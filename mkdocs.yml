@@ -14,9 +14,7 @@ theme:
     repo: fontawesome/brands/github
   features:
     - navigation.top
-    - navigation.footer
     - search.highlight
-    - search.share
     - content.code.copy
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -45,8 +43,6 @@ plugins:
   - search
   - meta
   - glightbox
-  - tags:
-      tags_file: tags.md
 
 markdown_extensions:
   - tables
@@ -59,8 +55,6 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.highlight
   - pymdownx.keys
-  - pymdownx.tasklist:
-      custom_checkbox: true
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.superfences:
@@ -78,6 +72,9 @@ markdown_extensions:
         - docs/includes/abbreviations.md
   - toc:
       permalink: "#"
+
+exclude_docs: |
+  includes/
 
 nav:
   - 首页: index.md
@@ -100,4 +97,3 @@ nav:
   - 索引:
       - 数据集索引: datasets.md
       - 参考文献索引: references.md
-  - 标签索引: tags.md
