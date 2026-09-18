@@ -8,6 +8,10 @@ title: 首页
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。`Ctrl + K` 全文搜索，[标签索引](tags.md) 按主题筛选。
 
+## :material-calendar-check: 活跃日程（最近一周）
+
+<!-- ACTIVITY_CALENDAR -->
+
 ## :material-history: 更新时间线
 
 <!-- TIMELINE -->
