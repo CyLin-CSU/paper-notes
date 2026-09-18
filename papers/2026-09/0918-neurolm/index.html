@@ -702,6 +702,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -932,6 +943,116 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../tags/" class="md-nav__link">
         
@@ -1072,6 +1193,17 @@
     <span class="md-ellipsis">
       
         个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
       
     </span>
   </a>
@@ -1239,6 +1371,23 @@
 <li>EEG-text 没有成对数据 → 只能做粗粒度的空间对齐，这是当前范式的天花板；附录展望了'用预定义句子描述 EEG + 对比损失'的细粒度对齐方向。</li>
 <li>阶梯掩码是'把语言的自回归搬到多通道信号'的干净答案：同通道 token 预测同通道下一时刻，每个 token 可见所有通道的当前与历史。</li>
 </ul>
+<h2 id="_5">自问自答</h2>
+<details class="question">
+<summary>Q1 · 为什么选择空间对齐而不是 CLIP 式的 embedding 对齐？</summary>
+<p>CLIP 式对齐需要大规模成对数据（图文对），而 EEG-text 对几乎不存在——一段 EEG 同时包含情绪、运动、病理等多重信息，人类语言无法完整标注。所以 NeuroLM 退而求其次做 space-wise 对齐：只要求 EEG embedding 落在与文本相同的分布空间里（域分类器 + 梯度反转），不要求逐条语义对应。</p>
+</details>
+<details class="question">
+<summary>Q2 · GRL（梯度反转层）是怎么工作的？</summary>
+<p>前向传播时是恒等变换，反向传播时把梯度取反。效果：域分类器 C 正常训练（学会分辨 EEG 和文本），而 VQ encoder 收到反向梯度、朝骗过分类器的方向更新——两者的极小极大博弈把 EEG embedding 推进文本 embedding 空间。λ 从 0 渐增到 1，避免训练初期扰动过大。</p>
+</details>
+<details class="question">
+<summary>Q3 · 为什么不能像语言那样逐 token 自回归？</summary>
+<p>语言是单序列、词序固定；EEG 的通道数和排列因数据集而异，没有统一的下一个 token。阶梯掩码的答案：同通道 token 预测同通道下一时间步（时序因果），同时每个 token 可见所有通道的当前与历史（空间全可见）——把语言的 AR 结构迁移到通道乘时间的二维格子上。</p>
+</details>
+<details class="question">
+<summary>Q4 · 为什么每批要混入少量纯文本数据？</summary>
+<p>防止 LLM 的语言能力灾难性遗忘。指令微调全部是 EEG 到短答案的任务，若纯用这些数据训练，GPT-2 的通用语言分布会迅速退化，泛化到新 prompt 的能力也随之丧失。</p>
+</details>
 
 
 
@@ -1341,6 +1490,10 @@
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

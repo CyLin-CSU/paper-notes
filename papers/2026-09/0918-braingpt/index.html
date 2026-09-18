@@ -667,6 +667,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -932,6 +943,116 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../tags/" class="md-nav__link">
         
@@ -1072,6 +1193,17 @@
     <span class="md-ellipsis">
       
         个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
       
     </span>
   </a>
@@ -1237,6 +1369,23 @@ Stage II：多任务微调
 <li>自回归直接回归连续值（MSE），绕开了离散化难题——与 LaBraM/TFM 的'先离散再预测'形成两条并行路线。</li>
 <li>电极级拆样本让样本量 ×E 倍膨胀（3750 万），这个数字要打折看：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 TEG 补回。</li>
 </ul>
+<h2 id="_5">自问自答</h2>
+<details class="question">
+<summary>Q1 · 为什么自回归比掩码建模更适合 EEG？</summary>
+<p>论文的消融（同架构、同损失度量）显示 AR 全面优于 MAE 平均 2% 以上：EEG 反映连续渐进的信息流，过去活动影响未来状态，因果的 next-token 预测天然贴合；MAE 的双向补全破坏了这种时序因果结构。且 AR 预测的是真实未来而非被人为挖掉的洞，任务更难、学到的表示更强。</p>
+</details>
+<details class="question">
+<summary>Q2 · TEG 图里到底存了什么多任务信息？</summary>
+<p>图结构本身不存任务信息。多任务信息来自训练方式：节点向量 V_m（电极原型）和 GAT 权重是所有任务的梯度共同更新的共享参数——同一电极被多个任务使用时，它的 V_m 同时接收多个任务的监督信号。推理时输入的电极集决定激活哪个子图（β mask），任务头决定读出。若两个任务电极集完全不相交，空间层面的共享就只剩 GAT 权重。</p>
+</details>
+<details class="question">
+<summary>Q3 · 电极级拆样本有什么代价？</summary>
+<p>样本量乘以电极数倍增（3750 万）有水分：单电极序列丢掉了跨电极的同步信息（空间关系、参考电极的共模成分），预训练学到的只是单电极时序动力学，空间整合完全押注在下游 TEG 上——这就是作者所说的渐进式时空解耦。</p>
+</details>
+<details class="question">
+<summary>Q4 · 末尾追加的 special token c 为什么能聚合成全局表示？</summary>
+<p>ETE 是因果（单向）注意力：序列末尾的 token 天然能注意到它之前的所有 token。把 c 放在每个电极序列的最后，它的输出位置就自动汇聚了该电极整段时序的信息，类似 GPT 里用最后一个 token 做分类。</p>
+</details>
 
 
 
@@ -1339,6 +1488,10 @@ Stage II：多任务微调
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

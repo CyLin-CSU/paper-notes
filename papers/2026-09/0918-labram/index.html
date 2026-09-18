@@ -597,6 +597,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -932,6 +943,116 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../tags/" class="md-nav__link">
         
@@ -1072,6 +1193,17 @@
     <span class="md-ellipsis">
       
         个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
       
     </span>
   </a>
@@ -1241,6 +1373,23 @@
 <li>线性探针在 TUEV 崩到 0.346，说明其表示与全量微调强绑定——对比 EEGPT 把 linear probing 做成核心卖点。</li>
 <li>对称掩码让一个样本产生 mask/补集两个互补视角，既是效率技巧（省一次 tokenizer 前向）也是数据增强（大模型受益更明显）。</li>
 </ul>
+<h2 id="_5">自问自答</h2>
+<details class="question">
+<summary>Q1 · 为什么重构傅里叶频谱而不是原始波形？</summary>
+<p>EEG 低信噪比、强随机、非平稳，作者前期实验里直接重构原始波形的 loss 根本不收敛。频谱的幅值/相位分布反映底层神经生理活动且更稳定可学——换个重构域是这篇最关键的实验发现，NeuroLM（去掉相位）和 TFM（掩码频谱图）都是这条线的延续。</p>
+</details>
+<details class="question">
+<summary>Q2 · codebook 是不是可有可无？直接掩码重构不行吗？</summary>
+<p>附录 Table 7 的消融：不用 codebook、直接重构原始信号或频谱（Setting 2/3），在低层任务 TUAB 上反而略好，但在高层任务 TUEV 上明显下降（0.6409 → 0.5730 / 0.5643）。离散语义码学到的抽象表示对区分事件类型这类高层任务至关重要。</p>
+</details>
+<details class="question">
+<summary>Q3 · 对称掩码为什么能省计算？</summary>
+<p>tokenize 一次的开销很大（要过整个 encoder）。对称掩码对同一样本生成 M 和它的补集两个视角，共享同一次 tokenizer 前向的离散结果，相当于白拿一次数据增强；附录消融显示参数越大的模型受益越明显。</p>
+</details>
+<details class="question">
+<summary>Q4 · 为什么 linear probing 在 TUEV 上崩了（0.346）？</summary>
+<p>说明 LaBraM 的表示与全量微调强绑定：掩码码字预测学到的特征停留在预测码字够用的层次，不经微调无法线性映射到任务空间。对比 EEGPT 把 linear probing 做成核心卖点，暴露了两种预训练目标在表示质量上的差异。</p>
+</details>
 
 
 
@@ -1343,6 +1492,10 @@
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

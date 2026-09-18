@@ -562,6 +562,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -932,6 +943,116 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../tags/" class="md-nav__link">
         
@@ -1078,6 +1199,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1160,6 +1292,10 @@
 - <strong>Positional embedding（时间）</strong>：通道内 token 顺序用正弦/余弦<strong>相对</strong>位置编码，免参数。</p>
 <p>最终"句子"为 <code>X ∈ R^{N×l}</code>（N 个 token，维度 l）。</p>
 <p><strong>Module 2：线性 Transformer</strong></p>
+<p>其线性注意力的核心公式（Linformer 式低秩投影）：</p>
+<div class="arithmatex">\[ \mathbf{H} = \mathrm{softmax}\left( rac{(\mathbf{X}\mathbf{W}_Q)(\mathbf{E}\mathbf{X}\mathbf{W}_K)^{    op}}{\sqrt{k}} 
+ight)(\mathbf{F}\mathbf{X}\mathbf{W}_V) \]</div>
+<p>其中 <span class="arithmatex">\(\mathbf{E} \in \mathbb{R}^{N   imes d}\)</span>、<span class="arithmatex">\(\mathbf{F} \in \mathbb{R}^{d    imes N}\)</span>（<span class="arithmatex">\(d \ll N\)</span>），注意力图由 <span class="arithmatex">\(N    imes N\)</span> 压缩为 <span class="arithmatex">\(N    imes d\)</span>。</p>
 <ul>
 <li>多通道长信号句子很长（64 通道 × 20s = 1280 tokens），标准注意力 O(N²) 不可行；</li>
 <li>采用 <strong>Linformer 式低秩线性注意力</strong>：引入两个可学习的低秩投影矩阵 E ∈ R^{N×d}、F ∈ R^{d×N}（d≪N），注意力图从 N×N 压缩到 N×d，时间/空间复杂度对 N 均为线性 <code>O(Nkd)</code>；</li>
@@ -1246,6 +1382,23 @@
 <li>线性注意力的 E/F 投影把注意力图固定为 N×d，隐含假设'全局信息可压缩进 d 个摘要位'——分类任务够用，但牺牲了精细的 token 间路由能力。</li>
 <li>频域在这里只是特征工程（FFT 能量 → FCN），模型本体仍在连续域运行——这为后来 LaBraM/TFM 的显式时频建模埋下了演进伏笔。</li>
 </ul>
+<h2 id="_5">自问自答</h2>
+<details class="question">
+<summary>Q1 · 为什么逐通道独立切分，而不是所有通道拼在一起切？</summary>
+<p>全通道拼接切分隐含假设通道数固定——换个数据集通道数变了就无法对齐。逐通道切分后每个 token 天然带通道 embedding，缺哪个通道就把对应 token 丢掉，模型结构完全不用改，这是 BIOT 能吃下异构格式的根本原因。</p>
+</details>
+<details class="question">
+<summary>Q2 · FFT 能量特征丢掉了相位，有什么后果？</summary>
+<p>频谱能量只描述有哪些频率、各多强，不描述相位对齐关系。对癫痫检测、情绪等频域主导的任务影响小；但 ERP 类任务（P300 在刺激后约 300ms 的相位锁定偏转）依赖精确的时域波形，EEGPT 报告 BIOT 在 PhysioP300 上仅 0.5485，并把它归因于此。</p>
+</details>
+<details class="question">
+<summary>Q3 · 线性注意力（Linformer 式）牺牲了什么？</summary>
+<p>E/F 投影把 N×N 注意力压成 N×d，隐含假设全局信息可以压缩进 d 个摘要位。代价是丢掉了细粒度的 token 间路由——每个 token 只能看 d 个全局摘要而非每个具体 token。对句子级分类（最后 mean pooling）足够，但不适合需要精确定位关系的任务。</p>
+</details>
+<details class="question">
+<summary>Q4 · 为什么用 mean pooling 而不是 [CLS] token？</summary>
+<p>作者实验发现加 [CLS] 的性能略差。可能原因：BIOT 的句子 token 顺序是按通道依次拼接而非自然语序，[CLS] 汇聚对位置敏感；mean pooling 对所有 token 等权平均，更稳健。</p>
+</details>
 
 
 
@@ -1348,6 +1501,10 @@
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

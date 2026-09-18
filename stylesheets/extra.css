@@ -9,47 +9,6 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* GitHub 风格活跃热力图（最近一周） */
-.activity-calendar {
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
-  flex-wrap: wrap;
-  padding: 0.7rem 1rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 8px;
-}
-.ac-total { font-size: 0.75rem; color: var(--md-default-fg-color--light); }
-.ac-grid { display: flex; gap: 0.4rem; }
-.ac-day { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
-.ac-cell {
-  width: 24px;
-  height: 24px;
-  border-radius: 5px;
-  background: #ebedf0; /* level 0 浅色模式 */
-}
-.ac-cell[data-l="1"] { background: #9be9a8; }
-.ac-cell[data-l="2"] { background: #40c463; }
-.ac-cell[data-l="3"] { background: #30a14e; }
-.ac-cell[data-l="4"] { background: #216e39; }
-.ac-cell[data-l="4"] { box-shadow: 0 0 0 1.5px var(--md-primary-fg-color); }
-.ac-wd { font-size: 0.6rem; line-height: 1; color: var(--md-default-fg-color--light); }
-.ac-legend {
-  display: flex;
-  align-items: center;
-  gap: 0.22rem;
-  font-size: 0.65rem;
-  color: var(--md-default-fg-color--light);
-}
-.ac-legend i { width: 12px; height: 12px; border-radius: 3px; background: #ebedf0; }
-.ac-legend i[data-l="1"] { background: #9be9a8; }
-.ac-legend i[data-l="2"] { background: #40c463; }
-.ac-legend i[data-l="3"] { background: #30a14e; }
-.ac-legend i[data-l="4"] { background: #216e39; }
-/* 暗色模式：level 0 用深底色（绿色梯度通用） */
-[data-md-color-scheme="slate"] .ac-cell,
-[data-md-color-scheme="slate"] .ac-legend i { background: #21262d; }
-
 /* 更新时间线样式 */
 .timeline {
   list-style: none;
