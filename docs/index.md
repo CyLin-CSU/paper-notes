@@ -94,3 +94,9 @@ title: 首页
 | 模型规模跨度 | 1.9M — 1.09B |
 
 综合对比见 [六篇方法对比](comparison.md)（13 个维度总览表 + 演进脉络）。
+
+## :material-comment-processing: 留言板
+
+欢迎留言交流——提问、纠错、推荐新论文都可以。
+
+<div id="giscus-container" data-loading="lazy"></div>
