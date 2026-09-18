@@ -50,6 +50,16 @@
 [data-md-color-scheme="slate"] .ac-cell,
 [data-md-color-scheme="slate"] .ac-legend i { background: #21262d; }
 
+/* 留言板 */
+#giscus-container { margin-top: 0.8rem; }
+.giscus-notconfigured {
+  padding: 0.8rem 1rem;
+  border: 1px dashed var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.8rem;
+}
+
 /* 更新时间线样式 */
 .timeline {
   list-style: none;
