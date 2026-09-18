@@ -338,15 +338,62 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026-09
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026-09
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../papers/biot/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-biot/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    BIOT (NeurIPS 2023)
+    0918 · BIOT (NeurIPS 2023)
   
 
     
@@ -374,14 +421,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/labram/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-labram/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    LaBraM (ICLR 2024)
+    0918 · LaBraM (ICLR 2024)
   
 
     
@@ -409,14 +456,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/eegpt/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-eegpt/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    EEGPT (NeurIPS 2024)
+    0918 · EEGPT (NeurIPS 2024)
   
 
     
@@ -444,14 +491,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/braingpt/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-braingpt/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    BrainGPT (arXiv 2024)
+    0918 · BrainGPT (arXiv 2024)
   
 
     
@@ -479,14 +526,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/neurolm/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-neurolm/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    NeuroLM (ICLR 2025)
+    0918 · NeuroLM (ICLR 2025)
   
 
     
@@ -514,14 +561,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/tfm-tokenizer/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-tfm-tokenizer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    TFM-Tokenizer (ICLR 2026)
+    0918 · TFM-Tokenizer (ICLR 2026)
   
 
     
@@ -537,6 +584,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -989,28 +1044,28 @@
 <tbody>
 <tr>
 <td><strong>① 通道 embedding 表</strong></td>
-<td><a href="../../papers/biot/">BIOT</a></td>
+<td><a href="../../papers/2026-09/0918-biot/">BIOT</a></td>
 <td>每个通道名一个可学习向量，逐通道切段后相加</td>
 <td>简单；缺通道直接丢 token</td>
 <td>表大小受训练时见过的通道限制</td>
 </tr>
 <tr>
 <td><strong>② 10-20 系统空间编码</strong></td>
-<td><a href="../../papers/labram/">LaBraM</a> / <a href="../../papers/neurolm/">NeuroLM</a></td>
+<td><a href="../../papers/2026-09/0918-labram/">LaBraM</a> / <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a></td>
 <td>全系统电极的空间 embedding 列表，按名字索引</td>
 <td>统一坐标系，预训练可收敛（LaBraM 消融：去掉 SE 不收敛）</td>
 <td>非标准设备（ear-EEG 等）无对应 embedding</td>
 </tr>
 <tr>
 <td><strong>③ 单通道独立建模</strong></td>
-<td><a href="../../papers/tfm-tokenizer/">TFM-Tokenizer</a> / <a href="../../papers/braingpt/">BrainGPT</a>（电极级）</td>
+<td><a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> / <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a>（电极级）</td>
 <td>tokenizer/训练样本以单通道为单位</td>
 <td><strong>天然 device-agnostic</strong>，任意电极组合</td>
 <td>丢失跨电极同步信息，需下游补空间整合</td>
 </tr>
 <tr>
 <td><strong>④ 图结构整合</strong></td>
-<td><a href="../../papers/braingpt/">BrainGPT</a>（TEG）</td>
+<td><a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a>（TEG）</td>
 <td>全电极建一张可学习图，样本只激活子图</td>
 <td>多任务共享 + 任意配置统一训练</td>
 <td>仅下游阶段，空间信息不在预训练中</td>
@@ -1042,7 +1097,7 @@
 </ul>
 <p>结论：<strong>通道适配方案决定了模型的应用边界</strong>。要做可穿戴、消费级 EEG（干电极、耳部、少导联），方案③（单通道独立）是目前最稳的路线。</p>
 <h2 id="_4">关联论文</h2>
-<p><a href="../../papers/biot/">BIOT</a> · <a href="../../papers/labram/">LaBraM</a> · <a href="../../papers/eegpt/">EEGPT</a> · <a href="../../papers/braingpt/">BrainGPT</a> · <a href="../../papers/tfm-tokenizer/">TFM-Tokenizer</a></p>
+<p><a href="../../papers/2026-09/0918-biot/">BIOT</a> · <a href="../../papers/2026-09/0918-labram/">LaBraM</a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></p>
 
 
 

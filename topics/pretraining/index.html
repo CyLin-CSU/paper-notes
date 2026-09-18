@@ -338,15 +338,62 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026-09
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026-09
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../papers/biot/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-biot/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    BIOT (NeurIPS 2023)
+    0918 · BIOT (NeurIPS 2023)
   
 
     
@@ -374,14 +421,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/labram/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-labram/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    LaBraM (ICLR 2024)
+    0918 · LaBraM (ICLR 2024)
   
 
     
@@ -409,14 +456,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/eegpt/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-eegpt/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    EEGPT (NeurIPS 2024)
+    0918 · EEGPT (NeurIPS 2024)
   
 
     
@@ -444,14 +491,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/braingpt/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-braingpt/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    BrainGPT (arXiv 2024)
+    0918 · BrainGPT (arXiv 2024)
   
 
     
@@ -479,14 +526,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/neurolm/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-neurolm/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    NeuroLM (ICLR 2025)
+    0918 · NeuroLM (ICLR 2025)
   
 
     
@@ -514,14 +561,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../papers/tfm-tokenizer/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-tfm-tokenizer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    TFM-Tokenizer (ICLR 2026)
+    0918 · TFM-Tokenizer (ICLR 2026)
   
 
     
@@ -537,6 +584,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1003,19 +1058,19 @@
 <tbody>
 <tr>
 <td><strong>对比学习</strong></td>
-<td><a href="../../papers/biot/">BIOT</a></td>
+<td><a href="../../papers/2026-09/0918-biot/">BIOT</a></td>
 <td>扰动版预测原版表示（BYOL 式）</td>
 <td>丢通道+丢 token → predictor → 对比损失（T=0.2）</td>
 </tr>
 <tr>
 <td><strong>掩码建模</strong></td>
-<td><a href="../../papers/labram/">LaBraM</a> / <a href="../../papers/eegpt/">EEGPT</a> / <a href="../../papers/tfm-tokenizer/">TFM</a></td>
+<td><a href="../../papers/2026-09/0918-labram/">LaBraM</a> / <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> / <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM</a></td>
 <td>看一部分，恢复另一部分</td>
 <td>三家的"恢复目标"完全不同（见下）</td>
 </tr>
 <tr>
 <td><strong>自回归</strong></td>
-<td><a href="../../papers/braingpt/">BrainGPT</a> / <a href="../../papers/neurolm/">NeuroLM</a></td>
+<td><a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> / <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a></td>
 <td>因果地预测下一单元</td>
 <td>BrainGPT 回归连续值；NeuroLM 预测离散码</td>
 </tr>
@@ -1088,7 +1143,7 @@
 <li><strong>LayerNorm 归一化目标</strong>（EEGPT 的 L_A 和 L_R 都对目标做 LN）：缓解极端值和协变量偏移。</li>
 </ul>
 <h2 id="_6">关联论文</h2>
-<p><a href="../../papers/biot/">BIOT</a> · <a href="../../papers/labram/">LaBraM</a> · <a href="../../papers/eegpt/">EEGPT</a> · <a href="../../papers/braingpt/">BrainGPT</a> · <a href="../../papers/neurolm/">NeuroLM</a> · <a href="../../papers/tfm-tokenizer/">TFM-Tokenizer</a></p>
+<p><a href="../../papers/2026-09/0918-biot/">BIOT</a> · <a href="../../papers/2026-09/0918-labram/">LaBraM</a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></p>
 
 
 

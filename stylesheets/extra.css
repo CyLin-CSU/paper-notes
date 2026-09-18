@@ -1,7 +1,7 @@
 /* 标题旁的 GitHub 头像 */
 .md-typeset h1 .h1-avatar {
-  height: 52px !important;
-  width: 52px !important;
+  height: 100px !important;
+  width: 100px !important;
   border-radius: 50%;
   vertical-align: middle;
   margin-right: 0.3rem;
