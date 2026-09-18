@@ -3,6 +3,9 @@ site_description: 我的论文精读总结库
 repo_url: https://github.com/CyLin-CSU/paper-notes
 repo_name: CyLin-CSU/paper-notes
 
+hooks:
+  - hooks.py
+
 theme:
   name: material
   language: zh
