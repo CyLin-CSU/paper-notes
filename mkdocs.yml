@@ -1,0 +1,57 @@
+site_name: Paper Notes · 论文阅读笔记
+site_description: 我的论文精读总结库
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.share
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: 切换暗色
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: 切换亮色
+
+plugins:
+  - search
+  - meta
+  - tags:
+      tags_file: tags.md
+
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - 首页: index.md
+  - 论文笔记:
+      - BIOT (NeurIPS 2023): papers/biot.md
+      - LaBraM (ICLR 2024): papers/labram.md
+      - EEGPT (NeurIPS 2024): papers/eegpt.md
+      - BrainGPT (arXiv 2024): papers/braingpt.md
+      - NeuroLM (ICLR 2025): papers/neurolm.md
+      - TFM-Tokenizer (ICLR 2026): papers/tfm-tokenizer.md
+  - 主题专题:
+      - EEG Tokenization 演进: topics/tokenization.md
+      - 预训练范式对比: topics/pretraining.md
+      - 通道异构的四种解法: topics/spatial.md
+  - 六篇方法对比: comparison.md
+  - 标签索引: tags.md
