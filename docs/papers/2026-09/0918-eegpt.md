@@ -1,4 +1,5 @@
 ---
+date: 2026-09-18
 title: "EEGPT: Pretrained Transformer for Universal and Reliable Representation of EEG Signals"
 authors: [Guagnyu Wang, Wenchao Liu, Yuhong He, Cong Xu, Lin Ma, Haifeng Li]
 venue: "NeurIPS 2024"
@@ -79,6 +80,13 @@ EEG(58ch, 4s, 256Hz)
 - 消融：去掉对齐损失 L_A 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary token 数量 S=4 较优。
 
 ---
+
+## 架构图
+
+![Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构](../../assets/eegpt-arch.png)
+
+*Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构*
+
 
 ## 要点速览
 !!! abstract "TL;DR"

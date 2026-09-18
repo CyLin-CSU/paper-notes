@@ -1,4 +1,5 @@
 ---
+date: 2026-09-18
 title: "BrainGPT: Unleashing the Potential of EEG Generalist Foundation Model by Autoregressive Pre-training"
 authors: [Tongtian Yue, Xuange Gao, Shuning Xue, Yepeng Tang, Longteng Guo, Jie Jiang, Jing Liu]
 venue: "arXiv 2024"
@@ -77,6 +78,13 @@ Stage II：多任务微调
 - 消融：模型越大 loss 越低、下游越好；数据越多性能越高（未饱和）；AR 优于 MAE（与损失度量无关，ℓ2 最好）；联合训练优于单独训练（共享电极节点相当于数据增强，小数据任务受益更大）；对未见数据（DREAMER）零训练也有强迁移表示。
 
 ---
+
+## 架构图
+
+![Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）](../../assets/braingpt-overview.png)
+
+*Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）*
+
 
 ## 要点速览
 !!! abstract "TL;DR"

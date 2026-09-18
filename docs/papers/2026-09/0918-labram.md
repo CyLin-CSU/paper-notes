@@ -1,4 +1,5 @@
 ---
+date: 2026-09-18
 title: "LaBraM: Large Brain Model for Learning Generic Representations with Tremendous EEG Data in BCI"
 authors: [Wei-Bang Jiang, Li-Ming Zhao, Bao-Liang Lu]
 venue: "ICLR 2024"
@@ -80,6 +81,17 @@ LaBraM: Large Brain Model (ICLR 2024)
   - 线性探针/只微调后几层在 TUEV 上显著变差 → 该模型依赖全量微调。
 
 ---
+
+## 架构图
+
+![Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer](../../assets/labram-arch.png)
+
+*Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer*
+
+![Figure 2 · 上：神经 tokenizer 训练（VQ + 频谱重构）；下：掩码 EEG 建模预训练](../../assets/labram-tokenizer.png)
+
+*Figure 2 · 上：神经 tokenizer 训练（VQ + 频谱重构）；下：掩码 EEG 建模预训练*
+
 
 ## 要点速览
 !!! abstract "TL;DR"

@@ -11,10 +11,10 @@ tags: [tokenization, 综述]
 
 | 时间 | 论文 | Token 形态 | 词表 | Token 的用途 |
 |---|---|---|---|---|
-| 2023 | [BIOT](../papers/biot.md) | 连续向量（1s 规则切段） | 无 | 模型输入 |
-| 2024 | [LaBraM](../papers/labram.md) | 离散码（VQ，8192） | 有 | **仅作预训练目标**，推理时丢弃 |
-| 2025 | [NeuroLM](../papers/neurolm.md) | 离散码（VQ） | 有（并入 GPT-2 词表） | LLM 的输入 token |
-| 2026 | [TFM-Tokenizer](../papers/tfm-tokenizer.md) | 离散码（VQ 时频 motif） | 有 | **基础模型的输入** + 可插拔复用 |
+| 2023 | [BIOT](../papers/2026-09/0918-biot.md) | 连续向量（1s 规则切段） | 无 | 模型输入 |
+| 2024 | [LaBraM](../papers/2026-09/0918-labram.md) | 离散码（VQ，8192） | 有 | **仅作预训练目标**，推理时丢弃 |
+| 2025 | [NeuroLM](../papers/2026-09/0918-neurolm.md) | 离散码（VQ） | 有（并入 GPT-2 词表） | LLM 的输入 token |
+| 2026 | [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) | 离散码（VQ 时频 motif） | 有 | **基础模型的输入** + 可插拔复用 |
 
 ## 三步跃迁
 
@@ -65,4 +65,4 @@ BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，**TFM 
 
 ## 关联论文
 
-[BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [NeuroLM](../papers/neurolm.md) · [TFM-Tokenizer](../papers/tfm-tokenizer.md)
+[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md)

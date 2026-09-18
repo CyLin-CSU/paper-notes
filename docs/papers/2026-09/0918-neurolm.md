@@ -1,4 +1,5 @@
 ---
+date: 2026-09-18
 title: "NeuroLM: A Universal Multi-task Foundation Model for Bridging the Gap between Language and EEG Signals"
 authors: [Wei-Bang Jiang, Yansen Wang, Bao-Liang Lu, Dongsheng Li]
 venue: "ICLR 2025"
@@ -78,6 +79,17 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
 - 消融：多通道自回归预训练对所有任务显著有益；指令选项乱序（shuffle）在数据充足的 TUEV/HMC 上鲁棒（说明真的理解了问题语义），小数据 TUSL 上受损；预训练 20 epoch 最优；注意力可视化显示浅层处理文本问题、深层聚焦 EEG token 生成答案，多数数据集信息汇聚到 Cz 通道。
 
 ---
+
+## 架构图
+
+![Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（GRL 梯度反转）](../../assets/neurolm-tokenizer.png)
+
+*Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（GRL 梯度反转）*
+
+![Figure 3 · 两阶段：多通道自回归预训练（左）→ 多任务指令微调（右）](../../assets/neurolm-training.png)
+
+*Figure 3 · 两阶段：多通道自回归预训练（左）→ 多任务指令微调（右）*
+
 
 ## 要点速览
 !!! abstract "TL;DR"

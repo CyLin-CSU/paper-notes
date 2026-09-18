@@ -11,9 +11,9 @@ tags: [预训练, 综述]
 
 | 路线 | 论文 | 核心机制 | 关键设计 |
 |---|---|---|---|
-| **对比学习** | [BIOT](../papers/biot.md) | 扰动版预测原版表示（BYOL 式） | 丢通道+丢 token → predictor → 对比损失（T=0.2） |
-| **掩码建模** | [LaBraM](../papers/labram.md) / [EEGPT](../papers/eegpt.md) / [TFM](../papers/tfm-tokenizer.md) | 看一部分，恢复另一部分 | 三家的"恢复目标"完全不同（见下） |
-| **自回归** | [BrainGPT](../papers/braingpt.md) / [NeuroLM](../papers/neurolm.md) | 因果地预测下一单元 | BrainGPT 回归连续值；NeuroLM 预测离散码 |
+| **对比学习** | [BIOT](../papers/2026-09/0918-biot.md) | 扰动版预测原版表示（BYOL 式） | 丢通道+丢 token → predictor → 对比损失（T=0.2） |
+| **掩码建模** | [LaBraM](../papers/2026-09/0918-labram.md) / [EEGPT](../papers/2026-09/0918-eegpt.md) / [TFM](../papers/2026-09/0918-tfm-tokenizer.md) | 看一部分，恢复另一部分 | 三家的"恢复目标"完全不同（见下） |
+| **自回归** | [BrainGPT](../papers/2026-09/0918-braingpt.md) / [NeuroLM](../papers/2026-09/0918-neurolm.md) | 因果地预测下一单元 | BrainGPT 回归连续值；NeuroLM 预测离散码 |
 
 ## 掩码建模：预测目标的三次进化
 
@@ -53,4 +53,4 @@ BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）
 
 ## 关联论文
 
-[BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [BrainGPT](../papers/braingpt.md) · [NeuroLM](../papers/neurolm.md) · [TFM-Tokenizer](../papers/tfm-tokenizer.md)
+[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md)

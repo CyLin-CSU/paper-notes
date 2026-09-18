@@ -1,4 +1,5 @@
 ---
+date: 2026-09-18
 title: "TFM-Tokenizer: Tokenizing Single-Channel EEG with Time-Frequency Motif Learning"
 authors: [Jathurshan Pradeepkumar, Xihao Piao, Zheng Chen, Jimeng Sun]
 venue: "ICLR 2026"
@@ -88,6 +89,13 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 - 消融：双域联合建模优于单时域（-R）或单频域（-S）变体；masking 策略与比例（频率 0.5 最优）；窗长 0.5s/0.25s hop 其实最好（但为对齐基线统一用 1s/0.5s）；embedding 维度 64 最优；下游 2 层即接近 12 层性能。
 
 ---
+
+## 架构图
+
+![Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测](../../assets/tfm-framework.png)
+
+*Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测*
+
 
 ## 要点速览
 !!! abstract "TL;DR"

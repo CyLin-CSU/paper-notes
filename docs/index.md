@@ -23,37 +23,37 @@ title: 首页
 
 <div class="grid cards" markdown>
 
-- :material-heart-pulse:{ .lg .middle } **[BIOT](papers/biot.md)**
+- :material-heart-pulse:{ .lg .middle } **[BIOT](papers/2026-09/0918-biot.md)**
     ---
     NeurIPS 2023 · 3.2M 参数
 
     逐通道切段 + 线性注意力，跨格式生物信号统一编码的**起点**。tags: `tokenization` `线性注意力`
 
-- :material-brain:{ .lg .middle } **[LaBraM](papers/labram.md)**
+- :material-brain:{ .lg .middle } **[LaBraM](papers/2026-09/0918-labram.md)**
     ---
     ICLR 2024 · 5.8M–369M 参数
 
     VQ 神经 codebook + 频谱重构 + 掩码码字预测的 EEG **大模型**。tags: `VQ-VAE` `掩码预训练`
 
-- :material-magnify:{ .lg .middle } **[EEGPT](papers/eegpt.md)**
+- :material-magnify:{ .lg .middle } **[EEGPT](papers/2026-09/0918-eegpt.md)**
     ---
     NeurIPS 2024 · ~10M 参数
 
     表示对齐 + 掩码重构**双自监督**，linear probing 达 SOTA。tags: `双自监督` `线性探针`
 
-- :material-chart-line:{ .lg .middle } **[BrainGPT](papers/braingpt.md)**
+- :material-chart-line:{ .lg .middle } **[BrainGPT](papers/2026-09/0918-braingpt.md)**
     ---
     arXiv 2024 · 至 1.09B 参数
 
     电极级建模 + GPT 式**自回归** + 任务共享电极图的首个 generalist。tags: `自回归` `多任务` `scaling law`
 
-- :material-robot:{ .lg .middle } **[NeuroLM](papers/neurolm.md)**
+- :material-robot:{ .lg .middle } **[NeuroLM](papers/2026-09/0918-neurolm.md)**
     ---
     ICLR 2025 · 至 1696M 参数
 
     把 EEG 当**外语接进 GPT-2**：文本对齐 tokenizer + 指令微调多任务。tags: `LLM` `指令微调`
 
-- :material-sine-wave:{ .lg .middle } **[TFM-Tokenizer](papers/tfm-tokenizer.md)**
+- :material-sine-wave:{ .lg .middle } **[TFM-Tokenizer](papers/2026-09/0918-tfm-tokenizer.md)**
     ---
     ICLR 2026 · ~1.9M 参数
 

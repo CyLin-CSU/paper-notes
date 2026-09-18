@@ -50,12 +50,13 @@ markdown_extensions:
 nav:
   - 首页: index.md
   - 论文笔记:
-      - BIOT (NeurIPS 2023): papers/biot.md
-      - LaBraM (ICLR 2024): papers/labram.md
-      - EEGPT (NeurIPS 2024): papers/eegpt.md
-      - BrainGPT (arXiv 2024): papers/braingpt.md
-      - NeuroLM (ICLR 2025): papers/neurolm.md
-      - TFM-Tokenizer (ICLR 2026): papers/tfm-tokenizer.md
+      - "2026-09":
+          - 0918 · BIOT (NeurIPS 2023): papers/2026-09/0918-biot.md
+          - 0918 · LaBraM (ICLR 2024): papers/2026-09/0918-labram.md
+          - 0918 · EEGPT (NeurIPS 2024): papers/2026-09/0918-eegpt.md
+          - 0918 · BrainGPT (arXiv 2024): papers/2026-09/0918-braingpt.md
+          - 0918 · NeuroLM (ICLR 2025): papers/2026-09/0918-neurolm.md
+          - 0918 · TFM-Tokenizer (ICLR 2026): papers/2026-09/0918-tfm-tokenizer.md
   - 主题专题:
       - EEG Tokenization 演进: topics/tokenization.md
       - 预训练范式对比: topics/pretraining.md

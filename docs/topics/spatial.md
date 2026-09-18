@@ -11,10 +11,10 @@ tags: [通道适配, 跨设备, 综述]
 
 | 方案 | 论文 | 机制 | 优点 | 局限 |
 |---|---|---|---|---|
-| **① 通道 embedding 表** | [BIOT](../papers/biot.md) | 每个通道名一个可学习向量，逐通道切段后相加 | 简单；缺通道直接丢 token | 表大小受训练时见过的通道限制 |
-| **② 10-20 系统空间编码** | [LaBraM](../papers/labram.md) / [NeuroLM](../papers/neurolm.md) | 全系统电极的空间 embedding 列表，按名字索引 | 统一坐标系，预训练可收敛（LaBraM 消融：去掉 SE 不收敛） | 非标准设备（ear-EEG 等）无对应 embedding |
-| **③ 单通道独立建模** | [TFM-Tokenizer](../papers/tfm-tokenizer.md) / [BrainGPT](../papers/braingpt.md)（电极级） | tokenizer/训练样本以单通道为单位 | **天然 device-agnostic**，任意电极组合 | 丢失跨电极同步信息，需下游补空间整合 |
-| **④ 图结构整合** | [BrainGPT](../papers/braingpt.md)（TEG） | 全电极建一张可学习图，样本只激活子图 | 多任务共享 + 任意配置统一训练 | 仅下游阶段，空间信息不在预训练中 |
+| **① 通道 embedding 表** | [BIOT](../papers/2026-09/0918-biot.md) | 每个通道名一个可学习向量，逐通道切段后相加 | 简单；缺通道直接丢 token | 表大小受训练时见过的通道限制 |
+| **② 10-20 系统空间编码** | [LaBraM](../papers/2026-09/0918-labram.md) / [NeuroLM](../papers/2026-09/0918-neurolm.md) | 全系统电极的空间 embedding 列表，按名字索引 | 统一坐标系，预训练可收敛（LaBraM 消融：去掉 SE 不收敛） | 非标准设备（ear-EEG 等）无对应 embedding |
+| **③ 单通道独立建模** | [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) / [BrainGPT](../papers/2026-09/0918-braingpt.md)（电极级） | tokenizer/训练样本以单通道为单位 | **天然 device-agnostic**，任意电极组合 | 丢失跨电极同步信息，需下游补空间整合 |
+| **④ 图结构整合** | [BrainGPT](../papers/2026-09/0918-braingpt.md)（TEG） | 全电极建一张可学习图，样本只激活子图 | 多任务共享 + 任意配置统一训练 | 仅下游阶段，空间信息不在预训练中 |
 
 ## 方案③的代价与补偿
 
@@ -48,4 +48,4 @@ TFM 的 ear-EEG（EESM23）实验是张试金石：睡眠分期任务，采集�
 
 ## 关联论文
 
-[BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [BrainGPT](../papers/braingpt.md) · [TFM-Tokenizer](../papers/tfm-tokenizer.md)
+[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md)

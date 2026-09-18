@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-论文笔记助手：新增笔记 + 自动更新首页时间线。
+论文笔记助手：新增笔记（按月份归档）+ 自动更新首页时间线。
 
 用法（在 paper-notes 目录下，pythonProject1 环境）：
   python new_note.py note <slug> "论文标题"      # 例：python new_note.py note cbramod "CBraMod"
   python new_note.py log "更新说明文字"          # 例：python new_note.py log "新增 CBraMod 精读"
 
-note 子命令会在 docs/papers/ 下生成模板文件（之后记得在 mkdocs.yml 的 nav 里登记）；
+note 子命令会在 docs/papers/YYYY-MM/ 下按当天日期生成模板文件（含架构图占位）；
+之后记得在 mkdocs.yml 的 nav 里登记。
 log 子命令会在首页时间线插入今天的条目，并自动刷新"最近更新"日期。
 """
 import datetime
@@ -20,9 +21,10 @@ INDEX = DOCS / "index.md"
 
 TEMPLATE = '''---
 title: "{title}"
+date: {today}
 authors: []
 venue: ""
-year: 2026
+year: {year}
 tags: []
 status: "粗读"
 rating:
@@ -38,6 +40,11 @@ one-liner: ""
 ## 问题定位
 
 ## 方法
+
+## 架构图
+
+![架构图占位](../../assets/占位.png)
+*把论文架构图放到 docs/assets/ 后替换上面的路径与说明*
 
 ## 创新点
 
@@ -60,27 +67,28 @@ def today() -> str:
 
 
 def cmd_note(slug: str, title: str) -> None:
-    out = DOCS / "papers" / f"{slug}.md"
+    d = datetime.date.today()
+    month_dir = DOCS / "papers" / d.strftime("%Y-%m")
+    month_dir.mkdir(parents=True, exist_ok=True)
+    out = month_dir / f"{d.strftime('%m%d')}-{slug}.md"
     if out.exists():
         print(f"[!] 已存在：{out}")
         sys.exit(1)
-    out.write_text(TEMPLATE.format(title=title), encoding="utf-8")
+    out.write_text(TEMPLATE.format(title=title, today=d.isoformat(), year=d.year), encoding="utf-8")
     print(f"[+] 已创建 {out}")
     print(f"[i] 记得在 mkdocs.yml 的 nav 里登记：\n"
-          f"      - {title} ({datetime.date.today().year}): papers/{slug}.md")
+          f'      - {d.strftime("%m%d")} · {title}: papers/{d.strftime("%Y-%m")}/{out.name}')
 
 
 def cmd_log(message: str) -> None:
     text = INDEX.read_text(encoding="utf-8")
     today_str = today()
-    # 插入时间线条目（放在 <!-- TIMELINE --> 标记之后）
     marker = "<!-- TIMELINE -->"
     if marker not in text:
         print("[!] index.md 中找不到 <!-- TIMELINE --> 标记")
         sys.exit(1)
     entry = f"- **{today_str}** · {message}\n"
     text = text.replace(marker, marker + "\n\n" + entry, 1)
-    # 刷新首页"最近更新"日期
     text = re.sub(r"(\*\*最近更新\*\*：)\d{4}-\d{2}-\d{2}", r"\g<1>" + today_str, text)
     INDEX.write_text(text, encoding="utf-8")
     print(f"[+] 时间线已更新：{today_str} · {message}")
