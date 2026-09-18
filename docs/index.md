@@ -8,13 +8,12 @@ title: 首页
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。`Ctrl + K` 全文搜索，[标签索引](tags.md) 按主题筛选。
 
-## :material-calendar-check: 活跃日程（最近一周）
-
-<!-- ACTIVITY_CALENDAR -->
-
 ## :material-history: 更新时间线
 
 <!-- TIMELINE -->
+
+- **2026-09-18** · 新增自问自答区、参考文献索引、数据集索引；移除活跃热力图；修复数学公式渲染
+
 <ul class="timeline" markdown>
 
 - **2026-09-18** · 站点 v1.2：主页改版，新增更新时间线与活跃状态

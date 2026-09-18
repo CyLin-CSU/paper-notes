@@ -108,3 +108,23 @@ EEG(58ch, 4s, 256Hz)
 - 'encoder 看被 mask 的稀疏部分、momentum encoder 看全量'的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。
 - 附录证明去掉 predictor 会表示坍塌（重构 loss 不再下降）——对齐分支必须保留 query/位置等余量，防止模型走捷径。
 
+## 自问自答
+
+??? question "Q1 · 为什么 encoder 处理的是被 mask 的部分，和 MAE 正好相反？"
+
+    这是显式表示 z 设计的一部分：encoder 只看 50% 时间 × 80% 通道的稀疏视图，却要靠 predictor 预测全量特征、与看过完整信号的 momentum encoder 对齐——逼着稀疏视图的输出携带全局语义。若 encoder 直接看全量，对齐任务就没有信息瓶颈，学不到这个性质。
+
+
+??? question "Q2 · 去掉 predictor 行不行？"
+
+    附录 Figure 6：去掉 predictor 后对齐目标变成 encoder 与 momentum encoder 直接对齐，两者可以走捷径坍缩到相同输出（表示坍塌），重构 loss 也不再下降。predictor + 可学习 query 提供了必要的不对称性，与 BYOL 需要 predictor 同理。
+
+
+??? question "Q3 · 为什么坚持 linear probing 而不微调？"
+
+    两个动机：一是 EEG 下游标注少，全量微调大模型极易过拟合；二是 linear probing 让性能完全归因于 encoder 的表示质量——它是更严格的通用表示评估协议，EEGPT 在这个协议下超过全量微调的 BENDR，说服力更强。
+
+
+??? question "Q4 · Codex book 怎么处理训练时没见过的通道？"
+
+    它维护通道名到可学习向量的映射表，覆盖常见命名体系，新数据集的通道按名字映射即可。但表是固定的（58 电极），碰到 ear-EEG 这类体系外通道就没有对应向量——这是它跨设备能力弱于 TFM 单通道方案的原因。

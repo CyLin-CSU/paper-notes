@@ -49,6 +49,12 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
   - 首页: index.md
@@ -65,4 +71,7 @@ nav:
       - 预训练范式对比: topics/pretraining.md
       - 通道异构的四种解法: topics/spatial.md
   - 六篇方法对比: comparison.md
+  - 索引:
+      - 数据集索引: datasets.md
+      - 参考文献索引: references.md
   - 标签索引: tags.md
