@@ -1,0 +1,24 @@
+/* 更新时间线样式 */
+.timeline {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--md-default-fg-color--lightest);
+}
+.timeline li {
+  position: relative;
+  margin: 0.4rem 0;
+}
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -1.76rem;
+  top: 0.5em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--md-primary-fg-color);
+}
+.timeline li:first-child::before {
+  background: #2e7d32; /* 最新一条用绿色圆点，呼应“活跃”状态 */
+}

@@ -22,6 +22,9 @@ theme:
         icon: material/brightness-4
         name: 切换亮色
 
+extra_css:
+  - stylesheets/extra.css
+
 plugins:
   - search
   - meta
