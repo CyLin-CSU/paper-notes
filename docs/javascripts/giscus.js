@@ -6,9 +6,9 @@
 // 4. 把页面生成的 data-repo-id 和 data-category-id 填到下面两个引号里
 var GISCUS_CONFIG = {
   repo: "CyLin-CSU/paper-notes",
-  repoId: "", // ← 填这里
+  repoId: "R_kgDOUf1vkQ",
   category: "Announcements",
-  categoryId: "" // ← 填这里
+  categoryId: "DIC_kwDOUf1vkc4DF4aj"
 };
 
 function mountGiscus() {
