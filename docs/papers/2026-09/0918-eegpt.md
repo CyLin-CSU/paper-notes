@@ -129,3 +129,15 @@ flowchart TD
 ??? question "Q4 · Codex book 怎么处理训练时没见过的通道？"
 
     它维护通道名到可学习向量的映射表，覆盖常见命名体系，新数据集的通道按名字映射即可。但表是固定的（58 电极），碰到 ear-EEG 这类体系外通道就没有对应向量——这是它跨设备能力弱于 TFM 单通道方案的原因。
+
+!!! abstract "复现速查卡"
+    - **代码**：[github.com/BINE022/EEGPT](https://github.com/BINE022/EEGPT)
+    - **关键超参**：58 电极 / 256Hz / 输入 4s；patch 64 点（250ms）；掩码 50% 时间 × 80% 通道；momentum 动量 0.01；最优变体 large：d=512、8 层、4 个 summary token；AdamW OneCycle（2.5e-4 起）
+    - **数据**：预训练 PhysioMI + HGD + TSU + SEED + M3CV；下游 7 数据集
+    - **算力参考**：8×RTX 3090，200 epochs，bf16；下游只训线性层所以极轻
+
+---
+
+**相关阅读**
+
+:material-arrow-left: [上一篇：LaBraM](0918-labram.md) ｜ :material-arrow-right: [下一篇：BrainGPT](0918-braingpt.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#跨论文-benchmark-战绩表)

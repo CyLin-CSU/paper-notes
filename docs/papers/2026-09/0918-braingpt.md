@@ -129,3 +129,15 @@ flowchart LR
 ??? question "Q4 · 末尾追加的 special token c 为什么能聚合成全局表示？"
 
     ETE 是因果（单向）注意力：序列末尾的 token 天然能注意到它之前的所有 token。把 c 放在每个电极序列的最后，它的输出位置就自动汇聚了该电极整段时序的信息，类似 GPT 里用最后一个 token 做分类。
+
+!!! abstract "复现速查卡"
+    - **代码**：论文声明将开源（截至精读时未见仓库，复现前先确认）
+    - **关键超参**：电极词表覆盖 E 个电极；patch 1s × D 采样点；ETE SwiGLU；预训练 lr 1e-4 / 3 epochs / batch 4096；微调 10 epochs（ETE 冻结，只训 TEG）；DeepSpeed Zero2/3 + bf16
+    - **数据**：3750 万单电极样本（≈1B token），来自 12 个基准的预训练拆分
+    - **算力参考**：8×A800-80G；Giant 1.09B 需 Zero3 + 梯度检查点
+
+---
+
+**相关阅读**
+
+:material-arrow-left: [上一篇：EEGPT](0918-eegpt.md) ｜ :material-arrow-right: [下一篇：NeuroLM](0918-neurolm.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#跨论文-benchmark-战绩表)

@@ -14,7 +14,7 @@ title: 首页
 
 ## :material-history: 更新时间线
 
-<ul class="timeline" markdown>
+<ul class="timeline" id="home-timeline" markdown>
 
 - **2026-09-18** · 组件大升级：Mermaid 流程图/内容标签页/脚注/术语提示/图片放大/阅读进度条/对比图表
 
@@ -82,6 +82,14 @@ title: 首页
 - :material-grid-large: **[通道异构的四种解法](topics/spatial.md)**
     ---
     通道 embedding / 空间编码 / 单通道独立 / 图结构整合，跨设备能力的分水岭。
+
+- :material-database: **[EEG 预训练数据全景](topics/data-landscape.md)**
+    ---
+    2500h vs 25000h：语料构成、域偏斜与规模瓶颈。
+
+- :material-vector-circle: **[多任务三条路线](topics/multi-task.md)**
+    ---
+    逐任务微调 / 共享骨干联合训练 / 指令微调。
 
 </div>
 

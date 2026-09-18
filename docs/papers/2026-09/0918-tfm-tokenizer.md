@@ -135,3 +135,15 @@ flowchart LR
 ??? question "Q4 · 这套 tokenization 的主要局限是什么？"
 
     作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 token（误判为不同 motif）。此外 VQ 查表是硬量化，边界附近的微小波形差异可能被吞掉；ear-EEG 实验也表明跨设备泛化仍依赖微调数据量。
+
+!!! abstract "复现速查卡"
+    - **代码**：[github.com/Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer)（含预训练权重与全部预处理脚本）
+    - **关键超参**：tokenizer ~1.2M + 下游 ~0.7M；STFT 窗 200 点/Hann/hop 100；码本 8192；token embedding 64；频带掩码率 0.5 + 时间掩码 + 对称掩码；tokenizer 内**无位置编码**；Ray Tune + Optuna 调参
+    - **数据**：TUEV/TUAB/CHB-MIT/IIIC（遵循 BIOT 划分）；跨设备 EESM23
+    - **算力参考**：无 GPU 规模要求披露——tokenizer 极小，消费级单卡可训
+
+---
+
+**相关阅读**
+
+:material-arrow-left: [上一篇：NeuroLM](0918-neurolm.md) ｜ :material-arrow-right: [下一篇：BIOT](0918-biot.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#跨论文-benchmark-战绩表)

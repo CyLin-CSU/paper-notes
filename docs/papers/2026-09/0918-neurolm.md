@@ -134,3 +134,15 @@ flowchart TD
 ??? question "Q4 · 为什么每批要混入少量纯文本数据？"
 
     防止 LLM 的语言能力灾难性遗忘。指令微调全部是 EEG 到短答案的任务，若纯用这些数据训练，GPT-2 的通用语言分布会迅速退化，泛化到新 prompt 的能力也随之丧失。
+
+!!! abstract "复现速查卡"
+    - **代码**：[github.com/935963004/NeuroLM](https://github.com/935963004/NeuroLM)（PyTorch 2.2.2 + CUDA 12.1）
+    - **关键超参**：GPT-2 基座（B/L/XL = 254M/500M/1696M）；码本 8192×128；序列最长 1024（短则零填充+掩码注意力）；patch 200 点；GRL 系数 λ 从 0 渐增；推理取 argmax 而非 beam search
+    - **数据**：约 25000h（TUEG ~24000h 为主力）；每批混入少量纯文本防遗忘
+    - **算力参考**：8×A100-80G
+
+---
+
+**相关阅读**
+
+:material-arrow-left: [上一篇：BrainGPT](0918-braingpt.md) ｜ :material-arrow-right: [下一篇：TFM-Tokenizer](0918-tfm-tokenizer.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#跨论文-benchmark-战绩表)

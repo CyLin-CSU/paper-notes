@@ -88,3 +88,70 @@ BIOT 把 FFT 当特征工程的一种（能量向量）；LaBraM 把频谱当重
 ---
 
 *总结基于六篇论文原文；实验数字均引自各论文报告值。*
+
+## 🏆 跨论文 Benchmark 战绩表
+
+所有数字均引自各论文自报结果（⚠️ 各论文预处理/数据划分存在差异，仅作量级参考）。`—` 表示该论文未报告该任务。
+
+### TUAB（异常检测 · Balanced Accuracy）
+
+| 模型 | Balanced Acc. | AUROC | 出处 |
+|---|---|---|---|
+| BIOT（多数据集预训练） | 0.7959 | 0.8815 | BIOT Table 4 |
+| LaBraM-Huge | **0.8258** | **0.9162** | LaBraM Table 1 |
+| EEGPT（linear probing, 25M） | 0.7983 | 0.8718 | EEGPT Table 2 |
+| NeuroLM-XL（多任务） | 0.7969 | 0.7884 | NeuroLM Table 2 |
+| BrainGPT-Giant | — | — | 未评测 |
+| TFM-Tokenizer | 0.8032 | 0.8870 | TFM Table 1 |
+
+### TUEV（事件分类）
+
+| 模型 | Balanced Acc. | Cohen's Kappa | 出处 |
+|---|---|---|---|
+| BIOT（多数据集预训练） | 0.5281 | 0.5273 | BIOT Table 5 |
+| LaBraM-Huge | 0.6616 | 0.6745 | LaBraM Table 2 |
+| EEGPT（linear probing, 25M） | 0.6232 | 0.6351 | EEGPT Table 3 |
+| NeuroLM-XL（多任务） | 0.4679 | 0.4570 | NeuroLM Table 2 |
+| BrainGPT-Giant | — | — | 未评测 |
+| TFM-Tokenizer | **0.5974** | **0.6189** | TFM Table 1 |
+
+### 其他任务代表成绩
+
+| 模型 | 任务与成绩 |
+|---|---|
+| LaBraM-Huge | SEED-V acc 0.4102；MoBI R² 0.3145 |
+| NeuroLM-XL | TUSL balanced acc 0.6845；SEED balanced acc 0.6034 |
+| BrainGPT-Giant | 12 基准 generalist：SS +11.2% / MW +8.5% / MI +6.05%（相对最优 specialist） |
+| TFM-Tokenizer | IIIC Kappa 0.4979（+36% vs LaBraM）；CHB-MIT AUROC 0.8839；ear-EEG Kappa 0.3883（+14%） |
+
+!!! note "数据快照"
+    本表数字整理于 **2026-09-19**。新论文入库时请在对应行追加，并更新此日期。
+
+## 🔗 论文互怼链
+
+箭头方向 = 批评/改进指向。每条边标注批评点。
+
+```mermaid
+flowchart LR
+    BIOT["BIOT<br/>2023"]:::old
+    LABRAM["LaBraM<br/>2024"]:::mid
+    EEGPT["EEGPT<br/>2024"]:::mid
+    BRAINGPT["BrainGPT<br/>2024"]:::mid
+    NEUROLM["NeuroLM<br/>2025"]:::new
+    TFM["TFM-Tokenizer<br/>2026"]:::new
+
+    TFM -- "token 只当训练目标、<br/>推理时丢弃" --> LABRAM
+    TFM -- "整窗 FFT 线性投影<br/>过粗、无跨频段建模" --> BIOT
+    EEGPT -- "FFT 只留能量丢相位，<br/>时域任务（P300/ERN）弱" --> BIOT
+    BRAINGPT -- "MAE 双向补全破坏<br/>时序因果结构（-2%+）" --> LABRAM
+    BRAINGPT -- "MAE 范式（同为对照）" --> BIOT
+    NEUROLM -- "重构相位贡献小，<br/>砍掉相位只留幅值+时域" --> LABRAM
+    NEUROLM -- "逐任务全量微调低效，<br/>无多任务推理" --> LABRAM
+    TFM -- "固定空间 embedding<br/>无法跨设备（ear-EEG 缺席）" --> EEGPT
+
+    classDef old fill:#eceff1,stroke:#90a4ae,color:#263238
+    classDef mid fill:#fff3e0,stroke:#ffb74d,color:#3e2723
+    classDef new fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20
+```
+
+**解读**：BIOT 是公共对照组；LaBraM 承接其位置但转向离散码；EEGPT 坚持连续表示但改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 token 接入 LLM；TFM 对前作做"输入表示"的终审。完整论述见各篇笔记的「与其他论文的关系」与「自问自答」板块。

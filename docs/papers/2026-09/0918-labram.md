@@ -139,3 +139,15 @@ flowchart TD
 ??? question "Q4 · 为什么 linear probing 在 TUEV 上崩了（0.346）？"
 
     说明 LaBraM 的表示与全量微调强绑定：掩码码字预测学到的特征停留在预测码字够用的层次，不经微调无法线性映射到任务空间。对比 EEGPT 把 linear probing 做成核心卖点，暴露了两种预训练目标在表示质量上的差异。
+
+!!! abstract "复现速查卡"
+    - **代码**：[github.com/935963004/LaBraM](https://github.com/935963004/LaBraM)（PyTorch 2.0.1 + CUDA 11.8）
+    - **关键超参**：码本 8192×64；patch 200 点（1s）；掩码率 0.5 + 对称掩码；Base 5.8M（12 层/200 维/10 头）；lr 5e-4 cosine；EMA 0.996；温度未用于掩码（交叉熵）
+    - **数据**：约 2500h / 20 数据集（TUSZ 1138h 为主力）；下游 TUAB/TUEV 划分严格沿用 BIOT
+    - **算力参考**：8×A800（40GB 级）；Huge 369M 需 Zero 并行
+
+---
+
+**相关阅读**
+
+:material-arrow-left: [上一篇：BIOT](0918-biot.md) ｜ :material-arrow-right: [下一篇：EEGPT](0918-eegpt.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#跨论文-benchmark-战绩表)
