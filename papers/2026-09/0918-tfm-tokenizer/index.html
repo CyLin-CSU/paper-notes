@@ -910,9 +910,92 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/data-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/multi-task/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多任务三条路线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog-2023-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -959,10 +1042,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -980,8 +1063,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1400,6 +1483,18 @@
 <summary>Q4 · 这套 tokenization 的主要局限是什么？</summary>
 <p>作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>（误判为不同 motif）。此外 <abbr title="向量量化 Vector Quantization">VQ</abbr> 查表是硬量化，边界附近的微小波形差异可能被吞掉；ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 实验也表明跨设备泛化仍依赖微调数据量。</p>
 </details>
+<div class="admonition abstract">
+<p class="admonition-title">复现速查卡</p>
+<ul>
+<li><strong>代码</strong>：<a href="https://github.com/Jathurshan0330/TFM-Tokenizer">github.com/Jathurshan0330/TFM-Tokenizer</a>（含预训练权重与全部预处理脚本）</li>
+<li><strong>关键超参</strong>：tokenizer ~1.2M + 下游 ~0.7M；<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 窗 200 点/Hann/hop 100；码本 8192；<abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 64；频带掩码率 0.5 + 时间掩码 + 对称掩码；tokenizer 内<strong>无位置编码</strong>；Ray Tune + Optuna 调参</li>
+<li><strong>数据</strong>：TUEV/TUAB/CHB-MIT/IIIC（遵循 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 划分）；跨设备 EESM23</li>
+<li><strong>算力参考</strong>：无 GPU 规模要求披露——tokenizer 极小，消费级单卡可训</li>
+</ul>
+</div>
+<hr>
+<p><strong>相关阅读</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-neurolm/">上一篇：NeuroLM</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../0918-biot/">下一篇：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/#跨论文-benchmark-战绩表">战绩总表</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -1511,6 +1606,8 @@
         <script src="../../../javascripts/giscus.js"></script>
       
         <script src="../../../javascripts/progress.js"></script>
+      
+        <script src="../../../javascripts/back-to-top.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
       

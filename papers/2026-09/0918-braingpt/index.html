@@ -910,9 +910,92 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/data-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/multi-task/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多任务三条路线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog-2023-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -959,10 +1042,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -980,8 +1063,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1395,6 +1478,18 @@
 <summary>Q4 · 末尾追加的 special <abbr title="词元，模型处理的最小输入单元">token</abbr> c 为什么能聚合成全局表示？</summary>
 <p><abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 是因果（单向）注意力：序列末尾的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 天然能注意到它之前的所有 <abbr title="词元，模型处理的最小输入单元">token</abbr>。把 c 放在每个电极序列的最后，它的输出位置就自动汇聚了该电极整段时序的信息，类似 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 里用最后一个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 做分类。</p>
 </details>
+<div class="admonition abstract">
+<p class="admonition-title">复现速查卡</p>
+<ul>
+<li><strong>代码</strong>：论文声明将开源（截至精读时未见仓库，复现前先确认）</li>
+<li><strong>关键超参</strong>：电极词表覆盖 E 个电极；patch 1s × D 采样点；<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> SwiGLU；预训练 lr 1e-4 / 3 epochs / batch 4096；微调 10 epochs（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 冻结，只训 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）；DeepSpeed Zero2/3 + bf16</li>
+<li><strong>数据</strong>：3750 万单电极样本（≈1B <abbr title="词元，模型处理的最小输入单元">token</abbr>），来自 12 个基准的预训练拆分</li>
+<li><strong>算力参考</strong>：8×A800-80G；Giant 1.09B 需 Zero3 + 梯度检查点</li>
+</ul>
+</div>
+<hr>
+<p><strong>相关阅读</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-eegpt/">上一篇：EEGPT</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../0918-neurolm/">下一篇：NeuroLM</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/#跨论文-benchmark-战绩表">战绩总表</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -1506,6 +1601,8 @@
         <script src="../../../javascripts/giscus.js"></script>
       
         <script src="../../../javascripts/progress.js"></script>
+      
+        <script src="../../../javascripts/back-to-top.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
       

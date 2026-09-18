@@ -8,26 +8,28 @@
       
       
       
+        <link rel="prev" href="../topics/multi-task/">
       
-        <link rel="next" href="papers/2026-09/0918-biot/">
+      
+        <link rel="next" href="../comparison/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>首页 - Paper Notes · 论文阅读笔记</title>
+        <title>综述 · EEG 基础模型三年演进（2023–2026） - Paper Notes · 论文阅读笔记</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -46,15 +48,15 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -83,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cylin-csu" class="md-skip">
+        <a href="#eeg-20232026" class="md-skip">
           跳转至
         </a>
       
@@ -99,7 +101,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+    <a href=".." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -119,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              首页
+              综述 · EEG 基础模型三年演进（2023–2026）
             
           </span>
         </div>
@@ -240,7 +242,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+    <a href=".." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -267,37 +269,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    首页
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -313,92 +288,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        活跃日程（最近一周）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        更新时间线
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        论文库
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        主题专题
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        阅读统计
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        留言板
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -504,7 +393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="papers/2026-09/0918-biot/" class="md-nav__link">
+      <a href="../papers/2026-09/0918-biot/" class="md-nav__link">
         
   
   
@@ -539,7 +428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="papers/2026-09/0918-labram/" class="md-nav__link">
+      <a href="../papers/2026-09/0918-labram/" class="md-nav__link">
         
   
   
@@ -574,7 +463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="papers/2026-09/0918-eegpt/" class="md-nav__link">
+      <a href="../papers/2026-09/0918-eegpt/" class="md-nav__link">
         
   
   
@@ -609,7 +498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="papers/2026-09/0918-braingpt/" class="md-nav__link">
+      <a href="../papers/2026-09/0918-braingpt/" class="md-nav__link">
         
   
   
@@ -644,7 +533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="papers/2026-09/0918-neurolm/" class="md-nav__link">
+      <a href="../papers/2026-09/0918-neurolm/" class="md-nav__link">
         
   
   
@@ -679,7 +568,7 @@
   
   
     <li class="md-nav__item">
-      <a href="papers/2026-09/0918-tfm-tokenizer/" class="md-nav__link">
+      <a href="../papers/2026-09/0918-tfm-tokenizer/" class="md-nav__link">
         
   
   
@@ -776,7 +665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="topics/tokenization/" class="md-nav__link">
+      <a href="../topics/tokenization/" class="md-nav__link">
         
   
   
@@ -804,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="topics/pretraining/" class="md-nav__link">
+      <a href="../topics/pretraining/" class="md-nav__link">
         
   
   
@@ -832,7 +721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="topics/spatial/" class="md-nav__link">
+      <a href="../topics/spatial/" class="md-nav__link">
         
   
   
@@ -860,7 +749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="topics/data-landscape/" class="md-nav__link">
+      <a href="../topics/data-landscape/" class="md-nav__link">
         
   
   
@@ -888,7 +777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="topics/multi-task/" class="md-nav__link">
+      <a href="../topics/multi-task/" class="md-nav__link">
         
   
   
@@ -920,10 +809,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="blog-2023-2026/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -939,6 +855,103 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、输入表示：token 的三次升维
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、预训练目标：掩码建模的内部革命与自回归的挑战
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specialist-generalist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、使用范式：从 specialist 到 generalist 的两条路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、绕不开的天花板：数据
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、给研究者的三点启示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        延伸阅读
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -950,7 +963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="comparison/" class="md-nav__link">
+      <a href="../comparison/" class="md-nav__link">
         
   
   
@@ -1024,7 +1037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="datasets/" class="md-nav__link">
+      <a href="../datasets/" class="md-nav__link">
         
   
   
@@ -1052,7 +1065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="references/" class="md-nav__link">
+      <a href="../references/" class="md-nav__link">
         
   
   
@@ -1087,7 +1100,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tags/" class="md-nav__link">
+      <a href="../tags/" class="md-nav__link">
         
   
   
@@ -1134,10 +1147,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、输入表示：token 的三次升维
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        活跃日程（最近一周）
+        二、预训练目标：掩码建模的内部革命与自回归的挑战
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specialist-generalist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、使用范式：从 specialist 到 generalist 的两条路
       
     </span>
   </a>
@@ -1148,7 +1194,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        更新时间线
+        四、绕不开的天花板：数据
       
     </span>
   </a>
@@ -1159,7 +1205,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        论文库
+        五、给研究者的三点启示
       
     </span>
   </a>
@@ -1170,29 +1216,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        主题专题
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        阅读统计
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        留言板
+        延伸阅读
       
     </span>
   </a>
@@ -1214,134 +1238,73 @@
                 
                   
 
+  <nav class="md-tags">
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:eeg" class="md-tag">EEG</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:基础模型" class="md-tag">基础模型</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:综述" class="md-tag">综述</a>
+      
+    
+  </nav>
+
 
   
   
 
 
-<h1 id="cylin-csu"><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="https://github.com/CyLin-CSU.png" data-desc-position="bottom"><img alt="CyLin-CSU" class="h1-avatar" src="https://github.com/CyLin-CSU.png"></a> CyLin-CSU<a class="headerlink" href="#cylin-csu" title="Permanent link">#</a></h1>
+<h1 id="eeg-20232026">综述：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型三年演进（2023–2026）<a class="headerlink" href="#eeg-20232026" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>最近更新</strong>：2026-09-18 16:26 · 🟢 **活跃中** · 精读 <strong>6</strong> 篇 · NeurIPS / ICLR 2023–2026 · 主题：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型与 Tokenization</p>
+<p>基于 6 篇代表性论文（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / BrainGPT / NeuroLM / TFM-Tokenizer）的精读综述。
+完整方法拆解见站内<a href="../papers/2026-09/0918-biot/">论文笔记</a>，本文是对外的观点性总结。</p>
 </blockquote>
-<p>个人论文精读库：记录方法拆解、创新点、流程与个人思考。<span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-k">K</kbd></span> 全文搜索，<a href="tags/">标签索引</a> 按主题筛选。</p>
-<h2 id="_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m0-5h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-2.47 8.06L15.47 10l-4.88 4.88-2.12-2.12-1.06 1.06L10.59 17z"></path></svg></span> 活跃日程（最近一周）<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<div class="ac-slot"><div class="activity-calendar"><span class="ac-total">本周提交 <b>20</b> 次</span><div class="ac-grid"><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-09-12（周六）· 0 次提交"></div><span class="ac-wd">六</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-09-13（周日）· 0 次提交"></div><span class="ac-wd">日</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-09-14（周一）· 0 次提交"></div><span class="ac-wd">一</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-09-15（周二）· 0 次提交"></div><span class="ac-wd">二</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-09-16（周三）· 0 次提交"></div><span class="ac-wd">三</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-09-17（周四）· 0 次提交"></div><span class="ac-wd">四</span></div><div class="ac-day"><div class="ac-cell" data-l="4" title="2026-09-18（周五）· 20 次提交"></div><span class="ac-wd">今</span></div></div><span class="ac-legend">少<i data-l="0"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i>多</span></div></div>
-
-<h2 id="_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 8H12v5l4.28 2.54.72-1.21-3.5-2.08zM13 3a9 9 0 0 0-9 9H1l3.96 4.03L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.9 8.9 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9"></path></svg></span> 更新时间线<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<ul class="timeline" id="home-timeline">
-<li><strong>2026-09-18</strong> · 组件大升级：Mermaid 流程图/内容标签页/脚注/术语提示/图片放大/阅读进度条/对比图表</li>
-<li><strong>2026-09-18</strong> · 新增自问自答区、参考文献索引、数据集索引；移除活跃热力图；修复数学公式渲染</li>
-<li><strong>2026-09-18</strong> · 站点 v1.2：主页改版，新增更新时间线与活跃状态</li>
-<li><strong>2026-09-18</strong> · 新增 3 个主题专题：Tokenization 演进 / 预训练范式 / 通道异构解法</li>
-<li><strong>2026-09-18</strong> · 完成 6 篇精读：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> · EEGPT · BrainGPT · NeuroLM · TFM-Tokenizer</li>
-</ul>
-<h2 id="_3"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"></path></svg></span> 论文库<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<div class="grid cards">
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">#</a></h2>
+<p>三年间，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型在三个维度上完成了从 0 到 1：<strong>输入表示</strong>从规则切段进化到可学习的时频 motif 词表；<strong>预训练目标</strong>从对比学习/掩码建模扩展到自回归；<strong>使用范式</strong>从"一任务一模型"进化到接 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的多任务指令推理。但所有模型的通用性仍被同一个东西卡住：<strong>数据</strong>——2.5 万小时已是极限规模，且被临床癫痫域重度偏斜。</p>
+<h2 id="token">一、输入表示：<abbr title="词元，模型处理的最小输入单元">token</abbr> 的三次升维<a class="headerlink" href="#token" title="Permanent link">#</a></h2>
+<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（NeurIPS'23）确立了"逐通道切段"的统一格式：通道可缺、长度可变、缺失即丢 <abbr title="词元，模型处理的最小输入单元">token</abbr>，配合线性注意力处理长句子。它的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是连续的、无词表的——"tokenize 了，但没有词汇表"。</p>
+<p><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（ICLR'24）补上了词表：<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 式码本（8192）+ 傅里叶频谱重构目标。关键实验发现是<strong>重构域的选择</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比导致原始波形不可重构，频谱可以。但它的码字只当预训练的监督信号，推理时被丢弃。</p>
+<p>NeuroLM（ICLR'25）让码字真正上岗：并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成"外语句子"。TFM-Tokenizer（ICLR'26）则给出终审意见——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 化不彻底；它学的是<strong>时频 motif</strong> 词表（频域路径显式建模跨频段依赖），并把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为下游模型的真正输入，以 1.9M 参数拿下多项 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>。</p>
+<p><strong>演进的逻辑主线</strong>：预处理产物 → 训练靶子 → 真实输入。</p>
+<h2 id="_1">二、预训练目标：掩码建模的内部革命与自回归的挑战<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>掩码建模内部经历了三次目标更替：原始波形（不收敛，失败）→ 频谱（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）→ 表示（EEGPT 的 JEPA 式对齐 + <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式重构双自监督）。EEGPT 的贡献是指出"掩码后恢复什么"比"是否掩码"更重要——在表示空间对齐比在信号空间重构学到的东西更通用，这让它用 linear probing 就达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>。</p>
+<p>BrainGPT（2024）则质疑范式本身：同架构同损失的消融显示，<strong>自回归比掩码建模平均高 2%+</strong>——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 是连续因果的信息流，双向补全破坏了它的自然结构。它把模型推到 1.09B 参数并验证了 scaling law，代价是需要下游图网络把单电极预训练丢掉的空间信息补回来。</p>
+<h2 id="specialist-generalist">三、使用范式：从 specialist 到 generalist 的两条路<a class="headerlink" href="#specialist-generalist" title="Permanent link">#</a></h2>
+<p>BrainGPT 用<strong>任务共享图网络</strong>联合训练 12 个基准——多任务信息的载体不是图结构，而是"电极节点被多任务梯度共同更新"；小任务受益最大（+3.9%），本质是隐式数据增强。</p>
+<p>NeuroLM 走了更激进的路：把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 当外语接进 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，指令微调统一六种任务。它诚实报告了性能仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，但零样板泛化到新 prompt 的能力是前两者没有的。<strong>多任务的价值目前在范式与效率，不在数字</strong>。</p>
+<h2 id="_2">四、绕不开的天花板：数据<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <ul>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <strong><a href="papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></strong>
-    ---
-    NeurIPS 2023 · 3.2M 参数</p>
-<p>逐通道切段 + 线性注意力，跨格式生物信号统一编码的<strong>起点</strong>。tags: <code>tokenization</code> <code>线性注意力</code></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"></path></svg></span> <strong><a href="papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></strong>
-    ---
-    ICLR 2024 · 5.8M–369M 参数</p>
-<p><abbr title="向量量化 Vector Quantization">VQ</abbr> 神经 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> + 频谱重构 + 掩码码字预测的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <strong>大模型</strong>。tags: <code>VQ-VAE</code> <code>掩码预训练</code></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> <strong><a href="papers/2026-09/0918-eegpt/">EEGPT</a></strong>
-    ---
-    NeurIPS 2024 · ~10M 参数</p>
-<p>表示对齐 + 掩码重构<strong>双自监督</strong>，linear probing 达 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>。tags: <code>双自监督</code> <code>线性探针</code></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"></path></svg></span> <strong><a href="papers/2026-09/0918-braingpt/">BrainGPT</a></strong>
-    ---
-    arXiv 2024 · 至 1.09B 参数</p>
-<p>电极级建模 + <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式<strong>自回归</strong> + 任务共享电极图的首个 generalist。tags: <code>自回归</code> <code>多任务</code> <code>scaling law</code></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> <strong><a href="papers/2026-09/0918-neurolm/">NeuroLM</a></strong>
-    ---
-    ICLR 2025 · 至 1696M 参数</p>
-<p>把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 当<strong>外语接进 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2</strong>：文本对齐 tokenizer + 指令微调多任务。tags: <code>LLM</code> <code>指令微调</code></p>
-</li>
-<li>
-<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 21c-3 0-4.19-4.24-5.45-8.72C10.14 9.04 9 5 7.5 5 4.11 5 4 11.93 4 12H2c0-.37.06-9 5.5-9 3 0 4.21 4.25 5.47 8.74C13.83 14.8 15 19 16.5 19c3.44 0 3.53-6.93 3.53-7h2c0 .37-.06 9-5.53 9"></path></svg></span> <strong><a href="papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></strong>
-    ---
-    ICLR 2026 · ~1.9M 参数</p>
-<p>单通道<strong>时频 motif 词表</strong>，离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 真正作为模型输入。tags: <code>tokenization</code> <code>时频motif</code></p>
-</li>
+<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 模型 500h ≈ 2500h 效果，Huge 在 2500h 仍未饱和；</li>
+<li>NeuroLM：L 与 XL 验证困惑度接近 → 25000h 喂不饱十亿参数；</li>
+<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 性能单调上升。</li>
 </ul>
-</div>
-<h2 id="_4"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2z"></path></svg></span> 主题专题<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<div class="grid cards">
+<p>规模瓶颈之外是<strong>域偏斜</strong>：能拿到万小时级的只有临床 TUEG 体系，这解释了为什么 pretrain-then-finetune 在脑机接口类任务上的收益普遍不如临床任务——BrainGPT 甚至观察到预训练 specialist 弱于从头训练。</p>
+<h2 id="_3">五、给研究者的三点启示<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<ol>
+<li><strong>做 tokenization 的人该看 TFM</strong>：词表要学、位置编码要去、单通道要独立——三个反直觉设计都有消融支撑；</li>
+<li><strong>做预训练的人该看 EEGPT 与 BrainGPT 的分歧</strong>：掩码 vs 自回归之争目前 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 略胜，但双向建模在"整段理解"任务上的潜力未被证伪；</li>
+<li><strong>做应用的人该看 NeuroLM 的 limitation 章节</strong>：多任务统一模型的现实成本（超参敏感、粗粒度对齐）写得非常坦诚。</li>
+</ol>
+<h2 id="_4">延伸阅读<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <strong><a href="topics/tokenization/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> Tokenization 演进</a></strong>
-    ---
-    从规则切段到可学习词表：<abbr title="词元，模型处理的最小输入单元">token</abbr> 形态与词表用法的三步跃迁。</p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 0 0-8 8 8 8 0 0 0 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18a6 6 0 0 1-6-6 6 6 0 0 1 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z"></path></svg></span> <strong><a href="topics/pretraining/">预训练范式对比</a></strong>
-    ---
-    对比学习 / 掩码建模 / 自回归三条路线与掩码目标的进化。</p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <strong><a href="topics/spatial/">通道异构的四种解法</a></strong>
-    ---
-    通道 embedding / 空间编码 / 单通道独立 / 图结构整合，跨设备能力的分水岭。</p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></span> <strong><a href="topics/data-landscape/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练数据全景</a></strong>
-    ---
-    2500h vs 25000h：语料构成、域偏斜与规模瓶颈。</p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v2.06A8.52 8.52 0 0 0 4.05 9H2v6h2.06A8.5 8.5 0 0 0 9 19.95V22h6v-2.06A8.5 8.5 0 0 0 19.95 15H22V9h-2.06A8.52 8.52 0 0 0 15 4.05V2m-4 2h2v2h-2m-2 .25V8h6V6.25c1.18.61 2.14 1.57 2.75 2.75H16v6h1.75A6.4 6.4 0 0 1 15 17.75V16H9v1.75A6.4 6.4 0 0 1 6.25 15H8V9H6.25A6.4 6.4 0 0 1 9 6.25M4 11h2v2H4m14-2h2v2h-2m-7 5h2v2h-2"></path></svg></span> <strong><a href="topics/multi-task/">多任务三条路线</a></strong>
-    ---
-    逐任务微调 / 共享骨干联合训练 / 指令微调。</p>
-</li>
+<li>完整对比：<a href="../comparison/">六篇方法对比</a>（13 维度表 + benchmark 战绩 + 论文互怼链）</li>
+<li>主题深挖：<a href="../topics/tokenization/">Tokenization 演进</a> · <a href="../topics/pretraining/">预训练范式</a> · <a href="../topics/spatial/">通道异构</a> · <a href="../topics/data-landscape/">数据全景</a> · <a href="../topics/multi-task/">多任务路线</a></li>
+<li>每篇精读：见左侧「论文笔记」</li>
 </ul>
-</div>
-<h2 id="_5"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2zm2 2H5V5h14v14.1M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"></path></svg></span> 阅读统计<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>统计项</th>
-<th>数值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>精读论文</td>
-<td>6 篇</td>
-</tr>
-<tr>
-<td>发表跨度</td>
-<td>2023 – 2026</td>
-</tr>
-<tr>
-<td>涉及会议</td>
-<td>NeurIPS ×2 · ICLR ×3 · arXiv ×1</td>
-</tr>
-<tr>
-<td>预训练语料规模（论文合计）</td>
-<td>2500h + 25000h + 3750 万样本</td>
-</tr>
-<tr>
-<td>模型规模跨度</td>
-<td>1.9M — 1.09B</td>
-</tr>
-</tbody>
-</table>
-<p>综合对比见 <a href="comparison/">六篇方法对比</a>（13 个维度总览表 + 演进脉络）。</p>
-<h2 id="_6"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29zm8-11V9h-2v2zm-4 0V9h-2v2zm-4 0V9H7v2z"></path></svg></span> 留言板<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
-<p>欢迎留言交流——提问、纠错、推荐新论文都可以。</p>
-<div id="giscus-container" data-loading="lazy"></div>
-
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -1380,15 +1343,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="页脚">
         
+          
+          <a href="../topics/multi-task/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 多任务三条路线">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                多任务三条路线
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="papers/2026-09/0918-biot/" class="md-footer__link md-footer__link--next" aria-label="下一页: 0918 · BIOT (NeurIPS 2023)">
+          <a href="../comparison/" class="md-footer__link md-footer__link--next" aria-label="下一页: 六篇方法对比">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                0918 · BIOT (NeurIPS 2023)
+                六篇方法对比
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1425,20 +1404,20 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.top", "navigation.footer", "search.highlight", "search.share", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.footer", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="javascripts/mathjax.js"></script>
+        <script src="../javascripts/mathjax.js"></script>
       
-        <script src="javascripts/load-mathjax.js"></script>
+        <script src="../javascripts/load-mathjax.js"></script>
       
-        <script src="javascripts/giscus.js"></script>
+        <script src="../javascripts/giscus.js"></script>
       
-        <script src="javascripts/progress.js"></script>
+        <script src="../javascripts/progress.js"></script>
       
-        <script src="javascripts/back-to-top.js"></script>
+        <script src="../javascripts/back-to-top.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
       

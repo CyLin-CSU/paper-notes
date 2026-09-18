@@ -8,7 +8,7 @@
       
       
       
-        <link rel="prev" href="../topics/spatial/">
+        <link rel="prev" href="../blog-2023-2026/">
       
       
         <link rel="next" href="../datasets/">
@@ -742,9 +742,92 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/data-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/multi-task/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多任务三条路线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog-2023-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -865,6 +948,67 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏆 跨论文 Benchmark 战绩表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏆 跨论文 Benchmark 战绩表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tuab-balanced-accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TUAB（异常检测 · Balanced Accuracy）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TUEV（事件分类）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他任务代表成绩
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 论文互怼链
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -888,10 +1032,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -909,8 +1053,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1083,6 +1227,67 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏆 跨论文 Benchmark 战绩表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏆 跨论文 Benchmark 战绩表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tuab-balanced-accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TUAB（异常检测 · Balanced Accuracy）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TUEV（事件分类）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他任务代表成绩
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 论文互怼链
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1311,6 +1516,160 @@ document.addEventListener("DOMContentLoaded", function () {
 <p><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></strong>（2023）解决了"异构信号如何统一编码"（连续 <abbr title="词元，模型处理的最小输入单元">token</abbr> + 线性注意力）→ <strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>（2024）证明"低信噪比 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 能学出离散语义码且大规模预训练有效"（<abbr title="向量量化 Vector Quantization">VQ</abbr>+频谱目标，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只当靶子）→ <strong>EEGPT</strong>（2024）指出掩码目标不该是原始信号而应是高质量表示（双自监督+线性探针）→ <strong>BrainGPT</strong>（2024）把范式从掩码补全扭向自回归并冲到十亿参数 → <strong>NeuroLM</strong>（2025）把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 真正接进 <abbr title="大语言模型 Large Language Model">LLM</abbr> 实现单模型多任务指令推理 → <strong>TFM-Tokenizer</strong>（2026）回到 tokenization 本身，给出第一个"学词表、可解释、跨设备、即插即用"的完整答案。</p>
 <hr>
 <p><em>总结基于六篇论文原文；实验数字均引自各论文报告值。</em></p>
+<h2 id="benchmark">🏆 跨论文 Benchmark 战绩表<a class="headerlink" href="#benchmark" title="Permanent link">#</a></h2>
+<p>所有数字均引自各论文自报结果（⚠️ 各论文预处理/数据划分存在差异，仅作量级参考）。<code>—</code> 表示该论文未报告该任务。</p>
+<h3 id="tuab-balanced-accuracy">TUAB（异常检测 · Balanced Accuracy）<a class="headerlink" href="#tuab-balanced-accuracy" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Balanced Acc.</th>
+<th>AUROC</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（多数据集预训练）</td>
+<td>0.7959</td>
+<td>0.8815</td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> Table 4</td>
+</tr>
+<tr>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge</td>
+<td><strong>0.8258</strong></td>
+<td><strong>0.9162</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> Table 1</td>
+</tr>
+<tr>
+<td>EEGPT（linear probing, 25M）</td>
+<td>0.7983</td>
+<td>0.8718</td>
+<td>EEGPT Table 2</td>
+</tr>
+<tr>
+<td>NeuroLM-XL（多任务）</td>
+<td>0.7969</td>
+<td>0.7884</td>
+<td>NeuroLM Table 2</td>
+</tr>
+<tr>
+<td>BrainGPT-Giant</td>
+<td>—</td>
+<td>—</td>
+<td>未评测</td>
+</tr>
+<tr>
+<td>TFM-Tokenizer</td>
+<td>0.8032</td>
+<td>0.8870</td>
+<td>TFM Table 1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tuev">TUEV（事件分类）<a class="headerlink" href="#tuev" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Balanced Acc.</th>
+<th>Cohen's Kappa</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（多数据集预训练）</td>
+<td>0.5281</td>
+<td>0.5273</td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> Table 5</td>
+</tr>
+<tr>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge</td>
+<td>0.6616</td>
+<td>0.6745</td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> Table 2</td>
+</tr>
+<tr>
+<td>EEGPT（linear probing, 25M）</td>
+<td>0.6232</td>
+<td>0.6351</td>
+<td>EEGPT Table 3</td>
+</tr>
+<tr>
+<td>NeuroLM-XL（多任务）</td>
+<td>0.4679</td>
+<td>0.4570</td>
+<td>NeuroLM Table 2</td>
+</tr>
+<tr>
+<td>BrainGPT-Giant</td>
+<td>—</td>
+<td>—</td>
+<td>未评测</td>
+</tr>
+<tr>
+<td>TFM-Tokenizer</td>
+<td><strong>0.5974</strong></td>
+<td><strong>0.6189</strong></td>
+<td>TFM Table 1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">其他任务代表成绩<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>任务与成绩</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge</td>
+<td>SEED-V acc 0.4102；MoBI R² 0.3145</td>
+</tr>
+<tr>
+<td>NeuroLM-XL</td>
+<td>TUSL balanced acc 0.6845；SEED balanced acc 0.6034</td>
+</tr>
+<tr>
+<td>BrainGPT-Giant</td>
+<td>12 基准 generalist：SS +11.2% / MW +8.5% / <abbr title="运动想象 Motor Imagery">MI</abbr> +6.05%（相对最优 specialist）</td>
+</tr>
+<tr>
+<td>TFM-Tokenizer</td>
+<td>IIIC Kappa 0.4979（+36% vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）；CHB-MIT AUROC 0.8839；ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> Kappa 0.3883（+14%）</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">数据快照</p>
+<p>本表数字整理于 <strong>2026-09-19</strong>。新论文入库时请在对应行追加，并更新此日期。</p>
+</div>
+<h2 id="_3">🔗 论文互怼链<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>箭头方向 = 批评/改进指向。每条边标注批评点。</p>
+<pre class="mermaid"><code>flowchart LR
+    BIOT["BIOT&lt;br/&gt;2023"]:::old
+    LABRAM["LaBraM&lt;br/&gt;2024"]:::mid
+    EEGPT["EEGPT&lt;br/&gt;2024"]:::mid
+    BRAINGPT["BrainGPT&lt;br/&gt;2024"]:::mid
+    NEUROLM["NeuroLM&lt;br/&gt;2025"]:::new
+    TFM["TFM-Tokenizer&lt;br/&gt;2026"]:::new
+
+    TFM -- "token 只当训练目标、&lt;br/&gt;推理时丢弃" --&gt; LABRAM
+    TFM -- "整窗 FFT 线性投影&lt;br/&gt;过粗、无跨频段建模" --&gt; BIOT
+    EEGPT -- "FFT 只留能量丢相位，&lt;br/&gt;时域任务（P300/ERN）弱" --&gt; BIOT
+    BRAINGPT -- "MAE 双向补全破坏&lt;br/&gt;时序因果结构（-2%+）" --&gt; LABRAM
+    BRAINGPT -- "MAE 范式（同为对照）" --&gt; BIOT
+    NEUROLM -- "重构相位贡献小，&lt;br/&gt;砍掉相位只留幅值+时域" --&gt; LABRAM
+    NEUROLM -- "逐任务全量微调低效，&lt;br/&gt;无多任务推理" --&gt; LABRAM
+    TFM -- "固定空间 embedding&lt;br/&gt;无法跨设备（ear-EEG 缺席）" --&gt; EEGPT
+
+    classDef old fill:#eceff1,stroke:#90a4ae,color:#263238
+    classDef mid fill:#fff3e0,stroke:#ffb74d,color:#3e2723
+    classDef new fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20</code></pre>
+<p><strong>解读</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 是公共对照组；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 承接其位置但转向离散码；EEGPT 坚持连续表示但改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接入 <abbr title="大语言模型 Large Language Model">LLM</abbr>；TFM 对前作做"输入表示"的终审。完整论述见各篇笔记的「与其他论文的关系」与「自问自答」板块。</p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -1347,7 +1706,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <nav class="md-footer__inner md-grid" aria-label="页脚">
         
           
-          <a href="../topics/spatial/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 通道异构的四种解法">
+          <a href="../blog-2023-2026/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 综述">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -1357,7 +1716,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 上一页
               </span>
               <div class="md-ellipsis">
-                通道异构的四种解法
+                综述
               </div>
             </div>
           </a>
@@ -1419,6 +1778,8 @@ document.addEventListener("DOMContentLoaded", function () {
         <script src="../javascripts/giscus.js"></script>
       
         <script src="../javascripts/progress.js"></script>
+      
+        <script src="../javascripts/back-to-top.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
       
