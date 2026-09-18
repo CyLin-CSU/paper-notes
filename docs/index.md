@@ -2,7 +2,7 @@
 title: 首页
 ---
 
-# Paper Notes
+# ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } Paper Notes
 
 > **最近更新**：2026-09-18 · 🟢 **活跃中** · 精读 **6** 篇 · NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
