@@ -8,6 +8,17 @@ title: 首页
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。`Ctrl + K` 全文搜索，[标签索引](tags.md) 按主题筛选。
 
+## :material-history: 更新时间线
+
+<!-- TIMELINE -->
+<ul class="timeline" markdown>
+
+- **2026-09-18** · 站点 v1.2：主页改版，新增更新时间线与活跃状态
+- **2026-09-18** · 新增 3 个主题专题：Tokenization 演进 / 预训练范式 / 通道异构解法
+- **2026-09-18** · 完成 6 篇精读：BIOT · LaBraM · EEGPT · BrainGPT · NeuroLM · TFM-Tokenizer
+
+</ul>
+
 ## :material-bookshelf: 论文库
 
 <div class="grid cards" markdown>
@@ -67,17 +78,6 @@ title: 首页
     通道 embedding / 空间编码 / 单通道独立 / 图结构整合，跨设备能力的分水岭。
 
 </div>
-
-## :material-history: 更新时间线
-
-<!-- TIMELINE -->
-<ul class="timeline" markdown>
-
-- **2026-09-18** · 站点 v1.2：主页改版，新增更新时间线与活跃状态
-- **2026-09-18** · 新增 3 个主题专题：Tokenization 演进 / 预训练范式 / 通道异构解法
-- **2026-09-18** · 完成 6 篇精读：BIOT · LaBraM · EEGPT · BrainGPT · NeuroLM · TFM-Tokenizer
-
-</ul>
 
 ## :material-chart-box-outline: 阅读统计
 
