@@ -58,17 +58,20 @@ BrainGPT：自回归 EEG 通用模型 (arXiv 2024)
 
 #### 4.4 流程
 
-```
-多电极 EEG
-   │ 按 1s × D 点切段 → 拆成单电极序列
-   ▼
-Stage I：自回归预训练
-   [电极条件 token ‖ x^e] → 共享因果 Transformer(ETE, SwiGLU) → 预测下一 token（MSE）
-   ▼
-Stage II：多任务微调
-   每电极序列尾接 [learnable token c] → 冻结的 ETE → 电极表示 z_j
-   → 注入全局电极图（只激活样本子图）→ GAT 图注意力(K层) → 池化 → 任务头
-   （5 任务 12 数据集联合训练）
+```mermaid
+flowchart LR
+    subgraph Pre["Stage I · 单电极自回归预训练"]
+        A["多电极 EEG 拆成单电极序列"] --> B["拼接电极条件 token"]
+        B --> C["共享 ETE 因果 Transformer"]
+        C --> D["预测下一 token（MSE）"]
+    end
+    subgraph Down["Stage II · 多任务微调"]
+        E["每电极序列末接可学习 token"] --> F["冻结 ETE 提取电极表示"]
+        F --> G["注入全局电极图（子图激活）"]
+        G --> H["GAT 图注意力 ×K 层"]
+        H --> I["池化 → 任务头"]
+    end
+    Pre ==> Down
 ```
 
 #### 4.5 实验与结果

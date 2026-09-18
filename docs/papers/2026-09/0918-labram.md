@@ -61,14 +61,20 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 #### 2.4 流程
 
-```
-第一阶段：训练神经 Tokenizer（VQ + 频谱重构）
-   EEG patch → temporal encoder → VQ 查表(8192) → decoder → 重构 DFT 幅值+相位（MSE）
-                                        ↓
-第二阶段：Masked EEG Modeling 预训练（tokenizer 冻结后仅取码字作标签）
-   mask 50% patch（+对称掩码） → 预测被 mask patch 的码字索引（交叉熵）
-                                        ↓
-第三阶段：下游微调（换预测头）
+```mermaid
+flowchart TD
+    subgraph S1["阶段一：神经 Tokenizer 训练"]
+        A["EEG channel patch"] --> B["Temporal Encoder"]
+        B --> C["VQ 查表（8192 码本）"]
+        C --> D["Neural Decoder 重构 DFT 幅值 + 相位"]
+    end
+    subgraph S2["阶段二：掩码 EEG 建模"]
+        E["随机掩码 50%（+ 对称掩码）"] --> F["预测被掩 patch 的码字索引"]
+    end
+    subgraph S3["阶段三：下游微调"]
+        G["换任务预测头 + 平均池化"]
+    end
+    S1 --> S2 --> S3
 ```
 
 #### 2.5 实验与结果

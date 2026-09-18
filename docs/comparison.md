@@ -1,5 +1,38 @@
 # 六篇方法对比
 
+## 📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）
+
+数据来源：TFM-Tokenizer 论文 Table 1（统一评测口径）。† 表示在四个 EEG 数据集上复现预训练。
+
+<canvas id="kappa-chart" height="130"></canvas>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var el = document.getElementById("kappa-chart");
+  if (!el || typeof Chart === "undefined") return;
+  new Chart(el, {
+    type: "bar",
+    data: {
+      labels: ["BIOT", "EEGPT", "NeuroLM-B", "LaBraM-Base †", "CBraMod †", "TFM-Tokenizer"],
+      datasets: [{
+        label: "TUEV Cohen's Kappa",
+        data: [0.5273, 0.5085, 0.4285, 0.5175, 0.5588, 0.6189],
+        backgroundColor: [
+          "#9e9e9e", "#8d6e63", "#90a4ae", "#7986cb", "#ffb74d",
+          "rgba(48, 161, 78, 0.85)"
+        ],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      indexAxis: "y",
+      plugins: { legend: { display: false } },
+      scales: { x: { min: 0.3, max: 0.7 } }
+    }
+  });
+});
+</script>
+
 7. 六篇方法对比
 
 #### 7.1 总览表

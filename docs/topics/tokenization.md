@@ -9,6 +9,15 @@ tags: [tokenization, 综述]
 
 ## 演进时间线
 
+```mermaid
+timeline
+    title EEG Tokenization 演进
+    2023 : BIOT : 规则切段，连续 token，无词表
+    2024 : LaBraM : VQ 词表 8192，仅作预训练目标
+    2025 : NeuroLM : 码字并入 GPT-2 词表，接入 LLM
+    2026 : TFM-Tokenizer : 时频 motif 词表，token 作为模型输入
+```
+
 | 时间 | 论文 | Token 形态 | 词表 | Token 的用途 |
 |---|---|---|---|---|
 | 2023 | [BIOT](../papers/2026-09/0918-biot.md) | 连续向量（1s 规则切段） | 无 | 模型输入 |
@@ -51,7 +60,7 @@ VQ-VAE 式 codebook（8192×64），重构目标用 DFT 幅值+相位（原始�
 
 ### 位置编码的争论
 
-BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，**TFM 在 tokenizer 内刻意去掉位置编码**（消融：Kappa 0.5119→0.5337，token 利用率 12.87%→9.78%）。
+BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，**TFM 在 tokenizer 内刻意去掉位置编码**（消融：Kappa 0.5119→0.5337，token 利用率 12.87%→9.78%[^pe]。
 
 理由：EEG motif 非平稳，同一模式可出现在任意位置；加 PE 会让相同 motif 在不同位置学成不同 token → 词表冗余。motif 词表需要的是**平移不变性**。
 
@@ -66,3 +75,5 @@ BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，**TFM 
 ## 关联论文
 
 [BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md)
+
+[^pe]: TFM-Tokenizer 附录 C.6 消融：位置编码会让同一 motif 因位置不同学成不同 token，移除后 Cohen's Kappa 0.5119→0.5337、利用率 12.87%→9.78%、类独有 token 1.94%→2.14%。

@@ -9,11 +9,24 @@ tags: [预训练, 综述]
 
 ## 三条路线总览
 
-| 路线 | 论文 | 核心机制 | 关键设计 |
-|---|---|---|---|
-| **对比学习** | [BIOT](../papers/2026-09/0918-biot.md) | 扰动版预测原版表示（BYOL 式） | 丢通道+丢 token → predictor → 对比损失（T=0.2） |
-| **掩码建模** | [LaBraM](../papers/2026-09/0918-labram.md) / [EEGPT](../papers/2026-09/0918-eegpt.md) / [TFM](../papers/2026-09/0918-tfm-tokenizer.md) | 看一部分，恢复另一部分 | 三家的"恢复目标"完全不同（见下） |
-| **自回归** | [BrainGPT](../papers/2026-09/0918-braingpt.md) / [NeuroLM](../papers/2026-09/0918-neurolm.md) | 因果地预测下一单元 | BrainGPT 回归连续值；NeuroLM 预测离散码 |
+=== "对比学习 · BIOT"
+    扰动版预测原版表示（BYOL 式）：随机丢弃部分通道和 token 得到扰动信号，predictor + 对比损失（温度 T=0.2）让扰动版预测原版表示。
+
+    预训练语料：PREST + SHHS + Cardiology，共约 1000 万样本。
+
+=== "掩码建模 · LaBraM / EEGPT / TFM"
+    看一部分、恢复另一部分。三家的"恢复目标"完全不同：
+
+    - LaBraM → 预测**离散码字**（BEiT 式，附对称掩码）
+    - EEGPT → 对齐**表示**（JEPA 式）+ 重构原始 patch（MAE 式）
+    - TFM → 重构**掩码频谱图**（频带+时间+对称掩码，训练 tokenizer 本身）
+
+=== "自回归 · BrainGPT / NeuroLM"
+    因果地预测下一单元，贴合 EEG 的时序因果结构：
+
+    - BrainGPT → 回归**连续信号值**（单电极，MSE）
+    - NeuroLM → 阶梯掩码下预测**离散码**（因果 LLM，多通道）
+
 
 ## 掩码建模：预测目标的三次进化
 
@@ -29,7 +42,7 @@ EEG 低信噪比让"掩码后恢复什么"成了核心设计问题，三代方�
 
 ## 自回归 vs 掩码：范式之争
 
-BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）：
+BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）[^t5]：
 
 - **AR 全面优于 MAE，平均 +2% 以上**，与距离度量选择无关（ℓ2 最好，cos 最差）；
 - 理由：EEG 反映连续渐进的信息流，过去神经活动影响未来状态，单向建模天然贴合；MAE 的双向重构破坏了信号的自然流向；
@@ -54,3 +67,5 @@ BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）
 ## 关联论文
 
 [BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md)
+
+[^t5]: BrainGPT Table V：同一模型架构与参数下，用 cos/ℓ1/ℓ2 三种重构损失对比 MAE 与 AR，AR 平均准确率高 2% 以上，ℓ2 为最优度量。

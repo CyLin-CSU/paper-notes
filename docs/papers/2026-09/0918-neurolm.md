@@ -60,16 +60,19 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
 
 #### 5.4 流程
 
-```
-阶段一：训练 text-aligned tokenizer
-   EEG patch → VQ encoder(含GRL) → 查表 → {时域decoder → 重构原始信号
-                                          {频域decoder → 重构DFT幅值   } L1
-                        ↘ domain classifier(EEG vs 文本) ← GRL 反转梯度对抗
-阶段二：多通道自回归预训练（GPT-2 词表扩充 EEG vocab）
-   冻结 VQ encoder → EEG tokens + 时空 embedding → GPT-2（阶梯掩码）
-   → 同通道下一时间步 token 预测（+ 混入文本保语言能力）
-阶段三：多任务指令微调
-   [EEG tokens][SEP][Question...Answer] → GPT-2 → loss 只算 Answer 部分
+```mermaid
+flowchart TD
+    subgraph P1["阶段一：文本对齐 Tokenizer"]
+        A["EEG patch → VQ Encoder"] --> B["查表 → 时域 / 频域双 Decoder"]
+        A -. "梯度反转 GRL" .-> C["域分类器：EEG 还是文本"]
+    end
+    subgraph P2["阶段二：多通道自回归"]
+        D["码字并入 GPT-2 词表"] --> E["阶梯掩码：同通道预测下一时刻"]
+    end
+    subgraph P3["阶段三：多任务指令微调"]
+        F["EEG tokens + SEP + 文本指令"] --> G["仅对答案部分计算损失"]
+    end
+    P1 --> P2 --> P3
 ```
 
 #### 5.5 实验与结果

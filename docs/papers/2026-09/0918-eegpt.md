@@ -60,16 +60,17 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 #### 3.4 流程
 
-```
-EEG(58ch, 4s, 256Hz)
-   │ 250ms 切 patch → 线性嵌入 ⊕ Codex book 通道 embedding
-   │ mask 50%时间 × 80%通道
-   ├─ masked 部分 + [SUM] tokens → Encoder ─┬→ Predictor(+RoPE, query) → 预测全部时段特征 ─┐
-   │                                        └→(skip)                                      ├→ L_A 对齐
-   └─ 全部 tokens → Momentum Encoder(EMA) ────────────────────────────────────────────────┘
-   Encoder特征 + Predictor特征 → Reconstructor → 重构 masked patch → L_R
-                                        ↓
-下游：冻结 encoder → adaptive spatial filter → summary token → 线性头
+```mermaid
+flowchart TD
+    A["EEG 58ch × 4s → 250ms patch"] --> B["掩码 50% 时间 × 80% 通道"]
+    B --> C["Encoder 处理 masked 部分 + Summary Tokens"]
+    B --> D["Momentum Encoder 处理全量（EMA 0.01）"]
+    C --> E["Predictor（RoPE + query）预测全部时段特征"]
+    E --> F["对齐损失 L_A（与 Momentum 输出）"]
+    C --> G["Reconstructor（含 skip）重构 masked 原始 patch"]
+    G --> H["重构损失 L_R"]
+    F --> I["总损失 L = L_A + L_R"]
+    D --> F
 ```
 
 #### 3.5 实验与结果

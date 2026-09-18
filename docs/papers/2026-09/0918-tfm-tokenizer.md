@@ -65,19 +65,17 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 
 #### 6.4 流程
 
-```
-阶段一：训练 TFM-Tokenizer（单通道、无监督）
-   单通道 EEG → patch(L=1s, H=0.5s)
-        ├─ STFT → 频谱窗 → 频率patch切分 → Frequency Transformer → 门控聚合 ┐
-        └─ 原始 patch → Temporal Encoder ──────────────────────────────────┴→ 拼接
-   → Temporal Transformer → VQ 量化(8192词表, 无位置编码)
-   训练目标：频带+时间(+对称)掩码下的频谱图重构 + VQ 两项损失（EMA 更新码字）
-        ↓ 冻结
-阶段二：下游 Transformer 预训练
-   每通道独立 tokenize → token embedding 查表(码字初始化) + 通道/位置 emb + [CLS]
-   → 线性注意力 Transformer → masked token prediction（交叉熵）
-        ↓
-阶段三：下游微调
+```mermaid
+flowchart LR
+    subgraph T1["阶段一：Tokenizer 训练（单通道）"]
+        A["原始 patch → Temporal Encoder"] --> F["拼接 → Temporal Transformer → VQ 8192"]
+        B["STFT 频谱窗 → 频率 patch 切分"] --> C["Frequency Transformer"]
+        C --> D["门控聚合"] --> F
+    end
+    F --> G["冻结 tokenizer → token 查表（码字初始化）"]
+    G --> H["下游线性注意力 Transformer"]
+    H --> I["掩码 token 预测（交叉熵）"]
+    I --> J["下游任务微调"]
 ```
 
 #### 6.5 实验与结果

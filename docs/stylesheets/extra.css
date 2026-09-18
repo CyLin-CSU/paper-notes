@@ -95,3 +95,15 @@
 .timeline li:first-child::before {
   background: #2e7d32; /* 最新一条用绿色圆点，呼应“活跃”状态 */
 }
+
+/* 顶部阅读进度条 */
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #40c463, #216e39);
+  z-index: 9999;
+  transition: width 0.08s linear;
+}

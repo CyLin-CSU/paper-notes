@@ -32,9 +32,17 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/mathjax.js
+  - javascripts/load-mathjax.js
+  - javascripts/giscus.js
+  - javascripts/progress.js
+  - https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js
+
 plugins:
   - search
   - meta
+  - glightbox
   - tags:
       tags_file: tags.md
 
@@ -43,19 +51,31 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - footnotes
+  - def_list
+  - abbr
   - pymdownx.details
   - pymdownx.highlight
-  - pymdownx.superfences
+  - pymdownx.keys
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.arithmatex:
       generic: true
-
-extra_javascript:
-  - javascripts/mathjax.js
-  - javascripts/load-mathjax.js
-  - javascripts/giscus.js
+  - pymdownx.snippets:
+      auto_append:
+        - docs/includes/abbreviations.md
+  - toc:
+      permalink: "#"
 
 nav:
   - 首页: index.md
