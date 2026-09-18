@@ -1,10 +1,10 @@
 /* 标题旁的 GitHub 头像 */
 .md-typeset h1 .h1-avatar {
-  height: 1.15em;
-  width: 1.15em;
+  height: 0.6em;
+  width: 0.6em;
   border-radius: 50%;
-  vertical-align: -0.2em;
-  margin-right: 0.35rem;
+  vertical-align: -0.08em;
+  margin-right: 0.3rem;
   border: 2px solid var(--md-primary-fg-color);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
