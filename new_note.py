@@ -83,12 +83,13 @@ def cmd_note(slug: str, title: str) -> None:
 def cmd_log(message: str) -> None:
     text = INDEX.read_text(encoding="utf-8")
     today_str = today()
-    marker = "<!-- TIMELINE -->"
-    if marker not in text:
-        print("[!] index.md 中找不到 <!-- TIMELINE --> 标记")
-        sys.exit(1)
     entry = f"- **{today_str}** · {message}\n"
-    text = text.replace(marker, marker + "\n\n" + entry, 1)
+    # 插入到样式化时间线 <ul> 的第一条位置
+    pattern = r'(<ul class="timeline" markdown>\s*\n)'
+    if not re.search(pattern, text):
+        print('[!] index.md 中找不到 <ul class="timeline" markdown> 时间线')
+        sys.exit(1)
+    text = re.sub(pattern, r"\1" + entry + "\n", text, count=1)
     text = re.sub(r"(\*\*最近更新\*\*：)\d{4}-\d{2}-\d{2}", r"\g<1>" + today_str, text)
     INDEX.write_text(text, encoding="utf-8")
     print(f"[+] 时间线已更新：{today_str} · {message}")
