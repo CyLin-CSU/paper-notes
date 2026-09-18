@@ -50,6 +50,17 @@
 [data-md-color-scheme="slate"] .ac-cell,
 [data-md-color-scheme="slate"] .ac-legend i { background: #21262d; }
 
+/* 架构图：放大至与页面内容宽度齐平（首页头像除外） */
+.md-typeset img:not(.h1-avatar) {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-left: 0;
+  margin-right: 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+}
+
 /* 留言板 */
 #giscus-container { margin-top: 0.8rem; }
 .giscus-notconfigured {
