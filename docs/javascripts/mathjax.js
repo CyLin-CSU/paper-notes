@@ -6,7 +6,8 @@ window.MathJax = {
     processEnvironments: true
   },
   options: {
+    // 跳过整页，仅处理 arithmatex 扩展生成的公式节点
     ignoreHtmlClass: ".*",
-    texHtmlClass: "mathjax_ignore"
+    processHtmlClass: "arithmatex"
   }
 };
