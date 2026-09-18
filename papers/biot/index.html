@@ -443,6 +443,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -640,6 +673,144 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主题专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    主题专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预训练范式对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/spatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通道异构的四种解法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../comparison/" class="md-nav__link">
         
@@ -769,6 +940,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -891,6 +1095,44 @@
 <li>附录消融：更高采样率对高频敏感任务（IIIC）略好；token 太长（&gt;1-2s）导致句子变短、性能下降；更大重叠 p 略好。</li>
 </ul>
 <hr />
+<h2 id="_1">要点速览</h2>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>3.2M 参数；四种学习场景（监督 / 带缺失监督 / 无监督预训练 / 跨任务预训练）</li>
+<li>9 个数据集（EEG/ECG/HAR）上超过全部基线；带缺失设定下性能衰减最小</li>
+<li>多数据集联合预训练进一步提升：CHB-MIT balanced acc 0.664 → 0.707</li>
+</ul>
+</div>
+<h2 id="_2">与其他论文的关系</h2>
+<table>
+<thead>
+<tr>
+<th>论文 / 工作</th>
+<th>关系说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LaBraM / NeuroLM / EEGPT / BrainGPT / TFM-Tokenizer</td>
+<td>全部把 BIOT 作为公共对照组——事实上的 baseline 标尺</td>
+</tr>
+<tr>
+<td>TFM-Tokenizer</td>
+<td>BIOT-TFM：仅把 BIOT 的输入 patch 投影替换为 TFM token，93% 指标-设定组合有提升 → 骨干仍有价值，弱在输入表示</td>
+</tr>
+<tr>
+<td>EEGPT（附录 F）</td>
+<td>批评其 FFT 只保留频谱能量、丢失相位，且 1s patch 的 FFT 过粗 → ERP/P300 等时域任务表现差（PhysioP300 仅 0.5485）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">个人思考</h2>
+<ul>
+<li>逐通道独立切分（缺失段直接丢 token）是它通吃异构格式的根本设计，后续所有工作都继承了这一点。</li>
+<li>线性注意力的 E/F 投影把注意力图固定为 N×d，隐含假设'全局信息可压缩进 d 个摘要位'——分类任务够用，但牺牲了精细的 token 间路由能力。</li>
+<li>频域在这里只是特征工程（FFT 能量 → FCN），模型本体仍在连续域运行——这为后来 LaBraM/TFM 的显式时频建模埋下了演进伏笔。</li>
+</ul>
 
 
 

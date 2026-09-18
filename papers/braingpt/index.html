@@ -548,6 +548,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -619,6 +652,144 @@
     <span class="md-status md-status--精读"></span>
   
 
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主题专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    主题专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预训练范式对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/spatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通道异构的四种解法
+  
+
+    
+  </span>
+  
   
 
       </a>
@@ -769,6 +940,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -884,6 +1088,44 @@ Stage II：多任务微调
 <li>消融：模型越大 loss 越低、下游越好；数据越多性能越高（未饱和）；AR 优于 MAE（与损失度量无关，ℓ2 最好）；联合训练优于单独训练（共享电极节点相当于数据增强，小数据任务受益更大）；对未见数据（DREAMER）零训练也有强迁移表示。</li>
 </ul>
 <hr />
+<h2 id="_1">要点速览</h2>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>最大 1.09B（EEG 领域当时最大）；3750 万单电极样本 / 约 1B token</li>
+<li>12 个基准 × 5 类任务，单一 generalist 全面超过 specialist：SS +11.2%、MW +8.5%</li>
+<li>AR 比 MAE 平均高 2%+（同架构同损失对比）；联合训练全面优于逐任务训练（MW +3.9%）</li>
+</ul>
+</div>
+<h2 id="_2">与其他论文的关系</h2>
+<table>
+<thead>
+<tr>
+<th>论文 / 工作</th>
+<th>关系说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NeuroLM</td>
+<td>两种多任务方案的对照：BrainGPT 用 TEG 联合微调（保留任务头），NeuroLM 用指令微调（统一到文本生成）</td>
+</tr>
+<tr>
+<td>EEGPT</td>
+<td>互补验证了 EEG 预训练的 scaling law（模型/数据规模均正相关）</td>
+</tr>
+<tr>
+<td>LaBraM / BIOT</td>
+<td>范式之争的直接证据：同设定下自回归（AR）优于双向掩码（MAE）2%+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">个人思考</h2>
+<ul>
+<li>TEG 的多任务信息不在图结构里，而在'共享参数被多任务梯度共同更新'：电极节点 V_m 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。</li>
+<li>自回归直接回归连续值（MSE），绕开了离散化难题——与 LaBraM/TFM 的'先离散再预测'形成两条并行路线。</li>
+<li>电极级拆样本让样本量 ×E 倍膨胀（3750 万），这个数字要打折看：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 TEG 补回。</li>
+</ul>
 
 
 

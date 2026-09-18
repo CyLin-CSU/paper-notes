@@ -14,7 +14,7 @@
         <link rel="prev" href="../neurolm/">
       
       
-        <link rel="next" href="../../comparison/">
+        <link rel="next" href="../../topics/tokenization/">
       
       
         
@@ -618,10 +618,181 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主题专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    主题专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预训练范式对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/spatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通道异构的四种解法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -769,6 +940,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -894,6 +1098,44 @@
 <li>消融：双域联合建模优于单时域（-R）或单频域（-S）变体；masking 策略与比例（频率 0.5 最优）；窗长 0.5s/0.25s hop 其实最好（但为对齐基线统一用 1s/0.5s）；embedding 维度 64 最优；下游 2 层即接近 12 层性能。</li>
 </ul>
 <hr />
+<h2 id="_1">要点速览</h2>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>总参数仅 ~1.9M（tokenizer 1.2M + 下游 0.7M），最小的那个反而最强</li>
+<li>多数据集设定 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比 LaBraM +36%）</li>
+<li>跨设备 ear-EEG 睡眠分期超过 BIOT/LaBraM 14%；plug-and-play 提升 BIOT/LaBraM 93% 指标</li>
+</ul>
+</div>
+<h2 id="_2">与其他论文的关系</h2>
+<table>
+<thead>
+<tr>
+<th>论文 / 工作</th>
+<th>关系说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LaBraM</td>
+<td>直接批评其 token '只当训练目标'；LaBraM-TFM 实验证明换用 TFM tokenizer 后性能普遍提升</td>
+</tr>
+<tr>
+<td>BIOT</td>
+<td>批评其 FFT 整窗线性投影过于粗糙；BIOT-TFM 用 token 替换其输入投影后同样提升</td>
+</tr>
+<tr>
+<td>EEGPT</td>
+<td>单通道设计 vs 固定 58 通道布局：ear-EEG 实验中 EEGPT 因空间 embedding 无法扩展而缺席</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">个人思考</h2>
+<ul>
+<li>去掉位置编码的反直觉设计有消融支撑：PE 会让同一 motif 因出现位置不同学成不同 token → 词表冗余；motif 词表要的正是平移不变性。</li>
+<li>token 可解释性分析（如 PLED 类的 token 4035 稳定对应'棘波-慢波'周期模式）是把 NLP 的 token 分析方法迁移到 EEG 的漂亮示范。</li>
+<li>作者自认局限：固定窗长可能把大 pattern 切断到不同窗口，导致同一事件被分到不同 token——这是切分式 tokenization 的共同软肋。</li>
+</ul>
 
 
 
@@ -949,13 +1191,13 @@
         
         
           
-          <a href="../../comparison/" class="md-footer__link md-footer__link--next" aria-label="下一页: 六篇方法对比">
+          <a href="../../topics/tokenization/" class="md-footer__link md-footer__link--next" aria-label="下一页: EEG Tokenization 演进">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                六篇方法对比
+                EEG Tokenization 演进
               </div>
             </div>
             <div class="md-footer__button md-icon">

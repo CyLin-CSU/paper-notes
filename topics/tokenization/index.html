@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../braingpt/">
+        <link rel="prev" href="../../papers/tfm-tokenizer/">
       
       
-        <link rel="next" href="../tfm-tokenizer/">
+        <link rel="next" href="../pretraining/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>NeuroLM: A Universal Multi-task Foundation Model for Bridging the Gap between Language and EEG Signals - Paper Notes · 论文阅读笔记</title>
+        <title>EEG Tokenization 演进 - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#neurolm-a-universal-multi-task-foundation-model-for-bridging-the-gap-between-language-and-eeg-signals" class="md-skip">
+        <a href="#eeg-tokenization" class="md-skip">
           跳转至
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NeuroLM: A Universal Multi-task Foundation Model for Bridging the Gap between Language and EEG Signals
+              EEG Tokenization 演进
             
           </span>
         </div>
@@ -263,20 +263,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -297,7 +295,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -315,7 +313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../biot/" class="md-nav__link">
+      <a href="../../papers/biot/" class="md-nav__link">
         
   
   
@@ -350,7 +348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../labram/" class="md-nav__link">
+      <a href="../../papers/labram/" class="md-nav__link">
         
   
   
@@ -385,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../eegpt/" class="md-nav__link">
+      <a href="../../papers/eegpt/" class="md-nav__link">
         
   
   
@@ -420,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../braingpt/" class="md-nav__link">
+      <a href="../../papers/braingpt/" class="md-nav__link">
         
   
   
@@ -452,44 +450,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    NeuroLM (ICLR 2025)
-  
-
-    
-  </span>
-  
-  
-    
-  
-  
-    <span class="md-status md-status--精读"></span>
-  
-
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../papers/neurolm/" class="md-nav__link">
         
   
   
@@ -512,114 +476,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#51" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.1 问题定位
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#52" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.2 方法（三阶段）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#53" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.3 创新点
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#54" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#55" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        要点速览
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -632,7 +488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tfm-tokenizer/" class="md-nav__link">
+      <a href="../../papers/tfm-tokenizer/" class="md-nav__link">
         
   
   
@@ -671,18 +527,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -703,7 +561,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -718,10 +576,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../topics/tokenization/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -737,6 +622,148 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演进时间线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三步跃迁
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三步跃迁">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#biot-tokenize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一步：BIOT —— "tokenize 但没词表"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二步：LaBraM —— "学词表但只当标签"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neurolm-tfm-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三步：NeuroLM / TFM —— "token 真正上岗"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键技术分歧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="关键技术分歧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        频域信息怎么进 token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位置编码的争论
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遗留问题
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关联论文
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -749,7 +776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../topics/pretraining/" class="md-nav__link">
+      <a href="../pretraining/" class="md-nav__link">
         
   
   
@@ -777,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../topics/spatial/" class="md-nav__link">
+      <a href="../spatial/" class="md-nav__link">
         
   
   
@@ -886,65 +913,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#51" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.1 问题定位
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#52" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.2 方法（三阶段）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#53" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.3 创新点
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#54" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#55" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        演进时间线
       
     </span>
   </a>
@@ -955,10 +927,49 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
+        三步跃迁
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="三步跃迁">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#biot-tokenize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一步：BIOT —— "tokenize 但没词表"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二步：LaBraM —— "学词表但只当标签"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neurolm-tfm-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三步：NeuroLM / TFM —— "token 真正上岗"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -966,7 +977,57 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        个人思考
+        关键技术分歧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="关键技术分歧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        频域信息怎么进 token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位置编码的争论
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遗留问题
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关联论文
       
     </span>
   </a>
@@ -994,138 +1055,129 @@
       
       
       
-        <a href="../../tags/#tag:eeg" class="md-tag">EEG</a>
+        <a href="../../tags/#tag:tokenization" class="md-tag">tokenization</a>
       
     
       
       
       
       
-        <a href="../../tags/#tag:llm" class="md-tag">LLM</a>
-      
-    
-      
-      
-      
-      
-        <a href="../../tags/#tag:vq-vae" class="md-tag">VQ-VAE</a>
-      
-    
-      
-      
-      
-      
-        <a href="../../tags/#tag:多任务" class="md-tag">多任务</a>
-      
-    
-      
-      
-      
-      
-        <a href="../../tags/#tag:指令微调" class="md-tag">指令微调</a>
+        <a href="../../tags/#tag:综述" class="md-tag">综述</a>
       
     
   </nav>
 
 
 
-<h1 id="neurolm-a-universal-multi-task-foundation-model-for-bridging-the-gap-between-language-and-eeg-signals">NeuroLM: A Universal Multi-task Foundation Model for Bridging the Gap between Language and EEG Signals</h1>
+<h1 id="eeg-tokenization">EEG Tokenization 演进</h1>
 <blockquote>
-<p><strong>ICLR 2025</strong></p>
+<p>一条主线：<strong>token 从"预处理产物" → "训练靶子" → "真正的模型输入"</strong>。</p>
 </blockquote>
-<p>NeuroLM (ICLR 2025)</p>
-<p><strong>作者</strong>：Wei-Bang Jiang, Yansen Wang, Bao-Liang Lu, Dongsheng Li（上海交大 / MSRA）</p>
-<h4 id="51">5.1 问题定位</h4>
-<p>LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模型只能干一件事。NeuroLM 是<strong>首个 EEG 多任务基础模型</strong>：把 EEG 当作"外语"，通过三阶段训练接入 LLM（GPT-2），实现单模型多任务学习与推理。三大挑战：EEG-text 对齐难（无成对数据）、LLM 范式下如何学通用表示、多任务统一。</p>
-<h4 id="52">5.2 方法（三阶段）</h4>
-<p><strong>阶段一：文本对齐神经 Tokenizer（text-aligned neural tokenizer）</strong></p>
-<ul>
-<li>在 LaBraM 的 VQ tokenizer 基础上改进，codebook <code>V ∈ R^{K×D}</code>（8192），ℓ2 归一化最近邻查表；</li>
-<li><strong>改进 1——时频双域重构（vector-quantized temporal-frequency prediction）</strong>：LaBraM 重构幅值+相位，NeuroLM 发现相位贡献很小，改为<strong>两个独立 decoder</strong>：时域 decoder 重构原始信号 + 频域 decoder 重构 DFT 幅值（幅值做样本内 z-score）；损失 L1 = 时域重构 + 频域重构 + codebook loss + commitment loss；</li>
-<li><strong>改进 2——EEG-文本空间对齐</strong>：因 EEG-text 成对数据稀缺、EEG 内容难以用语言完整描述，放弃 embedding 级对齐，改用<strong>空间级（space-wise）对齐</strong>：</li>
-<li>训练一个 domain classifier C 判断 embedding 来自 EEG 还是文本（文本 embedding 每批随机采自 GPT-2 词表）；</li>
-<li>VQ encoder 后接<strong>梯度反转层（GRL, Ganin et al. 2016）</strong>对抗训练，把 EEG embedding 推入文本 embedding 空间；</li>
-<li>总目标：<code>min L1 + λ Σ d_i log C(h_i)</code>，λ 随训练从 0 渐增到 1（<code>λ = 2/(1+e^{−10t/T}) − 1</code>）。</li>
-</ul>
-<p><strong>阶段二：多通道自回归预训练（multi-channel autoregressive pre-training）</strong></p>
-<ul>
-<li>冻结 VQ encoder；加载预训练 GPT-2，<strong>把 8192 个 codebook 索引并入 GPT-2 词表</strong>（Text vocab + EEG vocab）；</li>
-<li>EEG token 复用 LLM 的时间 embedding，另学空间 embedding；序列最长 1024，零 padding 处屏蔽注意力；</li>
-<li><strong>stair-stepping mask（阶梯式注意力掩码）</strong>：语言可以逐 token 预测，EEG 通道配置各异不行——改为"<strong>同通道 token 预测同通道下一时间步 token</strong>"：<code>p(I_11,...,I_CT) = Π_t p(I_1n,...,I_Cn | h_11,...,h_{C(t−1)})</code>；实现上每个 EEG token 可见所有通道在当前及之前时间步的 token；</li>
-<li><strong>VAE 理论解释</strong>：tokenizer = 后验 q_φ(z|x)，decoder = p_ψ(y|z)，多通道自回归预训练 = 学习先验 p_θ(z)，整个范式对应 ELBO 两项（重构 + KL）；</li>
-<li>预训练同时在每批混入少量纯文本数据，保持 LLM 语言能力。</li>
-</ul>
-<p><strong>阶段三：多任务指令微调（multi-task instruction tuning）</strong></p>
-<ul>
-<li>为 6 个下游数据集分别设计文本指令（如 TUAB："[SEP] Question: Is this EEG segment abnormal? Answer: {Yes, No} [END]"）；</li>
-<li><strong>[SEP] token</strong> 拼接 EEG token 与文本指令，标记模态切换；<strong>loss 只算答案部分</strong>（预测更稳定）；继续混入文本数据；</li>
-<li>推理时直接取最大 logits（不用 beam search）保证稳定。</li>
-</ul>
-<p><strong>模型规格</strong>：基座 GPT-2；NeuroLM-B/L/XL = 254M / 500M / 1696M（含 VQ encoder）；预训练约 <strong>25000 小时</strong> EEG。</p>
-<h4 id="53">5.3 创新点</h4>
-<ol>
-<li><strong>首个 EEG 多任务基础模型</strong>：单模型通过指令微调统一六种 BCI 任务（检测/分类/情绪/睡眠/负荷/慢波），首次把 instruction tuning 引入 EEG 领域；</li>
-<li><strong>文本对齐 tokenizer</strong>：GRL 对抗式空间对齐，使 EEG token 能直接作为 LLM 的输入 token（消融证明：不对齐则注意力紊乱、模型输出随机词）；</li>
-<li><strong>多通道自回归预训练 + 阶梯掩码</strong>：让因果 LLM 学到跨通道的 EEG 因果关系（消融证明对指令微调性能贡献显著）；</li>
-<li>EEG 词表并入 LLM 词表的"外语"接入范式；配 VAE/ELBO 理论解释；</li>
-<li>最大变体 1.7B 参数（EEG 信号处理领域当时最大）。</li>
-</ol>
-<h4 id="54">5.4 流程</h4>
-<div class="highlight"><pre><span></span><code>阶段一：训练 text-aligned tokenizer
-   EEG patch → VQ encoder(含GRL) → 查表 → {时域decoder → 重构原始信号
-                                          {频域decoder → 重构DFT幅值   } L1
-                        ↘ domain classifier(EEG vs 文本) ← GRL 反转梯度对抗
-阶段二：多通道自回归预训练（GPT-2 词表扩充 EEG vocab）
-   冻结 VQ encoder → EEG tokens + 时空 embedding → GPT-2（阶梯掩码）
-   → 同通道下一时间步 token 预测（+ 混入文本保语言能力）
-阶段三：多任务指令微调
-   [EEG tokens][SEP][Question...Answer] → GPT-2 → loss 只算 Answer 部分
-</code></pre></div>
-<h4 id="55">5.5 实验与结果</h4>
-<ul>
-<li>下游 6 数据集：TUAB、TUEV、SEED（情绪）、HMC（睡眠分期）、Workload（认知负荷）、TUSL（慢波分类）；</li>
-<li>单模型多任务推理，性能接近多数单任务基线（作者坦言仍逊于单任务 SOTA 的 LaBraM，但具备零样板泛化到新任务/新 prompt 的潜力）；</li>
-<li>消融：多通道自回归预训练对所有任务显著有益；指令选项乱序（shuffle）在数据充足的 TUEV/HMC 上鲁棒（说明真的理解了问题语义），小数据 TUSL 上受损；预训练 20 epoch 最优；注意力可视化显示浅层处理文本问题、深层聚焦 EEG token 生成答案，多数数据集信息汇聚到 Cz 通道。</li>
-</ul>
-<hr />
-<h2 id="_1">要点速览</h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>约 25000 小时 EEG 预训练；GPT-2 基座，B/L/XL = 254M / 500M / 1696M</li>
-<li>首个单模型多任务 EEG 模型：指令微调统一 6 种 BCI 任务</li>
-<li>token 接入方式：8192 codebook 并入 LLM 词表 + GRL 对抗式文本空间对齐</li>
-</ul>
-</div>
-<h2 id="_2">与其他论文的关系</h2>
+<h2 id="_1">演进时间线</h2>
 <table>
 <thead>
 <tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
+<th>时间</th>
+<th>论文</th>
+<th>Token 形态</th>
+<th>词表</th>
+<th>Token 的用途</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>LaBraM</td>
-<td>同团队续作：tokenizer 继承 VQ + 频谱思想，但改为时域+幅值双域重构（发现相位贡献小）</td>
+<td>2023</td>
+<td><a href="../../papers/biot/">BIOT</a></td>
+<td>连续向量（1s 规则切段）</td>
+<td>无</td>
+<td>模型输入</td>
 </tr>
 <tr>
-<td>BrainGPT</td>
-<td>多任务路线之争的另一方：指令微调 vs 图联合微调</td>
+<td>2024</td>
+<td><a href="../../papers/labram/">LaBraM</a></td>
+<td>离散码（VQ，8192）</td>
+<td>有</td>
+<td><strong>仅作预训练目标</strong>，推理时丢弃</td>
 </tr>
 <tr>
-<td>CLIP 类模型</td>
-<td>对齐思路的差异：因 EEG-text 无成对数据，选择 space-wise（域分类器+GRL）而非 embedding-wise 对齐</td>
+<td>2025</td>
+<td><a href="../../papers/neurolm/">NeuroLM</a></td>
+<td>离散码（VQ）</td>
+<td>有（并入 GPT-2 词表）</td>
+<td>LLM 的输入 token</td>
+</tr>
+<tr>
+<td>2026</td>
+<td><a href="../../papers/tfm-tokenizer/">TFM-Tokenizer</a></td>
+<td>离散码（VQ 时频 motif）</td>
+<td>有</td>
+<td><strong>基础模型的输入</strong> + 可插拔复用</td>
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考</h2>
+<h2 id="_2">三步跃迁</h2>
+<h3 id="biot-tokenize">第一步：BIOT —— "tokenize 但没词表"</h3>
+<p>逐通道独立切段（1s 窗、0.5s 重叠），token embedding = FFT 能量 → FCN ⊕ 通道 embedding ⊕ 正弦位置编码。</p>
 <ul>
-<li>论文很诚实：单模型多任务的性能仍逊于单任务 SOTA 的 LaBraM——其价值在范式（prompt 泛化到新任务、免逐任务微调），不在当前数字。</li>
-<li>EEG-text 没有成对数据 → 只能做粗粒度的空间对齐，这是当前范式的天花板；附录展望了'用预定义句子描述 EEG + 对比损失'的细粒度对齐方向。</li>
-<li>阶梯掩码是'把语言的自回归搬到多通道信号'的干净答案：同通道 token 预测同通道下一时刻，每个 token 可见所有通道的当前与历史。</li>
+<li>解决了：异构格式统一（缺通道直接丢 token）；</li>
+<li>没解决：token 是确定性切分的产物，没有数据驱动的词表，谈不上"语义单元"。</li>
 </ul>
+<h3 id="labram">第二步：LaBraM —— "学词表但只当标签"</h3>
+<p>VQ-VAE 式 codebook（8192×64），重构目标用 DFT 幅值+相位（原始波形不收敛）。但 token <strong>只在 masked EEG modeling 里当预测目标</strong>，下游微调时 tokenizer 被丢弃，模型实际吃的仍是连续 patch embedding。</p>
+<ul>
+<li>TFM-Tokenizer 对此的批评：tokenization 的红利（压缩、归纳偏置、输入表示质量）根本没落到模型输入上。实验佐证：LaBraM-TFM 换掉 tokenizer 后 93% 指标提升。</li>
+</ul>
+<h3 id="neurolm-tfm-token">第三步：NeuroLM / TFM —— "token 真正上岗"</h3>
+<p>两条不同的上岗方式：</p>
+<ul>
+<li><strong>NeuroLM</strong>：把 codebook 索引<strong>并入 GPT-2 词表</strong>，EEG 变成"外语句子"喂给 LLM，靠 GRL 对抗对齐文本空间 → 通向多任务指令推理；</li>
+<li><strong>TFM</strong>：token embedding 查表（码字初始化）作为轻量 Transformer 的<strong>输入</strong>，且作为即插即用组件替换 BIOT/LaBraM 的输入端 → 通向通用 tokenization 层。</li>
+</ul>
+<h2 id="_3">关键技术分歧</h2>
+<h3 id="token">频域信息怎么进 token</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>做法</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BIOT</td>
+<td>FFT 能量向量 → FCN</td>
+<td>丢失相位；1s 窗过粗，时域任务（P300）吃亏</td>
+</tr>
+<tr>
+<td>LaBraM</td>
+<td>DFT 幅值+相位作重构目标</td>
+<td>相位贡献小（NeuroLM 实验证实）</td>
+</tr>
+<tr>
+<td>NeuroLM</td>
+<td>时域信号 + DFT 幅值双 decoder</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TFM</td>
+<td>频率轴切 patch + 频率 Transformer + 门控聚合</td>
+<td><strong>显式建模窗内跨频段依赖</strong>，最彻底</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_4">位置编码的争论</h3>
+<p>BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，<strong>TFM 在 tokenizer 内刻意去掉位置编码</strong>（消融：Kappa 0.5119→0.5337，token 利用率 12.87%→9.78%）。</p>
+<p>理由：EEG motif 非平稳，同一模式可出现在任意位置；加 PE 会让相同 motif 在不同位置学成不同 token → 词表冗余。motif 词表需要的是<strong>平移不变性</strong>。</p>
+<p>（注意区分：TFM 的下游 Transformer 仍加位置/通道 embedding，去掉的只是 tokenizer 内部的 PE。）</p>
+<h2 id="_5">遗留问题</h2>
+<ul>
+<li><strong>固定窗长的软肋</strong>（TFM 作者自认）：大 pattern 可能跨窗被切断，同一事件分到不同 token；</li>
+<li><strong>词表大小与利用率的权衡</strong>：TFM 消融显示词表越大类独有 token 越多，但 token 利用率下降；</li>
+<li><strong>与自然语言对齐</strong>：LaBraM/NeuroLM 都展望过把神经码与语言词汇对齐，目前仍停留在空间级（粗粒度）。</li>
+</ul>
+<h2 id="_6">关联论文</h2>
+<p><a href="../../papers/biot/">BIOT</a> · <a href="../../papers/labram/">LaBraM</a> · <a href="../../papers/neurolm/">NeuroLM</a> · <a href="../../papers/tfm-tokenizer/">TFM-Tokenizer</a></p>
 
 
 
@@ -1164,7 +1216,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../braingpt/" class="md-footer__link md-footer__link--prev" aria-label="上一页: BrainGPT (arXiv 2024)">
+          <a href="../../papers/tfm-tokenizer/" class="md-footer__link md-footer__link--prev" aria-label="上一页: TFM-Tokenizer (ICLR 2026)">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1174,20 +1226,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                BrainGPT (arXiv 2024)
+                TFM-Tokenizer (ICLR 2026)
               </div>
             </div>
           </a>
         
         
           
-          <a href="../tfm-tokenizer/" class="md-footer__link md-footer__link--next" aria-label="下一页: TFM-Tokenizer (ICLR 2026)">
+          <a href="../pretraining/" class="md-footer__link md-footer__link--next" aria-label="下一页: 预训练范式对比">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                TFM-Tokenizer (ICLR 2026)
+                预训练范式对比
               </div>
             </div>
             <div class="md-footer__button md-icon">
