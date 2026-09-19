@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-09-19** · 新增专题：基座来源分析（从零训练 vs 现成 Base Model）
+
 - **2026-09-19** · 数据集索引新增 数据集×论文 使用矩阵热力图
 
 - **2026-09-18** · 组件大升级：Mermaid 流程图/内容标签页/脚注/术语提示/图片放大/阅读进度条/对比图表
@@ -88,6 +90,10 @@ title: 首页
 - :material-database: **[EEG 预训练数据全景](topics/data-landscape.md)**
     ---
     2500h vs 25000h：语料构成、域偏斜与规模瓶颈。
+
+- :material-cube-outline: **[基座来源分析](topics/base-model.md)**
+    ---
+    五篇从零训练，唯一例外 NeuroLM 站在 GPT-2 上——为什么。
 
 - :material-vector-circle: **[多任务三条路线](topics/multi-task.md)**
     ---

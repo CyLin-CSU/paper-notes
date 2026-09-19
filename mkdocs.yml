@@ -92,6 +92,7 @@ nav:
       - 通道异构的四种解法: topics/spatial.md
       - EEG 预训练数据全景: topics/data-landscape.md
       - 多任务三条路线: topics/multi-task.md
+      - 基座来源分析: topics/base-model.md
   - 综述: blog-2023-2026.md
   - 六篇方法对比: comparison.md
   - 索引:
