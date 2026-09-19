@@ -1327,7 +1327,7 @@
 <h4 id="22">2.2 方法<a class="headerlink" href="#22" title="Permanent link">#</a></h4>
 <p><strong>（a）骨干架构：Neural Transformer</strong></p>
 <ul>
-<li><abbr title="脑电图 Electroencephalogram">EEG</abbr> <code>X ∈ R^{C×T}</code> 按 w=200（1 秒）无重叠窗口切成 channel patch，共 <code>N = C·⌊t/w⌋</code> 个；</li>
+<li><abbr title="脑电图 Electroencephalogram">EEG</abbr> <span class="arithmatex">\( X \in \mathbb{R}^{C \times T} \)</span> 按 w=200（1 秒）无重叠窗口切成 channel patch，共 <code>N = C·⌊t/w⌋</code> 个；</li>
 <li><strong>Temporal Encoder</strong>：每个 patch 过若干 1D 卷积块（Conv + GroupNorm + GELU）提取 patch 内时序特征 → patch embedding；</li>
 <li><strong>Temporal &amp; Spatial Embedding</strong>：可学习的时间 embedding 列表（长度 tmax）+ 空间（通道）embedding 列表（10-20 系统），相加注入时空信息（绝对位置编码）；</li>
 <li><strong>Transformer Encoder</strong>：ViT 风格，但做两点修改（引 Dehghani et al. 2023）：Q、K 先做 LayerNorm 再点积注意力（防 attention logits 过大）；QKV 计算去掉 bias 项加速训练；</li>
@@ -1335,7 +1335,7 @@
 </ul>
 <p><strong>（b）神经 Tokenizer（向量量化神经频谱预测）</strong></p>
 <ul>
-<li>受 <abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 启发：<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> <code>V ∈ R^{K×D}</code>（K=8192，D=64）；</li>
+<li>受 <abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 启发：<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> <span class="arithmatex">\( \mathcal{V} \in \mathbb{R}^{K \times D} \)</span>（K=8192，D=64）；</li>
 <li>patch 表示 p 做 <strong>ℓ2 归一化</strong>后在 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 里<strong>余弦相似度最近邻查表</strong>得到码字索引（ℓ2 归一化提升 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 利用率）；</li>
 <li><strong>重构目标 = 傅里叶频谱（幅值 A + 相位 φ），不是原始波形</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比、随机、非平稳、非线性，直接重构原始波形 loss 不收敛；频谱的频率/相位分布反映底层神经生理活动。对 patch 做 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr>（欧拉公式展开），幅值/相位在样本内做 z-score 归一化；</li>
 <li>Neural decoder（若干 Transformer 块 + 平均池化 + 幅值/相位两个回归头）从离散码字回归频谱，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 损失；</li>

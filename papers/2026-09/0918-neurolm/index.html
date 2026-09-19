@@ -1327,12 +1327,12 @@
 <h4 id="52">5.2 方法（三阶段）<a class="headerlink" href="#52" title="Permanent link">#</a></h4>
 <p><strong>阶段一：文本对齐神经 Tokenizer（text-aligned neural tokenizer）</strong></p>
 <ul>
-<li>在 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 <abbr title="向量量化 Vector Quantization">VQ</abbr> tokenizer 基础上改进，<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> <code>V ∈ R^{K×D}</code>（8192），ℓ2 归一化最近邻查表；</li>
+<li>在 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 <abbr title="向量量化 Vector Quantization">VQ</abbr> tokenizer 基础上改进，<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> <span class="arithmatex">\( \mathcal{V} \in \mathbb{R}^{K \times D} \)</span>（8192），ℓ2 归一化最近邻查表；</li>
 <li><strong>改进 1——时频双域重构（vector-quantized temporal-frequency prediction）</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 重构幅值+相位，NeuroLM 发现相位贡献很小，改为<strong>两个独立 decoder</strong>：时域 decoder 重构原始信号 + 频域 decoder 重构 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 幅值（幅值做样本内 z-score）；损失 L1 = 时域重构 + 频域重构 + <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> loss + commitment loss；</li>
 <li><strong>改进 2——<abbr title="脑电图 Electroencephalogram">EEG</abbr>-文本空间对齐</strong>：因 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-text 成对数据稀缺、<abbr title="脑电图 Electroencephalogram">EEG</abbr> 内容难以用语言完整描述，放弃 embedding 级对齐，改用<strong>空间级（space-wise）对齐</strong>：</li>
 <li>训练一个 domain classifier C 判断 embedding 来自 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 还是文本（文本 embedding 每批随机采自 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表）；</li>
 <li><abbr title="向量量化 Vector Quantization">VQ</abbr> encoder 后接<strong>梯度反转层（<abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr>, Ganin et al. 2016）</strong>对抗训练，把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> embedding 推入文本 embedding 空间；</li>
-<li>总目标：<code>min L1 + λ Σ d_i log C(h_i)</code>，λ 随训练从 0 渐增到 1（<code>λ = 2/(1+e^{−10t/T}) − 1</code>）。</li>
+<li>总目标：<code>min L1 + λ Σ d_i log C(h_i)</code>，λ 随训练从 0 渐增到 1（<span class="arithmatex">\( \lambda = \tfrac{2}{1+e^{-10t/T}} - 1 \)</span>）。</li>
 </ul>
 <p><strong>阶段二：多通道自回归预训练（multi-channel autoregressive pre-training）</strong></p>
 <ul>

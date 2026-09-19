@@ -1337,7 +1337,7 @@
 - <strong>Segment embedding（频谱）</strong>：对每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 段做 FFT，提取所有频带的能量向量，过一个全连接网络（FCN）得到；
 - <strong>Channel embedding（空间）</strong>：可学习的通道 embedding 表，标记 <abbr title="词元，模型处理的最小输入单元">token</abbr> 来自哪个通道；
 - <strong>Positional embedding（时间）</strong>：通道内 <abbr title="词元，模型处理的最小输入单元">token</abbr> 顺序用正弦/余弦<strong>相对</strong>位置编码，免参数。</p>
-<p>最终"句子"为 <code>X ∈ R^{N×l}</code>（N 个 <abbr title="词元，模型处理的最小输入单元">token</abbr>，维度 l）。</p>
+<p>最终"句子"为 <span class="arithmatex">\( X \in \mathbb{R}^{N \times l} \)</span>（N 个 <abbr title="词元，模型处理的最小输入单元">token</abbr>，维度 l）。</p>
 <p><strong>Module 2：线性 Transformer</strong></p>
 <p>其线性注意力的核心公式（Linformer 式低秩投影）：</p>
 <div class="arithmatex">\[ \mathbf{H} = \mathrm{softmax}\left( \frac{(\mathbf{X}\mathbf{W}_Q)(\mathbf{E}\mathbf{X}\mathbf{W}_K)^{\top}}{\sqrt{k}} \right)(\mathbf{F}\mathbf{X}\mathbf{W}_V) \]</div>

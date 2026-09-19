@@ -1327,22 +1327,22 @@
 <h4 id="42">4.2 方法<a class="headerlink" href="#42" title="Permanent link">#</a></h4>
 <p><strong>（a）电极级建模策略（Electrode-wise Modeling）</strong></p>
 <ul>
-<li>多电极 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 先切成 T 个 1 秒区间，每区间 D 个均匀采样点；再<strong>把每个电极的时间序列拆成独立训练样本</strong> <code>x_i^e ∈ R^{T×D}</code>——天然适配任意电极数/组合；</li>
-<li><strong>电极词表</strong> <code>V ∈ R^{E×D}</code>：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 <strong>prefix 条件 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong> 拼在序列最前面（告诉模型信号来自哪个电极）；</li>
+<li>多电极 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 先切成 T 个 1 秒区间，每区间 D 个均匀采样点；再<strong>把每个电极的时间序列拆成独立训练样本</strong> <span class="arithmatex">\( x_i^e \in \mathbb{R}^{T \times D} \)</span>——天然适配任意电极数/组合；</li>
+<li><strong>电极词表</strong> <span class="arithmatex">\( \mathcal{V} \in \mathbb{R}^{E \times D} \)</span>：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 <strong>prefix 条件 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong> 拼在序列最前面（告诉模型信号来自哪个电极）；</li>
 <li>预训练集：3750 万个单电极样本，约 10 亿 <abbr title="词元，模型处理的最小输入单元">token</abbr>。</li>
 </ul>
 <p><strong>（b）自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>: Electrode Temporal Encoder）</strong></p>
 <ul>
 <li>所有电极<strong>共享</strong>一个 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式因果 Transformer：多头<strong>因果</strong>注意力（causal mask，只看过去）+ 位置前馈网络（论文表述为 Swish 激活 FFN，公式 <code>W_down·(Swish(W_gate·x) ⊙ (W_up·x))</code> 实为门控形式）；</li>
 <li>轻量 MLP 预测下一个 <abbr title="词元，模型处理的最小输入单元">token</abbr>（<strong>连续原始信号值</strong>，不做 <abbr title="向量量化 Vector Quantization">VQ</abbr> 离散化）；</li>
-<li>损失：<code>L(θ) = (1/T) Σ ρ(x_i^e[t] − ETE(x_i^e[≤t]))</code>，ρ 默认 <strong><abbr title="均方误差 Mean Squared Error">MSE</abbr></strong>；</li>
+<li>损失：<span class="arithmatex">\( \mathcal{L}(\theta) = \tfrac{1}{T} \sum_{t=1}^{T} \rho\!\left( x_i^e[t] - \mathrm{ETE}(x_i^e[\le t]) \right) \)</span>，ρ 默认 <strong><abbr title="均方误差 Mean Squared Error">MSE</abbr></strong>；</li>
 <li>意义：首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，直接建模"过去神经活动影响未来状态"的时序结构。</li>
 </ul>
 <p><strong>（c）多任务迁移学习（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>: Task-shared Electrode Graph）</strong></p>
 <ul>
 <li><abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> <strong>冻结</strong>，只作特征提取骨干；</li>
-<li>每个样本的每条电极序列末尾追加一个可学习 special <abbr title="词元，模型处理的最小输入单元">token</abbr> c（利用因果注意力把整条序列信息汇聚到该位置），取出该位置输出作为电极表示 <code>z_j ∈ R^{E_j×D}</code>；</li>
-<li><strong>全局电极图</strong>：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 <code>G ∈ R^{E×D}</code>；每个样本只激活其电极对应的子图 <code>G_j</code>（indicator 矩阵 <code>I_{G_j}</code> + <code>diag(z_j)</code> 注入表示，式 10）；</li>
+<li>每个样本的每条电极序列末尾追加一个可学习 special <abbr title="词元，模型处理的最小输入单元">token</abbr> c（利用因果注意力把整条序列信息汇聚到该位置），取出该位置输出作为电极表示 <span class="arithmatex">\( z_j \in \mathbb{R}^{E_j \times D} \)</span>；</li>
+<li><strong>全局电极图</strong>：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 <span class="arithmatex">\( \mathcal{G} \in \mathbb{R}^{E \times D} \)</span>；每个样本只激活其电极对应的子图 <code>G_j</code>（indicator 矩阵 <code>I_{G_j}</code> + <code>diag(z_j)</code> 注入表示，式 10）；</li>
 <li><strong>图注意力机制</strong>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr>）：α_mn = ReLU(aᵀ[W h_m ‖ W h_n]) 计算节点相关性，masking 系数 β_mn（同子图=1，否则 0）保证交互只发生在激活子图内，K 层堆叠 + 残差 + pre-norm；</li>
 <li>同一 batch 内不同数据集/任务通过构造各自的 β mask 矩阵统一训练；</li>
 <li>图网络池化节点表示 → 任务专属头（分类或回归）。</li>

@@ -1356,7 +1356,7 @@
 <li><strong>掩码方向反转</strong>：encoder 看被 mask 的稀疏部分、momentum encoder 看全量，迫使 encoder 输出含全局信息；</li>
 <li><strong>通道 Codex book</strong>（名字→向量映射）实现跨设备/跨通道配置适配；</li>
 <li><strong>Linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr></strong>：证明学到的特征本身足够通用，小样本下游免微调；</li>
-<li>参数规模 scaling law 实证：<code>ACC = (33.6·N)^0.029</code>、<code>L_R = (0.72·N)^{−0.014}</code>。</li>
+<li>参数规模 scaling law 实证：<span class="arithmatex">\( \mathrm{ACC} = (33.6 \cdot N)^{0.029} \)</span>、<span class="arithmatex">\( \mathcal{L}_R = (0.72 \cdot N)^{-0.014} \)</span>。</li>
 </ol>
 <h4 id="34">3.4 流程<a class="headerlink" href="#34" title="Permanent link">#</a></h4>
 <pre class="mermaid"><code>flowchart TD
