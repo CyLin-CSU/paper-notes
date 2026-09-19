@@ -8,28 +8,28 @@
       
       
       
-        <link rel="prev" href="../0918-labram/">
+        <link rel="prev" href="../multi-task/">
       
       
-        <link rel="next" href="../0918-braingpt/">
+        <link rel="next" href="../../blog-2023-2026/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>EEGPT: Pretrained Transformer for Universal and Reliable Representation of EEG Signals - Paper Notes · 论文阅读笔记</title>
+        <title>基座来源：从零训练还是站在巨人肩上 - Paper Notes · 论文阅读笔记</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -48,15 +48,15 @@
       
     
     
-      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#eegpt-pretrained-transformer-for-universal-and-reliable-representation-of-eeg-signals" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -101,7 +101,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../../.." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              EEGPT: Pretrained Transformer for Universal and Reliable Representation of EEG Signals
+              基座来源：从零训练还是站在巨人肩上
             
           </span>
         </div>
@@ -237,7 +237,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -267,7 +267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -291,20 +291,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -325,7 +323,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -340,20 +338,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1">
         
           
           <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
@@ -374,7 +370,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -392,7 +388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0918-biot/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-biot/" class="md-nav__link">
         
   
   
@@ -427,7 +423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0918-labram/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-labram/" class="md-nav__link">
         
   
   
@@ -459,44 +455,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    0918 · EEGPT (NeurIPS 2024)
-  
-
-    
-  </span>
-  
-  
-    
-  
-  
-    <span class="md-status md-status--精读"></span>
-  
-
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../papers/2026-09/0918-eegpt/" class="md-nav__link">
         
   
   
@@ -519,136 +481,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 问题定位
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 方法
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#33" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 创新点
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#34" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#35" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        架构图
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        要点速览
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -661,7 +493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0918-braingpt/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-braingpt/" class="md-nav__link">
         
   
   
@@ -696,7 +528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0918-neurolm/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-neurolm/" class="md-nav__link">
         
   
   
@@ -731,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0918-tfm-tokenizer/" class="md-nav__link">
+      <a href="../../papers/2026-09/0918-tfm-tokenizer/" class="md-nav__link">
         
   
   
@@ -778,18 +610,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -810,7 +644,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -828,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../topics/tokenization/" class="md-nav__link">
+      <a href="../tokenization/" class="md-nav__link">
         
   
   
@@ -856,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../topics/pretraining/" class="md-nav__link">
+      <a href="../pretraining/" class="md-nav__link">
         
   
   
@@ -884,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../topics/spatial/" class="md-nav__link">
+      <a href="../spatial/" class="md-nav__link">
         
   
   
@@ -912,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../topics/data-landscape/" class="md-nav__link">
+      <a href="../data-landscape/" class="md-nav__link">
         
   
   
@@ -940,7 +774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../topics/multi-task/" class="md-nav__link">
+      <a href="../multi-task/" class="md-nav__link">
         
   
   
@@ -965,10 +799,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../topics/base-model/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基座来源分析
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -984,6 +845,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总览表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么几乎都不用现成基座
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "复用权重"发生在下游而不是预训练
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新论文入库提示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关联页面
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1003,7 +939,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog-2023-2026/" class="md-nav__link">
+      <a href="../../blog-2023-2026/" class="md-nav__link">
         
   
   
@@ -1030,7 +966,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../comparison/" class="md-nav__link">
+      <a href="../../comparison/" class="md-nav__link">
         
   
   
@@ -1104,7 +1040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datasets/" class="md-nav__link">
+      <a href="../../datasets/" class="md-nav__link">
         
   
   
@@ -1132,7 +1068,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../references/" class="md-nav__link">
+      <a href="../../references/" class="md-nav__link">
         
   
   
@@ -1187,76 +1123,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 问题定位
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 方法
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#33" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 创新点
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#34" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#35" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        架构图
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        总览表
       
     </span>
   </a>
@@ -1267,7 +1137,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
+        为什么几乎都不用现成基座
       
     </span>
   </a>
@@ -1278,7 +1148,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        个人思考
+        "复用权重"发生在下游而不是预训练
       
     </span>
   </a>
@@ -1289,7 +1159,18 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        自问自答
+        新论文入库提示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关联页面
       
     </span>
   </a>
@@ -1316,137 +1197,65 @@
   
 
 
-<h1 id="eegpt-pretrained-transformer-for-universal-and-reliable-representation-of-eeg-signals">EEGPT: Pretrained Transformer for Universal and Reliable Representation of <abbr title="脑电图 Electroencephalogram">EEG</abbr> Signals<a class="headerlink" href="#eegpt-pretrained-transformer-for-universal-and-reliable-representation-of-eeg-signals" title="Permanent link">#</a></h1>
+<h1 id="_1">基座来源：从零训练还是站在巨人肩上<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>NeurIPS 2024</strong></p>
+<p>六篇基础模型的权重是"自己从零训练"还是"加载现成 Base Model"？结论：<strong>五篇从零训练，唯一例外是 NeuroLM 站在 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 上</strong>。</p>
 </blockquote>
-<p>EEGPT: Pretrained Transformer (NeurIPS 2024)</p>
-<p><strong>作者</strong>：Guagnyu Wang 等（哈尔滨工业大学）</p>
-<h4 id="31">3.1 问题定位<a class="headerlink" href="#31" title="Permanent link">#</a></h4>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比、被试间差异大、通道不匹配，导致掩码自编码器（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>）学到的特征质量差、BERT 式模型没有显式表示 z。EEGPT 提出仅 ~10M 参数的通用特征提取器，用<strong>双自监督</strong>（时空表示对齐 + 掩码重构）训练，下游只做 <strong>linear probing</strong>。</p>
-<h4 id="32">3.2 方法<a class="headerlink" href="#32" title="Permanent link">#</a></h4>
-<p><strong>理论动机（式 1→2）</strong>：标准 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 只有 <code>H(d_φ(z), x⊙(1−M))</code> 重构项，没有显式的 z；EEGPT 加一条表示对齐分支 <code>H(z, f_θ(x))</code>，显式地让 encoder 输出 z 携带全局语义（类似 MVEB 的最小充分表示），提升编码质量与泛化。</p>
-<p><strong>局部时空 embedding</strong></p>
-<ul>
-<li>58 电极、256Hz、输入 4 秒（T=1024）；每 patch 时间长度 d=64（250ms），共 N=16 个时间 patch；</li>
-<li>patch 线性嵌入 + <strong>通道 embedding（Codex book）</strong>：所有可学习通道向量 <code>{ς_i}</code> + 通道名→向量的映射 ℜ，<strong>灵活对应任意数据集的通道配置</strong>（通道适配的关键）；</li>
-<li><code>token_{i,j} = Embed(p_{i,j}) + ς_i</code>。</li>
-</ul>
-<p><strong>双自监督预训练</strong></p>
-<ol>
-<li><strong>掩码方式（与 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 相反的关键设计）</strong>：mask 掉 50% 时间 × 80% 通道的 patch，<strong>encoder 处理的恰恰是被 mask 的稀疏部分</strong>，且每个时间步追加 S 个可学习 <strong>summary <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>（类似 [CLS]）聚合信息；</li>
-<li><strong>时空表示对齐（JEPA 风格，损失 L_A）</strong>：</li>
-<li><strong>Momentum encoder</strong>（与 encoder 同构，EMA 动量 m=0.01）处理<strong>全部</strong> <abbr title="词元，模型处理的最小输入单元">token</abbr>（masked ∪ unmasked），作为预测目标 <code>menc_j</code>；</li>
-<li><strong>Predictor</strong>：拿 encoder 在 masked 部分的特征 + RoPE 旋转位置编码 + 可学习 query <abbr title="词元，模型处理的最小输入单元">token</abbr>，预测<strong>全部时间段</strong>的特征 <code>pred_j</code>；</li>
-<li>对齐损失：<code>L_A = −(1/N) Σ ‖pred_j, LN(menc_j)‖²</code>（LayerNorm 稳定训练）；</li>
-<li><strong>掩码重构（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 风格，损失 L_R）</strong>：</li>
-<li><strong>Reconstructor</strong>：encoder 特征（masked 部分）+ predictor 特征 + 位置信息 → 重构被 mask 部分的原始 patch；encoder→reconstructor 之间有 <strong>skip connection</strong>（保持特征、加速收敛）；</li>
-<li>重构损失：<code>L_R = −(1/|M|) Σ ‖rec_{i,j}, LN(p_{i,j})‖²</code>（目标也做 LayerNorm）；</li>
-<li>总损失 <code>L = L_A + L_R</code>。</li>
-</ol>
-<p><strong>下游 Linear Probing</strong></p>
-<ul>
-<li>encoder 完全冻结，只加两个轻量模块：<strong>adaptive spatial filter</strong>（1×1 卷积，对齐数据通道与模型通道）+ 线性分类头；</li>
-<li>只用 encoder 输出的 <strong>summary <abbr title="词元，模型处理的最小输入单元">token</abbr></strong> 对应特征送入分类头；</li>
-<li>目的：避免大数据模型在小样本微调下过拟合，同时让性能纯粹反映 encoder 本身的表示质量。</li>
-</ul>
-<h4 id="33">3.3 创新点<a class="headerlink" href="#33" title="Permanent link">#</a></h4>
-<ol>
-<li><strong>双自监督</strong>：表示对齐（JEPA 式，在表示空间预测）+ 掩码重构（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式，在信号空间重构）——显式表示 z，对抗低信噪比导致的特征质量差；</li>
-<li><strong>掩码方向反转</strong>：encoder 看被 mask 的稀疏部分、momentum encoder 看全量，迫使 encoder 输出含全局信息；</li>
-<li><strong>通道 Codex book</strong>（名字→向量映射）实现跨设备/跨通道配置适配；</li>
-<li><strong>Linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr></strong>：证明学到的特征本身足够通用，小样本下游免微调；</li>
-<li>参数规模 scaling law 实证：<code>ACC = (33.6·N)^0.029</code>、<code>L_R = (0.72·N)^{−0.014}</code>。</li>
-</ol>
-<h4 id="34">3.4 流程<a class="headerlink" href="#34" title="Permanent link">#</a></h4>
-<pre class="mermaid"><code>flowchart TD
-    A["EEG 58ch × 4s → 250ms patch"] --&gt; B["掩码 50% 时间 × 80% 通道"]
-    B --&gt; C["Encoder 处理 masked 部分 + Summary Tokens"]
-    B --&gt; D["Momentum Encoder 处理全量（EMA 0.01）"]
-    C --&gt; E["Predictor（RoPE + query）预测全部时段特征"]
-    E --&gt; F["对齐损失 L_A（与 Momentum 输出）"]
-    C --&gt; G["Reconstructor（含 skip）重构 masked 原始 patch"]
-    G --&gt; H["重构损失 L_R"]
-    F --&gt; I["总损失 L = L_A + L_R"]
-    D --&gt; F</code></pre>
-<h4 id="35">3.5 实验与结果<a class="headerlink" href="#35" title="Permanent link">#</a></h4>
-<ul>
-<li>预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；</li>
-<li>下游：BCIC-2A/2B（运动想象）、Sleep-EDFx（睡眠分期）、KaggleERN、PhysioP300（<abbr title="事件相关电位 Event-Related Potential">ERP</abbr>）、TUAB、TUEV；</li>
-<li>结果：TUEV 上比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 提升 9.5% balanced acc；与 BENDR/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 对比在多个任务领先（且对手往往是全量微调而 EEGPT 只线性探针）；</li>
-<li>消融：去掉对齐损失 L_A 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary <abbr title="词元，模型处理的最小输入单元">token</abbr> 数量 S=4 较优。</li>
-</ul>
-<hr>
-<h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/eegpt-arch.png" data-desc-position="bottom"><img alt="Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构" src="../../../assets/eegpt-arch.png"></a></p>
-<p><em>Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>~10M 参数（8 个变体 0.4M–101M）；下游只用 linear probing 即达 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr></li>
-<li>TUEV balanced acc 0.6232，比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（0.5281）高 9.5%</li>
-<li>双自监督：表示对齐（L_A，JEPA 式）+ 掩码重构（L_R，<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）；掩码 50% 时间 × 80% 通道</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">总览表<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
+<th>论文</th>
+<th>预训练权重来源</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>思想上</td>
-<td>承接 BYOL（momentum encoder）+ <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>（重构）+ JEPA（在表示空间预测）三条线</td>
+<td><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
+<td><strong>从零训练</strong></td>
+<td>3.2M 小模型，自己在 PREST+SHHS 上做无监督预训练，无任何外部权重</td>
 </tr>
 <tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>互补路线：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 走离散语义码，EEGPT 坚持连续表示但把自监督目标做得更好</td>
+<td><a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
+<td><strong>从零训练</strong></td>
+<td>架构借鉴 ViT（QK LayerNorm 等 trick），但 <abbr title="向量量化 Vector Quantization">VQ</abbr> tokenizer 和 Transformer 全部在自家 2500h 语料上从零训练</td>
 </tr>
 <tr>
-<td>TFM-Tokenizer</td>
-<td>对照实验：EEGPT 依赖固定 58 通道布局的 Codex book，ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 跨设备实验无法参与</td>
+<td><a href="../../papers/2026-09/0918-eegpt/">EEGPT</a></td>
+<td><strong>从零训练</strong></td>
+<td>采用 ViT 代码实现，但 encoder/predictor/reconstructor 权重全在 5 个数据集上从零预训练</td>
+</tr>
+<tr>
+<td><a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a></td>
+<td><strong>从零训练</strong></td>
+<td>架构是标准 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式（因果注意力+SwiGLU），但权重完全靠 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 自回归预训练学出，没有加载任何语言模型权重</td>
+</tr>
+<tr>
+<td><a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a></td>
+<td><strong>有基座：<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2</strong></td>
+<td>唯一例外——<abbr title="大语言模型 Large Language Model">LLM</abbr> 部分直接加载预训练 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，再在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 上做多通道自回归预训练 + 指令微调；<abbr title="向量量化 Vector Quantization">VQ</abbr> encoder 半边仍从零训练</td>
+</tr>
+<tr>
+<td><a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></td>
+<td><strong>从零训练</strong></td>
+<td>tokenizer（1.2M）+ 下游 Transformer（0.7M）都从零训</td>
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<ul>
-<li>把 linear probing 当评估协议本身就是贡献：冻结 encoder 后性能完全归因于表示质量，排除了微调技巧的干扰。</li>
-<li>'encoder 看被 mask 的稀疏部分、momentum encoder 看全量'的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。</li>
-<li>附录证明去掉 predictor 会表示坍塌（重构 loss 不再下降）——对齐分支必须保留 query/位置等余量，防止模型走捷径。</li>
-</ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么 encoder 处理的是被 mask 的部分，和 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 正好相反？</summary>
-<p>这是显式表示 z 设计的一部分：encoder 只看 50% 时间 × 80% 通道的稀疏视图，却要靠 predictor 预测全量特征、与看过完整信号的 momentum encoder 对齐——逼着稀疏视图的输出携带全局语义。若 encoder 直接看全量，对齐任务就没有信息瓶颈，学不到这个性质。</p>
-</details>
-<details class="question">
-<summary>Q2 · 去掉 predictor 行不行？</summary>
-<p>附录 Figure 6：去掉 predictor 后对齐目标变成 encoder 与 momentum encoder 直接对齐，两者可以走捷径坍缩到相同输出（表示坍塌），重构 loss 也不再下降。predictor + 可学习 query 提供了必要的不对称性，与 BYOL 需要 predictor 同理。</p>
-</details>
-<details class="question">
-<summary>Q3 · 为什么坚持 linear probing 而不微调？</summary>
-<p>两个动机：一是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 下游标注少，全量微调大模型极易过拟合；二是 linear probing 让性能完全归因于 encoder 的表示质量——它是更严格的通用表示评估协议，EEGPT 在这个协议下超过全量微调的 BENDR，说服力更强。</p>
-</details>
-<details class="question">
-<summary>Q4 · Codex book 怎么处理训练时没见过的通道？</summary>
-<p>它维护通道名到可学习向量的映射表，覆盖常见命名体系，新数据集的通道按名字映射即可。但表是固定的（58 电极），碰到 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 这类体系外通道就没有对应向量——这是它跨设备能力弱于 TFM 单通道方案的原因。</p>
-</details>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：<a href="https://github.com/BINE022/EEGPT">github.com/BINE022/EEGPT</a></li>
-<li><strong>关键超参</strong>：58 电极 / 256Hz / 输入 4s；patch 64 点（250ms）；掩码 50% 时间 × 80% 通道；momentum 动量 0.01；最优变体 large：d=512、8 层、4 个 summary <abbr title="词元，模型处理的最小输入单元">token</abbr>；AdamW OneCycle（2.5e-4 起）</li>
-<li><strong>数据</strong>：预训练 PhysioMI + HGD + TSU + SEED + M3CV；下游 7 数据集</li>
-<li><strong>算力参考</strong>：8×RTX 3090，200 epochs，bf16；下游只训线性层所以极轻</li>
-</ul>
-</div>
-<hr>
-<p><strong>相关阅读</strong></p>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-labram/">上一篇：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../0918-braingpt/">下一篇：BrainGPT</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/#跨论文-benchmark-战绩表">战绩总表</a></p>
+<h2 id="_3">为什么几乎都不用现成基座<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<ol>
+<li><strong>当时不存在可用的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座</strong>。这几篇本身就是"第一批"基础模型，没有前人 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 权重可站（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 互为对照，但都各自从零训练以保证公平）。</li>
+<li><strong>模态鸿沟</strong>。NLP/视觉的预训练权重对连续时序信号的迁移价值很低——加载了反而要花算力"遗忘"文本先验。</li>
+<li><strong>NeuroLM 是唯一例外恰因范式不同</strong>。它要把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 塞进 <abbr title="大语言模型 Large Language Model">LLM</abbr> 做指令推理，<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 的语言能力（理解问题、生成答案）正是需要保留的部分——所以保留基座 + 词表扩充 + 继续训练而非从零。其消融也证明每批混入纯文本数据对防止语言能力遗忘是必要的。</li>
+</ol>
+<h2 id="_4">"复用权重"发生在下游而不是预训练<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>虽然预训练都是自力更生，但每篇都<strong>开源了自己的预训练 checkpoint</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> Base/Large/Huge、EEGPT、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、NeuroLM、TFM 均在 GitHub 发布），下游任务是站在这些<strong>自家预训练权重</strong>上微调的。</p>
+<p>论文互相比时也不加载对方从头训的中间权重，而是：<strong>基线 = 对方的公开 checkpoint + 我们数据集上的微调</strong>。这也解释了 BrainGPT 的一个著名发现——"预训练 specialist 有时不如 from scratch"：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 语料偏临床癫痫，对情绪/运动想象等非临床任务迁移反而打折（详见<a href="../data-landscape/">预训练数据全景</a>）。</p>
+<h2 id="_5">新论文入库提示<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<p>读新论文时记一笔：它的权重是 <strong>from scratch / 加载公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座（哪家）/ 接 <abbr title="大语言模型 Large Language Model">LLM</abbr>（哪个）</strong> 三者中的哪一种？这决定了它与库里已有论文的可比性，也直接影响<a href="../../comparison/#论文互怼链">互怼链</a>的画法。</p>
+<h2 id="_6">关联页面<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
+<p><a href="../data-landscape/">预训练数据全景</a> · <a href="../multi-task/">多任务三条路线</a> · <a href="../../comparison/">六篇方法对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -1506,20 +1315,20 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../../../javascripts/mathjax.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
       
-        <script src="../../../javascripts/load-mathjax.js"></script>
+        <script src="../../javascripts/load-mathjax.js"></script>
       
-        <script src="../../../javascripts/giscus.js"></script>
+        <script src="../../javascripts/giscus.js"></script>
       
-        <script src="../../../javascripts/progress.js"></script>
+        <script src="../../javascripts/progress.js"></script>
       
-        <script src="../../../javascripts/back-to-top.js"></script>
+        <script src="../../javascripts/back-to-top.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
       
