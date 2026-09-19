@@ -32,13 +32,13 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
 - **改进 2——EEG-文本空间对齐**：因 EEG-text 成对数据稀缺、EEG 内容难以用语言完整描述，放弃 embedding 级对齐，改用**空间级（space-wise）对齐**：
   - 训练一个 domain classifier C 判断 embedding 来自 EEG 还是文本（文本 embedding 每批随机采自 GPT-2 词表）；
   - VQ encoder 后接**梯度反转层（GRL, Ganin et al. 2016）**对抗训练，把 EEG embedding 推入文本 embedding 空间；
-  - 总目标：`min L1 + λ Σ d_i log C(h_i)`，λ 随训练从 0 渐增到 1（\( \lambda = \tfrac{2}{1+e^{-10t/T}} - 1 \)）。
+  - 总目标：\( \min \mathcal{L}_1 + \lambda \sum_i d_i \log C(h_i) \)，λ 随训练从 0 渐增到 1（\( \lambda = \tfrac{2}{1+e^{-10t/T}} - 1 \)）。
 
 **阶段二：多通道自回归预训练（multi-channel autoregressive pre-training）**
 
 - 冻结 VQ encoder；加载预训练 GPT-2，**把 8192 个 codebook 索引并入 GPT-2 词表**（Text vocab + EEG vocab）；
 - EEG token 复用 LLM 的时间 embedding，另学空间 embedding；序列最长 1024，零 padding 处屏蔽注意力；
-- **stair-stepping mask（阶梯式注意力掩码）**：语言可以逐 token 预测，EEG 通道配置各异不行——改为"**同通道 token 预测同通道下一时间步 token**"：`p(I_11,...,I_CT) = Π_t p(I_1n,...,I_Cn | h_11,...,h_{C(t−1)})`；实现上每个 EEG token 可见所有通道在当前及之前时间步的 token；
+- **stair-stepping mask（阶梯式注意力掩码）**：语言可以逐 token 预测，EEG 通道配置各异不行——改为"**同通道 token 预测同通道下一时间步 token**"：\( p(I_{11}, \ldots, I_{CT}) = \prod_{t=1}^{T} p(I_{1t}, \ldots, I_{Ct} \mid h_{11}, \ldots, h_{C(t-1)}) \)；实现上每个 EEG token 可见所有通道在当前及之前时间步的 token；
 - **VAE 理论解释**：tokenizer = 后验 q_φ(z|x)，decoder = p_ψ(y|z)，多通道自回归预训练 = 学习先验 p_θ(z)，整个范式对应 ELBO 两项（重构 + KL）；
 - 预训练同时在每批混入少量纯文本数据，保持 LLM 语言能力。
 

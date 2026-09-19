@@ -41,7 +41,7 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 **（b）训练目标：时频掩码预测**
 
 - **频带掩码 + 时间掩码**（消融：随机掩码最差；频带掩码最关键，Kappa +8%；加时间掩码 balanced acc 再 +5%）+ **对称掩码**（沿用 LaBraM，数据增强+稳定）；
-- 损失：`L_token = Σ‖S(f,t) − Ŝ(f,t)‖² (掩码重构) + α Σ‖sg[E_i] − v_i‖² (codebook) + β Σ‖E_i − sg[v_i]‖² (commitment)`；码字 EMA 更新。
+- 损失：\[ \mathcal{L}_{\mathrm{token}} = \underbrace{\sum_{(f,t)} \left\| S(f,t) - \hat{S}(f,t) \right\|_2^2}_{\text{掩码重构}} \;+\; \underbrace{\alpha \sum_i \left\| \mathrm{sg}[E_i] - v_i \right\|_2^2}_{\text{codebook}} \;+\; \underbrace{\beta \sum_i \left\| E_i - \mathrm{sg}[v_i] \right\|_2^2}_{\text{commitment}} \]；码字 EMA 更新。
 
 **（c）下游 Transformer**
 

@@ -27,7 +27,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 **（a）骨干架构：Neural Transformer**
 
-- EEG \( X \in \mathbb{R}^{C \times T} \) 按 w=200（1 秒）无重叠窗口切成 channel patch，共 `N = C·⌊t/w⌋` 个；
+- EEG \( X \in \mathbb{R}^{C \times T} \) 按 w=200（1 秒）无重叠窗口切成 channel patch，共 \( N = C \cdot \lfloor t / w \rfloor \) 个；
 - **Temporal Encoder**：每个 patch 过若干 1D 卷积块（Conv + GroupNorm + GELU）提取 patch 内时序特征 → patch embedding；
 - **Temporal & Spatial Embedding**：可学习的时间 embedding 列表（长度 tmax）+ 空间（通道）embedding 列表（10-20 系统），相加注入时空信息（绝对位置编码）；
 - **Transformer Encoder**：ViT 风格，但做两点修改（引 Dehghani et al. 2023）：Q、K 先做 LayerNorm 再点积注意力（防 attention logits 过大）；QKV 计算去掉 bias 项加速训练；
@@ -39,7 +39,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 - patch 表示 p 做 **ℓ2 归一化**后在 codebook 里**余弦相似度最近邻查表**得到码字索引（ℓ2 归一化提升 codebook 利用率）；
 - **重构目标 = 傅里叶频谱（幅值 A + 相位 φ），不是原始波形**：EEG 低信噪比、随机、非平稳、非线性，直接重构原始波形 loss 不收敛；频谱的频率/相位分布反映底层神经生理活动。对 patch 做 DFT（欧拉公式展开），幅值/相位在样本内做 z-score 归一化；
 - Neural decoder（若干 Transformer 块 + 平均池化 + 幅值/相位两个回归头）从离散码字回归频谱，MSE 损失；
-- 总损失（式 9）= 幅值 MSE + 相位 MSE + **codebook loss**（`‖sg(ℓ2(p)) − ℓ2(v_z)‖²`，拉码字）+ **commitment loss**（`‖ℓ2(p) − sg(ℓ2(v_z))‖²`，稳编码器）；sg = stop-gradient；码字用 **EMA（指数滑动平均）**更新。
+- 总损失（式 9）= 幅值 MSE + 相位 MSE + **codebook loss**（\( \left\| \mathrm{sg}(\ell_2(p)) - \ell_2(v_{z_i}) \right\|_2^2 \)，拉码字）+ **commitment loss**（\( \left\| \ell_2(p) - \mathrm{sg}(\ell_2(v_{z_i})) \right\|_2^2 \)，稳编码器）；sg = stop-gradient；码字用 **EMA（指数滑动平均）**更新。
 
 **（c）Masked EEG Modeling 预训练**
 

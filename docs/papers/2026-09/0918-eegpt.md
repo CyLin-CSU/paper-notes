@@ -25,13 +25,13 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 #### 3.2 方法
 
-**理论动机（式 1→2）**：标准 MAE 只有 `H(d_φ(z), x⊙(1−M))` 重构项，没有显式的 z；EEGPT 加一条表示对齐分支 `H(z, f_θ(x))`，显式地让 encoder 输出 z 携带全局语义（类似 MVEB 的最小充分表示），提升编码质量与泛化。
+**理论动机（式 1→2）**：标准 MAE 只有 \( \mathcal{H}(d_\phi(z),\ x \odot (1-M)) \) 重构项，没有显式的 z；EEGPT 加一条表示对齐分支 \( \mathcal{H}(z,\ f_\theta(x)) \)，显式地让 encoder 输出 z 携带全局语义（类似 MVEB 的最小充分表示），提升编码质量与泛化。
 
 **局部时空 embedding**
 
 - 58 电极、256Hz、输入 4 秒（T=1024）；每 patch 时间长度 d=64（250ms），共 N=16 个时间 patch；
 - patch 线性嵌入 + **通道 embedding（Codex book）**：所有可学习通道向量 `{ς_i}` + 通道名→向量的映射 ℜ，**灵活对应任意数据集的通道配置**（通道适配的关键）；
-- `token_{i,j} = Embed(p_{i,j}) + ς_i`。
+- \( \mathrm{token}_{i,j} = \mathrm{Embed}(p_{i,j}) + \varsigma_i \)。
 
 **双自监督预训练**
 
@@ -39,11 +39,11 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 2. **时空表示对齐（JEPA 风格，损失 L_A）**：
    - **Momentum encoder**（与 encoder 同构，EMA 动量 m=0.01）处理**全部** token（masked ∪ unmasked），作为预测目标 `menc_j`；
    - **Predictor**：拿 encoder 在 masked 部分的特征 + RoPE 旋转位置编码 + 可学习 query token，预测**全部时间段**的特征 `pred_j`；
-   - 对齐损失：`L_A = −(1/N) Σ ‖pred_j, LN(menc_j)‖²`（LayerNorm 稳定训练）；
+   - 对齐损失：\( \mathcal{L}_A = -\tfrac{1}{N} \sum_{j=1}^{N} \left\| \mathrm{pred}_j,\ \mathrm{LN}(\mathrm{menc}_j) \right\|_2^2 \)（LayerNorm 稳定训练）；
 3. **掩码重构（MAE 风格，损失 L_R）**：
    - **Reconstructor**：encoder 特征（masked 部分）+ predictor 特征 + 位置信息 → 重构被 mask 部分的原始 patch；encoder→reconstructor 之间有 **skip connection**（保持特征、加速收敛）；
-   - 重构损失：`L_R = −(1/|M|) Σ ‖rec_{i,j}, LN(p_{i,j})‖²`（目标也做 LayerNorm）；
-4. 总损失 `L = L_A + L_R`。
+   - 重构损失：\( \mathcal{L}_R = -\tfrac{1}{|\mathcal{M}|} \sum_{(i,j) \in \mathcal{M}} \left\| \mathrm{rec}_{i,j},\ \mathrm{LN}(p_{i,j}) \right\|_2^2 \)（目标也做 LayerNorm）；
+4. 总损失 \( \mathcal{L} = \mathcal{L}_A + \mathcal{L}_R \)。
 
 **下游 Linear Probing**
 
