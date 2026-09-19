@@ -81,7 +81,7 @@ flowchart LR
 #### 6.5 实验与结果
 
 - 数据集：TUEV、TUAB、CHB-MIT、IIIC Seizure（+ 跨设备 EESM23 ear-EEG 睡眠分期）；
-- 单数据集与多数据集预训练两种设定下全面超过 BIOT/EEGPT/NeuroLM/CBraMod/LaBraM：多数据集 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比复现 LaBraM +36%）；
+- 两种设定下绝大多数指标-设定组合最优（例外：多数据集 CHB-MIT 的 balanced acc 0.6471 低于 BIOT 的 0.7068）：多数据集 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比复现 LaBraM +36%）；
 - plug-and-play：集成进 BIOT/LaBraM 后 93% 的指标-设定组合有提升（如单数据集 CHB-MIT 上 LaBraM-TFM 的 AUC-PR 提升 147%）；
 - 跨设备：ear-EEG 睡眠分期（仅 ~8K 标注样本、预训练完全没见过的采集方式）超过 BIOT/LaBraM 14%，EEGPT 因固定通道布局无法参与；
 - 消融：双域联合建模优于单时域（-R）或单频域（-S）变体；masking 策略与比例（频率 0.5 最优）；窗长 0.5s/0.25s hop 其实最好（但为对齐基线统一用 1s/0.5s）；embedding 维度 64 最优；下游 2 层即接近 12 层性能。
@@ -134,7 +134,7 @@ flowchart LR
 
 ??? question "Q4 · 这套 tokenization 的主要局限是什么？"
 
-    作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 token（误判为不同 motif）。此外 VQ 查表是硬量化，边界附近的微小波形差异可能被吞掉；ear-EEG 实验也表明跨设备泛化仍依赖微调数据量。
+    作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 token（误判为不同 motif）。此外属个人推断（论文仅自认窗长局限）：VQ 硬量化可能吞掉码字边界附近的微小波形差异。
 
 !!! abstract "复现速查卡"
     - **代码**：[github.com/Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer)（含预训练权重与全部预处理脚本）

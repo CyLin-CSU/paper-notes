@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   new Chart(el, {
     type: "bar",
     data: {
-      labels: ["BIOT", "EEGPT", "NeuroLM-B", "LaBraM-Base †", "CBraMod †", "TFM-Tokenizer"],
+      labels: ["BIOT", "EEGPT（TFM 复现 4.7M）", "NeuroLM-B", "LaBraM-Base †", "CBraMod †", "TFM-Tokenizer"],
       datasets: [{
         label: "TUEV Cohen's Kappa",
         data: [0.5273, 0.5085, 0.4285, 0.5175, 0.5588, 0.6189],
@@ -33,9 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-7. 六篇方法对比
 
-#### 7.1 总览表
+## 总览表
 
 | 维度 | BIOT | LaBraM | EEGPT | BrainGPT | NeuroLM | TFM-Tokenizer |
 |---|---|---|---|---|---|---|
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 | **多任务** | 否（逐任务微调） | 否 | 否（逐任务线性探针） | **是**（TEG 联合训练，验证协同增益） | **是**（指令微调单模型六任务） | 否（但组件可迁移） |
 | **跨设备** | 通道表可扩展 | 受限于 10-20 空间 embedding | 受限（固定 58 通道布局） | 支持 138 电极任意组合 | 未验证 | **单通道设计，ear-EEG 验证最强** |
 
-#### 7.2 核心分歧点解读
+## 核心分歧点解读
 
 **① "token 到底是什么"——六篇的根本分野**
 
@@ -81,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 BIOT 把 FFT 当特征工程的一种（能量向量）；LaBraM 把频谱当重构目标（发现相位贡献小）；NeuroLM 干脆去掉相位只留幅值+时域；TFM-Tokenizer 走得最远——把频率轴本身作为建模对象（频内 Transformer + 门控聚合 + 频带掩码）。这条线反映了社区共识的演进：**显式的时频结构建模比隐式期望模型自己学更重要**。
 
-#### 7.3 演进脉络一句话
+## 演进脉络一句话
 
 **BIOT**（2023）解决了"异构信号如何统一编码"（连续 token + 线性注意力）→ **LaBraM**（2024）证明"低信噪比 EEG 能学出离散语义码且大规模预训练有效"（VQ+频谱目标，但 token 只当靶子）→ **EEGPT**（2024）指出掩码目标不该是原始信号而应是高质量表示（双自监督+线性探针）→ **BrainGPT**（2024）把范式从掩码补全扭向自回归并冲到十亿参数 → **NeuroLM**（2025）把 token 真正接进 LLM 实现单模型多任务指令推理 → **TFM-Tokenizer**（2026）回到 tokenization 本身，给出第一个"学词表、可解释、跨设备、即插即用"的完整答案。
 
@@ -144,7 +143,7 @@ flowchart LR
     TFM -- "整窗 FFT 线性投影<br/>过粗、无跨频段建模" --> BIOT
     EEGPT -- "FFT 只留能量丢相位，<br/>时域任务（P300/ERN）弱" --> BIOT
     BRAINGPT -- "MAE 双向补全破坏<br/>时序因果结构（-2%+）" --> LABRAM
-    BRAINGPT -- "MAE 范式（同为对照）" --> BIOT
+    BRAINGPT -- "被其归入掩码/双向建模<br/>范式批评（BIOT 实为对比学习）" --> BIOT
     NEUROLM -- "重构相位贡献小，<br/>砍掉相位只留幅值+时域" --> LABRAM
     NEUROLM -- "逐任务全量微调低效，<br/>无多任务推理" --> LABRAM
     TFM -- "固定空间 embedding<br/>无法跨设备（ear-EEG 缺席）" --> EEGPT

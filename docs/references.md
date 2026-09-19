@@ -30,7 +30,7 @@ tags: [索引, 参考文献]
 | RoFormer（RoPE 旋转位置编码） | NeuroComputing 2024 | EEGPT | predictor 的时间位置信息 |
 | LayerNorm | arXiv 2016 | 全部六篇 | 各处归一化的基础组件 |
 | GroupNorm | ECCV 2018 | LaBraM | temporal encoder 卷积块内的归一化 |
-| Swish / 门控线性单元 | ICML 2017 | BrainGPT | ETE 前馈网络的 SwiGLU 结构 |
+| Swish / 门控线性单元 | ICML 2017 | BrainGPT | ETE 前馈网络的 Swish 激活（公式为门控形式） |
 
 ## 自监督与表征学习理论
 

@@ -25,7 +25,7 @@ timeline
 | 论文 | 主力语料 | 构成特点 | 域偏斜风险 |
 |---|---|---|---|
 | BIOT | PREST（静息）+ SHHS（睡眠）+ ECG | 跨模态（EEG+ECG+IMU），但 EEG 部分集中在静息/睡眠 | 中（缺任务态 EEG） |
-| LaBraM | TUSZ（1138h）+ TUEP + TUEG 系 | **临床癫痫数据占近半**，20 个数据集摊薄 | 高——BrainGPT 据此解释其 specialist 迁移偏弱 |
+| LaBraM | TUSZ（1138h）+ TUEP + TUEG 系 | **临床 TUEG 子集合计约 1800h（约七成，其中癫痫事件 TUSZ 约 45%）**，由 20 个数据集摊薄 | 高——BrainGPT 据此解释其 specialist 迁移偏弱 |
 | EEGPT | PhysioMI + HGD + TSU + SEED + M3CV | 多范式均衡（MI/SSVEP/EMO/多任务） | 低（但总量小，~10M 参数够用） |
 | BrainGPT | 12 个基准的预训练拆分 | 电极级拆分使样本量 ×E，任务覆盖最广 | 低（但单电极丢失空间信息） |
 | NeuroLM | TUEG（~24000h）+ 12 个公开集 | **绝对量最大**，仍以临床 TUEG 为主 | 高（同 LaBraM，但指令微调缓解） |
@@ -43,9 +43,9 @@ TUEG 体系（Temple 大学）是唯一能拿到万小时级 EEG 的公开来源
 
 ### 3. 数据需求量与模型规模的关系
 
-- LaBraM：Base 用 500h 就接近 2500h 的效果；Huge 在 2500h 仍未饱和（推断需万小时级）
+- LaBraM：Base 500h 在 TUAB 反超 2500h、TUEV 达其 90%+；Huge 在 2500h 仍未饱和（原论文推断需万小时级）
 - NeuroLM：L 和 XL 的验证困惑度接近 → 25000h 喂不饱十亿参数
-- BrainGPT：数据 0→1B token 一直涨，未饱和
+- BrainGPT：数据 0→1B token 性能持续上升，增益趋缓
 
 结论：**当前 EEG 语料规模仍是所有大模型的瓶颈**，且临床偏斜短期无解（没有第二来源）。
 
@@ -55,7 +55,7 @@ BrainGPT 把多电极信号拆成单电极样本，等效样本量 ×E（E 为�
 
 ## 对新建笔记的提示
 
-读新论文时，在笔记的「实验与结果」里记录其预训练语料的：**总时长（或样本数）、主力数据源、域构成**。如果它报告了 scaling 实验（数据量 vs 性能曲线），单独记一段——这类实验目前只有 LaBraM/BrainGPT/EEGPT 做过，非常稀缺。
+读新论文时，在笔记的「实验与结果」里记录其预训练语料的：**总时长（或样本数）、主力数据源、域构成**。如果它报告了 scaling 实验（数据量 vs 性能曲线），单独记一段——数据 scaling 曲线目前只有 LaBraM/BrainGPT 报告过（EEGPT 做的是模型规模消融），非常稀缺。
 
 ## 关联页面
 

@@ -32,7 +32,7 @@ BrainGPT：自回归 EEG 通用模型 (arXiv 2024)
 
 **（b）自回归预训练（ETE: Electrode Temporal Encoder）**
 
-- 所有电极**共享**一个 GPT 式因果 Transformer：多头**因果**注意力（causal mask，只看过去）+ 位置前馈网络（**SwiGLU**：`W_down·(Swish(W_gate·x) ⊙ (W_up·x))`）；
+- 所有电极**共享**一个 GPT 式因果 Transformer：多头**因果**注意力（causal mask，只看过去）+ 位置前馈网络（论文表述为 Swish 激活 FFN，公式 `W_down·(Swish(W_gate·x) ⊙ (W_up·x))` 实为门控形式）；
 - 轻量 MLP 预测下一个 token（**连续原始信号值**，不做 VQ 离散化）；
 - 损失：`L(θ) = (1/T) Σ ρ(x_i^e[t] − ETE(x_i^e[≤t]))`，ρ 默认 **MSE**；
 - 意义：首个自回归 EEG 模型，直接建模"过去神经活动影响未来状态"的时序结构。
@@ -132,7 +132,7 @@ flowchart LR
 
 !!! abstract "复现速查卡"
     - **代码**：论文声明将开源（截至精读时未见仓库，复现前先确认）
-    - **关键超参**：电极词表覆盖 E 个电极；patch 1s × D 采样点；ETE SwiGLU；预训练 lr 1e-4 / 3 epochs / batch 4096；微调 10 epochs（ETE 冻结，只训 TEG）；DeepSpeed Zero2/3 + bf16
+    - **关键超参**：电极词表覆盖 E 个电极；patch 1s × D 采样点；ETE 门控前馈（Swish 激活）；预训练 lr 1e-4 / 3 epochs / batch 4096；微调 10 epochs（ETE 冻结，只训 TEG）；DeepSpeed Zero2/3 + bf16
     - **数据**：3750 万单电极样本（≈1B token），来自 12 个基准的预训练拆分
     - **算力参考**：8×A800-80G；Giant 1.09B 需 Zero3 + 梯度检查点
 

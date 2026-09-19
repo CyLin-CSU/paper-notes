@@ -1,11 +1,12 @@
 ---
 date: 2026-09-18
 title: "EEGPT: Pretrained Transformer for Universal and Reliable Representation of EEG Signals"
-authors: [Guagnyu Wang, Wenchao Liu, Yuhong He, Cong Xu, Lin Ma, Haifeng Li]
+authors: [Guagnyu Wang, Yuhong He, Lin Ma, Wenchao Liu, Cong Xu, Haifeng Li]
 venue: "NeurIPS 2024"
 year: 2024
 tags: [EEG, 双自监督, 表示对齐, 线性探针, JEPA]
 status: "精读"
+arxiv: "（NeurIPS 2024 官方收录，无独立 arXiv 页）"
 rating: 4
 code: "https://github.com/BINE022/EEGPT"
 one-liner: "表示对齐 + 掩码重构双自监督的 10M 通用 EEG 特征提取器，linear probing 达 SOTA"
@@ -77,7 +78,7 @@ flowchart TD
 
 - 预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；
 - 下游：BCIC-2A/2B（运动想象）、Sleep-EDFx（睡眠分期）、KaggleERN、PhysioP300（ERP）、TUAB、TUEV；
-- 结果：TUEV 上比 BIOT 提升 9.5% balanced acc；与 BENDR/BIOT/LaBraM 对比在多个任务领先（且对手往往是全量微调而 EEGPT 只线性探针）；
+- 结果：TUEV 上比 BIOT 提升 9.5% balanced acc；与 BENDR/BIOT/LaBraM 对比在多个任务领先（其中仅 BENDR 为全量微调，BIOT/LaBraM 同样采用线性探针协议）；
 - 消融：去掉对齐损失 L_A 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary token 数量 S=4 较优。
 
 ---

@@ -14,7 +14,7 @@ tags: [基座模型, 综述]
 | [BIOT](../papers/2026-09/0918-biot.md) | **从零训练** | 3.2M 小模型，自己在 PREST+SHHS 上做无监督预训练，无任何外部权重 |
 | [LaBraM](../papers/2026-09/0918-labram.md) | **从零训练** | 架构借鉴 ViT（QK LayerNorm 等 trick），但 VQ tokenizer 和 Transformer 全部在自家 2500h 语料上从零训练 |
 | [EEGPT](../papers/2026-09/0918-eegpt.md) | **从零训练** | 采用 ViT 代码实现，但 encoder/predictor/reconstructor 权重全在 5 个数据集上从零预训练 |
-| [BrainGPT](../papers/2026-09/0918-braingpt.md) | **从零训练** | 架构是标准 GPT 式（因果注意力+SwiGLU），但权重完全靠 EEG 自回归预训练学出，没有加载任何语言模型权重 |
+| [BrainGPT](../papers/2026-09/0918-braingpt.md) | **从零训练** | 架构是标准 GPT 式（因果注意力+Swish 门控 FFN），但权重完全靠 EEG 自回归预训练学出，没有加载任何语言模型权重 |
 | [NeuroLM](../papers/2026-09/0918-neurolm.md) | **有基座：GPT-2** | 唯一例外——LLM 部分直接加载预训练 GPT-2，再在 EEG token 上做多通道自回归预训练 + 指令微调；VQ encoder 半边仍从零训练 |
 | [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) | **从零训练** | tokenizer（1.2M）+ 下游 Transformer（0.7M）都从零训 |
 

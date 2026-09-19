@@ -38,7 +38,7 @@ timeline
 
 VQ-VAE 式 codebook（8192×64），重构目标用 DFT 幅值+相位（原始波形不收敛）。但 token **只在 masked EEG modeling 里当预测目标**，下游微调时 tokenizer 被丢弃，模型实际吃的仍是连续 patch embedding。
 
-- TFM-Tokenizer 对此的批评：tokenization 的红利（压缩、归纳偏置、输入表示质量）根本没落到模型输入上。实验佐证：LaBraM-TFM 换掉 tokenizer 后 93% 指标提升。
+- TFM-Tokenizer 对此的批评：tokenization 的红利（压缩、归纳偏置、输入表示质量）根本没落到模型输入上。实验佐证：并入 TFM tokenizer 后（BIOT-TFM/LaBraM-TFM 合计）93% 的指标情形提升。
 
 ### 第三步：NeuroLM / TFM —— "token 真正上岗"
 
@@ -76,4 +76,4 @@ BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，**TFM 
 
 [BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md)
 
-[^pe]: TFM-Tokenizer 附录 C.6 消融：位置编码会让同一 motif 因位置不同学成不同 token，移除后 Cohen's Kappa 0.5119→0.5337、利用率 12.87%→9.78%、类独有 token 1.94%→2.14%。
+[^pe]: TFM-Tokenizer 附录 C.6 消融：位置编码会让同一 motif 因位置不同学成不同 token，移除后 Cohen's Kappa 0.5119→0.5337、利用率 12.87%→9.78%、类独有 token 1.94%→2.14%（此处利用率下降为正向信号：说明词表更紧凑）。

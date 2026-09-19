@@ -80,11 +80,11 @@ flowchart TD
 #### 2.5 实验与结果
 
 - 下游：TUAB（异常检测）、TUEV（事件分类）、SEED-V（情绪）、MoBI（步态回归）；
-- 全面超过 BIOT 及所有基线：TUEV balanced acc 0.6409→0.6616（Huge）、Kappa 0.6637→0.6745；TUAB 0.8140→0.8258；
+- 大幅领先 BIOT（其 TUEV 0.5281/Kappa 0.5273、TUAB 0.7959），且随模型规模递进：TUEV 0.6409（Base）→0.6616（Huge）、Kappa 0.6637→0.6745，TUAB 0.8140（Base）→0.8258（Huge）；
 - 重要消融：
   - 去掉 codebook 直接重构原始信号/频谱（Setting 2/3）：低层任务（TUAB）还行，高层任务（TUEV）明显掉——**离散语义 codebook 对高层任务至关重要**；
   - 去掉空间 embedding：预训练不收敛，下游大幅下降；
-  - 线性探针/只微调后几层在 TUEV 上显著变差 → 该模型依赖全量微调。
+  - 线性探针崩到 0.346；微调后 8 层（0.6541）与 4 层（0.6611）和全量微调（0.6409）相当甚至略好 → 依赖微调但不必全量。
 
 ---
 
@@ -111,7 +111,7 @@ flowchart TD
 | 论文 / 工作 | 关系说明 |
 |---|---|
 | NeuroLM | 同团队续作：tokenizer 改为时频双域重构 + GRL 文本空间对齐，token 并入 GPT-2 词表 |
-| TFM-Tokenizer | 批评其 token '只当训练目标、推理时被丢弃'；LaBraM-TFM 替换其 tokenizer 后 93% 指标提升 |
+| TFM-Tokenizer | 批评其 token '只当训练目标、推理时被丢弃'；并入 TFM tokenizer 后（BIOT-TFM/LaBraM-TFM 合计）93% 的指标情形提升 |
 | EEGPT / BrainGPT | 作为预训练基线被比较；BrainGPT 猜测其预训练语料偏癫痫临床域，domain 差异拖累一般下游任务 |
 
 ## 个人思考
@@ -128,7 +128,7 @@ flowchart TD
 
 ??? question "Q2 · codebook 是不是可有可无？直接掩码重构不行吗？"
 
-    附录 Table 7 的消融：不用 codebook、直接重构原始信号或频谱（Setting 2/3），在低层任务 TUAB 上反而略好，但在高层任务 TUEV 上明显下降（0.6409 → 0.5730 / 0.5643）。离散语义码学到的抽象表示对区分事件类型这类高层任务至关重要。
+    附录 Table 7 的消融：不用 codebook、直接重构原始信号或频谱（Setting 2/3），在低层任务 TUAB 上反而略好，但在高层任务 TUEV 上明显下降（0.6409 → 0.5630 / 0.5730，Setting 2/3）。离散语义码学到的抽象表示对区分事件类型这类高层任务至关重要。
 
 
 ??? question "Q3 · 对称掩码为什么能省计算？"
@@ -144,7 +144,7 @@ flowchart TD
     - **代码**：[github.com/935963004/LaBraM](https://github.com/935963004/LaBraM)（PyTorch 2.0.1 + CUDA 11.8）
     - **关键超参**：码本 8192×64；patch 200 点（1s）；掩码率 0.5 + 对称掩码；Base 5.8M（12 层/200 维/10 头）；lr 5e-4 cosine；EMA 0.996；温度未用于掩码（交叉熵）
     - **数据**：约 2500h / 20 数据集（TUSZ 1138h 为主力）；下游 TUAB/TUEV 划分严格沿用 BIOT
-    - **算力参考**：8×A800（40GB 级）；Huge 369M 需 Zero 并行
+    - **算力参考**：8×A800；Huge 369M 需分布式并行（论文未披露细节，此为推测）
 
 ---
 
