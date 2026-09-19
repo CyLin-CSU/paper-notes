@@ -1360,7 +1360,7 @@
 <li><strong>首个</strong>能处理通道不匹配、长度可变、数据缺失的统一生物信号编码模型；</li>
 <li><strong>逐通道独立 tokenization</strong>——异构数据通吃的核心设计（缺失通道/短通道直接丢 <abbr title="词元，模型处理的最小输入单元">token</abbr> 即可）；</li>
 <li><strong>线性注意力 Transformer</strong> 解决多通道长句子的二次复杂度问题（低秩 E/F 投影，注意力图 N×N → N×d）；</li>
-<li>频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 任务（CHB-MIT、IIIC、HAR）尤其有用；</li>
+<li>频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 CHB-MIT、IIIC 与可穿戴 HAR 任务尤其有用；</li>
 <li>同一模型结构支持四种学习场景：标准监督、带缺失监督、无监督预训练、跨任务监督预训练。</li>
 </ol>
 <h4 id="14">1.4 流程<a class="headerlink" href="#14" title="Permanent link">#</a></h4>
@@ -1391,7 +1391,7 @@
 <p class="admonition-title">TL;DR</p>
 <ul>
 <li>3.2M 参数；四种学习场景（监督 / 带缺失监督 / 无监督预训练 / 跨任务预训练）</li>
-<li>9 个数据集（<abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/HAR）上超过全部基线；带缺失设定下性能衰减最小</li>
+<li>9 个数据集（<abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/HAR）上超过或持平绝大多数基线；带缺失设定下性能衰减最小</li>
 <li>多数据集联合预训练进一步提升：CHB-MIT balanced acc 0.664 → 0.707</li>
 </ul>
 </div>

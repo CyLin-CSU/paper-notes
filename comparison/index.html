@@ -930,44 +930,38 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#71" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1 总览表
+        总览表
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#72" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.2 核心分歧点解读
+        核心分歧点解读
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#73" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.3 演进脉络一句话
+        演进脉络一句话
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1006,7 +1000,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         其他任务代表成绩
@@ -1022,7 +1016,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         🔗 论文互怼链
@@ -1185,44 +1179,38 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#71" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1 总览表
+        总览表
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#72" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.2 核心分歧点解读
+        核心分歧点解读
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#73" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.3 演进脉络一句话
+        演进脉络一句话
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1261,7 +1249,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         其他任务代表成绩
@@ -1277,7 +1265,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         🔗 论文互怼链
@@ -1319,7 +1307,7 @@ document.addEventListener("DOMContentLoaded", function () {
   new Chart(el, {
     type: "bar",
     data: {
-      labels: ["BIOT", "EEGPT", "NeuroLM-B", "LaBraM-Base †", "CBraMod †", "TFM-Tokenizer"],
+      labels: ["BIOT", "EEGPT（TFM 复现 4.7M）", "NeuroLM-B", "LaBraM-Base †", "CBraMod †", "TFM-Tokenizer"],
       datasets: [{
         label: "TUEV Cohen's Kappa",
         data: [0.5273, 0.5085, 0.4285, 0.5175, 0.5588, 0.6189],
@@ -1339,10 +1327,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<ol>
-<li>六篇方法对比</li>
-</ol>
-<h4 id="71">7.1 总览表<a class="headerlink" href="#71" title="Permanent link">#</a></h4>
+<h2 id="_2">总览表<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -1484,7 +1469,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="72">7.2 核心分歧点解读<a class="headerlink" href="#72" title="Permanent link">#</a></h4>
+<h2 id="_3">核心分歧点解读<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <p><strong>① "<abbr title="词元，模型处理的最小输入单元">token</abbr> 到底是什么"——六篇的根本分野</strong></p>
 <ul>
 <li><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>：<abbr title="词元，模型处理的最小输入单元">token</abbr> = 规则切段的连续窗口，"tokenization"只是预处理；</li>
@@ -1508,7 +1493,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </ul>
 <p><strong>④ 频域信息的地位递进</strong></p>
 <p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 把 FFT 当特征工程的一种（能量向量）；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 把频谱当重构目标（发现相位贡献小）；NeuroLM 干脆去掉相位只留幅值+时域；TFM-Tokenizer 走得最远——把频率轴本身作为建模对象（频内 Transformer + 门控聚合 + 频带掩码）。这条线反映了社区共识的演进：<strong>显式的时频结构建模比隐式期望模型自己学更重要</strong>。</p>
-<h4 id="73">7.3 演进脉络一句话<a class="headerlink" href="#73" title="Permanent link">#</a></h4>
+<h2 id="_4">演进脉络一句话<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <p><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></strong>（2023）解决了"异构信号如何统一编码"（连续 <abbr title="词元，模型处理的最小输入单元">token</abbr> + 线性注意力）→ <strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>（2024）证明"低信噪比 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 能学出离散语义码且大规模预训练有效"（<abbr title="向量量化 Vector Quantization">VQ</abbr>+频谱目标，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只当靶子）→ <strong>EEGPT</strong>（2024）指出掩码目标不该是原始信号而应是高质量表示（双自监督+线性探针）→ <strong>BrainGPT</strong>（2024）把范式从掩码补全扭向自回归并冲到十亿参数 → <strong>NeuroLM</strong>（2025）把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 真正接进 <abbr title="大语言模型 Large Language Model">LLM</abbr> 实现单模型多任务指令推理 → <strong>TFM-Tokenizer</strong>（2026）回到 tokenization 本身，给出第一个"学词表、可解释、跨设备、即插即用"的完整答案。</p>
 <hr>
 <p><em>总结基于六篇论文原文；实验数字均引自各论文报告值。</em></p>
@@ -1612,7 +1597,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="_2">其他任务代表成绩<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<h3 id="_5">其他任务代表成绩<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -1643,7 +1628,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <p class="admonition-title">数据快照</p>
 <p>本表数字整理于 <strong>2026-09-19</strong>。新论文入库时请在对应行追加，并更新此日期。</p>
 </div>
-<h2 id="_3">🔗 论文互怼链<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_6">🔗 论文互怼链<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
 <p>箭头方向 = 批评/改进指向。每条边标注批评点。</p>
 <pre class="mermaid"><code>flowchart LR
     BIOT["BIOT&lt;br/&gt;2023"]:::old
@@ -1657,7 +1642,7 @@ document.addEventListener("DOMContentLoaded", function () {
     TFM -- "整窗 FFT 线性投影&lt;br/&gt;过粗、无跨频段建模" --&gt; BIOT
     EEGPT -- "FFT 只留能量丢相位，&lt;br/&gt;时域任务（P300/ERN）弱" --&gt; BIOT
     BRAINGPT -- "MAE 双向补全破坏&lt;br/&gt;时序因果结构（-2%+）" --&gt; LABRAM
-    BRAINGPT -- "MAE 范式（同为对照）" --&gt; BIOT
+    BRAINGPT -- "被其归入掩码/双向建模&lt;br/&gt;范式批评（BIOT 实为对比学习）" --&gt; BIOT
     NEUROLM -- "重构相位贡献小，&lt;br/&gt;砍掉相位只留幅值+时域" --&gt; LABRAM
     NEUROLM -- "逐任务全量微调低效，&lt;br/&gt;无多任务推理" --&gt; LABRAM
     TFM -- "固定空间 embedding&lt;br/&gt;无法跨设备（ear-EEG 缺席）" --&gt; EEGPT

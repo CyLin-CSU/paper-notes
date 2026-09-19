@@ -1373,7 +1373,7 @@
 <ul>
 <li>预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；</li>
 <li>下游：BCIC-2A/2B（运动想象）、Sleep-EDFx（睡眠分期）、KaggleERN、PhysioP300（<abbr title="事件相关电位 Event-Related Potential">ERP</abbr>）、TUAB、TUEV；</li>
-<li>结果：TUEV 上比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 提升 9.5% balanced acc；与 BENDR/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 对比在多个任务领先（且对手往往是全量微调而 EEGPT 只线性探针）；</li>
+<li>结果：TUEV 上比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 提升 9.5% balanced acc；与 BENDR/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 对比在多个任务领先（其中仅 BENDR 为全量微调，<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 同样采用线性探针协议）；</li>
 <li>消融：去掉对齐损失 L_A 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary <abbr title="词元，模型处理的最小输入单元">token</abbr> 数量 S=4 较优。</li>
 </ul>
 <hr>

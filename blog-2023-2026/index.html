@@ -1256,12 +1256,12 @@
 <p>BrainGPT（2024）则质疑范式本身：同架构同损失的消融显示，<strong>自回归比掩码建模平均高 2%+</strong>——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 是连续因果的信息流，双向补全破坏了它的自然结构。它把模型推到 1.09B 参数并验证了 scaling law，代价是需要下游图网络把单电极预训练丢掉的空间信息补回来。</p>
 <h2 id="specialist-generalist">三、使用范式：从 specialist 到 generalist 的两条路<a class="headerlink" href="#specialist-generalist" title="Permanent link">#</a></h2>
 <p>BrainGPT 用<strong>任务共享图网络</strong>联合训练 12 个基准——多任务信息的载体不是图结构，而是"电极节点被多任务梯度共同更新"；小任务受益最大（+3.9%），本质是隐式数据增强。</p>
-<p>NeuroLM 走了更激进的路：把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 当外语接进 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，指令微调统一六种任务。它诚实报告了性能仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，但零样板泛化到新 prompt 的能力是前两者没有的。<strong>多任务的价值目前在范式与效率，不在数字</strong>。</p>
+<p>NeuroLM 走了更激进的路：把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 当外语接进 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，指令微调统一六种任务。它诚实报告了性能仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，且论文称有望泛化到新 prompt（潜力表述，原文未见泛化实验验证）。<strong>多任务的价值目前在范式与效率，不在数字</strong>。</p>
 <h2 id="_2">四、绕不开的天花板：数据<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <ul>
-<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 模型 500h ≈ 2500h 效果，Huge 在 2500h 仍未饱和；</li>
+<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 500h 在 TUAB 反超 2500h、TUEV 达其 90%+，Huge 在 2500h 仍未饱和；</li>
 <li>NeuroLM：L 与 XL 验证困惑度接近 → 25000h 喂不饱十亿参数；</li>
-<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 性能单调上升。</li>
+<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 性能持续上升但增益趋缓。</li>
 </ul>
 <p>规模瓶颈之外是<strong>域偏斜</strong>：能拿到万小时级的只有临床 TUEG 体系，这解释了为什么 pretrain-then-finetune 在脑机接口类任务上的收益普遍不如临床任务——BrainGPT 甚至观察到预训练 specialist 弱于从头训练。</p>
 <h2 id="_3">五、给研究者的三点启示<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>

@@ -1330,7 +1330,7 @@
 <tr>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
 <td>TUSZ（1138h）+ TUEP + TUEG 系</td>
-<td><strong>临床癫痫数据占近半</strong>，20 个数据集摊薄</td>
+<td><strong>临床 TUEG 子集合计约 1800h（约七成，其中癫痫事件 TUSZ 约 45%）</strong>，由 20 个数据集摊薄</td>
 <td>高——BrainGPT 据此解释其 specialist 迁移偏弱</td>
 </tr>
 <tr>
@@ -1366,15 +1366,15 @@
 <p>TUEG 体系（Temple 大学）是唯一能拿到万小时级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的公开来源，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 和 NeuroLM 都重度依赖它。这解释了为什么<strong>脑机接口类任务（<abbr title="运动想象 Motor Imagery">MI</abbr>/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr>）的 pretrain-then-finetune 收益普遍不如临床任务</strong>。</p>
 <h3 id="3">3. 数据需求量与模型规模的关系<a class="headerlink" href="#3" title="Permanent link">#</a></h3>
 <ul>
-<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 用 500h 就接近 2500h 的效果；Huge 在 2500h 仍未饱和（推断需万小时级）</li>
+<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 500h 在 TUAB 反超 2500h、TUEV 达其 90%+；Huge 在 2500h 仍未饱和（原论文推断需万小时级）</li>
 <li>NeuroLM：L 和 XL 的验证困惑度接近 → 25000h 喂不饱十亿参数</li>
-<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 一直涨，未饱和</li>
+<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 性能持续上升，增益趋缓</li>
 </ul>
 <p>结论：<strong>当前 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语料规模仍是所有大模型的瓶颈</strong>，且临床偏斜短期无解（没有第二来源）。</p>
 <h3 id="4">4. 单电极拆分是"数据倍增器"<a class="headerlink" href="#4" title="Permanent link">#</a></h3>
 <p>BrainGPT 把多电极信号拆成单电极样本，等效样本量 ×E（E 为电极数）——3750 万样本里含水量高，但换来了对任意电极配置的兼容性。TFM 的单通道 tokenizer 是同一思想的 tokenization 版。</p>
 <h2 id="_4">对新建笔记的提示<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<p>读新论文时，在笔记的「实验与结果」里记录其预训练语料的：<strong>总时长（或样本数）、主力数据源、域构成</strong>。如果它报告了 scaling 实验（数据量 vs 性能曲线），单独记一段——这类实验目前只有 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/BrainGPT/EEGPT 做过，非常稀缺。</p>
+<p>读新论文时，在笔记的「实验与结果」里记录其预训练语料的：<strong>总时长（或样本数）、主力数据源、域构成</strong>。如果它报告了 scaling 实验（数据量 vs 性能曲线），单独记一段——数据 scaling 曲线目前只有 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/BrainGPT 报告过（EEGPT 做的是模型规模消融），非常稀缺。</p>
 <h2 id="_5">关联页面<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <p><a href="../../datasets/">数据集索引</a> · <a href="../../comparison/">六篇方法对比</a> · <a href="../pretraining/">预训练范式对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->

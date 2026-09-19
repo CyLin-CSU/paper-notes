@@ -1393,7 +1393,7 @@
 <h3 id="labram">第二步：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> —— "学词表但只当标签"<a class="headerlink" href="#labram" title="Permanent link">#</a></h3>
 <p><abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 式 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>（8192×64），重构目标用 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 幅值+相位（原始波形不收敛）。但 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>只在 masked <abbr title="脑电图 Electroencephalogram">EEG</abbr> modeling 里当预测目标</strong>，下游微调时 tokenizer 被丢弃，模型实际吃的仍是连续 patch embedding。</p>
 <ul>
-<li>TFM-Tokenizer 对此的批评：tokenization 的红利（压缩、归纳偏置、输入表示质量）根本没落到模型输入上。实验佐证：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 换掉 tokenizer 后 93% 指标提升。</li>
+<li>TFM-Tokenizer 对此的批评：tokenization 的红利（压缩、归纳偏置、输入表示质量）根本没落到模型输入上。实验佐证：并入 TFM tokenizer 后（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>-TFM/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 合计）93% 的指标情形提升。</li>
 </ul>
 <h3 id="neurolm-tfm-token">第三步：NeuroLM / TFM —— "<abbr title="词元，模型处理的最小输入单元">token</abbr> 真正上岗"<a class="headerlink" href="#neurolm-tfm-token" title="Permanent link">#</a></h3>
 <p>两条不同的上岗方式：</p>
@@ -1452,7 +1452,7 @@
 <hr>
 <ol>
 <li id="fn:pe">
-<p>TFM-Tokenizer 附录 C.6 消融：位置编码会让同一 motif 因位置不同学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>，移除后 Cohen's Kappa 0.5119→0.5337、利用率 12.87%→9.78%、类独有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 1.94%→2.14%。&nbsp;<a class="footnote-backref" href="#fnref:pe" title="Jump back to footnote 1 in the text">↩</a></p>
+<p>TFM-Tokenizer 附录 C.6 消融：位置编码会让同一 motif 因位置不同学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>，移除后 Cohen's Kappa 0.5119→0.5337、利用率 12.87%→9.78%、类独有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 1.94%→2.14%（此处利用率下降为正向信号：说明词表更紧凑）。&nbsp;<a class="footnote-backref" href="#fnref:pe" title="Jump back to footnote 1 in the text">↩</a></p>
 </li>
 </ol>
 </div>

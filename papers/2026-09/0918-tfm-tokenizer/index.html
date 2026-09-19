@@ -1376,7 +1376,7 @@
 <h4 id="65">6.5 实验与结果<a class="headerlink" href="#65" title="Permanent link">#</a></h4>
 <ul>
 <li>数据集：TUEV、TUAB、CHB-MIT、IIIC Seizure（+ 跨设备 EESM23 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期）；</li>
-<li>单数据集与多数据集预训练两种设定下全面超过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/EEGPT/NeuroLM/CBraMod/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：多数据集 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比复现 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> +36%）；</li>
+<li>两种设定下绝大多数指标-设定组合最优（例外：多数据集 CHB-MIT 的 balanced acc 0.6471 低于 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 0.7068）：多数据集 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比复现 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> +36%）；</li>
 <li>plug-and-play：集成进 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 后 93% 的指标-设定组合有提升（如单数据集 CHB-MIT 上 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 的 AUC-PR 提升 147%）；</li>
 <li>跨设备：ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期（仅 ~8K 标注样本、预训练完全没见过的采集方式）超过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 14%，EEGPT 因固定通道布局无法参与；</li>
 <li>消融：双域联合建模优于单时域（-R）或单频域（-S）变体；masking 策略与比例（频率 0.5 最优）；窗长 0.5s/0.25s hop 其实最好（但为对齐基线统一用 1s/0.5s）；embedding 维度 64 最优；下游 2 层即接近 12 层性能。</li>
@@ -1438,7 +1438,7 @@
 </details>
 <details class="question">
 <summary>Q4 · 这套 tokenization 的主要局限是什么？</summary>
-<p>作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>（误判为不同 motif）。此外 <abbr title="向量量化 Vector Quantization">VQ</abbr> 查表是硬量化，边界附近的微小波形差异可能被吞掉；ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 实验也表明跨设备泛化仍依赖微调数据量。</p>
+<p>作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>（误判为不同 motif）。此外属个人推断（论文仅自认窗长局限）：<abbr title="向量量化 Vector Quantization">VQ</abbr> 硬量化可能吞掉码字边界附近的微小波形差异。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>

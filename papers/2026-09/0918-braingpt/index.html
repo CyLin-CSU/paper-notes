@@ -1333,7 +1333,7 @@
 </ul>
 <p><strong>（b）自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>: Electrode Temporal Encoder）</strong></p>
 <ul>
-<li>所有电极<strong>共享</strong>一个 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式因果 Transformer：多头<strong>因果</strong>注意力（causal mask，只看过去）+ 位置前馈网络（<strong>SwiGLU</strong>：<code>W_down·(Swish(W_gate·x) ⊙ (W_up·x))</code>）；</li>
+<li>所有电极<strong>共享</strong>一个 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式因果 Transformer：多头<strong>因果</strong>注意力（causal mask，只看过去）+ 位置前馈网络（论文表述为 Swish 激活 FFN，公式 <code>W_down·(Swish(W_gate·x) ⊙ (W_up·x))</code> 实为门控形式）；</li>
 <li>轻量 MLP 预测下一个 <abbr title="词元，模型处理的最小输入单元">token</abbr>（<strong>连续原始信号值</strong>，不做 <abbr title="向量量化 Vector Quantization">VQ</abbr> 离散化）；</li>
 <li>损失：<code>L(θ) = (1/T) Σ ρ(x_i^e[t] − ETE(x_i^e[≤t]))</code>，ρ 默认 <strong><abbr title="均方误差 Mean Squared Error">MSE</abbr></strong>；</li>
 <li>意义：首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，直接建模"过去神经活动影响未来状态"的时序结构。</li>
@@ -1439,7 +1439,7 @@
 <p class="admonition-title">复现速查卡</p>
 <ul>
 <li><strong>代码</strong>：论文声明将开源（截至精读时未见仓库，复现前先确认）</li>
-<li><strong>关键超参</strong>：电极词表覆盖 E 个电极；patch 1s × D 采样点；<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> SwiGLU；预训练 lr 1e-4 / 3 epochs / batch 4096；微调 10 epochs（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 冻结，只训 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）；DeepSpeed Zero2/3 + bf16</li>
+<li><strong>关键超参</strong>：电极词表覆盖 E 个电极；patch 1s × D 采样点；<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 门控前馈（Swish 激活）；预训练 lr 1e-4 / 3 epochs / batch 4096；微调 10 epochs（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 冻结，只训 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）；DeepSpeed Zero2/3 + bf16</li>
 <li><strong>数据</strong>：3750 万单电极样本（≈1B <abbr title="词元，模型处理的最小输入单元">token</abbr>），来自 12 个基准的预训练拆分</li>
 <li><strong>算力参考</strong>：8×A800-80G；Giant 1.09B 需 Zero3 + 梯度检查点</li>
 </ul>

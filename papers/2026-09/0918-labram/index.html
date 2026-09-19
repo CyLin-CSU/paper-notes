@@ -1375,11 +1375,11 @@
 <h4 id="25">2.5 实验与结果<a class="headerlink" href="#25" title="Permanent link">#</a></h4>
 <ul>
 <li>下游：TUAB（异常检测）、TUEV（事件分类）、SEED-V（情绪）、MoBI（步态回归）；</li>
-<li>全面超过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 及所有基线：TUEV balanced acc 0.6409→0.6616（Huge）、Kappa 0.6637→0.6745；TUAB 0.8140→0.8258；</li>
+<li>大幅领先 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（其 TUEV 0.5281/Kappa 0.5273、TUAB 0.7959），且随模型规模递进：TUEV 0.6409（Base）→0.6616（Huge）、Kappa 0.6637→0.6745，TUAB 0.8140（Base）→0.8258（Huge）；</li>
 <li>重要消融：</li>
 <li>去掉 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 直接重构原始信号/频谱（Setting 2/3）：低层任务（TUAB）还行，高层任务（TUEV）明显掉——<strong>离散语义 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 对高层任务至关重要</strong>；</li>
 <li>去掉空间 embedding：预训练不收敛，下游大幅下降；</li>
-<li>线性探针/只微调后几层在 TUEV 上显著变差 → 该模型依赖全量微调。</li>
+<li>线性探针崩到 0.346；微调后 8 层（0.6541）与 4 层（0.6611）和全量微调（0.6409）相当甚至略好 → 依赖微调但不必全量。</li>
 </ul>
 <hr>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
@@ -1411,7 +1411,7 @@
 </tr>
 <tr>
 <td>TFM-Tokenizer</td>
-<td>批评其 <abbr title="词元，模型处理的最小输入单元">token</abbr> '只当训练目标、推理时被丢弃'；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 替换其 tokenizer 后 93% 指标提升</td>
+<td>批评其 <abbr title="词元，模型处理的最小输入单元">token</abbr> '只当训练目标、推理时被丢弃'；并入 TFM tokenizer 后（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>-TFM/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 合计）93% 的指标情形提升</td>
 </tr>
 <tr>
 <td>EEGPT / BrainGPT</td>
@@ -1432,7 +1432,7 @@
 </details>
 <details class="question">
 <summary>Q2 · <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 是不是可有可无？直接掩码重构不行吗？</summary>
-<p>附录 Table 7 的消融：不用 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>、直接重构原始信号或频谱（Setting 2/3），在低层任务 TUAB 上反而略好，但在高层任务 TUEV 上明显下降（0.6409 → 0.5730 / 0.5643）。离散语义码学到的抽象表示对区分事件类型这类高层任务至关重要。</p>
+<p>附录 Table 7 的消融：不用 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>、直接重构原始信号或频谱（Setting 2/3），在低层任务 TUAB 上反而略好，但在高层任务 TUEV 上明显下降（0.6409 → 0.5630 / 0.5730，Setting 2/3）。离散语义码学到的抽象表示对区分事件类型这类高层任务至关重要。</p>
 </details>
 <details class="question">
 <summary>Q3 · 对称掩码为什么能省计算？</summary>
@@ -1448,7 +1448,7 @@
 <li><strong>代码</strong>：<a href="https://github.com/935963004/LaBraM">github.com/935963004/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>（PyTorch 2.0.1 + CUDA 11.8）</li>
 <li><strong>关键超参</strong>：码本 8192×64；patch 200 点（1s）；掩码率 0.5 + 对称掩码；Base 5.8M（12 层/200 维/10 头）；lr 5e-4 cosine；EMA 0.996；温度未用于掩码（交叉熵）</li>
 <li><strong>数据</strong>：约 2500h / 20 数据集（TUSZ 1138h 为主力）；下游 TUAB/TUEV 划分严格沿用 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></li>
-<li><strong>算力参考</strong>：8×A800（40GB 级）；Huge 369M 需 Zero 并行</li>
+<li><strong>算力参考</strong>：8×A800；Huge 369M 需分布式并行（论文未披露细节，此为推测）</li>
 </ul>
 </div>
 <hr>
