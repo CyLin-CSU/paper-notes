@@ -1344,7 +1344,7 @@
 <p>其中 <span class="arithmatex">\(\mathbf{E} \in \mathbb{R}^{N \times d}\)</span>、<span class="arithmatex">\(\mathbf{F} \in \mathbb{R}^{d \times N}\)</span>（<span class="arithmatex">\(d \ll N\)</span>），注意力图由 <span class="arithmatex">\(N \times N\)</span> 压缩为 <span class="arithmatex">\(N \times d\)</span>。</p>
 <ul>
 <li>多通道长信号句子很长（64 通道 × 20s = 1280 tokens），标准注意力 O(N²) 不可行；</li>
-<li>采用 <strong>Linformer 式低秩线性注意力</strong>：引入两个可学习的低秩投影矩阵 E ∈ R^{N×d}、F ∈ R^{d×N}（d≪N），注意力图从 N×N 压缩到 N×d，时间/空间复杂度对 N 均为线性 <code>O(Nkd)</code>；</li>
+<li>采用 <strong>Linformer 式低秩线性注意力</strong>：引入两个可学习的低秩投影矩阵 <span class="arithmatex">\( E \in \mathbb{R}^{N   imes d} \)</span>、<span class="arithmatex">\( F \in \mathbb{R}^{d   imes N} \)</span>（<span class="arithmatex">\( d \ll N \)</span>），注意力图从 N×N 压缩到 N×d，时间/空间复杂度对 N 均为线性 <code>O(Nkd)</code>；</li>
 <li>每个模块 = 一层线性自注意力 + FCN，组件前加 LayerNorm、残差、dropout（pre-norm）；</li>
 <li>默认配置：4 层、8 头；句子级表示用 <strong>mean pooling</strong>（试过 [CLS] <abbr title="词元，模型处理的最小输入单元">token</abbr>，略差）；</li>
 <li>分类头：ELU + 线性层。</li>
