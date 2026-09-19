@@ -1325,12 +1325,12 @@
 <h4 id="31">3.1 问题定位<a class="headerlink" href="#31" title="Permanent link">#</a></h4>
 <p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比、被试间差异大、通道不匹配，导致掩码自编码器（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>）学到的特征质量差、BERT 式模型没有显式表示 z。EEGPT 提出仅 ~10M 参数的通用特征提取器，用<strong>双自监督</strong>（时空表示对齐 + 掩码重构）训练，下游只做 <strong>linear probing</strong>。</p>
 <h4 id="32">3.2 方法<a class="headerlink" href="#32" title="Permanent link">#</a></h4>
-<p><strong>理论动机（式 1→2）</strong>：标准 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 只有 <code>H(d_φ(z), x⊙(1−M))</code> 重构项，没有显式的 z；EEGPT 加一条表示对齐分支 <code>H(z, f_θ(x))</code>，显式地让 encoder 输出 z 携带全局语义（类似 MVEB 的最小充分表示），提升编码质量与泛化。</p>
+<p><strong>理论动机（式 1→2）</strong>：标准 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 只有 <span class="arithmatex">\( \mathcal{H}(d_\phi(z),\ x \odot (1-M)) \)</span> 重构项，没有显式的 z；EEGPT 加一条表示对齐分支 <span class="arithmatex">\( \mathcal{H}(z,\ f_\theta(x)) \)</span>，显式地让 encoder 输出 z 携带全局语义（类似 MVEB 的最小充分表示），提升编码质量与泛化。</p>
 <p><strong>局部时空 embedding</strong></p>
 <ul>
 <li>58 电极、256Hz、输入 4 秒（T=1024）；每 patch 时间长度 d=64（250ms），共 N=16 个时间 patch；</li>
 <li>patch 线性嵌入 + <strong>通道 embedding（Codex book）</strong>：所有可学习通道向量 <code>{ς_i}</code> + 通道名→向量的映射 ℜ，<strong>灵活对应任意数据集的通道配置</strong>（通道适配的关键）；</li>
-<li><code>token_{i,j} = Embed(p_{i,j}) + ς_i</code>。</li>
+<li><span class="arithmatex">\( \mathrm{token}_{i,j} = \mathrm{Embed}(p_{i,j}) + \varsigma_i \)</span>。</li>
 </ul>
 <p><strong>双自监督预训练</strong></p>
 <ol>
@@ -1338,11 +1338,11 @@
 <li><strong>时空表示对齐（JEPA 风格，损失 L_A）</strong>：</li>
 <li><strong>Momentum encoder</strong>（与 encoder 同构，EMA 动量 m=0.01）处理<strong>全部</strong> <abbr title="词元，模型处理的最小输入单元">token</abbr>（masked ∪ unmasked），作为预测目标 <code>menc_j</code>；</li>
 <li><strong>Predictor</strong>：拿 encoder 在 masked 部分的特征 + RoPE 旋转位置编码 + 可学习 query <abbr title="词元，模型处理的最小输入单元">token</abbr>，预测<strong>全部时间段</strong>的特征 <code>pred_j</code>；</li>
-<li>对齐损失：<code>L_A = −(1/N) Σ ‖pred_j, LN(menc_j)‖²</code>（LayerNorm 稳定训练）；</li>
+<li>对齐损失：<span class="arithmatex">\( \mathcal{L}_A = -\tfrac{1}{N} \sum_{j=1}^{N} \left\| \mathrm{pred}_j,\ \mathrm{LN}(\mathrm{menc}_j) \right\|_2^2 \)</span>（LayerNorm 稳定训练）；</li>
 <li><strong>掩码重构（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 风格，损失 L_R）</strong>：</li>
 <li><strong>Reconstructor</strong>：encoder 特征（masked 部分）+ predictor 特征 + 位置信息 → 重构被 mask 部分的原始 patch；encoder→reconstructor 之间有 <strong>skip connection</strong>（保持特征、加速收敛）；</li>
-<li>重构损失：<code>L_R = −(1/|M|) Σ ‖rec_{i,j}, LN(p_{i,j})‖²</code>（目标也做 LayerNorm）；</li>
-<li>总损失 <code>L = L_A + L_R</code>。</li>
+<li>重构损失：<span class="arithmatex">\( \mathcal{L}_R = -\tfrac{1}{|\mathcal{M}|} \sum_{(i,j) \in \mathcal{M}} \left\| \mathrm{rec}_{i,j},\ \mathrm{LN}(p_{i,j}) \right\|_2^2 \)</span>（目标也做 LayerNorm）；</li>
+<li>总损失 <span class="arithmatex">\( \mathcal{L} = \mathcal{L}_A + \mathcal{L}_R \)</span>。</li>
 </ol>
 <p><strong>下游 Linear Probing</strong></p>
 <ul>

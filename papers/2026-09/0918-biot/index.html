@@ -1352,7 +1352,7 @@
 <p><strong>无监督预训练（BYOL 风格对比学习）</strong></p>
 <ul>
 <li>随机 dropout 部分通道 + 从剩余通道 dropout 部分 <abbr title="词元，模型处理的最小输入单元">token</abbr>，得到扰动信号 S̃；</li>
-<li>同一 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 编码器分别编码 S 和 S̃；S̃ 侧接两层 predictor：<code>Z = BIOT(S)</code>，<code>Z̃ = predictor(BIOT(S̃))</code>；</li>
+<li>同一 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 编码器分别编码 S 和 S̃；S̃ 侧接两层 predictor：<span class="arithmatex">\( Z = \mathrm{BIOT}(S) \)</span>，<span class="arithmatex">\( \tilde{Z} = \mathrm{predictor}(\mathrm{BIOT}(\tilde{S})) \)</span>；</li>
 <li>对比损失（温度 T=0.2，sample-wise L2 归一化）让扰动版预测原信号 embedding。</li>
 </ul>
 <h4 id="13">1.3 创新点<a class="headerlink" href="#13" title="Permanent link">#</a></h4>

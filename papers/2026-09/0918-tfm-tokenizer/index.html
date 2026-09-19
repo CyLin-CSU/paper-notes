@@ -1340,7 +1340,7 @@
 <p><strong>（b）训练目标：时频掩码预测</strong></p>
 <ul>
 <li><strong>频带掩码 + 时间掩码</strong>（消融：随机掩码最差；频带掩码最关键，Kappa +8%；加时间掩码 balanced acc 再 +5%）+ <strong>对称掩码</strong>（沿用 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>，数据增强+稳定）；</li>
-<li>损失：<code>L_token = Σ‖S(f,t) − Ŝ(f,t)‖² (掩码重构) + α Σ‖sg[E_i] − v_i‖² (codebook) + β Σ‖E_i − sg[v_i]‖² (commitment)</code>；码字 EMA 更新。</li>
+<li>损失：[ \mathcal{L}<em _f_t_="(f,t)">{\mathrm{<abbr title="词元，模型处理的最小输入单元">token</abbr>}} = \underbrace{\sum</em>(f,t) \right|} \left| S(f,t) - \hat{S<em _text_掩码重构="\text{掩码重构">2^2}</em>[E_i] - v_i \right|}} \;+\; \underbrace{\alpha \sum_i \left| \mathrm{sg<em _text_codebook="\text{codebook">2^2}</em>[v_i] \right|}} \;+\; \underbrace{\beta \sum_i \left| E_i - \mathrm{sg<em _text_commitment="\text{commitment">2^2}</em> ]；码字 EMA 更新。}</li>
 </ul>
 <p><strong>（c）下游 Transformer</strong></p>
 <ul>
