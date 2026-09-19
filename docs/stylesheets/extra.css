@@ -148,3 +148,37 @@
   cursor: pointer;
   user-select: none;
 }
+
+/* 数据集×论文使用矩阵 */
+.mx-wrap { overflow-x: auto; }
+.mx-matrix { border-collapse: separate; border-spacing: 3px; width: auto; }
+.mx-matrix th {
+  font-size: 0.7rem;
+  text-align: center;
+  white-space: nowrap;
+  background: transparent;
+}
+.mx-matrix tbody th {
+  text-align: left;
+  padding-right: 0.6rem;
+  font-weight: 500;
+}
+.mx-cell {
+  display: inline-block;
+  min-width: 2.1rem;
+  text-align: center;
+  padding: 0.25rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: default;
+}
+.mx-p { background: #40c46333; color: #1a7f37; }
+.mx-d { background: #4083ec33; color: #1f5fbf; }
+.mx-b { background: #8250df33; color: #6639ba; }
+.mx-n { color: var(--md-default-fg-color--lighter); }
+[data-md-color-scheme="slate"] .mx-p { color: #7ee787; }
+[data-md-color-scheme="slate"] .mx-d { color: #79c0ff; }
+[data-md-color-scheme="slate"] .mx-b { color: #d2a8ff; }
+.mx-legend { font-size: 0.72rem; color: var(--md-default-fg-color--light); }
+.mx-legend .mx-cell { margin: 0 0.15rem; }
