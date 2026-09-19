@@ -26,22 +26,22 @@ BrainGPT：自回归 EEG 通用模型 (arXiv 2024)
 
 **（a）电极级建模策略（Electrode-wise Modeling）**
 
-- 多电极 EEG 先切成 T 个 1 秒区间，每区间 D 个均匀采样点；再**把每个电极的时间序列拆成独立训练样本** `x_i^e ∈ R^{T×D}`——天然适配任意电极数/组合；
-- **电极词表** `V ∈ R^{E×D}`：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 **prefix 条件 token** 拼在序列最前面（告诉模型信号来自哪个电极）；
+- 多电极 EEG 先切成 T 个 1 秒区间，每区间 D 个均匀采样点；再**把每个电极的时间序列拆成独立训练样本** \( x_i^e \in \mathbb{R}^{T \times D} \)——天然适配任意电极数/组合；
+- **电极词表** \( \mathcal{V} \in \mathbb{R}^{E \times D} \)：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 **prefix 条件 token** 拼在序列最前面（告诉模型信号来自哪个电极）；
 - 预训练集：3750 万个单电极样本，约 10 亿 token。
 
 **（b）自回归预训练（ETE: Electrode Temporal Encoder）**
 
 - 所有电极**共享**一个 GPT 式因果 Transformer：多头**因果**注意力（causal mask，只看过去）+ 位置前馈网络（论文表述为 Swish 激活 FFN，公式 `W_down·(Swish(W_gate·x) ⊙ (W_up·x))` 实为门控形式）；
 - 轻量 MLP 预测下一个 token（**连续原始信号值**，不做 VQ 离散化）；
-- 损失：`L(θ) = (1/T) Σ ρ(x_i^e[t] − ETE(x_i^e[≤t]))`，ρ 默认 **MSE**；
+- 损失：\( \mathcal{L}(\theta) = \tfrac{1}{T} \sum_{t=1}^{T} \rho\!\left( x_i^e[t] - \mathrm{ETE}(x_i^e[\le t]) \right) \)，ρ 默认 **MSE**；
 - 意义：首个自回归 EEG 模型，直接建模"过去神经活动影响未来状态"的时序结构。
 
 **（c）多任务迁移学习（TEG: Task-shared Electrode Graph）**
 
 - ETE **冻结**，只作特征提取骨干；
-- 每个样本的每条电极序列末尾追加一个可学习 special token c（利用因果注意力把整条序列信息汇聚到该位置），取出该位置输出作为电极表示 `z_j ∈ R^{E_j×D}`；
-- **全局电极图**：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 `G ∈ R^{E×D}`；每个样本只激活其电极对应的子图 `G_j`（indicator 矩阵 `I_{G_j}` + `diag(z_j)` 注入表示，式 10）；
+- 每个样本的每条电极序列末尾追加一个可学习 special token c（利用因果注意力把整条序列信息汇聚到该位置），取出该位置输出作为电极表示 \( z_j \in \mathbb{R}^{E_j \times D} \)；
+- **全局电极图**：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 \( \mathcal{G} \in \mathbb{R}^{E \times D} \)；每个样本只激活其电极对应的子图 `G_j`（indicator 矩阵 `I_{G_j}` + `diag(z_j)` 注入表示，式 10）；
 - **图注意力机制**（GAT）：α_mn = ReLU(aᵀ[W h_m ‖ W h_n]) 计算节点相关性，masking 系数 β_mn（同子图=1，否则 0）保证交互只发生在激活子图内，K 层堆叠 + 残差 + pre-norm；
 - 同一 batch 内不同数据集/任务通过构造各自的 β mask 矩阵统一训练；
 - 图网络池化节点表示 → 任务专属头（分类或回归）。

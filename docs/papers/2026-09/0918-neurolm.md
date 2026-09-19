@@ -27,12 +27,12 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
 
 **阶段一：文本对齐神经 Tokenizer（text-aligned neural tokenizer）**
 
-- 在 LaBraM 的 VQ tokenizer 基础上改进，codebook `V ∈ R^{K×D}`（8192），ℓ2 归一化最近邻查表；
+- 在 LaBraM 的 VQ tokenizer 基础上改进，codebook \( \mathcal{V} \in \mathbb{R}^{K \times D} \)（8192），ℓ2 归一化最近邻查表；
 - **改进 1——时频双域重构（vector-quantized temporal-frequency prediction）**：LaBraM 重构幅值+相位，NeuroLM 发现相位贡献很小，改为**两个独立 decoder**：时域 decoder 重构原始信号 + 频域 decoder 重构 DFT 幅值（幅值做样本内 z-score）；损失 L1 = 时域重构 + 频域重构 + codebook loss + commitment loss；
 - **改进 2——EEG-文本空间对齐**：因 EEG-text 成对数据稀缺、EEG 内容难以用语言完整描述，放弃 embedding 级对齐，改用**空间级（space-wise）对齐**：
   - 训练一个 domain classifier C 判断 embedding 来自 EEG 还是文本（文本 embedding 每批随机采自 GPT-2 词表）；
   - VQ encoder 后接**梯度反转层（GRL, Ganin et al. 2016）**对抗训练，把 EEG embedding 推入文本 embedding 空间；
-  - 总目标：`min L1 + λ Σ d_i log C(h_i)`，λ 随训练从 0 渐增到 1（`λ = 2/(1+e^{−10t/T}) − 1`）。
+  - 总目标：`min L1 + λ Σ d_i log C(h_i)`，λ 随训练从 0 渐增到 1（\( \lambda = \tfrac{2}{1+e^{-10t/T}} - 1 \)）。
 
 **阶段二：多通道自回归预训练（multi-channel autoregressive pre-training）**
 

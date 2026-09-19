@@ -57,7 +57,7 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 2. **掩码方向反转**：encoder 看被 mask 的稀疏部分、momentum encoder 看全量，迫使 encoder 输出含全局信息；
 3. **通道 Codex book**（名字→向量映射）实现跨设备/跨通道配置适配；
 4. **Linear probing 达到 SOTA**：证明学到的特征本身足够通用，小样本下游免微调；
-5. 参数规模 scaling law 实证：`ACC = (33.6·N)^0.029`、`L_R = (0.72·N)^{−0.014}`。
+5. 参数规模 scaling law 实证：\( \mathrm{ACC} = (33.6 \cdot N)^{0.029} \)、\( \mathcal{L}_R = (0.72 \cdot N)^{-0.014} \)。
 
 #### 3.4 流程
 
