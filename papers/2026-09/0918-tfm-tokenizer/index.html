@@ -1340,8 +1340,9 @@
 <p><strong>（b）训练目标：时频掩码预测</strong></p>
 <ul>
 <li><strong>频带掩码 + 时间掩码</strong>（消融：随机掩码最差；频带掩码最关键，Kappa +8%；加时间掩码 balanced acc 再 +5%）+ <strong>对称掩码</strong>（沿用 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>，数据增强+稳定）；</li>
-<li>损失：[ \mathcal{L}<em _f_t_="(f,t)">{\mathrm{<abbr title="词元，模型处理的最小输入单元">token</abbr>}} = \underbrace{\sum</em>(f,t) \right|} \left| S(f,t) - \hat{S<em _text_掩码重构="\text{掩码重构">2^2}</em>[E_i] - v_i \right|}} \;+\; \underbrace{\alpha \sum_i \left| \mathrm{sg<em _text_codebook="\text{codebook">2^2}</em>[v_i] \right|}} \;+\; \underbrace{\beta \sum_i \left| E_i - \mathrm{sg<em _text_commitment="\text{commitment">2^2}</em> ]；码字 EMA 更新。}</li>
+<li>损失：总损失 = 掩码重构 + <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> + commitment 三项之和（下式）；码字用 EMA 更新：</li>
 </ul>
+<div class="arithmatex">\[ \mathcal{L}_{\mathrm{token}} = \underbrace{\sum_{(f,t)} \left\| S(f,t) - \hat{S}(f,t) \right\|_2^2}_{\text{掩码重构}} \;+\; \underbrace{\alpha \sum_i \left\| \mathrm{sg}[E_i] - v_i \right\|_2^2}_{\text{codebook}} \;+\; \underbrace{\beta \sum_i \left\| E_i - \mathrm{sg}[v_i] \right\|_2^2}_{\text{commitment}} \]</div>
 <p><strong>（c）下游 Transformer</strong></p>
 <ul>
 <li><abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 查表（<strong>用 <abbr title="向量量化 Vector Quantization">VQ</abbr> <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 初始化</strong>）+ 通道/位置 embedding + [CLS] <abbr title="词元，模型处理的最小输入单元">token</abbr> → <strong>线性注意力 Transformer</strong>（仅 ~0.7M 参数）；</li>
