@@ -85,7 +85,7 @@ def cmd_log(message: str) -> None:
     today_str = today()
     entry = f"- **{today_str}** · {message}\n"
     # 插入到样式化时间线 <ul> 的第一条位置
-    pattern = r'(<ul class="timeline" markdown>\s*\n)'
+    pattern = r'(<ul class="timeline"[^>]*>\s*\n)'
     if not re.search(pattern, text):
         print('[!] index.md 中找不到 <ul class="timeline" markdown> 时间线')
         sys.exit(1)
