@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-09-21** · 新增分类「模型架构基础」：首篇 LoRA 低秩适配精读（原论文 + 变体族谱 + EEG 语境用法）
+
 - **2026-09-20** · 全站内容审查：2 个审查代理核查 21 处问题并全部修复（含数据集矩阵严重错误）
 
 - **2026-09-19** · 新增专题：基座来源分析（从零训练 vs 现成 Base Model）
@@ -70,6 +72,20 @@ title: 首页
     ICLR 2026 · ~1.9M 参数
 
     单通道**时频 motif 词表**，离散 token 真正作为模型输入。tags: `tokenization` `时频motif`
+
+</div>
+
+## :material-cube-unfolded: 模型架构基础
+
+大模型通用组件的精读与速查——与 EEG 无关也值得掌握的基本功。
+
+<div class="grid cards" markdown>
+
+- :material-angle-acute:{ .lg .middle } **[LoRA · 低秩适配](basics/lora.md)**
+    ---
+    ICLR 2022 · 微调 0.02% 参数
+
+    冻结底座 + 低秩旁路 BA：参数高效微调的**事实标准**，含变体族谱与 EEG 用法。tags: `LoRA` `参数高效微调`
 
 </div>
 
