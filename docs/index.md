@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **6** 篇 · NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **7** 篇（含 1 篇 RF 跨领域）· NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。++ctrl+k++ 全文搜索。
 
@@ -15,6 +15,8 @@ title: 首页
 ## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-09-21** · 新增跨领域精读：RF-GPT——射频时频图 + 多模态 LLM（RFLM 概念首作）
 
 - **2026-09-21** · 新增分类「模型架构基础」：首篇 LoRA 低秩适配精读（原论文 + 变体族谱 + EEG 语境用法）
 
@@ -73,6 +75,12 @@ title: 首页
 
     单通道**时频 motif 词表**，离散 token 真正作为模型输入。tags: `tokenization` `时频motif`
 
+- :material-radio-tower:{ .lg .middle } **[RF-GPT](papers/2026-09/0921-rf-gpt.md)** `跨领域`
+    ---
+    arXiv 2026 · Qwen2.5-VL 3B/7B
+
+    射频**时频图当图片**喂进多模态 LLM，纯合成数据零人工标注。tags: `时频图` `多模态LLM` `合成数据`
+
 </div>
 
 ## :material-cube-unfolded: 模型架构基础
@@ -123,9 +131,9 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 6 篇 |
+| 精读论文 | 7 篇（EEG 6 + 跨领域 RF 1） |
 | 发表跨度 | 2023 – 2026 |
-| 涉及会议 | NeurIPS ×2 · ICLR ×3 · arXiv ×1 |
+| 涉及会议 | NeurIPS ×2 · ICLR ×3 · arXiv ×2（另 LoRA 基础页 ICLR 2022） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
 | 模型规模跨度 | 1.9M — 1.09B（按各篇主模型口径） |
 

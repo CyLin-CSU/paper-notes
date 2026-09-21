@@ -86,6 +86,7 @@ nav:
           - 0918 · BrainGPT (arXiv 2024): papers/2026-09/0918-braingpt.md
           - 0918 · NeuroLM (ICLR 2025): papers/2026-09/0918-neurolm.md
           - 0918 · TFM-Tokenizer (ICLR 2026): papers/2026-09/0918-tfm-tokenizer.md
+          - 0921 · RF-GPT (arXiv 2026 · 跨领域): papers/2026-09/0921-rf-gpt.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
   - 主题专题:
