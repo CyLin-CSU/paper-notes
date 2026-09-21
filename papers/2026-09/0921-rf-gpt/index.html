@@ -8,10 +8,10 @@
       
       
       
-        <link rel="prev" href="../0918-neurolm/">
+        <link rel="prev" href="../0918-tfm-tokenizer/">
       
       
-        <link rel="next" href="../0921-rf-gpt/">
+        <link rel="next" href="../../../basics/lora/">
       
       
         
@@ -22,7 +22,7 @@
     
     
       
-        <title>TFM-Tokenizer: Tokenizing Single-Channel EEG with Time-Frequency Motif Learning - Paper Notes · 论文阅读笔记</title>
+        <title>RF-GPT: Teaching AI to See the Wireless World - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tfm-tokenizer-tokenizing-single-channel-eeg-with-time-frequency-motif-learning" class="md-skip">
+        <a href="#rf-gpt-teaching-ai-to-see-the-wireless-world" class="md-skip">
           跳转至
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              TFM-Tokenizer: Tokenizing Single-Channel EEG with Time-Frequency Motif Learning
+              RF-GPT: Teaching AI to See the Wireless World
             
           </span>
         </div>
@@ -564,6 +564,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../0918-tfm-tokenizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · TFM-Tokenizer (ICLR 2026)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -583,7 +618,7 @@
   <span class="md-ellipsis">
     
   
-    0918 · TFM-Tokenizer (ICLR 2026)
+    0921 · RF-GPT (arXiv 2026 · 跨领域)
   
 
     
@@ -608,7 +643,7 @@
   <span class="md-ellipsis">
     
   
-    0918 · TFM-Tokenizer (ICLR 2026)
+    0921 · RF-GPT (arXiv 2026 · 跨领域)
   
 
     
@@ -641,10 +676,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#61" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.1 问题定位
+        1 问题定位
       
     </span>
   </a>
@@ -652,10 +687,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#62" class="md-nav__link">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.2 方法
+        2 方法
       
     </span>
   </a>
@@ -663,10 +698,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#63" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.3 创新点
+        3 数据流水线：零人工标注的三段式（本文最大贡献）
       
     </span>
   </a>
@@ -674,10 +709,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#64" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.4 流程
+        4 创新点
       
     </span>
   </a>
@@ -685,10 +720,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#65" class="md-nav__link">
+  <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.5 实验与结果
+        5 流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 实验与结果
       
     </span>
   </a>
@@ -754,41 +800,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../0921-rf-gpt/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    0921 · RF-GPT (arXiv 2026 · 跨领域)
-  
-
-    
-  </span>
-  
-  
-    
-  
-  
-    <span class="md-status md-status--精读"></span>
-  
-
-  
-
-      </a>
     </li>
   
 
@@ -1311,10 +1322,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#61" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.1 问题定位
+        1 问题定位
       
     </span>
   </a>
@@ -1322,10 +1333,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#62" class="md-nav__link">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.2 方法
+        2 方法
       
     </span>
   </a>
@@ -1333,10 +1344,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#63" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.3 创新点
+        3 数据流水线：零人工标注的三段式（本文最大贡献）
       
     </span>
   </a>
@@ -1344,10 +1355,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#64" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.4 流程
+        4 创新点
       
     </span>
   </a>
@@ -1355,10 +1366,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#65" class="md-nav__link">
+  <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.5 实验与结果
+        5 流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 实验与结果
       
     </span>
   </a>
@@ -1440,83 +1462,135 @@
   
 
 
-<h1 id="tfm-tokenizer-tokenizing-single-channel-eeg-with-time-frequency-motif-learning">TFM-Tokenizer: Tokenizing Single-Channel <abbr title="脑电图 Electroencephalogram">EEG</abbr> with Time-Frequency Motif Learning<a class="headerlink" href="#tfm-tokenizer-tokenizing-single-channel-eeg-with-time-frequency-motif-learning" title="Permanent link">#</a></h1>
+<h1 id="rf-gpt-teaching-ai-to-see-the-wireless-world">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>: Teaching AI to See the Wireless World<a class="headerlink" href="#rf-gpt-teaching-ai-to-see-the-wireless-world" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>ICLR 2026</strong></p>
+<p><strong>arXiv 2026</strong>（eess.SP, 2602.14833）· Khalifa University / 浙江大学 / Université de Lorraine —— 跨领域精读：这是"时频图 + 大模型"在<strong>射频域</strong>的完整落地，与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 时频路线互为镜像参照。</p>
 </blockquote>
-<p>TFM-Tokenizer (ICLR 2026)</p>
-<p><strong>作者</strong>：Jathurshan Pradeepkumar, Xihao Piao, Zheng Chen, Jimeng Sun（UIUC / 大阪大学 SANKEN）</p>
-<h4 id="61">6.1 问题定位<a class="headerlink" href="#61" title="Permanent link">#</a></h4>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> tokenization 是被忽视的关键问题。对现有方法的批评：① 多数基础模型只是把连续信号规则切段（"仅仅离散化"，没有学词表）；② <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 虽学了 <abbr title="向量量化 Vector Quantization">VQ</abbr> tokenizer，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>只作为训练目标、推理时被丢弃</strong>，基础模型仍然吃连续段级 embedding——没享受 tokenization 的红利。TFM-Tokenizer 要学一个<strong>时频 motif 词表</strong>，并把离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>真正作为下游模型输入</strong>。</p>
-<p>三大设计原则：① <strong>单通道级</strong>训练（channel-agnostic，跨设备泛化）；② <strong>Token 分辨率</strong>应捕捉 motif（短时、重复、有判别意义的时频波形模式，如振荡爆发、棘波）；③ 学习目标应<strong>显式包含时频表示</strong>（纯时域 motif 会被低频主导、丢失高频信息）。</p>
-<h4 id="62">6.2 方法<a class="headerlink" href="#62" title="Permanent link">#</a></h4>
-<p><strong>（a）TFM-Tokenizer（单通道 motif 学习，双路径）</strong></p>
+<p><strong>作者</strong>：Hang Zou, Yu Tian, Bohao Wang, Lina Bariah, Samson Lasaulce, Chongwen Huang, Mérouane Debbah</p>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
 <ul>
-<li>输入：单通道 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，切重叠 patch（窗长 L、hop H），每 patch 对应一个 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 频谱窗口 <code>S_i</code>（窗长 200 点=1s，hop 100=0.5s，Hann 窗，只取幅值）；</li>
-<li><strong>频域路径——Localized Spectral Window Encoder</strong>（相比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>"整窗过一个线性层"的改进）：</li>
-<li><strong>Frequency Patch Encoder</strong>：每个频谱窗沿频率轴切成 P 个不重叠 patch（每 patch 覆盖 Δf 个频点），线性投影 + GroupNorm + GeLU；</li>
-<li><strong>Frequency Transformer</strong>：沿频率轴做注意力，建模<strong>窗内跨频段依赖</strong>；</li>
-<li><strong>Gated Patchwise Aggregation</strong>：sigmoid 门控聚合（强调重要频段、抑制无关频段，如睡眠任务只关心 &lt;32Hz）；</li>
-<li><strong>时域路径——Temporal Encoder</strong>：原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> patch 线性投影 + GeLU + GroupNorm；</li>
-<li>两路 embedding <strong>拼接</strong> → <strong>Temporal Transformer</strong> 建模 N 个 patch 间的长程依赖 → 输出量化进 <abbr title="向量量化 Vector Quantization">VQ</abbr> 词表（<strong><abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 8192</strong>，与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 对齐以便公平比较）；</li>
-<li><strong>关键设计：不加位置编码</strong>——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 非平稳、motif 可出现在任意位置；消融证明去掉 <abbr title="位置编码 Positional Encoding">PE</abbr> 后 Cohen's Kappa 0.5119→0.5337，<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率下降、类独有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 上升（避免同一 motif 因位置不同学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的冗余）。</li>
+<li>提出 <strong>RFLM</strong>（radio-frequency language model）概念并给出首个实现 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>：IQ 波形 → <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 时频图 → <strong>直接复用预训练 VLM 的视觉编码器</strong> → 线性 adapter → 解码器 <abbr title="大语言模型 Large Language Model">LLM</abbr> 生成 RF-grounded 回答</li>
+<li>完全跳过自监督预训练：6 种无线技术的<strong>标准合规波形生成器</strong>造出 ~12,000 场景，"配置即标签"确定性 captioning + 文本 <abbr title="大语言模型 Large Language Model">LLM</abbr> 合成 <strong>0.625M 指令对，零人工标注</strong></li>
+<li>通用 VLM（Qwen2.5-VL、<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5）精心 prompt 后仍<strong>接近随机猜测</strong>；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 在技术识别达 <strong>99.6% joint 准确率</strong>，5 个 benchmark 全面碾压</li>
+<li>消融最扎心的一条：<strong>IQ 不平衡是最具破坏性的损伤</strong>（镜像/交叉泄漏直接毁掉视觉结构）——对所有"时频图当图片"的方案都是普适警示</li>
 </ul>
-<p><strong>（b）训练目标：时频掩码预测</strong></p>
+</div>
+<h4 id="1">1 问题定位<a class="headerlink" href="#1" title="Permanent link">#</a></h4>
+<p><abbr title="大语言模型 Large Language Model">LLM</abbr> 与多模态模型已统一了文本、视觉、音频，唯独<strong>射频（RF）信号</strong>——无线通信、雷达、ISAC 的物理层载体——没有被纳入基础模型框架。两侧各有困境：</p>
 <ul>
-<li><strong>频带掩码 + 时间掩码</strong>（消融：随机掩码最差；频带掩码最关键，Kappa +8%；加时间掩码 balanced acc 再 +5%）+ <strong>对称掩码</strong>（沿用 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>，数据增强+稳定）；</li>
-<li>损失：总损失 = 掩码重构 + <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> + commitment 三项之和（下式）；码字用 EMA 更新：</li>
+<li><strong>传统 RF 深度学习</strong>是任务专用的窄模型（调制识别/信道估计/波束选择/干扰识别/频谱感知），四个共性局限：① 每个任务一套架构、数据集、训练管线，难以复用；② 多样且标注良好的 RF 数据集昂贵（要专家标注）；③ 换 SNR/信道/硬件场景性能骤降；④ 只吐标签或回归值，无解释、无自然语言交互接口；</li>
+<li><strong>电信 <abbr title="大语言模型 Large Language Model">LLM</abbr></strong>（TelecomGPT 等 LLM4Telecom 一系）是 text-centric 的——处理工单、日志、KPI、配置表，<strong>不碰物理层</strong>，形成模态鸿沟；</li>
+<li>已有的无线/RF 基础模型（WFM、LWM、WirelessGPT 类）仍依赖任务专属输出头 + 逐任务微调，模型偏小、benchmark 窄，难以按 scaling law 扩展。</li>
 </ul>
-<div class="arithmatex">\[ \mathcal{L}_{\mathrm{token}} = \underbrace{\sum_{(f,t)} \left\| S(f,t) - \hat{S}(f,t) \right\|_2^2}_{\text{掩码重构}} \;+\; \underbrace{\alpha \sum_i \left\| \mathrm{sg}[E_i] - v_i \right\|_2^2}_{\text{codebook}} \;+\; \underbrace{\beta \sum_i \left\| E_i - \mathrm{sg}[v_i] \right\|_2^2}_{\text{commitment}} \]</div>
-<p><strong>（c）下游 Transformer</strong></p>
-<ul>
-<li><abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 查表（<strong>用 <abbr title="向量量化 Vector Quantization">VQ</abbr> <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 初始化</strong>）+ 通道/位置 embedding + [CLS] <abbr title="词元，模型处理的最小输入单元">token</abbr> → <strong>线性注意力 Transformer</strong>（仅 ~0.7M 参数）；</li>
-<li><strong>masked <abbr title="词元，模型处理的最小输入单元">token</abbr> prediction 预训练</strong>（随机 mask 跨通道跨时间的 <abbr title="词元，模型处理的最小输入单元">token</abbr>，交叉熵预测）——同时增强对缺失通道/损坏时间段的鲁棒性；</li>
-<li>最后微调分类。</li>
-</ul>
-<p><strong>（d）Plug-and-play 集成</strong></p>
-<ul>
-<li><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>-TFM</strong>：用 TFM-Tokenizer 替换 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 patch 线性投影层（<abbr title="词元，模型处理的最小输入单元">token</abbr> 直接作 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 输入）；</li>
-<li><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM</strong>：用 TFM-Tokenizer 替换 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的神经 tokenizer 做 masked <abbr title="脑电图 Electroencephalogram">EEG</abbr> modeling。</li>
-</ul>
-<h4 id="63">6.3 创新点<a class="headerlink" href="#63" title="Permanent link">#</a></h4>
+<p>作者的答案是把 RFLM 定义为<strong>以 RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 为条件的条件语言模型</strong>：给定一段 RF 录波，能用自然语言回答"这个频段里有哪些调制和技术？""有没有重叠传输、时频关系如何？""该行为是否符合相关无线标准？"，并输出结构化 JSON 供下游控制器使用。RF 恰好特别适合合成数据：标准波形生成器可以产生<strong>精确的 ground truth</strong>（调制类型、SNR、带宽、资源分配全是仿真器内部变量），从而摆脱专家标注。</p>
+<h4 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h4>
+<p><strong>（a）RFLM 形式化</strong>：RF 编码器把复基带 IQ 序列映射为 M 个 d 维 RF <abbr title="词元，模型处理的最小输入单元">token</abbr>：</p>
+<div class="arithmatex">\[ \varphi_{\mathrm{RF}}: \mathbb{C}^T \to \mathbb{R}^{M \times d}, \qquad \mathcal{P}_\Theta(\mathbf{y} \mid \varphi_{\mathrm{RF}}(\mathbf{x})) = \prod_{t=1}^{N} \mathcal{P}_\Theta\big(y_t \mid \mathbf{y}_{&lt;t}, \varphi_{\mathrm{RF}}(\mathbf{x})\big) \]</div>
+<p>RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为前缀条件驱动自回归解码。实现上完整编码器是"频谱图管线 ∘ 视觉管线"的复合：</p>
+<div class="arithmatex">\[ \varphi_{\mathrm{RF}}(\mathbf{x}) = \mathcal{E}_v\big(\mathrm{Spec}(\mathbf{x})\big) \]</div>
+<p><strong>（b）频谱图前端——为什么不直接吃原始 IQ</strong>：原始 IQ 采样率极高，直接进 Transformer 计算不可行，且丢掉时频结构的强归纳偏置。于是先做 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr>（窗 w、FFT 点数 F、hop H_hop），再对复谱做 dB 幅值压缩：</p>
+<div class="arithmatex">\[ A_{\mathrm{dB}}[k,t] = 10 \log_{10}\big(|S[k,t]|^2 + \varepsilon\big) \]</div>
+<p>归一化后映射为灰度图（C=1）或固定 colormap（viridis）伪 RGB 图（C=3），交给<strong>预训练视觉编码器</strong>。选这个路线的两个动机：① RF 信号跨技术的载频/带宽/采样率差异巨大，单一 raw-IQ tokenizer 很难同时高效适配窄带、宽带、多标准场景；② <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 本身就是有效的 RF 特征提取器，而图像预训练的视觉编码器能从任何图像（包括谱图）中提取通用语义结构。谱图切 P×P patch 后线性投影 + 可学习位置 embedding，过 Transformer 编码器层；<strong>不设 [CLS] <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>，全部 M 个 patch <abbr title="词元，模型处理的最小输入单元">token</abbr> 都作为 RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 交给语言模型。</p>
+<p>关于<strong>幅值谱丢相位</strong>：作者明确区分两个范畴——真正的相位重构（从幅值恢复整个波形，PhaseLift 一类）不在此列；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 只推任务相关属性（调制族、技术、SNR 档位、重叠结构），这些是波形的<strong>多对一映射</strong>，主要取决于时频能量模式而非逐样本相位，因此幅值谱作为"丰富但有损"的前端足够。</p>
+<p><strong>（c）RF adapter 与 <abbr title="大语言模型 Large Language Model">LLM</abbr></strong>：视觉编码器输出的 M 个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 经一个线性投影（LLaVA 式模态 adapter）映射到 <abbr title="大语言模型 Large Language Model">LLM</abbr> 嵌入维度，与文本 <abbr title="词元，模型处理的最小输入单元">token</abbr> 查表 embedding 拼接成单一序列：RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 在前、文本在后。解码器骨干是 Qwen 系现代设计——pre-norm <strong>RMSNorm</strong> + <strong>GQA</strong> 因果注意力 + <strong>SwiGLU 门控 MLP</strong> + RoPE。输出只取文本位置的 logits。</p>
+<p><strong>（d）RF-grounded SFT</strong>：在合成三元组 (x, q, y) 上做监督指令微调，(q, y) 按角色标记拼成单序列、RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 注入为前缀，<strong>梯度只算答案 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>，标准自回归交叉熵：</p>
+<div class="arithmatex">\[ \mathcal{L}(\Theta) = -\sum_{(\mathbf{x},\,q,\,\mathbf{y}) \in \mathcal{D}_{\mathrm{RF}}} \sum_{t=1}^{|\mathbf{y}|} \log \mathcal{P}_\Theta\big(y_t \mid \mathbf{y}_{&lt;t},\, q,\, \varphi_{\mathrm{RF}}(\mathbf{x})\big) \]</div>
+<p>关键性质：<strong>所有监督都是 RF-grounded 的</strong>——答案里的每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 都由构造保证与底层 RF 场景一致，迫使模型把谱图中的 RF 模式与语言中的 RF 概念对齐。</p>
+<h4 id="3">3 数据流水线：零人工标注的三段式（本文最大贡献）<a class="headerlink" href="#3" title="Permanent link">#</a></h4>
+<p><strong>第一段 · 标准合规波形生成</strong>：用 MATLAB Wireless Waveform Generator 家族（5G/LTE/UMTS/WLAN/卫星通信/蓝牙 Toolbox）为 <strong>5G NR、LTE、UMTS、WLAN、DVB-S2、Bluetooth</strong> 六种技术生成宽带场景。流程是统一模板：随机采样技术配置 → 过 MATLAB API 生成 → <strong>拒绝采样</strong>保证合规（PRB/RU 分配非法、带宽-numerology 不兼容、导频模式不一致即拒绝重采）→ 可选信道与损伤（衰落、频率选择性信道、目标 SNR）→ 全部配置与信道参数逐字存入元数据。另用 <strong>TorchSig</strong> 补充宽带调制的多样性（WBMC 即基于其 57 类调制扩展为宽带设定）。</p>
+<p><strong>第二段 · 确定性 captioning</strong>：因为每个谱图都由已知配置对象生成，标签天然零噪声。caption 信息按<strong>五级信息分层</strong>——Summary（一句话概述）/ Global visual（SSB、CSI-RS/SRS burst 等全局可视模式）/ Global context（带宽、SCS 等元数据可知但视觉不显的量）/ Signal visual（每信号的相对 SNR 与时频占据）/ Signal context（视觉难推的上下文，如 DM-RS/PTRS 设置）。</p>
+<p><strong>第三段 · 指令合成</strong>：确定性的密集 caption 太长、顺序固定、不是指令格式，直接训会难优化。于是按任务模板库（信号计数、调制/技术识别、信息抽取、重叠分析、一致性检查、开放描述）采样模板，把五级信息按难度选择性拼进隐藏上下文，交给强文本 <abbr title="大语言模型 Large Language Model">LLM</abbr>（<strong><abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-OSS-120B</strong>）生成格式受控的指令-答案对（纯标签/JSON/短段落）。</p>
+<p>规模：<strong>~12,000 个 RF 场景、0.625M 指令对，全程零人工标注</strong>。</p>
+<h4 id="4">4 创新点<a class="headerlink" href="#4" title="Permanent link">#</a></h4>
 <ol>
-<li><strong>首次系统研究 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的"可学习词表"问题，且 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为真正的输入</strong>（与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>"一次性标签"形成对照）；</li>
-<li><strong>时频 motif 作为离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>：双路径显式建模时频结构（频域路径窗内跨频段依赖 + 门控聚合），<abbr title="词元，模型处理的最小输入单元">token</abbr> 具有生理可解释性（如 <abbr title="词元，模型处理的最小输入单元">token</abbr> 4035 稳定对应 PLED 的"棘波-慢波"周期模式）；</li>
-<li><strong>单通道、channel-agnostic</strong>：不依赖 10-20 系统，可迁移到 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 等非标准设备（EEGPT 的固定空间 embedding 则无法扩展到该场景）；</li>
-<li><strong>去掉位置编码</strong>的 tokenizer 设计（有消融和理论论证）；</li>
-<li><strong>模型极小</strong>：tokenizer ~1.2M + 下游 ~0.7M ≈ 1.9M，比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（3.2M）、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（5.8M+8.6M）小，性能反而更好；</li>
-<li><abbr title="词元，模型处理的最小输入单元">token</abbr> 质量分析体系：类-<abbr title="词元，模型处理的最小输入单元">token</abbr> 独有性（uniqueness）、类内一致性（检索 precision@K）、频率学习能力（<abbr title="词元，模型处理的最小输入单元">token</abbr> 序列谱熵）、<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率。</li>
+<li><strong>提出并实现 RFLM 概念</strong>：以 RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 为条件的语言模型——RF 感知与高层推理之间的第一座桥；</li>
+<li><strong>零 RF 预训练</strong>：不训任何 RF 编码器，把频谱图当图片、整个复用预训练 VLM 的视觉栈，SFT 一步到位；</li>
+<li><strong>全自动数据飞轮</strong>：标准合规生成器（拒绝采样保真）+ "配置即标签"确定性 captioning + 文本 <abbr title="大语言模型 Large Language Model">LLM</abbr> 指令合成，0.625M 对零人工；</li>
+<li><strong>系统化 benchmark 套件</strong>：WBMC/WBOD/WTR/WNUC/NRIE 五族任务，覆盖调制、重叠推理、技术、计数、协议参数抽取，含难度分级与严格匹配准则。</li>
 </ol>
-<h4 id="64">6.4 流程<a class="headerlink" href="#64" title="Permanent link">#</a></h4>
+<h4 id="5">5 流程<a class="headerlink" href="#5" title="Permanent link">#</a></h4>
 <pre class="mermaid"><code>flowchart LR
-    subgraph T1["阶段一：Tokenizer 训练（单通道）"]
-        A["原始 patch → Temporal Encoder"] --&gt; F["拼接 → Temporal Transformer → VQ 8192"]
-        B["STFT 频谱窗 → 频率 patch 切分"] --&gt; C["Frequency Transformer"]
-        C --&gt; D["门控聚合"] --&gt; F
+    subgraph D["数据合成（零人工）"]
+        A["MATLAB 波形生成器 ×6 技术"] --&gt; B["拒绝采样：标准合规校验"]
+        B --&gt; C["信道/损伤 + 元数据落盘"]
+        C --&gt; E["确定性 captioning（五级信息分层）"]
+        E --&gt; F["GPT-OSS-120B × 任务模板 → 0.625M 指令对"]
     end
-    F --&gt; G["冻结 tokenizer → token 查表（码字初始化）"]
-    G --&gt; H["下游线性注意力 Transformer"]
-    H --&gt; I["掩码 token 预测（交叉熵）"]
-    I --&gt; J["下游任务微调"]</code></pre>
-<h4 id="65">6.5 实验与结果<a class="headerlink" href="#65" title="Permanent link">#</a></h4>
+    subgraph M["RF-GPT"]
+        G["IQ 波形"] --&gt; H["STFT + dB 幅值谱 512×512"]
+        H --&gt; I["视觉编码器 14×14 patch → 1369 RF token"]
+        I --&gt; J["线性 adapter"]
+        J --&gt; K["Qwen2.5-VL 解码器 + 文本指令"]
+    end
+    F --&gt; SFT["SFT：梯度只算答案 token"]
+    K --&gt; SFT</code></pre>
+<h4 id="6">6 实验与结果<a class="headerlink" href="#6" title="Permanent link">#</a></h4>
 <ul>
-<li>数据集：TUEV、TUAB、CHB-MIT、IIIC Seizure（+ 跨设备 EESM23 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期）；</li>
-<li>两种设定下绝大多数指标-设定组合最优（例外：多数据集 CHB-MIT 的 balanced acc 0.6471 低于 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 0.7068）：多数据集 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比复现 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> +36%）；</li>
-<li>plug-and-play：集成进 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 后 93% 的指标-设定组合有提升（如单数据集 CHB-MIT 上 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 的 AUC-PR 提升 147%）；</li>
-<li>跨设备：ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期（仅 ~8K 标注样本、预训练完全没见过的采集方式）超过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 14%，EEGPT 因固定通道布局无法参与；</li>
-<li>消融：双域联合建模优于单时域（-R）或单频域（-S）变体；masking 策略与比例（频率 0.5 最优）；窗长 0.5s/0.25s hop 其实最好（但为对齐基线统一用 1s/0.5s）；embedding 维度 64 最优；下游 2 层即接近 12 层性能。</li>
+<li><strong>设置</strong>：Qwen2.5-VL-3B/7B-Instruct 底座 → RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-3B/7B；3 epoch，AdamW lr 2×10⁻⁴，global batch 256，5% warmup + cosine 衰减，BF16，8×H200（140GB）；<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> Blackman 窗、FFT/窗/hop 均 512、无居中、频轴 fftshift；</li>
+<li><strong>通用 VLM 没有 RF 先验</strong>：Qwen2.5-VL-3B/7B-Instruct 与 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5 在"明确告知输入是 RF 谱图 + 轴含义 + 要机器可解析答案"的精心 prompt 下仍接近随机——WBMC 最高 7%、数信号正确率 &lt;5%、WTR joint 仅 ~5%，且预测高度偏斜（如永远答 DL）。结论：任何非零分都来自瞎猜；</li>
+<li><strong>五族 benchmark</strong>（E/M/H = 易/中/难）：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-3B</th>
+<th>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-7B</th>
+<th>通用 VLM 参照</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WBMC 调制分类（E/M/H）</td>
+<td>80.0 / 71.4 / 43.7</td>
+<td>82.4 / 74.2 / 47.8</td>
+<td>≤7%，hard 近 0</td>
+</tr>
+<tr>
+<td>WBOD 重叠检测（E/M/H）</td>
+<td>91.2 / 85.2 / 65.0</td>
+<td>91.5 / 87.6 / 71.7</td>
+<td>easy 23–25，hard 5–12</td>
+</tr>
+<tr>
+<td>WTR 技术+链路方向（joint）</td>
+<td>99.42%</td>
+<td>99.64%</td>
+<td>~5%（<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5 无法解析）</td>
+</tr>
+<tr>
+<td>WNUC WLAN 用户数（平均）</td>
+<td>65.43%</td>
+<td>70.17%</td>
+<td>~23%</td>
+</tr>
+<tr>
+<td>NRIE NR 参数抽取（平均）</td>
+<td>~72%</td>
+<td>SCS 99.1 / SSB 94.1 / UE 64.2</td>
+<td>~20%</td>
+</tr>
+</tbody>
+</table>
+<p>数信号存在性正确率约 98%（通用 VLM 几乎全错）；NRIE 说明模型能从纯视觉证据恢复 SCS、SSB 图案、CSI-RS/SRS 数量等协议参数；WNUC 中 11be 好于 11ax，作者归因于 11be 单用户占 RU 而 11ax 常见 MU-MIMO 共享 RU——视觉上掩盖个体用户特征；</p>
+<ul>
+<li><strong>消融 · 损伤鲁棒性</strong>：CFO 与 PA 非线性几乎不掉点、TDL 多径中等下降、<strong>IQ 不平衡最致命</strong>（NRIE 75.29% → 70.21%）：IQ 增益/相位失配制造镜像频率分量与交叉泄漏，直接干扰计数与结构线索；</li>
+<li><strong>消融 · vs CNN/Transformer</strong>：EfficientNet/ViT-B/ViT-H + 每属性专属任务头在 NRIE 上，ViT-H 训 30 epoch 到 76.39%；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-7B 只训 <strong>3 epoch 就到 76.96%</strong>——10 倍数据效率，且一个模型一个目标替代五套任务头；</li>
+<li><strong>消融 · 分辨率</strong>：224→384→512 单调提升（WBMC-Easy 72.94→78.72→82.41，hard +8.3），代价是 <abbr title="词元，模型处理的最小输入单元">token</abbr> 数与推理延迟。</li>
 </ul>
 <hr>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/tfm-framework.png" data-desc-position="bottom"><img alt="Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测" src="../../../assets/tfm-framework.png"></a></p>
-<p><em>Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/rf-gpt-framework.png" data-desc-position="bottom"><img alt="Figure 1 · RF-GPT 框架：基于视觉的 RF 编码器（谱图 → patch → 视觉编码器）+ RF adapter 线性投影 + decoder-only LLM" src="../../../assets/rf-gpt-framework.png"></a></p>
+<p><em>Figure 1 · RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 框架总览：频谱图经视觉编码器变成 RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀，<abbr title="大语言模型 Large Language Model">LLM</abbr> 在其条件下生成回答</em></p>
 <h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <div class="admonition abstract">
 <p class="admonition-title">TL;DR</p>
 <ul>
-<li>总参数仅 ~1.9M（tokenizer 1.2M + 下游 0.7M），最小的那个反而最强</li>
-<li>多数据集设定 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> +36%）</li>
-<li>跨设备 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期超过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 14%；plug-and-play 提升 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 93% 指标</li>
+<li>RFLM 概念首作：频谱图 → 现成 VLM 视觉编码器 → RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀 → <abbr title="大语言模型 Large Language Model">LLM</abbr> 回答，<strong>零 RF 预训练</strong></li>
+<li>纯合成数据飞轮：6 种技术标准波形 + 确定性 captioning + <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-OSS-120B 合成 0.625M 指令对，零人工标注</li>
+<li>WTR 99.6% joint、数信号 98%；通用 VLM（含 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5）精心 prompt 仍随机猜——<strong>模态接地必须靠专门 SFT</strong></li>
+<li>IQ 不平衡是最伤损伤（镜像伪影破坏视觉结构）；3 epoch 效率 = ViT-H 30 epoch</li>
 </ul>
 </div>
 <h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
@@ -1529,54 +1603,63 @@
 </thead>
 <tbody>
 <tr>
+<td>TFM-Tokenizer</td>
+<td>同样把 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图当图像切 patch；TFM 从头训 <abbr title="向量量化 Vector Quantization">VQ</abbr> motif 词表，RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 直接复用预训练视觉编码器、完全不学 RF 词表</td>
+</tr>
+<tr>
+<td>SleepGPT（Nature Comms 2026，待读清单）</td>
+<td>同为"时频图 + 大模型"：SleepGPT 走自监督预训练时频编码器（科学发现导向），RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 走纯合成 SFT（工程接口导向）——设计空间两极</td>
+</tr>
+<tr>
+<td>NeuroLM</td>
+<td>都把非文本 <abbr title="词元，模型处理的最小输入单元">token</abbr> 拼在 <abbr title="大语言模型 Large Language Model">LLM</abbr> 前缀；NeuroLM 用 <abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 对齐的离散码字接入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 用现成视觉编码器的连续 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接入现代 VLM</td>
+</tr>
+<tr>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>直接批评其 <abbr title="词元，模型处理的最小输入单元">token</abbr> '只当训练目标'；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 实验证明换用 TFM tokenizer 后性能普遍提升</td>
+<td>对照：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 把频谱当<strong>重构目标</strong>学表示，RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 把频谱图当<strong>唯一输入</strong>做指令跟随</td>
 </tr>
 <tr>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
-<td>批评其 FFT 整窗线性投影过于粗糙；<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>-TFM 用 <abbr title="词元，模型处理的最小输入单元">token</abbr> 替换其输入投影后同样提升</td>
-</tr>
-<tr>
-<td>EEGPT</td>
-<td>单通道设计 vs 固定 58 通道布局：ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 实验中 EEGPT 因空间 embedding 无法扩展而缺席</td>
+<td>LoRA（模型架构基础）</td>
+<td>同属"冻结大底座 + 轻量适配"工具箱：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 走 SFT 路线（论文未说明是否全参，按 8×H200 + AdamW 配置推断为全参），小显存场景可换 LoRA（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 迁移的自然选择）</td>
 </tr>
 </tbody>
 </table>
 <h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
-<li>去掉位置编码的反直觉设计有消融支撑：<abbr title="位置编码 Positional Encoding">PE</abbr> 会让同一 motif 因出现位置不同学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr> → 词表冗余；motif 词表要的正是平移不变性。</li>
-<li><abbr title="词元，模型处理的最小输入单元">token</abbr> 可解释性分析（如 PLED 类的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 4035 稳定对应'棘波-慢波'周期模式）是把 NLP 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 分析方法迁移到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的漂亮示范。</li>
-<li>作者自认局限：固定窗长可能把大 pattern 切断到不同窗口，导致同一事件被分到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>——这是切分式 tokenization 的共同软肋。</li>
+<li><strong>对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 时频路线的启示</strong>：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 证明了"频谱图当图片 + 现成 VLM + 合成指令 SFT"可以完全绕开自监督预训练。这条路搬到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的瓶颈在数据侧：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 没有"标准波形生成器"级别的合规仿真器，做不到 RF 这种配置即标签的零噪声监督——但睡眠纺锤波/棘波注入仿真、受控范式重放是部分替代；</li>
+<li><strong>"通用 VLM 随机猜"这个阴性结果和阳性结果同样值钱</strong>：<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5 级模型读不懂 RF 谱图，同理大概率也读不懂 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 谱图——"看起来像图"不等于"有先验"，模态接地没有捷径；</li>
+<li><strong>IQ 不平衡最伤</strong>对一切时频输入方案是普适警示：通道间失配制造的镜像/交叉泄漏在时频图上是结构性破坏。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的电极阻抗失配、工频干扰本质同类，做时频图输入方案时值得专门做敏感性分析；</li>
+<li>与六篇 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 论文相比最大的方法论差异是<strong>预训练的缺位</strong>：六篇都在卷"怎么预训练"，这篇把宝全押在 VLM 底座的通用视觉语义 + 合成数据的零噪声监督上——是工程主义路线的极端样本。</li>
 </ul>
 <h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <details class="question">
-<summary>Q1 · 为什么 tokenizer 内要去掉位置编码？</summary>
-<p>消融证据：去掉 <abbr title="位置编码 Positional Encoding">PE</abbr> 后 TUEV Kappa 从 0.5119 升到 0.5337，<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率下降（12.87% 到 9.78%）、类独有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 上升。机理：<abbr title="脑电图 Electroencephalogram">EEG</abbr> motif 非平稳，同一模式可出现在任意位置；加了 <abbr title="位置编码 Positional Encoding">PE</abbr>，相同 motif 会因位置不同被学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>，造成词表冗余。motif 词表需要的是平移不变性。注意：下游 Transformer 仍有位置编码，去掉的只是 tokenizer 内部的。</p>
+<summary>Q1 · 幅值谱丢了相位，为什么 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 不在乎，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 却要重构幅值+相位？</summary>
+<p>目标不同。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用重构学通用表示，相位携带波形精细结构信息，是表示学习的一部分；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 是任务驱动的判别式 SFT，其任务（调制族/技术/计数/重叠）是波形的<strong>多对一映射</strong>，只依赖时频能量分布。论文专门讨论了 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 相位恢复文献（合适冗余/支撑假设下、至多差一个全局相位即可由幅值恢复信号），但明确声明不重构波形、只要任务属性——"丰富但有损"的前端够用。</p>
 </details>
 <details class="question">
-<summary>Q2 · 频域路径为什么要把频谱窗沿频率轴切 patch？</summary>
-<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的做法是把整个频谱窗直接过一个线性层，频率信息被一次性压缩，模型容易只看能量最大的低频段。沿频率轴切 patch 后用频率 Transformer 建模窗内跨频段依赖，再用 sigmoid 门控聚合——让哪些频段重要变成可学习的决策（睡眠任务可以学会忽略 32Hz 以上）。</p>
+<summary>Q2 · 为什么不自己训一个 RF 前端编码器？</summary>
+<p>两个动机：① 异构性——RF 跨技术的载频/带宽/采样率差异巨大，单一 raw-IQ tokenizer 难以同时高效适配窄带、宽带、多标准；② <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 已是有效的特征提取器，而图像预训练的视觉编码器自带通用语义结构，对"长得像图像"的谱图开箱即用。消融间接支撑：分辨率越高收益越大（224→512 各难度 +8~10 点），说明视觉路径确实在利用时频细节。</p>
 </details>
 <details class="question">
-<summary>Q3 · 为什么频带掩码比随机掩码重要得多？</summary>
-<p>消融：随机掩码 Kappa 0.4772，频带掩码 0.5193（+8%）。随机掩小块太容易靠邻域插值恢复；按频带整条掩掉迫使模型从其他频带和时域上下文推断缺失频段的结构，学到的是跨频段依赖而非局部平滑。</p>
+<summary>Q3 · 纯合成数据训出的模型能信吗？</summary>
+<p>作者自认局限：grounding 全部来自合成、只支持单输入谱图，真实 OTA 数据、多天线、ISAC 留作未来。合成→真实的域差在 RF 尤其尖锐（真实硬件损伤与干扰谱远比仿真复杂）。但硬币另一面：配置对象逐字入元数据，训练信号<strong>零噪声</strong>——这是任何人工标注都给不了的精度，0.625M 对的规模也正因此才可行。</p>
 </details>
 <details class="question">
-<summary>Q4 · 这套 tokenization 的主要局限是什么？</summary>
-<p>作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>（误判为不同 motif）。此外属个人推断（论文仅自认窗长局限）：<abbr title="向量量化 Vector Quantization">VQ</abbr> 硬量化可能吞掉码字边界附近的微小波形差异。</p>
+<summary>Q4 · 相比六篇 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 论文，这篇最值得「偷」的是什么？</summary>
+<p>三样：① 五级信息分层的 captioning 设计（把元数据按"视觉可辨/需元数据"×"全局/单信号"组织，按难度选择性出题）可直接迁移到任何生理信号仿真；② 拒绝采样保证"标准合规"的思想 = 数据质量前置校验；③ 用"通用模型随机猜"做阴性对照来论证接地必要性——<abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 论文很少做这个对照。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>
-<li><strong>代码</strong>：<a href="https://github.com/Jathurshan0330/TFM-Tokenizer">github.com/Jathurshan0330/TFM-Tokenizer</a>（含预训练权重与全部预处理脚本）</li>
-<li><strong>关键超参</strong>：tokenizer ~1.2M + 下游 ~0.7M；<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 窗 200 点/Hann/hop 100；码本 8192；<abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 64；频带掩码率 0.5 + 时间掩码 + 对称掩码；tokenizer 内<strong>无位置编码</strong>；Ray Tune + Optuna 调参</li>
-<li><strong>数据</strong>：TUEV/TUAB/CHB-MIT/IIIC（遵循 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 划分）；跨设备 EESM23</li>
-<li><strong>算力参考</strong>：无 GPU 规模要求披露——tokenizer 极小，消费级单卡可训</li>
+<li><strong>代码</strong>：论文未附官方代码链接（精读时点）；组件全部公开可得——Qwen2.5-VL、LLaVA 式 adapter、PEFT</li>
+<li><strong>关键超参</strong>：<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> Blackman 窗、FFT/窗长/hop 均 512、无居中、频轴 fftshift；dB 幅值 + 动态范围裁剪；512×512 输入；14×14 patch → 1369 RF <abbr title="词元，模型处理的最小输入单元">token</abbr>（无 [CLS]）；3 epoch；AdamW 2×10⁻⁴；batch 256；5% warmup + cosine；BF16</li>
+<li><strong>数据</strong>：MATLAB 6 工具箱（5G NR/LTE/UMTS/WLAN/DVB-S2/蓝牙）+ TorchSig 调制类（WBMC 用其 57 类）；~12,000 场景 / 0.625M 指令对；指令由 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-OSS-120B 按模板生成</li>
+<li><strong>算力参考</strong>：8×H200 140GB SFT（论文未说明是否冻结部分模块，按配置推断全参）；迁移到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 小底座（2B 级）+ LoRA 可降一档</li>
 </ul>
 </div>
 <hr>
 <p><strong>相关阅读</strong></p>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-neurolm/">上一篇：NeuroLM</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../0918-biot/">下一篇：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/#跨论文-benchmark-战绩表">战绩总表</a></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-tfm-tokenizer/">上一篇：TFM-Tokenizer</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19H4.09L14.18 4.43l1.64 1.14-4.54 6.56c1.61.83 2.72 2.49 2.72 4.41 0 .16 0 .31-.03.46H20zM7.91 17h4.05c.04-.15.04-.3.04-.46 0-1.26-.76-2.32-1.86-2.76z"></path></svg></span> <a href="../../../basics/lora/">LoRA · 低秩适配</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
