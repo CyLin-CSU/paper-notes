@@ -107,3 +107,78 @@
   z-index: 9999;
   transition: width 0.08s linear;
 }
+
+/* 返回顶部按钮 */
+#back-to-top {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 9998;
+}
+#back-to-top.visible { opacity: 0.85; pointer-events: auto; }
+#back-to-top:hover { opacity: 1; }
+
+/* 暗色模式表格边框与斑马纹适配 */
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th,
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) td {
+  border-color: rgba(240, 240, 240, 0.12);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:hover {
+  background-color: rgba(240, 240, 240, 0.04);
+}
+
+/* 首页时间线折叠（超过 6 条隐藏，点按钮展开） */
+.timeline li.timeline-extra { display: none; }
+.timeline.expanded li.timeline-extra { display: list-item; }
+#timeline-more {
+  margin-top: 0.3rem;
+  font-size: 0.72rem;
+  color: var(--md-primary-fg-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 数据集×论文使用矩阵 */
+.mx-wrap { overflow-x: auto; }
+.mx-matrix { border-collapse: separate; border-spacing: 3px; width: auto; }
+.mx-matrix th {
+  font-size: 0.7rem;
+  text-align: center;
+  white-space: nowrap;
+  background: transparent;
+}
+.mx-matrix tbody th {
+  text-align: left;
+  padding-right: 0.6rem;
+  font-weight: 500;
+}
+.mx-cell {
+  display: inline-block;
+  min-width: 2.1rem;
+  text-align: center;
+  padding: 0.25rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: default;
+}
+.mx-p { background: #40c46333; color: #1a7f37; }
+.mx-d { background: #4083ec33; color: #1f5fbf; }
+.mx-b { background: #8250df33; color: #6639ba; }
+.mx-n { color: var(--md-default-fg-color--lighter); }
+[data-md-color-scheme="slate"] .mx-p { color: #7ee787; }
+[data-md-color-scheme="slate"] .mx-d { color: #79c0ff; }
+[data-md-color-scheme="slate"] .mx-b { color: #d2a8ff; }
+.mx-legend { font-size: 0.72rem; color: var(--md-default-fg-color--light); }
+.mx-legend .mx-cell { margin: 0 0.15rem; }

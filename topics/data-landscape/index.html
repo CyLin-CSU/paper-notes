@@ -8,10 +8,10 @@
       
       
       
-        <link rel="prev" href="../tokenization/">
+        <link rel="prev" href="../spatial/">
       
       
-        <link rel="next" href="../spatial/">
+        <link rel="next" href="../multi-task/">
       
       
         
@@ -22,7 +22,7 @@
     
     
       
-        <title>预训练范式对比 - Paper Notes · 论文阅读笔记</title>
+        <title>EEG 预训练数据全景 - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#eeg" class="md-skip">
           跳转至
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              预训练范式对比
+              EEG 预训练数据全景
             
           </span>
         </div>
@@ -776,37 +776,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    预训练范式对比
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../pretraining/" class="md-nav__link">
         
   
   
@@ -822,92 +795,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        三条路线总览
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        掩码建模：预测目标的三次进化
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自回归 vs 掩码：范式之争
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        三种"掩码花样"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        稳定性技巧清单
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        关联论文
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -945,10 +832,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../data-landscape/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -964,6 +878,131 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        规模一览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        语料构成对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键观察
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="关键观察">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 规模 ≠ 通用性，构成决定迁移半径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 临床数据是规模的主力，也是偏斜的来源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 数据需求量与模型规模的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 单电极拆分是"数据倍增器"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对新建笔记的提示
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关联页面
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1223,10 +1262,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        规模一览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        三条路线总览
+        语料构成对比
       
     </span>
   </a>
@@ -1237,21 +1287,60 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        掩码建模：预测目标的三次进化
+        关键观察
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="关键观察">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 规模 ≠ 通用性，构成决定迁移半径
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#vs" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        自回归 vs 掩码：范式之争
+        2. 临床数据是规模的主力，也是偏斜的来源
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 数据需求量与模型规模的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 单电极拆分是"数据倍增器"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1259,7 +1348,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        三种"掩码花样"
+        对新建笔记的提示
       
     </span>
   </a>
@@ -1270,18 +1359,7 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        稳定性技巧清单
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        关联论文
+        关联页面
       
     </span>
   </a>
@@ -1308,112 +1386,87 @@
   
 
 
-<h1 id="_1">预训练范式对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h1 id="eeg"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练数据全景<a class="headerlink" href="#eeg" title="Permanent link">#</a></h1>
 <blockquote>
-<p>六篇论文恰好覆盖了自监督学习的三条路线：<strong>对比学习、掩码建模、自回归</strong>，且掩码建模内部还在持续进化。</p>
+<p>六篇论文的预训练语料从 1000 万样本到 25000 小时不等——规模与构成直接决定了模型的通用性上限。</p>
 </blockquote>
-<h2 id="_2">三条路线总览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">对比学习 · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></label><label for="__tabbed_1_2">掩码建模 · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / TFM</label><label for="__tabbed_1_3">自回归 · BrainGPT / NeuroLM</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>扰动版预测原版表示（BYOL 式）：随机丢弃部分通道和 <abbr title="词元，模型处理的最小输入单元">token</abbr> 得到扰动信号，predictor + 对比损失（温度 T=0.2）让扰动版预测原版表示。</p>
-<p>预训练语料：PREST + SHHS + Cardiology，共约 1000 万样本。</p>
-</div>
-<div class="tabbed-block">
-<p>看一部分、恢复另一部分。三家的"恢复目标"完全不同：</p>
-<ul>
-<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> → 预测<strong>离散码字</strong>（BEiT 式，附对称掩码）</li>
-<li>EEGPT → 对齐<strong>表示</strong>（JEPA 式）+ 重构原始 patch（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）</li>
-<li>TFM → 重构<strong>掩码频谱图</strong>（频带+时间+对称掩码，训练 tokenizer 本身）</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p>因果地预测下一单元，贴合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序因果结构：</p>
-<ul>
-<li>BrainGPT → 回归<strong>连续信号值</strong>（单电极，<abbr title="均方误差 Mean Squared Error">MSE</abbr>）</li>
-<li>NeuroLM → 阶梯掩码下预测<strong>离散码</strong>（因果 <abbr title="大语言模型 Large Language Model">LLM</abbr>，多通道）</li>
-</ul>
-</div>
-</div>
-</div>
-<h2 id="_3">掩码建模：预测目标的三次进化<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比让"掩码后恢复什么"成了核心设计问题，三代方案一路升级：</p>
+<h2 id="_1">规模一览<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>timeline
+    title 预训练数据规模演进（对数刻度感知）
+    2023 : BIOT : 1000 万样本（PREST + SHHS + ECG）
+    2024 : LaBraM : 2500 小时 / 约 20 数据集
+    2024 : BrainGPT : 3750 万单电极样本 ≈ 1B token
+    2024 : EEGPT : 5 数据集混合（多范式，规模未以小时计）
+    2025 : NeuroLM : 25000 小时（TUEG 为主力）
+    2026 : TFM : 4 数据集（重质不重量）+ 跨设备 ear-EEG 验证</code></pre>
+<h2 id="_2">语料构成对比<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>代际</th>
-<th>恢复目标</th>
 <th>论文</th>
-<th>动机</th>
+<th>主力语料</th>
+<th>构成特点</th>
+<th>域偏斜风险</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>一代</td>
-<td>原始波形（<abbr title="均方误差 Mean Squared Error">MSE</abbr>）</td>
-<td>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 前期实验，<strong>失败</strong>）</td>
-<td><abbr title="脑电图 Electroencephalogram">EEG</abbr> 随机、非平稳、低信噪比，loss 不收敛</td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
+<td>PREST（静息）+ SHHS（睡眠）+ ECG</td>
+<td>跨模态（<abbr title="脑电图 Electroencephalogram">EEG</abbr>+ECG+IMU），但 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 部分集中在静息/睡眠</td>
+<td>中（缺任务态 <abbr title="脑电图 Electroencephalogram">EEG</abbr>）</td>
 </tr>
 <tr>
-<td>二代</td>
-<td>频谱（<abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 幅值+相位）</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>频谱反映神经生理活动且稳定可学</td>
+<td>TUSZ（1138h）+ TUEP + TUEG 系</td>
+<td><strong>临床 TUEG 子集合计约 1800h（约七成，其中癫痫事件 TUSZ 约 45%）</strong>，由 20 个数据集摊薄</td>
+<td>高——BrainGPT 据此解释其 specialist 迁移偏弱</td>
 </tr>
 <tr>
-<td>2.5 代</td>
-<td>时域信号 + 频域幅值</td>
-<td>NeuroLM</td>
-<td>发现相位贡献小，砍掉</td>
-</tr>
-<tr>
-<td>三代</td>
-<td><strong>表示</strong>（momentum encoder 的特征）</td>
 <td>EEGPT</td>
-<td>信号空间难学，就在表示空间对齐（JEPA 思想）</td>
+<td>PhysioMI + HGD + TSU + SEED + M3CV</td>
+<td>多范式均衡（<abbr title="运动想象 Motor Imagery">MI</abbr>/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr>/EMO/多任务）</td>
+<td>低（但总量小，~10M 参数够用）</td>
 </tr>
 <tr>
-<td>三代'</td>
-<td>掩码频谱图</td>
-<td>TFM-Tokenizer</td>
-<td>用于训练 tokenizer 本身</td>
+<td>BrainGPT</td>
+<td>12 个基准的预训练拆分</td>
+<td>电极级拆分使样本量 ×E，任务覆盖最广</td>
+<td>低（但单电极丢失空间信息）</td>
+</tr>
+<tr>
+<td>NeuroLM</td>
+<td>TUEG（~24000h）+ 12 个公开集</td>
+<td><strong>绝对量最大</strong>，仍以临床 TUEG 为主</td>
+<td>高（同 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>，但指令微调缓解）</td>
+</tr>
+<tr>
+<td>TFM</td>
+<td>TUEV/TUAB/CHB-MIT/IIIC</td>
+<td>最小语料；单通道 motif 学习弥补规模</td>
+<td>中；跨设备能力由单通道设计保证</td>
 </tr>
 </tbody>
 </table>
-<h2 id="vs">自回归 vs 掩码：范式之争<a class="headerlink" href="#vs" title="Permanent link">#</a></h2>
-<p>BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）<sup id="fnref:t5"><a class="footnote-ref" href="#fn:t5">1</a></sup>：</p>
+<h2 id="_3">关键观察<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h3 id="1">1. 规模 ≠ 通用性，构成决定迁移半径<a class="headerlink" href="#1" title="Permanent link">#</a></h3>
+<p>BrainGPT 的发现最有说服力：以癫痫临床数据为主的预训练模型，在情绪/运动想象等非临床下游上<strong>反而不如从头训练</strong>——域差异吞掉了预训练收益。EEGPT 用小而均衡的语料 + linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，是"构成比规模重要"的另一佐证。</p>
+<h3 id="2">2. 临床数据是规模的主力，也是偏斜的来源<a class="headerlink" href="#2" title="Permanent link">#</a></h3>
+<p>TUEG 体系（Temple 大学）是唯一能拿到万小时级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的公开来源，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 和 NeuroLM 都重度依赖它。这解释了为什么<strong>脑机接口类任务（<abbr title="运动想象 Motor Imagery">MI</abbr>/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr>）的 pretrain-then-finetune 收益普遍不如临床任务</strong>。</p>
+<h3 id="3">3. 数据需求量与模型规模的关系<a class="headerlink" href="#3" title="Permanent link">#</a></h3>
 <ul>
-<li><strong><abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 全面优于 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>，平均 +2% 以上</strong>，与距离度量选择无关（ℓ2 最好，cos 最差）；</li>
-<li>理由：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 反映连续渐进的信息流，过去神经活动影响未来状态，单向建模天然贴合；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的双向重构破坏了信号的自然流向；</li>
-<li>但注意代价：自回归只能用因果注意力，<strong>看不到未来</strong>——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/EEGPT 的双向建模在"整段理解型"任务上并非没有优势。</li>
+<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 500h 在 TUAB 反超 2500h、TUEV 达其 90%+；Huge 在 2500h 仍未饱和（原论文推断需万小时级）</li>
+<li>NeuroLM：L 和 XL 的验证困惑度接近 → 25000h 喂不饱十亿参数</li>
+<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 性能持续上升，增益趋缓</li>
 </ul>
-<h2 id="_4">三种"掩码花样"<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<ol>
-<li><strong>对称掩码</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 首创，TFM 沿用）：mask 与其补集各做一次 masked modeling——省一次 tokenizer 前向 + 一个样本两个互补视角（数据增强），大模型受益更明显；</li>
-<li><strong>频带+时间掩码</strong>（TFM）：消融显示随机掩码最差，频带掩码最关键（Kappa +8%），加时间掩码 balanced acc 再 +5%——<strong>掩码的结构要匹配信号的结构</strong>；</li>
-<li><strong>阶梯掩码</strong>（NeuroLM）：多通道场景下，同通道 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测同通道下一时刻，每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 可见所有通道的当前与历史时间步。</li>
-</ol>
-<h2 id="_5">稳定性技巧清单<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<p>各家反复出现的训练技巧，值得记下：</p>
-<ul>
-<li><strong>EMA 更新目标侧</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 更新 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>、EEGPT 更新 momentum encoder（m=0.01）——防止目标漂移过快；</li>
-<li><strong>stop-gradient 成对损失</strong>：<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> loss + commitment loss（<abbr title="向量量化 Vector Quantization">VQ</abbr> 三件套），把编码器和码字的更新解耦；</li>
-<li><strong>混入文本数据</strong>（NeuroLM）：接 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的模型每批喂少量纯文本，防语言能力灾难性遗忘；</li>
-<li><strong>只算答案部分的 loss</strong>（NeuroLM 指令微调）：预测更稳定；</li>
-<li><strong>LayerNorm 归一化目标</strong>（EEGPT 的 L_A 和 L_R 都对目标做 LN）：缓解极端值和协变量偏移。</li>
-</ul>
-<h2 id="_6">关联论文<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></p>
+<p>结论：<strong>当前 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语料规模仍是所有大模型的瓶颈</strong>，且临床偏斜短期无解（没有第二来源）。</p>
+<h3 id="4">4. 单电极拆分是"数据倍增器"<a class="headerlink" href="#4" title="Permanent link">#</a></h3>
+<p>BrainGPT 把多电极信号拆成单电极样本，等效样本量 ×E（E 为电极数）——3750 万样本里含水量高，但换来了对任意电极配置的兼容性。TFM 的单通道 tokenizer 是同一思想的 tokenization 版。</p>
+<h2 id="_4">对新建笔记的提示<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>读新论文时，在笔记的「实验与结果」里记录其预训练语料的：<strong>总时长（或样本数）、主力数据源、域构成</strong>。如果它报告了 scaling 实验（数据量 vs 性能曲线），单独记一段——数据 scaling 曲线目前只有 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/BrainGPT 报告过（EEGPT 做的是模型规模消融），非常稀缺。</p>
+<h2 id="_5">关联页面<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<p><a href="../../datasets/">数据集索引</a> · <a href="../../comparison/">六篇方法对比</a> · <a href="../pretraining/">预训练范式对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
-
-<div class="footnote">
-<hr>
-<ol>
-<li id="fn:t5">
-<p>BrainGPT Table V：同一模型架构与参数下，用 cos/ℓ1/ℓ2 三种重构损失对比 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 与 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr>，<abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 平均准确率高 2% 以上，ℓ2 为最优度量。&nbsp;<a class="footnote-backref" href="#fnref:t5" title="Jump back to footnote 1 in the text">↩</a></p>
-</li>
-</ol>
-</div>
 
 
 
