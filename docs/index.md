@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-09-22** · 模型架构基础新增：Attention 替代方案（线性注意力 → Mamba-2 → Gated DeltaNet → 混合 → DSA），整理自 Stanford CS336 Lec 4
+
 - **2026-09-21** · 新增跨领域精读：RF-GPT——射频时频图 + 多模态 LLM（RFLM 概念首作）
 
 - **2026-09-21** · 新增分类「模型架构基础」：首篇 LoRA 低秩适配精读（原论文 + 变体族谱 + EEG 语境用法）
@@ -94,6 +96,12 @@ title: 首页
     ICLR 2022 · 微调 0.02% 参数
 
     冻结底座 + 低秩旁路 BA：参数高效微调的**事实标准**，含变体族谱与 EEG 用法。tags: `LoRA` `参数高效微调`
+
+- :material-vector-polyline:{ .lg .middle } **[Attention 替代方案](basics/attention-alternatives.md)**
+    ---
+    Stanford CS336 Lec 4 · MoE 之前部分
+
+    长上下文路线图：线性注意力 → Mamba-2 → Gated DeltaNet → 混合堆叠 → DSA 稀疏注意力。tags: `线性注意力` `SSM` `稀疏注意力`
 
 </div>
 

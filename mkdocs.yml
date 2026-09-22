@@ -89,6 +89,7 @@ nav:
           - 0921 · RF-GPT (arXiv 2026 · 跨领域): papers/2026-09/0921-rf-gpt.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
+      - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md
   - 主题专题:
       - EEG Tokenization 演进: topics/tokenization.md
       - 预训练范式对比: topics/pretraining.md
