@@ -87,6 +87,7 @@ nav:
           - 0918 · NeuroLM (ICLR 2025): papers/2026-09/0918-neurolm.md
           - 0918 · TFM-Tokenizer (ICLR 2026): papers/2026-09/0918-tfm-tokenizer.md
           - 0921 · RF-GPT (arXiv 2026 · 跨领域): papers/2026-09/0921-rf-gpt.md
+          - 0923 · JET (ICML 2026 · EEG 生成): papers/2026-09/0923-jet.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md

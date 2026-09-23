@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-09-23** · 新增精读 JET（ICML 2026）：条件流匹配生成原始 EEG + 三条生理结构约束——站内首篇「生成」轴线论文
+
 - **2026-09-22** · 模型架构基础新增：Attention 替代方案（线性注意力 → Mamba-2 → Gated DeltaNet → 混合 → DSA），整理自 Stanford CS336 Lec 4
 
 - **2026-09-21** · 新增跨领域精读：RF-GPT——射频时频图 + 多模态 LLM（RFLM 概念首作）
@@ -83,6 +85,12 @@ title: 首页
 
     射频**时频图当图片**喂进多模态 LLM，纯合成数据零人工标注。tags: `时频图` `多模态LLM` `合成数据`
 
+- :material-creation:{ .lg .middle } **[JET](papers/2026-09/0923-jet.md)** `EEG 生成`
+    ---
+    ICML 2026 · 129.9M 参数
+
+    条件流匹配直接生成**原始 EEG**，三条生理结构约束，TS-FID 降 40%+。tags: `Flow Matching` `EEG生成`
+
 </div>
 
 ## :material-cube-unfolded: 模型架构基础
@@ -139,9 +147,9 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 7 篇（EEG 6 + 跨领域 RF 1） |
+| 精读论文 | 8 篇（EEG 6 + 跨领域 RF 1 + EEG 生成 1） |
 | 发表跨度 | 2023 – 2026 |
-| 涉及会议 | NeurIPS ×2 · ICLR ×3 · arXiv ×2（另 LoRA 基础页 ICLR 2022） |
+| 涉及会议 | NeurIPS ×2 · ICLR ×3 · ICML ×1 · arXiv ×2（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
 | 模型规模跨度 | 1.9M — 1.09B（按各篇主模型口径） |
 
