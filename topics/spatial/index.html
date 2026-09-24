@@ -661,6 +661,76 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/2026-09/0924-eegmoe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · EEGMoE (TNNLS 2026 · MoE)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/2026-09/0924-luna/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1016,6 +1086,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#20252026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2025–2026 延伸：第五、六种解法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1361,6 +1442,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#20252026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2025–2026 延伸：第五、六种解法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1444,8 +1536,15 @@
 <li><strong>EEGPT：无法参与</strong>——固定 58 通道布局的空间 embedding 无法映射到 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 通道</li>
 </ul>
 <p>结论：<strong>通道适配方案决定了模型的应用边界</strong>。要做可穿戴、消费级 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（干电极、耳部、少导联），方案③（单通道独立）是目前最稳的路线。</p>
+<h2 id="20252026">2025–2026 延伸：第五、六种解法<a class="headerlink" href="#20252026" title="Permanent link">#</a></h2>
+<p>上述四解法来自已精读的六篇；2025–2026 的新工作把这条谱系继续推进了两格：</p>
+<ul>
+<li><strong>⑤ 解耦路由 · EEGMoE</strong>（TNNLS 2026）：不追求统一格式本身，先把所有 montage 摆进统一 2-D 脑地图网格（输入端抹平几何差异），再用 Specific+Shared 双专家 MoE 在<strong>表征层解耦任务/数据集域</strong>——几何轴统一、任务轴分工。总参数仅 1.68M；专家-任务分工可视化给出解耦成功的直接证据；</li>
+<li><strong>⑥ 学习 query 统一 · LUNA</strong>（NeurIPS 2025）：Q 个学习 query 对任意通道集合做交叉注意力，压进固定隐空间（置换不变）后再做时间注意力——<strong>对通道数线性</strong>的复杂度，8000 通道时 FLOPs 仅为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180；代价是隐空间瓶颈（TUAB 落后全注意力约 1pp，未见拓扑 SEED-V 落后 2–3pp）。</li>
+</ul>
+<p>两者合起来给出一个二维地图：<strong>几何轴可以抹平（LUNA），任务轴应该解耦（EEGMoE）</strong>——理想模型可能需要同时做这两件事。</p>
 <h2 id="_4">关联论文<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></p>
+<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/2026-09/0924-eegmoe/">EEGMoE</a> · <a href="../../papers/2026-09/0924-luna/">LUNA</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
