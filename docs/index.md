@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-09-24** · 新增双篇精读：EEGMoE（域解耦 MoE）× LUNA（拓扑统一）——通道异构问题的两条相反路线；专题页新增第五/六种解法
+
 - **2026-09-23** · 新增精读 JET（ICML 2026）：条件流匹配生成原始 EEG + 三条生理结构约束——站内首篇「生成」轴线论文
 
 - **2026-09-22** · 模型架构基础新增：Attention 替代方案（线性注意力 → Mamba-2 → Gated DeltaNet → 混合 → DSA），整理自 Stanford CS336 Lec 4
@@ -91,6 +93,18 @@ title: 首页
 
     条件流匹配直接生成**原始 EEG**，三条生理结构约束，TS-FID 降 40%+。tags: `Flow Matching` `EEG生成`
 
+- :material-account-group:{ .lg .middle } **[EEGMoE](papers/2026-09/0924-eegmoe.md)** `MoE`
+    ---
+    IEEE TNNLS 2026 · 1.68M 参数
+
+    Specific+Shared 双专家**解耦域差异**：Top-K 管特性、软路由管共性。tags: `MoE` `域解耦` `多任务`
+
+- :material-compress:{ .lg .middle } **[LUNA](papers/2026-09/0924-luna.md)** `拓扑无关`
+    ---
+    NeurIPS 2025 · 7M–311M 参数
+
+    学习 query 把任意电极拓扑**压进固定隐空间**：通道线性复杂度，FLOPs 降 300×。tags: `跨导联` `Perceiver` `效率`
+
 </div>
 
 ## :material-cube-unfolded: 模型架构基础
@@ -147,11 +161,11 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 8 篇（EEG 6 + 跨领域 RF 1 + EEG 生成 1） |
+| 精读论文 | 10 篇（EEG 8 + 跨领域 RF 1 + EEG 生成 1） |
 | 发表跨度 | 2023 – 2026 |
-| 涉及会议 | NeurIPS ×2 · ICLR ×3 · ICML ×1 · arXiv ×2（另基础页 ICLR 2022 / CS336） |
+| 涉及会议/期刊 | NeurIPS ×3 · ICLR ×3 · ICML ×1 · TNNLS ×1 · arXiv ×2（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
-| 模型规模跨度 | 1.9M — 1.09B（按各篇主模型口径） |
+| 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
 综合对比见 [六篇方法对比](comparison.md)（14 个维度总览表 + 演进脉络）。
 

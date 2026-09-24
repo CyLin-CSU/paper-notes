@@ -68,6 +68,15 @@ TFM 的 ear-EEG（EESM23）实验是张试金石：睡眠分期任务，采集�
 
 结论：**通道适配方案决定了模型的应用边界**。要做可穿戴、消费级 EEG（干电极、耳部、少导联），方案③（单通道独立）是目前最稳的路线。
 
+## 2025–2026 延伸：第五、六种解法
+
+上述四解法来自已精读的六篇；2025–2026 的新工作把这条谱系继续推进了两格：
+
+- **⑤ 解耦路由 · EEGMoE**（TNNLS 2026）：不追求统一格式本身，先把所有 montage 摆进统一 2-D 脑地图网格（输入端抹平几何差异），再用 Specific+Shared 双专家 MoE 在**表征层解耦任务/数据集域**——几何轴统一、任务轴分工。总参数仅 1.68M；专家-任务分工可视化给出解耦成功的直接证据；
+- **⑥ 学习 query 统一 · LUNA**（NeurIPS 2025）：Q 个学习 query 对任意通道集合做交叉注意力，压进固定隐空间（置换不变）后再做时间注意力——**对通道数线性**的复杂度，8000 通道时 FLOPs 仅为 BIOT 的 1/180；代价是隐空间瓶颈（TUAB 落后全注意力约 1pp，未见拓扑 SEED-V 落后 2–3pp）。
+
+两者合起来给出一个二维地图：**几何轴可以抹平（LUNA），任务轴应该解耦（EEGMoE）**——理想模型可能需要同时做这两件事。
+
 ## 关联论文
 
-[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md)
+[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) · [EEGMoE](../papers/2026-09/0924-eegmoe.md) · [LUNA](../papers/2026-09/0924-luna.md)
