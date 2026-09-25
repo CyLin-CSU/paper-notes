@@ -1237,7 +1237,7 @@
   <span class="md-ellipsis">
     
   
-    六篇方法对比
+    十篇方法对比
   
 
     
@@ -1517,7 +1517,7 @@
 <p>虽然预训练都是自力更生，但每篇都<strong>开源了自己的预训练 checkpoint</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> Base/Large/Huge、EEGPT、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、NeuroLM、TFM 均在 GitHub 发布），下游任务是站在这些<strong>自家预训练权重</strong>上微调的。</p>
 <p>论文互相比时也不加载对方从头训的中间权重，而是：<strong>基线 = 对方的公开 checkpoint + 我们数据集上的微调</strong>。这也解释了 BrainGPT 的一个著名发现——"预训练 specialist 有时不如 from scratch"：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 语料偏临床癫痫，对情绪/运动想象等非临床任务迁移反而打折（详见<a href="../data-landscape/">预训练数据全景</a>）。</p>
 <h2 id="_5">新论文入库提示<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<p>读新论文时记一笔：它的权重是 <strong>from scratch / 加载公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座（哪家）/ 接 <abbr title="大语言模型 Large Language Model">LLM</abbr>（哪个）</strong> 三者中的哪一种？这决定了它与库里已有论文的可比性，也直接影响<a href="../../comparison/#论文互怼链">互怼链</a>的画法。</p>
+<p>读新论文时记一笔：它的权重是 <strong>from scratch / 加载公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座（哪家）/ 接 <abbr title="大语言模型 Large Language Model">LLM</abbr>（哪个）</strong> 三者中的哪一种？这决定了它与库里已有论文的可比性，也直接影响<a href="../../comparison/#critique-chain">互怼链</a>的画法。</p>
 <h2 id="_6">关联页面<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
 <p><a href="../data-landscape/">预训练数据全景</a> · <a href="../multi-task/">多任务三条路线</a> · <a href="../../comparison/">六篇方法对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
