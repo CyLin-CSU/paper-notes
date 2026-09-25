@@ -167,7 +167,7 @@ title: 首页
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
-综合对比见 [六篇方法对比](comparison.md)（14 个维度总览表 + 演进脉络）。
+综合对比见 [十篇方法对比](comparison.md)（核心六篇 14 维表 + 扩展四篇速览 + benchmark 战绩 + 互怼链）。
 
 ## :material-comment-processing: 留言板
 

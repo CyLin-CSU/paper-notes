@@ -101,7 +101,7 @@ nav:
       - 多任务三条路线: topics/multi-task.md
       - 基座来源分析: topics/base-model.md
   - 综述: blog-2023-2026.md
-  - 六篇方法对比: comparison.md
+  - 十篇方法对比: comparison.md
   - 索引:
       - 数据集索引: datasets.md
       - 参考文献索引: references.md
