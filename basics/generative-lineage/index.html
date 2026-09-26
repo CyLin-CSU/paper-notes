@@ -1651,6 +1651,8 @@
 <p><strong>第三步：重参数化技巧。</strong> "从 <span class="arithmatex">\( q_\phi(z|x) \)</span> 采样"是随机节点，梯度断路。把随机性挪到网络外面：</p>
 <div class="arithmatex">\[ z = \mu_\phi(x) + \sigma_\phi(x) \odot \varepsilon, \qquad \varepsilon \sim \mathcal{N}(0, I) \]</div>
 <p><span class="arithmatex">\( z \)</span> 变成对 <span class="arithmatex">\( \varepsilon \)</span> 的确定性函数，反向传播可以穿过采样直达编码器。这一招在所有概率生成模型里反复出现。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/gen-vae-arch.png" data-desc-position="bottom"><img alt="VAE 架构与损失分解：Encoder 输出隐空间中每个样本的高斯分布（均值/方差），Decoder 从中采样重建；下方为损失分解——重构项即 MSE，KL 项有闭式解" src="../../assets/gen-vae-arch.png"></a></p>
+<p><em>VAE 架构与损失分解：<span class="arithmatex">\( x \to q_\phi(z|x) \to p(z) \to p_\theta(x|z) \)</span> 的完整链路；图中 KL 闭式解 <span class="arithmatex">\( \frac{1}{2}\sum_i(\sigma_i^2 + \mu_i^2 - \log\sigma_i^2 - 1) \)</span> 即上文正则项的逐维展开</em></p>
 <p><strong>固有缺陷与分支</strong>：decoder 逐像素独立高斯似然的最优解是<strong>所有可能样本的均值</strong>——均值模糊，所以 VAE 生成总是糊的；decoder 太强（自回归）时还会<strong>后验坍缩</strong>（KL 把 <span class="arithmatex">\( q \)</span> 压向先验，<span class="arithmatex">\( z \)</span> 失去信息）。<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr>（2017）把连续高斯隐变量换成离散 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>（commitment loss + stop-gradient，扔掉 KL）——这就是 <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> / <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> / <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> 的 tokenizer 血统；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 附录那个 ELBO 解释（tokenizer = 后验、decoder = 似然、掩码建模 = 学先验）正是这个框架的离散版。</p>
 <h2 id="3-20112019">3 暗线 · 得分函数：换一个问题问（2011–2019）<a class="headerlink" href="#3-20112019" title="Permanent link">#</a></h2>
 <p>在 DDPM 之前有条容易被忽略的暗线：不建密度 <span class="arithmatex">\( p(x) \)</span> 本身，学它的<strong>梯度</strong>。</p>
@@ -1668,6 +1670,8 @@
 <p><strong>反向过程</strong>是要学的 <span class="arithmatex">\( p_\theta(x_{t-1}|x_t) \)</span>（直接算需要对未知的 <span class="arithmatex">\( x_0 \)</span> 积分）。理论骨架仍是对整条链写负 ELBO——妙处在<strong>每一项都是两个高斯之间的 KL，全有闭式解</strong>：VAE 里最难算的正则项在这里免费了。化简到底只剩 Ho et al. 的：</p>
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{simple}} = \mathbb{E}_{t,\,x_0,\,\varepsilon} \big\| \varepsilon - \varepsilon_\theta(x_t,\,t) \big\|^2 \]</div>
 <p>用人话说：<strong>拿一张干净图，按公式加一份已知噪声，让网络看带噪图、猜出那份噪声，用 <abbr title="均方误差 Mean Squared Error">MSE</abbr> 惩罚</strong>，<span class="arithmatex">\( t \)</span> 随机采。网络实际在学的是得分——<span class="arithmatex">\( \varepsilon_\theta(x_t, t) / \sqrt{1-\bar{\alpha}_t} \approx -\nabla_x \log p_t(x_t) \)</span>，与 denoising score matching 是同一件事。生成从此锐利：每步只做小幅残差修正，网络永远不必像 VAE 那样一步输出条件均值。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/gen-ddpm-markov.png" data-desc-position="bottom"><img alt="DDPM 的马尔可夫链视角：前向加噪 q 是固定无参数的，反向去噪 pθ 是要学的网络；从纯噪声 xT 逐步走到干净样本 x0" src="../../assets/gen-ddpm-markov.png"></a></p>
+<p><em>DDPM 的马尔可夫链视角：灰色圆是带噪状态，<span class="arithmatex">\( q(x_t|x_{t-1}) \)</span>（虚线）是固定的前向加噪，<span class="arithmatex">\( p_\theta(x_{t-1}|x_t) \)</span> 是要学习的反向去噪——"从加噪过程中学习逐步去噪"</em></p>
 <p><strong>DDIM（2020）是承前启后的一步</strong>：ancestral sampling 去掉每步随机项后，采样变成一个<strong>确定性 ODE 积分</strong>——同一个模型不用重训，路径从 SDE 换成 ODE。人们由此意识到：扩散模型骨子里是一条连续的流。</p>
 <h2 id="5-sde-2021">5 桥梁 · SDE 统一（2021）<a class="headerlink" href="#5-sde-2021" title="Permanent link">#</a></h2>
 <p>Song et al. 把所有加噪方案写成连续时间的<strong>前向 SDE</strong>（VP-SDE 即 DDPM 的连续极限）：</p>
@@ -1680,6 +1684,8 @@
 <div class="arithmatex">\[ \text{路径：}\; x_t = (1-t)\,x_0 + t\,x_1 \qquad \text{目标：}\; u_t = x_1 - x_0 \]</div>
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{FM}} = \mathbb{E} \big\| v_\theta(x_t,\,t) - (x_1 - x_0) \big\|^2 \]</div>
 <p>关键定理：对条件目标回归与对边缘目标回归的<strong>梯度相同</strong>（边缘速度恰是条件速度的期望 <span class="arithmatex">\( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)</span>，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 的最优解就是条件期望）——所以不必知道边缘场，采样配对做回归即可。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/gen-fm-ode.png" data-desc-position="bottom"><img alt="ODE 三要素与流的形变：dX(t)/dt = u(t, X) 是要学的向量场，单条解是轨迹，全体轨迹构成流 ψ；右图直观展示一组网格从高斯先验（左）被输运到数据分布（中）的过程" src="../../assets/gen-fm-ode.png"></a></p>
+<p><em>Flow Matching 的三个核心名词：</em><em>向量场</em><em>（<span class="arithmatex">\( u_t \)</span>，要学习的项）、</em><em>轨迹</em><em>（一条 ODE 解 <span class="arithmatex">\( X_t \)</span>）、</em><em>流</em><em>（全体轨迹 <span class="arithmatex">\( \psi_t(x_0) \)</span>）——生成就是把左侧高斯先验"揉"成右侧数据分布的那组形变</em></p>
 <p><strong>Rectified Flow（Liu et al. 2022，同期工作）</strong>补上直化：用训好的模型生成新配对再重训（reflow），轨迹越来越直 → 少步乃至<strong>一步生成</strong>。"straighter trajectories, faster sampling"的出处，也是 JET 引用 Mean Flow（2025）的那条线。</p>
 <p><strong>与 DDPM 的精确关系</strong>：把插值路径从直线换成 VP 路径（系数 <span class="arithmatex">\( \sqrt{\bar{\alpha}_t} \)</span>、<span class="arithmatex">\( \sqrt{1-\bar{\alpha}_t} \)</span>），FM 的回归目标就退化回噪声预测——扩散的概率流 ODE 是 Flow Matching 取特定路径的特例：</p>
 <div class="arithmatex">\[ \text{Flow Matching} = \text{扩散的推广（路径自由）} + \text{简化（无调度表、纯确定性、目标是速度而非噪声）} \]</div>
