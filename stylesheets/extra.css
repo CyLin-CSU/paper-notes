@@ -173,6 +173,12 @@
   font-weight: 700;
   cursor: default;
 }
+/* 矩阵数据格必须保持 table-cell：.mx-cell 的 inline-block 只用于图例 span，
+   td 若也变 inline-block 会脱离表格布局，导致整列竖排、行名错位 */
+.mx-matrix td.mx-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
 .mx-p { background: #40c46333; color: #1a7f37; }
 .mx-d { background: #4083ec33; color: #1f5fbf; }
 .mx-b { background: #8250df33; color: #6639ba; }
