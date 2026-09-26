@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-09-26** · 模型架构基础新增：生成模型三代脉络（VAE → DDPM → Flow Matching），一条主线串起 ELBO、得分匹配与速度场回归
+
 - **2026-09-24** · 新增双篇精读：EEGMoE（域解耦 MoE）× LUNA（拓扑统一）——通道异构问题的两条相反路线；专题页新增第五/六种解法
 
 - **2026-09-23** · 新增精读 JET（ICML 2026）：条件流匹配生成原始 EEG + 三条生理结构约束——站内首篇「生成」轴线论文
@@ -124,6 +126,12 @@ title: 首页
     Stanford CS336 Lec 4 · MoE 之前部分
 
     长上下文路线图：线性注意力 → Mamba-2 → Gated DeltaNet → 混合堆叠 → DSA 稀疏注意力。tags: `线性注意力` `SSM` `稀疏注意力`
+
+- :material-chart-timeline-variant:{ .lg .middle } **[生成模型脉络](basics/generative-lineage.md)**
+    ---
+    VAE → DDPM → Flow Matching
+
+    一条主线：似然积分算不动——变分下界、逐步去噪、直连速度场的**三代绕法**。tags: `ELBO` `扩散` `流匹配`
 
 </div>
 

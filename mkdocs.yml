@@ -93,6 +93,7 @@ nav:
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md
+      - 生成模型脉络 (VAE → DDPM → FM): basics/generative-lineage.md
   - 主题专题:
       - EEG Tokenization 演进: topics/tokenization.md
       - 预训练范式对比: topics/pretraining.md
