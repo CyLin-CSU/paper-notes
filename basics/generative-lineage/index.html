@@ -8,10 +8,10 @@
       
       
       
-        <link rel="prev" href="../pretraining/">
+        <link rel="prev" href="../attention-alternatives/">
       
       
-        <link rel="next" href="../data-landscape/">
+        <link rel="next" href="../../topics/tokenization/">
       
       
         
@@ -22,7 +22,7 @@
     
     
       
-        <title>通道异构的四种解法 - Paper Notes · 论文阅读笔记</title>
+        <title>生成模型三代脉络：VAE → DDPM → Flow Matching - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#vae-ddpm-flow-matching" class="md-skip">
           跳转至
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              通道异构的四种解法
+              生成模型三代脉络：VAE → DDPM → Flow Matching
             
           </span>
         </div>
@@ -750,18 +750,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -782,7 +784,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -800,7 +802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../basics/lora/" class="md-nav__link">
+      <a href="../lora/" class="md-nav__link">
         
   
   
@@ -835,7 +837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../basics/attention-alternatives/" class="md-nav__link">
+      <a href="../attention-alternatives/" class="md-nav__link">
         
   
   
@@ -867,10 +869,44 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../basics/generative-lineage/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生成模型脉络 (VAE → DDPM → FM)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -893,6 +929,136 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 全景时间线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vae2013" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 第一代 · VAE：变分绕积分（2013）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-20112019" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 暗线 · 得分函数：换一个问题问（2011–2019）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ddpm2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 第二代 · DDPM：给去噪装上马尔可夫链（2020）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-sde-2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 桥梁 · SDE 统一（2021）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-flow-matching2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 第三代 · Flow Matching：把调度也交出去（2022）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 三代统一对照
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8 三条"缺陷驱动进化"的主线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-eeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9 在 EEG 语境中的位置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -909,20 +1075,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -943,7 +1107,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -961,7 +1125,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tokenization/" class="md-nav__link">
+      <a href="../../topics/tokenization/" class="md-nav__link">
         
   
   
@@ -989,7 +1153,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pretraining/" class="md-nav__link">
+      <a href="../../topics/pretraining/" class="md-nav__link">
         
   
   
@@ -1014,37 +1178,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    通道异构的四种解法
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../topics/spatial/" class="md-nav__link">
         
   
   
@@ -1060,92 +1197,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        四种方案对比
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        方案③的代价与补偿
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#teg" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TEG 的多任务共享机制（易误解点）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        跨设备能力的分水岭
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#20252026" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2025–2026 延伸：第五、六种解法
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        关联论文
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1158,7 +1209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../data-landscape/" class="md-nav__link">
+      <a href="../../topics/data-landscape/" class="md-nav__link">
         
   
   
@@ -1186,7 +1237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multi-task/" class="md-nav__link">
+      <a href="../../topics/multi-task/" class="md-nav__link">
         
   
   
@@ -1214,7 +1265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../base-model/" class="md-nav__link">
+      <a href="../../topics/base-model/" class="md-nav__link">
         
   
   
@@ -1433,10 +1484,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        四种方案对比
+        1 全景时间线
       
     </span>
   </a>
@@ -1444,10 +1495,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
+  <a href="#2-vae2013" class="md-nav__link">
     <span class="md-ellipsis">
       
-        方案③的代价与补偿
+        2 第一代 · VAE：变分绕积分（2013）
       
     </span>
   </a>
@@ -1455,10 +1506,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#teg" class="md-nav__link">
+  <a href="#3-20112019" class="md-nav__link">
     <span class="md-ellipsis">
       
-        TEG 的多任务共享机制（易误解点）
+        3 暗线 · 得分函数：换一个问题问（2011–2019）
       
     </span>
   </a>
@@ -1466,10 +1517,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#4-ddpm2020" class="md-nav__link">
     <span class="md-ellipsis">
       
-        跨设备能力的分水岭
+        4 第二代 · DDPM：给去噪装上马尔可夫链（2020）
       
     </span>
   </a>
@@ -1477,10 +1528,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#20252026" class="md-nav__link">
+  <a href="#5-sde-2021" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2025–2026 延伸：第五、六种解法
+        5 桥梁 · SDE 统一（2021）
       
     </span>
   </a>
@@ -1488,10 +1539,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#6-flow-matching2022" class="md-nav__link">
     <span class="md-ellipsis">
       
-        关联论文
+        6 第三代 · Flow Matching：把调度也交出去（2022）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 三代统一对照
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8 三条"缺陷驱动进化"的主线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-eeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9 在 EEG 语境中的位置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
       
     </span>
   </a>
@@ -1518,68 +1613,178 @@
   
 
 
-<h1 id="_1">通道异构的四种解法<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h1 id="vae-ddpm-flow-matching">生成模型三代脉络：VAE → DDPM → Flow Matching<a class="headerlink" href="#vae-ddpm-flow-matching" title="Permanent link">#</a></h1>
 <blockquote>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 换一台设备就是另一套电极布局——通道适配能力直接决定基础模型能不能"跨设备"。六篇论文给出四种代表性方案。</p>
+<p>「模型架构基础」第三篇。深度生成模型三十年只有一条主线：<strong>latent variable model 的似然积分算不动</strong>，VAE、DDPM、Flow Matching 是三种越来越聪明的绕法。理解了主线，所有公式都不是孤立记忆的——本文把三代的原理、核心公式与血缘关系一次讲透，并接回站内的 <a href="../../papers/2026-09/0923-jet/">JET 笔记</a>。</p>
 </blockquote>
-<h2 id="_2">四种方案对比<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">① 通道 embedding 表 · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></label><label for="__tabbed_1_2">② 10-20 系统空间编码 · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM</label><label for="__tabbed_1_3">③ 单通道独立建模 · TFM / BrainGPT（电极级）</label><label for="__tabbed_1_4">④ 图结构整合 · BrainGPT（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p><strong>机制</strong>：每个通道名一个可学习向量，逐通道切段后加到 <abbr title="词元，模型处理的最小输入单元">token</abbr> 上。</p>
-<p><strong>优点</strong>：简单直接；缺通道直接丢 <abbr title="词元，模型处理的最小输入单元">token</abbr>，结构不变。</p>
-<p><strong>局限</strong>：向量表受训练时见过的通道限制，未见通道无对应 embedding。</p>
-</div>
-<div class="tabbed-block">
-<p><strong>机制</strong>：为 10-20 系统全部电极建空间 embedding 列表，按通道名索引。</p>
-<p><strong>优点</strong>：统一坐标系；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 消融证明去掉后预训练不收敛。</p>
-<p><strong>局限</strong>：非标准设备（ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 等）无对应 embedding。</p>
-</div>
-<div class="tabbed-block">
-<p><strong>机制</strong>：tokenizer / 训练样本以单通道为单位，多通道只是结果拼接。</p>
-<p><strong>优点</strong>：天然 device-agnostic，任意电极组合；预训练数据量 ×E 倍。</p>
-<p><strong>局限</strong>：丢失跨电极同步信息，需下游模块补偿空间整合。</p>
-</div>
-<div class="tabbed-block">
-<p><strong>机制</strong>：全电极建一张可学习图，样本只激活自己的子图（β mask），<abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 注意力交互。</p>
-<p><strong>优点</strong>：多任务共享电极原型节点 + 一套 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重；任意配置统一训练。</p>
-<p><strong>局限</strong>：空间整合只在下游阶段；电极集不相交的任务间共享大幅缩水。</p>
-</div>
-</div>
-</div>
-<h2 id="3">方案③的代价与补偿<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p>单通道建模是最激进的方案：把多电极 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 拆成独立样本（BrainGPT 样本量 ×E 倍膨胀到 3750 万），换来的是对任意采集设备的兼容性。但跨电极的空间关系在预训练中完全丢失，所以：</p>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
 <ul>
-<li><strong>BrainGPT</strong> 在下游用 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>（任务共享电极图）补回空间：每条电极序列末尾接可学习 <abbr title="词元，模型处理的最小输入单元">token</abbr> 聚合出电极表示，再注入全电极图做 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 注意力（子图激活 + mask）；</li>
-<li><strong>TFM</strong> 在下游把各通道 <abbr title="词元，模型处理的最小输入单元">token</abbr> 展平后加通道/位置 embedding 过注意力。</li>
+<li>主线：<span class="arithmatex">\( p(x) = \int p(x|z)\,p(z)\,dz \)</span> 这个积分算不可积，三代模型给出三种绕法</li>
+<li><strong>VAE</strong>（2013）：变分下界 ELBO + 重参数化，一步编码-解码——代价是模糊（均值坍缩）</li>
+<li><strong>DDPM</strong>（2020）：把生成拆成 T 步小去噪，ELBO 逐级闭式化简成"预测噪声"<abbr title="均方误差 Mean Squared Error">MSE</abbr>——锐利但采样慢、调度手工</li>
+<li>桥梁：得分匹配（预测噪声 = 预测 <span class="arithmatex">\( \nabla_x \log p \)</span>）与 SDE 视角（扩散本质是一条概率流 ODE）</li>
+<li><strong>Flow Matching</strong>（2022）：直接学从噪声到数据的速度场，路径自由（直线 + reflow 直奔一步生成）——DDPM 是它取"VP 路径 + 噪声参数化"的特例</li>
+<li>三代共享同一骨架：<strong>在噪声与数据之间插值，让网络回归中间动力学</strong>；进化的只是"谁决定插值的形状"</li>
 </ul>
-<p>这构成一个共同范式：<strong>"单通道学时间 + 下游学空间"的渐进式时空解耦</strong>（BrainGPT 的官方说法）。</p>
-<h2 id="teg"><abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 的多任务共享机制（易误解点）<a class="headerlink" href="#teg" title="Permanent link">#</a></h2>
-<p>图本身不存储任务信息——<strong>多任务信息来自"共享参数被多个任务的梯度共同更新"</strong>：</p>
+</div>
+<h2 id="1">1 全景时间线<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A["似然积分算不动&lt;br/&gt;p(x) = ∫ p(x|z)p(z) dz"] --&gt; B["VAE · 2013&lt;br/&gt;变分下界绕积分"]
+    A --&gt; C["GAN · 2014&lt;br/&gt;不建密度的另一分支"]
+    B --&gt; D["VQ-VAE · 2017&lt;br/&gt;离散 codebook&lt;br/&gt;→ LaBraM / NeuroLM / TFM"]
+    B --&gt; E["Neural ODE / CNF · 2018&lt;br/&gt;连续流但训练贵"]
+    F["得分匹配 · 2011–2019&lt;br/&gt;加噪 + 预测梯度"] --&gt; G["DDPM · 2020&lt;br/&gt;逐步去噪 + ELBO 化简"]
+    G --&gt; H["DDIM · 2020&lt;br/&gt;采样确定性化"]
+    H --&gt; I["Score SDE · 2021&lt;br/&gt;概率流 ODE 统一"]
+    I --&gt; J["Flow Matching · 2022&lt;br/&gt;直线插值学速度场"]
+    J --&gt; K["Rectified Flow · 2022&lt;br/&gt;reflow 直化 → 一步生成"]
+    K --&gt; L["SD3 / Flux / JET&lt;br/&gt;2023–2026"]</code></pre>
+<h2 id="2-vae2013">2 第一代 · VAE：变分绕积分（2013）<a class="headerlink" href="#2-vae2013" title="Permanent link">#</a></h2>
+<p><strong>要解决的问题</strong>：想学含隐变量的生成模型 <span class="arithmatex">\( p_\theta(x) = \int p_\theta(x|z)\,p(z)\,dz \)</span>（先验 <span class="arithmatex">\( z \sim \mathcal{N}(0, I) \)</span>），这个积分算不动，最大似然不可行。</p>
+<p><strong>第一步：引入近似后验。</strong> 真实后验 <span class="arithmatex">\( p_\theta(z|x) = p(x|z)p(z)/p(x) \)</span> 的分母就是那个积分，也算不动——于是用编码器网络 <span class="arithmatex">\( q_\phi(z|x) \)</span> 去近似它。对任意 <span class="arithmatex">\( q \)</span> 恒有：</p>
+<div class="arithmatex">\[ \log p_\theta(x) = \mathrm{ELBO}(\theta, \phi; x) + \mathrm{KL}\big( q_\phi(z|x) \,\|\, p_\theta(z|x) \big) \]</div>
+<p>KL 项 ≥ 0，所以 ELBO 是下界；KL 不可算但 ELBO 可算。<strong>最大化 ELBO 同时做两件事</strong>：把似然推高，顺便让 <span class="arithmatex">\( q \)</span> 逼近真实后验（间隙缩小）。</p>
+<p><strong>第二步：ELBO 拆成两项</strong>（对积分取 log 用 Jensen 不等式）：</p>
+<div class="arithmatex">\[ \mathrm{ELBO} = \underbrace{\mathbb{E}_{q(z|x)}\big[ \log p_\theta(x|z) \big]}_{\text{重构项}} \;-\; \underbrace{\mathrm{KL}\big( q_\phi(z|x) \,\|\, \mathcal{N}(0, I) \big)}_{\text{正则项}} \]</div>
+<p>重构项要求编码出的 <span class="arithmatex">\( z \)</span> 能解回 <span class="arithmatex">\( x \)</span>（decoder 取高斯似然时就是最小化 <abbr title="均方误差 Mean Squared Error">MSE</abbr>）；正则项把每个 <span class="arithmatex">\( x \)</span> 的后验拉向标准正态，保证潜空间平滑、从先验采样就能 decode 出合理样本。高斯 <span class="arithmatex">\( q \)</span> 配高斯先验时 KL 有闭式解：每维 <span class="arithmatex">\( -\tfrac{1}{2}(1 + \log \sigma^2 - \mu^2 - \sigma^2) \)</span>。</p>
+<p><strong>第三步：重参数化技巧。</strong> "从 <span class="arithmatex">\( q_\phi(z|x) \)</span> 采样"是随机节点，梯度断路。把随机性挪到网络外面：</p>
+<div class="arithmatex">\[ z = \mu_\phi(x) + \sigma_\phi(x) \odot \varepsilon, \qquad \varepsilon \sim \mathcal{N}(0, I) \]</div>
+<p><span class="arithmatex">\( z \)</span> 变成对 <span class="arithmatex">\( \varepsilon \)</span> 的确定性函数，反向传播可以穿过采样直达编码器。这一招在所有概率生成模型里反复出现。</p>
+<p><strong>固有缺陷与分支</strong>：decoder 逐像素独立高斯似然的最优解是<strong>所有可能样本的均值</strong>——均值模糊，所以 VAE 生成总是糊的；decoder 太强（自回归）时还会<strong>后验坍缩</strong>（KL 把 <span class="arithmatex">\( q \)</span> 压向先验，<span class="arithmatex">\( z \)</span> 失去信息）。<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr>（2017）把连续高斯隐变量换成离散 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>（commitment loss + stop-gradient，扔掉 KL）——这就是 <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> / <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> / <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> 的 tokenizer 血统；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 附录那个 ELBO 解释（tokenizer = 后验、decoder = 似然、掩码建模 = 学先验）正是这个框架的离散版。</p>
+<h2 id="3-20112019">3 暗线 · 得分函数：换一个问题问（2011–2019）<a class="headerlink" href="#3-20112019" title="Permanent link">#</a></h2>
+<p>在 DDPM 之前有条容易被忽略的暗线：不建密度 <span class="arithmatex">\( p(x) \)</span> 本身，学它的<strong>梯度</strong>。</p>
+<div class="arithmatex">\[ s(x) = \nabla_x \log p(x) \qquad \text{—— 指向数据密度上升最快方向的场} \]</div>
 <ul>
-<li>节点向量 h_m = <strong>V_m（可学习电极原型）</strong> + z_j（样本内容）；</li>
-<li>joint 训练时，同一电极 V_m 同时接收所有涉及该电极的任务的梯度 → V_m 成为跨任务的电极记忆；</li>
-<li>推理时任务区分靠：输入电极集决定激活哪个子图（β mask）+ 任务专属 head；</li>
-<li>论文证据：joint 训练全面优于 separate，数据量最小的任务受益最大（MW 仅 4K 样本 +3.9%，SS 42K 样本 +0.9%）——共享节点相当于小任务的隐式数据增强。</li>
+<li><strong>Denoising Score Matching</strong>（Vincent 2011）：对数据加噪声 <span class="arithmatex">\( \tilde{x} = x + \sigma\varepsilon \)</span> 后"预测噪声"等价于"预测得分"——因为 <span class="arithmatex">\( \nabla_{\tilde{x}} \log q(\tilde{x}|x) = -(\tilde{x} - x)/\sigma^2 \)</span>；</li>
+<li><strong>Langevin 动力学</strong>：有了得分就能采样——沿密度梯度爬升并加随机扰动，迭代逼近数据分布；</li>
+<li><strong>NCSN</strong>（Song &amp; Ermon 2019）：单个噪声尺度不够（大噪声处无信号、小噪声处无覆盖），于是用<strong>一系列从大到小的噪声级</strong>，同一个网络以 <span class="arithmatex">\( (x, \sigma) \)</span> 为条件预测所有尺度的得分。</li>
 </ul>
-<p>若两任务电极集完全不相交，空间层面的共享就只剩 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重，多任务增益会大幅缩水。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 主流电极高度重叠（同源于 10-20 系统），所以这一设计在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 里特别划算。</p>
-<h2 id="_3">跨设备能力的分水岭<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<p>TFM 的 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr>（EESM23）实验是张试金石：睡眠分期任务，采集设备、通道配置与预训练完全不同，仅 ~8K 标注样本微调——</p>
+<p>关键伏笔："加噪声 + 预测噪声"的训练范式在这里已经成型，只是还没有马尔可夫链的衣裳。</p>
+<h2 id="4-ddpm2020">4 第二代 · DDPM：给去噪装上马尔可夫链（2020）<a class="headerlink" href="#4-ddpm2020" title="Permanent link">#</a></h2>
+<p>DDPM 把 NCSN 的多尺度噪声重述成一条 <span class="arithmatex">\( T \)</span> 步前向链（<strong>固定、无参数</strong>）：</p>
+<div class="arithmatex">\[ q(x_t | x_{t-1}) = \mathcal{N}\big( \sqrt{1-\beta_t}\; x_{t-1},\; \beta_t I \big) \quad\Longrightarrow\quad x_t = \sqrt{\bar{\alpha}_t}\; x_0 + \sqrt{1-\bar{\alpha}_t}\; \varepsilon \]</div>
+<p>其中 <span class="arithmatex">\( \bar{\alpha}_t = \prod_{s=1}^{t}(1-\beta_s) \)</span>（累乘）。任意时刻一步到位，这是纯代数——训练时造带噪样本就靠右式。走到底 <span class="arithmatex">\( x_T \approx \mathcal{N}(0, I) \)</span>。</p>
+<p><strong>反向过程</strong>是要学的 <span class="arithmatex">\( p_\theta(x_{t-1}|x_t) \)</span>（直接算需要对未知的 <span class="arithmatex">\( x_0 \)</span> 积分）。理论骨架仍是对整条链写负 ELBO——妙处在<strong>每一项都是两个高斯之间的 KL，全有闭式解</strong>：VAE 里最难算的正则项在这里免费了。化简到底只剩 Ho et al. 的：</p>
+<div class="arithmatex">\[ \mathcal{L}_{\mathrm{simple}} = \mathbb{E}_{t,\,x_0,\,\varepsilon} \big\| \varepsilon - \varepsilon_\theta(x_t,\,t) \big\|^2 \]</div>
+<p>用人话说：<strong>拿一张干净图，按公式加一份已知噪声，让网络看带噪图、猜出那份噪声，用 <abbr title="均方误差 Mean Squared Error">MSE</abbr> 惩罚</strong>，<span class="arithmatex">\( t \)</span> 随机采。网络实际在学的是得分——<span class="arithmatex">\( \varepsilon_\theta(x_t, t) / \sqrt{1-\bar{\alpha}_t} \approx -\nabla_x \log p_t(x_t) \)</span>，与 denoising score matching 是同一件事。生成从此锐利：每步只做小幅残差修正，网络永远不必像 VAE 那样一步输出条件均值。</p>
+<p><strong>DDIM（2020）是承前启后的一步</strong>：ancestral sampling 去掉每步随机项后，采样变成一个<strong>确定性 ODE 积分</strong>——同一个模型不用重训，路径从 SDE 换成 ODE。人们由此意识到：扩散模型骨子里是一条连续的流。</p>
+<h2 id="5-sde-2021">5 桥梁 · SDE 统一（2021）<a class="headerlink" href="#5-sde-2021" title="Permanent link">#</a></h2>
+<p>Song et al. 把所有加噪方案写成连续时间的<strong>前向 SDE</strong>（VP-SDE 即 DDPM 的连续极限）：</p>
+<div class="arithmatex">\[ dx = f(x, t)\,dt + g(t)\,dw \]</div>
+<p>Anderson (1982) 的结论：每个前向 SDE 都有一个时间倒着走的<strong>反向 SDE</strong>（需要得分场），且有一条确定性伴随物——<strong>概率流 ODE</strong>：</p>
+<div class="arithmatex">\[ dx = \Big[ f(x, t) - \tfrac{1}{2}\, g(t)^2\, \nabla_x \log p_t(x) \Big] dt \qquad \text{（同样的边缘分布，无随机项）} \]</div>
+<p><strong>这就是 DDPM → Flow Matching 的桥</strong>：扩散模型的三个身份（离散链 / 反向 SDE / 概率流 ODE）里，概率流 ODE 已经是"把噪声分布输运到数据分布的向量场"——和生成流是同一个数学对象。DDPM 的全部特殊之处，只剩它的向量场形状由<strong>手工噪声调度</strong> <span class="arithmatex">\( \beta(t) \)</span> 决定。</p>
+<h2 id="6-flow-matching2022">6 第三代 · Flow Matching：把调度也交出去（2022）<a class="headerlink" href="#6-flow-matching2022" title="Permanent link">#</a></h2>
+<p>更早的 Neural ODE / CNF（2018）想过"用 ODE 定义生成流"，但训练要算雅可比迹、在 ODE solver 里反传——贵到不可用。<strong>Flow Matching（Lipman et al. 2022）的贡献是 simulation-free 训练</strong>：想学速度场 <span class="arithmatex">\( v_\theta(x, t) \)</span>，它生成的 ODE 把先验 <span class="arithmatex">\( p_0 = \mathcal{N}(0, I) \)</span> 输运到数据 <span class="arithmatex">\( p_1 \)</span>。边缘速度场没有真值，但对<strong>成对样本</strong> <span class="arithmatex">\( (x_0, x_1) \)</span> 可定义条件路径与条件速度：</p>
+<div class="arithmatex">\[ \text{路径：}\; x_t = (1-t)\,x_0 + t\,x_1 \qquad \text{目标：}\; u_t = x_1 - x_0 \]</div>
+<div class="arithmatex">\[ \mathcal{L}_{\mathrm{FM}} = \mathbb{E} \big\| v_\theta(x_t,\,t) - (x_1 - x_0) \big\|^2 \]</div>
+<p>关键定理：对条件目标回归与对边缘目标回归的<strong>梯度相同</strong>（边缘速度恰是条件速度的期望 <span class="arithmatex">\( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)</span>，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 的最优解就是条件期望）——所以不必知道边缘场，采样配对做回归即可。</p>
+<p><strong>Rectified Flow（Liu et al. 2022，同期工作）</strong>补上直化：用训好的模型生成新配对再重训（reflow），轨迹越来越直 → 少步乃至<strong>一步生成</strong>。"straighter trajectories, faster sampling"的出处，也是 JET 引用 Mean Flow（2025）的那条线。</p>
+<p><strong>与 DDPM 的精确关系</strong>：把插值路径从直线换成 VP 路径（系数 <span class="arithmatex">\( \sqrt{\bar{\alpha}_t} \)</span>、<span class="arithmatex">\( \sqrt{1-\bar{\alpha}_t} \)</span>），FM 的回归目标就退化回噪声预测——扩散的概率流 ODE 是 Flow Matching 取特定路径的特例：</p>
+<div class="arithmatex">\[ \text{Flow Matching} = \text{扩散的推广（路径自由）} + \text{简化（无调度表、纯确定性、目标是速度而非噪声）} \]</div>
+<h2 id="7">7 三代统一对照<a class="headerlink" href="#7" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>VAE</th>
+<th>DDPM</th>
+<th>Flow Matching</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绕积分的方式</td>
+<td>变分下界（一次近似）</td>
+<td>变分下界（T 级链，逐级闭式）</td>
+<td>不走 ELBO：直接回归向量场</td>
+</tr>
+<tr>
+<td>中间变量</td>
+<td>一个全局 <code>z</code></td>
+<td>T 个逐步状态</td>
+<td>连续路径 <code>x(t)</code>，t 从 0 到 1</td>
+</tr>
+<tr>
+<td>网络学什么</td>
+<td>decoder 似然</td>
+<td>噪声 ε（= 得分的缩放）</td>
+<td>速度场 v(x, t)</td>
+</tr>
+<tr>
+<td>训练回归目标</td>
+<td>重构误差</td>
+<td>噪声 ε</td>
+<td>速度 <code>x1 − x0</code></td>
+</tr>
+<tr>
+<td>采样方式</td>
+<td>一步 decode</td>
+<td>SDE 采样 / DDIM（ODE）</td>
+<td>ODE 积分（路径可任意直化）</td>
+</tr>
+<tr>
+<td>先验/调度</td>
+<td>高斯先验</td>
+<td><strong>手工</strong>噪声调度</td>
+<td>路径自由选（常用直线）</td>
+</tr>
+<tr>
+<td>固有缺陷</td>
+<td>模糊、后验坍缩</td>
+<td>采样慢、调度手工</td>
+<td>矫直不彻底则少步掉点</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8">8 三条"缺陷驱动进化"的主线<a class="headerlink" href="#8" title="Permanent link">#</a></h2>
+<p>把整个脉络压缩成三句话，每句对应一个公式组件的消亡：</p>
+<ol>
+<li><strong>"模糊"死于分步</strong>——VAE 一步解码输出条件均值；DDPM 把生成拆成上千个小残差修正，模糊消失（2020）；</li>
+<li><strong>"慢"死于 ODE 化</strong>——DDPM 的 T 次 SDE 采样，经 DDIM 与 SDE 视角变成确定性 ODE，为少步化铺路（2020–2021）；</li>
+<li><strong>"手工调度"死于路径自由</strong>——FM 把 <span class="arithmatex">\( \sqrt{\bar{\alpha}_t} \)</span> 这张人拍的表换成可自由设计的插值路径，直线路径 + reflow 直奔一步生成（2022–2025）。</li>
+</ol>
+<h2 id="9-eeg">9 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语境中的位置<a class="headerlink" href="#9-eeg" title="Permanent link">#</a></h2>
 <ul>
-<li>TFM-Tokenizer：0.4148 balanced acc（比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 高 14%）✓</li>
-<li><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：可跑但明显更弱</li>
-<li><strong>EEGPT：无法参与</strong>——固定 58 通道布局的空间 embedding 无法映射到 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 通道</li>
+<li><strong><abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 分支</strong> → 已精读的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（神经码本 + 频谱重构目标）/ NeuroLM（码字并入 <abbr title="大语言模型 Large Language Model">LLM</abbr> 词表）/ TFM（时频 motif 词表）；</li>
+<li><strong>DDPM 线</strong> → <a href="../../papers/2026-09/0923-jet/">JET</a> 的 Vanilla Diffusion 基线与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 对照。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的"原始波形不可重构、改频谱目标"与扩散"分步去噪才能锐利"，其实是同一现象（一步回归的均值坍缩）的两种表述；</li>
+<li><strong>FM 线</strong> → JET 本体：<span class="arithmatex">\( x_t = t\,x_1 + (1-t)\,x_0 \)</span> 就是直线插值路径，三条生理约束相当于在 FM 损失外加了结构正则；</li>
+<li><strong>先验的拓扑要求三代一致</strong>：JET 的"零噪声初始化灾难失败"（TS-FID 1600+）正是"先验必须非退化、有全空间支撑"的实证——VAE 的 <span class="arithmatex">\( z \sim \mathcal{N}(0, I) \)</span>、DDPM 的 <span class="arithmatex">\( x_T \)</span>、FM 的 <span class="arithmatex">\( x_0 \)</span> 没有例外。</li>
 </ul>
-<p>结论：<strong>通道适配方案决定了模型的应用边界</strong>。要做可穿戴、消费级 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（干电极、耳部、少导联），方案③（单通道独立）是目前最稳的路线。</p>
-<h2 id="20252026">2025–2026 延伸：第五、六种解法<a class="headerlink" href="#20252026" title="Permanent link">#</a></h2>
-<p>上述四解法来自已精读的六篇；2025–2026 的新工作把这条谱系继续推进了两格：</p>
+<h2 id="_1">自问自答<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<details class="question">
+<summary>Q1 · 为什么 VAE 模糊而扩散锐利？</summary>
+<p>根因在一步回归的均值坍缩：逐像素独立高斯似然下，最优解码器输出的是条件均值——把多种可能平均成一张糊图。DDPM 把一步生成拆成 T 步小去噪，每步只需处理小残差、且采样过程中有随机项维持多样性，不需要任何一步"押注"完整样本。<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 走的是另一条修路：把隐变量离散化，重构目标变成离散码预测，绕开连续均值。</p>
+</details>
+<details class="question">
+<summary>Q2 · Flow Matching 和 DDPM 到底什么关系？</summary>
+<p>同一家族的两个参数化。DDPM 在"VP 路径 + 预测噪声"参数化下是 FM 的特例：把 FM 的直线插值换成 <span class="arithmatex">\( x_t = \sqrt{\bar{\alpha}_t}\,x_0 + \sqrt{1-\bar{\alpha}_t}\,\varepsilon \)</span>、把回归目标从速度 <span class="arithmatex">\( x_1 - x_0 \)</span> 换成噪声 <span class="arithmatex">\( \varepsilon \)</span>，就还原回扩散。差别有三：FM 的插值路径自由（直线/最优传输），DDPM 的由手工调度表决定；FM 训练回归的是速度场，采样纯确定性 ODE；DDPM 的反向采样天然带随机性（SDE 视角），少步采样时随机项有助于覆盖多模态。</p>
+</details>
+<details class="question">
+<summary>Q3 · 条件速度场没有真值，凭什么对配对样本回归就行？</summary>
+<p>边缘速度场是条件速度在配对分布下的期望：<span class="arithmatex">\( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)</span>。<abbr title="均方误差 Mean Squared Error">MSE</abbr> 回归的最优解恰好是条件期望——所以对随机采样的配对 <span class="arithmatex">\( (x_0, x_1) \)</span> 做回归，其梯度与对边缘场回归的梯度一致。这与"DDPM 预测噪声等价于预测得分"是同构的逻辑：都在用一个可采样的条件量替代不可算的边缘量。</p>
+</details>
+<details class="question">
+<summary>Q4 · 为什么三代模型的先验都要求非退化？</summary>
+<p>从单个点出发要把退化的分布展开成复杂多模态的数据分布，是一对多的映射——连续流（ODE）无法表示，只有带全空间支撑的随机先验（如高斯）才能给输运提供覆盖数据支撑的自由度。JET 的消融给了实证：零噪声初始化下 TS-FID 从 188 崩到 1615 以上，且换任何损失权重都救不回来——这不是超参问题而是结构性不可表示。</p>
+</details>
+<div class="admonition abstract">
+<p class="admonition-title">关键文献速查</p>
 <ul>
-<li><strong>⑤ 解耦路由 · EEGMoE</strong>（TNNLS 2026）：不追求统一格式本身，先把所有 montage 摆进统一 2-D 脑地图网格（输入端抹平几何差异），再用 Specific+Shared 双专家 MoE 在<strong>表征层解耦任务/数据集域</strong>——几何轴统一、任务轴分工。总参数仅 1.68M；专家-任务分工可视化给出解耦成功的直接证据；</li>
-<li><strong>⑥ 学习 query 统一 · LUNA</strong>（NeurIPS 2025）：Q 个学习 query 对任意通道集合做交叉注意力，压进固定隐空间（置换不变）后再做时间注意力——<strong>对通道数线性</strong>的复杂度，8000 通道时 FLOPs 仅为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180；代价是隐空间瓶颈（TUAB 落后全注意力约 1pp，未见拓扑 SEED-V 落后 2–3pp）。</li>
+<li><strong>VAE</strong>：Kingma &amp; Welling, <em>Auto-Encoding Variational Bayes</em>, arXiv:1312.6114（2013）</li>
+<li><strong><abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr></strong>：van den Oord et al., <em>Neural Discrete Representation Learning</em>, NeurIPS 2017</li>
+<li><strong>DDPM</strong>：Ho et al., <em>Denoising Diffusion Probabilistic Models</em>, NeurIPS 2020（arXiv:2006.11239）</li>
+<li><strong>DDIM</strong>：Song et al., <em>Denoising Diffusion Implicit Models</em>, ICLR 2021</li>
+<li><strong>Score SDE</strong>：Song et al., <em>Score-Based Generative Modeling through SDEs</em>, ICLR 2021（arXiv:2011.13456）</li>
+<li><strong>Flow Matching</strong>：Lipman et al., arXiv:2210.02747（2022）</li>
+<li><strong>Rectified Flow</strong>：Liu et al., <em>Flow Straight and Fast</em>, arXiv:2209.03003（2022）</li>
+<li><strong><abbr title="脑电图 Electroencephalogram">EEG</abbr> 落点</strong>：<a href="../../papers/2026-09/0923-jet/">JET（ICML 2026）</a>——直线插值 + 生理约束的本站精读</li>
 </ul>
-<p>两者合起来给出一个二维地图：<strong>几何轴可以抹平（LUNA），任务轴应该解耦（EEGMoE）</strong>——理想模型可能需要同时做这两件事。</p>
-<h2 id="_4">关联论文<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/2026-09/0924-eegmoe/">EEGMoE</a> · <a href="../../papers/2026-09/0924-luna/">LUNA</a></p>
+</div>
+<hr>
+<p><strong>相关阅读</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../../papers/2026-09/0923-jet/">JET · 流匹配生成 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（本站精读）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19H4.09L14.18 4.43l1.64 1.14-4.54 6.56c1.61.83 2.72 2.49 2.72 4.41 0 .16 0 .31-.03.46H20zM7.91 17h4.05c.04-.15.04-.3.04-.46 0-1.26-.76-2.32-1.86-2.76z"></path></svg></span> <a href="../lora/">LoRA · 低秩适配</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../attention-alternatives/">Attention 替代方案</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 分支的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 实现）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
