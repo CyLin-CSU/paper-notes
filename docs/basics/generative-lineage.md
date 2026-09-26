@@ -59,6 +59,10 @@ KL 项 ≥ 0，所以 ELBO 是下界；KL 不可算但 ELBO 可算。**最大化
 
 \( z \) 变成对 \( \varepsilon \) 的确定性函数，反向传播可以穿过采样直达编码器。这一招在所有概率生成模型里反复出现。
 
+![VAE 架构与损失分解：Encoder 输出隐空间中每个样本的高斯分布（均值/方差），Decoder 从中采样重建；下方为损失分解——重构项即 MSE，KL 项有闭式解](../assets/gen-vae-arch.png)
+
+*VAE 架构与损失分解：\( x \to q_\phi(z|x) \to p(z) \to p_\theta(x|z) \) 的完整链路；图中 KL 闭式解 \( \frac{1}{2}\sum_i(\sigma_i^2 + \mu_i^2 - \log\sigma_i^2 - 1) \) 即上文正则项的逐维展开*
+
 **固有缺陷与分支**：decoder 逐像素独立高斯似然的最优解是**所有可能样本的均值**——均值模糊，所以 VAE 生成总是糊的；decoder 太强（自回归）时还会**后验坍缩**（KL 把 \( q \) 压向先验，\( z \) 失去信息）。VQ-VAE（2017）把连续高斯隐变量换成离散 codebook（commitment loss + stop-gradient，扔掉 KL）——这就是 [LaBraM](../papers/2026-09/0918-labram.md) / [NeuroLM](../papers/2026-09/0918-neurolm.md) / [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) 的 tokenizer 血统；LaBraM 附录那个 ELBO 解释（tokenizer = 后验、decoder = 似然、掩码建模 = 学先验）正是这个框架的离散版。
 
 ## 3 暗线 · 得分函数：换一个问题问（2011–2019）
@@ -87,6 +91,10 @@ DDPM 把 NCSN 的多尺度噪声重述成一条 \( T \) 步前向链（**固定�
 
 用人话说：**拿一张干净图，按公式加一份已知噪声，让网络看带噪图、猜出那份噪声，用 MSE 惩罚**，\( t \) 随机采。网络实际在学的是得分——\( \varepsilon_\theta(x_t, t) / \sqrt{1-\bar{\alpha}_t} \approx -\nabla_x \log p_t(x_t) \)，与 denoising score matching 是同一件事。生成从此锐利：每步只做小幅残差修正，网络永远不必像 VAE 那样一步输出条件均值。
 
+![DDPM 的马尔可夫链视角：前向加噪 q 是固定无参数的，反向去噪 pθ 是要学的网络；从纯噪声 xT 逐步走到干净样本 x0](../assets/gen-ddpm-markov.png)
+
+*DDPM 的马尔可夫链视角：灰色圆是带噪状态，\( q(x_t|x_{t-1}) \)（虚线）是固定的前向加噪，\( p_\theta(x_{t-1}|x_t) \) 是要学习的反向去噪——"从加噪过程中学习逐步去噪"*
+
 **DDIM（2020）是承前启后的一步**：ancestral sampling 去掉每步随机项后，采样变成一个**确定性 ODE 积分**——同一个模型不用重训，路径从 SDE 换成 ODE。人们由此意识到：扩散模型骨子里是一条连续的流。
 
 ## 5 桥梁 · SDE 统一（2021）
@@ -110,6 +118,10 @@ Anderson (1982) 的结论：每个前向 SDE 都有一个时间倒着走的**反
 \[ \mathcal{L}_{\mathrm{FM}} = \mathbb{E} \big\| v_\theta(x_t,\,t) - (x_1 - x_0) \big\|^2 \]
 
 关键定理：对条件目标回归与对边缘目标回归的**梯度相同**（边缘速度恰是条件速度的期望 \( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)，MSE 的最优解就是条件期望）——所以不必知道边缘场，采样配对做回归即可。
+
+![ODE 三要素与流的形变：dX(t)/dt = u(t, X) 是要学的向量场，单条解是轨迹，全体轨迹构成流 ψ；右图直观展示一组网格从高斯先验（左）被输运到数据分布（中）的过程](../assets/gen-fm-ode.png)
+
+*Flow Matching 的三个核心名词：**向量场**（\( u_t \)，要学习的项）、**轨迹**（一条 ODE 解 \( X_t \)）、**流**（全体轨迹 \( \psi_t(x_0) \)）——生成就是把左侧高斯先验"揉"成右侧数据分布的那组形变*
 
 **Rectified Flow（Liu et al. 2022，同期工作）**补上直化：用训好的模型生成新配对再重训（reflow），轨迹越来越直 → 少步乃至**一步生成**。"straighter trajectories, faster sampling"的出处，也是 JET 引用 Mean Flow（2025）的那条线。
 
