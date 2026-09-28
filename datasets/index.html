@@ -731,6 +731,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../papers/2026-09/0928-cbramod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0928 · CBraMod (ICLR 2025 · 十字交叉)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1168,7 +1203,7 @@
   <span class="md-ellipsis">
     
   
-    十篇方法对比
+    十一篇方法对比
   
 
     
@@ -1374,6 +1409,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        癫痫 / 精神诊断 / 想象语音
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ecg" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1543,6 +1589,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        癫痫 / 精神诊断 / 想象语音
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ecg" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1585,16 +1642,16 @@
 
 
 <h1 id="_1">数据集索引<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>十篇精读论文（核心六篇 + RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA）用到的全部数据集汇总。<strong>↑ = 预训练语料，↓ = 下游评估</strong>（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部<a href="#dataset-alias">别名说明</a>。</p>
+<p>十一篇精读论文（核心六篇 + RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod）用到的全部数据集汇总。<strong>↑ = 预训练语料，↓ = 下游评估</strong>（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部<a href="#dataset-alias">别名说明</a>。</p>
 <h2 id="_2">📊 数据集 × 论文使用矩阵<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <div class="mx-wrap">
 <table class="mx-matrix">
-<thead><tr><th>数据集 \ 论文</th><th>BIOT</th><th>LaBraM</th><th>EEGPT</th><th>BrainGPT</th><th>NeuroLM</th><th>TFM</th><th>EEGMoE</th><th>LUNA</th><th>JET</th><th>RF-GPT</th></tr></thead>
-<tbody><tr><th>TUAB</th><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-b" title="生成训练 + TS-FID 评估">P+D</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>TUEV</th><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="生成训练 + TS-FID 评估">P+D</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>TUEG（总体）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>TUSZ</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="生成训练 + TS-FID 评估">P+D</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>TUEP / TUAR / TUSL</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="TUAR/TUSL 下游；TUEP 含于 TUEG 预训练">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>SEED（原始）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>SEED-IV / SEED-V</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="预训练 + 下游">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>DEAP / FACED</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>PhysioMI</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="EEGMMIDB 预训练">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>HGD</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>BCIC4-1 / MIBCI</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>BCIC-2A / 2B</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>Grasp and Lift</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>SHHS</th><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>EDF / HMC（睡眠）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>EESM23（ear-EEG）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>EEGMat / STEW（负荷）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="EEGMat 预训练 + STEW 下游">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>Inria BCI / TVNT（P300）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>KaggleERN / PhysioP300</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>TSU（SSVEP）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>M3CV</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>PTB-XL / Cardiology（ECG）</th><td class="mx-cell mx-b" title="预训练 + 下游">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>HAR（可穿戴）</th><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>MoBI（步态）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>Raw EEG / Resting / Siena / SPIS / 自采集</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="Siena 预训练；TUEG 另计">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>DREAMER（未见验证）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="EEGMoE 预训练语料之一">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>合成 RF 波形（MATLAB 六技术 + TorchSig）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="RF-GPT 生成/指令数据语料（12,000 场景 / 0.625M 指令对）">P</td></tr></tbody>
+<thead><tr><th>数据集 \ 论文</th><th>BIOT</th><th>LaBraM</th><th>EEGPT</th><th>BrainGPT</th><th>NeuroLM</th><th>TFM</th><th>EEGMoE</th><th>LUNA</th><th>JET</th><th>RF-GPT</th><th>CBraMod</th></tr></thead>
+<tbody><tr><th>TUAB</th><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-b" title="生成训练 + TS-FID 评估">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="预训练 + 下游">P+D</td></tr><tr><th>TUEV</th><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="生成训练 + TS-FID 评估">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="预训练 + 下游">P+D</td></tr><tr><th>TUEG（总体）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td></tr><tr><th>TUSZ</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="生成训练 + TS-FID 评估">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td></tr><tr><th>TUEP / TUAR / TUSL</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="TUAR/TUSL 下游；TUEP 含于 TUEG 预训练">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td></tr><tr><th>SEED（原始）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>SEED-IV / SEED-V</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="预训练 + 下游">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>DEAP / FACED</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>PhysioMI</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="EEGMMIDB 预训练">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>HGD</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>BCIC4-1 / MIBCI</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>BCIC-2A / 2B</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>Grasp and Lift</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>SHHS</th><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>EDF / HMC（睡眠）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>EESM23（ear-EEG）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>EEGMat / STEW（负荷）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-b" title="EEGMat 预训练 + STEW 下游">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>Inria BCI / TVNT（P300）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>KaggleERN / PhysioP300</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>TSU（SSVEP）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>M3CV</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>PTB-XL / Cardiology（ECG）</th><td class="mx-cell mx-b" title="预训练 + 下游">P+D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>HAR（可穿戴）</th><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>MoBI（步态）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>Raw EEG / Resting / Siena / SPIS / 自采集</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="预训练语料">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="Siena 预训练；TUEG 另计">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>SHU-MI</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>ISRUC</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>CHB-MIT</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>BCIC2020-3</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>Mumtaz2016</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>SEED-VIG</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td></tr><tr><th>DREAMER（未见验证）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-d" title="下游评估">D</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="EEGMoE 预训练语料之一">P</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td></tr><tr><th>合成 RF 波形（MATLAB 六技术 + TorchSig）</th><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-n" title="未使用">·</td><td class="mx-cell mx-p" title="RF-GPT 生成/指令数据语料（12,000 场景 / 0.625M 指令对）">P</td><td class="mx-cell mx-n" title="未使用">·</td></tr></tbody>
 </table>
 </div>
 
-<p class="mx-legend">图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者兼有　<span class="mx-cell mx-n">·</span> 未使用　（悬停查看说明；ECG 与 IMU 数据仅 BIOT 跨模态使用；SEED-IV/V 为 LaBraM 预训练 + LaBraM/NeuroLM/BrainGPT 相关任务；LUNA 预训练 = TUEG + Siena；EEGMoE 预训练 = 6 个认知任务数据集；JET 的 P+D = 生成训练 + TS-FID 评估；RF-GPT 的 P = 合成指令语料）</p>
+<p class="mx-legend">图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者兼有　<span class="mx-cell mx-n">·</span> 未使用　（悬停查看说明；ECG 与 IMU 数据仅 BIOT 跨模态使用；SEED-IV/V 为 LaBraM 预训练 + LaBraM/NeuroLM/BrainGPT 相关任务；LUNA 预训练 = TUEG + Siena；EEGMoE 预训练 = 6 个认知任务数据集；JET 的 P+D = 生成训练 + TS-FID 评估；RF-GPT 的 P = 合成指令语料；CBraMod 的 P+D = TUEG 系预训练 + 剔除下游后重评的防泄漏版）</p>
 
 <hr>
 <h2 id="eegtemple-tueg">临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（Temple 大学 TUEG 体系）<a class="headerlink" href="#eegtemple-tueg" title="Permanent link">#</a></h2>
@@ -1614,21 +1671,21 @@
 <td>临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语料</td>
 <td>17–23ch / 250–1024Hz</td>
 <td>~24,000h</td>
-<td>NeuroLM↑ · LUNA↑（21,787h）</td>
+<td>NeuroLM↑ · LUNA↑（21,787h） · CBraMod↑（清洗后 &gt;9000h）</td>
 </tr>
 <tr>
 <td><strong>TUAB</strong></td>
 <td>异常检测（二分类）</td>
 <td>23ch / 256Hz / 10s</td>
 <td>409,455 样本</td>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ NeuroLM↓ EEGPT↓ TFM↓ LUNA↓ JET⚙（生成）</td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ NeuroLM↓ EEGPT↓ TFM↓ LUNA↓ JET⚙（生成） CBraMod↓（防泄漏重训版仍 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>）</td>
 </tr>
 <tr>
 <td><strong>TUEV</strong></td>
 <td>事件分类（6 类）</td>
 <td>23ch / 256Hz / 5s</td>
 <td>112,491 样本</td>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ NeuroLM↓ EEGPT↓ TFM↓ JET⚙（生成）</td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ NeuroLM↓ EEGPT↓ TFM↓ JET⚙（生成） CBraMod↓（防泄漏重训）</td>
 </tr>
 <tr>
 <td><strong>TUSL</strong></td>
@@ -1691,7 +1748,7 @@
 <td>5 类情绪</td>
 <td>62ch / 1000Hz</td>
 <td>20 被试</td>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ BrainGPT↓ LUNA↓（未见拓扑）</td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ BrainGPT↓ LUNA↓（未见拓扑） CBraMod↓（开源 16 人版）</td>
 </tr>
 <tr>
 <td><strong>DEAP</strong></td>
@@ -1712,7 +1769,7 @@
 <td>9 类情绪</td>
 <td>30ch / 1000Hz</td>
 <td>123 被试</td>
-<td>BrainGPT↓</td>
+<td>BrainGPT↓ CBraMod↓</td>
 </tr>
 <tr>
 <td><strong>Emobrain</strong></td>
@@ -1740,7 +1797,7 @@
 <td><abbr title="运动想象 Motor Imagery">MI</abbr> &amp; ME</td>
 <td>64ch / 160Hz</td>
 <td>109 被试</td>
-<td>EEGPT↑ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑ EEGMoE↑</td>
+<td>EEGPT↑ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑ EEGMoE↑ CBraMod↓</td>
 </tr>
 <tr>
 <td><strong>HGD</strong></td>
@@ -1768,7 +1825,14 @@
 <td><abbr title="运动想象 Motor Imagery">MI</abbr>（4 类）</td>
 <td>22ch / 250Hz</td>
 <td>9 被试</td>
-<td>EEGMoE↓（LOSO）</td>
+<td>EEGMoE↓（LOSO） CBraMod↓</td>
+</tr>
+<tr>
+<td><strong>SHU-<abbr title="运动想象 Motor Imagery">MI</abbr></strong></td>
+<td><abbr title="运动想象 Motor Imagery">MI</abbr>（2 类：左右手）</td>
+<td>32ch / 250Hz</td>
+<td>25 被试</td>
+<td>CBraMod↓</td>
 </tr>
 <tr>
 <td><strong>Grasp and Lift</strong></td>
@@ -1819,6 +1883,13 @@
 <td>10 被试</td>
 <td>TFM 跨设备评估</td>
 </tr>
+<tr>
+<td><strong>ISRUC</strong></td>
+<td>睡眠分期（5 类）</td>
+<td>6ch（对侧导联）/ 200Hz</td>
+<td>100 晚</td>
+<td>CBraMod↓</td>
+</tr>
 </tbody>
 </table>
 <h2 id="_6">认知负荷<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
@@ -1834,11 +1905,11 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>EEGMat</strong>（NeuroLM 中称 Workload）</td>
+<td><strong>EEGMat</strong>（NeuroLM 中称 Workload，CBraMod 中称 MentalArithmetic）</td>
 <td>高/低认知负荷</td>
 <td>19ch / 500Hz</td>
 <td>36 被试（BrainGPT 报 34）</td>
-<td>NeuroLM↓ BrainGPT↓ EEGMoE↑（预训练）</td>
+<td>NeuroLM↓ BrainGPT↓ EEGMoE↑（预训练） CBraMod↓</td>
 </tr>
 <tr>
 <td><strong>STEW</strong></td>
@@ -1846,6 +1917,13 @@
 <td>14ch / 128Hz</td>
 <td>45 被试</td>
 <td>BrainGPT↓ EEGMoE↓（LOSO）</td>
+</tr>
+<tr>
+<td><strong>SEED-VIG</strong></td>
+<td>警觉度回归（PERCLOS 标签）</td>
+<td>17ch / 200Hz</td>
+<td>23 被试</td>
+<td>CBraMod↓</td>
 </tr>
 </tbody>
 </table>
@@ -1902,6 +1980,41 @@
 <td>—</td>
 <td>106 被试</td>
 <td>EEGPT↑</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_7">癫痫 / 精神诊断 / 想象语音<a class="headerlink" href="#_7" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>任务</th>
+<th>配置</th>
+<th>规模</th>
+<th>使用情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CHB-MIT</strong></td>
+<td>癫痫检测（2 类）</td>
+<td>16 双极导联 / 256Hz</td>
+<td>23 患者（儿科）/ 326,993 样本</td>
+<td>CBraMod↓</td>
+</tr>
+<tr>
+<td><strong>Mumtaz2016</strong></td>
+<td>抑郁症诊断（2 类）</td>
+<td>19ch / 256Hz</td>
+<td>34 MDD + 30 正常</td>
+<td>CBraMod↓</td>
+</tr>
+<tr>
+<td><strong>BCIC2020-3</strong></td>
+<td>想象语音（5 词）</td>
+<td>64ch / 256Hz</td>
+<td>15 被试 / 6,000 样本</td>
+<td>CBraMod↓</td>
 </tr>
 </tbody>
 </table>

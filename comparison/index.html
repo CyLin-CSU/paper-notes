@@ -22,7 +22,7 @@
     
     
       
-        <title>十篇方法对比 - Paper Notes · 论文阅读笔记</title>
+        <title>十一篇方法对比 - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              十篇方法对比
+              十一篇方法对比
             
           </span>
         </div>
@@ -731,6 +731,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../papers/2026-09/0928-cbramod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0928 · CBraMod (ICLR 2025 · 十字交叉)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1177,7 +1212,7 @@
   <span class="md-ellipsis">
     
   
-    十篇方法对比
+    十一篇方法对比
   
 
     
@@ -1195,7 +1230,7 @@
   <span class="md-ellipsis">
     
   
-    十篇方法对比
+    十一篇方法对比
   
 
     
@@ -1616,7 +1651,7 @@
   
 
 
-<h1 id="_1">十篇方法对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h1 id="_1">十一篇方法对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <h2 id="tuev-cohens-kappa">📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）<a class="headerlink" href="#tuev-cohens-kappa" title="Permanent link">#</a></h2>
 <p>数据来源：TFM-Tokenizer 论文 Table 1（统一评测口径）。† 表示在四个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集上复现预训练。</p>
 <canvas id="kappa-chart" height="130"></canvas>
@@ -1981,6 +2016,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>0.8957</td>
 <td>LUNA Table 1（311.4M）</td>
 </tr>
+<tr>
+<td>CBraMod</td>
+<td><strong>0.8289</strong></td>
+<td><strong>0.9227</strong></td>
+<td>CBraMod Table 14（4.0M；防泄漏重训版 0.8249 / 0.9156）</td>
+</tr>
 </tbody>
 </table>
 <h3 id="tuev">TUEV（事件分类）<a class="headerlink" href="#tuev" title="Permanent link">#</a></h3>
@@ -2030,6 +2071,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <td><strong>0.6189</strong></td>
 <td>TFM Table 1</td>
 </tr>
+<tr>
+<td>CBraMod</td>
+<td><strong>0.6671</strong></td>
+<td><strong>0.6772</strong></td>
+<td>CBraMod Table 13（4.0M 打过 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 369M；防泄漏重训版 0.6659 / 0.6744）</td>
+</tr>
 </tbody>
 </table>
 <h3 id="_5">其他任务代表成绩<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
@@ -2066,6 +2113,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>TUAR AUROC <strong>0.921</strong>、TUSL AUROC <strong>0.802</strong>（双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>）；SEED-V Bal Acc 0.3900（未见 62 通道拓扑，落后 CBraMod）</td>
 </tr>
 <tr>
+<td>CBraMod</td>
+<td>10 任务 12 数据集全 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>（4.0M 参数）：FACED Kappa 0.5041 · ISRUC 睡眠分期 Kappa 0.7442 · CHB-MIT Bal Acc 0.7398 · PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> Kappa 0.5222；TUAB/TUEV 做了防泄漏重训仍第一</td>
+</tr>
+<tr>
 <td>JET⚙ 生成</td>
 <td>TS-FID 188.27 / 235.86 / 151.27（TUAB/TUEV/TUSZ，基线 274–449）；Silhouette 0.983–0.995；下游增强 ΔAcc +0.017~+0.032（CBraMod 裁判）</td>
 </tr>
@@ -2077,7 +2128,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <div class="admonition note">
 <p class="admonition-title">数据快照</p>
-<p>本表数字整理于 <strong>2026-09-25</strong>（覆盖十篇：六篇核心 + LUNA / EEGMoE / JET / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。</p>
+<p>本表数字整理于 <strong>2026-09-28</strong>（覆盖十一篇：六篇核心 + LUNA / EEGMoE / JET / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / CBraMod）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。</p>
 </div>
 <h2 id="critique-chain">🔗 论文互怼链<a class="headerlink" href="#critique-chain" title="Permanent link">#</a></h2>
 <p>箭头方向 = 批评/改进指向。每条边标注批评点。</p>

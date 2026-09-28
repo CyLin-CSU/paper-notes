@@ -8,10 +8,10 @@
       
       
       
-        <link rel="prev" href="../0924-eegmoe/">
+        <link rel="prev" href="../0924-luna/">
       
       
-        <link rel="next" href="../0928-cbramod/">
+        <link rel="next" href="../../../basics/lora/">
       
       
         
@@ -22,7 +22,7 @@
     
     
       
-        <title>LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis - Paper Notes · 论文阅读笔记</title>
+        <title>CBraMod: A Criss-Cross Brain Foundation Model for EEG Decoding - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis" class="md-skip">
+        <a href="#cbramod-a-criss-cross-brain-foundation-model-for-eeg-decoding" class="md-skip">
           跳转至
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis
+              CBraMod: A Criss-Cross Brain Foundation Model for EEG Decoding
             
           </span>
         </div>
@@ -704,6 +704,41 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../0924-luna/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -723,7 +758,7 @@
   <span class="md-ellipsis">
     
   
-    0924 · LUNA (NeurIPS 2025 · 拓扑无关)
+    0928 · CBraMod (ICLR 2025 · 十字交叉)
   
 
     
@@ -748,7 +783,7 @@
   <span class="md-ellipsis">
     
   
-    0924 · LUNA (NeurIPS 2025 · 拓扑无关)
+    0928 · CBraMod (ICLR 2025 · 十字交叉)
   
 
     
@@ -781,10 +816,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#1-eeg" class="md-nav__link">
+  <a href="#1-vit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1 问题定位：拓扑异构是 EEG 基础模型的地基问题
+        1 问题定位：两处「照搬 ViT」的不合身
       
     </span>
   </a>
@@ -804,10 +839,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#21-patch-3d" class="md-nav__link">
+  <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.1 Patch 特征提取（双路 + 3D 空间编码）
+        2.1 切段与掩码
       
     </span>
   </a>
@@ -815,10 +850,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#22-channel-unification-module" class="md-nav__link">
+  <a href="#22-patch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.2 Channel-Unification Module：拓扑无关的核心
+        2.2 时频双分支 patch 编码
       
     </span>
   </a>
@@ -826,10 +861,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#23-patch-wise" class="md-nav__link">
+  <a href="#23-acpe" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.3 Patch-wise 时间编码器 + 双解码器
+        2.3 ACPE：非对称条件位置编码
       
     </span>
   </a>
@@ -837,10 +872,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#24-query" class="md-nav__link">
+  <a href="#24-criss-cross-attention" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.4 训练目标：重构 + query 特化
+        2.4 Criss-Cross Attention：空间/时间两路并行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 掩码重构预训练
       
     </span>
   </a>
@@ -856,18 +902,7 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3 复杂度账本
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 结果
+        3 预训练流水线
       
     </span>
   </a>
@@ -886,18 +921,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        4 结果与消融
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 结果与消融">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-10-12-sota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 主结果：10 任务 12 数据集全 SOTA
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 关键消融
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         与其他论文的关系
@@ -908,7 +971,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -919,7 +982,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         自问自答
@@ -933,41 +996,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../0928-cbramod/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    0928 · CBraMod (ICLR 2025 · 十字交叉)
-  
-
-    
-  </span>
-  
-  
-    
-  
-  
-    <span class="md-status md-status--精读"></span>
-  
-
-  
-
-      </a>
     </li>
   
 
@@ -1560,10 +1588,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#1-eeg" class="md-nav__link">
+  <a href="#1-vit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1 问题定位：拓扑异构是 EEG 基础模型的地基问题
+        1 问题定位：两处「照搬 ViT」的不合身
       
     </span>
   </a>
@@ -1583,10 +1611,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#21-patch-3d" class="md-nav__link">
+  <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.1 Patch 特征提取（双路 + 3D 空间编码）
+        2.1 切段与掩码
       
     </span>
   </a>
@@ -1594,10 +1622,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#22-channel-unification-module" class="md-nav__link">
+  <a href="#22-patch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.2 Channel-Unification Module：拓扑无关的核心
+        2.2 时频双分支 patch 编码
       
     </span>
   </a>
@@ -1605,10 +1633,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#23-patch-wise" class="md-nav__link">
+  <a href="#23-acpe" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.3 Patch-wise 时间编码器 + 双解码器
+        2.3 ACPE：非对称条件位置编码
       
     </span>
   </a>
@@ -1616,10 +1644,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#24-query" class="md-nav__link">
+  <a href="#24-criss-cross-attention" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.4 训练目标：重构 + query 特化
+        2.4 Criss-Cross Attention：空间/时间两路并行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 掩码重构预训练
       
     </span>
   </a>
@@ -1635,18 +1674,7 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3 复杂度账本
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 结果
+        3 预训练流水线
       
     </span>
   </a>
@@ -1665,18 +1693,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        4 结果与消融
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 结果与消融">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-10-12-sota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 主结果：10 任务 12 数据集全 SOTA
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 关键消融
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         与其他论文的关系
@@ -1687,7 +1743,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -1698,7 +1754,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         自问自答
@@ -1728,129 +1784,165 @@
   
 
 
-<h1 id="luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis">LUNA: Efficient and Topology-Agnostic Foundation Model for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Signal Analysis<a class="headerlink" href="#luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis" title="Permanent link">#</a></h1>
+<h1 id="cbramod-a-criss-cross-brain-foundation-model-for-eeg-decoding">CBraMod: A Criss-Cross Brain Foundation Model for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Decoding<a class="headerlink" href="#cbramod-a-criss-cross-brain-foundation-model-for-eeg-decoding" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>NeurIPS 2025</strong> · ETH Zürich —— 与 EEGMoE 对照阅读：EEGMoE 解耦"域差异"，LUNA 抹平"拓扑差异"。这是站内已读工作里<strong>第一个把"跨 montage 泛化"和"计算效率"当主贡献</strong>的基础模型。</p>
+<p><strong>ICLR 2025</strong> · 浙江大学 + 阿里巴巴 —— <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass（NSR 2026）12 模型统一 benchmark 的<strong>综合第 1 名</strong>（平均秩 6.56，防泄漏复评仍第 1）。站内第一篇「把注意力结构本身当 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 先验」的论文：不换数据、不换 tokenizer，只改注意力怎么数 patch。</p>
 </blockquote>
-<p><strong>作者</strong>：Berkay Döner, Thorir Mar Ingolfsson, Luca Benini, Yawei Li（Integrated Systems Laboratory, ETH Zürich）</p>
+<p><strong>作者</strong>：Jiquan Wang, Sha Zhao*, Zhiling Luo（阿里）, Yangxuan Zhou, Haiteng Jiang, Shijian Li, Tao Li, Gang Pan*（浙大大脑机智能重点实验室；*通讯）</p>
 <div class="admonition abstract">
 <p class="admonition-title">TL;DR</p>
 <ul>
-<li>痛点有数据：<abbr title="运动想象 Motor Imagery">MI</abbr> 解码器从 PhysioNet 迁到 KU <strong>最多</strong>掉 <strong>14 个百分点</strong>；<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/MMM 在 SEED↔DEAP 蒙特间掉 13–15pp；只保留公共电极的方案要丢掉最多 <strong>80%</strong> 的数据</li>
-<li>核心机制：<strong>Channel-Unification Module</strong>——Q 个学习 query 对 C 个通道的 patch 特征做交叉注意力，压进固定隐空间（置换不变 → 拓扑无关）；之后时间注意力只在这个 Q×E 的隐空间上做</li>
-<li>复杂度：对通道数<strong>线性</strong>（vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 O((S·C)²)、CBraMod 的 O(max(S²,C²))）；论文总括声称对全注意力基线 FLOPs 降 <strong>300×</strong>、显存省最多 <strong>10×</strong>（对 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 这一线性注意力基线的实测对比：8000 通道 4156 GFLOPs vs LUNA-Base 23，约 180×）</li>
-<li>预训练 21,900h（TUEG+Siena，3 种拓扑）；TUAR AUROC <strong>0.921</strong>、TUSL <strong>0.802</strong> 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 81.57%（略低于 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge/CBraMod）；未见 62 通道 SEED-V 落后 CBraMod 2–3pp（论文口径，按其表格实算约 1.9pp；作者坦承对未见拓扑敏感）</li>
-<li>统计实践罕见地严谨：消融差异配对 t 检验（p=0.2136 不显著），用「实践优势」而非「统计显著」措辞</li>
+<li>两个动机：① <strong>全注意力一锅炖</strong>忽略 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特有的异构依赖——同通道/同时刻的 patch 依赖更强，而图像只有空间依赖，ViT 式展平把两种轴混在一起；② <strong>电极编号式绝对位置编码</strong>把「通道 ↔ 电极位置」焊死，换参考方案（耳参考/平均参考/双极）就失效</li>
+<li>解法一：<strong>criss-cross transformer</strong>——8 头注意力劈成两半，4 头 S-Attention 只在「同一时刻的全部通道」内做，4 头 T-Attention 只在「同一通道的全部时间段」内做，两路并行，复杂度从 O((Cn)²) 降到 O(Cn² + nC²)</li>
+<li>解法二：<strong>ACPE 非对称条件位置编码</strong>——1 层 2D depthwise 卷积从 patch 邻域动态生成位置编码，卷积核 (19,7) 长边管空间（长程）、短边管时间（短程），任意通道格式都有定义</li>
+<li>预训练：TUEG 清洗后 <strong>1,109,545 个 30 秒样本（&gt;9000h，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 3.5 倍）</strong>，<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式掩码重构，mask 50%，全零 mask <abbr title="词元，模型处理的最小输入单元">token</abbr>，4.0M 参数，4×A5000 五天</li>
+<li>结果：<strong>10 个下游 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 任务、12 个公开数据集全部 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr></strong>（附录脚注：把审稿人建议的 BCIC-IV-2a 算上实评 13 个数据集）——TUEV 上 4.0M 打过 369M 的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge（0.6671 vs 0.6616）；TUAB 0.8289（防泄漏重训版 0.8249 仍 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>）；ISRUC 睡眠分期 Kappa 0.7442；附录 G 证明<strong>架构贡献 &gt; 预训练数据贡献</strong></li>
 </ul>
 </div>
-<h2 id="1-eeg">1 问题定位：拓扑异构是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型的地基问题<a class="headerlink" href="#1-eeg" title="Permanent link">#</a></h2>
-<p>每个公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集自定义电极布局，模型换 montage 就崩。论文给的三组数字把问题钉死：运动想象解码器跨数据集最多掉 14pp；<abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 情绪模型（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、MMM）在 SEED 与 DEAP 蒙特之间掉 13–15pp；sEEG 的被试间迁移在无显式空间编码时接近随机。</p>
-<p>现有方案的取舍都不彻底：<strong>每个 montage 训专用模型</strong>（放弃统一）；<strong>只保留公共电极</strong>（丢掉最多 80% 数据）；<strong>通道+时间展平成超长序列</strong>（O((S·C)²) 复杂度，高密度帽直接爆显存）。论文要的是<strong>单一、montage 无关、对电极数高效扩展</strong>的架构。</p>
+<h2 id="1-vit">1 问题定位：两处「照搬 ViT」的不合身<a class="headerlink" href="#1-vit" title="Permanent link">#</a></h2>
+<p>第一代 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/EEGPT 等）的通用配方是：切段 → 展平 → 全注意力，再用「电极编号 → embedding」编码通道位置。CBraMod 指出这套配方在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上有两处错配：</p>
+<p><strong>异构的空间-时间依赖</strong>。图像 patch 之间只有空间依赖，而 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 是「多通道 × 时间序列」的二维结构：同一通道内相邻时间段、同一时刻相邻通道之间的依赖，强于跨通道跨时间的任意两 patch。全注意力对这 C·n 个 patch 一视同仁地建模，既浪费容量又超出合适的建模范围（19 通道 × 30 秒 = 570 个 patch，已超出全注意力的舒适区）。</p>
+<p><strong>通道变异性</strong>。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 通道不只由电极位置决定，还受参考方案影响（耳参考、平均参考、REST、双极纵联）。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 式的「电极编号 → 绝对位置编码」假设通道和电极位置一一对应，换数据集换参考就崩。</p>
 <h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
-<h3 id="21-patch-3d">2.1 Patch 特征提取（双路 + 3D 空间编码）<a class="headerlink" href="#21-patch-3d" title="Permanent link">#</a></h3>
-<p>原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> x ∈ R^{B×C×T} 每通道切 S = T/P 个不重叠 patch，两路并行嵌入后求和：</p>
+<h3 id="21">2.1 切段与掩码<a class="headerlink" href="#21" title="Permanent link">#</a></h3>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 样本 <span class="arithmatex">\(S \in \mathbb{R}^{C \times T}\)</span> 按固定时间窗 <span class="arithmatex">\(t\)</span> 切成 <span class="arithmatex">\(X \in \mathbb{R}^{C \times n \times t}\)</span>（<span class="arithmatex">\(n = \lfloor T/t \rfloor\)</span>），每通道 <span class="arithmatex">\(n\)</span> 个 patch。按 Bernoulli 比例 <span class="arithmatex">\(r\)</span> 随机生成掩码 <span class="arithmatex">\(M\)</span>，被掩 patch 替换为全零 mask <abbr title="词元，模型处理的最小输入单元">token</abbr>（消融显示全零与可学习 <abbr title="词元，模型处理的最小输入单元">token</abbr> 无显著差异）。</p>
+<h3 id="22-patch">2.2 时频双分支 patch 编码<a class="headerlink" href="#22-patch" title="Permanent link">#</a></h3>
+<p>每个 patch 过两条并行支路再相加：</p>
 <ul>
-<li><strong>时域路</strong>：1D 卷积网络（GroupNorm + GELU），与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod 同款；</li>
-<li><strong>频域路</strong>：每个 patch 做 FFT，幅值与相位经 MLP 投影；</li>
-<li><strong>通道位置编码</strong>：对归一化的 <strong>3D 电极坐标</strong>做 NeRF 式正弦编码再过 MLP，加到特征上。注意这是比 10–20 系统离散 embedding 更连续优雅的空间先验——任意位置都有定义。</li>
+<li><strong>时域支路</strong>：3 层 1D 卷积块（Conv + GroupNorm + GELU）提局部波形特征；</li>
+<li><strong>频域支路</strong>：对 patch 做 rFFT 得到能量向量（每维是一个频率的能量），过全连接层投影到同一维度。</li>
 </ul>
-<p>预训练时随机掩码部分 <abbr title="词元，模型处理的最小输入单元">token</abbr>（可学习 mask embedding）。</p>
-<h3 id="22-channel-unification-module">2.2 Channel-Unification Module：拓扑无关的核心<a class="headerlink" href="#22-channel-unification-module" title="Permanent link">#</a></h3>
-<p>这是全文的关键创新，思想来自 Set Transformer 的 inducing points 与 PerceiverIO 的隐空间瓶颈：</p>
+<div class="arithmatex">\[ e_{i,j} = e^{t}_{i,j} + e^{f}_{i,j} \]</div>
+<p>与 LUNA 的 FFT 幅相支路、TFM 的时频 motif 一脉相承——时频信息补全在 patch embedding 这一层是各家共识，且 CBraMod 的消融（附录 I）给出排序：<strong>时域+频域 &gt; 纯时域 &gt; 纯频域</strong>（频域丢失时域信息掉得更多）。</p>
+<h3 id="23-acpe">2.3 ACPE：非对称条件位置编码<a class="headerlink" href="#23-acpe" title="Permanent link">#</a></h3>
+<p>改造自 CPVT 的 CPE（条件位置编码）：用<strong>1 层 2D depthwise 卷积</strong>从 patch embedding 的时空邻域动态生成位置编码，加回 embedding。非对称性体现在卷积核 (19, 7)——空间维长边编码<strong>长程空间</strong>位置关系，时间维短边编码<strong>短程时间</strong>位置关系，对应「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 通道少而时间步多」的结构。</p>
+<p>与两类前代的关系：比 APE 强在<strong>动态生成</strong>（不焊死通道-电极对应，换蒙太奇/换参考都适用）；比 CPE 强在<strong>非对称设计</strong>（图像 patch 两个轴对称，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 不是）。消融排序：w/o <abbr title="位置编码 Positional Encoding">PE</abbr> &lt; APE &lt; CPE &lt; ACPE。</p>
+<h3 id="24-criss-cross-attention">2.4 Criss-Cross Attention：空间/时间两路并行<a class="headerlink" href="#24-criss-cross-attention" title="Permanent link">#</a></h3>
+<p>把 K=8 个注意力头<strong>劈成两半</strong>，4 头管空间、4 头管时间，在同一层并行计算：</p>
 <ul>
-<li><strong>Q 个学习 query</strong> Q_learn ∈ R^{Q×E}（<strong>无 batch 维</strong>的共享参数，正交初始化），对每个 (batch, patch) 实例的 C 个通道特征做交叉注意力（query→Q，通道特征→K,V）：</li>
+<li><strong>S-Attention</strong>：把 embedding 按 n 个时刻切成 n 条「空间条带」，每条条带内 C 个通道做注意力——只在<strong>同一时刻的通道间</strong>交互；</li>
+<li><strong>T-Attention</strong>：同理按 C 个通道切成「时间条带」，条带内 n 个时间段做注意力——只在<strong>同一通道的时间步间</strong>交互。</li>
 </ul>
-<div class="arithmatex">\[ \mathbf{A}_{\mathrm{out}} = \mathrm{MultiHeadAttention}(\tilde{\mathbf{Q}}, \mathbf{X}', \mathbf{X}') \in \mathbb{R}^{(B \cdot S) \times Q \times E} \]</div>
-<ul>
-<li>再经 FFN + L 层 Transformer（在 Q 维上做自注意力）得到统一表示 X_unified ∈ R^{(B·S)×Q×E}。</li>
-</ul>
-<p>两个性质：<strong>置换不变</strong>（打乱通道顺序输出不变 → 拓扑无关），<strong>对 C 线性</strong>（交叉注意力只算 Q×C 的注意力图）。每个时间 <abbr title="词元，模型处理的最小输入单元">token</abbr> 从此封装的是"该时刻所有通道的聚合信息"，而非单通道片段。</p>
-<h3 id="23-patch-wise">2.3 Patch-wise 时间编码器 + 双解码器<a class="headerlink" href="#23-patch-wise" title="Permanent link">#</a></h3>
-<p>统一表示重排为 X'_unified ∈ R^{B×S×(Q·E)}，用带 <strong>RoPE</strong> 的 Transformer 块建模时间依赖——<strong>有效序列长度从 S·C 降到 S</strong>，这是效率的第二个来源（第一个是 Q ≪ C）。</p>
-<p>解码器按任务分两种：<strong>重构头</strong>（预训练）用 C 个<strong>按通道标签索引</strong>的学习 query 交叉注意力还原各通道 patch 值（电极有重叠的数据集可复用）；<strong>分类头</strong>（微调）用单个聚合 query 生成池化表示过 MLP。</p>
-<h3 id="24-query">2.4 训练目标：重构 + query 特化<a class="headerlink" href="#24-query" title="Permanent link">#</a></h3>
-<p>Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05——让可见部分也承担弱约束）；外加 <strong>query 特化损失</strong>：对通道统一模块的 query-channel 亲和矩阵，惩罚其非对角元素相似度，促使各 query 关注不同空间区域：</p>
-<div class="arithmatex">\[ \mathcal{L}_{\mathrm{spec}} = \frac{\lambda_{\mathrm{spec}}}{B' \cdot Q \cdot (Q-1)} \sum_{b'} \sum_{i} \sum_{j \neq i} \big( (\mathbf{A}_{\mathrm{affinity}} \mathbf{A}_{\mathrm{affinity}}^{\top})_{b',i,j} \big)^2 \]</div>
-<p><strong>预训练规模</strong>：TUEG + Siena 共 <strong>21,900 小时</strong>原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，覆盖 20/22 通道双极 + 29 通道单极共 3 种拓扑，mask 率 0.5。三个模型规格：Base 7M（8 层/Q=4/E=64/hidden 256）、Large 43M（10 层/Q=6/96/576）、Huge 311.4M（24 层/Q=8/128/1024）。</p>
-<h2 id="3">3 复杂度账本<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>瓶颈复杂度</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>LUNA</strong>（隐空间注意力）</td>
-<td>O(B·S²·Q·E) 或 O(B·S·Q·C·E)</td>
-</tr>
-<tr>
-<td>全注意力（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）</td>
-<td>O(B·S²·C²·E)</td>
-</tr>
-<tr>
-<td>交替注意力（CBraMod，patch 维）</td>
-<td>O(B·S²·C·E)</td>
-</tr>
-<tr>
-<td>交替注意力（CBraMod，通道维）</td>
-<td>O(B·S·C²·E)</td>
-</tr>
-</tbody>
-</table>
-<p>效率曲线（附录 Table 9/10）：patch 数 4000 时 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 2286 GFLOPs vs LUNA-Base 768；<strong>通道数 8000 时 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 4156 GFLOPs / 12.3GB vs LUNA-Base 23 GFLOPs / 2GB</strong>。结论：通道数增加时 LUNA 计算近乎恒定，且 LUNA-Base（7M 参数、16-bit 约 14MB）能塞进可穿戴 SoC 的实时预算——这是同组（ETH 低功耗组）的看家视角。</p>
-<h2 id="4">4 结果<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
-<p><strong>临床 TUH 系</strong>（预训练语料严格排除下游被试与记录）：</p>
-<table>
-<thead>
-<tr>
-<th>基准</th>
-<th>LUNA-Huge</th>
-<th>对照</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TUAB（异常检测）</td>
-<td>Bal Acc 81.57% / AUROC 0.8957</td>
-<td><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 82.58% / 0.9162</strong>、CBraMod 82.49% / 0.9156 —— LUNA 落后约 1pp</td>
-</tr>
-<tr>
-<td>TUAR（伪迹检测，5 类）</td>
-<td><strong>AUROC 0.921 ± 0.011</strong></td>
-<td>超 FEMBA-Large 0.915，<abbr title="State Of The Art，当前最先进水平">SOTA</abbr></td>
-</tr>
-<tr>
-<td>TUSL（慢波分类，4 类）</td>
-<td><strong>AUROC 0.802 ± 0.005</strong></td>
-<td>全场最高（FEMBA-Base 0.731）</td>
-</tr>
-</tbody>
-</table>
-<p><strong>SEED-V（未见过的 62 通道拓扑）</strong>：LUNA-Huge Bal Acc 0.3900，<strong>落后 CBraMod（0.4091）2–3pp</strong>（论文口径；按其 Table 3 实算约 1.9pp）。作者诚实归因：对未见通道拓扑敏感，可能源于预训练学到的位置编码约束；且 Base→Large 有正向 scaling，Large→Huge 点估计不再提升（0.3918→0.3900，差异在种子方差内——此句为从 Table 3 得出的推断，论文未评价）。</p>
-<p><strong>消融</strong>（TUAB/TUAR）：</p>
-<ul>
-<li><strong>学习 query vs 固定空间区域</strong>（MMM 式）：AUROC 变化仅 -0.004~-0.006，在种子方差内——论文明确强调学习 query 的价值是<strong>实践优势</strong>（数据驱动、无需解剖先验）而非统计显著的指标增益；</li>
-<li><strong>去掉 query 特化损失</strong>：AUROC 降 0.003~0.007（论文正文记 -0.003~-0.006，其 Table 4 与 Table 13 给 TUAR 为 -0.007）；配对 t 检验 <strong>p=0.2136 不显著</strong>（该检验仅针对 TUAR AUROC 这一次比较）；保留它的理由是正则作用——促使 query 学成多样、非冗余的空间滤波器（可视化显示去掉后<strong>两个</strong> query 退化为粗粒度左右侧化模式、<strong>其余</strong> query 宽泛且互相重叠）；</li>
-<li><strong>去掉频域特征</strong>：掉得最多——AUROC 至 -0.011、AUC-PR 至 -0.012（TUAB；论文正文表述为 "up to -0.012 AUROC"，与其自身表格略有出入）——时频信息再次被证明是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征的关键补全；</li>
-<li><strong>Q×E 权衡</strong>：固定 Q·E=256 预算下，平衡配置 4×64 最好，16×16（query 多维度小）明显退化。</li>
-</ul>
+<div class="arithmatex">\[ \mathrm{CrissCrossAttn}(\tilde{E}) = \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_K), \quad \mathrm{head}_k = \begin{cases} \text{S-Attention}_k(\tilde{E}) &amp; k \le K/2 \\ \text{T-Attention}_k(\tilde{E}) &amp; k &gt; K/2 \end{cases} \]</div>
+<p>backbone 共 12 层（hidden 200 / FF 800 / pre-norm），复杂度 <span class="arithmatex">\(O(Cn^2 + nC^2)\)</span>——把全注意力的 <span class="arithmatex">\(O(C^2n^2)\)</span> 拆成两个一维注意力的和。附录 L 的头数配比消融：4:4 最优，偏科（6:2 或 2:6）都掉分，说明<strong>空间与时间依赖同等重要</strong>。</p>
+<h3 id="25">2.5 掩码重构预训练<a class="headerlink" href="#25" title="Permanent link">#</a></h3>
+<p>FC 重构头从表示还原被掩 patch，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 损失<strong>只算被掩位置</strong>（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 惯例）。</p>
+<h2 id="3">3 预训练流水线<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    A["TUEG 27,062h 原始临床 EEG&lt;br/&gt;69,652 记录 / 14,987 被试"] --&gt; B["清洗：&lt;5min 剔除&lt;br/&gt;掐头去尾 1min&lt;br/&gt;选 19 个 10-20 公共通道"]
+    B --&gt; C["0.3-75Hz 带通&lt;br/&gt;60Hz 陷波&lt;br/&gt;重采样 200Hz"]
+    C --&gt; D["切 30s 样本&lt;br/&gt;任意点 &gt;100µV 整段剔除&lt;br/&gt;单位 100µV 归一"]
+    D --&gt; E["1,109,545 样本&lt;br/&gt;合计 &gt;9000h"]
+    E --&gt; F["切段 1s/patch&lt;br/&gt;30s → 19×30=570 patch&lt;br/&gt;随机掩码 50%（全零 token）"]
+    F --&gt; G["时频双分支编码&lt;br/&gt;3 层 1D CNN ⊕ rFFT 能量+FC"]
+    G --&gt; H["ACPE&lt;br/&gt;2D depthwise conv 核 (19,7)"]
+    H --&gt; I["12 层 Criss-Cross Transformer&lt;br/&gt;4 头 S-Attn 并行 4 头 T-Attn"]
+    I --&gt; J["FC 重构头&lt;br/&gt;MSE 只算被掩 patch"]</code></pre>
+<p>关键数字：清洗环节剔掉了大量脏数据后仍剩 <strong>&gt;9000h</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 预训练语料 2,534.78h 的 3.5 倍）；训练配置 AdamW lr 5e-4 / wd 5e-2 / cosine 退火 / batch 128 / 40 epoch，4×RTX A5000 约 5 天。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/luna-arch.png" data-desc-position="bottom"><img alt="Figure 1 · LUNA 总览：patch + 双路嵌入（1D Conv + FFT）→ Channel-Unification Module（学习 query 交叉注意力压进固定隐空间）→ Patch-wise Temporal Attention → 解码器" src="../../../assets/luna-arch.png"></a></p>
-<p><em>Figure 1 · Channel-Unification Module：Q 个学习 query 对 C 通道特征做交叉注意力，时间注意力只在固定隐空间上进行</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/cbramod-overview.png" data-desc-position="bottom"><img alt="Figure 2 · CBraMod 预训练总览：切段掩码 → 时频双分支 patch 编码 → ACPE → 12 层 Criss-Cross Transformer → 重构被掩 patch" src="../../../assets/cbramod-overview.png"></a></p>
+<p><em>Figure 2 · 预训练总览：左上切段+掩码，右上 ACPE 从邻域动态生成位置编码，右下 12 层 criss-cross 块，左下只重构被掩 patch</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/cbramod-block.png" data-desc-position="bottom"><img alt="Figure 3 · Criss-Cross Transformer Block：(a) pre-norm 块结构；(b) 8 头劈成 S-Attention（竖条带）与 T-Attention（横条带）并行后 concat" src="../../../assets/cbramod-block.png"></a></p>
+<p><em>Figure 3 · criss-cross 注意力机制：空间条带（同一时刻跨通道）与时间条带（同一通道跨时刻）两路并行，各占一半注意力头</em></p>
+<h2 id="4">4 结果与消融<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
+<h3 id="41-10-12-sota">4.1 主结果：10 任务 12 数据集全 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr><a class="headerlink" href="#41-10-12-sota" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>任务 / 数据集</th>
+<th>CBraMod（4.0M）</th>
+<th>最强基线</th>
+<th>差距</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>情绪 FACED（9 类）</td>
+<td>Kappa <strong>0.5041</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base 0.4698</td>
+<td>+3.4pp</td>
+</tr>
+<tr>
+<td>情绪 SEED-V（5 类，开源 16 人版）</td>
+<td>Kappa <strong>0.2569</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.2386</td>
+<td>+1.8pp</td>
+</tr>
+<tr>
+<td>运动想象 PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr>（4 类）</td>
+<td>Kappa <strong>0.5222</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.4912</td>
+<td>+3.1pp</td>
+</tr>
+<tr>
+<td>运动想象 SHU-<abbr title="运动想象 Motor Imagery">MI</abbr>（2 类）</td>
+<td>AUROC <strong>0.6988</strong></td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 0.6609</td>
+<td>+3.8pp</td>
+</tr>
+<tr>
+<td>睡眠分期 ISRUC（5 类）</td>
+<td>Kappa <strong>0.7442</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.7231</td>
+<td>+2.1pp</td>
+</tr>
+<tr>
+<td>癫痫检测 CHB-MIT</td>
+<td>Bal Acc <strong>0.7398</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.7075</td>
+<td>+3.2pp</td>
+</tr>
+<tr>
+<td>想象语音 BCIC2020-3（5 类）</td>
+<td>Kappa <strong>0.4216</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.3800</td>
+<td>+4.2pp</td>
+</tr>
+<tr>
+<td>抑郁诊断 Mumtaz2016</td>
+<td>Bal Acc <strong>0.9560</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.9409</td>
+<td>+1.5pp</td>
+</tr>
+<tr>
+<td>警觉度回归 SEED-VIG</td>
+<td>Pearson <strong>0.6459</strong></td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 0.5996</td>
+<td>+4.6pp</td>
+</tr>
+<tr>
+<td>心理压力检测 MentalArithmetic</td>
+<td>Bal Acc <strong>0.7256</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.6909</td>
+<td>+3.5pp</td>
+</tr>
+<tr>
+<td>事件分类 TUEV（6 类）</td>
+<td>Bal Acc <strong>0.6671</strong></td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-<strong>Huge</strong>(369M) 0.6616</td>
+<td>+0.6pp</td>
+</tr>
+<tr>
+<td>异常检测 TUAB</td>
+<td>Bal Acc <strong>0.8289</strong> / AUC-PR 0.9258</td>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 0.8258 / 0.9204</td>
+<td>+0.3pp</td>
+</tr>
+</tbody>
+</table>
+<p>两个防泄漏版本值得单独记：TUEV/TUAB 都是 TUEG 的子集，作者<strong>剔除后重新预训练</strong>再评——TUAB 0.8249 / TUEV 0.6659，仍然 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>。这是站内已读论文里少见地把「预训练包含下游数据」摆在明面上处理的（NeuroLM/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 均未做）。</p>
+<h3 id="42">4.2 关键消融<a class="headerlink" href="#42" title="Permanent link">#</a></h3>
 <ul>
-<li>学习 query + 交叉注意力 = 可微分的"通道压缩器"：任意拓扑 → 固定 Q×E 隐空间，置换不变</li>
-<li>时间序列长度从 S·C 降到 S，通道复杂度从平方到线性——8000 通道时 FLOPs 仅为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180</li>
-<li>TUAR/TUSL 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 略逊 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod 约 1pp；未见拓扑 SEED-V 落后 2–3pp——效率与容量的真实 trade-off</li>
-<li>消融统计实践严谨（t 检验、种子方差、"实践优势"措辞）；频域特征是最不可去的组件</li>
-<li>代码开源（pulp-bio/biofoundation）；LUNA-Base 7M/14MB 面向可穿戴边缘部署</li>
+<li><strong>注意力机制对比</strong>（图 4）：全注意力最差；CCNet 式 criss-cross 略好于全注意力但显著差于 CBraMod；轴向注意力好于全注意力但仍不及 CBraMod。全注意力垫底印证了 570 patch 超出建模范围；双路并行优于串行（轴向）说明两类依赖应该<strong>同时</strong>建模而不是排队（注：原文未直接比较轴向与 CCNet 的相对高下，两者均劣于本文方案是明确结论）；</li>
+<li><strong>位置编码对比</strong>：w/o <abbr title="位置编码 Positional Encoding">PE</abbr> &lt; APE &lt; CPE &lt; ACPE——APE 输给 CPE 说明「动态生成」比「绝对绑定」重要，CPE 输给 ACPE 说明「非对称」比「对称」重要；</li>
+<li><strong>预训练消融</strong>（表 4）：清洗版 &gt; 脏数据版 &gt; 不预训练，且清洗版<strong>方差最小</strong>——脏数据不仅拉低均值还放大不稳定；</li>
+<li><strong>架构 vs 数据</strong>（附录 G，全文最干净的一张牌）：把 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的架构搬到 CBraMod 的 9000h 语料上重训，<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(ours) ≈ <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(original)，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(ours) 仅小幅提升，而 CBraMod 全面碾压 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(ours)——<strong>换数据没用，换架构才有用</strong>；</li>
+<li><strong>Scaling</strong>（附录 F）：预训练数据 1h→9000h 单调提升但 <strong>1000h 后边际递减</strong>；模型 0.1M→4M 持续提升，作者明确声明不外推 scaling law；</li>
+<li><strong>微调消融</strong>（附录 J）：冻结 backbone 只训分类头<strong>性能崩塌</strong>（FACED Kappa 0.5041→0.2579）——CBraMod 目前<strong>不能当 CLIP 式冻结特征提取器</strong>，但冻结版仍好过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 冻结版；30% 低资源微调下优势保持（附录 K）；</li>
+<li><strong>成本</strong>（附录 O，CHB-MIT 16ch 10s 输入）：318.9M FLOPs——比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（483M）/ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base（483M）省 1/3，criss-cross 是四种注意力变体里最省的；</li>
+<li><strong>可解释性</strong>（附录 P）：Grad-CAM 地形图左右手对称、patch 相关热图呈十字形状且<strong>深层出现非局部依赖</strong>——分层结构让 criss-cross 之外的全局交互也能学到。</li>
 </ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -1860,75 +1952,78 @@
 </thead>
 <tbody>
 <tr>
-<td>EEGMoE（本站同期笔记）</td>
-<td><strong>对照哲学</strong>：LUNA 把拓扑差异当噪声抹平（query 瓶颈），EEGMoE 把域差异当信号解耦（MoE 分工）——作用轴不同（电极几何 vs 任务/数据集），可叠加</td>
+<td><a href="../0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
+<td>最主要对照：同用 TUEG 系语料，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 全注意力 + 神经码字预测，CBraMod 双路并行注意力 + 像素重构——4M 打 369M（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge，TUEV/TUAB 数字引自 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 原文；其 Large/Huge 权重未开源，作者只自行微调了 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base）</td>
 </tr>
 <tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / CBraMod</td>
-<td>精度上限对照组：展平/交替注意力的容量优势在 TUAB 上兑现约 1pp，但通道复杂度平方——高密度场景不可行</td>
+<td><a href="../0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
+<td>另一基础模型基线：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 线性注意力逐通道处理但<strong>限 18 通道</strong>（超出要拆多个模型），CBraMod 无此限制</td>
 </tr>
 <tr>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
-<td>效率路线前作：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 展平后用线性注意力（其原文为 Linformer 式低秩投影），LUNA 先统一通道再全注意力；论文正文 4.3 把 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 作为效率基线，附录 Table 9/10 给出详细对比——8000 通道时 LUNA-Base FLOPs 约为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180</td>
+<td><a href="../0918-eegpt/">EEGPT</a></td>
+<td>同为掩码系但走「表示对齐 + 重构」双目标；EEGPT 固定 58 通道表，CBraMod 用 ACPE 动态编码——通道适应的两种哲学</td>
 </tr>
 <tr>
-<td>MMM</td>
-<td>显式拓扑映射前作：预定义解剖区域 + 手工 DE 特征；LUNA 用学习 query + 原始信号端到端（消融显示两者指标相当，但学习 query 免解剖先验）</td>
+<td><a href="../0918-tfm-tokenizer/">TFM-Tokenizer</a></td>
+<td>同为 ICLR（2026 vs 2025）的掩码预训练，路线相反：TFM 单通道 + 时频 motif 离散词表，CBraMod 多通道 + 原始信号连续重构；<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 统一 benchmark 里 CBraMod 综合<strong>第 1</strong>、TFM <strong>第 20</strong>（垫底）</td>
 </tr>
 <tr>
-<td>Set Transformer / PerceiverIO</td>
-<td>机制来源：inducing points / 隐空间瓶颈，LUNA 加了 3D 电极坐标编码与两种任务解码头（重构/分类）</td>
+<td><a href="../0924-luna/">LUNA</a></td>
+<td>复杂度对照组：LUNA 对通道线性（O(S·C·Q)），CBraMod 是 O(Cn²+nC²)——高密度通道场景 LUNA 更优（8000 通道时 FLOPs 1/180），小通道场景 CBraMod 精度上限更高（TUAB 上 +1pp）</td>
 </tr>
 <tr>
-<td>Brant / GNN 系</td>
-<td>被绕开的路线：固定拓扑空间编码器 / 预定义邻接图，都需要为动态拓扑打补丁</td>
+<td>CCNet / CSWin（视觉前作）</td>
+<td>机制来源：CCNet 的 criss-cross 是单注意力图仿射近似，CSWin 十字窗口启发双路设计——CBraMod 把「十字交叉」从图像搬到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 并论证了为什么 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 更需要（图像没有时间轴）</td>
 </tr>
 <tr>
-<td><a href="../../../topics/spatial/">通道异构专题</a></td>
-<td>第六种解法：<strong>先统一再建模</strong>——与 JET 的"无空间结构"、EEGPT 的"固定 58 通道表"都不同</td>
+<td><a href="../0923-jet/">JET</a></td>
+<td>互补轴线：JET 用 FM 生成 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（结构先验进损失），CBraMod 用注意力结构先验做判别表征——两条「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 结构先验」路线分头走</td>
+</tr>
+<tr>
+<td><a href="../../../blog-2023-2026/"><abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass</a></td>
+<td>外部裁判：12 FM × 9 数据集统一重测，CBraMod 平均秩 6.56 综合第一，防泄漏版仍第一——本文自报的 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 经第三方复核成立</td>
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>与 EEGMoE 连读极有收获</strong>：两篇对"异构性"的态度完全相反却都成立——EEGMoE 认为任务/数据集域差异是需要<strong>保留的信号</strong>（专家分工），LUNA 认为电极几何差异是需要<strong>抹掉的噪声</strong>（query 瓶颈）。合起来其实给出了一个二维地图：任务轴用解耦管理、几何轴用统一抹平。一个自然的组合实验是 LUNA 的统一隐空间 + EEGMoE 的 SSMoE 块；</li>
-<li><strong>TUAB 上那 1pp 是"瓶颈税"</strong>：Q 个 query 是信息瓶颈，高密度通道的信息被有损压缩，因此上限略低于全注意力的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod。论文的 Q×E 消融（16×16 明显退化）证实瓶颈容量确实有限。这不是缺陷而是定价——问题是<strong>哪些任务愿意为 300× 效率付 1pp</strong>：高密度研究级 <abbr title="脑电图 Electroencephalogram">EEG</abbr>、长程监测、可穿戴，都是愿意的；</li>
-<li><strong>统计实践是全站已读论文里最严谨的</strong>：报告配对 t 检验并承认 p=0.2136 不显著、把学习 query 的优势明确表述为"实践性而非统计性"、给出 ±0.01 AUROC 的实用等价带。对比之下多数 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 论文把种子方差内的差异包装成 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>——这个措辞标准值得本站的 benchmark 表引用时警惕；</li>
-<li><strong>频域特征消融掉得最多（AUROC 至 -0.011）</strong>又一次印证时频信息的价值——与 TFM（时频 motif 词表）、SleepGPT（时频双流）的结论三方互证。有趣的是 LUNA 只在 patch embedding 里加了 FFT 幅相这一小块，性价比极高；</li>
-<li><strong>位置编码是未见拓扑的阿喀琉斯之踵</strong>：SEED-V 的失利被归因于预训练学到的位置编码绑定了训练拓扑。这提示"连续 3D 坐标编码"（NeRF 式）仍不够泛化——预训练拓扑只覆盖 3 种布局，坐标空间的采样太稀疏。未来做多数据集预训练 + 随机通道 dropout（论文展望）是对的；</li>
-<li><strong>对我的项目</strong>：LUNA-Base（7M、14MB、线性复杂度）是"可穿戴低功耗 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM"的现成参考配置；其"先统一通道再时间建模"的结构与 eeg2text-lite 的单通道设计不冲突——若扩展到多通道可穿戴（如耳 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 多触点），LUNA 的统一模块可直接借用。</li>
+<li><strong>这是「归纳偏置设计」的样板论文</strong>。全文没有新数据、新 tokenizer、新损失，唯一做对的事是把注意力的计算图改成匹配 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 结构的形状——然后 4M 参数横扫 369M。附录 G（架构迁移实验）是全篇最值得学的实验设计：固定数据换架构，把「贡献归因」做成了可证伪的对照。对照 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 的发现（top-6 FM 参数全 ≤5.8M、无 scaling law），「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型当下的竞争维度是结构先验而非规模」这条结论有了双重证据；</li>
+<li><strong>ACPE 是被低估的贡献</strong>。它把 CPVT 的「位置编码当卷积副产品」思想推广到非对称双轴。对比 LUNA 的 NeRF 式 3D 坐标编码：ACPE 不需要电极坐标元数据（很多公开数据集没有），从数据里学相对位置——代价是它编码的是「邻域模式」而非绝对空间位置，跨蒙太奇时语义会漂。SEED-V 这个 62 通道未见蒙太奇上，CBraMod（0.4091）确实赢了 LUNA-Huge（0.3900），但 ACPE 学到的仍是「19 通道临床蒙太奇的邻域规律」，面对高密度或可穿戴拓扑能撑多少，论文没测——通道异构问题没有在这里终结，只是换了个表达方式；</li>
+<li><strong>「不能冻结」是个诚实的坏消息</strong>。附录 J 显示冻结版 Kappa 从 0.50 直接掉到 0.26，说明 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式重构学到的表征仍高度任务特化，通用性靠微调兑现。对我的 eeg2text-lite（预训练→LoRA→解码）路线这是个提醒：<strong>别指望冻结提取器</strong>，LoRA/全参数微调是必选项——好在与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 的微调方式结论（LoRA 介于全微调与线性探针之间）方向一致；</li>
+<li><strong>1000h 后数据边际递减值得警惕</strong>。这给「堆数据」路线（REVE 的 61,415h、SleepGPT 的 86,335h）打了个问号：至少在 CBraMod 的架构和清洗流程下，9000h 已接近饱和。当然可能只是清洗后数据同质化（19 通道临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 单一分布）——REVE 的多数据集多样性是否突破这个饱和点，是读 REVE 时要专门验证的问题；</li>
+<li><strong>十字交叉 vs 线性注意力的取舍</strong>写进了<a href="../../../topics/spatial/">通道异构专题</a>：CBraMod 的复杂度 O(Cn² + nC²) 在 C 大时仍平方爆炸，LUNA 的隐空间瓶颈才是高密度的答案。CBraMod 自己在讨论里也承认部署门槛比非基础模型高。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<h2 id="_4">自问自答<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <details class="question">
-<summary>Q1 · 为什么先统一通道、再做时间注意力，而不是反过来（先时间再统一）？</summary>
-<p>效率的乘法结构决定的：统一在前，时间注意力只作用于 Q×E 的隐空间（序列长 S）；若反过来，每个通道先做完整时间编码（C 倍计算），统一阶段还要处理 S·C×C 的交叉注意力。统一在前还让"每个时间 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是全通道聚合"成为时间建模的输入归纳偏置——模型从第一层就在学跨通道整合后的动态。代价是空间压缩不可逆，重构头必须从 Q 个 query 里恢复 C 个通道的细节（这也是它需要按通道索引的学习解码 query 的原因）。</p>
+<summary>Q1 · 为什么 4:4 劈头？劈 6:2 会怎样？</summary>
+<p>附录 L 实测：6:2 和 2:6 都系统性变差（FACED Kappa：2:6 为 0.4921、6:2 为 0.4910；PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> Kappa：2:6 为 0.4995、6:2 为 0.5013）。结论是空间与时间依赖在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征里<strong>同等重要</strong>，没有先验理由偏科。这也反过来给「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 是时间序列还是空间拓扑」的争论一个经验答案：两个轴的信息量相当。</p>
 </details>
 <details class="question">
-<summary>Q2 · Q 个 query 是不是信息瓶颈？多大合适？</summary>
-<p>是，而且是设计出来的瓶颈。Q×E 消融显示：固定预算下平衡配置最好（4×64），query 太多维度太小（16×16）反而差——q 数量超过可分辨的空间模式后只是冗余切分，维度不足则每个 query 表达力不够。Base/Large/Huge 依次用 Q=4/6/8 也说明：<strong>Q 应随模型容量温和增长</strong>，而不是堆大。</p>
+<summary>Q2 · S-Attention 和 T-Attention 并行，信息怎么流通的？</summary>
+<p>靠层叠 + 头拼接：每层内 S/T 两路的输出 concat 后过 FFN 进下一层，下一层再做新一轮 S/T。单层内空间信息和时间信息不直接交互（各自条带内注意），但<strong>层的堆叠让交互自然发生</strong>——附录 P.3 的热图显示浅层相关呈严格十字形，深层出现非局部依赖，说明多层结构确实学到了 criss-cross 之外的全局模式。</p>
 </details>
 <details class="question">
-<summary>Q3 · SEED-V 上为什么落后 CBraMod？能修吗？</summary>
-<p>论文自认：SEED-V 的 62 通道拓扑在预训练中未见，位置编码绑定了训练时的三种布局。可行的修复方向论文自己也点了：多数据集预训练扩充拓扑覆盖、随机通道 dropout 增强鲁棒、混合学习/几何嵌入。注意 CBraMod 也未必"泛化更好"——它的交替注意力对输入形状更宽容，但代价是 O(C²) 复杂度，在 62 通道小数据集上付得起，在 256 通道长程监测上付不起。</p>
+<summary>Q3 · TUAB/TUEV 的防泄漏重训说明了什么？</summary>
+<p>TUEG 是 TUAB/TUEV 的父集，正常预训练等于「考前见过题」。作者剔除下游数据重新预训练，TUAB 0.8289→0.8249、TUEV 0.6671→0.6659——下降不到半个百分点，<abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 保住。这说明模型的泛化不是靠背下游数据，同时也给全行业提了个醒：凡是用 TUEG 系预训练的模型（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/NeuroLM 都算），报 TUAB/TUEV 成绩都该补这组对照。<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 专门做了 leakage-aware 复评，CBraMod 仍第一。</p>
 </details>
 <details class="question">
-<summary>Q4 · 可见（未掩码）patch 为什么也参与损失？</summary>
-<p>重构损失对可见部分以小系数（α=0.05）加权。直觉是：掩码重构训练信号集中在被掩区域，但通道统一模块对<strong>所有</strong> <abbr title="词元，模型处理的最小输入单元">token</abbr> 做压缩——如果可见 patch 完全不管，隐空间可能对可见内容失真，下游微调（通常不用掩码）就会吃亏。小系数既约束隐空间保真，又不喧宾夺主。</p>
+<summary>Q4 · 为什么不用可学习的 mask <abbr title="词元，模型处理的最小输入单元">token</abbr>？</summary>
+<p>试了（附录 N）：可学习 <abbr title="词元，模型处理的最小输入单元">token</abbr> 与全零 <abbr title="词元，模型处理的最小输入单元">token</abbr> 无显著差异（FACED Kappa 0.5033 vs 0.5041）。直觉是 mask <abbr title="词元，模型处理的最小输入单元">token</abbr> 只在预训练出现、下游微调即弃，其参数没有梯度压力去学有意义的语义；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 系（图像/时间序列）也大多用固定 <abbr title="词元，模型处理的最小输入单元">token</abbr>。省掉一组参数和调参负担。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>
-<li><strong>代码</strong>：<a href="https://github.com/pulp-bio/biofoundation">github.com/pulp-bio/biofoundation</a>（官方开源）</li>
-<li><strong>规格</strong>：Base 7M（8 层/Q=4/query 64/hidden 256/MLP 1024/8 头）、Large 43M（10 层/Q=6/96/576/2304/12 头）、Huge 311.4M（24 层/Q=8/128/1024/4096/16 头）；patch 长 40 时间戳</li>
-<li><strong>预训练</strong>：TUEG+Siena 21,900h（3 拓扑）；AdamW lr 1.25e-4 cosine（min 2.5e-7）、β(0.9,0.98)、wd 0.05；batch 总 8160（Base）/11520（Huge）；60 epoch、warmup 10；Smooth-L1，mask 0.5，可见系数 0.05，query 特化系数 0.8；bf16-mixed；8×A100 约 1 天（Huge 16 卡）</li>
-<li><strong>微调</strong>：lr 1e-4、50 epoch、早停 patience 10、warmup 5、layer-wise lr decay 0.5(B)/0.8(L/H)、drop path 0.1(B/L)/0.2(H)、标签平滑 0.1（多分类）</li>
-<li><strong>预处理</strong>：0.1–75Hz 带通 + 50/60Hz 陷波 + 256Hz 重采样；TUEG/TUAB/TUAR/TUSL 双极（纵联差分，论文附录 A.7 给全电极对）、Siena/SEED-V 单极；逐通道 z-score</li>
-<li><strong>边缘参考</strong>：LUNA-Base 16-bit 约 14MB，GFLOPs 在可穿戴 SoC 实时预算内</li>
+<li><strong>代码</strong>：<a href="https://github.com/wjq-learning/CBraMod">github.com/wjq-learning/CBraMod</a>（官方开源，已进 Braindecode）</li>
+<li><strong>规格</strong>：4.0M 参数；12 层 criss-cross transformer，hidden 200 / FF 800 / 8 头（4S+4T）；patch 编码 3 层 1D CNN（核 49/3/3，stride 25/1/1）；ACPE 1 层 2D depthwise conv 核 (19,7)</li>
+<li><strong>预训练</strong>：TUEG 清洗版 1,109,545 样本 &gt;9000h（19 通道 10-20 系统，0.3-75Hz 带通，60Hz 陷波，200Hz，30s 样本，&gt;100µV 剔除，单位 100µV）；patch 1s；mask 50% 全零 <abbr title="词元，模型处理的最小输入单元">token</abbr>；AdamW lr 5e-4 / wd 5e-2 / cosine（min 1e-5）/ batch 128 / 40 epoch；4×A5000 约 5 天</li>
+<li><strong>微调</strong>：重构头换成展平 + MLP 任务头；AdamW lr 1e-4 / wd 5e-2 / cosine / batch 64 / 50 epoch；标签平滑 0.1（多分类）；二分类 BCE、回归 <abbr title="均方误差 Mean Squared Error">MSE</abbr>；所有下游统一重采样 200Hz、patch 1s</li>
+<li><strong>防泄漏协议</strong>：TUAB/TUEV 从预训练剔除后重训版本权重若公开可直接用；下游 5 种子取均值±方差，二分类看 Bal Acc / AUC-PR / AUROC（AUROC 为早停指标），多分类看 Bal Acc / Kappa / Weighted F1（Kappa 为早停指标）</li>
+<li><strong>成本参考</strong>：CHB-MIT 16ch×10s 输入 318.9M FLOPs（criss-cross 比全注意力变体省 32%）</li>
 </ul>
 </div>
 <hr>
 <p><strong>相关阅读</strong></p>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0924-eegmoe/">EEGMoE（域解耦路线，对照阅读）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（效率前作对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../../topics/spatial/">通道异构的解法 → 本篇是第六种</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../../basics/attention-alternatives/">Attention 替代方案（效率视角）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（最主要对照：神经码字 vs 像素重构）</a> ｜ :material-compress: <a href="../0924-luna/">LUNA（通道线性复杂度的另一极）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 21c-3 0-4.19-4.24-5.45-8.72C10.14 9.04 9 5 7.5 5 4.11 5 4 11.93 4 12H2c0-.37.06-9 5.5-9 3 0 4.21 4.25 5.47 8.74C13.83 14.8 15 19 16.5 19c3.44 0 3.53-6.93 3.53-7h2c0 .37-.06 9-5.53 9"></path></svg></span> <a href="../0918-tfm-tokenizer/">TFM-Tokenizer（ICLR 2026 掩码路线的另一端）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../../topics/spatial/">通道异构的解法（ACPE 是第三种）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../../basics/attention-alternatives/">Attention 替代方案（因子化注意力谱系）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

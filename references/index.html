@@ -729,6 +729,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../papers/2026-09/0928-cbramod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0928 · CBraMod (ICLR 2025 · 十字交叉)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1166,7 +1201,7 @@
   <span class="md-ellipsis">
     
   
-    十篇方法对比
+    十一篇方法对比
   
 
     
@@ -1495,7 +1530,7 @@
 
 
 <h1 id="_1">参考文献索引<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>十篇精读论文（含 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA）与两篇「模型架构基础」页引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。</p>
+<p>十一篇精读论文（含 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。</p>
 <h2 id="_2">基础架构与预训练范式<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -1819,8 +1854,26 @@
 <tr>
 <td>CBraMod</td>
 <td>ICLR 2025</td>
-<td>TFM · LUNA · JET</td>
-<td>跨颅脑基础模型（TFM 对照组；JET 用其作生成数据下游裁判；LUNA 效率对照）</td>
+<td>TFM · LUNA · JET · <a href="../papers/2026-09/0928-cbramod/">本站精读</a></td>
+<td>十字交叉脑基础模型（<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET 用其作生成数据下游裁判；LUNA 效率对照）</td>
+</tr>
+<tr>
+<td>CPVT（条件位置编码 CPE）</td>
+<td>arXiv 2021</td>
+<td>CBraMod</td>
+<td>ACPE 的直接来源：卷积动态生成位置编码，CBraMod 推广为非对称双轴</td>
+</tr>
+<tr>
+<td>CCNet（criss-cross attention）</td>
+<td>ICCV 2019</td>
+<td>CBraMod</td>
+<td>十字交叉注意力的视觉出处（单注意力图仿射近似）</td>
+</tr>
+<tr>
+<td>CSWin Transformer</td>
+<td>CVPR 2022</td>
+<td>CBraMod</td>
+<td>十字形状窗口注意力的视觉出处（CBraMod 双路并行设计参照）</td>
 </tr>
 <tr>
 <td>EEGFormer</td>
