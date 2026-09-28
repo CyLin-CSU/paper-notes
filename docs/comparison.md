@@ -1,4 +1,4 @@
-# 十篇方法对比
+# 十一篇方法对比
 
 ## 📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）
 
@@ -135,6 +135,7 @@ JET 把 EEG 建模为连续动力过程（条件流匹配），核心论点是�
 | BrainGPT-Giant | — | — | 未评测 |
 | TFM-Tokenizer | 0.8032 | 0.8870 | TFM Table 1 |
 | LUNA-Huge | 0.8157 | 0.8957 | LUNA Table 1（311.4M） |
+| CBraMod | **0.8289** | **0.9227** | CBraMod Table 14（4.0M；防泄漏重训版 0.8249 / 0.9156） |
 
 ### TUEV（事件分类）
 
@@ -146,6 +147,7 @@ JET 把 EEG 建模为连续动力过程（条件流匹配），核心论点是�
 | NeuroLM-XL（多任务） | 0.4679 | 0.4570 | NeuroLM Table 2 |
 | BrainGPT-Giant | — | — | 未评测 |
 | TFM-Tokenizer | **0.5974** | **0.6189** | TFM Table 1 |
+| CBraMod | **0.6671** | **0.6772** | CBraMod Table 13（4.0M 打过 LaBraM-Huge 369M；防泄漏重训版 0.6659 / 0.6744） |
 
 ### 其他任务代表成绩
 
@@ -157,11 +159,12 @@ JET 把 EEG 建模为连续动力过程（条件流匹配），核心论点是�
 | TFM-Tokenizer | IIIC Kappa 0.4979（+36% vs LaBraM）；CHB-MIT AUROC 0.8839；ear-EEG Kappa 0.3883（+14%） |
 | EEGMoE | DEAP-V/A ACC 59.40 / 62.73；BCIC4-2a 47.92；STEW 72.41（LOSO ACC%，全面超复现的 EEGNet/BIOT/LaBraM 等） |
 | LUNA | TUAR AUROC **0.921**、TUSL AUROC **0.802**（双 SOTA）；SEED-V Bal Acc 0.3900（未见 62 通道拓扑，落后 CBraMod） |
+| CBraMod | 10 任务 12 数据集全 SOTA（4.0M 参数）：FACED Kappa 0.5041 · ISRUC 睡眠分期 Kappa 0.7442 · CHB-MIT Bal Acc 0.7398 · PhysioNet-MI Kappa 0.5222；TUAB/TUEV 做了防泄漏重训仍第一 |
 | JET⚙ 生成 | TS-FID 188.27 / 235.86 / 151.27（TUAB/TUEV/TUSZ，基线 274–449）；Silhouette 0.983–0.995；下游增强 ΔAcc +0.017~+0.032（CBraMod 裁判） |
 | RF-GPT⚙ 跨域 | WTR joint 99.6%；WBMC 82.4 / 74.2 / 47.8（E/M/H）；通用 VLM 基线 ≤7%——射频域"时频图 + LLM"参照 |
 
 !!! note "数据快照"
-    本表数字整理于 **2026-09-25**（覆盖十篇：六篇核心 + LUNA / EEGMoE / JET / RF-GPT）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。
+    本表数字整理于 **2026-09-28**（覆盖十一篇：六篇核心 + LUNA / EEGMoE / JET / RF-GPT / CBraMod）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。
 
 ## 🔗 论文互怼链 {: #critique-chain }
 

@@ -90,6 +90,7 @@ nav:
           - 0923 · JET (ICML 2026 · EEG 生成): papers/2026-09/0923-jet.md
           - 0924 · EEGMoE (TNNLS 2026 · MoE): papers/2026-09/0924-eegmoe.md
           - 0924 · LUNA (NeurIPS 2025 · 拓扑无关): papers/2026-09/0924-luna.md
+          - 0928 · CBraMod (ICLR 2025 · 十字交叉): papers/2026-09/0928-cbramod.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md
@@ -102,7 +103,7 @@ nav:
       - 多任务三条路线: topics/multi-task.md
       - 基座来源分析: topics/base-model.md
   - 综述: blog-2023-2026.md
-  - 十篇方法对比: comparison.md
+  - 十一篇方法对比: comparison.md
   - 索引:
       - 数据集索引: datasets.md
       - 参考文献索引: references.md

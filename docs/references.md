@@ -5,7 +5,7 @@ tags: [索引, 参考文献]
 
 # 参考文献索引
 
-十篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA）与两篇「模型架构基础」页引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
+十一篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
 ## 基础架构与预训练范式
 
@@ -71,7 +71,10 @@ tags: [索引, 参考文献]
 | neuro2vec | arXiv 2022 | LaBraM | 掩码傅里叶频谱预测的思想来源 |
 | MMM | NeurIPS 2023/2024 | NeuroLM · TFM | 拓扑无关表示（多维位置编码、多级通道层次） |
 | Brant | NeurIPS 2023 | NeuroLM | 颅内 EEG 基础模型（长程依赖+时空联合） |
-| CBraMod | ICLR 2025 | TFM · LUNA · JET | 跨颅脑基础模型（TFM 对照组；JET 用其作生成数据下游裁判；LUNA 效率对照） |
+| CBraMod | ICLR 2025 | TFM · LUNA · JET · [本站精读](papers/2026-09/0928-cbramod.md) | 十字交叉脑基础模型（EEG-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET 用其作生成数据下游裁判；LUNA 效率对照） |
+| CPVT（条件位置编码 CPE） | arXiv 2021 | CBraMod | ACPE 的直接来源：卷积动态生成位置编码，CBraMod 推广为非对称双轴 |
+| CCNet（criss-cross attention） | ICCV 2019 | CBraMod | 十字交叉注意力的视觉出处（单注意力图仿射近似） |
+| CSWin Transformer | CVPR 2022 | CBraMod | 十字形状窗口注意力的视觉出处（CBraMod 双路并行设计参照） |
 | EEGFormer | AAAI 2024 Spring Symp. | LUNA | TUAR/TUSL 评测口径的来源工作 |
 | CEReBrO | arXiv 2025 | LUNA | 同组（ETH）前作，交替注意力的效率对照 |
 | FEMBA | arXiv 2025 | LUNA | 双向 Mamba EEG 基础模型，TUAB/TUAR 强基线 |
