@@ -1662,25 +1662,31 @@
 <p><strong>（a）电极级建模策略（Electrode-wise Modeling）</strong></p>
 <ul>
 <li>多电极 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 先切成 T 个 1 秒区间，每区间 D 个均匀采样点；再<strong>把每个电极的时间序列拆成独立训练样本</strong> <span class="arithmatex">\( x_i^e \in \mathbb{R}^{T \times D} \)</span>——天然适配任意电极数/组合；</li>
-<li><strong>电极词表</strong> <span class="arithmatex">\( \mathcal{V} \in \mathbb{R}^{E \times D} \)</span>：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 <strong>prefix 条件 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong> 拼在序列最前面（告诉模型信号来自哪个电极）；</li>
-<li>预训练集：3750 万个单电极样本，约 10 亿 <abbr title="词元，模型处理的最小输入单元">token</abbr>。</li>
+<li><strong>电极词表</strong> <span class="arithmatex">\( \mathcal{V} \in \mathbb{R}^{E \times D} \)</span>：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 <strong>条件 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong> 拼在序列最前面，告诉模型信号来自哪个电极；</li>
+<li>预训练集：3750 万个单电极样本，约 10 亿 tokens。</li>
 </ul>
 <p><strong>（b）自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>: Electrode Temporal Encoder）</strong></p>
 <ul>
-<li>所有电极<strong>共享</strong>一个 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式因果 Transformer：多头<strong>因果</strong>注意力（causal mask，只看过去）+ 位置前馈网络（论文表述为 Swish 激活 FFN，公式 <code>W_down·(Swish(W_gate·x) ⊙ (W_up·x))</code> 实为门控形式）；</li>
+<li>所有电极<strong>共享</strong>一个 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式因果 Transformer：多头<strong>因果</strong>注意力（causal mask，只看过去）+ Swish 门控前馈网络（公式见下）；</li>
 <li>轻量 MLP 预测下一个 <abbr title="词元，模型处理的最小输入单元">token</abbr>（<strong>连续原始信号值</strong>，不做 <abbr title="向量量化 Vector Quantization">VQ</abbr> 离散化）；</li>
-<li>损失：<span class="arithmatex">\( \mathcal{L}(\theta) = \tfrac{1}{T} \sum_{t=1}^{T} \rho\!\left( x_i^e[t] - \mathrm{ETE}(x_i^e[\le t]) \right) \)</span>，ρ 默认 <strong><abbr title="均方误差 Mean Squared Error">MSE</abbr></strong>；</li>
+<li>损失：预测的下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 与真实值之间的 ρ 距离（默认 <strong><abbr title="均方误差 Mean Squared Error">MSE</abbr></strong>），公式见下；</li>
 <li>意义：首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，直接建模"过去神经活动影响未来状态"的时序结构。</li>
 </ul>
+<p>Swish 门控前馈（SwiGLU 形式）：</p>
+<div class="arithmatex">\[ \mathrm{FFN}(x) = W_{\text{down}} \left( \mathrm{Swish}(W_{\text{gate}}\, x) \odot (W_{\text{up}}\, x) \right) \]</div>
+<p>自回归下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测损失：</p>
+<div class="arithmatex">\[ \mathcal{L}(\theta) = \frac{1}{T} \sum_{t=1}^{T} \rho \left( x_i^e[t] - \mathrm{ETE}(x_i^e[\leq t]) \right) \]</div>
 <p><strong>（c）多任务迁移学习（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>: Task-shared Electrode Graph）</strong></p>
 <ul>
 <li><abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> <strong>冻结</strong>，只作特征提取骨干；</li>
 <li>每个样本的每条电极序列末尾追加一个可学习 special <abbr title="词元，模型处理的最小输入单元">token</abbr> c（利用因果注意力把整条序列信息汇聚到该位置），取出该位置输出作为电极表示 <span class="arithmatex">\( z_j \in \mathbb{R}^{E_j \times D} \)</span>；</li>
-<li><strong>全局电极图</strong>：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 <span class="arithmatex">\( \mathcal{G} \in \mathbb{R}^{E \times D} \)</span>；每个样本只激活其电极对应的子图 <code>G_j</code>（indicator 矩阵 <code>I_{G_j}</code> + <code>diag(z_j)</code> 注入表示，式 10）；</li>
-<li><strong>图注意力机制</strong>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr>）：α_mn = ReLU(aᵀ[W h_m ‖ W h_n]) 计算节点相关性，masking 系数 β_mn（同子图=1，否则 0）保证交互只发生在激活子图内，K 层堆叠 + 残差 + pre-norm；</li>
+<li><strong>全局电极图</strong>：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 <span class="arithmatex">\( \mathcal{G} \in \mathbb{R}^{E \times D} \)</span>；每个样本只激活其电极对应的子图 <span class="arithmatex">\( G_j \)</span>（indicator 矩阵 <span class="arithmatex">\( I_{G_j} \)</span> + <span class="arithmatex">\( diag(z_j) \)</span> ）；</li>
+<li><strong>图注意力机制</strong>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr>）计算节点相关性（注意力系数公式见下），masking 系数 <span class="arithmatex">\( \beta_{mn} \)</span>（同子图=1，否则 0）保证交互只发生在激活子图内，K 层堆叠 + 残差 + pre-norm；</li>
 <li>同一 batch 内不同数据集/任务通过构造各自的 β mask 矩阵统一训练；</li>
 <li>图网络池化节点表示 → 任务专属头（分类或回归）。</li>
 </ul>
+<p><abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 注意力系数（‖ 表示向量拼接）：</p>
+<div class="arithmatex">\[ \alpha_{mn} = \mathrm{ReLU} \left( \mathbf{a}^{\top} \big[ W h_m \,\Vert\, W h_n \big] \right) \]</div>
 <p><strong>模型规格</strong>：Base 1.46M / Large 11.29M / Huge 183.8M / <strong>Giant 1.09B</strong>（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 领域当时最大）。</p>
 <h4 id="43">4.3 创新点<a class="headerlink" href="#43" title="Permanent link">#</a></h4>
 <ol>
@@ -1748,7 +1754,7 @@
 </table>
 <h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
-<li><abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 的多任务信息不在图结构里，而在'共享参数被多任务梯度共同更新'：电极节点 V_m 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。</li>
+<li><abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 的多任务信息不在图结构里，而在'共享参数被多任务梯度共同更新'：电极节点 <span class="arithmatex">\( V_m \)</span> 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。</li>
 <li>自回归直接回归连续值（<abbr title="均方误差 Mean Squared Error">MSE</abbr>），绕开了离散化难题——与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 的'先离散再预测'形成两条并行路线。</li>
 <li>电极级拆样本让样本量 ×E 倍膨胀（3750 万），这个数字要打折看：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 补回。</li>
 </ul>
@@ -1759,7 +1765,7 @@
 </details>
 <details class="question">
 <summary>Q2 · <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 图里到底存了什么多任务信息？</summary>
-<p>图结构本身不存任务信息。多任务信息来自训练方式：节点向量 V_m（电极原型）和 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重是所有任务的梯度共同更新的共享参数——同一电极被多个任务使用时，它的 V_m 同时接收多个任务的监督信号。推理时输入的电极集决定激活哪个子图（β mask），任务头决定读出。若两个任务电极集完全不相交，空间层面的共享就只剩 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重。</p>
+<p>图结构本身不存任务信息。多任务信息来自训练方式：节点向量 <span class="arithmatex">\( V_m \)</span>（电极原型）和 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重是所有任务的梯度共同更新的共享参数——同一电极被多个任务使用时，它的 <span class="arithmatex">\( V_m \)</span> 同时接收多个任务的监督信号。推理时输入的电极集决定激活哪个子图（β mask），任务头决定读出。若两个任务电极集完全不相交，空间层面的共享就只剩 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重。</p>
 </details>
 <details class="question">
 <summary>Q3 · 电极级拆样本有什么代价？</summary>
