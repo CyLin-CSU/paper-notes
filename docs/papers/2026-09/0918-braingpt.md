@@ -27,24 +27,36 @@ BrainGPT：自回归 EEG 通用模型 (arXiv 2024)
 **（a）电极级建模策略（Electrode-wise Modeling）**
 
 - 多电极 EEG 先切成 T 个 1 秒区间，每区间 D 个均匀采样点；再**把每个电极的时间序列拆成独立训练样本** \( x_i^e \in \mathbb{R}^{T \times D} \)——天然适配任意电极数/组合；
-- **电极词表** \( \mathcal{V} \in \mathbb{R}^{E \times D} \)：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 **prefix 条件 token** 拼在序列最前面（告诉模型信号来自哪个电极）；
-- 预训练集：3750 万个单电极样本，约 10 亿 token。
+- **电极词表** \( \mathcal{V} \in \mathbb{R}^{E \times D} \)：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 **条件 token** 拼在序列最前面，告诉模型信号来自哪个电极；
+- 预训练集：3750 万个单电极样本，约 10 亿 tokens。
 
 **（b）自回归预训练（ETE: Electrode Temporal Encoder）**
 
-- 所有电极**共享**一个 GPT 式因果 Transformer：多头**因果**注意力（causal mask，只看过去）+ 位置前馈网络（论文表述为 Swish 激活 FFN，公式 `W_down·(Swish(W_gate·x) ⊙ (W_up·x))` 实为门控形式）；
+- 所有电极**共享**一个 GPT 式因果 Transformer：多头**因果**注意力（causal mask，只看过去）+ Swish 门控前馈网络（公式见下）；
 - 轻量 MLP 预测下一个 token（**连续原始信号值**，不做 VQ 离散化）；
-- 损失：\( \mathcal{L}(\theta) = \tfrac{1}{T} \sum_{t=1}^{T} \rho\!\left( x_i^e[t] - \mathrm{ETE}(x_i^e[\le t]) \right) \)，ρ 默认 **MSE**；
+- 损失：预测的下一 token 与真实值之间的 ρ 距离（默认 **MSE**），公式见下；
 - 意义：首个自回归 EEG 模型，直接建模"过去神经活动影响未来状态"的时序结构。
+
+Swish 门控前馈（SwiGLU 形式）：
+
+\[ \mathrm{FFN}(x) = W_{\text{down}} \left( \mathrm{Swish}(W_{\text{gate}}\, x) \odot (W_{\text{up}}\, x) \right) \]
+
+自回归下一 token 预测损失：
+
+\[ \mathcal{L}(\theta) = \frac{1}{T} \sum_{t=1}^{T} \rho \left( x_i^e[t] - \mathrm{ETE}(x_i^e[\leq t]) \right) \]
 
 **（c）多任务迁移学习（TEG: Task-shared Electrode Graph）**
 
 - ETE **冻结**，只作特征提取骨干；
 - 每个样本的每条电极序列末尾追加一个可学习 special token c（利用因果注意力把整条序列信息汇聚到该位置），取出该位置输出作为电极表示 \( z_j \in \mathbb{R}^{E_j \times D} \)；
-- **全局电极图**：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 \( \mathcal{G} \in \mathbb{R}^{E \times D} \)；每个样本只激活其电极对应的子图 `G_j`（indicator 矩阵 `I_{G_j}` + `diag(z_j)` 注入表示，式 10）；
-- **图注意力机制**（GAT）：α_mn = ReLU(aᵀ[W h_m ‖ W h_n]) 计算节点相关性，masking 系数 β_mn（同子图=1，否则 0）保证交互只发生在激活子图内，K 层堆叠 + 残差 + pre-norm；
+- **全局电极图**：节点 = 预训练中所有 E 个电极（可学习向量），全连接图 \( \mathcal{G} \in \mathbb{R}^{E \times D} \)；每个样本只激活其电极对应的子图 \( G_j \)（indicator 矩阵 \( I_{G_j} \) + \( diag(z_j) \) ）；
+- **图注意力机制**（GAT）计算节点相关性（注意力系数公式见下），masking 系数 \( \beta_{mn} \)（同子图=1，否则 0）保证交互只发生在激活子图内，K 层堆叠 + 残差 + pre-norm；
 - 同一 batch 内不同数据集/任务通过构造各自的 β mask 矩阵统一训练；
 - 图网络池化节点表示 → 任务专属头（分类或回归）。
+
+GAT 注意力系数（‖ 表示向量拼接）：
+
+\[ \alpha_{mn} = \mathrm{ReLU} \left( \mathbf{a}^{\top} \big[ W h_m \,\Vert\, W h_n \big] \right) \]
 
 **模型规格**：Base 1.46M / Large 11.29M / Huge 183.8M / **Giant 1.09B**（EEG 领域当时最大）。
 
@@ -105,7 +117,7 @@ flowchart LR
 | LaBraM / BIOT | 范式之争的直接证据：同设定下自回归（AR）优于双向掩码（MAE）2%+ |
 
 ## 个人思考
-- TEG 的多任务信息不在图结构里，而在'共享参数被多任务梯度共同更新'：电极节点 V_m 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。
+- TEG 的多任务信息不在图结构里，而在'共享参数被多任务梯度共同更新'：电极节点 \( V_m \) 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。
 - 自回归直接回归连续值（MSE），绕开了离散化难题——与 LaBraM/TFM 的'先离散再预测'形成两条并行路线。
 - 电极级拆样本让样本量 ×E 倍膨胀（3750 万），这个数字要打折看：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 TEG 补回。
 
@@ -118,7 +130,7 @@ flowchart LR
 
 ??? question "Q2 · TEG 图里到底存了什么多任务信息？"
 
-    图结构本身不存任务信息。多任务信息来自训练方式：节点向量 V_m（电极原型）和 GAT 权重是所有任务的梯度共同更新的共享参数——同一电极被多个任务使用时，它的 V_m 同时接收多个任务的监督信号。推理时输入的电极集决定激活哪个子图（β mask），任务头决定读出。若两个任务电极集完全不相交，空间层面的共享就只剩 GAT 权重。
+    图结构本身不存任务信息。多任务信息来自训练方式：节点向量 \( V_m \)（电极原型）和 GAT 权重是所有任务的梯度共同更新的共享参数——同一电极被多个任务使用时，它的 \( V_m \) 同时接收多个任务的监督信号。推理时输入的电极集决定激活哪个子图（β mask），任务头决定读出。若两个任务电极集完全不相交，空间层面的共享就只剩 GAT 权重。
 
 
 ??? question "Q3 · 电极级拆样本有什么代价？"
