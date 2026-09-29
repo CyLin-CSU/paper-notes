@@ -8,9 +8,22 @@ with open(p, encoding='utf-8') as f:
     lines = f.readlines()
 
 bad = []
+in_dollar_block = False
 for i, line in enumerate(lines, 1):
+    stripped = line.strip()
+    if in_dollar_block:
+        # inside a multi-line $$ display block: pure math, skip
+        if '$$' in stripped:
+            in_dollar_block = False
+        continue
+    if stripped.startswith('$$'):
+        # $$ fence line: opener (block follows) or a complete one-line block
+        if not (stripped.endswith('$$') and len(stripped) > 4):
+            in_dollar_block = True
+        continue
     s = line
-    # remove display math and inline math
+    # remove display math and inline math ($$..$$ inline, \( \), \[ \])
+    s = re.sub(r'\$\$.*?\$\$', '', s)
     s = re.sub(r'\\\[.*?\\\]', '', s)
     s = re.sub(r'\\\(.*?\\\)', '', s)
     # remove inline code spans (markdown does not process emphasis inside them)
