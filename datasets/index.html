@@ -1642,7 +1642,7 @@
 
 
 <h1 id="_1">数据集索引<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>十一篇精读论文（核心六篇 + RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod）用到的全部数据集汇总。<strong>↑ = 预训练语料，↓ = 下游评估</strong>（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部<a href="#dataset-alias">别名说明</a>。</p>
+<p>十一篇精读论文（核心六篇 + RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod）用到的全部数据集汇总。<strong>↑ = 预训练语料，↓ = 下游评估</strong>（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部<a href="#dataset-alias">别名说明</a>。<strong>数据集名均链接至官方获取页；🔒 = 需注册或申请，无公开官方页的在表内注明。</strong></p>
 <h2 id="_2">📊 数据集 × 论文使用矩阵<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <div class="mx-wrap">
 <table class="mx-matrix">
@@ -1667,49 +1667,49 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>TUEG</strong></td>
+<td><a href="https://www.isip.piconepress.com/projects/tuh_eeg/"><strong>TUEG</strong> 🔒</a></td>
 <td>临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语料</td>
 <td>17–23ch / 250–1024Hz</td>
 <td>~24,000h</td>
 <td>NeuroLM↑ · LUNA↑（21,787h） · CBraMod↑（清洗后 &gt;9000h）</td>
 </tr>
 <tr>
-<td><strong>TUAB</strong></td>
+<td><a href="https://www.isip.piconepress.com/projects/tuh_eeg/"><strong>TUAB</strong> 🔒</a></td>
 <td>异常检测（二分类）</td>
 <td>23ch / 256Hz / 10s</td>
 <td>409,455 样本</td>
 <td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ NeuroLM↓ EEGPT↓ TFM↓ LUNA↓ JET⚙（生成） CBraMod↓（防泄漏重训版仍 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>）</td>
 </tr>
 <tr>
-<td><strong>TUEV</strong></td>
+<td><a href="https://www.isip.piconepress.com/projects/tuh_eeg/"><strong>TUEV</strong> 🔒</a></td>
 <td>事件分类（6 类）</td>
 <td>23ch / 256Hz / 5s</td>
 <td>112,491 样本</td>
 <td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ NeuroLM↓ EEGPT↓ TFM↓ JET⚙（生成） CBraMod↓（防泄漏重训）</td>
 </tr>
 <tr>
-<td><strong>TUSL</strong></td>
+<td><a href="https://www.isip.piconepress.com/projects/tuh_eeg/"><strong>TUSL</strong> 🔒</a></td>
 <td>慢波分类（3 类）</td>
 <td>23ch / 256Hz / 10s</td>
 <td>245 样本</td>
 <td>NeuroLM↓ LUNA↓ · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑</td>
 </tr>
 <tr>
-<td><strong>TUSZ</strong></td>
+<td><a href="https://www.isip.piconepress.com/projects/tuh_eeg/"><strong>TUSZ</strong> 🔒</a></td>
 <td>癫痫事件检测</td>
 <td>19–23ch / 256Hz</td>
 <td>1,138.5h</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑ · JET⚙（生成）</td>
 </tr>
 <tr>
-<td><strong>TUEP</strong></td>
+<td><a href="https://www.isip.piconepress.com/projects/tuh_eeg/"><strong>TUEP</strong> 🔒</a></td>
 <td>癫痫/非癫痫</td>
 <td>19–23ch / 256Hz</td>
 <td>591.2h</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>TUAR</strong></td>
+<td><a href="https://www.isip.piconepress.com/projects/tuh_eeg/"><strong>TUAR</strong> 🔒</a></td>
 <td>伪迹标注（5 类）</td>
 <td>23ch / 256Hz</td>
 <td>92.2h</td>
@@ -1730,49 +1730,49 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>SEED</strong></td>
+<td><a href="https://bcmi.sjtu.edu.cn/home/seed/seed.html"><strong>SEED</strong> 🔒</a></td>
 <td>3 类情绪</td>
 <td>62ch / 1000Hz</td>
 <td>15 被试</td>
 <td>NeuroLM↓ · EEGPT↑ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ EEGMoE↑</td>
 </tr>
 <tr>
-<td><strong>SEED-IV</strong></td>
+<td><a href="https://bcmi.sjtu.edu.cn/home/seed/seed-iv.html"><strong>SEED-IV</strong> 🔒</a></td>
 <td>4 类情绪</td>
 <td>62ch / 1000Hz</td>
 <td>15 被试</td>
 <td>BrainGPT↓ · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>SEED-V</strong></td>
+<td><a href="https://bcmi.sjtu.edu.cn/home/seed/seed-v.html"><strong>SEED-V</strong> 🔒</a></td>
 <td>5 类情绪</td>
 <td>62ch / 1000Hz</td>
-<td>20 被试</td>
+<td>20 被试（开源版 16）</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓ BrainGPT↓ LUNA↓（未见拓扑） CBraMod↓（开源 16 人版）</td>
 </tr>
 <tr>
-<td><strong>DEAP</strong></td>
+<td><a href="http://www.eecs.qmul.ac.uk/mmv/datasets/deap/"><strong>DEAP</strong> 🔒</a></td>
 <td>情绪 (4 类)</td>
 <td>32ch / 128Hz</td>
 <td>32 被试</td>
 <td>BrainGPT↓ EEGMoE↓（V/A LOSO）</td>
 </tr>
 <tr>
-<td><strong>MAHNOB-HCI</strong></td>
+<td><a href="https://mahnob-db.eu/"><strong>MAHNOB-HCI</strong> 🔒</a></td>
 <td>情绪（维度模型）</td>
 <td>32ch / 256Hz</td>
 <td>27 被试</td>
 <td>EEGMoE↑（预训练）</td>
 </tr>
 <tr>
-<td><strong>FACED</strong></td>
+<td><a href="https://www.synapse.org/Synapse:syn50614194"><strong>FACED</strong> 🔒</a>（Synapse 账号）</td>
 <td>9 类情绪</td>
 <td>30ch / 1000Hz</td>
 <td>123 被试</td>
 <td>BrainGPT↓ CBraMod↓</td>
 </tr>
 <tr>
-<td><strong>Emobrain</strong></td>
+<td><strong>Emobrain</strong>（无公开官方页，需向 Boğaziçi VPA 实验室邮件申请）</td>
 <td>情绪 (IAPS 诱发)</td>
 <td>64ch / 1024Hz</td>
 <td>16 被试</td>
@@ -1793,49 +1793,49 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>PhysioMI</strong>（<abbr title="脑电图 Electroencephalogram">EEG</abbr> Motor Movement/Imagery，EEGMMIDB）</td>
+<td><a href="https://physionet.org/content/eegmmidb/1.0.0/"><strong>PhysioMI</strong></a>（<abbr title="脑电图 Electroencephalogram">EEG</abbr> Motor Movement/Imagery，EEGMMIDB）</td>
 <td><abbr title="运动想象 Motor Imagery">MI</abbr> &amp; ME</td>
 <td>64ch / 160Hz</td>
 <td>109 被试</td>
 <td>EEGPT↑ <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑ EEGMoE↑ CBraMod↓</td>
 </tr>
 <tr>
-<td><strong>HGD</strong></td>
+<td><a href="https://github.com/robintibor/high-gamma-dataset"><strong>HGD</strong></a></td>
 <td><abbr title="运动想象 Motor Imagery">MI</abbr>（4 类）</td>
 <td>128ch</td>
 <td>14 被试</td>
 <td>EEGPT↑</td>
 </tr>
 <tr>
-<td><strong>MIBCI</strong></td>
+<td><a href="https://gigadb.org/dataset/100295"><strong>MIBCI</strong></a>（Cho et al. 2017 GigaScience）</td>
 <td><abbr title="运动想象 Motor Imagery">MI</abbr>（2 类）</td>
 <td>64ch / 512Hz</td>
 <td>52 被试</td>
 <td>BrainGPT↓</td>
 </tr>
 <tr>
-<td><strong><abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> Competition IV-1</strong>（BCIC4-1）</td>
+<td><a href="http://www.bbci.de/competition/iv/"><strong><abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> Competition IV-1</strong></a>（BCIC4-1）</td>
 <td><abbr title="运动想象 Motor Imagery">MI</abbr>（2 类+空闲）</td>
 <td>38–59ch / 100Hz</td>
 <td>7 被试</td>
 <td>BrainGPT↓ · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑ EEGMoE↑</td>
 </tr>
 <tr>
-<td><strong><abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> Competition IV-2a</strong>（BCIC4-2a）</td>
+<td><a href="http://www.bbci.de/competition/iv/"><strong><abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> Competition IV-2a</strong></a>（BCIC4-2a）</td>
 <td><abbr title="运动想象 Motor Imagery">MI</abbr>（4 类）</td>
 <td>22ch / 250Hz</td>
 <td>9 被试</td>
 <td>EEGMoE↓（LOSO） CBraMod↓</td>
 </tr>
 <tr>
-<td><strong>SHU-<abbr title="运动想象 Motor Imagery">MI</abbr></strong></td>
+<td><a href="https://figshare.com/articles/dataset/19228725"><strong>SHU-<abbr title="运动想象 Motor Imagery">MI</abbr></strong></a></td>
 <td><abbr title="运动想象 Motor Imagery">MI</abbr>（2 类：左右手）</td>
 <td>32ch / 250Hz</td>
 <td>25 被试</td>
 <td>CBraMod↓</td>
 </tr>
 <tr>
-<td><strong>Grasp and Lift</strong></td>
+<td><a href="https://www.kaggle.com/c/grasp-and-lift-eeg-detection"><strong>Grasp and Lift</strong> 🔒</a></td>
 <td>抓握动作</td>
 <td>32ch / 500Hz</td>
 <td>12 被试</td>
@@ -1856,35 +1856,35 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>SHHS</strong></td>
+<td><a href="https://sleepdata.org/datasets/shhs"><strong>SHHS</strong> 🔒</a></td>
 <td>睡眠分期</td>
 <td>2ch / 125Hz / 30s</td>
 <td>5,445 录音（500 万样本）</td>
 <td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↑</td>
 </tr>
 <tr>
-<td><strong>EDF</strong></td>
+<td><a href="https://physionet.org/content/sleep-edfx/1.0.0/"><strong>EDF</strong></a></td>
 <td>睡眠分期（5 类）</td>
 <td>2ch / 100Hz</td>
 <td>78 晚</td>
 <td>BrainGPT↓</td>
 </tr>
 <tr>
-<td><strong>HMC</strong></td>
+<td><a href="https://physionet.org/content/hmc-sleep-staging/"><strong>HMC</strong></a>（v1.1）</td>
 <td>睡眠分期（5 类）</td>
 <td>4ch / 256Hz / 30s</td>
 <td>151 被试</td>
 <td>NeuroLM↓ BrainGPT↓</td>
 </tr>
 <tr>
-<td><strong>EESM23</strong></td>
+<td><a href="https://openneuro.org/datasets/ds005178/versions/1.0.0"><strong>EESM23</strong></a>（OpenNeuro，Aarhus）</td>
 <td><strong>ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr></strong> 睡眠分期</td>
 <td>4ch（耳道电极）</td>
 <td>10 被试</td>
 <td>TFM 跨设备评估</td>
 </tr>
 <tr>
-<td><strong>ISRUC</strong></td>
+<td><a href="https://sleeptight.isr.uc.pt/"><strong>ISRUC</strong> 🔒</a></td>
 <td>睡眠分期（5 类）</td>
 <td>6ch（对侧导联）/ 200Hz</td>
 <td>100 晚</td>
@@ -1905,21 +1905,21 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>EEGMat</strong>（NeuroLM 中称 Workload，CBraMod 中称 MentalArithmetic）</td>
+<td><a href="https://physionet.org/content/eegmat/1.0.0/"><strong>EEGMat</strong></a>（NeuroLM 中称 Workload，CBraMod 中称 MentalArithmetic）</td>
 <td>高/低认知负荷</td>
 <td>19ch / 500Hz</td>
 <td>36 被试（BrainGPT 报 34）</td>
 <td>NeuroLM↓ BrainGPT↓ EEGMoE↑（预训练） CBraMod↓</td>
 </tr>
 <tr>
-<td><strong>STEW</strong></td>
+<td><a href="https://ieee-dataport.org/open-access/stew-simultaneous-task-eeg-workload-dataset"><strong>STEW</strong> 🔒</a></td>
 <td>负荷（3 类）</td>
 <td>14ch / 128Hz</td>
-<td>45 被试</td>
+<td>48 采集（45 有标签）</td>
 <td>BrainGPT↓ EEGMoE↓（LOSO）</td>
 </tr>
 <tr>
-<td><strong>SEED-VIG</strong></td>
+<td><a href="https://bcmi.sjtu.edu.cn/home/seed/seed-vig.html"><strong>SEED-VIG</strong> 🔒</a></td>
 <td>警觉度回归（PERCLOS 标签）</td>
 <td>17ch / 200Hz</td>
 <td>23 被试</td>
@@ -1940,42 +1940,42 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Inria <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr></strong></td>
+<td><a href="https://www.kaggle.com/c/inria-bci-challenge"><strong>Inria <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr></strong> 🔒</a></td>
 <td>P300 拼写</td>
 <td>56ch / 600Hz</td>
 <td>26 被试</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>Target vs Non-Target</strong></td>
+<td><a href="https://zenodo.org/records/3266930"><strong>Target vs Non-Target</strong></a>（bi2015a Brain Invaders，GIPSA-lab）</td>
 <td>P300 oddball</td>
 <td>32ch / 512Hz</td>
 <td>50 被试</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>PhysioP300</strong></td>
+<td><a href="https://physionet.org/content/erpbci/1.0.0/"><strong>PhysioP300</strong></a></td>
 <td>P300 目标检测</td>
 <td>—</td>
-<td>9 被试</td>
+<td>10 采集（EEGPT 用 9）</td>
 <td>EEGPT↓</td>
 </tr>
 <tr>
-<td><strong>KaggleERN</strong></td>
+<td><a href="https://www.kaggle.com/c/inria-bci-challenge/data"><strong>KaggleERN</strong> 🔒</a>（即 Inria <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 竞赛）</td>
 <td>错误相关负电位 <abbr title="错误相关负电位 Error-Related Negativity">ERN</abbr></td>
 <td>56ch</td>
 <td>26 被试</td>
 <td>EEGPT↓</td>
 </tr>
 <tr>
-<td><strong>TSU</strong></td>
+<td><a href="https://bci.med.tsinghua.edu.cn/download.html"><strong>TSU</strong></a></td>
 <td><abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr>（40 目标）</td>
-<td>64ch / 250Hz</td>
+<td>64ch / 250Hz（原采 1000Hz）</td>
 <td>35 被试</td>
 <td>EEGPT↑</td>
 </tr>
 <tr>
-<td><strong>M3CV</strong></td>
+<td><a href="https://www.kaggle.com/competitions/eeg-biometric-competition"><strong>M3CV</strong> 🔒</a></td>
 <td>多范式生物识别</td>
 <td>—</td>
 <td>106 被试</td>
@@ -1996,21 +1996,21 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>CHB-MIT</strong></td>
+<td><a href="https://physionet.org/content/chbmit/1.0.0/"><strong>CHB-MIT</strong></a></td>
 <td>癫痫检测（2 类）</td>
 <td>16 双极导联 / 256Hz</td>
 <td>23 患者（儿科）/ 326,993 样本</td>
 <td>CBraMod↓</td>
 </tr>
 <tr>
-<td><strong>Mumtaz2016</strong></td>
+<td><a href="https://figshare.com/articles/dataset/EEG_Data_New/4244171"><strong>Mumtaz2016</strong></a></td>
 <td>抑郁症诊断（2 类）</td>
 <td>19ch / 256Hz</td>
 <td>34 MDD + 30 正常</td>
 <td>CBraMod↓</td>
 </tr>
 <tr>
-<td><strong>BCIC2020-3</strong></td>
+<td><a href="https://osf.io/pq7vb/"><strong>BCIC2020-3</strong></a></td>
 <td>想象语音（5 词）</td>
 <td>64ch / 256Hz</td>
 <td>15 被试 / 6,000 样本</td>
@@ -2031,70 +2031,70 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>PTB-XL</strong></td>
+<td><a href="https://physionet.org/content/ptb-xl/1.0.3/"><strong>PTB-XL</strong></a></td>
 <td>ECG 心律失常（二分类）</td>
 <td>12 导联 / 500Hz</td>
 <td>21,911 录音</td>
 <td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓</td>
 </tr>
 <tr>
-<td><strong>Cardiology（5 套合集）</strong></td>
+<td><a href="https://physionet.org/content/challenge-2021/1.0.0/"><strong>Cardiology（5 套合集）</strong></a></td>
 <td>ECG</td>
 <td>6/12 导联 / 500Hz</td>
 <td>21,264 录音</td>
 <td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↑</td>
 </tr>
 <tr>
-<td><strong>HAR</strong></td>
+<td><a href="https://archive.ics.uci.edu/dataset/341/smartphone+based+recognition+of+human+activities+and+postural+transitions"><strong>HAR</strong></a></td>
 <td>可穿戴 IMU 动作（6 类）</td>
 <td>9 坐标 / 50Hz</td>
 <td>30 被试</td>
 <td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>↓</td>
 </tr>
 <tr>
-<td><strong>MoBI</strong></td>
+<td><a href="https://doi.org/10.6084/m9.figshare.c.3894013"><strong>MoBI</strong></a></td>
 <td>步态关节角回归</td>
 <td>60ch / 100Hz</td>
 <td>8 被试</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↓</td>
 </tr>
 <tr>
-<td><strong>Raw <abbr title="脑电图 Electroencephalogram">EEG</abbr> Data</strong>（Trujillo 2020）</td>
+<td><a href="https://dataverse.tdl.org/dataset.xhtml?persistentId=doi:10.18738/T8/SS2NHB"><strong>Raw <abbr title="脑电图 Electroencephalogram">EEG</abbr> Data</strong></a>（Trujillo 2020）</td>
 <td>信息整合分类</td>
 <td>64ch / 256Hz</td>
 <td>—</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>Resting State</strong>（Trujillo 2017）</td>
+<td><a href="https://dataverse.tdl.org/dataset.xhtml?persistentId=doi:10.18738/T8/EG0LJI"><strong>Resting State</strong></a>（Trujillo 2017）</td>
 <td>静息态</td>
 <td>64ch / 256Hz</td>
 <td>22 被试</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>Siena Scalp</strong></td>
+<td><a href="https://physionet.org/content/siena-scalp-eeg/1.0.0/"><strong>Siena Scalp</strong></a></td>
 <td>临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr></td>
 <td>31ch / 512Hz</td>
 <td>14 患者</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑ LUNA↑（预训练）</td>
 </tr>
 <tr>
-<td><strong>SPIS</strong></td>
+<td><a href="https://github.com/mastaneht/SPIS-Resting-State-Dataset"><strong>SPIS</strong></a>（子集开放，完整版联系作者）</td>
 <td>静息+持续注意</td>
 <td>64ch / 2048Hz</td>
 <td>10 被试</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>Self-collected</strong></td>
+<td><strong>Self-collected</strong>（自采，未公开）</td>
 <td>混合任务</td>
 <td>62ch / 1000Hz</td>
 <td>140+ 被试</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>↑ NeuroLM↑</td>
 </tr>
 <tr>
-<td><strong>DREAMER</strong></td>
+<td><a href="https://zenodo.org/records/546113"><strong>DREAMER</strong></a>（Zenodo 开放镜像）</td>
 <td>情绪（预训练未见）</td>
 <td>—</td>
 <td>23 被试</td>
@@ -2145,6 +2145,14 @@
 <tr>
 <td>SEED 系列与 NeuroLM</td>
 <td>NeuroLM 预训练的 "SEED Series" 指 SEED-IV/V/GER/FRA，不含原始 SEED（原始 SEED 对 NeuroLM 为下游）</td>
+</tr>
+<tr>
+<td>KaggleERN = Inria <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> Challenge</td>
+<td>同一 Kaggle 竞赛数据（NER 2015 P300，56ch / 26 被试），EEGPT 称 KaggleERN，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/NeuroLM 称 Inria <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr></td>
+</tr>
+<tr>
+<td>PhysioP300 = PhysioNet erpbci</td>
+<td>EEGPT 官方仓库指明 PhysioP300 即 PhysioNet "<abbr title="事件相关电位 Event-Related Potential">ERP</abbr>-based <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> recordings"（Citi et al. 6×6 speller）</td>
 </tr>
 </tbody>
 </table>
