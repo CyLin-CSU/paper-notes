@@ -26,6 +26,8 @@ for i, line in enumerate(lines, 1):
     s = re.sub(r'\$\$.*?\$\$', '', s)
     s = re.sub(r'\\\[.*?\\\]', '', s)
     s = re.sub(r'\\\(.*?\\\)', '', s)
+    # markdown links: keep link text, drop URL target (underscores in URLs are safe)
+    s = re.sub(r'\[([^\]]*)\]\([^)]*\)', r'\1', s)
     # remove inline code spans (markdown does not process emphasis inside them)
     s = re.sub(r'`[^`]*`', '', s)
     n = s.count('_')

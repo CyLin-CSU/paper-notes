@@ -5,7 +5,7 @@ tags: [索引, 数据集]
 
 # 数据集索引
 
-十一篇精读论文（核心六篇 + RF-GPT / JET / EEGMoE / LUNA / CBraMod）用到的全部数据集汇总。**↑ = 预训练语料，↓ = 下游评估**（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部[别名说明](#dataset-alias)。
+十一篇精读论文（核心六篇 + RF-GPT / JET / EEGMoE / LUNA / CBraMod）用到的全部数据集汇总。**↑ = 预训练语料，↓ = 下游评估**（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部[别名说明](#dataset-alias)。**数据集名均链接至官方获取页；🔒 = 需注册或申请，无公开官方页的在表内注明。**
 
 ## 📊 数据集 × 论文使用矩阵
 
@@ -24,89 +24,89 @@ tags: [索引, 数据集]
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **TUEG** | 临床 EEG 语料 | 17–23ch / 250–1024Hz | ~24,000h | NeuroLM↑ · LUNA↑（21,787h） · CBraMod↑（清洗后 >9000h） |
-| **TUAB** | 异常检测（二分类） | 23ch / 256Hz / 10s | 409,455 样本 | BIOT↓ LaBraM↓ NeuroLM↓ EEGPT↓ TFM↓ LUNA↓ JET⚙（生成） CBraMod↓（防泄漏重训版仍 SOTA） |
-| **TUEV** | 事件分类（6 类） | 23ch / 256Hz / 5s | 112,491 样本 | BIOT↓ LaBraM↓ NeuroLM↓ EEGPT↓ TFM↓ JET⚙（生成） CBraMod↓（防泄漏重训） |
-| **TUSL** | 慢波分类（3 类） | 23ch / 256Hz / 10s | 245 样本 | NeuroLM↓ LUNA↓ · LaBraM↑ |
-| **TUSZ** | 癫痫事件检测 | 19–23ch / 256Hz | 1,138.5h | LaBraM↑ NeuroLM↑ · JET⚙（生成） |
-| **TUEP** | 癫痫/非癫痫 | 19–23ch / 256Hz | 591.2h | LaBraM↑ NeuroLM↑ |
-| **TUAR** | 伪迹标注（5 类） | 23ch / 256Hz | 92.2h | LaBraM↑ NeuroLM↑ · LUNA↓（SOTA 0.921） |
+| [**TUEG** 🔒](https://www.isip.piconepress.com/projects/tuh_eeg/) | 临床 EEG 语料 | 17–23ch / 250–1024Hz | ~24,000h | NeuroLM↑ · LUNA↑（21,787h） · CBraMod↑（清洗后 >9000h） |
+| [**TUAB** 🔒](https://www.isip.piconepress.com/projects/tuh_eeg/) | 异常检测（二分类） | 23ch / 256Hz / 10s | 409,455 样本 | BIOT↓ LaBraM↓ NeuroLM↓ EEGPT↓ TFM↓ LUNA↓ JET⚙（生成） CBraMod↓（防泄漏重训版仍 SOTA） |
+| [**TUEV** 🔒](https://www.isip.piconepress.com/projects/tuh_eeg/) | 事件分类（6 类） | 23ch / 256Hz / 5s | 112,491 样本 | BIOT↓ LaBraM↓ NeuroLM↓ EEGPT↓ TFM↓ JET⚙（生成） CBraMod↓（防泄漏重训） |
+| [**TUSL** 🔒](https://www.isip.piconepress.com/projects/tuh_eeg/) | 慢波分类（3 类） | 23ch / 256Hz / 10s | 245 样本 | NeuroLM↓ LUNA↓ · LaBraM↑ |
+| [**TUSZ** 🔒](https://www.isip.piconepress.com/projects/tuh_eeg/) | 癫痫事件检测 | 19–23ch / 256Hz | 1,138.5h | LaBraM↑ NeuroLM↑ · JET⚙（生成） |
+| [**TUEP** 🔒](https://www.isip.piconepress.com/projects/tuh_eeg/) | 癫痫/非癫痫 | 19–23ch / 256Hz | 591.2h | LaBraM↑ NeuroLM↑ |
+| [**TUAR** 🔒](https://www.isip.piconepress.com/projects/tuh_eeg/) | 伪迹标注（5 类） | 23ch / 256Hz | 92.2h | LaBraM↑ NeuroLM↑ · LUNA↓（SOTA 0.921） |
 
 ## 情绪识别
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **SEED** | 3 类情绪 | 62ch / 1000Hz | 15 被试 | NeuroLM↓ · EEGPT↑ LaBraM↑ EEGMoE↑ |
-| **SEED-IV** | 4 类情绪 | 62ch / 1000Hz | 15 被试 | BrainGPT↓ · LaBraM↑ NeuroLM↑ |
-| **SEED-V** | 5 类情绪 | 62ch / 1000Hz | 20 被试 | LaBraM↓ BrainGPT↓ LUNA↓（未见拓扑） CBraMod↓（开源 16 人版） |
-| **DEAP** | 情绪 (4 类) | 32ch / 128Hz | 32 被试 | BrainGPT↓ EEGMoE↓（V/A LOSO） |
-| **MAHNOB-HCI** | 情绪（维度模型） | 32ch / 256Hz | 27 被试 | EEGMoE↑（预训练） |
-| **FACED** | 9 类情绪 | 30ch / 1000Hz | 123 被试 | BrainGPT↓ CBraMod↓ |
-| **Emobrain** | 情绪 (IAPS 诱发) | 64ch / 1024Hz | 16 被试 | LaBraM↑ NeuroLM↑ |
+| [**SEED** 🔒](https://bcmi.sjtu.edu.cn/home/seed/seed.html) | 3 类情绪 | 62ch / 1000Hz | 15 被试 | NeuroLM↓ · EEGPT↑ LaBraM↑ EEGMoE↑ |
+| [**SEED-IV** 🔒](https://bcmi.sjtu.edu.cn/home/seed/seed-iv.html) | 4 类情绪 | 62ch / 1000Hz | 15 被试 | BrainGPT↓ · LaBraM↑ NeuroLM↑ |
+| [**SEED-V** 🔒](https://bcmi.sjtu.edu.cn/home/seed/seed-v.html) | 5 类情绪 | 62ch / 1000Hz | 20 被试（开源版 16） | LaBraM↓ BrainGPT↓ LUNA↓（未见拓扑） CBraMod↓（开源 16 人版） |
+| [**DEAP** 🔒](http://www.eecs.qmul.ac.uk/mmv/datasets/deap/) | 情绪 (4 类) | 32ch / 128Hz | 32 被试 | BrainGPT↓ EEGMoE↓（V/A LOSO） |
+| [**MAHNOB-HCI** 🔒](https://mahnob-db.eu/) | 情绪（维度模型） | 32ch / 256Hz | 27 被试 | EEGMoE↑（预训练） |
+| [**FACED** 🔒](https://www.synapse.org/Synapse:syn50614194)（Synapse 账号） | 9 类情绪 | 30ch / 1000Hz | 123 被试 | BrainGPT↓ CBraMod↓ |
+| **Emobrain**（无公开官方页，需向 Boğaziçi VPA 实验室邮件申请） | 情绪 (IAPS 诱发) | 64ch / 1024Hz | 16 被试 | LaBraM↑ NeuroLM↑ |
 
 ## 运动想象 / 执行
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **PhysioMI**（EEG Motor Movement/Imagery，EEGMMIDB） | MI & ME | 64ch / 160Hz | 109 被试 | EEGPT↑ LaBraM↑ NeuroLM↑ EEGMoE↑ CBraMod↓ |
-| **HGD** | MI（4 类） | 128ch | 14 被试 | EEGPT↑ |
-| **MIBCI** | MI（2 类） | 64ch / 512Hz | 52 被试 | BrainGPT↓ |
-| **BCI Competition IV-1**（BCIC4-1） | MI（2 类+空闲） | 38–59ch / 100Hz | 7 被试 | BrainGPT↓ · LaBraM↑ NeuroLM↑ EEGMoE↑ |
-| **BCI Competition IV-2a**（BCIC4-2a） | MI（4 类） | 22ch / 250Hz | 9 被试 | EEGMoE↓（LOSO） CBraMod↓ |
-| **SHU-MI** | MI（2 类：左右手） | 32ch / 250Hz | 25 被试 | CBraMod↓ |
-| **Grasp and Lift** | 抓握动作 | 32ch / 500Hz | 12 被试 | LaBraM↑ NeuroLM↑ |
+| [**PhysioMI**](https://physionet.org/content/eegmmidb/1.0.0/)（EEG Motor Movement/Imagery，EEGMMIDB） | MI & ME | 64ch / 160Hz | 109 被试 | EEGPT↑ LaBraM↑ NeuroLM↑ EEGMoE↑ CBraMod↓ |
+| [**HGD**](https://github.com/robintibor/high-gamma-dataset) | MI（4 类） | 128ch | 14 被试 | EEGPT↑ |
+| [**MIBCI**](https://gigadb.org/dataset/100295)（Cho et al. 2017 GigaScience） | MI（2 类） | 64ch / 512Hz | 52 被试 | BrainGPT↓ |
+| [**BCI Competition IV-1**](http://www.bbci.de/competition/iv/)（BCIC4-1） | MI（2 类+空闲） | 38–59ch / 100Hz | 7 被试 | BrainGPT↓ · LaBraM↑ NeuroLM↑ EEGMoE↑ |
+| [**BCI Competition IV-2a**](http://www.bbci.de/competition/iv/)（BCIC4-2a） | MI（4 类） | 22ch / 250Hz | 9 被试 | EEGMoE↓（LOSO） CBraMod↓ |
+| [**SHU-MI**](https://figshare.com/articles/dataset/19228725) | MI（2 类：左右手） | 32ch / 250Hz | 25 被试 | CBraMod↓ |
+| [**Grasp and Lift** 🔒](https://www.kaggle.com/c/grasp-and-lift-eeg-detection) | 抓握动作 | 32ch / 500Hz | 12 被试 | LaBraM↑ NeuroLM↑ |
 
 ## 睡眠分期
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **SHHS** | 睡眠分期 | 2ch / 125Hz / 30s | 5,445 录音（500 万样本） | BIOT↑ |
-| **EDF** | 睡眠分期（5 类） | 2ch / 100Hz | 78 晚 | BrainGPT↓ |
-| **HMC** | 睡眠分期（5 类） | 4ch / 256Hz / 30s | 151 被试 | NeuroLM↓ BrainGPT↓ |
-| **EESM23** | **ear-EEG** 睡眠分期 | 4ch（耳道电极） | 10 被试 | TFM 跨设备评估 |
-| **ISRUC** | 睡眠分期（5 类） | 6ch（对侧导联）/ 200Hz | 100 晚 | CBraMod↓ |
+| [**SHHS** 🔒](https://sleepdata.org/datasets/shhs) | 睡眠分期 | 2ch / 125Hz / 30s | 5,445 录音（500 万样本） | BIOT↑ |
+| [**EDF**](https://physionet.org/content/sleep-edfx/1.0.0/) | 睡眠分期（5 类） | 2ch / 100Hz | 78 晚 | BrainGPT↓ |
+| [**HMC**](https://physionet.org/content/hmc-sleep-staging/)（v1.1） | 睡眠分期（5 类） | 4ch / 256Hz / 30s | 151 被试 | NeuroLM↓ BrainGPT↓ |
+| [**EESM23**](https://openneuro.org/datasets/ds005178/versions/1.0.0)（OpenNeuro，Aarhus） | **ear-EEG** 睡眠分期 | 4ch（耳道电极） | 10 被试 | TFM 跨设备评估 |
+| [**ISRUC** 🔒](https://sleeptight.isr.uc.pt/) | 睡眠分期（5 类） | 6ch（对侧导联）/ 200Hz | 100 晚 | CBraMod↓ |
 
 ## 认知负荷
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **EEGMat**（NeuroLM 中称 Workload，CBraMod 中称 MentalArithmetic） | 高/低认知负荷 | 19ch / 500Hz | 36 被试（BrainGPT 报 34） | NeuroLM↓ BrainGPT↓ EEGMoE↑（预训练） CBraMod↓ |
-| **STEW** | 负荷（3 类） | 14ch / 128Hz | 45 被试 | BrainGPT↓ EEGMoE↓（LOSO） |
-| **SEED-VIG** | 警觉度回归（PERCLOS 标签） | 17ch / 200Hz | 23 被试 | CBraMod↓ |
+| [**EEGMat**](https://physionet.org/content/eegmat/1.0.0/)（NeuroLM 中称 Workload，CBraMod 中称 MentalArithmetic） | 高/低认知负荷 | 19ch / 500Hz | 36 被试（BrainGPT 报 34） | NeuroLM↓ BrainGPT↓ EEGMoE↑（预训练） CBraMod↓ |
+| [**STEW** 🔒](https://ieee-dataport.org/open-access/stew-simultaneous-task-eeg-workload-dataset) | 负荷（3 类） | 14ch / 128Hz | 48 采集（45 有标签） | BrainGPT↓ EEGMoE↓（LOSO） |
+| [**SEED-VIG** 🔒](https://bcmi.sjtu.edu.cn/home/seed/seed-vig.html) | 警觉度回归（PERCLOS 标签） | 17ch / 200Hz | 23 被试 | CBraMod↓ |
 
 ## ERP / P300 / SSVEP
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **Inria BCI** | P300 拼写 | 56ch / 600Hz | 26 被试 | LaBraM↑ NeuroLM↑ |
-| **Target vs Non-Target** | P300 oddball | 32ch / 512Hz | 50 被试 | LaBraM↑ NeuroLM↑ |
-| **PhysioP300** | P300 目标检测 | — | 9 被试 | EEGPT↓ |
-| **KaggleERN** | 错误相关负电位 ERN | 56ch | 26 被试 | EEGPT↓ |
-| **TSU** | SSVEP（40 目标） | 64ch / 250Hz | 35 被试 | EEGPT↑ |
-| **M3CV** | 多范式生物识别 | — | 106 被试 | EEGPT↑ |
+| [**Inria BCI** 🔒](https://www.kaggle.com/c/inria-bci-challenge) | P300 拼写 | 56ch / 600Hz | 26 被试 | LaBraM↑ NeuroLM↑ |
+| [**Target vs Non-Target**](https://zenodo.org/records/3266930)（bi2015a Brain Invaders，GIPSA-lab） | P300 oddball | 32ch / 512Hz | 50 被试 | LaBraM↑ NeuroLM↑ |
+| [**PhysioP300**](https://physionet.org/content/erpbci/1.0.0/) | P300 目标检测 | — | 10 采集（EEGPT 用 9） | EEGPT↓ |
+| [**KaggleERN** 🔒](https://www.kaggle.com/c/inria-bci-challenge/data)（即 Inria BCI 竞赛） | 错误相关负电位 ERN | 56ch | 26 被试 | EEGPT↓ |
+| [**TSU**](https://bci.med.tsinghua.edu.cn/download.html) | SSVEP（40 目标） | 64ch / 250Hz（原采 1000Hz） | 35 被试 | EEGPT↑ |
+| [**M3CV** 🔒](https://www.kaggle.com/competitions/eeg-biometric-competition) | 多范式生物识别 | — | 106 被试 | EEGPT↑ |
 
 ## 癫痫 / 精神诊断 / 想象语音
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **CHB-MIT** | 癫痫检测（2 类） | 16 双极导联 / 256Hz | 23 患者（儿科）/ 326,993 样本 | CBraMod↓ |
-| **Mumtaz2016** | 抑郁症诊断（2 类） | 19ch / 256Hz | 34 MDD + 30 正常 | CBraMod↓ |
-| **BCIC2020-3** | 想象语音（5 词） | 64ch / 256Hz | 15 被试 / 6,000 样本 | CBraMod↓ |
+| [**CHB-MIT**](https://physionet.org/content/chbmit/1.0.0/) | 癫痫检测（2 类） | 16 双极导联 / 256Hz | 23 患者（儿科）/ 326,993 样本 | CBraMod↓ |
+| [**Mumtaz2016**](https://figshare.com/articles/dataset/EEG_Data_New/4244171) | 抑郁症诊断（2 类） | 19ch / 256Hz | 34 MDD + 30 正常 | CBraMod↓ |
+| [**BCIC2020-3**](https://osf.io/pq7vb/) | 想象语音（5 词） | 64ch / 256Hz | 15 被试 / 6,000 样本 | CBraMod↓ |
 
 ## ECG / 可穿戴 / 跨模态 / 其他
 
 | 数据集 | 任务 | 配置 | 规模 | 使用情况 |
 |---|---|---|---|---|
-| **PTB-XL** | ECG 心律失常（二分类） | 12 导联 / 500Hz | 21,911 录音 | BIOT↓ |
-| **Cardiology（5 套合集）** | ECG | 6/12 导联 / 500Hz | 21,264 录音 | BIOT↑ |
-| **HAR** | 可穿戴 IMU 动作（6 类） | 9 坐标 / 50Hz | 30 被试 | BIOT↓ |
-| **MoBI** | 步态关节角回归 | 60ch / 100Hz | 8 被试 | LaBraM↓ |
-| **Raw EEG Data**（Trujillo 2020） | 信息整合分类 | 64ch / 256Hz | — | LaBraM↑ NeuroLM↑ |
-| **Resting State**（Trujillo 2017） | 静息态 | 64ch / 256Hz | 22 被试 | LaBraM↑ NeuroLM↑ |
-| **Siena Scalp** | 临床 EEG | 31ch / 512Hz | 14 患者 | LaBraM↑ NeuroLM↑ LUNA↑（预训练） |
-| **SPIS** | 静息+持续注意 | 64ch / 2048Hz | 10 被试 | LaBraM↑ NeuroLM↑ |
-| **Self-collected** | 混合任务 | 62ch / 1000Hz | 140+ 被试 | LaBraM↑ NeuroLM↑ |
-| **DREAMER** | 情绪（预训练未见） | — | 23 被试 | BrainGPT 迁移性验证 · EEGMoE↑（预训练） |
+| [**PTB-XL**](https://physionet.org/content/ptb-xl/1.0.3/) | ECG 心律失常（二分类） | 12 导联 / 500Hz | 21,911 录音 | BIOT↓ |
+| [**Cardiology（5 套合集）**](https://physionet.org/content/challenge-2021/1.0.0/) | ECG | 6/12 导联 / 500Hz | 21,264 录音 | BIOT↑ |
+| [**HAR**](https://archive.ics.uci.edu/dataset/341/smartphone+based+recognition+of+human+activities+and+postural+transitions) | 可穿戴 IMU 动作（6 类） | 9 坐标 / 50Hz | 30 被试 | BIOT↓ |
+| [**MoBI**](https://doi.org/10.6084/m9.figshare.c.3894013) | 步态关节角回归 | 60ch / 100Hz | 8 被试 | LaBraM↓ |
+| [**Raw EEG Data**](https://dataverse.tdl.org/dataset.xhtml?persistentId=doi:10.18738/T8/SS2NHB)（Trujillo 2020） | 信息整合分类 | 64ch / 256Hz | — | LaBraM↑ NeuroLM↑ |
+| [**Resting State**](https://dataverse.tdl.org/dataset.xhtml?persistentId=doi:10.18738/T8/EG0LJI)（Trujillo 2017） | 静息态 | 64ch / 256Hz | 22 被试 | LaBraM↑ NeuroLM↑ |
+| [**Siena Scalp**](https://physionet.org/content/siena-scalp-eeg/1.0.0/) | 临床 EEG | 31ch / 512Hz | 14 患者 | LaBraM↑ NeuroLM↑ LUNA↑（预训练） |
+| [**SPIS**](https://github.com/mastaneht/SPIS-Resting-State-Dataset)（子集开放，完整版联系作者） | 静息+持续注意 | 64ch / 2048Hz | 10 被试 | LaBraM↑ NeuroLM↑ |
+| **Self-collected**（自采，未公开） | 混合任务 | 62ch / 1000Hz | 140+ 被试 | LaBraM↑ NeuroLM↑ |
+| [**DREAMER**](https://zenodo.org/records/546113)（Zenodo 开放镜像） | 情绪（预训练未见） | — | 23 被试 | BrainGPT 迁移性验证 · EEGMoE↑（预训练） |
 | **合成 RF 波形** | RF 信号合成（6 无线技术 + TorchSig 调制） | — | ~12,000 场景 | RF-GPT↑（生成/指令语料，零人工标注） |
 
 ## 别名说明 {: #dataset-alias }
@@ -120,3 +120,5 @@ tags: [索引, 数据集]
 | SEED 系列 | SEED / SEED-IV / SEED-V / SEED-GER / SEED-FRA 的统称 |
 | EDF | Sleep-EDFx 数据库的子集（Kemp et al. 2000），BrainGPT 基准中称 EDF |
 | SEED 系列与 NeuroLM | NeuroLM 预训练的 "SEED Series" 指 SEED-IV/V/GER/FRA，不含原始 SEED（原始 SEED 对 NeuroLM 为下游） |
+| KaggleERN = Inria BCI Challenge | 同一 Kaggle 竞赛数据（NER 2015 P300，56ch / 26 被试），EEGPT 称 KaggleERN，LaBraM/NeuroLM 称 Inria BCI |
+| PhysioP300 = PhysioNet erpbci | EEGPT 官方仓库指明 PhysioP300 即 PhysioNet "ERP-based BCI recordings"（Citi et al. 6×6 speller） |
