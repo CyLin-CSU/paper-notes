@@ -1667,7 +1667,7 @@
 
 <h1 id="eeg-tokenization"><abbr title="脑电图 Electroencephalogram">EEG</abbr> Tokenization 演进<a class="headerlink" href="#eeg-tokenization" title="Permanent link">#</a></h1>
 <blockquote>
-<p>一条主线：<strong><abbr title="词元，模型处理的最小输入单元">token</abbr> 从"预处理产物" → "训练靶子" → "真正的模型输入"</strong>。</p>
+<p>一条主线：<strong><abbr title="词元，模型处理的最小输入单元">token</abbr> 从「预处理产物」→「训练靶子」→「真正的模型输入」</strong>。</p>
 </blockquote>
 <h2 id="_1">演进时间线<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <pre class="mermaid"><code>timeline
@@ -1722,7 +1722,7 @@
 <p>逐通道独立切段（1s 窗、0.5s 重叠），<abbr title="词元，模型处理的最小输入单元">token</abbr> embedding = FFT 能量 → FCN ⊕ 通道 embedding ⊕ 正弦位置编码。</p>
 <ul>
 <li>解决了：异构格式统一（缺通道直接丢 <abbr title="词元，模型处理的最小输入单元">token</abbr>）；</li>
-<li>没解决：<abbr title="词元，模型处理的最小输入单元">token</abbr> 是确定性切分的产物，没有数据驱动的词表，谈不上"语义单元"。</li>
+<li>没解决：<abbr title="词元，模型处理的最小输入单元">token</abbr> 是确定性切分的产物，没有数据驱动的词表，谈不上「语义单元」。</li>
 </ul>
 <h3 id="labram">第二步：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> —— "学词表但只当标签"<a class="headerlink" href="#labram" title="Permanent link">#</a></h3>
 <p><abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 式 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>（8192×64），重构目标用 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 幅值+相位（原始波形不收敛）。但 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>只在 masked <abbr title="脑电图 Electroencephalogram">EEG</abbr> modeling 里当预测目标</strong>，下游微调时 tokenizer 被丢弃，模型实际吃的仍是连续 patch embedding。</p>
@@ -1732,7 +1732,7 @@
 <h3 id="neurolm-tfm-token">第三步：NeuroLM / TFM —— "<abbr title="词元，模型处理的最小输入单元">token</abbr> 真正上岗"<a class="headerlink" href="#neurolm-tfm-token" title="Permanent link">#</a></h3>
 <p>两条不同的上岗方式：</p>
 <ul>
-<li><strong>NeuroLM</strong>：把 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 索引<strong>并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表</strong>，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成"外语句子"喂给 <abbr title="大语言模型 Large Language Model">LLM</abbr>，靠 <abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 对抗对齐文本空间 → 通向多任务指令推理；</li>
+<li><strong>NeuroLM</strong>：把 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 索引<strong>并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表</strong>，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成「外语句子」喂给 <abbr title="大语言模型 Large Language Model">LLM</abbr>，靠 <abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 对抗对齐文本空间 → 通向多任务指令推理；</li>
 <li><strong>TFM</strong>：<abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 查表（码字初始化）作为轻量 Transformer 的<strong>输入</strong>，且作为即插即用组件替换 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的输入端 → 通向通用 tokenization 层。</li>
 </ul>
 <h2 id="_3">关键技术分歧<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
@@ -1769,7 +1769,7 @@
 </tbody>
 </table>
 <h3 id="_4">位置编码的争论<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
-<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 用正弦相对位置编码，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用可学习时/空 embedding，<strong>TFM 在 tokenizer 内刻意去掉位置编码</strong>（消融：Kappa 0.5119→0.5337，<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率 12.87%→9.78%<sup id="fnref:pe"><a class="footnote-ref" href="#fn:pe">1</a></sup>。</p>
+<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 用正弦相对位置编码，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用可学习时/空 embedding，<strong>TFM 在 tokenizer 内刻意去掉位置编码</strong>（消融：Kappa 0.5119→0.5337，<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率 12.87%→9.78%<sup id="fnref:pe"><a class="footnote-ref" href="#fn:pe">1</a></sup>）。</p>
 <p>理由：<abbr title="脑电图 Electroencephalogram">EEG</abbr> motif 非平稳，同一模式可出现在任意位置；加 <abbr title="位置编码 Positional Encoding">PE</abbr> 会让相同 motif 在不同位置学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr> → 词表冗余。motif 词表需要的是<strong>平移不变性</strong>。</p>
 <p>（注意区分：TFM 的下游 Transformer 仍加位置/通道 embedding，去掉的只是 tokenizer 内部的 <abbr title="位置编码 Positional Encoding">PE</abbr>。）</p>
 <h2 id="_5">遗留问题<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>

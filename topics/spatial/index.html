@@ -1555,7 +1555,7 @@
 
 <h1 id="_1">通道异构的四种解法<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 换一台设备就是另一套电极布局——通道适配能力直接决定基础模型能不能"跨设备"。六篇论文给出四种代表性方案。</p>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 换一台设备就是另一套电极布局——通道适配能力直接决定基础模型能不能「跨设备」。六篇论文给出四种代表性方案。</p>
 </blockquote>
 <h2 id="_2">四种方案对比<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">① 通道 embedding 表 · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></label><label for="__tabbed_1_2">② 10-20 系统空间编码 · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM</label><label for="__tabbed_1_3">③ 单通道独立建模 · TFM / BrainGPT（电极级）</label><label for="__tabbed_1_4">④ 图结构整合 · BrainGPT（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）</label></div>
@@ -1588,12 +1588,12 @@
 <li><strong>BrainGPT</strong> 在下游用 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>（任务共享电极图）补回空间：每条电极序列末尾接可学习 <abbr title="词元，模型处理的最小输入单元">token</abbr> 聚合出电极表示，再注入全电极图做 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 注意力（子图激活 + mask）；</li>
 <li><strong>TFM</strong> 在下游把各通道 <abbr title="词元，模型处理的最小输入单元">token</abbr> 展平后加通道/位置 embedding 过注意力。</li>
 </ul>
-<p>这构成一个共同范式：<strong>"单通道学时间 + 下游学空间"的渐进式时空解耦</strong>（BrainGPT 的官方说法）。</p>
+<p>这构成一个共同范式：<strong>「单通道学时间 + 下游学空间」的渐进式时空解耦</strong>（BrainGPT 的官方说法）。</p>
 <h2 id="teg"><abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 的多任务共享机制（易误解点）<a class="headerlink" href="#teg" title="Permanent link">#</a></h2>
-<p>图本身不存储任务信息——<strong>多任务信息来自"共享参数被多个任务的梯度共同更新"</strong>：</p>
+<p>图本身不存储任务信息——<strong>多任务信息来自「共享参数被多个任务的梯度共同更新」</strong>：</p>
 <ul>
-<li>节点向量 h_m = <strong>V_m（可学习电极原型）</strong> + z_j（样本内容）；</li>
-<li>joint 训练时，同一电极 V_m 同时接收所有涉及该电极的任务的梯度 → V_m 成为跨任务的电极记忆；</li>
+<li>节点向量 <span class="arithmatex">\( h_m \)</span> = <strong><span class="arithmatex">\( V_m \)</span>（可学习电极原型）</strong> + <span class="arithmatex">\( z_j \)</span>（样本内容）；</li>
+<li>joint 训练时，同一电极 <span class="arithmatex">\( V_m \)</span> 同时接收所有涉及该电极的任务的梯度 → <span class="arithmatex">\( V_m \)</span> 成为跨任务的电极记忆；</li>
 <li>推理时任务区分靠：输入电极集决定激活哪个子图（β mask）+ 任务专属 head；</li>
 <li>论文证据：joint 训练全面优于 separate，数据量最小的任务受益最大（MW 仅 4K 样本 +3.9%，SS 42K 样本 +0.9%）——共享节点相当于小任务的隐式数据增强。</li>
 </ul>

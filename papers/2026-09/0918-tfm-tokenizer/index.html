@@ -1657,13 +1657,13 @@
 <p>TFM-Tokenizer (ICLR 2026)</p>
 <p><strong>作者</strong>：Jathurshan Pradeepkumar, Xihao Piao, Zheng Chen, Jimeng Sun（UIUC / 大阪大学 SANKEN）</p>
 <h4 id="61">6.1 问题定位<a class="headerlink" href="#61" title="Permanent link">#</a></h4>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> tokenization 是被忽视的关键问题。对现有方法的批评：① 多数基础模型只是把连续信号规则切段（"仅仅离散化"，没有学词表）；② <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 虽学了 <abbr title="向量量化 Vector Quantization">VQ</abbr> tokenizer，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>只作为训练目标、推理时被丢弃</strong>，基础模型仍然吃连续段级 embedding——没享受 tokenization 的红利。TFM-Tokenizer 要学一个<strong>时频 motif 词表</strong>，并把离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>真正作为下游模型输入</strong>。</p>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> tokenization 是被忽视的关键问题。对现有方法的批评：① 多数基础模型只是把连续信号规则切段（「仅仅离散化」，没有学词表）；② <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 虽学了 <abbr title="向量量化 Vector Quantization">VQ</abbr> tokenizer，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>只作为训练目标、推理时被丢弃</strong>，基础模型仍然吃连续段级 embedding——没享受 tokenization 的红利。TFM-Tokenizer 要学一个<strong>时频 motif 词表</strong>，并把离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> <strong>真正作为下游模型输入</strong>。</p>
 <p>三大设计原则：① <strong>单通道级</strong>训练（channel-agnostic，跨设备泛化）；② <strong>Token 分辨率</strong>应捕捉 motif（短时、重复、有判别意义的时频波形模式，如振荡爆发、棘波）；③ 学习目标应<strong>显式包含时频表示</strong>（纯时域 motif 会被低频主导、丢失高频信息）。</p>
 <h4 id="62">6.2 方法<a class="headerlink" href="#62" title="Permanent link">#</a></h4>
 <p><strong>（a）TFM-Tokenizer（单通道 motif 学习，双路径）</strong></p>
 <ul>
 <li>输入：单通道 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，切重叠 patch（窗长 L、hop H），每 patch 对应一个 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 频谱窗口 <code>S_i</code>（窗长 200 点=1s，hop 100=0.5s，Hann 窗，只取幅值）；</li>
-<li><strong>频域路径——Localized Spectral Window Encoder</strong>（相比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>"整窗过一个线性层"的改进）：</li>
+<li><strong>频域路径——Localized Spectral Window Encoder</strong>（相比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>「整窗过一个线性层」的改进）：</li>
 <li><strong>Frequency Patch Encoder</strong>：每个频谱窗沿频率轴切成 P 个不重叠 patch（每 patch 覆盖 Δf 个频点），线性投影 + GroupNorm + GeLU；</li>
 <li><strong>Frequency Transformer</strong>：沿频率轴做注意力，建模<strong>窗内跨频段依赖</strong>；</li>
 <li><strong>Gated Patchwise Aggregation</strong>：sigmoid 门控聚合（强调重要频段、抑制无关频段，如睡眠任务只关心 &lt;32Hz）；</li>
@@ -1690,8 +1690,8 @@
 </ul>
 <h4 id="63">6.3 创新点<a class="headerlink" href="#63" title="Permanent link">#</a></h4>
 <ol>
-<li><strong>首次系统研究 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的"可学习词表"问题，且 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为真正的输入</strong>（与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>"一次性标签"形成对照）；</li>
-<li><strong>时频 motif 作为离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>：双路径显式建模时频结构（频域路径窗内跨频段依赖 + 门控聚合），<abbr title="词元，模型处理的最小输入单元">token</abbr> 具有生理可解释性（如 <abbr title="词元，模型处理的最小输入单元">token</abbr> 4035 稳定对应 PLED 的"棘波-慢波"周期模式）；</li>
+<li><strong>首次系统研究 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的「可学习词表」问题，且 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为真正的输入</strong>（与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>「一次性标签」形成对照）；</li>
+<li><strong>时频 motif 作为离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>：双路径显式建模时频结构（频域路径窗内跨频段依赖 + 门控聚合），<abbr title="词元，模型处理的最小输入单元">token</abbr> 具有生理可解释性（如 <abbr title="词元，模型处理的最小输入单元">token</abbr> 4035 稳定对应 PLED 的「棘波-慢波」周期模式）；</li>
 <li><strong>单通道、channel-agnostic</strong>：不依赖 10-20 系统，可迁移到 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 等非标准设备（EEGPT 的固定空间 embedding 则无法扩展到该场景）；</li>
 <li><strong>去掉位置编码</strong>的 tokenizer 设计（有消融和理论论证）；</li>
 <li><strong>模型极小</strong>：tokenizer ~1.2M + 下游 ~0.7M ≈ 1.9M，比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（3.2M）、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（5.8M+8.6M）小，性能反而更好；</li>

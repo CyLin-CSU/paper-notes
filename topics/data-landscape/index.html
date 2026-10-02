@@ -1695,7 +1695,7 @@
 </table>
 <h2 id="_3">关键观察<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <h3 id="1">1. 规模 ≠ 通用性，构成决定迁移半径<a class="headerlink" href="#1" title="Permanent link">#</a></h3>
-<p>BrainGPT 的发现最有说服力：以癫痫临床数据为主的预训练模型，在情绪/运动想象等非临床下游上<strong>反而不如从头训练</strong>——域差异吞掉了预训练收益。EEGPT 用小而均衡的语料 + linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，是"构成比规模重要"的另一佐证。</p>
+<p>BrainGPT 的发现最有说服力：以癫痫临床数据为主的预训练模型，在情绪/运动想象等非临床下游上<strong>反而不如从头训练</strong>——域差异吞掉了预训练收益。EEGPT 用小而均衡的语料 + linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，是「构成比规模重要」的另一佐证。</p>
 <h3 id="2">2. 临床数据是规模的主力，也是偏斜的来源<a class="headerlink" href="#2" title="Permanent link">#</a></h3>
 <p>TUEG 体系（Temple 大学）是唯一能拿到万小时级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的公开来源，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 和 NeuroLM 都重度依赖它。这解释了为什么<strong>脑机接口类任务（<abbr title="运动想象 Motor Imagery">MI</abbr>/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr>）的 pretrain-then-finetune 收益普遍不如临床任务</strong>。</p>
 <h3 id="3">3. 数据需求量与模型规模的关系<a class="headerlink" href="#3" title="Permanent link">#</a></h3>

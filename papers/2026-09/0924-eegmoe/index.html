@@ -1722,9 +1722,9 @@
 </ul>
 </div>
 <h2 id="1">1 问题定位：统一格式 ≠ 学好表征<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
-<p>任务专用 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型（DEAP 上调好的情绪模型换到 <abbr title="运动想象 Motor Imagery">MI</abbr> 就失效）泛化受限，这已是共识；近年的回应是大规模自监督预训练——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、DMAE-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 等把不同数据集<strong>统一成同一格式</strong>喂给一个模型。EEGMoE 对这条路线的批评是：<strong>统一格式只处理了"怎么喂"，没处理"喂进去之后域与域打架"的问题</strong>。</p>
+<p>任务专用 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型（DEAP 上调好的情绪模型换到 <abbr title="运动想象 Motor Imagery">MI</abbr> 就失效）泛化受限，这已是共识；近年的回应是大规模自监督预训练——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、DMAE-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 等把不同数据集<strong>统一成同一格式</strong>喂给一个模型。EEGMoE 对这条路线的批评是：<strong>统一格式只处理了「怎么喂」，没处理「喂进去之后域与域打架」的问题</strong>。</p>
 <p>论文的实证很直观（Fig. 1）：在经典 Transformer 上对 DEAP（ER）、BCIC4-2a（<abbr title="运动想象 Motor Imagery">MI</abbr>）、STEW（MWL）三个任务交替做自监督预训练，把每步梯度更新方向投影到 2-D 参数空间——ER 把参数往右下拉、<abbr title="运动想象 Motor Imagery">MI</abbr> 往左上拉、MWL 往右上拉。<strong>异质域的梯度冲突是真实存在的</strong>，而同质参数硬吃异构数据的后果是域特定细节被抹掉。</p>
-<p>对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 里已有的 MoE 工作，论文的批评分三类：IDMMOE、Seizure-MoE 用<strong>全部专家加权求和</strong>（丧失 MoE"选择性激活"的核心优势）；MoGE 是单任务有监督特征提取器；EEGMamba 虽有 MoE 但靠<strong>任务 <abbr title="词元，模型处理的最小输入单元">token</abbr> 引导专家选择</strong>、面向有监督多任务兼容，而非自监督的细粒度域解耦。EEGMoE 自称是<strong>首个用 MoE 做解耦式 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征学习</strong>的工作。</p>
+<p>对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 里已有的 MoE 工作，论文的批评分三类：IDMMOE、Seizure-MoE 用<strong>全部专家加权求和</strong>（丧失 MoE「选择性激活」的核心优势）；MoGE 是单任务有监督特征提取器；EEGMamba 虽有 MoE 但靠<strong>任务 <abbr title="词元，模型处理的最小输入单元">token</abbr> 引导专家选择</strong>、面向有监督多任务兼容，而非自监督的细粒度域解耦。EEGMoE 自称是<strong>首个用 MoE 做解耦式 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征学习</strong>的工作。</p>
 <h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <h3 id="21-4-d">2.1 数据预处理：4-D 脑地图输入<a class="headerlink" href="#21-4-d" title="Permanent link">#</a></h3>
 <p>原始信号切 Ts 秒不重叠片段 → 每段分解为 <strong>5 个频带</strong>（δ 1–4Hz、θ 4–8Hz、α 8–14Hz、β 14–31Hz、γ 31–45Hz）→ 每个频带按电极的头皮位置摆成 <strong>2-D 脑地图</strong>（高斯平滑/z-score 消除突变）→ 沿频带堆成 3-D → 按时间堆成 4-D：X ∈ R^{(T×Sr)×B×H×W}。一个空间与频率编码器（两层 MLP，隐藏 64→128）沿通道和频带维度聚合，得到 embedding Z。注意这一步顺带解决了<strong>跨数据集 montage 不一致</strong>——所有数据集都被映射到统一的 2-D 电极网格上。</p>
@@ -1767,7 +1767,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>注意预训练总量只有约 142 小时</strong>——"large-scale" 在这里是相对这 9 个小数据集而言，与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 2500h 不是一回事。</p>
+<p><strong>注意预训练总量只有约 142 小时</strong>——「large-scale」在这里是相对这 9 个小数据集而言，与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 2500h 不是一回事。</p>
 <h2 id="4">4 结果<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -1811,13 +1811,13 @@
 <ul>
 <li><strong>预训练有效</strong>：从零训练 59.25 vs 继承预训练 60.62；</li>
 <li><strong>两组专家都不可少</strong>（总专家数固定为 4 排除参数量干扰）：去掉 Specific 组 59.73、去掉 Shared 组 58.18、默认 Top-K 2 + Shared 2 为 60.62；</li>
-<li><strong>SSMoE 架构本身有效</strong>：与"激活参数等价"模型（0.89M，59.73）和"总参数等价"模型（1.68M，58.91）比，EEGMoE（总 1.68M/激活 0.89M，60.62）以相当或更低的计算量胜出——收益来自域解耦而非参数量；</li>
+<li><strong>SSMoE 架构本身有效</strong>：与「激活参数等价」模型（0.89M，59.73）和「总参数等价」模型（1.68M，58.91）比，EEGMoE（总 1.68M/激活 0.89M，60.62）以相当或更低的计算量胜出——收益来自域解耦而非参数量；</li>
 <li><strong>专家数量</strong>：候选 6 / Top-K 2 / Shared 2 最优；Top-K=2 即够（每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 组合少数域专家即可），Shared 多于 1 个普遍有益；</li>
 <li><strong>预训练目标很鲁棒</strong>：L1（60.62）&gt; 相对定位对比 RP（60.10）&gt; L2（59.66）&gt; 时序打乱 TS（59.33）&gt; Cosine（58.33），差异不大——说明收益来自架构对多种预训练范式的兼容性；</li>
 <li><strong>融合方式</strong>：简单相加（60.62）&gt; 注意力融合（57.15）&gt; 门控融合（56.46）——复杂融合反而有害；</li>
 <li><strong>掩码率</strong>：0.4 最优，0.2→0.8 呈倒 U 型（太低训练不足，太高重构太难）。</li>
 </ul>
-<p><strong>可视化（最有说服力的证据）</strong>：Fig. 5 显示 ER 偏好激活专家 1/3/5、<abbr title="运动想象 Motor Imagery">MI</abbr> 偏好 1/4/6（少用 3/5）、MWL 偏好专家 2（少用 1）；Fig. 6 反向看每个专家的"业务构成"——专家 1/3/5 主要处理 ER、专家 2/4 主要处理 MWL、专家 6 主要处理 <abbr title="运动想象 Motor Imagery">MI</abbr>。两个视角互相印证：<strong>路由真的把任务分配给了不同的专家</strong>。</p>
+<p><strong>可视化（最有说服力的证据）</strong>：Fig. 5 显示 ER 偏好激活专家 1/3/5、<abbr title="运动想象 Motor Imagery">MI</abbr> 偏好 1/4/6（少用 3/5）、MWL 偏好专家 2（少用 1）；Fig. 6 反向看每个专家的「业务构成」——专家 1/3/5 主要处理 ER、专家 2/4 主要处理 MWL、专家 6 主要处理 <abbr title="运动想象 Motor Imagery">MI</abbr>。两个视角互相印证：<strong>路由真的把任务分配给了不同的专家</strong>。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/eegmoe-arch.png" data-desc-position="bottom"><img alt="Figure 2 · EEGMoE 总体架构：4-D 预处理 → 空间/频率编码器 → 域解耦编码器（MHSA + SSMoE 块：Top-K Specific 专家组 + Soft Shared 专家组）" src="../../../assets/eegmoe-arch.png"></a></p>
 <p><em>Figure 2 · SSMoE 块细节：Specific Router 按 <abbr title="词元，模型处理的最小输入单元">token</abbr> 选 Top-K=2 个特定专家，Shared Router 让 2 个共享专家对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 全程参与</em></p>
@@ -1843,7 +1843,7 @@
 <tbody>
 <tr>
 <td>LUNA（本站同期笔记）</td>
-<td><strong>哲学相反的姊妹篇</strong>：EEGMoE 把域差异当"信号"解耦保留（MoE 分工），LUNA 把拓扑差异当"噪声"统一抹平（query 瓶颈）；且一个作用于任务/数据集轴，一个作用于电极几何轴</td>
+<td><strong>哲学相反的姊妹篇</strong>：EEGMoE 把域差异当「信号」解耦保留（MoE 分工），LUNA 把拓扑差异当「噪声」统一抹平（query 瓶颈）；且一个作用于任务/数据集轴，一个作用于电极几何轴</td>
 </tr>
 <tr>
 <td>EEGMamba</td>
@@ -1859,30 +1859,30 @@
 </tr>
 <tr>
 <td>NeuroLM</td>
-<td>同为"多任务统一"但路线不同：NeuroLM 把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的外语用指令微调；EEGMoE 在表征层用专家分工</td>
+<td>同为「多任务统一」但路线不同：NeuroLM 把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的外语用指令微调；EEGMoE 在表征层用专家分工</td>
 </tr>
 <tr>
 <td><a href="../../../topics/spatial/">通道异构专题</a></td>
-<td>本篇是"第五种解法"：不统一格式（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）、不绑定拓扑（EEGPT）、也不抹平（LUNA），而是<strong>解耦路由</strong></td>
+<td>本篇是「第五种解法」：不统一格式（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）、不绑定拓扑（EEGPT）、也不抹平（LUNA），而是<strong>解耦路由</strong></td>
 </tr>
 </tbody>
 </table>
 <h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>参数量是最好的清醒剂</strong>：1.68M 总参数/0.89M 激活——MoE 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的价值压根不在 scale（那是 NLP 千亿参数的游戏），而在<strong>用条件计算管理异构性</strong>。这也解释了为什么 total-equivalent 模型（1.68M 稠密）反而比 EEGMoE 差：同样的参数量，解耦路由的"分工先验"本身就是收益；</li>
-<li><strong>"large-scale" 这个词要打折看</strong>：预训练语料约 142 小时、9 个数据集全是小样本认知任务数据集。这更像一次严肃的多域联合训练研究，而非 NeurIPS 意义上的基础模型工作——它的可扩展性（换更多域、更多数据）恰恰是 MoE 路线的理论优势，但论文没验证；</li>
-<li><strong>4-D 脑地图输入是个隐藏的大决定</strong>：把波形离散化到 2D 电极网格 + 5 频带，等于放弃原始波形的相位/形态细节（对比 JET/TFM 的 raw/时频路线），换来的是<strong>任何 montage 都能摆进同一张网格</strong>。这个取舍和 LUNA 的 query 统一异曲同工——都是"牺牲信号细节换拓扑统一"，只是实现位置不同（输入端 vs 编码器内）；</li>
+<li><strong>参数量是最好的清醒剂</strong>：1.68M 总参数/0.89M 激活——MoE 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的价值压根不在 scale（那是 NLP 千亿参数的游戏），而在<strong>用条件计算管理异构性</strong>。这也解释了为什么 total-equivalent 模型（1.68M 稠密）反而比 EEGMoE 差：同样的参数量，解耦路由的「分工先验」本身就是收益；</li>
+<li><strong>「large-scale」这个词要打折看</strong>：预训练语料约 142 小时、9 个数据集全是小样本认知任务数据集。这更像一次严肃的多域联合训练研究，而非 NeurIPS 意义上的基础模型工作——它的可扩展性（换更多域、更多数据）恰恰是 MoE 路线的理论优势，但论文没验证；</li>
+<li><strong>4-D 脑地图输入是个隐藏的大决定</strong>：把波形离散化到 2D 电极网格 + 5 频带，等于放弃原始波形的相位/形态细节（对比 JET/TFM 的 raw/时频路线），换来的是<strong>任何 montage 都能摆进同一张网格</strong>。这个取舍和 LUNA 的 query 统一异曲同工——都是「牺牲信号细节换拓扑统一」，只是实现位置不同（输入端 vs 编码器内）；</li>
 <li><strong>掩码的是 embedding 而非原始信号</strong>：预训练目标是重构空间/频率编码器输出的 embedding，不是重建波形。这与 CBraMod（重构 raw patch）形成对比——重构 embedding 更容易（信息已压缩），但学到的动态也受限于编码器的表达能力；</li>
-<li><strong>DEAP 上 STD 高达 7–11 个百分点</strong>（LOSO 逐被试波动大），和基线同量级——跨被试方差这个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 老大难并没有被 MoE 化解，域解耦按数据集/任务分工，但"被试内差异"这层域没有被显式建模。IDMMOE 按被试分配子空间的思路其实可以叠上来。</li>
+<li><strong>DEAP 上 STD 高达 7–11 个百分点</strong>（LOSO 逐被试波动大），和基线同量级——跨被试方差这个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 老大难并没有被 MoE 化解，域解耦按数据集/任务分工，但「被试内差异」这层域没有被显式建模。IDMMOE 按被试分配子空间的思路其实可以叠上来。</li>
 </ul>
 <h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <details class="question">
 <summary>Q1 · 为什么 Top-K 路由对应「域特定」、软路由对应「域共享」？这个对应关系是设计出来的还是学出来的？</summary>
-<p>是结构性设计：Top-K 让每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只见少数专家——不同域的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 自然聚到不同专家组合，形成分工（可视化证实）；软路由强制所有专家对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 负责——任何单个专家都必须学到跨域共性，否则在自己不见的域上掉链子。但注意：<strong>哪个专家管哪个域是学出来的</strong>，设计只保证"存在分工的机制"。</p>
+<p>是结构性设计：Top-K 让每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只见少数专家——不同域的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 自然聚到不同专家组合，形成分工（可视化证实）；软路由强制所有专家对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 负责——任何单个专家都必须学到跨域共性，否则在自己不见的域上掉链子。但注意：<strong>哪个专家管哪个域是学出来的</strong>，设计只保证「存在分工的机制」。</p>
 </details>
 <details class="question">
 <summary>Q2 · 为什么相加融合反而比门控/注意力融合好？</summary>
-<p>论文没有给机理证明，只给结果（60.62 vs 57.15/56.46）。一个合理猜测：门控和注意力融合引入了额外的可学习参数来决定"特性和共性怎么混合"，而混合权重本身也要在多域数据上训练——小数据下这些额外自由度更容易学到域偏置；相加把混合问题留给下游微调的注意力层，预训练阶段保持解耦的纯粹性。</p>
+<p>论文没有给机理证明，只给结果（60.62 vs 57.15/56.46）。一个合理猜测：门控和注意力融合引入了额外的可学习参数来决定「特性和共性怎么混合」，而混合权重本身也要在多域数据上训练——小数据下这些额外自由度更容易学到域偏置；相加把混合问题留给下游微调的注意力层，预训练阶段保持解耦的纯粹性。</p>
 </details>
 <details class="question">
 <summary>Q3 · 预训练只有约 142 小时，凭什么和 2500 小时的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 比？</summary>
@@ -1890,12 +1890,12 @@
 </details>
 <details class="question">
 <summary>Q4 · 这套 MoE 思路对生成式模型（如 JET）适用吗？</summary>
-<p>论文只做了判别式验证，但机制上可迁移：生成模型同样面临"不同病理模式的动态特性冲突"（发作 vs 背景 vs 睡眠纺锤波的频谱结构差异极大）。把 SSMoE 放进去噪/流匹配骨干的 FFN 位置，让不同专家分管不同信号模式、共享专家管普适动态，是顺理成章的延伸——目前站内已读的生成工作（JET/<abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN）都没做这一步。</p>
+<p>论文只做了判别式验证，但机制上可迁移：生成模型同样面临「不同病理模式的动态特性冲突」（发作 vs 背景 vs 睡眠纺锤波的频谱结构差异极大）。把 SSMoE 放进去噪/流匹配骨干的 FFN 位置，让不同专家分管不同信号模式、共享专家管普适动态，是顺理成章的延伸——目前站内已读的生成工作（JET/<abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN）都没做这一步。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>
-<li><strong>代码</strong>：论文声明 "code and model will be released"，精读时未见公开仓库链接</li>
+<li><strong>代码</strong>：论文声明「code and model will be released」，精读时未见公开仓库链接</li>
 <li><strong>模型</strong>：空间/频率编码器 MLP hidden 64→128；域解耦编码器 hidden 512、注意力头 4、Top-K 2、Shared 专家 2、掩码率 0.4；总参数 1.68M / 激活 0.89M</li>
 <li><strong>训练</strong>：AdamW；预训练 lr 1e-4、5 epoch、warmup 0.05、batch 64、负载均衡权重 1e-4；微调 lr 1e-3、batch 128、DEAP 35 / BCIC4-2a 50 / STEW 15 epoch；线性分类头 + 交叉熵</li>
 <li><strong>数据</strong>：预训练 6 数据集约 142h；微调 DEAP / BCIC4-2a / STEW，LOSO 交叉验证；4-D 输入（时间 × 5 频带 × 9×9 脑地图）</li>

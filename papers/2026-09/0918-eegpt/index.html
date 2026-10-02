@@ -1669,11 +1669,11 @@
 <p><strong>双自监督预训练</strong></p>
 <ol>
 <li><strong>掩码方式（与 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 相反的关键设计）</strong>：mask 掉 50% 时间 × 80% 通道的 patch，<strong>encoder 处理的恰恰是被 mask 的稀疏部分</strong>，且每个时间步追加 S 个可学习 <strong>summary <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>（类似 [CLS]）聚合信息；</li>
-<li><strong>时空表示对齐（JEPA 风格，损失 L_A）</strong>：</li>
+<li><strong>时空表示对齐（JEPA 风格，损失 <span class="arithmatex">\( L_A \)</span>）</strong>：</li>
 <li><strong>Momentum encoder</strong>（与 encoder 同构，EMA 动量 m=0.01）处理<strong>全部</strong> <abbr title="词元，模型处理的最小输入单元">token</abbr>（masked ∪ unmasked），作为预测目标 <code>menc_j</code>；</li>
 <li><strong>Predictor</strong>：拿 encoder 在 masked 部分的特征 + RoPE 旋转位置编码 + 可学习 query <abbr title="词元，模型处理的最小输入单元">token</abbr>，预测<strong>全部时间段</strong>的特征 <code>pred_j</code>；</li>
 <li>对齐损失：<span class="arithmatex">\( \mathcal{L}_A = -\tfrac{1}{N} \sum_{j=1}^{N} \left\| \mathrm{pred}_j,\ \mathrm{LN}(\mathrm{menc}_j) \right\|_2^2 \)</span>（LayerNorm 稳定训练）；</li>
-<li><strong>掩码重构（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 风格，损失 L_R）</strong>：</li>
+<li><strong>掩码重构（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 风格，损失 <span class="arithmatex">\( L_R \)</span>）</strong>：</li>
 <li><strong>Reconstructor</strong>：encoder 特征（masked 部分）+ predictor 特征 + 位置信息 → 重构被 mask 部分的原始 patch；encoder→reconstructor 之间有 <strong>skip connection</strong>（保持特征、加速收敛）；</li>
 <li>重构损失：<span class="arithmatex">\( \mathcal{L}_R = -\tfrac{1}{|\mathcal{M}|} \sum_{(i,j) \in \mathcal{M}} \left\| \mathrm{rec}_{i,j},\ \mathrm{LN}(p_{i,j}) \right\|_2^2 \)</span>（目标也做 LayerNorm）；</li>
 <li>总损失 <span class="arithmatex">\( \mathcal{L} = \mathcal{L}_A + \mathcal{L}_R \)</span>。</li>
@@ -1708,7 +1708,7 @@
 <li>预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；</li>
 <li>下游：BCIC-2A/2B（运动想象）、Sleep-EDFx（睡眠分期）、KaggleERN、PhysioP300（<abbr title="事件相关电位 Event-Related Potential">ERP</abbr>）、TUAB、TUEV；</li>
 <li>结果：TUEV 上比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 提升 9.5% balanced acc；与 BENDR/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 对比在多个任务领先（其中仅 BENDR 为全量微调，<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 同样采用线性探针协议）；</li>
-<li>消融：去掉对齐损失 L_A 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary <abbr title="词元，模型处理的最小输入单元">token</abbr> 数量 S=4 较优。</li>
+<li>消融：去掉对齐损失 <span class="arithmatex">\( L_A \)</span> 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary <abbr title="词元，模型处理的最小输入单元">token</abbr> 数量 S=4 较优。</li>
 </ul>
 <hr>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
@@ -1720,7 +1720,7 @@
 <ul>
 <li>~10M 参数（8 个变体 0.4M–101M）；下游只用 linear probing 即达 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr></li>
 <li>TUEV balanced acc 0.6232，比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（0.5281）高 9.5%</li>
-<li>双自监督：表示对齐（L_A，JEPA 式）+ 掩码重构（L_R，<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）；掩码 50% 时间 × 80% 通道</li>
+<li>双自监督：表示对齐（<span class="arithmatex">\( L_A \)</span>，JEPA 式）+ 掩码重构（<span class="arithmatex">\( L_R \)</span>，<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）；掩码 50% 时间 × 80% 通道</li>
 </ul>
 </div>
 <h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
@@ -1749,7 +1749,7 @@
 <h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
 <li>把 linear probing 当评估协议本身就是贡献：冻结 encoder 后性能完全归因于表示质量，排除了微调技巧的干扰。</li>
-<li>'encoder 看被 mask 的稀疏部分、momentum encoder 看全量'的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。</li>
+<li>「encoder 看被 mask 的稀疏部分、momentum encoder 看全量」的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。</li>
 <li>附录证明去掉 predictor 会表示坍塌（重构 loss 不再下降）——对齐分支必须保留 query/位置等余量，防止模型走捷径。</li>
 </ul>
 <h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>

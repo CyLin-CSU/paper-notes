@@ -1633,7 +1633,7 @@
 
 <h1 id="_1">多任务三条路线<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>"一个模型能不能同时干多种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 任务？"——六篇论文给出了三种答案，外加传统基线。</p>
+<p>「一个模型能不能同时干多种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 任务？」——六篇论文给出了三种答案，外加传统基线。</p>
 </blockquote>
 <h2 id="_2">路线总览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <pre class="mermaid"><code>flowchart LR
@@ -1702,7 +1702,7 @@
 <h3 id="braingpt-teg">BrainGPT 的 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>：为什么联合训练能双赢<a class="headerlink" href="#braingpt-teg" title="Permanent link">#</a></h3>
 <p>任务 A 和任务 B 的电极集重叠部分（如 C4），其<strong>节点向量被两个任务的梯度共同更新</strong>——相当于大任务给小任务做数据增强。论文证据：MW（仅 4K 样本）在联合训练中 +3.9%，SS（42K 样本）只 +0.9%——<strong>小任务受益与数据量成反比</strong>。</p>
 <h3 id="neurolm">NeuroLM 的指令微调：为什么要把任务变成问答<a class="headerlink" href="#neurolm" title="Permanent link">#</a></h3>
-<p>把"6 类事件分类"变成 <code>[SEP] Question: Which event type...? Answer: {(A)...(F)}</code>，任务差异就被压进了<strong>文本 prompt</strong> 而非模型结构。配套设计：只对答案部分算损失（稳定）、混入纯文本防遗忘、评测取 argmax 而非 beam search。消融显示模型对选项乱序鲁棒（TUEV/HMC），说明真的理解了问题语义而非背选项位置。</p>
+<p>把「6 类事件分类」变成 <code>[SEP] Question: Which event type...? Answer: {(A)...(F)}</code>，任务差异就被压进了<strong>文本 prompt</strong> 而非模型结构。配套设计：只对答案部分算损失（稳定）、混入纯文本防遗忘、评测取 argmax 而非 beam search。消融显示模型对选项乱序鲁棒（TUEV/HMC），说明真的理解了问题语义而非背选项位置。</p>
 <h3 id="_5">性能差距从哪来<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
 <p>NeuroLM 坦言多任务版本仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（如 TUAB 0.7969 vs 0.8258）。三个原因：① 任务间梯度干扰；② 文本对齐是粗粒度的空间级（无 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-text 成对数据）；③ <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 基座偏小且老。<strong>多任务的价值在范式与效率，不在当下数字</strong>。</p>
 <h2 id="_6">与传统多任务学习的对比<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>

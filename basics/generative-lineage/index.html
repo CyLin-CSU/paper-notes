@@ -1708,21 +1708,21 @@
 
 <h1 id="vae-ddpm-flow-matching">生成模型三代脉络：VAE → DDPM → Flow Matching<a class="headerlink" href="#vae-ddpm-flow-matching" title="Permanent link">#</a></h1>
 <blockquote>
-<p>「模型架构基础」第三篇。<strong>本文结构刻意做成"思维链优先"</strong>：第 1 节用大白话把三代的核心思想与演进逻辑一次讲完——看懂第 1 节就拿到了整个框架；之后各节的公式只是把思维链落到实处，按需回来查即可。落地实例见站内 <a href="../../papers/2026-09/0923-jet/">JET 笔记</a>。</p>
+<p>「模型架构基础」第三篇。<strong>本文结构刻意做成思维链优先</strong>：第 1 节用大白话把三代的核心思想与演进逻辑一次讲完——看懂第 1 节就拿到了整个框架；之后各节的公式只是把思维链落到实处，按需回来查即可。落地实例见站内 <a href="../../papers/2026-09/0923-jet/">JET 笔记</a>。</p>
 </blockquote>
 <div class="admonition abstract">
 <p class="admonition-title">TL;DR · 每代一句话</p>
 <ul>
 <li><strong>VAE</strong>：把数据映射到隐空间，并让隐空间整体呈<strong>标准正态分布</strong>；生成 = 从正态分布抽一个点，用 decoder 一步还原出样本。<strong>能生成，但模糊。</strong></li>
 <li><strong>DDPM</strong>：用<strong>马尔可夫链建模去噪过程</strong>——先把数据一步步加噪声变成纯噪声（固定、不用学），再教网络学会倒着走；生成 = 从纯噪声逐步去噪回来。<strong>锐利，但慢、调度靠人拍。</strong></li>
-<li><strong>Flow Matching</strong>：扔掉"去噪"的说法，直接学一个<strong>从噪声指向数据的导航场</strong>（向量场）；生成 = 沿着场从噪声走到数据，路径可拉直到一步。<strong>DDPM 是它的特例。</strong></li>
+<li><strong>Flow Matching</strong>：扔掉「去噪」的说法，直接学一个<strong>从噪声指向数据的导航场</strong>（向量场）；生成 = 沿着场从噪声走到数据，路径可拉直到一步。<strong>DDPM 是它的特例。</strong></li>
 </ul>
 </div>
 <h2 id="1">1 思维链总览（先读这节）<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
-<p><strong>起点问题</strong>：我们想让机器生成数据——图片、语音，或者本站的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>。难点在于：数据的分布"长什么样"说不出来，更写不出公式。三代模型，就是三代越来越聪明的绕法。</p>
-<p><strong>第一棒 · VAE——造一份"说明书"</strong>。既然分布写不出公式，就不写了：encoder 把每条数据映射到隐空间的一个点，并顺手把所有点<strong>整成一团标准正态</strong>；decoder 学会从这团分布里的点还原出数据。生成时从正态分布里随便抽一个点解码即可。<strong>但生成是糊的</strong>——decoder 被要求"一步画出完整样本"，它学会的最优策略是把所有可能的答案<strong>取平均</strong>。</p>
-<p><strong>第二棒 · DDPM——既然一步画会糊，就分一千步画</strong>。先把真实数据一点点加噪声、直到变成纯噪声——注意这条加噪链是<strong>固定的、不用学</strong>；然后教一个网络"只往前去噪一小步"。生成 = 从纯噪声出发倒着走一千步，每步只做小修正，不再需要一步押注完整答案 → <strong>锐利了</strong>。但留下两件烦心事：一千步采样太慢；每步"去多少噪声"的调度表是人<strong>手工拍的</strong>。</p>
-<p><strong>第三棒 · Flow Matching——把"去噪"这个说法也扔掉</strong>。去噪只是"从噪声走向数据"的一种实现方式；直接学一个<strong>导航场</strong>（向量场）：在噪声和数据之间连直线，让网络学会"在路径上每个位置，该往哪个方向、以多快速度走"。生成 = 从噪声出发沿导航场积分到数据。路径自己选、可以拉直、甚至直化到<strong>一步生成</strong>；DDPM 那张手工调度表，在这个视角下只是无数可选路径里的一种。</p>
+<p><strong>起点问题</strong>：我们想让机器生成数据——图片、语音，或者本站的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>。难点在于：数据的分布「长什么样」说不出来，更写不出公式。三代模型，就是三代越来越聪明的绕法。</p>
+<p><strong>第一棒 · VAE——造一份「说明书」</strong>。既然分布写不出公式，就不写了：encoder 把每条数据映射到隐空间的一个点，并顺手把所有点<strong>整成一团标准正态</strong>；decoder 学会从这团分布里的点还原出数据。生成时从正态分布里随便抽一个点解码即可。<strong>但生成是糊的</strong>——decoder 被要求「一步画出完整样本」，它学会的最优策略是把所有可能的答案<strong>取平均</strong>。</p>
+<p><strong>第二棒 · DDPM——既然一步画会糊，就分一千步画</strong>。先把真实数据一点点加噪声、直到变成纯噪声——注意这条加噪链是<strong>固定的、不用学</strong>；然后教一个网络「只往前去噪一小步」。生成 = 从纯噪声出发倒着走一千步，每步只做小修正，不再需要一步押注完整答案 → <strong>锐利了</strong>。但留下两件烦心事：一千步采样太慢；每步「去多少噪声」的调度表是人<strong>手工拍的</strong>。</p>
+<p><strong>第三棒 · Flow Matching——把「去噪」这个说法也扔掉</strong>。去噪只是「从噪声走向数据」的一种实现方式；直接学一个<strong>导航场</strong>（向量场）：在噪声和数据之间连直线，让网络学会「在路径上每个位置，该往哪个方向、以多快速度走」。生成 = 从噪声出发沿导航场积分到数据。路径自己选、可以拉直、甚至直化到<strong>一步生成</strong>；DDPM 那张手工调度表，在这个视角下只是无数可选路径里的一种。</p>
 <pre class="mermaid"><code>flowchart TD
     Q0["起点：想让机器生成数据&lt;br/&gt;但数据分布写不出公式"] --&gt; A
     A["第一代 VAE：造说明书&lt;br/&gt;encoder 把数据压进隐空间并整成标准正态&lt;br/&gt;decoder 从正态分布抽点一步还原"] --&gt; P1["缺陷：一步解码 = 取平均&lt;br/&gt;生成模糊"]
@@ -1737,9 +1737,9 @@
 <h2 id="2-vae">2 第一代 · VAE：造一份"说明书"<a class="headerlink" href="#2-vae" title="Permanent link">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">核心思想（大白话）</p>
-<p>把数据映射到隐空间，并让隐空间整体呈标准正态分布；生成 = 从正态分布抽一个点，用 decoder 一步还原。encoder 是"存入"，decoder 是"取出"。</p>
+<p>把数据映射到隐空间，并让隐空间整体呈标准正态分布；生成 = 从正态分布抽一个点，用 decoder 一步还原。encoder 是「存入」，decoder 是「取出」。</p>
 </div>
-<p><strong>思维链位置</strong>：回答了"分布写不出公式怎么办"——不写分布，写"数据 ↔ 隐空间"的往返说明书。留下的缺陷：<strong>一步解码取平均 → 模糊</strong>（这就是第二棒要解决的问题）。</p>
+<p><strong>思维链位置</strong>：回答了「分布写不出公式怎么办」——不写分布，写「数据 ↔ 隐空间」的往返说明书。留下的缺陷：<strong>一步解码取平均 → 模糊</strong>（这就是第二棒要解决的问题）。</p>
 <h3 id="_1">落到公式<a class="headerlink" href="#_1" title="Permanent link">#</a></h3>
 <p>积分写不出来：<span class="arithmatex">\( p_\theta(x) = \int p_\theta(x|z)\,p(z)\,dz \)</span> 算不动，最大似然不可行。VAE 用变分下界绕开它——用一个编码器 <span class="arithmatex">\( q_\phi(z|x) \)</span> 近似真实后验，对任意 <span class="arithmatex">\( q \)</span> 恒有：</p>
 <div class="arithmatex">\[ \log p_\theta(x) = \mathrm{ELBO}(\theta, \phi; x) + \mathrm{KL}\big( q_\phi(z|x) \,\|\, p_\theta(z|x) \big) \]</div>
@@ -1752,7 +1752,7 @@
 <h2 id="3-ddpm">3 第二代 · DDPM：用马尔可夫链学去噪<a class="headerlink" href="#3-ddpm" title="Permanent link">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">核心思想（大白话）</p>
-<p>把"加噪"和"去噪"建模成一条马尔可夫链：前向把数据一步步加噪声变成纯噪声——这条链<strong>固定、无参数、不用学</strong>；反向教一个网络每次只去一小步噪声。生成 = 从纯噪声倒着走到数据。</p>
+<p>把「加噪」和「去噪」建模成一条马尔可夫链：前向把数据一步步加噪声变成纯噪声——这条链<strong>固定、无参数、不用学</strong>；反向教一个网络每次只去一小步噪声。生成 = 从纯噪声倒着走到数据。</p>
 </div>
 <p><strong>思维链位置</strong>：修复 VAE 的模糊——分步小修正替代一步取平均。留下新问题：<strong>上千步采样太慢</strong>、<strong>噪声调度表靠人手工拍</strong>（这是第三棒要解决的问题）。</p>
 <h3 id="_2">落到公式<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
@@ -1760,27 +1760,27 @@
 <div class="arithmatex">\[ q(x_t | x_{t-1}) = \mathcal{N}\big( \sqrt{1-\beta_t}\; x_{t-1},\; \beta_t I \big) \quad\Longrightarrow\quad x_t = \sqrt{\bar{\alpha}_t}\; x_0 + \sqrt{1-\bar{\alpha}_t}\; \varepsilon \]</div>
 <p>反向过程 <span class="arithmatex">\( p_\theta(x_{t-1}|x_t) \)</span> 要学（直接算需对未知的 <span class="arithmatex">\( x_0 \)</span> 积分）。对整条链写负 ELBO——<strong>每一项都是两个高斯的 KL，全有闭式解</strong>（VAE 里最难算的正则项在这里免费了），化简到底只剩：</p>
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{simple}} = \mathbb{E}_{t,\,x_0,\,\varepsilon} \big\| \varepsilon - \varepsilon_\theta(x_t,\,t) \big\|^2 \]</div>
-<p>大白话：<strong>拿干净图加一份已知噪声，让网络看带噪图、猜出那份噪声，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 惩罚</strong>。网络实际在学的是得分函数——<span class="arithmatex">\( \varepsilon_\theta(x_t, t) / \sqrt{1-\bar{\alpha}_t} \approx -\nabla_x \log p_t(x_t) \)</span>，即"数据密度上升最快的方向"（这正是"加噪 + 预测噪声"这条暗线从 denoising score matching 一路传下来的原因）。</p>
+<p>大白话：<strong>拿干净图加一份已知噪声，让网络看带噪图、猜出那份噪声，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 惩罚</strong>。网络实际在学的是得分函数——<span class="arithmatex">\( \varepsilon_\theta(x_t, t) / \sqrt{1-\bar{\alpha}_t} \approx -\nabla_x \log p_t(x_t) \)</span>，即「数据密度上升最快的方向」（这正是「加噪 + 预测噪声」这条暗线从 denoising score matching 一路传下来的原因）。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/gen-ddpm-markov.png" data-desc-position="bottom"><img alt="DDPM 的马尔可夫链视角：前向加噪 q 是固定无参数的，反向去噪 pθ 是要学的网络；从纯噪声 xT 逐步走到干净样本 x0" src="../../assets/gen-ddpm-markov.png"></a></p>
-<p><em>DDPM 的马尔可夫链视角：灰色圆是带噪状态，前向 <span class="arithmatex">\( q(x_t|x_{t-1}) \)</span>（虚线）固定，反向 <span class="arithmatex">\( p_\theta(x_{t-1}|x_t) \)</span> 是要学的网络——"从加噪过程中学习逐步去噪"</em></p>
+<p><em>DDPM 的马尔可夫链视角：灰色圆是带噪状态，前向 <span class="arithmatex">\( q(x_t|x_{t-1}) \)</span>（虚线）固定，反向 <span class="arithmatex">\( p_\theta(x_{t-1}|x_t) \)</span> 是要学的网络——「从加噪过程中学习逐步去噪」</em></p>
 <p><strong>DDIM（2020）埋下伏笔</strong>：把采样中的随机项去掉，采样变成确定性 ODE 积分——同一个模型不用重训，路径从 SDE 换成 ODE。人们由此意识到：扩散模型骨子里是一条连续的流。</p>
 <h2 id="4-ode">4 桥梁：扩散的本质是一条 ODE<a class="headerlink" href="#4-ode" title="Permanent link">#</a></h2>
-<p><strong>思维链位置</strong>：这一节不引入新模型，只换一副眼镜——为"导航场"视角铺路。</p>
+<p><strong>思维链位置</strong>：这一节不引入新模型，只换一副眼镜——为导航场视角铺路。</p>
 <p>Song et al.（2021）把所有加噪方案写成连续时间的<strong>前向 SDE</strong> <span class="arithmatex">\( dx = f(x, t)\,dt + g(t)\,dw \)</span>（VP-SDE 即 DDPM 的连续极限）。每个前向 SDE 都有确定性伴随物——<strong>概率流 ODE</strong>：</p>
 <div class="arithmatex">\[ dx = \Big[ f(x, t) - \tfrac{1}{2}\, g(t)^2\, \nabla_x \log p_t(x) \Big] dt \qquad \text{（同样的边缘分布，无随机项）} \]</div>
-<p>也就是说：扩散模型除了"逐步去噪"的身份，还有一个<strong>"把噪声分布输运到数据分布的向量场"</strong>的身份——和生成流是同一个数学对象。DDPM 的全部特殊之处，只剩它的向量场形状由<strong>手工调度</strong> <span class="arithmatex">\( \beta(t) \)</span> 决定。</p>
+<p>也就是说：扩散模型除了「逐步去噪」的身份，还有一个<strong>把噪声分布输运到数据分布的向量场</strong>的身份——和生成流是同一个数学对象。DDPM 的全部特殊之处，只剩它的向量场形状由<strong>手工调度</strong> <span class="arithmatex">\( \beta(t) \)</span> 决定。</p>
 <h2 id="5-flow-matching">5 第三代 · Flow Matching：直接学导航场<a class="headerlink" href="#5-flow-matching" title="Permanent link">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">核心思想（大白话）</p>
-<p>不叫"去噪"了——直接学一个<strong>从噪声指向数据的导航场</strong>（向量场）：在噪声和数据之间连直线，网络学会"路径上每个位置该往哪个方向、以多快速度走"。生成 = 从噪声沿场积分到数据。路径自己选、可拉直、可一步。</p>
+<p>不叫「去噪」了——直接学一个<strong>从噪声指向数据的导航场</strong>（向量场）：在噪声和数据之间连直线，网络学会「路径上每个位置该往哪个方向、以多快速度走」。生成 = 从噪声沿场积分到数据。路径自己选、可拉直、可一步。</p>
 </div>
-<p><strong>思维链位置</strong>：同时修复 DDPM 的两大遗留问题——<strong>慢</strong>（ODE 路径可拉直、少步甚至一步）与<strong>手工调度</strong>（路径自由选择，调度表只是无数路径之一）。DDPM 取"VP 路径 + 噪声参数化"时恰好退化回扩散——它是 Flow Matching 的特例而非对照。</p>
+<p><strong>思维链位置</strong>：同时修复 DDPM 的两大遗留问题——<strong>慢</strong>（ODE 路径可拉直、少步甚至一步）与<strong>手工调度</strong>（路径自由选择，调度表只是无数路径之一）。DDPM 取「VP 路径 + 噪声参数化」时恰好退化回扩散——它是 Flow Matching 的特例而非对照。</p>
 <h3 id="_3">落到公式<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
-<p>Flow Matching（Lipman et al. 2022）解决了老方法 CNF"训练要在 ODE solver 里反传"的不可用问题——<strong>simulation-free 训练</strong>：边缘速度场没有真值，但对成对样本 <span class="arithmatex">\( (x_0, x_1) \)</span> 可定义条件路径与条件速度：</p>
+<p>Flow Matching（Lipman et al. 2022）解决了老方法 CNF「训练要在 ODE solver 里反传」的不可用问题——<strong>simulation-free 训练</strong>：边缘速度场没有真值，但对成对样本 <span class="arithmatex">\( (x_0, x_1) \)</span> 可定义条件路径与条件速度：</p>
 <div class="arithmatex">\[ \text{路径：}\; x_t = (1-t)\,x_0 + t\,x_1 \qquad \text{目标：}\; u_t = x_1 - x_0 \qquad \mathcal{L}_{\mathrm{FM}} = \mathbb{E} \big\| v_\theta(x_t,\,t) - (x_1 - x_0) \big\|^2 \]</div>
 <p>关键定理：<strong>对条件目标回归与对边缘目标回归的梯度相同</strong>（边缘速度恰是条件速度的期望 <span class="arithmatex">\( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)</span>，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 的最优解就是条件期望）——所以不必知道边缘场，采样配对做回归即可。<strong>Rectified Flow</strong>（Liu et al. 2022）补上直化：用训好的模型生成新配对再重训（reflow），轨迹越来越直 → 少步乃至一步生成。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/gen-fm-ode.png" data-desc-position="bottom"><img alt="ODE 三要素与流的形变：dX(t)/dt = u(t, X) 是要学的向量场，单条解是轨迹，全体轨迹构成流 ψ；右图直观展示一组网格从高斯先验（左）被输运到数据分布（中）的过程" src="../../assets/gen-fm-ode.png"></a></p>
-<p><em>Flow Matching 的三个核心名词：</em><em>向量场</em><em>（<span class="arithmatex">\( u_t \)</span>，要学习的项）、</em><em>轨迹</em><em>（一条 ODE 解 <span class="arithmatex">\( X_t \)</span>）、</em><em>流</em><em>（全体轨迹 <span class="arithmatex">\( \psi_t(x_0) \)</span>）——生成就是把左侧高斯先验"揉"成右侧数据分布的那组形变</em></p>
+<p><em>Flow Matching 的三个核心名词：</em><em>向量场</em><em>（<span class="arithmatex">\( u_t \)</span>，要学习的项）、</em><em>轨迹</em><em>（一条 ODE 解 <span class="arithmatex">\( X_t \)</span>）、</em><em>流</em><em>（全体轨迹 <span class="arithmatex">\( \psi_t(x_0) \)</span>）——生成就是把左侧高斯先验揉成右侧数据分布的那组形变</em></p>
 <h2 id="6">6 三代统一对照<a class="headerlink" href="#6" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -1833,14 +1833,14 @@
 <h2 id="7-eeg">7 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语境中的位置<a class="headerlink" href="#7-eeg" title="Permanent link">#</a></h2>
 <ul>
 <li><strong><abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 分支</strong> → 已精读的 <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>（神经码本 + 频谱重构目标）/ <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a>（码字并入 <abbr title="大语言模型 Large Language Model">LLM</abbr> 词表）/ <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM</a>（时频 motif 词表）；</li>
-<li><strong>DDPM 线</strong> → <a href="../../papers/2026-09/0923-jet/">JET</a> 的 Vanilla Diffusion 基线与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 对照。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的"原始波形不可重构、改频谱目标"与扩散"分步去噪才能锐利"，其实是同一现象（一步回归的均值坍缩）的两种表述；</li>
+<li><strong>DDPM 线</strong> → <a href="../../papers/2026-09/0923-jet/">JET</a> 的 Vanilla Diffusion 基线与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 对照。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的「原始波形不可重构、改频谱目标」与扩散「分步去噪才能锐利」，其实是同一现象（一步回归的均值坍缩）的两种表述；</li>
 <li><strong>FM 线</strong> → JET 本体：直线插值路径 + 三条生理约束（在 FM 损失外加结构正则）；</li>
-<li><strong>先验的拓扑要求三代一致</strong>：JET 的"零噪声初始化灾难失败"（TS-FID 1600+）正是"先验必须非退化、有全空间支撑"的实证——VAE 的标准正态先验、DDPM 的 <span class="arithmatex">\( x_T \)</span>、FM 的 <span class="arithmatex">\( x_0 \)</span> 没有例外。</li>
+<li><strong>先验的拓扑要求三代一致</strong>：JET 的「零噪声初始化灾难失败」（TS-FID 1600+）正是「先验必须非退化、有全空间支撑」的实证——VAE 的标准正态先验、DDPM 的 <span class="arithmatex">\( x_T \)</span>、FM 的 <span class="arithmatex">\( x_0 \)</span> 没有例外。</li>
 </ul>
 <h2 id="_4">自问自答<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <details class="question">
 <summary>Q1 · 为什么 VAE 模糊而扩散锐利？</summary>
-<p>根因在一步回归的均值坍缩：逐像素独立高斯似然下，最优解码器输出的是条件均值——把多种可能平均成一张糊图。DDPM 把一步生成拆成上千个小去噪步，每步只处理小残差、采样中的随机项维持多样性，任何一步都不需要"押注"完整样本。<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 是另一条修路：隐变量离散化后重构目标变成离散码预测，绕开连续均值。</p>
+<p>根因在一步回归的均值坍缩：逐像素独立高斯似然下，最优解码器输出的是条件均值——把多种可能平均成一张糊图。DDPM 把一步生成拆成上千个小去噪步，每步只处理小残差、采样中的随机项维持多样性，任何一步都不需要押注完整样本。<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 是另一条修路：隐变量离散化后重构目标变成离散码预测，绕开连续均值。</p>
 </details>
 <details class="question">
 <summary>Q2 · Flow Matching 和 DDPM 到底什么关系？</summary>
@@ -1848,7 +1848,7 @@
 </details>
 <details class="question">
 <summary>Q3 · 条件速度场没有真值，凭什么对配对样本回归就行？</summary>
-<p>边缘速度场是条件速度在配对分布下的期望：<span class="arithmatex">\( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)</span>。<abbr title="均方误差 Mean Squared Error">MSE</abbr> 回归的最优解恰好是条件期望——所以对随机采样的配对 <span class="arithmatex">\( (x_0, x_1) \)</span> 做回归，梯度与对边缘场回归一致。这与"DDPM 预测噪声等价于预测得分"是同构的逻辑：都在用一个可采样的条件量替代不可算的边缘量。</p>
+<p>边缘速度场是条件速度在配对分布下的期望：<span class="arithmatex">\( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)</span>。<abbr title="均方误差 Mean Squared Error">MSE</abbr> 回归的最优解恰好是条件期望——所以对随机采样的配对 <span class="arithmatex">\( (x_0, x_1) \)</span> 做回归，梯度与对边缘场回归一致。这与「DDPM 预测噪声等价于预测得分」是同构的逻辑：都在用一个可采样的条件量替代不可算的边缘量。</p>
 </details>
 <details class="question">
 <summary>Q4 · 为什么三代模型的先验都要求非退化？</summary>

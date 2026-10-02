@@ -1533,7 +1533,7 @@
 
 <h1 id="_1">基座来源：从零训练还是站在巨人肩上<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>六篇基础模型的权重是"自己从零训练"还是"加载现成 Base Model"？结论：<strong>五篇从零训练，唯一例外是 NeuroLM 站在 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 上</strong>。</p>
+<p>六篇基础模型的权重是「自己从零训练」还是「加载现成 Base Model」？结论：<strong>五篇从零训练，唯一例外是 NeuroLM 站在 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 上</strong>。</p>
 </blockquote>
 <h2 id="_2">总览表<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
@@ -1579,13 +1579,13 @@
 </table>
 <h2 id="_3">为什么几乎都不用现成基座<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ol>
-<li><strong>当时不存在可用的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座</strong>。这几篇本身就是"第一批"基础模型，没有前人 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 权重可站（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 互为对照，但都各自从零训练以保证公平）。</li>
-<li><strong>模态鸿沟</strong>。NLP/视觉的预训练权重对连续时序信号的迁移价值很低——加载了反而要花算力"遗忘"文本先验。</li>
+<li><strong>当时不存在可用的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座</strong>。这几篇本身就是「第一批」基础模型，没有前人 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 权重可站（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 互为对照，但都各自从零训练以保证公平）。</li>
+<li><strong>模态鸿沟</strong>。NLP/视觉的预训练权重对连续时序信号的迁移价值很低——加载了反而要花算力「遗忘」文本先验。</li>
 <li><strong>NeuroLM 是唯一例外恰因范式不同</strong>。它要把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 塞进 <abbr title="大语言模型 Large Language Model">LLM</abbr> 做指令推理，<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 的语言能力（理解问题、生成答案）正是需要保留的部分——所以保留基座 + 词表扩充 + 继续训练而非从零。其消融也证明每批混入纯文本数据对防止语言能力遗忘是必要的。</li>
 </ol>
 <h2 id="_4">"复用权重"发生在下游而不是预训练<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <p>虽然预训练都是自力更生，但每篇都<strong>开源了自己的预训练 checkpoint</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> Base/Large/Huge、EEGPT、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、NeuroLM、TFM 均在 GitHub 发布），下游任务是站在这些<strong>自家预训练权重</strong>上微调的。</p>
-<p>论文互相比时也不加载对方从头训的中间权重，而是：<strong>基线 = 对方的公开 checkpoint + 我们数据集上的微调</strong>。这也解释了 BrainGPT 的一个著名发现——"预训练 specialist 有时不如 from scratch"：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 语料偏临床癫痫，对情绪/运动想象等非临床任务迁移反而打折（详见<a href="../data-landscape/">预训练数据全景</a>）。</p>
+<p>论文互相比时也不加载对方从头训的中间权重，而是：<strong>基线 = 对方的公开 checkpoint + 我们数据集上的微调</strong>。这也解释了 BrainGPT 的一个著名发现——「预训练 specialist 有时不如 from scratch」：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 语料偏临床癫痫，对情绪/运动想象等非临床任务迁移反而打折（详见<a href="../data-landscape/">预训练数据全景</a>）。</p>
 <h2 id="_5">新论文入库提示<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <p>读新论文时记一笔：它的权重是 <strong>from scratch / 加载公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座（哪家）/ 接 <abbr title="大语言模型 Large Language Model">LLM</abbr>（哪个）</strong> 三者中的哪一种？这决定了它与库里已有论文的可比性，也直接影响<a href="../../comparison/#critique-chain">互怼链</a>的画法。</p>
 <h2 id="_6">关联页面<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>

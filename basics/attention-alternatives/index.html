@@ -1634,7 +1634,7 @@
 <p class="admonition-title">TL;DR</p>
 <ul>
 <li>长上下文下注意力的成本随序列长度<strong>平方增长</strong>且逐渐压过 FFN，这是整条替代路线的动机</li>
-<li>关键恒等式：ρ 取恒等时 (QKᵀ)V = Q(KᵀV)——把平方换成线性，代价是失去 softmax 的"选择性"</li>
+<li>关键恒等式：<span class="arithmatex">\( \rho \)</span> 取恒等时 <span class="arithmatex">\( (QK^{\top})V = Q(K^{\top}V) \)</span>——把平方换成线性，代价是失去 softmax 的选择性</li>
 <li>由此得到<strong>对偶性</strong>：并行二次形式用于训练、串行线性形式（RNN 形态）用于推理</li>
 <li>补回表达力的路径：加数据依赖门控（Mamba-2）→ 再加选择性擦除（Gated DeltaNet）</li>
 <li>工程上没人纯用线性层：<strong>混合堆叠</strong>是当前主流（MiniMax M1 7:1、Nemotron 3 ~3:1、Qwen3.5 3:1）</li>
@@ -1642,8 +1642,8 @@
 </ul>
 </div>
 <h2 id="1">1 动机：上下文在涨，注意力成本也在涨<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
-<p>2018–2025 年主流模型的上下文窗口从千级涨到百万级甚至千万级。问题在于标准注意力的成本随序列长度<strong>平方增长</strong>，而 FFN 部分是线性的——序列一长，注意力就成了时间与显存的主要开销来源，且占比随长度扩大。于是"如何控制注意力的成本"成为一条独立的研究路线。</p>
-<p>讲义把解决思路分成三层，前两层是"沿用现有注意力但省钱"，第三层才是改数学：</p>
+<p>2018–2025 年主流模型的上下文窗口从千级涨到百万级甚至千万级。问题在于标准注意力的成本随序列长度<strong>平方增长</strong>，而 FFN 部分是线性的——序列一长，注意力就成了时间与显存的主要开销来源，且占比随长度扩大。于是「如何控制注意力的成本」成为一条独立的研究路线。</p>
+<p>讲义把解决思路分成三层，前两层是「沿用现有注意力但省钱」，第三层才是改数学：</p>
 <pre class="mermaid"><code>flowchart TD
     A["长上下文成本问题"] --&gt; B["① 稀疏模式&lt;br/&gt;局部/跨步/固定窗口 · 手工设计的掩码"]
     A --&gt; C["② 局部+全局交替&lt;br/&gt;多数层局部、少数层全局"]
@@ -1685,47 +1685,47 @@
 </tr>
 </tbody>
 </table>
-<p>系统工程能拿到很实的速度提升（讲义展示 FlashAttention-2 在长序列上吞吐显著高于朴素 PyTorch 实现，后者在 16K 附近直接显存不足），但这是"常数级"的胜利。讲义随即转向真正的问题：<strong>要更根本的收益，必须动注意力的数学形式</strong>。</p>
+<p>系统工程能拿到很实的速度提升（讲义展示 FlashAttention-2 在长序列上吞吐显著高于朴素 PyTorch 实现，后者在 16K 附近直接显存不足），但这是常数级的胜利。讲义随即转向真正的问题：<strong>要更根本的收益，必须动注意力的数学形式</strong>。</p>
 <h2 id="2">2 线性注意力：一个"很蠢但极其重要"的恒等式<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
-<p>标准注意力写为（ρ 一般是 softmax）：</p>
+<p>标准注意力写为（<span class="arithmatex">\( \rho \)</span> 一般是 softmax）：</p>
 <div class="arithmatex">\[ \mathrm{Attn}(Q, K, V) = \rho(QK^\top)V, \qquad Q \in \mathbb{R}^{n \times d_k},\; K \in \mathbb{R}^{n \times d_k},\; V \in \mathbb{R}^{n \times d_v} \]</div>
-<p>成本主要来自 QKᵀ 这个 n×n 矩阵（约 n²d_k），加上再乘 V 的 n²d_v。</p>
-<p><strong>关键观察</strong>：当 ρ 退化为恒等映射时，矩阵乘法满足结合律，可以换一个计算顺序：</p>
+<p>成本主要来自 <span class="arithmatex">\( QK^{\top} \)</span> 这个 <span class="arithmatex">\( n \times n \)</span> 矩阵（约 <span class="arithmatex">\( n^2 d_k \)</span>），加上再乘 <span class="arithmatex">\( V \)</span> 的 <span class="arithmatex">\( n^2 d_v \)</span>。</p>
+<p><strong>关键观察</strong>：当 <span class="arithmatex">\( \rho \)</span> 退化为恒等映射时，矩阵乘法满足结合律，可以换一个计算顺序：</p>
 <div class="arithmatex">\[ (QK^\top)V = Q(K^\top V) \]</div>
-<p>左边先算 n×n 的注意力矩阵（平方），右边先算 d_k×d_v 的"状态"矩阵（与 n 无关），再让 Q 去乘它。复杂度从 n²d_k + n²d_v 变成约 2·n·d_v·d_k——<strong>对序列长度 n 是线性的</strong>。</p>
-<p>这个变换简单到"看起来很蠢"，但它是后面所有线性注意力、状态空间模型（SSM）工作的起点。代价也很明确：softmax 提供的<strong>选择性</strong>（让某个 query 只关注少数 key、忽略其余）被丢掉了，因为 ρ 必须是恒等才有结合律。补回表达力，正是后面 Mamba-2、GDN 的主线。</p>
+<p>左边先算 <span class="arithmatex">\( n \times n \)</span> 的注意力矩阵（平方），右边先算 <span class="arithmatex">\( d_k \times d_v \)</span> 的「状态」矩阵（与 <span class="arithmatex">\( n \)</span> 无关），再让 <span class="arithmatex">\( Q \)</span> 去乘它。复杂度从 <span class="arithmatex">\( n^2 d_k + n^2 d_v \)</span> 变成约 <span class="arithmatex">\( 2 \cdot n \cdot d_v \cdot d_k \)</span>——<strong>对序列长度 <span class="arithmatex">\( n \)</span> 是线性的</strong>。</p>
+<p>这个变换简单到「看起来很蠢」，但它是后面所有线性注意力、状态空间模型（SSM）工作的起点。代价也很明确：softmax 提供的<strong>选择性</strong>（让某个 query 只关注少数 key、忽略其余）被丢掉了，因为 <span class="arithmatex">\( \rho \)</span> 必须是恒等才有结合律。补回表达力，正是后面 Mamba-2、GDN 的主线。</p>
 <div class="admonition note">
 <p class="admonition-title">与原讲义关联的两点</p>
 <ul>
-<li>讲义把这条线追溯到 Shen et al. 2018 与 Katharopoulos 2020（后者的 kernel 化版本即"Transformers are RNNs"），并指出它与 fast weight programmers 的思想相通；</li>
-<li>一个常见的误解是把"线性注意力"理解成"低秩近似注意力"（如 Linformer 把 n×n 投影到 n×d）。<strong>这里不是近似</strong>：在 ρ 为恒等的设定下，两种计算顺序给出<strong>完全相同的数值结果</strong>——区别只在计算图与复杂度。<a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> 走的是低秩近似那条路，两者容易混淆。</li>
+<li>讲义把这条线追溯到 Shen et al. 2018 与 Katharopoulos 2020（后者的 kernel 化版本即「Transformers are RNNs」），并指出它与 fast weight programmers 的思想相通；</li>
+<li>一个常见的误解是把「线性注意力」理解成「低秩近似注意力」（如 Linformer 把 <span class="arithmatex">\( n \times n \)</span> 投影到 <span class="arithmatex">\( n \times d \)</span>）。<strong>这里不是近似</strong>：在 <span class="arithmatex">\( \rho \)</span> 为恒等的设定下，两种计算顺序给出<strong>完全相同的数值结果</strong>——区别只在计算图与复杂度。<a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> 走的是低秩近似那条路，两者容易混淆。</li>
 </ul>
 </div>
 <h2 id="3">3 循环形式与对偶性<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
 <p>把上面的线性形式按时间步展开，就得到一个 RNN 形态的递推：</p>
 <div class="arithmatex">\[ S_t = S_{t-1} + k_t v_t^\top, \qquad y_t = q_t^\top S_t \]</div>
-<p>其中状态 S 是一个 d_k×d_v 的矩阵（与序列长度无关的"记忆"），每来一个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 做一次外积写入、再用 query 读取一次。逐 <abbr title="词元，模型处理的最小输入单元">token</abbr> 计算量恒定，推理时不需要保留过去的 KV cache。</p>
+<p>其中状态 <span class="arithmatex">\( S \)</span> 是一个 <span class="arithmatex">\( d_k \times d_v \)</span> 的矩阵（与序列长度无关的「记忆」），每来一个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 做一次外积写入、再用 query 读取一次。逐 <abbr title="词元，模型处理的最小输入单元">token</abbr> 计算量恒定，推理时不需要保留过去的 KV cache。</p>
 <p>这就带来讲义强调的<strong>对偶性</strong>：同一个模型有两种等价写法——</p>
 <ul>
 <li><strong>并行形式</strong>（二次复杂度）：训练时一次算完，能充分利用 GPU 的矩阵乘吞吐；</li>
 <li><strong>串行形式</strong>（线性复杂度、恒定状态）：推理时逐个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 递推，每步开销与历史长度无关。</li>
 </ul>
-<p>训练用前者、推理用后者，这是线性注意力类模型在工程上最漂亮的性质。讲义还点出一个细节：如果给 S_{t-1} 乘一个衰减系数 γ，得到的正是 <strong>RetNet</strong>——也就是说"遗忘"这件事可以简单地由一个标量门来承担。</p>
+<p>训练用前者、推理用后者，这是线性注意力类模型在工程上最漂亮的性质。讲义还点出一个细节：如果给 <span class="arithmatex">\( S_{t-1} \)</span> 乘一个衰减系数 <span class="arithmatex">\( \gamma \)</span>，得到的正是 <strong>RetNet</strong>——也就是说「遗忘」这件事可以简单地由一个标量门来承担。</p>
 <h2 id="4-mamba-2">4 加门控：从线性注意力到 Mamba-2<a class="headerlink" href="#4-mamba-2" title="Permanent link">#</a></h2>
 <p>Mamba-2 在做的事，是把上面那个常数改成<strong>数据依赖的逐位置门控</strong>：</p>
 <div class="arithmatex">\[ S_t = \gamma_t S_{t-1} + k_t v_t^\top, \qquad y_t = q_t^\top S_t + v_t^\top D, \qquad \gamma_t = f(x_t) \]</div>
-<p>相比线性注意力多了两处：状态衰减系数 γ_t 由当前输入算出（而不是固定常数），以及一个从 v 直连输出的跳连项（D 项，类似残差，让模型不必把所有信息都塞进状态）。讲义的评价很直接：<strong>门控让线性注意力更富表达力</strong>（"gating is good"）。直觉上，γ_t 让模型自己决定"保留多少历史"——输入变化剧烈时把旧状态清掉，信息平稳时长期保留。</p>
+<p>相比线性注意力多了两处：状态衰减系数 <span class="arithmatex">\( \gamma_t \)</span> 由当前输入算出（而不是固定常数），以及一个从 <span class="arithmatex">\( v \)</span> 直连输出的跳连项（<span class="arithmatex">\( D \)</span> 项，类似残差，让模型不必把所有信息都塞进状态）。讲义的评价很直接：<strong>门控让线性注意力更富表达力</strong>（「gating is good」）。直觉上，<span class="arithmatex">\( \gamma_t \)</span> 让模型自己决定「保留多少历史」——输入变化剧烈时把旧状态清掉，信息平稳时长期保留。</p>
 <p>并且对偶性依然成立，只是并行形式的实现换成了 SSM 的扫描（scan）算法：γ 可以并行算出，再套用对偶性。讲义用 Mamba-2 论文里的两张图说明同一层的两种形态——串行版逐 <abbr title="词元，模型处理的最小输入单元">token</abbr> 递推，并行版用卷积 + 扫描一次算完。</p>
 <h2 id="5-gated-delta-net">5 选择性擦除：Gated Delta Net<a class="headerlink" href="#5-gated-delta-net" title="Permanent link">#</a></h2>
-<p>线路继续往"记忆更像可读写寄存器"的方向走。Mamba-2 的门控只能整体缩放旧状态（衰减），不能<strong>定点删除</strong>某类信息。GDN（Gated Delta Net）引入了第二个门 β_t 和一个投影项：</p>
+<p>线路继续往「记忆更像可读写寄存器」的方向走。Mamba-2 的门控只能整体缩放旧状态（衰减），不能<strong>定点删除</strong>某类信息。GDN（Gated Delta Net）引入了第二个门 <span class="arithmatex">\( \beta_t \)</span> 和一个投影项：</p>
 <div class="arithmatex">\[ S_t = \gamma_t (I - \beta_t k_t k_t^\top) S_{t-1} + \beta_t k_t v_t^\top, \qquad y_t = q_t^\top S_t \]</div>
 <div class="arithmatex">\[ \gamma_t = f(x_t), \qquad \beta_t = f(x_t) \]</div>
 <p>两个门的职责分工很清晰：</p>
 <ul>
-<li><strong>β_t 控制写入强度</strong>：β=0 时整个更新项消失，等价于"这一步不再写入"；</li>
-<li><strong>(I − β_t k_t k_tᵀ) 做定向擦除</strong>：这个投影算子会把旧状态中<strong>与当前 key 方向重合的成分</strong>抹掉，再写入新的 (k, v) 对。</li>
+<li><strong><span class="arithmatex">\( \beta_t \)</span> 控制写入强度</strong>：<span class="arithmatex">\( \beta = 0 \)</span> 时整个更新项消失，等价于「这一步不再写入」；</li>
+<li><strong><span class="arithmatex">\( (I - \beta_t k_t k_t^{\top}) \)</span> 做定向擦除</strong>：这个投影算子会把旧状态中<strong>与当前 key 方向重合的成分</strong>抹掉，再写入新的 <span class="arithmatex">\( (k, v) \)</span> 对。</li>
 </ul>
-<p>这就是 delta rule（增量/纠错式更新）的思想：不是无脑叠加新信息，而是先把"关于这个 key 的旧答案"擦掉，再写上新的。它更接近"读写内存"而非"不断累加的寄存器"，因此对需要<strong>覆盖旧信息</strong>的任务（如精确检索、状态跟踪）更友好。讲义也指出这条线与 fast weight programming、test-time training 一脉相承。</p>
+<p>这就是 delta rule（增量/纠错式更新）的思想：不是无脑叠加新信息，而是先把「关于这个 key 的旧答案」擦掉，再写上新的。它更接近「读写内存」而非「不断累加的寄存器」，因此对需要<strong>覆盖旧信息</strong>的任务（如精确检索、状态跟踪）更友好。讲义也指出这条线与 fast weight programming、test-time training 一脉相承。</p>
 <p>把经典 RNN 到 GDN 的更新规则并排看，能看出这条线的演进逻辑（下表整理自讲义引用的 ByteDance Seed 系统研究，各行为原论文的更新规则）：</p>
 <table>
 <thead>
@@ -1740,49 +1740,49 @@
 <tr>
 <td>向量状态（经典/门控 RNN）</td>
 <td>HGRN</td>
-<td>h_t = α_t ⊙ h_{t-1} + (1−α_t) ⊙ v_t</td>
+<td><span class="arithmatex">\( h_t = \alpha_t \odot h_{t-1} + (1-\alpha_t) \odot v_t \)</span></td>
 <td>逐维衰减累加</td>
 </tr>
 <tr>
 <td>向量状态</td>
 <td>Hawk (RG-LRU)</td>
-<td>h_t = γ_t h_{t-1} + i_t ⊙ z_t</td>
+<td><span class="arithmatex">\( h_t = \gamma_t h_{t-1} + i_t \odot z_t \)</span></td>
 <td>门控 + 输入门</td>
 </tr>
 <tr>
 <td>矩阵状态（外积写入）</td>
 <td>RetNet / Lightning</td>
-<td>S_t = γ S_{t-1} + k_t v_tᵀ</td>
+<td><span class="arithmatex">\( S_t = \gamma S_{t-1} + k_t v_t^{\top} \)</span></td>
 <td>固定衰减</td>
 </tr>
 <tr>
 <td>矩阵状态</td>
 <td>GLA</td>
-<td>S_t = S_{t-1} ⊙ (1αᵀ) + k_t v_tᵀ</td>
+<td><span class="arithmatex">\( S_t = S_{t-1} \odot (1\alpha^{\top}) + k_t v_t^{\top} \)</span></td>
 <td>逐维衰减</td>
 </tr>
 <tr>
 <td>矩阵状态</td>
 <td>Mamba-2</td>
-<td>S_t = γ_t S_{t-1} + k_t v_tᵀ</td>
+<td><span class="arithmatex">\( S_t = \gamma_t S_{t-1} + k_t v_t^{\top} \)</span></td>
 <td>数据依赖衰减</td>
 </tr>
 <tr>
 <td>矩阵状态</td>
 <td>RWKV-6</td>
-<td>S_t = S_{t-1} − Diag(α) + k_t v_tᵀ</td>
+<td><span class="arithmatex">\( S_t = S_{t-1} - \mathrm{Diag}(\alpha) + k_t v_t^{\top} \)</span></td>
 <td>数据依赖衰减</td>
 </tr>
 <tr>
 <td>增量规则</td>
 <td>DeltaNet</td>
-<td>S_t = S_{t-1}(I − β_t k_t k_tᵀ) + β_t k_t v_tᵀ</td>
+<td><span class="arithmatex">\( S_t = S_{t-1}(I - \beta_t k_t k_t^{\top}) + \beta_t k_t v_t^{\top} \)</span></td>
 <td>定向擦除 + 写入</td>
 </tr>
 <tr>
 <td>增量规则</td>
 <td><strong>Gated DeltaNet</strong></td>
-<td>S_t = α_t S_{t-1}(I − β_t k_t k_tᵀ) + β_t k_t v_tᵀ</td>
+<td><span class="arithmatex">\( S_t = \alpha_t S_{t-1}(I - \beta_t k_t k_t^{\top}) + \beta_t k_t v_t^{\top} \)</span></td>
 <td>衰减 + 定向擦除 + 写入</td>
 </tr>
 </tbody>
@@ -1805,7 +1805,7 @@
 <li><strong>Nemotron 3</strong>：以 Mamba-2 + MoE 为骨干、按固定模式插入极少数全注意力层（讲义图里的层序大致是连续若干 Mamba 块后插一个注意力块），在推理基准与超长上下文任务上达到同级模型的水平，同时吞吐更好；</li>
 <li><strong>Qwen3.5 / Qwen3-Next</strong>：3:1 的 GDN / Attention 混合，配套 Gated Attention 与 Zero-Centered RMSNorm；讲义给的结果是性能合理、推理特性明显更好（长上下文下的解码吞吐相对基线大幅提升）。</li>
 </ul>
-<p><strong>混合比例有没有系统依据？</strong> 讲义引用 ByteDance Seed 与 UCSC 的《A Systematic Analysis of Hybrid Linear Attention》，结论是<strong>受控消融仍然很少</strong>，但已有证据指向"小比例线性层即可、再往上加收益递减"：在召回类任务（RULER）上，从 3:1 到 24:1 的线性占比增加会带来召回能力下滑，而 3:1 附近的损失最小。也就是说，混合比例本质上是在<strong>效率与精确回忆能力之间取平衡点</strong>。</p>
+<p><strong>混合比例有没有系统依据？</strong> 讲义引用 ByteDance Seed 与 UCSC 的《A Systematic Analysis of Hybrid Linear Attention》，结论是<strong>受控消融仍然很少</strong>，但已有证据指向「小比例线性层即可、再往上加收益递减」：在召回类任务（RULER）上，从 3:1 到 24:1 的线性占比增加会带来召回能力下滑，而 3:1 附近的损失最小。也就是说，混合比例本质上是在<strong>效率与精确回忆能力之间取平衡点</strong>。</p>
 <h2 id="7-dsa">7 另一条路：稀疏注意力（DSA）<a class="headerlink" href="#7-dsa" title="Permanent link">#</a></h2>
 <p>与其把所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 都换成线性混合，另一条路是<strong>保留标准注意力，但只让它看一部分 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>。DeepSeek Sparse Attention（用于 DeepSeek-V3.2 一系）的框架是两段式：</p>
 <p><strong>（a）轻量 indexer 打分</strong>：用一个头数很少、可跑 FP8 的小模块算 query 与历史 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的相关性分数：</p>
@@ -1815,29 +1815,29 @@
 <div class="arithmatex">\[ u_t = \mathrm{Attn}\big(h_t, \{c_s \mid I_{t,s} \in \mathrm{Top}\text{-}k(I_{t,:})\}\big) \]</div>
 <p>两个工程上极有价值的性质：</p>
 <ol>
-<li><strong>可后置适配</strong>：可以在训练好的稠密短上下文模型上"事后"接上 DSA 继续训练，不必从头预训练——讲义引用 GLM-4.7-Flash 的消融：只训 indexer（冻结底座）与联合训练两种变体在 4K–64K 都与基线相当，但到 <strong>128K 时只训 indexer 的变体明显退化（71.35 vs 基线 79.21），联合训练能保持在基线水平（78.86）</strong>。含义很实际：<strong>只训 indexer 不够，长上下文能力需要底座参与</strong>；</li>
+<li><strong>可后置适配</strong>：可以在训练好的稠密短上下文模型上事后接上 DSA 继续训练，不必从头预训练——讲义引用 GLM-4.7-Flash 的消融：只训 indexer（冻结底座）与联合训练两种变体在 4K–64K 都与基线相当，但到 <strong>128K 时只训 indexer 的变体明显退化（71.35 vs 基线 79.21），联合训练能保持在基线水平（78.86）</strong>。含义很实际：<strong>只训 indexer 不够，长上下文能力需要底座参与</strong>；</li>
 <li><strong>成本曲线被压平</strong>：DeepSeek-V3.2 相比 V3.1-Terminus，prefilling 与 decoding 的每百万 <abbr title="词元，模型处理的最小输入单元">token</abbr> 成本随位置增长要平缓得多——这正是长上下文服务成本的痛点所在。</li>
 </ol>
 <h2 id="8-eeg">8 与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的关联<a class="headerlink" href="#8-eeg" title="Permanent link">#</a></h2>
-<p>这条线对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 建模不是"隔壁领域的技术"，而是直接可用的工具：</p>
+<p>这条线对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 建模不是「隔壁领域的技术」，而是直接可用的工具：</p>
 <ul>
-<li><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 用的就是线性注意力这一族</strong>——它借鉴 Linformer 式的低秩投影来把多通道长句子压到线性复杂度。读完本节再回看 <a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 笔记</a>，可以清楚区分"低秩近似"与"结合律重排"两种省算力的思路；</li>
-<li><strong><abbr title="脑电图 Electroencephalogram">EEG</abbr> 的上下文问题比语言更尖锐</strong>：临床长程监测可达数小时到数十小时（如 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 2500 小时语料、NeuroLM 的 25000 小时），若把整段记录当一个序列建模，二次复杂度是硬瓶颈——这正是 SleepGPT（Nature Comms 2026）把"二次复杂度不利于长时/实时场景"列为自身局限的原因；</li>
-<li><strong>GDN / Mamba 类模型在生理信号上已是常见选择</strong>：恒定状态 + 线性推理的特性天然契合"可穿戴设备上做长时低功耗推理"的需求，这也是为什么 SSM 一系在 <abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/PPG 的轻量部署工作里出现频率很高；</li>
-<li><strong>一个值得注意的取舍</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的很多任务是"精确回忆型"（找出某次发作的开始时刻、某个导联的特定波形），而混合研究显示这类任务正是线性层最吃亏的地方——如果做长时 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，混合比例这个旋钮值得专门做消融，而不是照搬语言模型的 3:1。</li>
+<li><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 用的就是线性注意力这一族</strong>——它借鉴 Linformer 式的低秩投影来把多通道长句子压到线性复杂度。读完本节再回看 <a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 笔记</a>，可以清楚区分「低秩近似」与「结合律重排」两种省算力的思路；</li>
+<li><strong><abbr title="脑电图 Electroencephalogram">EEG</abbr> 的上下文问题比语言更尖锐</strong>：临床长程监测可达数小时到数十小时（如 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 2500 小时语料、NeuroLM 的 25000 小时），若把整段记录当一个序列建模，二次复杂度是硬瓶颈——这正是 SleepGPT（Nature Comms 2026）把「二次复杂度不利于长时/实时场景」列为自身局限的原因；</li>
+<li><strong>GDN / Mamba 类模型在生理信号上已是常见选择</strong>：恒定状态 + 线性推理的特性天然契合「可穿戴设备上做长时低功耗推理」的需求，这也是为什么 SSM 一系在 <abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/PPG 的轻量部署工作里出现频率很高；</li>
+<li><strong>一个值得注意的取舍</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的很多任务是「精确回忆型」（找出某次发作的开始时刻、某个导联的特定波形），而混合研究显示这类任务正是线性层最吃亏的地方——如果做长时 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，混合比例这个旋钮值得专门做消融，而不是照搬语言模型的 3:1。</li>
 </ul>
 <h2 id="_1">自问自答<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <details class="question">
-<summary>Q1 · 既然 (QKᵀ)V = Q(KᵀV) 只是换个顺序，为什么不直接全用？</summary>
-<p>因为恒等式成立的前提是 ρ 为恒等。一旦要保留 softmax（它带来注意力分布的选择性——让 query 聚焦少数 key），结合律就不成立，右边的推导不再等价。线性注意力的代价就在这：能换顺序，但换掉之后就必须放弃 softmax，表达力靠后续的门控与擦除机制补回来。另一个实际代价是"状态容量"——把任意长的历史压进固定大小的 d_k×d_v 状态，天然是瓶颈。</p>
+<summary>Q1 · 既然 <span class="arithmatex">\( (QK^{\top})V = Q(K^{\top}V) \)</span> 只是换个顺序，为什么不直接全用？</summary>
+<p>因为恒等式成立的前提是 <span class="arithmatex">\( \rho \)</span> 为恒等。一旦要保留 softmax（它带来注意力分布的选择性——让 query 聚焦少数 key），结合律就不成立，右边的推导不再等价。线性注意力的代价就在这：能换顺序，但换掉之后就必须放弃 softmax，表达力靠后续的门控与擦除机制补回来。另一个实际代价是「状态容量」——把任意长的历史压进固定大小的 <span class="arithmatex">\( d_k \times d_v \)</span> 状态，天然是瓶颈。</p>
 </details>
 <details class="question">
 <summary>Q2 · 门控（γ）到底解决了什么问题？</summary>
-<p>固定衰减意味着所有位置用同一个遗忘速率，而真实序列的"该记多久"是随内容变化的：一段关键信息可能需要长期保留，噪声应当快速遗忘。让 γ_t = f(x_t) 把遗忘速率变成输入的函数，模型就能按内容动态决定记忆深度。GDN 在此之上再加 β 与擦除项，把"遗忘"从整体衰减细化成"按 key 方向定向清除"。</p>
+<p>固定衰减意味着所有位置用同一个遗忘速率，而真实序列的「该记多久」是随内容变化的：一段关键信息可能需要长期保留，噪声应当快速遗忘。让 <span class="arithmatex">\( \gamma_t = f(x_t) \)</span> 把遗忘速率变成输入的函数，模型就能按内容动态决定记忆深度。GDN 在此之上再加 <span class="arithmatex">\( \beta \)</span> 与擦除项，把「遗忘」从整体衰减细化成「按 key 方向定向清除」。</p>
 </details>
 <details class="question">
 <summary>Q3 · 混合架构为什么非要保留少量全注意力层？</summary>
-<p>因为线性/SSM 层的状态是固定容量的压缩记忆，做<strong>精确检索</strong>（从长历史里精确取回某一项信息）时先天吃亏——这正是 ByteDance 的研究在召回类任务上观察到的现象：线性比例越高、召回越差。保留少数全注意力层，相当于在压缩记忆之外留了一条"无损直通通道"，专门服务需要精确定位的依赖关系。比例因此是能力与成本的折中旋钮，而不是越线性越好。</p>
+<p>因为线性/SSM 层的状态是固定容量的压缩记忆，做<strong>精确检索</strong>（从长历史里精确取回某一项信息）时先天吃亏——这正是 ByteDance 的研究在召回类任务上观察到的现象：线性比例越高、召回越差。保留少数全注意力层，相当于在压缩记忆之外留了一条「无损直通通道」，专门服务需要精确定位的依赖关系。比例因此是能力与成本的折中旋钮，而不是越线性越好。</p>
 </details>
 <details class="question">
 <summary>Q4 · DSA 和线性注意力是竞争关系吗？</summary>
@@ -1847,7 +1847,7 @@
 <p class="admonition-title">复现速查卡</p>
 <ul>
 <li><strong>原讲义</strong>：<a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_04.pdf">CS336 lecture_04.pdf</a>（本页只整理 MoE 之前的部分）</li>
-<li><strong>核心公式</strong>：线性注意力结合律 (QKᵀ)V = Q(KᵀV)；递推形式 S_t = S_{t-1} + k_t v_tᵀ；Mamba-2 加 γ_t；GDN 加 β_t 与 (I − β_t k_t k_tᵀ) 擦除项</li>
+<li><strong>核心公式</strong>：线性注意力结合律 <span class="arithmatex">\( (QK^{\top})V = Q(K^{\top}V) \)</span>；递推形式 <span class="arithmatex">\( S_t = S_{t-1} + k_t v_t^{\top} \)</span>；Mamba-2 加 <span class="arithmatex">\( \gamma_t \)</span>；GDN 加 <span class="arithmatex">\( \beta_t \)</span> 与 <span class="arithmatex">\( (I - \beta_t k_t k_t^{\top}) \)</span> 擦除项</li>
 <li><strong>沿革线索</strong>：Shen et al. 2018 / Katharopoulos 2020（线性注意力）→ RetNet（衰减）→ Mamba-2（数据依赖门控）→ Gated DeltaNet（delta rule）→ 混合堆叠 → DSA（稀疏选择）</li>
 <li><strong>落地参考</strong>：MiniMax M1（7:1 线性/全注意力）、Nemotron 3（Mamba-2+MoE 骨干）、Qwen3.5/Next（3:1 GDN/Attention，Gated Attention + Zero-Centered RMSNorm）、DeepSeek-V3.2 与 GLM（DSA）</li>
 <li><strong>要点</strong>：混合比例在召回能力与效率间折中；DSA 可后置适配但长上下文仍需底座参与训练</li>

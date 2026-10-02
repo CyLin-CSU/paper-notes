@@ -1565,7 +1565,7 @@
 <p>预训练语料：PREST + SHHS + Cardiology，共约 1000 万样本。</p>
 </div>
 <div class="tabbed-block">
-<p>看一部分、恢复另一部分。三家的"恢复目标"完全不同：</p>
+<p>看一部分、恢复另一部分。三家的「恢复目标」完全不同：</p>
 <ul>
 <li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> → 预测<strong>离散码字</strong>（BEiT 式，附对称掩码）</li>
 <li>EEGPT → 对齐<strong>表示</strong>（JEPA 式）+ 重构原始 patch（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）</li>
@@ -1582,7 +1582,7 @@
 </div>
 </div>
 <h2 id="_3">掩码建模：预测目标的三次进化<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比让"掩码后恢复什么"成了核心设计问题，三代方案一路升级：</p>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比让「掩码后恢复什么」成了核心设计问题，三代方案一路升级：</p>
 <table>
 <thead>
 <tr>
@@ -1630,7 +1630,7 @@
 <ul>
 <li><strong><abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 全面优于 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>，平均 +2% 以上</strong>，与距离度量选择无关（ℓ2 最好，cos 最差）；</li>
 <li>理由：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 反映连续渐进的信息流，过去神经活动影响未来状态，单向建模天然贴合；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的双向重构破坏了信号的自然流向；</li>
-<li>但注意代价：自回归只能用因果注意力，<strong>看不到未来</strong>——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/EEGPT 的双向建模在"整段理解型"任务上并非没有优势。</li>
+<li>但注意代价：自回归只能用因果注意力，<strong>看不到未来</strong>——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/EEGPT 的双向建模在「整段理解型」任务上并非没有优势。</li>
 </ul>
 <h2 id="_4">三种"掩码花样"<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ol>
@@ -1645,7 +1645,7 @@
 <li><strong>stop-gradient 成对损失</strong>：<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> loss + commitment loss（<abbr title="向量量化 Vector Quantization">VQ</abbr> 三件套），把编码器和码字的更新解耦；</li>
 <li><strong>混入文本数据</strong>（NeuroLM）：接 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的模型每批喂少量纯文本，防语言能力灾难性遗忘；</li>
 <li><strong>只算答案部分的 loss</strong>（NeuroLM 指令微调）：预测更稳定；</li>
-<li><strong>LayerNorm 归一化目标</strong>（EEGPT 的 L_A 和 L_R 都对目标做 LN）：缓解极端值和协变量偏移。</li>
+<li><strong>LayerNorm 归一化目标</strong>（EEGPT 的 <span class="arithmatex">\( L_A \)</span> 和 <span class="arithmatex">\( L_R \)</span> 都对目标做 LN）：缓解极端值和协变量偏移。</li>
 </ul>
 <h2 id="_6">关联论文<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
 <p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></p>

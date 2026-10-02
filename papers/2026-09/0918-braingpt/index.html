@@ -1670,7 +1670,7 @@
 <li>所有电极<strong>共享</strong>一个 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式因果 Transformer：多头<strong>因果</strong>注意力（causal mask，只看过去）+ Swish 门控前馈网络（公式见下）；</li>
 <li>轻量 MLP 预测下一个 <abbr title="词元，模型处理的最小输入单元">token</abbr>（<strong>连续原始信号值</strong>，不做 <abbr title="向量量化 Vector Quantization">VQ</abbr> 离散化）；</li>
 <li>损失：预测的下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 与真实值之间的 ρ 距离（默认 <strong><abbr title="均方误差 Mean Squared Error">MSE</abbr></strong>），公式见下；</li>
-<li>意义：首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，直接建模"过去神经活动影响未来状态"的时序结构。</li>
+<li>意义：首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，直接建模「过去神经活动影响未来状态」的时序结构。</li>
 </ul>
 <p>Swish 门控前馈（SwiGLU 形式）：</p>
 <div class="arithmatex">\[ \mathrm{FFN}(x) = W_{\text{down}} \left( \mathrm{Swish}(W_{\text{gate}}\, x) \odot (W_{\text{up}}\, x) \right) \]</div>
@@ -1691,7 +1691,7 @@
 <h4 id="43">4.3 创新点<a class="headerlink" href="#43" title="Permanent link">#</a></h4>
 <ol>
 <li><strong>电极级建模</strong>：单电极信号为基本样本 + 电极条件 prefix <abbr title="词元，模型处理的最小输入单元">token</abbr>，支持最多 138 个电极及任意组合（覆盖面最大）；</li>
-<li><strong>首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型</strong>：从"双向掩码补全"转向"因果下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测"，更贴合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序本质（消融：同架构同损失下 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 比 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均高 2%+）；</li>
+<li><strong>首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型</strong>：从「双向掩码补全」转向「因果下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测」，更贴合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序本质（消融：同架构同损失下 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 比 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均高 2%+）；</li>
 <li><strong>首次验证 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练的 scaling law</strong>（模型规模 4 个数量级 + 数据量 0~1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 均正相关）；</li>
 <li><strong>任务共享图网络（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）实现多任务兼容与协同</strong>：首个证实多任务联合训练优于逐任务单独训练（joint 比 separate 在 5 个任务上全部提升，MW +3.9%）；</li>
 <li>渐进式时空解耦：<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 管时间（预训练）→ <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 管空间（下游）。</li>
@@ -1754,14 +1754,14 @@
 </table>
 <h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
-<li><abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 的多任务信息不在图结构里，而在'共享参数被多任务梯度共同更新'：电极节点 <span class="arithmatex">\( V_m \)</span> 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。</li>
-<li>自回归直接回归连续值（<abbr title="均方误差 Mean Squared Error">MSE</abbr>），绕开了离散化难题——与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 的'先离散再预测'形成两条并行路线。</li>
-<li>电极级拆样本让样本量 ×E 倍膨胀（3750 万），这个数字要打折看：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 补回。</li>
+<li><abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 的多任务信息不在图结构里，而在「共享参数被多任务梯度共同更新」：电极节点 <span class="arithmatex">\( V_m \)</span> 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。</li>
+<li>自回归直接回归连续值（<abbr title="均方误差 Mean Squared Error">MSE</abbr>），绕开了离散化难题——与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 的「先离散再预测」形成两条并行路线。</li>
+<li>电极级拆样本让样本量 ×E 倍膨胀（3750 万），这一数字需要谨慎解读：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 补回。</li>
 </ul>
 <h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <details class="question">
 <summary>Q1 · 为什么自回归比掩码建模更适合 <abbr title="脑电图 Electroencephalogram">EEG</abbr>？</summary>
-<p>论文的消融（同架构、同损失度量）显示 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 全面优于 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均 2% 以上：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 反映连续渐进的信息流，过去活动影响未来状态，因果的 next-<abbr title="词元，模型处理的最小输入单元">token</abbr> 预测天然贴合；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的双向补全破坏了这种时序因果结构。且 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 预测的是真实未来而非被人为挖掉的洞，任务更难、学到的表示更强。</p>
+<p>论文的消融（同架构、同损失度量）显示 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 全面优于 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均 2% 以上：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 反映连续渐进的信息流，过去活动影响未来状态，因果的 next-<abbr title="词元，模型处理的最小输入单元">token</abbr> 预测天然贴合；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的双向补全破坏了这种时序因果结构。且 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 预测的是真实未来而非被人为挖空的部分，任务更难、学到的表示更强。</p>
 </details>
 <details class="question">
 <summary>Q2 · <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 图里到底存了什么多任务信息？</summary>
@@ -1769,7 +1769,7 @@
 </details>
 <details class="question">
 <summary>Q3 · 电极级拆样本有什么代价？</summary>
-<p>样本量乘以电极数倍增（3750 万）有水分：单电极序列丢掉了跨电极的同步信息（空间关系、参考电极的共模成分），预训练学到的只是单电极时序动力学，空间整合完全押注在下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 上——这就是作者所说的渐进式时空解耦。</p>
+<p>样本量乘以电极数倍增（3750 万）存在水分：单电极序列丢掉了跨电极的同步信息（空间关系、参考电极的共模成分），预训练学到的只是单电极时序动力学，空间整合完全押注在下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 上——这就是作者所说的渐进式时空解耦。</p>
 </details>
 <details class="question">
 <summary>Q4 · 末尾追加的 special <abbr title="词元，模型处理的最小输入单元">token</abbr> c 为什么能聚合成全局表示？</summary>

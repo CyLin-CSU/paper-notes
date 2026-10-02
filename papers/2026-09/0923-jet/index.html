@@ -1716,7 +1716,7 @@
 <ul>
 <li>核心主张：<strong><abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成应建模为连续动力过程</strong>，而非离散去噪（GAN 的隐式密度估计 / diffusion 的迭代去噪与神经信号的连续演化不匹配）</li>
 <li>方法：条件流匹配学一个向量场，把高斯噪声沿连续轨迹输运到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据分布；用标准 Transformer 直接吃原始多通道序列</li>
-<li>三条"principled constraints"正则化生成流：L1 重构（Laplacian 先验，抗尖波伪迹）+ 统计一致性（一阶/二阶矩）+ 时空结构（时间全变分 + Pearson 相关）</li>
+<li>三条「principled constraints」正则化生成流：L1 重构（Laplacian 先验，抗尖波伪迹）+ 统计一致性（一阶/二阶矩）+ 时空结构（时间全变分 + Pearson 相关）</li>
 <li>三个 TUH 基准上 TS-FID 降 <strong>40%+</strong>（如 TUSZ 274→151）；Silhouette 近 0.99（基线 0.66–0.89）；下游 CBraMod 增强收益全为正</li>
 <li>效率：129.9M 参数，单张 B200；32 条 10 秒样本 4.78 s 生成（149 ms/条，约 <strong>67× 实时</strong>）</li>
 </ul>
@@ -1754,23 +1754,23 @@
 <p>由此提出核心论点：脑活动在高维状态空间里<strong>平滑演化</strong>，因此生成应当跟随一条连续轨迹，而不是一串离散的去噪步骤——这正是条件流匹配的适用场景。</p>
 <h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <h3 id="21">2.1 条件流匹配的形式化<a class="headerlink" href="#21" title="Permanent link">#</a></h3>
-<p>记 x₁ ~ q(x₁) 为 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据样本，x₀ ~ N(0, I) 为标准高斯先验。流匹配要学的是随时间演化的向量场 v_t(x, t)，把概率密度从 x₀ 输运到 x₁（t 从 0 到 1）。</p>
+<p>记 x₁ ~ q(x₁) 为 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据样本，x₀ ~ N(0, I) 为标准高斯先验。流匹配要学的是随时间演化的向量场 <span class="arithmatex">\( v_t(x, t) \)</span>，把概率密度从 x₀ 输运到 x₁（t 从 0 到 1）。</p>
 <p>为了让训练可解，采用条件流匹配：给定配对 (x₀, x₁)，定义线性插值路径</p>
 <div class="arithmatex">\[ x_t = t\,x_1 + (1-t)\,x_0, \qquad t \in [0, 1] \]</div>
 <p>其时间导数给出了回归目标向量场：</p>
 <div class="arithmatex">\[ u_t(x_t \mid x_0, x_1) = \frac{dx_t}{dt} = x_1 - x_0 \]</div>
 <p>网络 <span class="arithmatex">\(f_\theta\)</span>（即 JET）接收带噪状态 <span class="arithmatex">\(x_t\)</span>、时间 <span class="arithmatex">\(t\)</span>、类别标签 <span class="arithmatex">\(c\)</span>，预测 <span class="arithmatex">\(v_\theta(x_t, t, c)\)</span>。<strong>推理时</strong>从 <span class="arithmatex">\(x_0 \sim \mathcal{N}(0, I)\)</span> 出发解常微分方程即可采样：</p>
 <div class="arithmatex">\[ \frac{dx_t}{dt} = v_\theta(x_t, t, c) \]</div>
-<p>与扩散的对照：扩散是"随机去噪动力学"（每步注入/去除噪声），流匹配是"学习一个平滑的时变向量场，其积分曲线实现从源分布到目标分布的最优输运"。论文用三个流形上的玩具实验（螺旋、8 高斯、双月）直观对比了 GAN / 扩散 / 流匹配三种范式学到的分布。</p>
+<p>与扩散的对照：扩散是「随机去噪动力学」（每步注入/去除噪声），流匹配是「学习一个平滑的时变向量场，其积分曲线实现从源分布到目标分布的最优输运」。论文用三个流形上的玩具实验直观对比了 GAN / 扩散 / 流匹配三种范式学到的分布。</p>
 <h3 id="22">2.2 架构：为什么不切时频图、也不要邻接矩阵<a class="headerlink" href="#22" title="Permanent link">#</a></h3>
 <p>论文的架构选择有一个明确的立场：<strong>直接在原始多通道序列上建模</strong>，不做时频变换、不用预定义邻接矩阵。理由是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的两个物理性质违反了卷积与静态图模型的先验假设——<strong>容积传导</strong>让单一神经源的活动同时扩散到多个电极（空间依赖不是局部的），<strong>功能连接</strong>随时间连续演化（连接结构不是静态的）。自注意力提供的全局感受野天然适合表达跨越远近时间点与空间分布通道的依赖。</p>
-<p><strong>原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的 tokenization</strong>：输入 X ∈ R^{C×T}（C 通道、T 时间点），沿时间轴切成 N = T/P 个不重叠 patch，得到 X_p ∈ R^{C×N×P}；每个 patch 线性投影到 D 维。<strong>关键细节</strong>：与标准 ViT 先把空间维展平再做投影不同，JET 在初始 embedding 阶段<strong>保留通道身份</strong>以维持空间结构，得到 <abbr title="词元，模型处理的最小输入单元">token</abbr> 序列 Z₀ ∈ R^{(C·N)×D}，另加可学习位置编码表达时间顺序。</p>
+<p><strong>原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的 tokenization</strong>：输入 X ∈ R^{C×T}（C 通道、T 时间点），沿时间轴切成 N = T/P 个不重叠 patch，得到 <span class="arithmatex">\( X_p \)</span> ∈ R^{C×N×P}；每个 patch 线性投影到 D 维。<strong>关键细节</strong>：与标准 ViT 先把空间维展平再做投影不同，JET 在初始 embedding 阶段<strong>保留通道身份</strong>以维持空间结构，得到 <abbr title="词元，模型处理的最小输入单元">token</abbr> 序列 Z₀ ∈ R^{(C·N)×D}，另加可学习位置编码表达时间顺序。</p>
 <p><strong>Transformer 骨干</strong>：标准堆叠（多头自注意力 + FFN + LayerNorm + 残差）。条件信息（流时间 t 与类别标签 c）沿用 DiT / JiT 的做法，通过 <strong>adaptive layer normalization</strong> 注入——每层归一化的 scale/shift 参数由时间嵌入与类别嵌入之和预测，保证整条流轨迹都可被条件控制。</p>
-<p><strong>自适应类别均衡采样</strong>：临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 天然严重类别不平衡（正常背景远多于癫痫发作等罕见病理事件），均匀采样会让模型偏向多数类、甚至模式坍塌。为此给每个训练样本按类别频率赋采样概率：</p>
+<p><strong>自适应类别均衡采样</strong>：临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 天然严重类别不平衡，均匀采样会让模型偏向多数类、甚至模式坍塌。为此给每个训练样本按类别频率赋采样概率：</p>
 <div class="arithmatex">\[ p_i \propto \frac{1}{N_c^{\alpha}}, \qquad \alpha \in [0, 1] \]</div>
 <p>α 控制再平衡强度，使训练分布的期望类别频率近似均匀，让模型在不被主导节律带偏的前提下学好罕见病理模式。</p>
 <h3 id="23-principled-constraints">2.3 三条"principled constraints"<a class="headerlink" href="#23-principled-constraints" title="Permanent link">#</a></h3>
-<p>论文强调"principled"的含义是：这些约束<strong>源自 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的建模假设与统计结构</strong>，而不是临时拼凑的正则项。它们沿重构、统计、时空三个维度约束学习到的流。</p>
+<p>论文强调「principled」的含义是：这些约束<strong>源自 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的建模假设与统计结构</strong>，而不是临时拼凑的正则项。它们沿重构、统计、时空三个维度约束学习到的流。</p>
 <p><strong>（a）Laplacian 先验的重构损失</strong>——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 常含肌电、电极移动引起的脉冲式非高斯伪迹，L2 重构对应高斯似然、对离群点敏感；改用 L1 重构，隐含 Laplacian 先验，对瞬态偏离更稳健，同时保住尖锐的神经事件（如癫痫样棘波）：</p>
 <div class="arithmatex">\[ \hat{x}_1 = x_t + (1-t)\,v_\theta(x_t, t, c), \qquad \mathcal{L}_{\mathrm{recon}} = \mathbb{E}_t \left\| x_1 - \hat{x}_1 \right\|_1 \]</div>
 <p>论文在附录 C 给了定理与证明：若残差服从独立同分布 Laplacian，最小化 L1 范数等价于最大似然估计。</p>
@@ -1877,15 +1877,15 @@
 <p>三点值得注意：① TS-FID 相对最强基线降幅超过 40%；② 基线方法的 ∆Acc 基本为零甚至为负——生成的样本给分类器引入了噪声或分布偏移，而 JET 的合成数据是<strong>真正分布对齐</strong>的；③ 效率上 JET 32 条 10 秒样本 4.78 s，优于扩散的 7.01 s（<abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 4.12 s 略快但保真度与下游效用差得多），综合是保真度–延迟权衡最优。</p>
 <p><strong>生理结构分析</strong>（论文最有说服力的部分，逐条对应开头的三大挑战）：</p>
 <ul>
-<li><strong>频谱</strong>：生成 PSD 在 δ 频段（0–5Hz，含高幅病理慢波）紧贴真值、无基线失真；α 频段（8–13Hz）能复现出<strong>清晰的 α 峰</strong>而非塌成平滑 1/f 曲线，说明学到了具体的节律特征；15Hz 以上（β/γ）生成谱相对真值<strong>轻度衰减</strong>，论文的解释是选择性地抑制了无结构的高频成分（真实记录该段常被肌电与传感器噪声污染），属于"优先保留生理有意义动态"而非谱坍塌；</li>
+<li><strong>频谱</strong>：生成 PSD 在 δ 频段（0–5Hz，含高幅病理慢波）紧贴真值、无基线失真；α 频段（8–13Hz）能复现出<strong>清晰的 α 峰</strong>而非塌成平滑 1/f 曲线，说明学到了具体的节律特征；15Hz 以上（β/γ）生成谱相对真值<strong>轻度衰减</strong>，论文的解释是选择性地抑制了无结构的高频成分（真实记录该段常被肌电与传感器噪声污染），属于「优先保留生理有意义动态」而非谱坍塌；</li>
 <li><strong>时间动态</strong>：用通道聚合 RMS 包络的线性斜率、以及首末四分位的一二阶矩漂移构造统计量，与留出真数据比 1-Wasserstein 距离（以真对真划分为经验下界）。JET 的三个漂移距离（0.015/0.021/0.018）都在真对真下界的 <strong>2 倍以内</strong>，而 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN（0.065/0.078/0.071）与扩散（0.051/0.063/0.058）明显更远；</li>
-<li><strong>幅度分布</strong>：log-density 直方图显示生成样本同时复现了尖锐的中心峰与重尾衰减；群体多样性上生成与真实的谱方差置信区间大幅重叠，说明没有模式坍塌（高频段生成分布略窄，与上面的"保守约束"一致）。</li>
+<li><strong>幅度分布</strong>：log-density 直方图显示生成样本同时复现了尖锐的中心峰与重尾衰减；群体多样性上生成与真实的谱方差置信区间大幅重叠，说明没有模式坍塌（高频段生成分布略窄，与上面的「保守约束」一致）。</li>
 </ul>
 <p><strong>消融</strong>：</p>
 <ul>
 <li><strong>噪声空间拓扑</strong>：零噪声初始化 δ(0) 灾难性失败（TS-FID 1615/1964/1958 vs 高斯的 188/236/151）。论文从拓扑角度解释：从单个点出发要把退化的分布展开成复杂多模态分布，是<strong>不可表示的一对多映射</strong>，连续流做不到；高斯先验有全空间支撑，才能把概率质量平滑输运到目标分布；</li>
 <li><strong>约束层级</strong>：只用 <code>L_recon</code> 最差（TUEV 287.81）——纯逐像素距离导致均值化、丢失高频纹理；单项添加中结构约束（<code>L_tv</code>、<code>L_corr</code>）收益最大，<code>L_tv</code> 大幅压高频噪声、<code>L_corr</code> 保证相位对齐；<code>L_cons</code> 是必要的能量包络正则（单独追求平滑或相关会得到物理上不合理的信号）。四项齐全最好（235.86）；</li>
-<li><strong>约束设计 vs tokenizer 式损失</strong>：把 JET 的约束换成 BrainOmni 式的 tokenizer 损失集、同一骨干重训，三个基准全面变差（314.87/471.15/369.28）。论文诚实声明"单个项（L1 重构、Pearson 相关）在先前工作中并非首创"，但强调<strong>这套组合是与原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 结构对齐的</strong>——增益来自约束设计而非单纯增加损失项；</li>
+<li><strong>约束设计 vs tokenizer 式损失</strong>：把 JET 的约束换成 BrainOmni 式的 tokenizer 损失集、同一骨干重训，三个基准全面变差（314.87/471.15/369.28）。论文诚实声明「单个项（L1 重构、Pearson 相关）在先前工作中并非首创」，但强调<strong>这套组合是与原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 结构对齐的</strong>——增益来自约束设计而非单纯增加损失项；</li>
 <li><strong>Patch 大小</strong>：P ∈ {50, 100, 200} 的分布保真度稳定，更细的 patch 对瞬态事件形态略好但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 数翻倍/四倍；P=400 全局与局部质量都退化，故默认 P=200 作为效率–保真折中。</li>
 </ul>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
@@ -1913,7 +1913,7 @@
 <tbody>
 <tr>
 <td>CBraMod</td>
-<td>本文用它做下游效用评估的骨干分类器——生成质量最终由它的准确率增益来背书，是生成侧的"裁判"</td>
+<td>本文用它做下游效用评估的骨干分类器——生成质量最终由它的准确率增益来背书，是生成侧的「裁判」</td>
 </tr>
 <tr>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / TFM-Tokenizer</td>
@@ -1921,7 +1921,7 @@
 </tr>
 <tr>
 <td>NeuroLM / BrainGPT</td>
-<td>那些是"解码/表示"轴线（<abbr title="脑电图 Electroencephalogram">EEG</abbr> → 语义），JET 是"生成"轴线（噪声 → <abbr title="脑电图 Electroencephalogram">EEG</abbr>）——本笔记是站内第一篇生成向论文</td>
+<td>那些是「解码/表示」轴线（<abbr title="脑电图 Electroencephalogram">EEG</abbr> → 语义），JET 是「生成」轴线（噪声 → <abbr title="脑电图 Electroencephalogram">EEG</abbr>）——本笔记是站内第一篇生成向论文</td>
 </tr>
 <tr>
 <td><abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN / Vanilla Diffusion</td>
@@ -1933,17 +1933,17 @@
 </tr>
 <tr>
 <td>SleepGPT（待读清单）</td>
-<td>对照：SleepGPT 是"时频编码器 + 生成式预训练 + 多任务解码"的大模型路线（用生成能力做增强与伪迹修复），JET 是"流匹配 + 原始波形"的专用生成器路线</td>
+<td>对照：SleepGPT 是「时频编码器 + 生成式预训练 + 多任务解码」的大模型路线（用生成能力做增强与伪迹修复），JET 是「流匹配 + 原始波形」的专用生成器路线</td>
 </tr>
 </tbody>
 </table>
 <h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>对我的项目直接可用的三件事</strong>：① 三条约束里 <code>L_recon</code>（L1）+ <code>L_corr</code> 是性价比最高的起点，消融显示结构约束单项收益最大；② 类别均衡采样的 <span class="arithmatex">\(p_i \propto 1/N_c^{\alpha}\)</span> 几乎零成本，直接对应 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集的严重不平衡；③ adaLN 注入条件（时间 + 类别嵌入之和预测 scale/shift）是流匹配 + Transformer 组合的标准做法，值得直接沿用；</li>
-<li><strong>"保留通道身份"这个细节只在正文 §3.2 出现过一次</strong>（附录 B.1 描述 tokenization 时并未重申，只说了切 patch 与线性投影）——它是容易被复现者忽略的隐含设计：与 ViT 先展平空间维不同，JET 让 <abbr title="词元，模型处理的最小输入单元">token</abbr> 序列是 (C·N) 而非 N，对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 而言通道是物理量，展平等于把电极身份交给模型自己从位置编码里猜；</li>
+<li><strong>「保留通道身份」这个细节只在正文 §3.2 出现过一次</strong>（附录 B.1 描述 tokenization 时并未重申，只说了切 patch 与线性投影）——它是容易被复现者忽略的隐含设计：与 ViT 先展平空间维不同，JET 让 <abbr title="词元，模型处理的最小输入单元">token</abbr> 序列是 (C·N) 而非 N，对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 而言通道是物理量，展平等于把电极身份交给模型自己从位置编码里猜；</li>
 <li><strong>零噪声失败的拓扑解释</strong>值得记住：这不是超参问题而是<strong>结构性不可表示</strong>。如果我之后尝试 shortcut/one-step 生成（把噪声起点变少），这篇的论证提示了边界在哪里——退化起点会破坏一对多映射的表达能力；</li>
-<li><strong>论文最诚实的部分</strong>是承认单独损失项并非首创、以及明确给出高频衰减并给出"选择性抑制噪声"的解释。高频段那个 15Hz 以上轻度衰减，反过来也说明当前约束<strong>偏向保守</strong>：TV 正则本质上是惩罚高频，和"保留高频瞬态信息"存在张力。若我要生成对高频敏感的范式（如高频振荡 HFO、γ 节律研究），这个 <code>λ_tv</code> 需要重新标定——这是一个现成的改进切口。（注：附录 D.2 对 &gt;20Hz 的表述与正文 §4.3(3) 的"轻度衰减"不一致，引用时以正文为准。）</li>
-<li><strong>一个可以补的实验</strong>：论文的生理分析缺"生成数据是否真的改善<strong>罕见类</strong>下游性能"的分层报告——∆Acc 是整体准确率，而 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 临床价值恰在罕见病理事件。类别均衡采样 + 生成增强的组合，最该证明的正是"罕见类召回率提升"。</li>
+<li><strong>论文最诚实的部分</strong>是承认单独损失项并非首创、以及明确报告高频衰减并给出「选择性抑制噪声」的解释。高频段那个 15Hz 以上轻度衰减，反过来也说明当前约束<strong>偏向保守</strong>：TV 正则本质上是惩罚高频，和「保留高频瞬态信息」存在张力。若我要生成对高频敏感的范式（如高频振荡 HFO、γ 节律研究），这个 <code>λ_tv</code> 需要重新标定——这是一个现成的改进切口。（注：附录 D.2 对 &gt;20Hz 的表述与正文 §4.3(3) 的「轻度衰减」不一致，引用时以正文为准。）</li>
+<li><strong>一个可以补的实验</strong>：论文的生理分析缺「生成数据是否真的改善<strong>罕见类</strong>下游性能」的分层报告——∆Acc 是整体准确率，而 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 临床价值恰在罕见病理事件。类别均衡采样 + 生成增强的组合，最该证明的正是「罕见类召回率提升」。</li>
 </ul>
 <h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <details class="question">
@@ -1960,7 +1960,7 @@
 </details>
 <details class="question">
 <summary>Q4 · Patch 化会不会割断跨 patch 的长程依赖？</summary>
-<p>这正是题目"Let <abbr title="脑电图 Electroencephalogram">EEG</abbr> Models Learn <abbr title="脑电图 Electroencephalogram">EEG</abbr>"的反面担忧。论文的答卷有两层：① 自注意力提供全局感受野，跨 patch 依赖由注意力显式建模（不像卷积受局部窗口限制）；② patch 大小消融显示 P ∈ {50,100,200} 分布保真度稳定，说明 P=200（1 秒 @200Hz）没有明显割断全局结构。不过注意 P=200 时 TUAB 的时间轴只切成 <strong>10 个 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>——序列极短，这既是效率来源（21.5GB 显存可训），也意味着模型在时间粒度上相当粗。</p>
+<p>这正是题目「Let <abbr title="脑电图 Electroencephalogram">EEG</abbr> Models Learn <abbr title="脑电图 Electroencephalogram">EEG</abbr>」的反面担忧。论文的答卷有两层：① 自注意力提供全局感受野，跨 patch 依赖由注意力显式建模（不像卷积受局部窗口限制）；② patch 大小消融显示 P ∈ {50,100,200} 分布保真度稳定，说明 P=200（1 秒 @200Hz）没有明显割断全局结构。不过注意 P=200 时 TUAB 的时间轴只切成 <strong>10 个 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>——序列极短，这既是效率来源（21.5GB 显存可训），也意味着模型在时间粒度上相当粗。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>

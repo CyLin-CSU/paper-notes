@@ -1619,7 +1619,7 @@
 </ul>
 </div>
 <h4 id="11">1.1 动机：全量微调的三重困境<a class="headerlink" href="#11" title="Permanent link">#</a></h4>
-<p>大模型落地的标准流程是"预训练 + 适配下游任务"，主流做法全量微调（更新所有权重），但它有三重代价：</p>
+<p>大模型落地的标准流程是「预训练 + 适配下游任务」，主流做法全量微调（更新所有权重），但它有三重代价：</p>
 <ol>
 <li><strong>部署贵</strong>：每个下游任务都要存一份完整模型副本——<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-3 175B 级别一个 checkpoint 就是 350GB；</li>
 <li><strong>训练贵</strong>：优化器状态（Adam 的动量与二阶矩）让显存开销远超权重本身；</li>
@@ -1629,7 +1629,7 @@
 <h4 id="12">1.2 方法：低秩旁路<a class="headerlink" href="#12" title="Permanent link">#</a></h4>
 <p>对预训练权重 W₀ ∈ ℝ^{d×k}，LoRA 把它冻结，在旁边加一条可训练的低秩旁路，只对旁路做前向计算：</p>
 <div class="arithmatex">\[ \mathbf{h} = \mathbf{W}_0 \mathbf{x} + \Delta \mathbf{W} \mathbf{x} \;=\; \mathbf{W}_0 \mathbf{x} + \frac{\alpha}{r} \, \mathbf{B} \mathbf{A} \mathbf{x} \]</div>
-<p>其中 A ∈ ℝ^{r×k}（降维）、B ∈ ℝ^{d×r}（升维），秩 r ≪ min(d, k)。<strong>初始化</strong>：A 用随机高斯、B 置零——于是训练起点 ΔW = BA = 0，模型完全等价于预训练原模型，从"零偏移"出发平稳启动。</p>
+<p>其中 A ∈ ℝ^{r×k}（降维）、B ∈ ℝ^{d×r}（升维），秩 r ≪ min(d, k)。<strong>初始化</strong>：A 用随机高斯、B 置零——于是训练起点 ΔW = BA = 0，模型完全等价于预训练原模型，从零偏移出发平稳启动。</p>
 <p>参数量的账很好算：</p>
 <div class="arithmatex">\[ \underbrace{d \times k}_{\text{全量微调}} \;\longrightarrow\; \underbrace{r \times (d + k)}_{\text{LoRA}} \]</div>
 <p>以 d = k = 12288、r = 8 为例：全量 1.5 亿参数的更新空间被压到约 20 万，压缩比约 768 倍。</p>
@@ -1715,9 +1715,9 @@
 </tr>
 </tbody>
 </table>
-<p>一个反直觉的消融结论：<strong>单纯增大 r 而不扩大挂载的矩阵类型，质量往往不升反降</strong>——说明低秩子空间本身容量已够，瓶颈在"把 LoRA 放到哪些层"。</p>
+<p>一个反直觉的消融结论：<strong>单纯增大 r 而不扩大挂载的矩阵类型，质量往往不升反降</strong>——说明低秩子空间本身容量已够，瓶颈在「把 LoRA 放到哪些层」。</p>
 <h4 id="15">1.5 为什么低秩有效，以及它的局限<a class="headerlink" href="#15" title="Permanent link">#</a></h4>
-<p><strong>有效性</strong>：原论文的子空间分析显示，用不同随机种子、不同 r 学到的 ΔWg 高度共享同一个子空间（相似度随 r 增大趋平）——增大会 r 并不会引入更多有用方向，佐证了"更新量本征秩低"的假设。</p>
+<p><strong>有效性</strong>：原论文的子空间分析显示，用不同随机种子、不同 r 学到的 ΔWg 高度共享同一个子空间（相似度随 r 增大趋平）——增大会 r 并不会引入更多有用方向，佐证了「更新量本征秩低」的假设。</p>
 <p><strong>局限</strong>：</p>
 <ol>
 <li>逐样本而言 ΔW = BA 秩不超过 r，但<strong>一个 batch 堆叠后的联合更新并不严格低秩</strong>——LoRA 的秩约束只在单样本意义下成立；</li>
@@ -1759,10 +1759,10 @@
 <p>此外还有大量改进线（rsLoRA 的稳定缩放、LoRA+ 的 A/B 不等学习率、PiSSA 的主成分初始化等），思路都围绕缩放方式、初始化与预算分配三个旋钮展开。</p>
 <h4 id="17-eeg">1.7 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 大模型语境下怎么用<a class="headerlink" href="#17-eeg" title="Permanent link">#</a></h4>
 <ul>
-<li><strong>已读六篇的微调光谱</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 依赖全量微调（linear probing 在 TUEV 崩到 0.346，表示与微调强绑定）；EEGPT 主打免微调 linear probing；TFM-Tokenizer 参数太小（1.9M）可以全训。LoRA 卡在光谱中间：<strong>比线性探针容量大、比全量微调便宜两个数量级</strong>——正好适合"拿开源 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 的权重、适配自己的任务"的场景；</li>
+<li><strong>已读六篇的微调光谱</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 依赖全量微调（linear probing 在 TUEV 崩到 0.346，表示与微调强绑定）；EEGPT 主打免微调 linear probing；TFM-Tokenizer 参数太小（1.9M）可以全训。LoRA 卡在光谱中间：<strong>比线性探针容量大、比全量微调便宜两个数量级</strong>——正好适合「拿开源 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 的权重、适配自己的任务」的场景；</li>
 <li><strong>NeuroLM 是现成试验田</strong>：它的底座就是 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，PEFT 库的 LoRA 配置可以直接套用；</li>
 <li><strong><abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据普遍偏小</strong>，全量微调容易过拟合且灾难性遗忘预训练知识——低秩约束本身即正则。建议从 <strong>r=4~8、只挂注意力 q/v</strong> 起步，任务简单时甚至可以只调分类头 + LoRA；</li>
-<li>这也是 eeg2text-lite 项目"预训练 → LoRA → 解码"路线的理论支点：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 到文本/解码器的适配任务数据量小、映射偏移有限，处于 LoRA 的甜点区。</li>
+<li>这也是 eeg2text-lite 项目「预训练 → LoRA → 解码」路线的理论支点：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 到文本/解码器的适配任务数据量小、映射偏移有限，处于 LoRA 的甜点区。</li>
 </ul>
 <h2 id="_1">自问自答<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <details class="question">
@@ -1771,7 +1771,7 @@
 </details>
 <details class="question">
 <summary>Q2 · α/r 这个缩放为什么除以 r？</summary>
-<p>把不同 r 下的旁路输出量级拉平，使得扫 r 时不用连带重调学习率——α 才是真正控制"适配强度"的旋钮。rsLoRA 后续指出 α/r 在大 r 时会让更新量衰减过快，改用 α/√r 更稳。</p>
+<p>把不同 r 下的旁路输出量级拉平，使得扫 r 时不用连带重调学习率——α 才是真正控制适配强度的旋钮。rsLoRA 后续指出 α/r 在大 r 时会让更新量衰减过快，改用 α/√r 更稳。</p>
 </details>
 <details class="question">
 <summary>Q3 · LoRA 和 Adapter / Prefix-tuning 的本质区别？</summary>
