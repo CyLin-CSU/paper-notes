@@ -21,7 +21,7 @@ TFM-Tokenizer (ICLR 2026)
 
 #### 6.1 问题定位
 
-EEG tokenization 是被忽视的关键问题。对现有方法的批评：① 多数基础模型只是把连续信号规则切段（"仅仅离散化"，没有学词表）；② LaBraM 虽学了 VQ tokenizer，但 token **只作为训练目标、推理时被丢弃**，基础模型仍然吃连续段级 embedding——没享受 tokenization 的红利。TFM-Tokenizer 要学一个**时频 motif 词表**，并把离散 token **真正作为下游模型输入**。
+EEG tokenization 是被忽视的关键问题。对现有方法的批评：① 多数基础模型只是把连续信号规则切段（「仅仅离散化」，没有学词表）；② LaBraM 虽学了 VQ tokenizer，但 token **只作为训练目标、推理时被丢弃**，基础模型仍然吃连续段级 embedding——没享受 tokenization 的红利。TFM-Tokenizer 要学一个**时频 motif 词表**，并把离散 token **真正作为下游模型输入**。
 
 三大设计原则：① **单通道级**训练（channel-agnostic，跨设备泛化）；② **Token 分辨率**应捕捉 motif（短时、重复、有判别意义的时频波形模式，如振荡爆发、棘波）；③ 学习目标应**显式包含时频表示**（纯时域 motif 会被低频主导、丢失高频信息）。
 
@@ -30,7 +30,7 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 **（a）TFM-Tokenizer（单通道 motif 学习，双路径）**
 
 - 输入：单通道 EEG，切重叠 patch（窗长 L、hop H），每 patch 对应一个 STFT 频谱窗口 `S_i`（窗长 200 点=1s，hop 100=0.5s，Hann 窗，只取幅值）；
-- **频域路径——Localized Spectral Window Encoder**（相比 BIOT"整窗过一个线性层"的改进）：
+- **频域路径——Localized Spectral Window Encoder**（相比 BIOT「整窗过一个线性层」的改进）：
   1. **Frequency Patch Encoder**：每个频谱窗沿频率轴切成 P 个不重叠 patch（每 patch 覆盖 Δf 个频点），线性投影 + GroupNorm + GeLU；
   2. **Frequency Transformer**：沿频率轴做注意力，建模**窗内跨频段依赖**；
   3. **Gated Patchwise Aggregation**：sigmoid 门控聚合（强调重要频段、抑制无关频段，如睡眠任务只关心 <32Hz）；
@@ -58,8 +58,8 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 
 #### 6.3 创新点
 
-1. **首次系统研究 EEG 的"可学习词表"问题，且 token 作为真正的输入**（与 LaBraM"一次性标签"形成对照）；
-2. **时频 motif 作为离散 token**：双路径显式建模时频结构（频域路径窗内跨频段依赖 + 门控聚合），token 具有生理可解释性（如 token 4035 稳定对应 PLED 的"棘波-慢波"周期模式）；
+1. **首次系统研究 EEG 的「可学习词表」问题，且 token 作为真正的输入**（与 LaBraM「一次性标签」形成对照）；
+2. **时频 motif 作为离散 token**：双路径显式建模时频结构（频域路径窗内跨频段依赖 + 门控聚合），token 具有生理可解释性（如 token 4035 稳定对应 PLED 的「棘波-慢波」周期模式）；
 3. **单通道、channel-agnostic**：不依赖 10-20 系统，可迁移到 ear-EEG 等非标准设备（EEGPT 的固定空间 embedding 则无法扩展到该场景）；
 4. **去掉位置编码**的 tokenizer 设计（有消融和理论论证）；
 5. **模型极小**：tokenizer ~1.2M + 下游 ~0.7M ≈ 1.9M，比 BIOT（3.2M）、LaBraM（5.8M+8.6M）小，性能反而更好；

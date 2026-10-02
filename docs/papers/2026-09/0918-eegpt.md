@@ -36,11 +36,11 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 **双自监督预训练**
 
 1. **掩码方式（与 MAE 相反的关键设计）**：mask 掉 50% 时间 × 80% 通道的 patch，**encoder 处理的恰恰是被 mask 的稀疏部分**，且每个时间步追加 S 个可学习 **summary token**（类似 [CLS]）聚合信息；
-2. **时空表示对齐（JEPA 风格，损失 L_A）**：
+2. **时空表示对齐（JEPA 风格，损失 \( L_A \)）**：
    - **Momentum encoder**（与 encoder 同构，EMA 动量 m=0.01）处理**全部** token（masked ∪ unmasked），作为预测目标 `menc_j`；
    - **Predictor**：拿 encoder 在 masked 部分的特征 + RoPE 旋转位置编码 + 可学习 query token，预测**全部时间段**的特征 `pred_j`；
    - 对齐损失：\( \mathcal{L}_A = -\tfrac{1}{N} \sum_{j=1}^{N} \left\| \mathrm{pred}_j,\ \mathrm{LN}(\mathrm{menc}_j) \right\|_2^2 \)（LayerNorm 稳定训练）；
-3. **掩码重构（MAE 风格，损失 L_R）**：
+3. **掩码重构（MAE 风格，损失 \( L_R \)）**：
    - **Reconstructor**：encoder 特征（masked 部分）+ predictor 特征 + 位置信息 → 重构被 mask 部分的原始 patch；encoder→reconstructor 之间有 **skip connection**（保持特征、加速收敛）；
    - 重构损失：\( \mathcal{L}_R = -\tfrac{1}{|\mathcal{M}|} \sum_{(i,j) \in \mathcal{M}} \left\| \mathrm{rec}_{i,j},\ \mathrm{LN}(p_{i,j}) \right\|_2^2 \)（目标也做 LayerNorm）；
 4. 总损失 \( \mathcal{L} = \mathcal{L}_A + \mathcal{L}_R \)。
@@ -79,7 +79,7 @@ flowchart TD
 - 预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；
 - 下游：BCIC-2A/2B（运动想象）、Sleep-EDFx（睡眠分期）、KaggleERN、PhysioP300（ERP）、TUAB、TUEV；
 - 结果：TUEV 上比 BIOT 提升 9.5% balanced acc；与 BENDR/BIOT/LaBraM 对比在多个任务领先（其中仅 BENDR 为全量微调，BIOT/LaBraM 同样采用线性探针协议）；
-- 消融：去掉对齐损失 L_A 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary token 数量 S=4 较优。
+- 消融：去掉对齐损失 \( L_A \) 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary token 数量 S=4 较优。
 
 ---
 
@@ -94,7 +94,7 @@ flowchart TD
 !!! abstract "TL;DR"
     - ~10M 参数（8 个变体 0.4M–101M）；下游只用 linear probing 即达 SOTA
     - TUEV balanced acc 0.6232，比 BIOT（0.5281）高 9.5%
-    - 双自监督：表示对齐（L_A，JEPA 式）+ 掩码重构（L_R，MAE 式）；掩码 50% 时间 × 80% 通道
+    - 双自监督：表示对齐（\( L_A \)，JEPA 式）+ 掩码重构（\( L_R \)，MAE 式）；掩码 50% 时间 × 80% 通道
 
 
 ## 与其他论文的关系
@@ -107,7 +107,7 @@ flowchart TD
 
 ## 个人思考
 - 把 linear probing 当评估协议本身就是贡献：冻结 encoder 后性能完全归因于表示质量，排除了微调技巧的干扰。
-- 'encoder 看被 mask 的稀疏部分、momentum encoder 看全量'的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。
+- 「encoder 看被 mask 的稀疏部分、momentum encoder 看全量」的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。
 - 附录证明去掉 predictor 会表示坍塌（重构 loss 不再下降）——对齐分支必须保留 query/位置等余量，防止模型走捷径。
 
 ## 自问自答

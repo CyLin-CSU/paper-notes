@@ -5,7 +5,7 @@ tags: [tokenization, 综述]
 
 # EEG Tokenization 演进
 
-> 一条主线：**token 从"预处理产物" → "训练靶子" → "真正的模型输入"**。
+> 一条主线：**token 从「预处理产物」→「训练靶子」→「真正的模型输入」**。
 
 ## 演进时间线
 
@@ -32,7 +32,7 @@ timeline
 逐通道独立切段（1s 窗、0.5s 重叠），token embedding = FFT 能量 → FCN ⊕ 通道 embedding ⊕ 正弦位置编码。
 
 - 解决了：异构格式统一（缺通道直接丢 token）；
-- 没解决：token 是确定性切分的产物，没有数据驱动的词表，谈不上"语义单元"。
+- 没解决：token 是确定性切分的产物，没有数据驱动的词表，谈不上「语义单元」。
 
 ### 第二步：LaBraM —— "学词表但只当标签"
 
@@ -44,7 +44,7 @@ VQ-VAE 式 codebook（8192×64），重构目标用 DFT 幅值+相位（原始�
 
 两条不同的上岗方式：
 
-- **NeuroLM**：把 codebook 索引**并入 GPT-2 词表**，EEG 变成"外语句子"喂给 LLM，靠 GRL 对抗对齐文本空间 → 通向多任务指令推理；
+- **NeuroLM**：把 codebook 索引**并入 GPT-2 词表**，EEG 变成「外语句子」喂给 LLM，靠 GRL 对抗对齐文本空间 → 通向多任务指令推理；
 - **TFM**：token embedding 查表（码字初始化）作为轻量 Transformer 的**输入**，且作为即插即用组件替换 BIOT/LaBraM 的输入端 → 通向通用 tokenization 层。
 
 ## 关键技术分歧
@@ -60,7 +60,7 @@ VQ-VAE 式 codebook（8192×64），重构目标用 DFT 幅值+相位（原始�
 
 ### 位置编码的争论
 
-BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，**TFM 在 tokenizer 内刻意去掉位置编码**（消融：Kappa 0.5119→0.5337，token 利用率 12.87%→9.78%[^pe]。
+BIOT 用正弦相对位置编码，LaBraM 用可学习时/空 embedding，**TFM 在 tokenizer 内刻意去掉位置编码**（消融：Kappa 0.5119→0.5337，token 利用率 12.87%→9.78%[^pe]）。
 
 理由：EEG motif 非平稳，同一模式可出现在任意位置；加 PE 会让相同 motif 在不同位置学成不同 token → 词表冗余。motif 词表需要的是**平移不变性**。
 

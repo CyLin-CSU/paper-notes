@@ -5,7 +5,13 @@ import sys
 p = sys.argv[1] if len(sys.argv) > 1 else r'docs/papers/2026-09/0923-jet.md'
 
 with open(p, encoding='utf-8') as f:
-    lines = f.readlines()
+    raw = f.read()
+
+# strip fenced code blocks entirely (mermaid/Python examples contain pseudo-symbols by design)
+raw = re.sub(r'```.*?```', '', raw, flags=re.S)
+# strip HTML comments (e.g. <!-- LAST_UPDATE --> placeholders)
+raw = re.sub(r'<!--.*?-->', '', raw, flags=re.S)
+lines = raw.splitlines()
 
 bad = []
 in_dollar_block = False

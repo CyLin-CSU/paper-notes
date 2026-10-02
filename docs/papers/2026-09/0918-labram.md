@@ -21,7 +21,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 #### 2.1 问题定位
 
-受 LLM 启发探索大型 EEG 模型（LEMs）。三大挑战：① 缺乏足够大规模 EEG 数据（收集了 ~2500 小时、约 20 个数据集）；② EEG 采集配置多样（电极数、时长不一）；③ 缺乏有效的 EEG 表示学习范式（低信噪比）。核心答案：**把 EEG 切成 channel patch，用向量量化的"神经 tokenization"得到离散神经码，再用 BERT 式掩码预测码字来预训练**。
+受 LLM 启发探索大型 EEG 模型（LEMs）。三大挑战：① 缺乏足够大规模 EEG 数据（收集了 ~2500 小时、约 20 个数据集）；② EEG 采集配置多样，电极数、时长不一；③ 缺乏有效的 EEG 表示学习范式（低信噪比）。核心答案：**把 EEG 切成 channel patch，用向量量化的「神经 tokenization」得到离散神经码，再用 BERT 式掩码预测码字来预训练**。
 
 #### 2.2 方法
 
@@ -46,7 +46,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 - patch embedding 中随机 mask 比例 r=0.5，被 mask 位置换成可学习 mask token；
 - Transformer 编码可见 patch，线性分类头预测被 mask patch 对应的**码字索引**，交叉熵损失；
 - **对称掩码（Symmetric Masking）**：mask 的补集也各做一次 masked modeling——省一次 tokenizer 前向 + 提供更多掩码视角（相当于数据增强），提升下游性能与稳定性；
-- **VAE/ELBO 理论解释**（附录 B）：tokenizer 是后验 q_φ(z|x)，decoder 是 p_ψ(x̃|z)，masked modeling 学习先验 p_θ(z|x^M)；两阶段分别对应"最小化重构损失"和"固定 q、p_ψ 最小化 KL"。
+- **VAE/ELBO 理论解释**（附录 B）：tokenizer 是后验 \( q_\phi(z \mid x) \)，decoder 是 \( p_\psi(\tilde{x} \mid z) \)，masked modeling 学习先验 \( p_\theta(z \mid x^M) \)；两阶段分别对应「最小化重构损失」和「固定 \( q \)、\( p_\psi \) 最小化 KL」。
 
 **模型规格**：Base 5.8M（12层/200维/10头）、Large 46M、Huge 369M——当时 BCI 领域最大模型。
 
@@ -54,7 +54,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 1. **首个**在 2500 小时、约 20 个数据集上预训练的大规模 EEG 基础模型（数据本身即是贡献）；
 2. **channel patch** 切分 + 可学习空间 embedding，天然兼容任意电极数/时长配置；
-3. **神经 codebook**：VQ 离散码 + 傅里叶频谱重构目标——绕开原始波形不可重构的难题，把连续 EEG 变成 8192 个"神经 token"的离散语义空间；
+3. **神经 codebook**：VQ 离散码 + 傅里叶频谱重构目标——绕开原始波形不可重构的难题，把连续 EEG 变成 8192 个「神经 token」的离散语义空间；
 4. **掩码码字预测**（masked neural code prediction）替代原始信号重构作为预训练目标；
 5. 对称掩码策略（效率 + 数据多样性）；
 6. 大规模 scaling 实验（数据量 1~2500 小时 × 模型 Base/Large/Huge），证实 EEG 领域也遵循 scaling law（Huge 模型在万小时级数据上仍会持续提升）。
@@ -111,11 +111,11 @@ flowchart TD
 | 论文 / 工作 | 关系说明 |
 |---|---|
 | NeuroLM | 同团队续作：tokenizer 改为时频双域重构 + GRL 文本空间对齐，token 并入 GPT-2 词表 |
-| TFM-Tokenizer | 批评其 token '只当训练目标、推理时被丢弃'；并入 TFM tokenizer 后（BIOT-TFM/LaBraM-TFM 合计）93% 的指标情形提升 |
+| TFM-Tokenizer | 批评其 token 「只当训练目标、推理时被丢弃」；并入 TFM tokenizer 后（BIOT-TFM/LaBraM-TFM 合计）93% 的指标情形提升 |
 | EEGPT / BrainGPT | 作为预训练基线被比较；BrainGPT 猜测其预训练语料偏癫痫临床域，domain 差异拖累一般下游任务 |
 
 ## 个人思考
-- 最有价值的发现是'重构域'的选择：EEG 低信噪比导致重构原始波形不收敛 → 改为频谱目标。这一思路后来被 NeuroLM（去掉相位）和 TFM（掩码频谱图）继续演进。
+- 最有价值的发现是重构域的选择：EEG 低信噪比导致重构原始波形不收敛 → 改为频谱目标。这一思路后来被 NeuroLM（去掉相位）和 TFM（掩码频谱图）继续演进。
 - 线性探针在 TUEV 崩到 0.346，说明其表示与全量微调强绑定——对比 EEGPT 把 linear probing 做成核心卖点。
 - 对称掩码让一个样本产生 mask/补集两个互补视角，既是效率技巧（省一次 tokenizer 前向）也是数据增强（大模型受益更明显）。
 
