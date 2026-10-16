@@ -25,25 +25,43 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 #### 3.2 方法
 
-**理论动机（式 1→2）**：标准 MAE 只有 \( \mathcal{H}(d_\phi(z),\ x \odot (1-M)) \) 重构项，没有显式的 z；EEGPT 加一条表示对齐分支 \( \mathcal{H}(z,\ f_\theta(x)) \)，显式地让 encoder 输出 z 携带全局语义（类似 MVEB 的最小充分表示），提升编码质量与泛化。
+**理论动机（式 1→2）**：标准 MAE 只有 \( \mathcal{H}(d_\phi(z),\ x \odot (1-M)) \) 重构项，没有显式的隐变量z；EEGPT 加一条表示对齐分支 \( \mathcal{H}(z,\ f_\theta(x)) \)，显式地让 encoder 输出 z ，携带全局语义，提升编码质量与泛化。
 
 **局部时空 embedding**
 
 - 58 电极、256Hz、输入 4 秒（T=1024）；每 patch 时间长度 d=64（250ms），共 N=16 个时间 patch；
-- patch 线性嵌入 + **通道 embedding（Codex book）**：所有可学习通道向量 `{ς_i}` + 通道名→向量的映射 ℜ，**灵活对应任意数据集的通道配置**（通道适配的关键）；
+- patch embedding + **通道 embedding（Code book）**：可学习通道向量 `{ς_i}`，**灵活对应任意数据集的通道配置**（通道适配的关键）；
 - \( \mathrm{token}_{i,j} = \mathrm{Embed}(p_{i,j}) + \varsigma_i \)。
 
 **双自监督预训练**
 
-1. **掩码方式（与 MAE 相反的关键设计）**：mask 掉 50% 时间 × 80% 通道的 patch，**encoder 处理的恰恰是被 mask 的稀疏部分**，且每个时间步追加 S 个可学习 **summary token**（类似 [CLS]）聚合信息；
-2. **时空表示对齐（JEPA 风格，损失 \( L_A \)）**：
-   - **Momentum encoder**（与 encoder 同构，EMA 动量 m=0.01）处理**全部** token（masked ∪ unmasked），作为预测目标 `menc_j`；
-   - **Predictor**：拿 encoder 在 masked 部分的特征 + RoPE 旋转位置编码 + 可学习 query token，预测**全部时间段**的特征 `pred_j`；
-   - 对齐损失：\( \mathcal{L}_A = -\tfrac{1}{N} \sum_{j=1}^{N} \left\| \mathrm{pred}_j,\ \mathrm{LN}(\mathrm{menc}_j) \right\|_2^2 \)（LayerNorm 稳定训练）；
-3. **掩码重构（MAE 风格，损失 \( L_R \)）**：
-   - **Reconstructor**：encoder 特征（masked 部分）+ predictor 特征 + 位置信息 → 重构被 mask 部分的原始 patch；encoder→reconstructor 之间有 **skip connection**（保持特征、加速收敛）；
-   - 重构损失：\( \mathcal{L}_R = -\tfrac{1}{|\mathcal{M}|} \sum_{(i,j) \in \mathcal{M}} \left\| \mathrm{rec}_{i,j},\ \mathrm{LN}(p_{i,j}) \right\|_2^2 \)（目标也做 LayerNorm）；
-4. 总损失 \( \mathcal{L} = \mathcal{L}_A + \mathcal{L}_R \)。
+整个流程三条路径，输入均为 patch 化后的 EEG。
+
+**路径① · 完整信号 → Momentum encoder（对齐目标）**。不做掩码，经动量编码器 \( f_{\bar\theta} \)（权重由在线 encoder 的 EMA 更新，目标侧不回传梯度）输出**全部位置**的目标表示：
+
+\[ \mathrm{menc}_j = f_{\bar\theta}(x)_j, \qquad j = 1, \dots, N \]
+
+**路径② · 掩码信号（真值备用）**。按 \(50\%\) 时间 × \(80\%\) 通道挖掉 patch，被挖掉的原始 patch 记为 \( \{p_{i,j}\}_{(i,j)\in\mathcal{M}} \)，留作重构目标。与 MAE 相反的关键设计：encoder 不看这些位置，只处理掩码后剩下的稀疏可见 token，且每个时间步追加 \(S\) 个可学习 summary token（类似 [CLS]）聚合全局信息。
+
+**路径③ · 掩码视图 → Encoder → 两个头（学习支路）**。
+
+- **Encoder** 编码稀疏可见部分：
+
+\[ z_{\mathcal{V}} = f_\theta\big( \{x_p\}_{p\in\mathcal{V}},\ \text{summary tokens} \big), \qquad \mathcal{V}\ \text{为可见位置集合} \]
+
+- **Predictor（对齐头）**：以 encoder 特征 + RoPE 旋转位置编码 + 可学习 query token，预测**全部时间段**的表示，与路径①的目标做对齐（JEPA 风格：在表示空间对齐，不做像素级重建；目标侧 LayerNorm 稳定训练）：
+
+\[ \mathrm{pred}_j = P\big( z_{\mathcal{V}},\ \mathrm{RoPE}_j,\ q \big), \qquad \mathcal{L}_A = \frac{1}{N} \sum_{j=1}^{N} \big\| \mathrm{pred}_j - \mathrm{LN}(\mathrm{menc}_j) \big\|_2^2 \]
+
+- **Reconstructor（重构头）**：encoder 特征（可见部分）+ predictor 特征 + 位置信息 → 映射回原始信号维度，只重构被掩 patch（encoder→reconstructor 有 **skip connection**，保持特征、加速收敛），与路径②的真值对齐（MAE 风格，目标侧同样做 LayerNorm）：
+
+\[ \mathcal{L}_R = \frac{1}{|\mathcal{M}|} \sum_{(i,j)\in\mathcal{M}} \big\| \mathrm{rec}_{i,j} - \mathrm{LN}(p_{i,j}) \big\|_2^2 \]
+
+**总损失**：
+
+\[ \mathcal{L} = \mathcal{L}_A + \mathcal{L}_R \]
+
+分工：\( \mathcal{L}_A \) 迫使 encoder 在只剩稀疏可见 token 的条件下输出对齐全量目标的全局语义表示（linear probing 不微调直接可用的来源）；\( \mathcal{L}_R \) 把表示锚回局部信号细节。
 
 **下游 Linear Probing**
 
@@ -55,7 +73,7 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 1. **双自监督**：表示对齐（JEPA 式，在表示空间预测）+ 掩码重构（MAE 式，在信号空间重构）——显式表示 z，对抗低信噪比导致的特征质量差；
 2. **掩码方向反转**：encoder 看被 mask 的稀疏部分、momentum encoder 看全量，迫使 encoder 输出含全局信息；
-3. **通道 Codex book**（名字→向量映射）实现跨设备/跨通道配置适配；
+3. **通道 Code book**（名字→向量映射）实现跨设备/跨通道配置适配；
 4. **Linear probing 达到 SOTA**：证明学到的特征本身足够通用，小样本下游免微调；
 5. 参数规模 scaling law 实证：\( \mathrm{ACC} = (33.6 \cdot N)^{0.029} \)、\( \mathcal{L}_R = (0.72 \cdot N)^{-0.014} \)。
 
