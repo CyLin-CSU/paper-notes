@@ -772,6 +772,96 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026-10
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026-10
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../papers/2026-10/1017-eegdm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1017 · EEGDM (arXiv 2026 · 扩散表征)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1201,7 +1291,7 @@
   <span class="md-ellipsis">
     
   
-    十一篇方法对比
+    十二篇方法对比
   
 
     
@@ -1530,7 +1620,7 @@
 
 
 <h1 id="_1">参考文献索引<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>十一篇精读论文（含 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。</p>
+<p>十一篇精读论文（含 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod / EEGDM）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。</p>
 <h2 id="_2">基础架构与预训练范式<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -1601,6 +1691,24 @@
 <td>arXiv 2022（Lipman et al.）</td>
 <td>JET</td>
 <td>连续归一化流的简化训练目标，JET 生成框架的基础</td>
+</tr>
+<tr>
+<td>DDPM</td>
+<td>NeurIPS 2020（Ho et al.）</td>
+<td>生成脉络 · EEGDM</td>
+<td>去噪扩散概率模型的奠基工作（L_simple 噪声预测目标）</td>
+</tr>
+<tr>
+<td>Improved DDPM</td>
+<td>ICML 2021（Nichol &amp; Dhariwal）</td>
+<td>EEGDM</td>
+<td>L_vlb 变分下界与可学习协方差预测（EEGDM 的第二项损失）</td>
+</tr>
+<tr>
+<td>Latent Diffusion Model</td>
+<td>CVPR 2022（Rombach et al.）</td>
+<td>EEGDM</td>
+<td>在压缩隐空间做扩散的范式出处（EEGDM 改用零训练 PCA 隐空间）</td>
 </tr>
 <tr>
 <td>DiT (Peebles &amp; Xie)</td>
@@ -1856,6 +1964,12 @@
 <td>ICLR 2025</td>
 <td>TFM · LUNA · JET · <a href="../papers/2026-09/0928-cbramod/">本站精读</a></td>
 <td>十字交叉脑基础模型（<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET 用其作生成数据下游裁判；LUNA 效率对照）</td>
+</tr>
+<tr>
+<td>EEGDM</td>
+<td>arXiv 2025（v5 2026-10）</td>
+<td><a href="../papers/2026-10/1017-eegdm/">本站精读</a></td>
+<td>潜扩散生成目标做 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征学习：encoder 表示作扩散条件、不 detach 联合优化；类不均衡鲁棒（与 Puah-EEGDM-SSM 撞名）</td>
 </tr>
 <tr>
 <td>CPVT（条件位置编码 CPE）</td>

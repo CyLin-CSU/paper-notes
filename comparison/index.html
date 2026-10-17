@@ -22,7 +22,7 @@
     
     
       
-        <title>十一篇方法对比 - Paper Notes · 论文阅读笔记</title>
+        <title>十二篇方法对比 - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              十一篇方法对比
+              十二篇方法对比
             
           </span>
         </div>
@@ -774,6 +774,96 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026-10
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026-10
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../papers/2026-10/1017-eegdm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1017 · EEGDM (arXiv 2026 · 扩散表征)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1212,7 +1302,7 @@
   <span class="md-ellipsis">
     
   
-    十一篇方法对比
+    十二篇方法对比
   
 
     
@@ -1230,7 +1320,7 @@
   <span class="md-ellipsis">
     
   
-    十一篇方法对比
+    十二篇方法对比
   
 
     
@@ -1281,7 +1371,7 @@
   <a href="#20252026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        扩展四篇速览（2025–2026：异构管理与生成轴线）
+        扩展五篇速览（2025–2026：异构管理与生成轴线）
       
     </span>
   </a>
@@ -1541,7 +1631,7 @@
   <a href="#20252026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        扩展四篇速览（2025–2026：异构管理与生成轴线）
+        扩展五篇速览（2025–2026：异构管理与生成轴线）
       
     </span>
   </a>
@@ -1651,7 +1741,7 @@
   
 
 
-<h1 id="_1">十一篇方法对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h1 id="_1">十二篇方法对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <h2 id="tuev-cohens-kappa">📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）<a class="headerlink" href="#tuev-cohens-kappa" title="Permanent link">#</a></h2>
 <p>数据来源：TFM-Tokenizer 论文 Table 1（统一评测口径）。† 表示在四个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集上复现预训练。</p>
 <canvas id="kappa-chart" height="130"></canvas>
@@ -1825,105 +1915,22 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h2 id="20252026">扩展四篇速览（2025–2026：异构管理与生成轴线）<a class="headerlink" href="#20252026" title="Permanent link">#</a></h2>
-<p>核心六篇回答的是「<abbr title="词元，模型处理的最小输入单元">token</abbr> 该是什么、怎么预训练」；下面四篇把问题推到了新的轴上——<strong>EEGMoE / LUNA</strong> 分别用「解耦」与「统一」处理 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的任务域异构与电极拓扑异构（对通道异构问题的两种相反哲学），<strong>JET</strong> 把建模对象从「表示」换成「信号本身」（生成轴线），<strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></strong> 则是同一套「时频图 + 大模型」思路在射频域的完整落地。</p>
-<table>
-<thead>
-<tr>
-<th>维度</th>
-<th>EEGMoE</th>
-<th>LUNA</th>
-<th>JET</th>
-<th>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>发表</strong></td>
-<td>IEEE TNNLS 2026</td>
-<td>NeurIPS 2025</td>
-<td>ICML 2026</td>
-<td>arXiv 2026</td>
-</tr>
-<tr>
-<td><strong>轴线</strong></td>
-<td>判别 · 多任务表示</td>
-<td>判别 · 拓扑无关基础模型</td>
-<td><strong>生成</strong>（流匹配）</td>
-<td>跨领域参照（RF 时频图 + <abbr title="大语言模型 Large Language Model">LLM</abbr>）</td>
-</tr>
-<tr>
-<td><strong>核心机制</strong></td>
-<td>SSMoE 块：Top-K Specific 专家（域特性）+ 软路由 Shared 专家（域共性），相加融合</td>
-<td>Q 个学习 query + 交叉注意力把任意电极拓扑压进固定隐空间（Q×E），时间注意力只在隐空间上做</td>
-<td>条件流匹配：线性插值路径 → 预测向量场 → ODE 采样；原始多通道序列 + adaLN 条件注入</td>
-<td>IQ→<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图→<strong>复用现成 VLM 视觉编码器</strong>→RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀→<abbr title="大语言模型 Large Language Model">LLM</abbr> 生成回答</td>
-</tr>
-<tr>
-<td><strong>异构/域哲学</strong></td>
-<td><strong>解耦保留</strong>（域差异是需要学的信号）</td>
-<td><strong>统一抹平</strong>（拓扑差异是噪声，置换不变性）</td>
-<td>不处理（固定 16 通道 TUH 设置）</td>
-<td>不处理（合成数据天然统一）</td>
-</tr>
-<tr>
-<td><strong>输入形态</strong></td>
-<td>4-D 脑地图（时间 × 5 频带 × 2D 电极网格）</td>
-<td>原始波形双路嵌入（1D Conv + FFT 幅相）+ 3D 电极坐标 NeRF 式编码</td>
-<td>原始波形 patch（<strong>保留通道身份</strong>，序列 (C·N)×D）</td>
-<td><abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 幅值谱图（512×512，dB）</td>
-</tr>
-<tr>
-<td><strong>词表/离散化</strong></td>
-<td>无（MoE 分工）</td>
-<td>无（连续隐空间瓶颈）</td>
-<td>无（连续向量场）</td>
-<td>无 RF 词表（只扩展 <abbr title="大语言模型 Large Language Model">LLM</abbr> 文本词表）</td>
-</tr>
-<tr>
-<td><strong>训练目标</strong></td>
-<td>掩码 embedding 重构（L1）+ 负载均衡辅助损失</td>
-<td>掩码 patch 重构（Smooth-L1）+ query 特化损失</td>
-<td>流匹配回归 + 三条生理约束（L1 重构 / 统计一致性 / TV+Pearson）</td>
-<td>无预训练，纯合成数据 SFT（梯度只算答案）</td>
-</tr>
-<tr>
-<td><strong>模型规模</strong></td>
-<td>1.68M 总 / 0.89M 激活</td>
-<td>7M / 43M / 311.4M</td>
-<td>129.9M</td>
-<td>Qwen2.5-VL 3B / 7B</td>
-</tr>
-<tr>
-<td><strong>数据</strong></td>
-<td>9 数据集约 142h（6 预训练 + 3 LOSO 微调）</td>
-<td>TUEG + Siena <strong>21,900h</strong>（3 种拓扑）</td>
-<td>TUAB / TUEV / TUSZ（16 通道，&gt;10,000 sessions）</td>
-<td>全合成：6 技术标准波形 + TorchSig，~12,000 场景 / 0.625M 指令对（零人工标注）</td>
-</tr>
-<tr>
-<td><strong>下游/评测</strong></td>
-<td>线性头微调（LOSO）</td>
-<td>聚合 query + MLP 微调</td>
-<td>生成质量 TS-FID + 下游增强 ΔAcc（CBraMod 当裁判）</td>
-<td>文本回答（WBMC/WBOD/WTR/WNUC/NRIE 五族）</td>
-</tr>
-<tr>
-<td><strong>代表成绩</strong></td>
-<td>DEAP-V/A 59.40 / 62.73，BCIC4-2a 47.92，STEW 72.41（全面超复现的 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）</td>
-<td>TUAR AUROC <strong>0.921</strong>、TUSL <strong>0.802</strong> 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 81.57%（-1pp vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge）；8000 通道 FLOPs 仅 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180</td>
-<td>TS-FID 188 / 236 / 151（基线 274–449，<strong>-40%+</strong>）；Silhouette≈0.99；ΔAcc 全正（基线≈0）</td>
-<td>WTR <strong>99.6%</strong> joint；通用 VLM（含 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5）精心 prompt 仍随机猜</td>
-</tr>
-<tr>
-<td><strong>代码</strong></td>
-<td>声明将放出（未附链接）</td>
-<td><a href="https://github.com/pulp-bio/biofoundation">pulp-bio/biofoundation</a></td>
-<td><a href="https://y-research-sbu.github.io/JET/">项目页</a></td>
-<td>论文未附仓库</td>
-</tr>
-</tbody>
-</table>
+<h2 id="20252026">扩展五篇速览（2025–2026：异构管理与生成轴线）<a class="headerlink" href="#20252026" title="Permanent link">#</a></h2>
+<p>核心六篇回答的是「<abbr title="词元，模型处理的最小输入单元">token</abbr> 该是什么、怎么预训练」；下面五篇把问题推到了新的轴上——<strong>EEGMoE / LUNA</strong> 分别用「解耦」与「统一」处理 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的任务域异构与电极拓扑异构（对通道异构问题的两种相反哲学），<strong>JET</strong> 把建模对象从「表示」换成「信号本身」（生成轴线），<strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></strong> 则是同一套「时频图 + 大模型」思路在射频域的完整落地，<strong>EEGDM</strong> 把生成目标反向用于表征学习（encoder 表示作扩散条件，以生成训表征）。</p>
+<p>| 维度 | EEGMoE | LUNA | JET | RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> | EEGDM |
+|---|---|---|---|---|
+| <strong>发表</strong> | IEEE TNNLS 2026 | NeurIPS 2025 | ICML 2026 | arXiv 2026 | arXiv 2026（IEEE 预印本 v5） |
+| <strong>轴线</strong> | 判别 · 多任务表示 | 判别 · 拓扑无关基础模型 | <strong>生成</strong>（流匹配） | 跨领域参照（RF 时频图 + <abbr title="大语言模型 Large Language Model">LLM</abbr>） | <strong>生成</strong>（潜扩散）· 表征学习导向 |
+| <strong>核心机制</strong> | SSMoE 块：Top-K Specific 专家（域特性）+ 软路由 Shared 专家（域共性），相加融合 | Q 个学习 query + 交叉注意力把任意电极拓扑压进固定隐空间（Q×E），时间注意力只在隐空间上做 | 条件流匹配：线性插值路径 → 预测向量场 → ODE 采样；原始多通道序列 + adaLN 条件注入 | IQ→<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图→<strong>复用现成 VLM 视觉编码器</strong>→RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀→<abbr title="大语言模型 Large Language Model">LLM</abbr> 生成回答 | encoder 表示（3 视图平均，不 detach）作条件，经 adaLN-Zero 调制 DiT 在 PCA 隐空间（K=20）去噪；去噪损失经条件反传，encoder 与扩散联合优化 |
+| <strong>异构/域哲学</strong> | <strong>解耦保留</strong>（域差异是需要学的信号） | <strong>统一抹平</strong>（拓扑差异是噪声，置换不变性） | 不处理（固定 16 通道 TUH 设置） | 不处理（合成数据天然统一） | 不处理（19 通道 TUEG 统一）；类不均衡靠类均衡指标（G-Mean/Macro AUC）显式应对 |
+| <strong>输入形态</strong> | 4-D 脑地图（时间 × 5 频带 × 2D 电极网格） | 原始波形双路嵌入（1D Conv + FFT 幅相）+ 3D 电极坐标 NeRF 式编码 | 原始波形 patch（<strong>保留通道身份</strong>，序列 (C·N)×D） | <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 幅值谱图（512×512，dB） | 原始波形 1s patch（1D conv 时序编码）；3 源视图（零掩蔽 0.4s / 幅值缩放） |
+| <strong>词表/离散化</strong> | 无（MoE 分工） | 无（连续隐空间瓶颈） | 无（连续向量场） | 无 RF 词表（只扩展 <abbr title="大语言模型 Large Language Model">LLM</abbr> 文本词表） | 无（连续隐空间 + 连续扩散） |
+| <strong>训练目标</strong> | 掩码 embedding 重构（L1）+ 负载均衡辅助损失 | 掩码 patch 重构（Smooth-L1）+ query 特化损失 | 流匹配回归 + 三条生理约束（L1 重构 / 统计一致性 / TV+Pearson） | 无预训练，纯合成数据 SFT（梯度只算答案） | 噪声预测 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 变分下界（λ=1），经条件 e 反传至 encoder |
+| <strong>模型规模</strong> | 1.68M 总 / 0.89M 激活 | 7M / 43M / 311.4M | 129.9M | Qwen2.5-VL 3B / 7B | 25M 下游 encoder（生成模块下游弃用） |
+| <strong>数据</strong> | 9 数据集约 142h（6 预训练 + 3 LOSO 微调） | TUEG + Siena <strong>21,900h</strong>（3 种拓扑） | TUAB / TUEV / TUSZ（16 通道，&gt;10,000 sessions） | 全合成：6 技术标准波形 + TorchSig，~12,000 场景 / 0.625M 指令对（零人工标注） | TUEG 19ch（200Hz/30s 样本，4×A100 约 113h） |
+| <strong>下游/评测</strong> | 线性头微调（LOSO） | 聚合 query + MLP 微调 | 生成质量 TS-FID + 下游增强 ΔAcc（CBraMod 当裁判） | 文本回答（WBMC/WBOD/WTR/WNUC/NRIE 五族） | 微调 + 线性探针；6 任务（TUEV / TUAB / SHU-<abbr title="运动想象 Motor Imagery">MI</abbr> / CL-Drive / Seed-VII / DMER） |
+| <strong>代表成绩</strong> | DEAP-V/A 59.40 / 62.73，BCIC4-2a 47.92，STEW 72.41（全面超复现的 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>） | TUAR AUROC <strong>0.921</strong>、TUSL <strong>0.802</strong> 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 81.57%（-1pp vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge）；8000 通道 FLOPs 仅 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180 | TS-FID 188 / 236 / 151（基线 274–449，<strong>-40%+</strong>）；Silhouette≈0.99；ΔAcc 全正（基线≈0） | WTR <strong>99.6%</strong> joint；通用 VLM（含 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5）精心 prompt 仍随机猜 | TUEV Bal Acc <strong>0.6826</strong> / G-Mean 0.6443 / Macro AUC 0.9169 全场最佳，少数类 SPSW 召回 50.3%（基线 10–18%）；TUAB 0.8180 第二；DMER 五指标最佳 |
+| <strong>代码</strong> | 声明将放出（未附链接） | <a href="https://github.com/pulp-bio/biofoundation">pulp-bio/biofoundation</a> | <a href="https://y-research-sbu.github.io/JET/">项目页</a> | 论文未附仓库 | <a href="https://github.com/wangsc18/EEGDM">wangsc18/EEGDM</a> |</p>
 <h2 id="_3">核心分歧点解读<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <p><strong>① 「<abbr title="词元，模型处理的最小输入单元">token</abbr> 到底是什么」——六篇的根本分野</strong></p>
 <ul>
@@ -1960,7 +1967,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <h2 id="_4">演进脉络一句话<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <p><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></strong>（2023）解决了「异构信号如何统一编码」（连续 <abbr title="词元，模型处理的最小输入单元">token</abbr> + 线性注意力）→ <strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>（2024）证明「低信噪比 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 能学出离散语义码且大规模预训练有效」（<abbr title="向量量化 Vector Quantization">VQ</abbr>+频谱目标，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只当靶子）→ <strong>EEGPT</strong>（2024）指出掩码目标不该是原始信号而应是高质量表示（双自监督+线性探针）→ <strong>BrainGPT</strong>（2024）把范式从掩码补全扭向自回归并冲到十亿参数 → <strong>NeuroLM</strong>（2025）把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 真正接进 <abbr title="大语言模型 Large Language Model">LLM</abbr> 实现单模型多任务指令推理 → <strong>TFM-Tokenizer</strong>（2026）回到 tokenization 本身，给出第一个「学词表、可解释、跨设备、即插即用」的完整答案。此后问题重心转移：<strong>LUNA</strong>（2025）与 <strong>EEGMoE</strong>（2026）分别从「统一拓扑」与「解耦域」两端吃异构性，<strong>JET</strong>（2026）开辟连续生成轴线，<strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></strong>（2026）证明该范式跨模态通用——从「怎么表示 <abbr title="脑电图 Electroencephalogram">EEG</abbr>」走向「怎么管理 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的异构性、以及能否直接生成它」。</p>
 <hr>
-<p><em>核心六篇部分总结自各论文原文；扩展四篇同。实验数字均引自各论文报告值。</em></p>
+<p><em>核心六篇部分总结自各论文原文；扩展五篇同。实验数字均引自各论文报告值。</em></p>
 <h2 id="benchmarks">🏆 跨论文 Benchmark 战绩表<a class="headerlink" href="#benchmarks" title="Permanent link">#</a></h2>
 <p>所有数字均引自各论文自报结果（⚠️ 各论文预处理/数据划分存在差异，仅作量级参考）。<code>—</code> 表示该论文未报告该任务。</p>
 <h3 id="tuab-balanced-accuracy">TUAB（异常检测 · Balanced Accuracy）<a class="headerlink" href="#tuab-balanced-accuracy" title="Permanent link">#</a></h3>
@@ -2022,6 +2029,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <td><strong>0.9227</strong></td>
 <td>CBraMod Table 14（4.0M；防泄漏重训版 0.8249 / 0.9156）</td>
 </tr>
+<tr>
+<td>EEGDM</td>
+<td>0.8180</td>
+<td>0.8922</td>
+<td>EEGDM Table IV（25M，微调；全场第二，CBraMod 仍第一；线性探针 0.7813）</td>
+</tr>
 </tbody>
 </table>
 <h3 id="tuev">TUEV（事件分类）<a class="headerlink" href="#tuev" title="Permanent link">#</a></h3>
@@ -2073,9 +2086,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>CBraMod</td>
-<td><strong>0.6671</strong></td>
+<td>0.6671</td>
 <td><strong>0.6772</strong></td>
 <td>CBraMod Table 13（4.0M 打过 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 369M；防泄漏重训版 0.6659 / 0.6744）</td>
+</tr>
+<tr>
+<td>EEGDM</td>
+<td><strong>0.6826</strong></td>
+<td>0.5357</td>
+<td>EEGDM Table II（25M，微调；Bal Acc 最佳 / G-Mean 0.6443 / Macro AUC 0.9169 也最佳，Kappa 落后——少数类召回换来的口径分歧）</td>
 </tr>
 </tbody>
 </table>
@@ -2117,6 +2136,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>10 任务 12 数据集全 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>（4.0M 参数）：FACED Kappa 0.5041 · ISRUC 睡眠分期 Kappa 0.7442 · CHB-MIT Bal Acc 0.7398 · PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> Kappa 0.5222；TUAB/TUEV 做了防泄漏重训仍第一</td>
 </tr>
 <tr>
+<td>EEGDM</td>
+<td>6 任务全面有竞争力（全部最佳或第二）：TUEV 最稀有类 SPSW 召回 50.3%（掩码基线 10–18%）；DMER 情绪分布预测五指标最佳；扩散合成增强 CL-Drive +5.4pp</td>
+</tr>
+<tr>
 <td>JET⚙ 生成</td>
 <td>TS-FID 188.27 / 235.86 / 151.27（TUAB/TUEV/TUSZ，基线 274–449）；Silhouette 0.983–0.995；下游增强 ΔAcc +0.017~+0.032（CBraMod 裁判）</td>
 </tr>
@@ -2128,7 +2151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <div class="admonition note">
 <p class="admonition-title">数据快照</p>
-<p>本表数字整理于 <strong>2026-09-28</strong>（覆盖十一篇：六篇核心 + LUNA / EEGMoE / JET / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / CBraMod）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。</p>
+<p>本表数字整理于 <strong>2026-10-17</strong>（覆盖十二篇：六篇核心 + LUNA / EEGMoE / JET / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / CBraMod / EEGDM）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。</p>
 </div>
 <h2 id="critique-chain">🔗 论文互怼链<a class="headerlink" href="#critique-chain" title="Permanent link">#</a></h2>
 <p>箭头方向 = 批评/改进指向。每条边标注批评点。</p>
@@ -2161,6 +2184,10 @@ document.addEventListener("DOMContentLoaded", function () {
     EEGMOE -- "统一格式不解耦域，&lt;br/&gt;域失配拖累迁移" --&gt; LABRAM
     JET -- "EEG 生成应连续演化，&lt;br/&gt;离散去噪错配神经动态" --&gt; EEGGAN
     RFGPT -- "谱图可直接喂现成 VLM，&lt;br/&gt;无需自训时频词表" --&gt; TFM
+    EEGDM["EEGDM&lt;br/&gt;arXiv 2026"]:::new
+    EEGDM -- "掩码重构可由局部插值求解，&lt;br/&gt;学不到全局生成约束" --&gt; LABRAM
+    EEGDM -- "少数类召回 10–18%（SPSW）&lt;br/&gt;容量花在局部统计上" --&gt; CBRAMOD
+    EEGDM -.-&gt;|"同轴线互补：&lt;br/&gt;JET 生成质量 / EEGDM 表征副产品"| JET
 
     classDef old fill:#eceff1,stroke:#90a4ae,color:#263238
     classDef mid fill:#fff3e0,stroke:#ffb74d,color:#3e2723

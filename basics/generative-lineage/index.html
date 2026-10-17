@@ -774,6 +774,96 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026-10
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026-10
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/2026-10/1017-eegdm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1017 · EEGDM (arXiv 2026 · 扩散表征)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1398,7 +1488,7 @@
   <span class="md-ellipsis">
     
   
-    十一篇方法对比
+    十二篇方法对比
   
 
     
@@ -1833,7 +1923,7 @@
 <h2 id="7-eeg">7 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语境中的位置<a class="headerlink" href="#7-eeg" title="Permanent link">#</a></h2>
 <ul>
 <li><strong><abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 分支</strong> → 已精读的 <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>（神经码本 + 频谱重构目标）/ <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a>（码字并入 <abbr title="大语言模型 Large Language Model">LLM</abbr> 词表）/ <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM</a>（时频 motif 词表）；</li>
-<li><strong>DDPM 线</strong> → <a href="../../papers/2026-09/0923-jet/">JET</a> 的 Vanilla Diffusion 基线与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 对照。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；</li>
+<li><strong>DDPM 线</strong> → <a href="../../papers/2026-09/0923-jet/">JET</a> 的 Vanilla Diffusion 基线与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 对照。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；<a href="../../papers/2026-10/1017-eegdm/">EEGDM</a> 把条件潜扩散（PCA 隐空间 + DiT）整个用作表征学习目标——encoder 表示当扩散条件且不 detach，生成即表征；</li>
 <li><strong>FM 线</strong> → JET 本体：线性插值路径 + 三条生理约束（在 FM 损失之外施加结构正则）；</li>
 <li><strong>先验的拓扑要求三代一致</strong>：JET 的「零噪声初始化灾难性失败」（TS-FID 1600+）是「先验必须非退化、具有全空间支撑」的实证——VAE 的标准正态先验、DDPM 的 <span class="arithmatex">\( x_T \)</span>、FM 的 <span class="arithmatex">\( x_0 \)</span> 无一例外。</li>
 </ul>
