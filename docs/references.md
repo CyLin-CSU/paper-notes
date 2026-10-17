@@ -36,7 +36,11 @@ tags: [索引, 参考文献]
 |---|---|---|---|
 | Linformer | arXiv 2020 | BIOT | 低秩 E/F 投影线性注意力的出处 |
 | Transformers are RNNs（线性注意力） | ICML 2020 | BIOT · TFM | 线性复杂度注意力的另一条路线；TFM 下游直接采用 |
-| Graph Attention Networks (GAT) | ICLR 2018 | BrainGPT | TEG 电极图网络的注意力机制 |
+| Graph Attention Networks (GAT) | ICLR 2018 | BrainGPT · [图神经网络基础页](basics/gnn.md) | TEG 电极图网络的注意力机制 |
+| GCN | ICLR 2017（Kipf & Welling） | [图神经网络基础页](basics/gnn.md) | 对称归一化邻居平均的一阶谱卷积（图卷积的事实标准） |
+| GraphSAGE | NeurIPS 2017（Hamilton et al.） | [图神经网络基础页](basics/gnn.md) | 邻居采样 + 归纳式聚合（新节点/新图免重算） |
+| GIN | ICLR 2019（Xu et al.） | [图神经网络基础页](basics/gnn.md) | sum 聚合达到消息传递表达力上限（1-WL 等价） |
+| ChebNet | NeurIPS 2016（Defferrard et al.） | [图神经网络基础页](basics/gnn.md) | 切比雪夫多项式谱滤波（GCN 一阶近似的来源） |
 | RoFormer（RoPE 旋转位置编码） | NeuroComputing 2024 | EEGPT · LUNA | predictor/时间编码器的位置信息 |
 | NeRF 式正弦编码 | Commun. ACM 2021 | LUNA | 3D 电极坐标的连续位置编码（任意拓扑有定义） |
 | LayerNorm | arXiv 2016 | 全部六篇 | 各处归一化的基础组件 |

@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-10-17** · 模型架构基础新增：图神经网络——消息传递 / 谱卷积 / GAT / 表达力边界，BrainGPT TEG 的机制基础
+
 - **2026-10-17** · 新增精读 EEGDM（arXiv 2026）：潜扩散生成目标替代掩码重构——encoder 表示作扩散条件联合优化，TUEV 类不均衡指标全场最佳
 
 - **2026-09-28** · 新增精读 CBraMod（ICLR 2025）：十字交叉注意力 + 非对称条件位置编码——EEG-FM-Compass 统一 benchmark 综合第一
@@ -148,6 +150,12 @@ title: 首页
     VAE → DDPM → Flow Matching
 
     一条主线：似然积分算不动——变分下界、逐步去噪、直连速度场的**三代绕法**。tags: `ELBO` `扩散` `流匹配`
+
+- :material-graph:{ .lg .middle } **[图神经网络](basics/gnn.md)**
+    ---
+    消息传递 · GAT · 表达力
+
+    网格与序列之外的第三种形态：置换不变聚合、谱卷积出身、过平滑边界——BrainGPT TEG 的机制基础。tags: `消息传递` `GAT` `图卷积`
 
 </div>
 
