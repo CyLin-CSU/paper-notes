@@ -5,7 +5,7 @@ tags: [索引, 参考文献]
 
 # 参考文献索引
 
-十一篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
+十一篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
 ## 基础架构与预训练范式
 
@@ -21,6 +21,9 @@ tags: [索引, 参考文献]
 | ViT-22B 训练修改 | ICML 2023 | LaBraM | QK 先 LayerNorm、QKV 去 bias 等稳定化技巧 |
 | LoRA: Low-Rank Adaptation | ICLR 2022 | [LoRA 基础页](basics/lora.md) | 低秩旁路参数高效微调的事实标准（含变体族谱） |
 | Flow Matching | arXiv 2022（Lipman et al.） | JET | 连续归一化流的简化训练目标，JET 生成框架的基础 |
+| DDPM | NeurIPS 2020（Ho et al.） | 生成脉络 · EEGDM | 去噪扩散概率模型的奠基工作（L_simple 噪声预测目标） |
+| Improved DDPM | ICML 2021（Nichol & Dhariwal） | EEGDM | L_vlb 变分下界与可学习协方差预测（EEGDM 的第二项损失） |
+| Latent Diffusion Model | CVPR 2022（Rombach et al.） | EEGDM | 在压缩隐空间做扩散的范式出处（EEGDM 改用零训练 PCA 隐空间） |
 | DiT (Peebles & Xie) | ICCV 2023 | JET | adaLN 条件注入的出处（时间/类别嵌入预测 scale/shift） |
 | Set Transformer | ICML 2019 | LUNA | inducing points 思想来源（置换不变集合抽象） |
 | Perceiver IO | ICLR 2022 | LUNA | 固定大小隐空间瓶颈处理可变输入的机制来源 |
@@ -72,6 +75,7 @@ tags: [索引, 参考文献]
 | MMM | NeurIPS 2023/2024 | NeuroLM · TFM | 拓扑无关表示（多维位置编码、多级通道层次） |
 | Brant | NeurIPS 2023 | NeuroLM | 颅内 EEG 基础模型（长程依赖+时空联合） |
 | CBraMod | ICLR 2025 | TFM · LUNA · JET · [本站精读](papers/2026-09/0928-cbramod.md) | 十字交叉脑基础模型（EEG-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET 用其作生成数据下游裁判；LUNA 效率对照） |
+| EEGDM | arXiv 2025（v5 2026-10） | [本站精读](papers/2026-10/1017-eegdm.md) | 潜扩散生成目标做 EEG 表征学习：encoder 表示作扩散条件、不 detach 联合优化；类不均衡鲁棒（与 Puah-EEGDM-SSM 撞名） |
 | CPVT（条件位置编码 CPE） | arXiv 2021 | CBraMod | ACPE 的直接来源：卷积动态生成位置编码，CBraMod 推广为非对称双轴 |
 | CCNet（criss-cross attention） | ICCV 2019 | CBraMod | 十字交叉注意力的视觉出处（单注意力图仿射近似） |
 | CSWin Transformer | CVPR 2022 | CBraMod | 十字形状窗口注意力的视觉出处（CBraMod 双路并行设计参照） |

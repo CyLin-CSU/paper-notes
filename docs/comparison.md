@@ -1,4 +1,4 @@
-# 十一篇方法对比
+# 十二篇方法对比
 
 ## 📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）
 
@@ -53,24 +53,24 @@ document.addEventListener("DOMContentLoaded", function () {
 | **多任务** | 否（逐任务微调） | 否 | 否（逐任务线性探针） | **是**（TEG 联合训练，验证协同增益） | **是**（指令微调单模型六任务） | 否（但组件可迁移） |
 | **跨设备** | 通道表可扩展 | 受限于 10-20 空间 embedding | 受限（固定 58 通道布局） | 支持 138 电极任意组合 | 未验证 | **单通道设计，ear-EEG 验证最强** |
 
-## 扩展四篇速览（2025–2026：异构管理与生成轴线）
+## 扩展五篇速览（2025–2026：异构管理与生成轴线）
 
-核心六篇回答的是「token 该是什么、怎么预训练」；下面四篇把问题推到了新的轴上——**EEGMoE / LUNA** 分别用「解耦」与「统一」处理 EEG 的任务域异构与电极拓扑异构（对通道异构问题的两种相反哲学），**JET** 把建模对象从「表示」换成「信号本身」（生成轴线），**RF-GPT** 则是同一套「时频图 + 大模型」思路在射频域的完整落地。
+核心六篇回答的是「token 该是什么、怎么预训练」；下面五篇把问题推到了新的轴上——**EEGMoE / LUNA** 分别用「解耦」与「统一」处理 EEG 的任务域异构与电极拓扑异构（对通道异构问题的两种相反哲学），**JET** 把建模对象从「表示」换成「信号本身」（生成轴线），**RF-GPT** 则是同一套「时频图 + 大模型」思路在射频域的完整落地，**EEGDM** 把生成目标反向用于表征学习（encoder 表示作扩散条件，以生成训表征）。
 
-| 维度 | EEGMoE | LUNA | JET | RF-GPT |
+| 维度 | EEGMoE | LUNA | JET | RF-GPT | EEGDM |
 |---|---|---|---|---|
-| **发表** | IEEE TNNLS 2026 | NeurIPS 2025 | ICML 2026 | arXiv 2026 |
-| **轴线** | 判别 · 多任务表示 | 判别 · 拓扑无关基础模型 | **生成**（流匹配） | 跨领域参照（RF 时频图 + LLM） |
-| **核心机制** | SSMoE 块：Top-K Specific 专家（域特性）+ 软路由 Shared 专家（域共性），相加融合 | Q 个学习 query + 交叉注意力把任意电极拓扑压进固定隐空间（Q×E），时间注意力只在隐空间上做 | 条件流匹配：线性插值路径 → 预测向量场 → ODE 采样；原始多通道序列 + adaLN 条件注入 | IQ→STFT 谱图→**复用现成 VLM 视觉编码器**→RF token 前缀→LLM 生成回答 |
-| **异构/域哲学** | **解耦保留**（域差异是需要学的信号） | **统一抹平**（拓扑差异是噪声，置换不变性） | 不处理（固定 16 通道 TUH 设置） | 不处理（合成数据天然统一） |
-| **输入形态** | 4-D 脑地图（时间 × 5 频带 × 2D 电极网格） | 原始波形双路嵌入（1D Conv + FFT 幅相）+ 3D 电极坐标 NeRF 式编码 | 原始波形 patch（**保留通道身份**，序列 (C·N)×D） | STFT 幅值谱图（512×512，dB） |
-| **词表/离散化** | 无（MoE 分工） | 无（连续隐空间瓶颈） | 无（连续向量场） | 无 RF 词表（只扩展 LLM 文本词表） |
-| **训练目标** | 掩码 embedding 重构（L1）+ 负载均衡辅助损失 | 掩码 patch 重构（Smooth-L1）+ query 特化损失 | 流匹配回归 + 三条生理约束（L1 重构 / 统计一致性 / TV+Pearson） | 无预训练，纯合成数据 SFT（梯度只算答案） |
-| **模型规模** | 1.68M 总 / 0.89M 激活 | 7M / 43M / 311.4M | 129.9M | Qwen2.5-VL 3B / 7B |
-| **数据** | 9 数据集约 142h（6 预训练 + 3 LOSO 微调） | TUEG + Siena **21,900h**（3 种拓扑） | TUAB / TUEV / TUSZ（16 通道，>10,000 sessions） | 全合成：6 技术标准波形 + TorchSig，~12,000 场景 / 0.625M 指令对（零人工标注） |
-| **下游/评测** | 线性头微调（LOSO） | 聚合 query + MLP 微调 | 生成质量 TS-FID + 下游增强 ΔAcc（CBraMod 当裁判） | 文本回答（WBMC/WBOD/WTR/WNUC/NRIE 五族） |
-| **代表成绩** | DEAP-V/A 59.40 / 62.73，BCIC4-2a 47.92，STEW 72.41（全面超复现的 BIOT/LaBraM） | TUAR AUROC **0.921**、TUSL **0.802** 双 SOTA；TUAB 81.57%（-1pp vs LaBraM-Huge）；8000 通道 FLOPs 仅 BIOT 的 1/180 | TS-FID 188 / 236 / 151（基线 274–449，**-40%+**）；Silhouette≈0.99；ΔAcc 全正（基线≈0） | WTR **99.6%** joint；通用 VLM（含 GPT-5）精心 prompt 仍随机猜 |
-| **代码** | 声明将放出（未附链接） | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | [项目页](https://y-research-sbu.github.io/JET/) | 论文未附仓库 |
+| **发表** | IEEE TNNLS 2026 | NeurIPS 2025 | ICML 2026 | arXiv 2026 | arXiv 2026（IEEE 预印本 v5） |
+| **轴线** | 判别 · 多任务表示 | 判别 · 拓扑无关基础模型 | **生成**（流匹配） | 跨领域参照（RF 时频图 + LLM） | **生成**（潜扩散）· 表征学习导向 |
+| **核心机制** | SSMoE 块：Top-K Specific 专家（域特性）+ 软路由 Shared 专家（域共性），相加融合 | Q 个学习 query + 交叉注意力把任意电极拓扑压进固定隐空间（Q×E），时间注意力只在隐空间上做 | 条件流匹配：线性插值路径 → 预测向量场 → ODE 采样；原始多通道序列 + adaLN 条件注入 | IQ→STFT 谱图→**复用现成 VLM 视觉编码器**→RF token 前缀→LLM 生成回答 | encoder 表示（3 视图平均，不 detach）作条件，经 adaLN-Zero 调制 DiT 在 PCA 隐空间（K=20）去噪；去噪损失经条件反传，encoder 与扩散联合优化 |
+| **异构/域哲学** | **解耦保留**（域差异是需要学的信号） | **统一抹平**（拓扑差异是噪声，置换不变性） | 不处理（固定 16 通道 TUH 设置） | 不处理（合成数据天然统一） | 不处理（19 通道 TUEG 统一）；类不均衡靠类均衡指标（G-Mean/Macro AUC）显式应对 |
+| **输入形态** | 4-D 脑地图（时间 × 5 频带 × 2D 电极网格） | 原始波形双路嵌入（1D Conv + FFT 幅相）+ 3D 电极坐标 NeRF 式编码 | 原始波形 patch（**保留通道身份**，序列 (C·N)×D） | STFT 幅值谱图（512×512，dB） | 原始波形 1s patch（1D conv 时序编码）；3 源视图（零掩蔽 0.4s / 幅值缩放） |
+| **词表/离散化** | 无（MoE 分工） | 无（连续隐空间瓶颈） | 无（连续向量场） | 无 RF 词表（只扩展 LLM 文本词表） | 无（连续隐空间 + 连续扩散） |
+| **训练目标** | 掩码 embedding 重构（L1）+ 负载均衡辅助损失 | 掩码 patch 重构（Smooth-L1）+ query 特化损失 | 流匹配回归 + 三条生理约束（L1 重构 / 统计一致性 / TV+Pearson） | 无预训练，纯合成数据 SFT（梯度只算答案） | 噪声预测 MSE + 变分下界（λ=1），经条件 e 反传至 encoder |
+| **模型规模** | 1.68M 总 / 0.89M 激活 | 7M / 43M / 311.4M | 129.9M | Qwen2.5-VL 3B / 7B | 25M 下游 encoder（生成模块下游弃用） |
+| **数据** | 9 数据集约 142h（6 预训练 + 3 LOSO 微调） | TUEG + Siena **21,900h**（3 种拓扑） | TUAB / TUEV / TUSZ（16 通道，>10,000 sessions） | 全合成：6 技术标准波形 + TorchSig，~12,000 场景 / 0.625M 指令对（零人工标注） | TUEG 19ch（200Hz/30s 样本，4×A100 约 113h） |
+| **下游/评测** | 线性头微调（LOSO） | 聚合 query + MLP 微调 | 生成质量 TS-FID + 下游增强 ΔAcc（CBraMod 当裁判） | 文本回答（WBMC/WBOD/WTR/WNUC/NRIE 五族） | 微调 + 线性探针；6 任务（TUEV / TUAB / SHU-MI / CL-Drive / Seed-VII / DMER） |
+| **代表成绩** | DEAP-V/A 59.40 / 62.73，BCIC4-2a 47.92，STEW 72.41（全面超复现的 BIOT/LaBraM） | TUAR AUROC **0.921**、TUSL **0.802** 双 SOTA；TUAB 81.57%（-1pp vs LaBraM-Huge）；8000 通道 FLOPs 仅 BIOT 的 1/180 | TS-FID 188 / 236 / 151（基线 274–449，**-40%+**）；Silhouette≈0.99；ΔAcc 全正（基线≈0） | WTR **99.6%** joint；通用 VLM（含 GPT-5）精心 prompt 仍随机猜 | TUEV Bal Acc **0.6826** / G-Mean 0.6443 / Macro AUC 0.9169 全场最佳，少数类 SPSW 召回 50.3%（基线 10–18%）；TUAB 0.8180 第二；DMER 五指标最佳 |
+| **代码** | 声明将放出（未附链接） | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | [项目页](https://y-research-sbu.github.io/JET/) | 论文未附仓库 | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) |
 
 ## 核心分歧点解读
 
@@ -118,7 +118,7 @@ JET 把 EEG 建模为连续动力过程（条件流匹配），核心论点是�
 
 ---
 
-*核心六篇部分总结自各论文原文；扩展四篇同。实验数字均引自各论文报告值。*
+*核心六篇部分总结自各论文原文；扩展五篇同。实验数字均引自各论文报告值。*
 
 ## 🏆 跨论文 Benchmark 战绩表 {: #benchmarks }
 
@@ -136,6 +136,7 @@ JET 把 EEG 建模为连续动力过程（条件流匹配），核心论点是�
 | TFM-Tokenizer | 0.8032 | 0.8870 | TFM Table 1 |
 | LUNA-Huge | 0.8157 | 0.8957 | LUNA Table 1（311.4M） |
 | CBraMod | **0.8289** | **0.9227** | CBraMod Table 14（4.0M；防泄漏重训版 0.8249 / 0.9156） |
+| EEGDM | 0.8180 | 0.8922 | EEGDM Table IV（25M，微调；全场第二，CBraMod 仍第一；线性探针 0.7813） |
 
 ### TUEV（事件分类）
 
@@ -147,7 +148,8 @@ JET 把 EEG 建模为连续动力过程（条件流匹配），核心论点是�
 | NeuroLM-XL（多任务） | 0.4679 | 0.4570 | NeuroLM Table 2 |
 | BrainGPT-Giant | — | — | 未评测 |
 | TFM-Tokenizer | **0.5974** | **0.6189** | TFM Table 1 |
-| CBraMod | **0.6671** | **0.6772** | CBraMod Table 13（4.0M 打过 LaBraM-Huge 369M；防泄漏重训版 0.6659 / 0.6744） |
+| CBraMod | 0.6671 | **0.6772** | CBraMod Table 13（4.0M 打过 LaBraM-Huge 369M；防泄漏重训版 0.6659 / 0.6744） |
+| EEGDM | **0.6826** | 0.5357 | EEGDM Table II（25M，微调；Bal Acc 最佳 / G-Mean 0.6443 / Macro AUC 0.9169 也最佳，Kappa 落后——少数类召回换来的口径分歧） |
 
 ### 其他任务代表成绩
 
@@ -160,11 +162,12 @@ JET 把 EEG 建模为连续动力过程（条件流匹配），核心论点是�
 | EEGMoE | DEAP-V/A ACC 59.40 / 62.73；BCIC4-2a 47.92；STEW 72.41（LOSO ACC%，全面超复现的 EEGNet/BIOT/LaBraM 等） |
 | LUNA | TUAR AUROC **0.921**、TUSL AUROC **0.802**（双 SOTA）；SEED-V Bal Acc 0.3900（未见 62 通道拓扑，落后 CBraMod） |
 | CBraMod | 10 任务 12 数据集全 SOTA（4.0M 参数）：FACED Kappa 0.5041 · ISRUC 睡眠分期 Kappa 0.7442 · CHB-MIT Bal Acc 0.7398 · PhysioNet-MI Kappa 0.5222；TUAB/TUEV 做了防泄漏重训仍第一 |
+| EEGDM | 6 任务全面有竞争力（全部最佳或第二）：TUEV 最稀有类 SPSW 召回 50.3%（掩码基线 10–18%）；DMER 情绪分布预测五指标最佳；扩散合成增强 CL-Drive +5.4pp |
 | JET⚙ 生成 | TS-FID 188.27 / 235.86 / 151.27（TUAB/TUEV/TUSZ，基线 274–449）；Silhouette 0.983–0.995；下游增强 ΔAcc +0.017~+0.032（CBraMod 裁判） |
 | RF-GPT⚙ 跨域 | WTR joint 99.6%；WBMC 82.4 / 74.2 / 47.8（E/M/H）；通用 VLM 基线 ≤7%——射频域「时频图 + LLM」参照 |
 
 !!! note "数据快照"
-    本表数字整理于 **2026-09-28**（覆盖十一篇：六篇核心 + LUNA / EEGMoE / JET / RF-GPT / CBraMod）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。
+    本表数字整理于 **2026-10-17**（覆盖十二篇：六篇核心 + LUNA / EEGMoE / JET / RF-GPT / CBraMod / EEGDM）。⚙ 标记行的指标口径与上方分类基准不同（生成质量 / 跨领域任务），仅供量级参考。新论文入库时请在对应行追加，并更新此日期。
 
 ## 🔗 论文互怼链 {: #critique-chain }
 
@@ -200,6 +203,10 @@ flowchart LR
     EEGMOE -- "统一格式不解耦域，<br/>域失配拖累迁移" --> LABRAM
     JET -- "EEG 生成应连续演化，<br/>离散去噪错配神经动态" --> EEGGAN
     RFGPT -- "谱图可直接喂现成 VLM，<br/>无需自训时频词表" --> TFM
+    EEGDM["EEGDM<br/>arXiv 2026"]:::new
+    EEGDM -- "掩码重构可由局部插值求解，<br/>学不到全局生成约束" --> LABRAM
+    EEGDM -- "少数类召回 10–18%（SPSW）<br/>容量花在局部统计上" --> CBRAMOD
+    EEGDM -.->|"同轴线互补：<br/>JET 生成质量 / EEGDM 表征副产品"| JET
 
     classDef old fill:#eceff1,stroke:#90a4ae,color:#263238
     classDef mid fill:#fff3e0,stroke:#ffb74d,color:#3e2723

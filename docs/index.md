@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **11** 篇（含 1 篇 RF 跨领域）· NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **12** 篇（含 1 篇 RF 跨领域）· NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。++ctrl+k++ 全文搜索。
 
@@ -15,6 +15,8 @@ title: 首页
 ## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-10-17** · 新增精读 EEGDM（arXiv 2026）：潜扩散生成目标替代掩码重构——encoder 表示作扩散条件联合优化，TUEV 类不均衡指标全场最佳
 
 - **2026-09-28** · 新增精读 CBraMod（ICLR 2025）：十字交叉注意力 + 非对称条件位置编码——EEG-FM-Compass 统一 benchmark 综合第一
 
@@ -115,6 +117,12 @@ title: 首页
 
     空间/时间**双路并行注意力** + 动态位置编码：4M 打 369M，10 任务 12 数据集全 SOTA。tags: `掩码重构` `因子化注意力` `benchmark冠军`
 
+- :material-waveform:{ .lg .middle } **[EEGDM](papers/2026-10/1017-eegdm.md)** `EEG 生成`
+    ---
+    arXiv 2026 · 25M 参数
+
+    以生成训表征：encoder 表示作条件引导**潜扩散**去噪，梯度穿过条件联合优化；TUEV 类不均衡三项最佳。tags: `扩散` `DiT` `类均衡`
+
 </div>
 
 ## :material-cube-unfolded: 模型架构基础
@@ -177,13 +185,13 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 11 篇（EEG 9 + 跨领域 RF 1 + EEG 生成 1） |
+| 精读论文 | 12 篇（EEG 9 + 跨领域 RF 1 + EEG 生成 2） |
 | 发表跨度 | 2023 – 2026 |
-| 涉及会议/期刊 | NeurIPS ×3 · ICLR ×4 · ICML ×1 · TNNLS ×1 · arXiv ×2（另基础页 ICLR 2022 / CS336） |
+| 涉及会议/期刊 | NeurIPS ×3 · ICLR ×4 · ICML ×1 · TNNLS ×1 · arXiv ×3（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
-综合对比见 [十一篇方法对比](comparison.md)（核心六篇 14 维表 + 扩展四篇速览 + benchmark 战绩 + 互怼链）。
+综合对比见 [十二篇方法对比](comparison.md)（核心六篇 14 维表 + 扩展四篇速览 + benchmark 战绩 + 互怼链）。
 
 ## :material-comment-processing: 留言板
 

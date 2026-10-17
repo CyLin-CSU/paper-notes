@@ -136,7 +136,7 @@ Flow Matching（Lipman et al. 2022）解决了连续归一化流「训练需在 
 ## 7 在 EEG 语境中的位置
 
 - **VQ-VAE 分支** → 已精读的 [LaBraM](../papers/2026-09/0918-labram.md)（神经码本 + 频谱重构目标）/ [NeuroLM](../papers/2026-09/0918-neurolm.md)（码字并入 LLM 词表）/ [TFM](../papers/2026-09/0918-tfm-tokenizer.md)（时频 motif 词表）；
-- **DDPM 线** → [JET](../papers/2026-09/0923-jet.md) 的 Vanilla Diffusion 基线与 EEG-GAN 对照。LaBraM 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；
+- **DDPM 线** → [JET](../papers/2026-09/0923-jet.md) 的 Vanilla Diffusion 基线与 EEG-GAN 对照。LaBraM 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；[EEGDM](../papers/2026-10/1017-eegdm.md) 把条件潜扩散（PCA 隐空间 + DiT）整个用作表征学习目标——encoder 表示当扩散条件且不 detach，生成即表征；
 - **FM 线** → JET 本体：线性插值路径 + 三条生理约束（在 FM 损失之外施加结构正则）；
 - **先验的拓扑要求三代一致**：JET 的「零噪声初始化灾难性失败」（TS-FID 1600+）是「先验必须非退化、具有全空间支撑」的实证——VAE 的标准正态先验、DDPM 的 \( x_T \)、FM 的 \( x_0 \) 无一例外。
 
