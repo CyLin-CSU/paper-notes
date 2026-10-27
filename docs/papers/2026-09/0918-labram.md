@@ -33,22 +33,22 @@ LaBraM: Large Brain Model (ICLR 2024)
 - **Transformer Encoder**：ViT 风格，但做两点修改（引 Dehghani et al. 2023）：Q、K 先做 LayerNorm 再点积注意力（防 attention logits 过大）；QKV 计算去掉 bias 项加速训练；
 - 下游用平均池化 + 任务预测头。
 
-**（b）神经 Tokenizer（向量量化神经频谱预测）**
+**（b）神经 VQ-Tokenizer**
 
 - 受 VQ-VAE 启发：codebook \( \mathcal{V} \in \mathbb{R}^{K \times D} \)（K=8192，D=64）；
 - patch 表示 p 做 **ℓ2 归一化**后在 codebook 里**余弦相似度最近邻查表**得到码字索引（ℓ2 归一化提升 codebook 利用率）；
-- **重构目标 = 傅里叶频谱（幅值 A + 相位 φ），不是原始波形**：EEG 低信噪比、随机、非平稳、非线性，直接重构原始波形 loss 不收敛；频谱的频率/相位分布反映底层神经生理活动。对 patch 做 DFT（欧拉公式展开），幅值/相位在样本内做 z-score 归一化；
+- **重构目标：频谱（幅值 A + 相位 φ），不是原始波形**：EEG 低信噪比、随机、非平稳、非线性，直接重构原始波形 loss 不收敛；频谱的频率/相位分布反映底层神经生理活动。做法：对 patch 做 DFT；
 - Neural decoder（若干 Transformer 块 + 平均池化 + 幅值/相位两个回归头）从离散码字回归频谱，MSE 损失；
 - 总损失（式 9）= 幅值 MSE + 相位 MSE + **codebook loss**（\( \left\| \mathrm{sg}(\ell_2(p)) - \ell_2(v_{z_i}) \right\|_2^2 \)，拉码字）+ **commitment loss**（\( \left\| \ell_2(p) - \mathrm{sg}(\ell_2(v_{z_i})) \right\|_2^2 \)，稳编码器）；sg = stop-gradient；码字用 **EMA（指数滑动平均）**更新。
 
-**（c）Masked EEG Modeling 预训练**
+**（c）掩码预训练**
 
 - patch embedding 中随机 mask 比例 r=0.5，被 mask 位置换成可学习 mask token；
 - Transformer 编码可见 patch，线性分类头预测被 mask patch 对应的**码字索引**，交叉熵损失；
-- **对称掩码（Symmetric Masking）**：mask 的补集也各做一次 masked modeling——省一次 tokenizer 前向 + 提供更多掩码视角（相当于数据增强），提升下游性能与稳定性；
+- **对称掩码（Symmetric Masking）**：mask 的补集也各做一次 masked modeling，相当于数据增强，提升下游性能与稳定性；
 - **VAE/ELBO 理论解释**（附录 B）：tokenizer 是后验 \( q_\phi(z \mid x) \)，decoder 是 \( p_\psi(\tilde{x} \mid z) \)，masked modeling 学习先验 \( p_\theta(z \mid x^M) \)；两阶段分别对应「最小化重构损失」和「固定 \( q \)、\( p_\psi \) 最小化 KL」。
 
-**模型规格**：Base 5.8M（12层/200维/10头）、Large 46M、Huge 369M——当时 BCI 领域最大模型。
+**模型规格**：Base 5.8M（12层/200维/10头）、Large 46M、Huge 369M。
 
 #### 2.3 创新点
 

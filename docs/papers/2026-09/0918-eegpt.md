@@ -34,8 +34,8 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 - \( \mathrm{token}_{i,j} = \mathrm{Embed}(p_{i,j}) + \varsigma_i \)。
 
 **双自监督预训练**
+三条路径，patch后输入：第一条不掩码，经过momentum encoder得到压缩后的表示；第二条做掩码之后备用；第三条不经过momentum encoder,掩码后经过encoder得到压缩表示，再经过predictor预测掩码部分得到完整预测表示，和第二条表示做对齐；然后把掩码部分挖掉，经过reconstructor映射回原始信号维度，和第二条做reconstruction loss.
 
-整个流程三条路径，输入均为 patch 化后的 EEG。
 
 **路径① · 完整信号 → Momentum encoder（对齐目标）**。不做掩码，经动量编码器 \( f_{\bar\theta} \)（权重由在线 encoder 的 EMA 更新，目标侧不回传梯度）输出**全部位置**的目标表示：
 
