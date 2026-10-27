@@ -101,7 +101,7 @@ nav:
   - 主题专题:
       - EEG Tokenization 演进: topics/tokenization.md
       - 预训练范式对比: topics/pretraining.md
-      - 通道异构的四种解法: topics/spatial.md
+      - 通道异构的六种解法: topics/spatial.md
       - EEG 预训练数据全景: topics/data-landscape.md
       - 多任务三条路线: topics/multi-task.md
       - 基座来源分析: topics/base-model.md

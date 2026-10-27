@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-10-27** · 对比体系重构：comparison 收敛为枢纽页（速览 + 九维导读 + 战绩/互怼链），维度详解下放六大专题页，各专题覆盖扩至十二篇
+
 - **2026-10-17** · 模型架构基础新增：图神经网络——消息传递 / 谱卷积 / GAT / 表达力边界，BrainGPT TEG 的机制基础
 
 - **2026-10-17** · 新增精读 EEGDM（arXiv 2026）：潜扩散生成目标替代掩码重构——encoder 表示作扩散条件联合优化，TUEV 类不均衡指标全场最佳
@@ -199,7 +201,7 @@ title: 首页
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
-综合对比见 [十二篇方法对比](comparison.md)（核心六篇 14 维表 + 扩展四篇速览 + benchmark 战绩 + 互怼链）。
+综合对比见 [十二篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——数据 / tokenization / 预训练目标 / 通道异构 / 下游适配 / 基座六大专题深读，模型设计 / 频域 / 规模效率保留在页内 + benchmark 战绩 + 互怼链）。
 
 ## :material-comment-processing: 留言板
 
