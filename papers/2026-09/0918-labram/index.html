@@ -1350,7 +1350,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1792,22 +1792,22 @@
 <li><strong>Transformer Encoder</strong>：ViT 风格，但做两点修改（引 Dehghani et al. 2023）：Q、K 先做 LayerNorm 再点积注意力（防 attention logits 过大）；QKV 计算去掉 bias 项加速训练；</li>
 <li>下游用平均池化 + 任务预测头。</li>
 </ul>
-<p><strong>（b）神经 Tokenizer（向量量化神经频谱预测）</strong></p>
+<p><strong>（b）神经 <abbr title="向量量化 Vector Quantization">VQ</abbr>-Tokenizer</strong></p>
 <ul>
 <li>受 <abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 启发：<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> <span class="arithmatex">\( \mathcal{V} \in \mathbb{R}^{K \times D} \)</span>（K=8192，D=64）；</li>
 <li>patch 表示 p 做 <strong>ℓ2 归一化</strong>后在 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 里<strong>余弦相似度最近邻查表</strong>得到码字索引（ℓ2 归一化提升 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 利用率）；</li>
-<li><strong>重构目标 = 傅里叶频谱（幅值 A + 相位 φ），不是原始波形</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比、随机、非平稳、非线性，直接重构原始波形 loss 不收敛；频谱的频率/相位分布反映底层神经生理活动。对 patch 做 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr>（欧拉公式展开），幅值/相位在样本内做 z-score 归一化；</li>
+<li><strong>重构目标：频谱（幅值 A + 相位 φ），不是原始波形</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比、随机、非平稳、非线性，直接重构原始波形 loss 不收敛；频谱的频率/相位分布反映底层神经生理活动。做法：对 patch 做 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr>；</li>
 <li>Neural decoder（若干 Transformer 块 + 平均池化 + 幅值/相位两个回归头）从离散码字回归频谱，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 损失；</li>
 <li>总损失（式 9）= 幅值 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 相位 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + <strong><abbr title="码本，离散 token 的可查询向量表">codebook</abbr> loss</strong>（<span class="arithmatex">\( \left\| \mathrm{sg}(\ell_2(p)) - \ell_2(v_{z_i}) \right\|_2^2 \)</span>，拉码字）+ <strong>commitment loss</strong>（<span class="arithmatex">\( \left\| \ell_2(p) - \mathrm{sg}(\ell_2(v_{z_i})) \right\|_2^2 \)</span>，稳编码器）；sg = stop-gradient；码字用 <strong>EMA（指数滑动平均）</strong>更新。</li>
 </ul>
-<p><strong>（c）Masked <abbr title="脑电图 Electroencephalogram">EEG</abbr> Modeling 预训练</strong></p>
+<p><strong>（c）掩码预训练</strong></p>
 <ul>
 <li>patch embedding 中随机 mask 比例 r=0.5，被 mask 位置换成可学习 mask <abbr title="词元，模型处理的最小输入单元">token</abbr>；</li>
 <li>Transformer 编码可见 patch，线性分类头预测被 mask patch 对应的<strong>码字索引</strong>，交叉熵损失；</li>
-<li><strong>对称掩码（Symmetric Masking）</strong>：mask 的补集也各做一次 masked modeling——省一次 tokenizer 前向 + 提供更多掩码视角（相当于数据增强），提升下游性能与稳定性；</li>
+<li><strong>对称掩码（Symmetric Masking）</strong>：mask 的补集也各做一次 masked modeling，相当于数据增强，提升下游性能与稳定性；</li>
 <li><strong>VAE/ELBO 理论解释</strong>（附录 B）：tokenizer 是后验 <span class="arithmatex">\( q_\phi(z \mid x) \)</span>，decoder 是 <span class="arithmatex">\( p_\psi(\tilde{x} \mid z) \)</span>，masked modeling 学习先验 <span class="arithmatex">\( p_\theta(z \mid x^M) \)</span>；两阶段分别对应「最小化重构损失」和「固定 <span class="arithmatex">\( q \)</span>、<span class="arithmatex">\( p_\psi \)</span> 最小化 KL」。</li>
 </ul>
-<p><strong>模型规格</strong>：Base 5.8M（12层/200维/10头）、Large 46M、Huge 369M——当时 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 领域最大模型。</p>
+<p><strong>模型规格</strong>：Base 5.8M（12层/200维/10头）、Large 46M、Huge 369M。</p>
 <h4 id="23">2.3 创新点<a class="headerlink" href="#23" title="Permanent link">#</a></h4>
 <ol>
 <li><strong>首个</strong>在 2500 小时、约 20 个数据集上预训练的大规模 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型（数据本身即是贡献）；</li>

@@ -1184,7 +1184,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1310,10 +1310,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
+  <a href="#2-tueg" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 临床数据是规模的主力，也是偏斜的来源
+        2. TUEG 一条龙：同一语料池，越报越大，也越洗越净
       
     </span>
   </a>
@@ -1324,7 +1324,7 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 数据需求量与模型规模的关系
+        3. 防泄漏意识：只有一家把「考前见题」摆在明面上
       
     </span>
   </a>
@@ -1332,10 +1332,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
+  <a href="#4-scaling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 单电极拆分是"数据倍增器"
+        4. Scaling 的证据分裂：从「万小时叙事」到「边际递减」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 单电极拆分是"数据倍增器"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 合成数据：数据获取的第三条路
       
     </span>
   </a>
@@ -1677,10 +1699,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
+  <a href="#2-tueg" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 临床数据是规模的主力，也是偏斜的来源
+        2. TUEG 一条龙：同一语料池，越报越大，也越洗越净
       
     </span>
   </a>
@@ -1691,7 +1713,7 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 数据需求量与模型规模的关系
+        3. 防泄漏意识：只有一家把「考前见题」摆在明面上
       
     </span>
   </a>
@@ -1699,10 +1721,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
+  <a href="#4-scaling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 单电极拆分是"数据倍增器"
+        4. Scaling 的证据分裂：从「万小时叙事」到「边际递减」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 单电极拆分是"数据倍增器"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 合成数据：数据获取的第三条路
       
     </span>
   </a>
@@ -1758,7 +1802,7 @@
 
 <h1 id="eeg"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练数据全景<a class="headerlink" href="#eeg" title="Permanent link">#</a></h1>
 <blockquote>
-<p>六篇论文的预训练语料从 1000 万样本到 25000 小时不等——规模与构成直接决定了模型的通用性上限。</p>
+<p>十二篇论文的预训练语料从 142 小时到 25000 小时不等——规模、构成、清洗质量与域距离共同决定了模型的通用性上限。本页是<a href="../../comparison/">十二篇方法对比</a>的「数据维度」深读页。</p>
 </blockquote>
 <h2 id="_1">规模一览<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <pre class="mermaid"><code>timeline
@@ -1768,7 +1812,11 @@
     2024 : BrainGPT : 3750 万单电极样本 ≈ 1B token
     2024 : EEGPT : 5 数据集混合（多范式，规模未以小时计）
     2025 : NeuroLM : 25000 小时（TUEG 为主力）
-    2026 : TFM : 4 数据集（重质不重量）+ 跨设备 ear-EEG 验证</code></pre>
+    2025 : CBraMod : TUEG 清洗版 &gt;9000h（质量路线）
+    2025 : LUNA : TUEG + Siena 21900h（拓扑覆盖路线）
+    2026 : EEGMoE : 约 142h 认知域（域邻近路线）
+    2026 : TFM : 4 数据集（重质不重量）+ 跨设备 ear-EEG 验证
+    2026 : RF-GPT : 0.625M 合成指令对（零人工路线）</code></pre>
 <h2 id="_2">语料构成对比<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -1816,26 +1864,75 @@
 <td>最小语料；单通道 motif 学习弥补规模</td>
 <td>中；跨设备能力由单通道设计保证</td>
 </tr>
+<tr>
+<td>CBraMod</td>
+<td>TUEG <strong>清洗版</strong>（&gt;9000h）</td>
+<td>27,062h 原始临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 五步清洗后剩 110 万个 30s 样本（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 语料的 3.5 倍）</td>
+<td>低（清洗 + 防泄漏重训，最干净的临床语料）</td>
+</tr>
+<tr>
+<td>LUNA</td>
+<td>TUEG + Siena（21,900h）</td>
+<td>刻意覆盖 20/22 通道双极 + 29 通道单极共 <strong>3 种拓扑</strong>——为拓扑泛性而选数据</td>
+<td>中（拓扑多样但仍是临床域）</td>
+</tr>
+<tr>
+<td>EEGMoE</td>
+<td>6 个认知域数据集（~142h）</td>
+<td>情绪（DREAMER/SEED/MAHNOB）+ <abbr title="运动想象 Motor Imagery">MI</abbr>（EEGMMIDB/BCIC-IV-1）+ 负荷（EEGMat），与下游同域</td>
+<td><strong>极低（域邻近正是其卖点）</strong></td>
+</tr>
+<tr>
+<td>JET</td>
+<td>TUAB / TUEV / TUSZ（16 通道统一）</td>
+<td>生成器训练即全部数据，无「预训练→下游」转移问题</td>
+<td>—（生成路线）</td>
+</tr>
+<tr>
+<td>EEGDM</td>
+<td>TUEG 19 通道（30s 样本）</td>
+<td>沿用 CBraMod 的通道选取与统一设定</td>
+<td>低</td>
+</tr>
+<tr>
+<td>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></td>
+<td>全合成（~12,000 场景 / 0.625M 指令对）</td>
+<td>标准波形生成器 + 拒绝采样 + <abbr title="大语言模型 Large Language Model">LLM</abbr> 合成指令，「配置即标签」零噪声</td>
+<td>—（合成→真实域差是作者自认局限）</td>
+</tr>
 </tbody>
 </table>
 <h2 id="_3">关键观察<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <h3 id="1">1. 规模 ≠ 通用性，构成决定迁移半径<a class="headerlink" href="#1" title="Permanent link">#</a></h3>
 <p>BrainGPT 的发现最有说服力：以癫痫临床数据为主的预训练模型，在情绪/运动想象等非临床下游上<strong>反而不如从头训练</strong>——域差异吞掉了预训练收益。EEGPT 用小而均衡的语料 + linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，是「构成比规模重要」的另一佐证。</p>
-<h3 id="2">2. 临床数据是规模的主力，也是偏斜的来源<a class="headerlink" href="#2" title="Permanent link">#</a></h3>
-<p>TUEG 体系（Temple 大学）是唯一能拿到万小时级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的公开来源，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 和 NeuroLM 都重度依赖它。这解释了为什么<strong>脑机接口类任务（<abbr title="运动想象 Motor Imagery">MI</abbr>/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr>）的 pretrain-then-finetune 收益普遍不如临床任务</strong>。</p>
-<h3 id="3">3. 数据需求量与模型规模的关系<a class="headerlink" href="#3" title="Permanent link">#</a></h3>
+<p><strong>2026 年最尖锐的证据来自 EEGMoE</strong>：预训练仅 ~142h（六个认知域数据集），在认知任务上大胜 2500h 癫痫域语料的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>——BCIC4-2a 运动想象上 47.92 vs 复现 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 29.59。<strong>域距离比数据量更决定迁移成败</strong>。</p>
+<h3 id="2-tueg">2. TUEG 一条龙：同一语料池，越报越大，也越洗越净<a class="headerlink" href="#2-tueg" title="Permanent link">#</a></h3>
+<p>TUEG 体系（Temple 大学）是唯一能拿到万小时级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的公开来源，被反复使用：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> ~2500h → NeuroLM ~25000h → LUNA 21,900h（+Siena，为拓扑覆盖）→ CBraMod 清洗后 &gt;9000h → EEGDM（沿用 CBraMod 设定）。两个引申：</p>
 <ul>
-<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 500h 在 TUAB 反超 2500h、TUEV 达其 90%+；Huge 在 2500h 仍未饱和（原论文推断需万小时级）</li>
-<li>NeuroLM：L 和 XL 的验证困惑度接近 → 25000h 喂不饱十亿参数</li>
-<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 性能持续上升，增益趋缓</li>
+<li><strong>清洗是被低估的变量</strong>：CBraMod 把清洗写成流水线（&lt;5min 记录剔除、掐头去尾 1min、选 19 个 10-20 公共通道、0.3–75Hz 带通 + 60Hz 陷波、任意点 &gt;100µV 整段剔除），消融给出排序：<strong>清洗版 &gt; 脏数据版 &gt; 不预训练</strong>，且清洗版方差最小——脏数据不只拉低均值还放大不稳定。「同一个 TUEG」在不同论文手里的有效数据量与质量差很远；</li>
+<li>这也解释了为什么<strong>脑机接口类任务（<abbr title="运动想象 Motor Imagery">MI</abbr>/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr>）的 pretrain-then-finetune 收益普遍不如临床任务</strong>——语料主力是临床域。</li>
 </ul>
-<p>结论：<strong>当前 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语料规模仍是所有大模型的瓶颈</strong>，且临床偏斜短期无解（没有第二来源）。</p>
-<h3 id="4">4. 单电极拆分是"数据倍增器"<a class="headerlink" href="#4" title="Permanent link">#</a></h3>
+<h3 id="3">3. 防泄漏意识：只有一家把「考前见题」摆在明面上<a class="headerlink" href="#3" title="Permanent link">#</a></h3>
+<p>TUEG 是 TUAB/TUEV 的父集，凡用 TUEG 系预训练再报 TUAB/TUEV 成绩，都隐含「预训练见过下游数据」。<strong>CBraMod 是唯一做防泄漏对照的</strong>：剔除 TUAB/TUEV 被试后重新预训练，TUAB 0.8289→0.8249、TUEV 0.6671→0.6659，降幅 &lt;0.5pp 仍 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>——证明其泛化不靠背题，同时给全行业提了醒（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM 未做此对照，严格说成绩都含泄漏成分；<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 的 leakage-aware 复评因此更有价值）。</p>
+<h3 id="4-scaling">4. Scaling 的证据分裂：从「万小时叙事」到「边际递减」<a class="headerlink" href="#4-scaling" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>正方</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（数据 1→2500h 与 Base→Huge 均单调升，Huge 未饱和）、BrainGPT（模型跨 4 个数量级 + 数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 均正相关）、EEGPT（模型规模幂律拟合）三家报告 scaling law；</li>
+<li><strong>反方</strong>：CBraMod 的数据消融显示 <strong>1h→9000h 单调提升但 1000h 后边际递减</strong>，且作者明确拒绝外推；<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 统一复测发现综合排名靠前的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 参数全部 ≤5.8M、无 scaling law 迹象；</li>
+<li>结论修正：<strong>当前 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语料的瓶颈不是量而是多样性</strong>——CBraMod 清洗后是 19 通道临床单一分布，1000h 饱和很可能只是同质化饱和；REVE（61,415h）、SleepGPT（86,335h）这类多数据集堆量路线能否突破，是待验证问题。</li>
+</ul>
+<h3 id="5">5. 单电极拆分是"数据倍增器"<a class="headerlink" href="#5" title="Permanent link">#</a></h3>
 <p>BrainGPT 把多电极信号拆成单电极样本，等效样本量 ×E（E 为电极数）——3750 万样本里含水量高，但换来了对任意电极配置的兼容性。TFM 的单通道 tokenizer 是同一思想的 tokenization 版。</p>
+<h3 id="6">6. 合成数据：数据获取的第三条路<a class="headerlink" href="#6" title="Permanent link">#</a></h3>
+<p>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 演示了「仿真器即数据工厂」的完整形态：标准合规波形生成器（配置精确已知）+ 拒绝采样保真 + 确定性 captioning——<strong>训练信号零噪声，这是任何人工标注都给不了的精度</strong>，0.625M 指令对因此才可行。局限同样明确：合成→真实的域差在生理信号域同样尖锐（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 没有「标准波形生成器」级别的仿真器，但睡眠纺锤波/棘波注入仿真、受控范式重放是部分替代）。JET/EEGDM 则从另一头逼近同一问题：先用真实数据训生成器，生成能力反哺下游数据增强（见<a href="../multi-task/">多任务专题</a>）。</p>
 <h2 id="_4">对新建笔记的提示<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<p>读新论文时，在笔记的「实验与结果」里记录其预训练语料的：<strong>总时长（或样本数）、主力数据源、域构成</strong>。如果它报告了 scaling 实验（数据量 vs 性能曲线），单独记一段——数据 scaling 曲线目前只有 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/BrainGPT 报告过（EEGPT 做的是模型规模消融），非常稀缺。</p>
+<p>读新论文时，在笔记的「实验与结果」里记录其预训练语料的：<strong>总时长（或样本数）、主力数据源、域构成、清洗流程</strong>。三个加分记录项：</p>
+<ol>
+<li>报告了 scaling 实验（数据量 vs 性能曲线）吗？（目前 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / BrainGPT / CBraMod 三家，仍稀缺）</li>
+<li>做了防泄漏对照吗（预训练语料与下游基准的交集如何处理）？</li>
+<li>域构成与你的下游任务邻近吗——这比小时数更值得先看。</li>
+</ol>
 <h2 id="_5">关联页面<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<p><a href="../../datasets/">数据集索引</a> · <a href="../../comparison/">六篇方法对比</a> · <a href="../pretraining/">预训练范式对比</a></p>
+<p><a href="../../datasets/">数据集索引</a> · <a href="../../comparison/">十二篇方法对比</a> · <a href="../pretraining/">预训练范式对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

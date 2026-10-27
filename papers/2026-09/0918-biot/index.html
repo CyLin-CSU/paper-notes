@@ -1356,7 +1356,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1800,14 +1800,22 @@
 <p><strong>1. 生物信号 Tokenizer</strong></p>
 <ol>
 <li><strong>重采样</strong>：线性插值统一到同一采样率 r（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 用 200Hz），依据采样定理（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 感兴趣最高频率约 100Hz）；</li>
-<li><strong>归一化</strong>：每个通道除以自身绝对幅值的 95 分位数 <code>S[i] / percentile(|S[i]|, 95%)</code>，消除通道/数据集间的单位和幅度差异；</li>
-<li><strong>逐通道 Tokenization</strong>：每个通道<strong>独立</strong>切成 t 秒（如 1s）的 <abbr title="词元，模型处理的最小输入单元">token</abbr>，相邻 <abbr title="词元，模型处理的最小输入单元">token</abbr> 可重叠 p 秒（如 0.5s）；<strong>缺失段的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 直接丢弃</strong>。逐通道独立切分是与以往"所有通道拼一起切"的关键区别——通道缺失/不匹配也能处理；</li>
+<li><strong>归一化</strong>：每个通道除以自身绝对幅值的 95 分位数 <span class="arithmatex">\( S[i] \,/\, |S[i]|_{95\%} \)</span>，消除通道/数据集间的单位和幅度差异；</li>
+<li><strong>逐通道 Tokenization</strong>：每个通道<strong>独立</strong>切成 t 秒（1s）的 <abbr title="词元，模型处理的最小输入单元">token</abbr>，相邻 <abbr title="词元，模型处理的最小输入单元">token</abbr> 可重叠 p 秒（0.5s）；<strong>缺失段的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 直接丢弃</strong>。逐通道独立切分是与以往"所有通道拼一起切"的关键区别——通道缺失/不匹配也能处理；</li>
 <li><strong>Flattening</strong>：所有通道的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 按顺序展平成一条统一的"biosignal sentence"。</li>
 </ol>
-<p><strong>Token embedding（三部分相加）</strong>：
-- <strong>Segment embedding（频谱）</strong>：对每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 段做 FFT，提取所有频带的能量向量，过一个全连接网络（FCN）得到；
-- <strong>Channel embedding（空间）</strong>：可学习的通道 embedding 表，标记 <abbr title="词元，模型处理的最小输入单元">token</abbr> 来自哪个通道；
-- <strong>Positional embedding（时间）</strong>：通道内 <abbr title="词元，模型处理的最小输入单元">token</abbr> 顺序用正弦/余弦<strong>相对</strong>位置编码，免参数。</p>
+<p><strong>Token embedding（三部分相加）</strong>：</p>
+<ul>
+<li>
+<p><strong>Segment embedding（频谱）</strong>：对每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 段做 FFT，提取所有频带的能量向量，过一个全连接网络（FCN）得到；</p>
+</li>
+<li>
+<p><strong>Channel embedding（空间）</strong>：可学习的通道 embedding 表，标记 <abbr title="词元，模型处理的最小输入单元">token</abbr> 来自哪个通道；</p>
+</li>
+<li>
+<p><strong>Positional embedding（时间）</strong>：通道内 <abbr title="词元，模型处理的最小输入单元">token</abbr> 顺序用正弦/余弦<strong>相对</strong>位置编码， position针对的是token位置的position 而不是原始序列时间点的的position。</p>
+</li>
+</ul>
 <p>最终"句子"为 <span class="arithmatex">\( X \in \mathbb{R}^{N \times l} \)</span>。</p>
 <p><strong>2. 线性 Transformer</strong></p>
 <p>其线性注意力的核心公式（Linformer 式低秩投影）：</p>

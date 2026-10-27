@@ -1350,7 +1350,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1791,8 +1791,8 @@
 <li>patch embedding + <strong>通道 embedding（Code book）</strong>：可学习通道向量 <code>{ς_i}</code>，<strong>灵活对应任意数据集的通道配置</strong>（通道适配的关键）；</li>
 <li><span class="arithmatex">\( \mathrm{token}_{i,j} = \mathrm{Embed}(p_{i,j}) + \varsigma_i \)</span>。</li>
 </ul>
-<p><strong>双自监督预训练</strong></p>
-<p>整个流程三条路径，输入均为 patch 化后的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>。</p>
+<p><strong>双自监督预训练</strong>
+三条路径，patch后输入：第一条不掩码，经过momentum encoder得到压缩后的表示；第二条做掩码之后备用；第三条不经过momentum encoder,掩码后经过encoder得到压缩表示，再经过predictor预测掩码部分得到完整预测表示，和第二条表示做对齐；然后把掩码部分挖掉，经过reconstructor映射回原始信号维度，和第二条做reconstruction loss.</p>
 <p><strong>路径① · 完整信号 → Momentum encoder（对齐目标）</strong>。不做掩码，经动量编码器 <span class="arithmatex">\( f_{\bar\theta} \)</span>（权重由在线 encoder 的 EMA 更新，目标侧不回传梯度）输出<strong>全部位置</strong>的目标表示：</p>
 <div class="arithmatex">\[ \mathrm{menc}_j = f_{\bar\theta}(x)_j, \qquad j = 1, \dots, N \]</div>
 <p><strong>路径② · 掩码信号（真值备用）</strong>。按 <span class="arithmatex">\(50\%\)</span> 时间 × <span class="arithmatex">\(80\%\)</span> 通道挖掉 patch，被挖掉的原始 patch 记为 <span class="arithmatex">\( \{p_{i,j}\}_{(i,j)\in\mathcal{M}} \)</span>，留作重构目标。与 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 相反的关键设计：encoder 不看这些位置，只处理掩码后剩下的稀疏可见 <abbr title="词元，模型处理的最小输入单元">token</abbr>，且每个时间步追加 <span class="arithmatex">\(S\)</span> 个可学习 summary <abbr title="词元，模型处理的最小输入单元">token</abbr>（类似 [CLS]）聚合全局信息。</p>

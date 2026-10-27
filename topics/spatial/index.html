@@ -22,7 +22,7 @@
     
     
       
-        <title>通道异构的四种解法 - Paper Notes · 论文阅读笔记</title>
+        <title>通道异构的六种解法 - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              通道异构的四种解法
+              通道异构的六种解法
             
           </span>
         </div>
@@ -1193,7 +1193,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1211,7 +1211,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1293,6 +1293,17 @@
       
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两个不入编号的变体
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
@@ -1651,6 +1662,17 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
+        两个不入编号的变体
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         关联论文
       
     </span>
@@ -1678,9 +1700,9 @@
   
 
 
-<h1 id="_1">通道异构的四种解法<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h1 id="_1">通道异构的六种解法<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 换一台设备就是另一套电极布局——通道适配能力直接决定基础模型能不能「跨设备」。六篇论文给出四种代表性方案。</p>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 换一台设备就是另一套电极布局——通道适配能力直接决定基础模型能不能「跨设备」。核心六篇给出四种代表性方案，2025–2026 扩展到六种（另有两个不入编号的变体）。本页是<a href="../../comparison/">十二篇方法对比</a>的「空间异构维度」深读页。</p>
 </blockquote>
 <h2 id="_2">四种方案对比<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">① 通道 embedding 表 · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></label><label for="__tabbed_1_2">② 10-20 系统空间编码 · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM</label><label for="__tabbed_1_3">③ 单通道独立建模 · TFM / BrainGPT（电极级）</label><label for="__tabbed_1_4">④ 图结构整合 · BrainGPT（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）</label></div>
@@ -1737,9 +1759,14 @@
 <li><strong>⑤ 解耦路由 · EEGMoE</strong>（TNNLS 2026）：不追求统一格式本身，先把所有 montage 摆进统一 2-D 脑地图网格（输入端抹平几何差异），再用 Specific+Shared 双专家 MoE 在<strong>表征层解耦任务/数据集域</strong>——几何轴统一、任务轴分工。总参数仅 1.68M；专家-任务分工可视化给出解耦成功的直接证据；</li>
 <li><strong>⑥ 学习 query 统一 · LUNA</strong>（NeurIPS 2025）：Q 个学习 query 对任意通道集合做交叉注意力，压进固定隐空间（置换不变）后再做时间注意力——<strong>对通道数线性</strong>的复杂度，8000 通道时 FLOPs 仅为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180；代价是隐空间瓶颈（TUAB 落后全注意力约 1pp，未见拓扑 SEED-V 落后 2–3pp）。</li>
 </ul>
-<p>两者合起来给出一个二维地图：<strong>几何轴可以抹平（LUNA），任务轴应该解耦（EEGMoE）</strong>——理想模型可能需要同时做这两件事。</p>
-<h2 id="_4">关联论文<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/2026-09/0924-eegmoe/">EEGMoE</a> · <a href="../../papers/2026-09/0924-luna/">LUNA</a></p>
+<p>两者合起来给出一个二维地图：<strong>几何轴可以抹平（LUNA），任务轴应该解耦（EEGMoE）</strong>——理想模型可能需要同时做这两件事（两组论文都未验证组合）。</p>
+<h2 id="_4">两个不入编号的变体<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>EEGPT 的 codex book</strong>：本质是方案①的加强版——维护「通道名 → 可学习向量」的映射表而非逐数据集的通道表，覆盖常见命名体系。但表是固定的（58 电极布局），体系外通道无对应向量——它正是「跨设备分水岭」实验里唯一无法参赛的模型；</li>
+<li><strong>CBraMod 的 ACPE</strong>（非对称条件位置编码）：既非查表也非统一坐标系，位置编码由 2D depthwise 卷积从 patch 时空邻域<strong>动态生成</strong>——不焊死「通道 ↔ 电极位置」的对应，换蒙太奇/换参考方案（耳参考/平均参考/双极）仍适用。代价：编码的是邻域模式而非绝对空间位置，学到的仍是训练蒙太奇的邻域规律——不过 SEED-V（62 通道未见蒙太奇）上 CBraMod 0.4091 确实赢了 LUNA-Huge 0.3900，说明「动态生成」比「连续坐标 + 稀疏拓扑覆盖」泛化更稳。</li>
+</ul>
+<h2 id="_5">关联论文<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/2026-09/0928-cbramod/">CBraMod</a> · <a href="../../papers/2026-09/0924-eegmoe/">EEGMoE</a> · <a href="../../papers/2026-09/0924-luna/">LUNA</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

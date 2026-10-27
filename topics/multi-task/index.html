@@ -22,7 +22,7 @@
     
     
       
-        <title>多任务三条路线 - Paper Notes · 论文阅读笔记</title>
+        <title>多任务与下游适配 - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              多任务三条路线
+              多任务与下游适配
             
           </span>
         </div>
@@ -1184,7 +1184,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1365,7 +1365,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#20252026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路线之外：下游适配的三个新变量（2025–2026）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="路线之外：下游适配的三个新变量（2025–2026）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        变量一 · 冻结探针 vs 微调：两个极端的全部证据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        变量二 · 生成增强：掩码范式结构性做不到的外溢
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        变量三 · 组件可插拔：tokenizer 当独立产品
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         与传统多任务学习的对比
@@ -1376,7 +1426,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         新论文入库提示
@@ -1387,7 +1437,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联页面
@@ -1704,7 +1754,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#20252026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        路线之外：下游适配的三个新变量（2025–2026）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="路线之外：下游适配的三个新变量（2025–2026）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        变量一 · 冻结探针 vs 微调：两个极端的全部证据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        变量二 · 生成增强：掩码范式结构性做不到的外溢
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        变量三 · 组件可插拔：tokenizer 当独立产品
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         与传统多任务学习的对比
@@ -1715,7 +1815,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         新论文入库提示
@@ -1726,7 +1826,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联页面
@@ -1756,15 +1856,15 @@
   
 
 
-<h1 id="_1">多任务三条路线<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<h1 id="_1">多任务与下游适配<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>「一个模型能不能同时干多种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 任务？」——六篇论文给出了三种答案，外加传统基线。</p>
+<p>「一个模型能不能同时干多种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 任务？」——核心六篇给出三条路线；2025–2026 的扩展论文又带来路线之外的三个新变量（冻结探针之争、生成增强、组件可插拔）。本页是<a href="../../comparison/">十二篇方法对比</a>的「下游适配维度」深读页。</p>
 </blockquote>
 <h2 id="_2">路线总览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <pre class="mermaid"><code>flowchart LR
-    A["预训练好的 EEG 模型"] --&gt; B["路线① 逐任务微调&lt;br/&gt;BIOT / LaBraM / EEGPT / TFM"]
+    A["预训练好的 EEG 模型"] --&gt; B["路线① 逐任务微调&lt;br/&gt;BIOT / LaBraM / EEGPT / TFM / CBraMod"]
     A --&gt; C["路线② 共享骨干联合训练&lt;br/&gt;BrainGPT（TEG）"]
-    A --&gt; D["路线③ 指令微调&lt;br/&gt;NeuroLM（GPT-2）"]
+    A --&gt; D["路线③ 指令微调&lt;br/&gt;NeuroLM（GPT-2）· RF-GPT（跨域印证）"]
     B --&gt; E["每任务一份权重&lt;br/&gt;性能最优"]
     C --&gt; F["一份权重 + 任务头&lt;br/&gt;任务间协同增益"]
     D --&gt; G["一份权重 + prompt&lt;br/&gt;可泛化到新任务"]</code></pre>
@@ -1781,9 +1881,9 @@
 <tbody>
 <tr>
 <td>代表</td>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / TFM</td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / TFM / CBraMod</td>
 <td>BrainGPT（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 图网络）</td>
-<td>NeuroLM（<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 + instruction）</td>
+<td>NeuroLM（<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2）；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>（Qwen2.5-VL，跨域）</td>
 </tr>
 <tr>
 <td>权重份数</td>
@@ -1805,7 +1905,7 @@
 </tr>
 <tr>
 <td>性能天花板</td>
-<td><strong>最高</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 均为此路线）</td>
+<td><strong>最高</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod 均为此路线）</td>
 <td>略低于单独训练的最优，但全面高于各自 separate</td>
 <td>目前略逊单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，接近多数基线</td>
 </tr>
@@ -1823,6 +1923,7 @@
 </tr>
 </tbody>
 </table>
+<p><strong>路线③的跨域印证</strong>：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 在射频域用同一范式（谱图 <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀 + 文本指令 + 只算答案损失）做到一个模型五族任务（调制/重叠/技术/计数/参数抽取）——指令微调路线在非 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 域同样成立，且其阴性对照（<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5 精心 prompt 后仍随机猜）反过来强调：这条路线的前提是<strong>模态接地要先做专门训练</strong>，不是通用 <abbr title="大语言模型 Large Language Model">LLM</abbr> 天生就会。</p>
 <h2 id="_4">关键机制细节<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <h3 id="braingpt-teg">BrainGPT 的 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>：为什么联合训练能双赢<a class="headerlink" href="#braingpt-teg" title="Permanent link">#</a></h3>
 <p>任务 A 和任务 B 的电极集重叠部分（如 C4），其<strong>节点向量被两个任务的梯度共同更新</strong>——相当于大任务给小任务做数据增强。论文证据：MW（仅 4K 样本）在联合训练中 +3.9%，SS（42K 样本）只 +0.9%——<strong>小任务受益与数据量成反比</strong>。</p>
@@ -1830,17 +1931,65 @@
 <p>把「6 类事件分类」变成 <code>[SEP] Question: Which event type...? Answer: {(A)...(F)}</code>，任务差异就被压进了<strong>文本 prompt</strong> 而非模型结构。配套设计：只对答案部分算损失（稳定）、混入纯文本防遗忘、评测取 argmax 而非 beam search。消融显示模型对选项乱序鲁棒（TUEV/HMC），说明真的理解了问题语义而非背选项位置。</p>
 <h3 id="_5">性能差距从哪来<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
 <p>NeuroLM 坦言多任务版本仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（如 TUAB 0.7969 vs 0.8258）。三个原因：① 任务间梯度干扰；② 文本对齐是粗粒度的空间级（无 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-text 成对数据）；③ <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 基座偏小且老。<strong>多任务的价值在范式与效率，不在当下数字</strong>。</p>
-<h2 id="_6">与传统多任务学习的对比<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 领域传统 MTL（hard/soft parameter sharing、跨任务预训练）一直存在，但这六篇的差异在于：</p>
+<h2 id="20252026">路线之外：下游适配的三个新变量（2025–2026）<a class="headerlink" href="#20252026" title="Permanent link">#</a></h2>
+<h3 id="vs">变量一 · 冻结探针 vs 微调：两个极端的全部证据<a class="headerlink" href="#vs" title="Permanent link">#</a></h3>
+<p>「预训练表示要不要微调才可用」，站内已积累四个数据点，一边倒地指向「要」：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>冻结/探针表现</th>
+<th>微调表现</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EEGPT</strong></td>
+<td>linear probing 即 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>（TUEV 0.6232）</td>
+<td>—（探针就是其协议）</td>
+<td><strong>唯一例外</strong>：对齐目标 <span class="arithmatex">\( L_A \)</span> 直接优化表示质量</td>
+</tr>
+<tr>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
+<td>探针崩（TUEV <strong>0.346</strong>）</td>
+<td>0.6409+</td>
+<td>掩码码字预测的特征停留 in「预测码字够用」的层次</td>
+</tr>
+<tr>
+<td>CBraMod</td>
+<td>冻结 backbone 只训头崩（FACED Kappa 0.5041→<strong>0.2579</strong>）</td>
+<td>0.5041</td>
+<td><abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式重构表征高度任务特化（但冻结版仍好过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 冻结版）</td>
+</tr>
+<tr>
+<td>EEGDM</td>
+<td>探针 0.6010（仅略高于从零训练 0.5825）</td>
+<td><strong>0.6826</strong></td>
+<td>生成预训练的表示同样靠微调兑现</td>
+</tr>
+</tbody>
+</table>
+<p>结论：<strong>「预训练价值靠微调兑现」是普遍规律，EEGPT 是目前唯一例外</strong>——与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass「线性探针普遍不够」的第三方结论一致。对「预训练→冻结→解码」类项目的直接提醒：别指望冻结提取器，LoRA/微调是必选项。</p>
+<h3 id="_6">变量二 · 生成增强：掩码范式结构性做不到的外溢<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p>生成式预训练附赠一个掩码重构没有的资产——<strong>生成器本身</strong>：</p>
+<ul>
+<li><strong>JET</strong>：合成数据增强 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 分类器 CBraMod，ΔAcc +0.017~+0.032 全为正；而 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN / 扩散基线的 ΔAcc ≈ 0 甚至为负（生成样本引入分布偏移）；</li>
+<li><strong>EEGDM</strong>：扩散模块直接当增强器，CL-Drive Balanced Accuracy +5.4pp（53.57%→58.96%），对样本稀缺的 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 任务是独有账目。</li>
+</ul>
+<h3 id="tokenizer">变量三 · 组件可插拔：tokenizer 当独立产品<a class="headerlink" href="#tokenizer" title="Permanent link">#</a></h3>
+<p>TFM 把 tokenization 从「论文的一部分」做成<strong>可替换组件</strong>：替换 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的输入投影 / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的神经 tokenizer 后，93% 的指标-设定组合提升（单数据集 CHB-MIT 上 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 的 AUC-PR +147%）；跨设备 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 仅 ~8K 标注样本微调即超基线 14%。这是「输入表示质量独立于骨干」的最强证据。</p>
+<h2 id="_7">与传统多任务学习的对比<a class="headerlink" href="#_7" title="Permanent link">#</a></h2>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 领域传统 MTL（hard/soft parameter sharing、跨任务预训练）一直存在，但这批论文的差异在于：</p>
 <ol>
 <li><strong>骨干来自大规模自监督预训练</strong>（而非随机初始化的多任务网络）；</li>
 <li><strong>输入表示天然任务无关</strong>（channel patch / 单电极 <abbr title="词元，模型处理的最小输入单元">token</abbr>），这是多任务能共享骨干的前提；</li>
 <li>NeuroLM 首次把 NLP 的 instruction tuning 完整范式搬进 <abbr title="脑电图 Electroencephalogram">EEG</abbr>。</li>
 </ol>
-<h2 id="_7">新论文入库提示<a class="headerlink" href="#_7" title="Permanent link">#</a></h2>
-<p>读新论文时记录：它是哪条路线？如果是联合训练，报告 joint vs separate 对比了吗？如果是指令微调，prompt 模板长什么样、泛化到没见过的任务了吗？——这两问是判断多任务工作含金量的关键。</p>
-<h2 id="_8">关联页面<a class="headerlink" href="#_8" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-braingpt/">BrainGPT 笔记</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM 笔记</a> · <a href="../spatial/">通道异构的四种解法</a></p>
+<h2 id="_8">新论文入库提示<a class="headerlink" href="#_8" title="Permanent link">#</a></h2>
+<p>读新论文时记四问：① 它走哪条路线？联合训练报 joint vs separate 了吗？指令微调的 prompt 泛化到没见过的任务了吗？② 它报了冻结/探针/微调的对比吗——这是判断表示质量的最干净口径；③ 它有生成器吗，合成数据能给下游增强吗？④ 它的组件（tokenizer/编码器）能插进别家骨干吗？——后两问是 2026 年的新增分水岭。</p>
+<h2 id="_9">关联页面<a class="headerlink" href="#_9" title="Permanent link">#</a></h2>
+<p><a href="../../papers/2026-09/0918-braingpt/">BrainGPT 笔记</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM 笔记</a> · <a href="../spatial/">通道异构的六种解法</a> · <a href="../../comparison/">十二篇方法对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

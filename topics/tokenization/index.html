@@ -1195,6 +1195,28 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
+        切段之前：预处理与归一化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切段粒度谱系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         三步跃迁
       
     </span>
@@ -1242,7 +1264,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#20252026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2025–2026：连续派的加固与新形态
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        token embedding 组成对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         关键技术分歧
@@ -1265,7 +1309,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         位置编码的争论
@@ -1281,7 +1325,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         遗留问题
@@ -1292,7 +1336,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
@@ -1353,7 +1397,7 @@
   <span class="md-ellipsis">
     
   
-    通道异构的四种解法
+    通道异构的六种解法
   
 
     
@@ -1663,6 +1707,28 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
+        切段之前：预处理与归一化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切段粒度谱系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         三步跃迁
       
     </span>
@@ -1710,7 +1776,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#20252026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2025–2026：连续派的加固与新形态
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        token embedding 组成对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         关键技术分歧
@@ -1733,7 +1821,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         位置编码的争论
@@ -1749,7 +1837,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         遗留问题
@@ -1760,7 +1848,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
@@ -1792,15 +1880,18 @@
 
 <h1 id="eeg-tokenization"><abbr title="脑电图 Electroencephalogram">EEG</abbr> Tokenization 演进<a class="headerlink" href="#eeg-tokenization" title="Permanent link">#</a></h1>
 <blockquote>
-<p>一条主线：<strong><abbr title="词元，模型处理的最小输入单元">token</abbr> 从「预处理产物」→「训练靶子」→「真正的模型输入」</strong>。</p>
+<p>一条主线：<strong><abbr title="词元，模型处理的最小输入单元">token</abbr> 从「预处理产物」→「训练靶子」→「真正的模型输入」</strong>；2025–2026 连续派又带着新形态回归。本页是<a href="../../comparison/">十二篇方法对比</a>的「Tokenization 维度」深读页，覆盖十二篇。</p>
 </blockquote>
 <h2 id="_1">演进时间线<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <pre class="mermaid"><code>timeline
     title EEG Tokenization 演进
     2023 : BIOT : 规则切段，连续 token，无词表
     2024 : LaBraM : VQ 词表 8192，仅作预训练目标
+    2024 : EEGPT : 连续 patch + 通道 codex book
     2025 : NeuroLM : 码字并入 GPT-2 词表，接入 LLM
-    2026 : TFM-Tokenizer : 时频 motif 词表，token 作为模型输入</code></pre>
+    2025 : CBraMod / LUNA : 连续派加固：时频双分支 embedding + 动态空间编码
+    2026 : TFM-Tokenizer : 时频 motif 词表，token 作为模型输入
+    2026 : RF-GPT : 谱图当图片、复用视觉编码器（跨域质疑自训词表）</code></pre>
 <table>
 <thead>
 <tr>
@@ -1827,6 +1918,13 @@
 <td><strong>仅作预训练目标</strong>，推理时丢弃</td>
 </tr>
 <tr>
+<td>2024</td>
+<td><a href="../../papers/2026-09/0918-eegpt/">EEGPT</a></td>
+<td>连续 patch embedding</td>
+<td>无（通道 codex book 另算）</td>
+<td>模型输入</td>
+</tr>
+<tr>
 <td>2025</td>
 <td><a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a></td>
 <td>离散码（<abbr title="向量量化 Vector Quantization">VQ</abbr>）</td>
@@ -1842,7 +1940,19 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_2">三步跃迁<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<h2 id="_2">切段之前：预处理与归一化<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>进模型前把异构信号拉齐的方式，各家并无共识——跨论文比较时的隐藏变量：</p>
+<ul>
+<li><strong>重采样</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / CBraMod / EEGDM / JET 统一 200Hz；EEGPT / LUNA 统一 256Hz。滤波细节只有两家披露：LUNA 0.1–75Hz 带通 + 50/60Hz 陷波，CBraMod 0.3–75Hz 带通 + 60Hz 陷波；</li>
+<li><strong>归一化四式</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 逐通道除以绝对幅值 <strong>95 分位数</strong>；LUNA 逐通道 <strong>z-score</strong>；CBraMod 以 <strong>100µV 为单位</strong>归一；JET 幅值整体 <strong>×0.01</strong>。</li>
+</ul>
+<h2 id="_3">切段粒度谱系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>patch 时间长度</strong>：LUNA 最细（40 个时间戳，@256Hz 约 0.16s）→ EEGPT 250ms（64 点）→ 主流 <strong>1s</strong>（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> w=200 / TFM 窗 200 点 / CBraMod / EEGDM / JET P=200）——首尾差 6 倍，粒度选择与「motif 通常持续亚秒到数秒」的生理直觉大体一致；</li>
+<li><strong>重叠与否</strong>：只有 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（1s 窗 0.5s 重叠）与 TFM（hop 0.5s）重叠切，其余全部无重叠；</li>
+<li><strong>切的对象</strong>：主流「每通道独立切」（承 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的逐通道设计）；EEGPT 在固定 58 电极网格上切；<strong>EEGMoE 干脆不切波形</strong>——先分 5 个频带（δ 1–4 / θ 4–8 / α 8–14 / β 14–31 / γ 31–45Hz）、按头皮位置摆成 2-D 网格再堆成 4-D 脑地图；<strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 把整个 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图当一张 512×512 图片</strong>切 14×14 patch（1369 个 <abbr title="词元，模型处理的最小输入单元">token</abbr>）。</li>
+</ul>
+<h2 id="_4">三步跃迁<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <h3 id="biot-tokenize">第一步：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> —— "tokenize 但没词表"<a class="headerlink" href="#biot-tokenize" title="Permanent link">#</a></h3>
 <p>逐通道独立切段（1s 窗、0.5s 重叠），<abbr title="词元，模型处理的最小输入单元">token</abbr> embedding = FFT 能量 → FCN ⊕ 通道 embedding ⊕ 正弦位置编码。</p>
 <ul>
@@ -1860,7 +1970,89 @@
 <li><strong>NeuroLM</strong>：把 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 索引<strong>并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表</strong>，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成「外语句子」喂给 <abbr title="大语言模型 Large Language Model">LLM</abbr>，靠 <abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 对抗对齐文本空间 → 通向多任务指令推理；</li>
 <li><strong>TFM</strong>：<abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 查表（码字初始化）作为轻量 Transformer 的<strong>输入</strong>，且作为即插即用组件替换 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的输入端 → 通向通用 tokenization 层。</li>
 </ul>
-<h2 id="_3">关键技术分歧<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>离散化的共同代价：量化丢幅度细节——BrainGPT 直接回归连续值绕开，JET 在生成侧用连续向量场绕开。</p>
+<h2 id="20252026">2025–2026：连续派的加固与新形态<a class="headerlink" href="#20252026" title="Permanent link">#</a></h2>
+<p>离散词表线走到 TFM 后，2025–2026 的新工作大多回到连续域，但每一家都往 <abbr title="词元，模型处理的最小输入单元">token</abbr> 里塞了新东西：</p>
+<ul>
+<li><strong>CBraMod · 时频双分支 + 动态位置</strong>：每 patch 时域 3 层 1D conv ⊕ rFFT 能量两路<strong>相加</strong>，位置编码改由 2D depthwise 卷积从邻域动态生成（ACPE，核 (19,7)）——不再查表绑定电极；</li>
+<li><strong>LUNA · 双路嵌入 + 连续空间坐标</strong>：1D conv ⊕ FFT 幅相双路相加，空间信息用 3D 电极坐标的 NeRF 式正弦编码——任意位置都有定义，比 10-20 离散 embedding 连续；</li>
+<li><strong>EEGDM · PCA 隐空间</strong>：encoder 侧 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是常规 1D conv + 可学习位置嵌入；特别之处在<strong>去噪目标</strong>先沿时间维 PCA 到 K=20 维（零训练线性隐空间）——把「压缩」从学出来的词表换成闭式主成分；</li>
+<li><strong>JET · 保留通道身份</strong>：patch 线性投影 + 可学习位置编码，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 序列是 (C·N)×D 而非 N×D——电极是物理量，展平等于把通道身份交给位置编码去猜（这是容易被复现者忽略的隐含设计）；</li>
+<li><strong>EEGMoE · 放弃波形</strong>：<abbr title="词元，模型处理的最小输入单元">token</abbr> 单位不是波形段而是「时刻 × 频带 × 电极网格」的脑地图体素——用输入端的离散化换任何 montage 的统一表达；</li>
+<li><strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> · 谱图即图片</strong>：<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> dB 幅值谱直接复用预训练 VLM 的视觉编码器，<strong>不学任何信号词表</strong>——从跨域视角质疑「自训词表」的必要性（详见遗留问题）。</li>
+</ul>
+<h2 id="token-embedding"><abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 组成对比<a class="headerlink" href="#token-embedding" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>时域</th>
+<th>频域</th>
+<th>空间/通道</th>
+<th>时间位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
+<td>—（切段即 <abbr title="词元，模型处理的最小输入单元">token</abbr>）</td>
+<td>FFT 能量 → FCN</td>
+<td>可学习通道表</td>
+<td>正弦相对</td>
+</tr>
+<tr>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM</td>
+<td>temporal conv</td>
+<td>（进重构目标，不进 <abbr title="词元，模型处理的最小输入单元">token</abbr>）</td>
+<td>10-20 空间表</td>
+<td>可学习时间表</td>
+</tr>
+<tr>
+<td>EEGPT</td>
+<td>patch embedding</td>
+<td>无显式</td>
+<td>通道 codex book</td>
+<td>（predictor 内 RoPE）</td>
+</tr>
+<tr>
+<td>TFM</td>
+<td>线性投影 + GeLU</td>
+<td><strong>频率 patch → 频率 Transformer → 门控聚合</strong>（拼接）</td>
+<td>单通道，下游加通道 embedding</td>
+<td><strong>tokenizer 内无</strong></td>
+</tr>
+<tr>
+<td>CBraMod</td>
+<td>3 层 1D conv</td>
+<td>rFFT 能量 → FC（相加）</td>
+<td>并入 ACPE 卷积</td>
+<td>并入 ACPE 卷积（核短边）</td>
+</tr>
+<tr>
+<td>LUNA</td>
+<td>1D conv</td>
+<td>FFT 幅相 → MLP（相加）</td>
+<td>3D 坐标 NeRF 编码</td>
+<td>RoPE（时间 Transformer）</td>
+</tr>
+<tr>
+<td>EEGDM</td>
+<td>1D conv（512 出）</td>
+<td>无显式</td>
+<td>19 通道统一设定</td>
+<td>可学习位置嵌入</td>
+</tr>
+<tr>
+<td>JET</td>
+<td>线性投影</td>
+<td>无显式（损失间接控制）</td>
+<td><strong>保留通道身份</strong>（C·N 序列）</td>
+<td>可学习位置编码</td>
+</tr>
+</tbody>
+</table>
+<p>两个规律：<strong>频域几乎都以双分支相加/拼接的方式进入 embedding 层</strong>（性价比最高的位置）；<strong>空间与位置编码从「查表」走向「动态生成 / 连续坐标 / 干脆不要」</strong>。</p>
+<h2 id="_5">关键技术分歧<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <h3 id="token">频域信息怎么进 <abbr title="词元，模型处理的最小输入单元">token</abbr><a class="headerlink" href="#token" title="Permanent link">#</a></h3>
 <table>
 <thead>
@@ -1891,20 +2083,32 @@
 <td>频率轴切 patch + 频率 Transformer + 门控聚合</td>
 <td><strong>显式建模窗内跨频段依赖</strong>，最彻底</td>
 </tr>
+<tr>
+<td>CBraMod</td>
+<td>rFFT 能量与时域 conv 相加进 embedding</td>
+<td>消融：时+频 &gt; 纯时 &gt; 纯频</td>
+</tr>
+<tr>
+<td>LUNA</td>
+<td>FFT 幅相经 MLP 与时域 conv 相加</td>
+<td>消融：<strong>去掉后掉分最多的组件</strong>（AUROC 至 -0.011）</td>
+</tr>
 </tbody>
 </table>
-<h3 id="_4">位置编码的争论<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<h3 id="_6">位置编码的争论<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
 <p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 用正弦相对位置编码，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用可学习时/空 embedding，<strong>TFM 在 tokenizer 内刻意去掉位置编码</strong>（消融：Kappa 0.5119→0.5337，<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率 12.87%→9.78%<sup id="fnref:pe"><a class="footnote-ref" href="#fn:pe">1</a></sup>）。</p>
 <p>理由：<abbr title="脑电图 Electroencephalogram">EEG</abbr> motif 非平稳，同一模式可出现在任意位置；加 <abbr title="位置编码 Positional Encoding">PE</abbr> 会让相同 motif 在不同位置学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr> → 词表冗余。motif 词表需要的是<strong>平移不变性</strong>。</p>
+<p>2025 年出现两个新答案，与 TFM 的「无」构成三种态度：<strong>CBraMod ACPE</strong>——位置编码不是查表而是从 patch 邻域卷积动态生成（换蒙太奇/换参考仍适用）；<strong>LUNA NeRF 编码</strong>——连续 3D 电极坐标，任意位置有定义（代价：预训练拓扑只覆盖 3 种布局时，坐标空间采样太稀疏，未见拓扑 SEED-V 上掉分）。三者共同点：拒绝「电极编号 → embedding」的绝对绑定。</p>
 <p>（注意区分：TFM 的下游 Transformer 仍加位置/通道 embedding，去掉的只是 tokenizer 内部的 <abbr title="位置编码 Positional Encoding">PE</abbr>。）</p>
-<h2 id="_5">遗留问题<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<h2 id="_7">遗留问题<a class="headerlink" href="#_7" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>固定窗长的软肋</strong>（TFM 作者自认）：大 pattern 可能跨窗被切断，同一事件分到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>；</li>
 <li><strong>词表大小与利用率的权衡</strong>：TFM 消融显示词表越大类独有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 越多，但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率下降；</li>
+<li><strong>要不要自训词表</strong>（RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 的跨域质疑）：谱图可以直接复用视觉编码器开箱即用，RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 以此质疑「自训时频词表」的必要性——但注意其任务是波形的多对一判别（幅值谱够用），<abbr title="脑电图 Electroencephalogram">EEG</abbr> 表示学习是否同样成立未经验证；</li>
 <li><strong>与自然语言对齐</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/NeuroLM 都展望过把神经码与语言词汇对齐，目前仍停留在空间级（粗粒度）。</li>
 </ul>
-<h2 id="_6">关联论文<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></p>
+<h2 id="_8">关联论文<a class="headerlink" href="#_8" title="Permanent link">#</a></h2>
+<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/2026-09/0928-cbramod/">CBraMod</a> · <a href="../../papers/2026-09/0924-luna/">LUNA</a> · <a href="../../papers/2026-10/1017-eegdm/">EEGDM</a> · <a href="../../papers/2026-09/0923-jet/">JET</a> · <a href="../../papers/2026-09/0924-eegmoe/">EEGMoE</a> · <a href="../../papers/2026-09/0921-rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 <div class="footnote">
