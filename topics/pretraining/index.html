@@ -856,6 +856,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/2026-10/1028-not-all-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1028 · Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1257,7 +1292,7 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        两条生成路线的分工
+        两条生成路线的分工（与一次内部迭代）
       
     </span>
   </a>
@@ -1482,7 +1517,7 @@
   <span class="md-ellipsis">
     
   
-    十二篇方法对比
+    十三篇方法对比
   
 
     
@@ -1680,7 +1715,7 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        两条生成路线的分工
+        两条生成路线的分工（与一次内部迭代）
       
     </span>
   </a>
@@ -1758,10 +1793,10 @@
 
 <h1 id="_1">预训练范式对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>十二篇论文覆盖了自监督学习的<strong>四条路线</strong>：对比学习、掩码建模、自回归、生成（2026 新增），掩码建模内部还在持续进化；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 则完全跳过预训练（纯合成 SFT）。本页是<a href="../../comparison/">十二篇方法对比</a>的「预训练目标维度」深读页。</p>
+<p>十三篇论文覆盖了自监督学习的<strong>四条路线</strong>：对比学习、掩码建模、自回归、生成（2026 新增），掩码建模内部还在持续进化；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 则完全跳过预训练（纯合成 SFT）。本页是<a href="../../comparison/">十三篇方法对比</a>的「预训练目标维度」深读页。</p>
 </blockquote>
 <h2 id="_2">四条路线总览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">对比学习 · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></label><label for="__tabbed_1_2">掩码建模 · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / TFM / CBraMod / LUNA / EEGMoE</label><label for="__tabbed_1_3">自回归 · BrainGPT / NeuroLM</label><label for="__tabbed_1_4">生成 · JET / EEGDM（2026 新增）</label><label for="__tabbed_1_5">无预训练 · RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">对比学习 · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></label><label for="__tabbed_1_2">掩码建模 · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / TFM / CBraMod / LUNA / EEGMoE</label><label for="__tabbed_1_3">自回归 · BrainGPT / NeuroLM</label><label for="__tabbed_1_4">生成 · JET / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>（2026 新增）</label><label for="__tabbed_1_5">无预训练 · RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>扰动版预测原版表示（BYOL 式）：随机丢弃部分通道和 <abbr title="词元，模型处理的最小输入单元">token</abbr> 得到扰动信号，predictor + 对比损失（温度 T=0.2）让扰动版预测原版表示。</p>
@@ -1790,6 +1825,7 @@
 <ul>
 <li>JET → 条件流匹配：线性插值路径回归向量场，推理解 ODE；质量导向（生成质量论英雄）</li>
 <li>EEGDM → 潜扩散：encoder 表示作条件引导 DiT 在 PCA 隐空间去噪；表征导向（下游指标论英雄）</li>
+<li>Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> → 位置自适应时间调度：EMA 误差图把全局 t 展开成端点保持的位置时间图，监督按历史难度分配（生成路线的第一次内部迭代）</li>
 </ul>
 </div>
 <div class="tabbed-block">
@@ -1857,12 +1893,13 @@
 <li><strong>JET · 连续性批评</strong>：脑活动在高维状态空间平滑演化，离散的去噪/补全步骤与神经信号的连续动力错配；<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的三大统计特性（幂律频谱、非平稳动态、重尾幅度）都在惩罚「各向同性噪声假设下优化局部重构精度」的范式；</li>
 <li><strong>EEGDM · 捷径批评</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 强局部自相关下，掩码重构存在<strong>局部插值捷径</strong>——从可见锚点插值即可把被掩 patch 填得八九不离齐，损失低不等于学到全局分布；而「从纯噪声生成完整信号」必须建模全局数据分布。</li>
 </ol>
-<h3 id="_5">两条生成路线的分工<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<h3 id="_5">两条生成路线的分工（与一次内部迭代）<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
 <ul>
 <li><strong>JET（质量导向）</strong>：条件流匹配学向量场 <span class="arithmatex">\( v_\theta(x_t, t, c) \)</span>，线性插值路径 <span class="arithmatex">\( x_t = t x_1 + (1-t) x_0 \)</span> 给出回归目标；三条生理约束（L1 重构隐含 Laplacian 先验 / 一二阶矩统计一致 / 时间全变分 + Pearson 相关）源自 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 统计结构而非临时正则。战绩：TS-FID 降 40%+、下游增强 ΔAcc 全正（基线≈0）。注意其拓扑学教训：<strong>零噪声初始化灾难性失败</strong>（TS-FID 1600+）——从单点展开成多模态分布是不可表示的一对多映射；</li>
 <li><strong>EEGDM（表征导向）</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> encoder 的表示 <span class="arithmatex">\( e \)</span>（三个增强视图平均）作扩散条件，关键设计是 <strong><span class="arithmatex">\( e \)</span> 不 detach</strong>——去噪损失经条件反传，encoder 与扩散联合优化，「学一个对去噪最有用的条件」就是表征学习本身。战绩：TUEV 类不均衡指标全场最佳（最稀有类 SPSW 召回 50.3% vs 掩码基线 10–18%）。代价：比同规模掩码重构贵一个量级（4×A100×113h）。</li>
 </ul>
 <p>两篇共享同一立场（生成目标须建模全局分布）与同一技术件（adaLN 条件注入：JET 注入时间+类别、EEGDM 注入时间+encoder 表示）。</p>
+<p><strong>2026 下半场，生成路线开始自我修正（Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>）</strong>：批评点不再是掩码范式，而是自己的上一代——JET 的「全局统一时间调度」让所有通道 × 位置拿到完全相同的监督（<strong>分配太平均</strong>，与 EEGDM 批评的「监督太容易」互补）。解法 PATS：训练中维护每个 (通道 × patch) 位置重构误差的 EMA 图，把全局 t 展开成端点保持的位置时间图 <span class="arithmatex">\( \tau_{i,j} = t + m\,s_{i,j}\,t(1-t) \)</span>，难位置提前进入低噪声阶段；同时把 JET 的时域 TV 约束（无差别压高频）换成<strong>频率加权的多分辨率频谱损失</strong>（<span class="arithmatex">\( w_k \propto k^\alpha \)</span> 对抗幂律谱偏置）。对同口径复现 JET 的 TS-FID 再降 40–62%，按基线误差分层的分析显示收益集中在最难的一成位置（第 10 分位误差削减 14.9%，其余分位 1–5%）——<strong>监督信号怎么分配</strong>本身成了新的设计维度。</p>
 <h2 id="vs">自回归 vs 掩码：范式之争<a class="headerlink" href="#vs" title="Permanent link">#</a></h2>
 <p>BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）<sup id="fnref:t5"><a class="footnote-ref" href="#fn:t5">1</a></sup>：</p>
 <ul>

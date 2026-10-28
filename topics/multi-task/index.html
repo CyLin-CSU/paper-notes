@@ -856,6 +856,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/2026-10/1028-not-all-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1028 · Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1532,7 +1567,7 @@
   <span class="md-ellipsis">
     
   
-    十二篇方法对比
+    十三篇方法对比
   
 
     
@@ -1858,7 +1893,7 @@
 
 <h1 id="_1">多任务与下游适配<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>「一个模型能不能同时干多种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 任务？」——核心六篇给出三条路线；2025–2026 的扩展论文又带来路线之外的三个新变量（冻结探针之争、生成增强、组件可插拔）。本页是<a href="../../comparison/">十二篇方法对比</a>的「下游适配维度」深读页。</p>
+<p>「一个模型能不能同时干多种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 任务？」——核心六篇给出三条路线；2025–2026 的扩展论文又带来路线之外的三个新变量（冻结探针之争、生成增强、组件可插拔）。本页是<a href="../../comparison/">十三篇方法对比</a>的「下游适配维度」深读页。</p>
 </blockquote>
 <h2 id="_2">路线总览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <pre class="mermaid"><code>flowchart LR
@@ -1975,7 +2010,8 @@
 <p>生成式预训练附赠一个掩码重构没有的资产——<strong>生成器本身</strong>：</p>
 <ul>
 <li><strong>JET</strong>：合成数据增强 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 分类器 CBraMod，ΔAcc +0.017~+0.032 全为正；而 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN / 扩散基线的 ΔAcc ≈ 0 甚至为负（生成样本引入分布偏移）；</li>
-<li><strong>EEGDM</strong>：扩散模块直接当增强器，CL-Drive Balanced Accuracy +5.4pp（53.57%→58.96%），对样本稀缺的 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 任务是独有账目。</li>
+<li><strong>EEGDM</strong>：扩散模块直接当增强器，CL-Drive Balanced Accuracy +5.4pp（53.57%→58.96%），对样本稀缺的 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 任务是独有账目；</li>
+<li><strong>Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></strong>：位置难度自适应调度让增强收益再放大——TUEV 上 ΔAcc +9.58pp（EEGNet 裁判）/ +2.39pp（CBraMod 裁判），且首创<strong>双裁判协议</strong>（从零训练的 EEGNet + 预训练的 CBraMod 各评一遍），排除「合成数据只对弱分类器有效」的伪增益。</li>
 </ul>
 <h3 id="tokenizer">变量三 · 组件可插拔：tokenizer 当独立产品<a class="headerlink" href="#tokenizer" title="Permanent link">#</a></h3>
 <p>TFM 把 tokenization 从「论文的一部分」做成<strong>可替换组件</strong>：替换 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的输入投影 / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的神经 tokenizer 后，93% 的指标-设定组合提升（单数据集 CHB-MIT 上 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 的 AUC-PR +147%）；跨设备 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 仅 ~8K 标注样本微调即超基线 14%。这是「输入表示质量独立于骨干」的最强证据。</p>
@@ -1989,7 +2025,7 @@
 <h2 id="_8">新论文入库提示<a class="headerlink" href="#_8" title="Permanent link">#</a></h2>
 <p>读新论文时记四问：① 它走哪条路线？联合训练报 joint vs separate 了吗？指令微调的 prompt 泛化到没见过的任务了吗？② 它报了冻结/探针/微调的对比吗——这是判断表示质量的最干净口径；③ 它有生成器吗，合成数据能给下游增强吗？④ 它的组件（tokenizer/编码器）能插进别家骨干吗？——后两问是 2026 年的新增分水岭。</p>
 <h2 id="_9">关联页面<a class="headerlink" href="#_9" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-braingpt/">BrainGPT 笔记</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM 笔记</a> · <a href="../spatial/">通道异构的六种解法</a> · <a href="../../comparison/">十二篇方法对比</a></p>
+<p><a href="../../papers/2026-09/0918-braingpt/">BrainGPT 笔记</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM 笔记</a> · <a href="../spatial/">通道异构的六种解法</a> · <a href="../../comparison/">十三篇方法对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

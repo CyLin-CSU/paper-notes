@@ -1,0 +1,2170 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="我的论文精读总结库">
+      
+      
+      
+      
+        <link rel="prev" href="../1017-eegdm/">
+      
+      
+        <link rel="next" href="../../../basics/lora/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Not All EEG Moments Are Equal: Position-Adaptive Time Scheduling for EEG Generation - Paper Notes · 论文阅读笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#not-all-eeg-moments-are-equal-position-adaptive-time-scheduling-for-eeg-generation" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Paper Notes · 论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Not All EEG Moments Are Equal: Position-Adaptive Time Scheduling for EEG Generation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换暗色" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换亮色" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Paper Notes · 论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    论文笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    论文笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1">
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026-09
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026-09
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0918-biot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · BIOT (NeurIPS 2023)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0918-labram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · LaBraM (ICLR 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0918-eegpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · EEGPT (NeurIPS 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0918-braingpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · BrainGPT (arXiv 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0918-neurolm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · NeuroLM (ICLR 2025)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0918-tfm-tokenizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · TFM-Tokenizer (ICLR 2026)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0921-rf-gpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0921 · RF-GPT (arXiv 2026 · 跨领域)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0923-jet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0923 · JET (ICML 2026 · EEG 生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0924-eegmoe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · EEGMoE (TNNLS 2026 · MoE)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0924-luna/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2026-09/0928-cbramod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0928 · CBraMod (ICLR 2025 · 十字交叉)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026-10
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2026-10
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1017-eegdm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1017 · EEGDM (arXiv 2026 · 扩散表征)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1028 · Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1028 · Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：统一时间调度的「均等主义」
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 预备：干净样本参数化的条件流匹配
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-pats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 PATS：位置自适应时间调度（核心贡献）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 因子化时空注意力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 四项损失
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 实验与结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模型架构基础
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    模型架构基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../basics/lora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LoRA · 低秩适配 (ICLR 2022)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../basics/attention-alternatives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention 替代方案 (CS336 Lec 4)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../basics/generative-lineage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生成模型脉络 (VAE → DDPM → FM)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../basics/gnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图神经网络 (消息传递与 GAT)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主题专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    主题专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预训练范式对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/spatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通道异构的六种解法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/data-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/multi-task/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多任务三条路线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../topics/base-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基座来源分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog-2023-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十三篇方法对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：统一时间调度的「均等主义」
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 预备：干净样本参数化的条件流匹配
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-pats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 PATS：位置自适应时间调度（核心贡献）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 因子化时空注意力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 四项损失
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 实验与结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="not-all-eeg-moments-are-equal-position-adaptive-time-scheduling-for-eeg-generation">Not All <abbr title="脑电图 Electroencephalogram">EEG</abbr> Moments Are Equal: Position-Adaptive Time Scheduling for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Generation<a class="headerlink" href="#not-all-eeg-moments-are-equal-position-adaptive-time-scheduling-for-eeg-generation" title="Permanent link">#</a></h1>
+<blockquote>
+<p><strong>arXiv 2026</strong>（eess.SP 预印本 v1，2026-07-25）· 北京理工大学计算机学院 —— 站内<strong>第三篇生成轴线</strong>论文：直接站在 <a href="../../2026-09/0923-jet/">JET</a>（ICML 2026，流匹配）之上，攻击其遗留的「全局统一时间调度」假设；与 <a href="../1017-eegdm/">EEGDM</a>（潜扩散训表征）一起，把生成轴线的三篇拼成完整光谱——生成质量（JET）→ 生成训表征（EEGDM）→ 生成调度精细化（本篇）。</p>
+</blockquote>
+<p><strong>作者</strong>：Boheng Liu, Ziyu Li*（通讯）, Chenghua Duan, Qing Li, Xia Wu（北京理工大学）</p>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>核心论点：<strong>不是所有 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 时刻都同等难</strong>——准平稳背景节律与稀疏高难度瞬态（病理放电、伪迹段、通道特异性事件）共存于同一段记录，且难位置在同一采集协议下<strong>跨样本复现</strong>；而现有流匹配（JET）让所有通道 × 时间位置共享一个标量时间 t，难易位置拿到完全相同的有效监督，容量浪费在易位置上</li>
+<li>PATS（核心贡献）：训练中维护每个 (通道 i × patch j) 位置重构误差的 <strong>EMA 统计图</strong>（全数据集共享）→ 归一化为显著图 s → 把全局 t 展开为端点保持的位置时间图 <span class="arithmatex">\( \tau_{i,j}(t) = t + m\, s_{i,j}\, t(1-t) \)</span>——历史难的位置被提前推向低噪声阶段；采样用同一张统计图</li>
+<li>配套两件：<strong>因子化时空注意力</strong>（时间条带 + 通道条带两阶段，τ 作 <abbr title="词元，模型处理的最小输入单元">token</abbr> 级条件经 adaLN 注入，复杂度 <span class="arithmatex">\( O(CN^2 + NC^2) \)</span>——与 <a href="../../2026-09/0928-cbramod/">CBraMod</a> 十字交叉同族、搬到生成侧）；<strong>频率对齐多分辨率频谱一致性损失</strong>（<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 幅值 + 频率权重 <span class="arithmatex">\( w_k \propto k^\alpha \)</span> 对抗幂律谱偏置——替换 JET 的时域 TV 约束）</li>
+<li>结果：三个数据集（TUEV 16ch / BCIC-IV-2a 22ch / SEED-IV 62ch）TS-FID 全面最低——比自家复现的最强基线 JET 再降 <strong>40.7% / 62.2% / 41.5%</strong>；下游增强 ΔAcc 最高 +9.58pp（EEGNet 裁判）/ +2.74pp（CBraMod 裁判），两个裁判下全部最高</li>
+<li>全文最漂亮的一张牌：按基线误差十分位分层的误差削减——第 1–6 分位 1.3%→4.8% 缓升、7–9 分位回落至 3.3%、<strong>第 10 分位跳到 14.9%</strong>（约为其他分位 3 倍）：收益集中在最难的少数位置，中心假设的直接验证</li>
+</ul>
+</div>
+<h2 id="1">1 问题定位：统一时间调度的「均等主义」<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据稀缺 → 生成增强的动机与 JET 一致。本文攻击的是 JET 留下的一个具体假设：条件流匹配的线性插值路径 <span class="arithmatex">\( x_t = t\,x_1 + (1-t)\,x_0 \)</span> 中，<strong>样本内所有通道、所有 patch 位置共享同一个标量 t</strong>——同一训练步里，每个 (i,j) 位置的噪声水平完全相同。</p>
+<p>这与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的两个物理事实冲突：</p>
+<ol>
+<li><strong>难度异质</strong>：准平稳背景与高难瞬态共存，重构误差天然不均衡；</li>
+<li><strong>难位置复现</strong>：同一采集协议下，病理放电、通道特异性伪迹等难模式趋向出现在相近的通道-时间位置（TUEV 的事件中心窗尤其如此）——因此「难度」可以做成<strong>数据集级的位置统计量</strong>，而不必逐样本估计。</li>
+</ol>
+<p>统一调度的后果：难位置与易位置得到同样的有效监督 → 有限容量被浪费。与站内已有批评线的关系：<a href="../1017-eegdm/">EEGDM</a> 批评掩码重构的「局部插值捷径」（监督信号<strong>太容易</strong>），本文批评流匹配的「均匀调度」（监督信号<strong>分配太平均</strong>）——同属「训练信号分配失当」家族，EEGDM 换目标，本篇换调度。</p>
+<h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
+<h3 id="21">2.1 预备：干净样本参数化的条件流匹配<a class="headerlink" href="#21" title="Permanent link">#</a></h3>
+<p>patch 化（P=200 无重叠，承 JET）得 <span class="arithmatex">\( x_1 \in \mathbb{R}^{C \times N \times P} \)</span>，高斯 <span class="arithmatex">\( x_0 \)</span> 同形。与 JET 直接回归向量场不同，本文让网络<strong>直接预测干净样本</strong> <span class="arithmatex">\( \hat{x}_1 = f_\theta(z, t, c) \)</span>（引 Li &amp; He 2026「Back to basics」的去噪参数化），向量场由 <span class="arithmatex">\( \hat{x}_1 \)</span> 反解，推理解 ODE。</p>
+<h3 id="22-pats">2.2 PATS：位置自适应时间调度（核心贡献）<a class="headerlink" href="#22-pats" title="Permanent link">#</a></h3>
+<p><strong>① EMA 误差图</strong>。每个训练步后更新 <span class="arithmatex">\( \bar{e} \leftarrow \beta\bar{e} + (1-\beta)e \)</span>，其中 <span class="arithmatex">\( e_{i,j} = \mathbb{E}_{P,B}[|x_1 - \hat{x}_1|] \)</span> 是位置 (i,j) 上沿 patch 维与 batch 平均的绝对误差。这张 <span class="arithmatex">\( \bar{e} \in \mathbb{R}^{C \times N} \)</span> 图<strong>全数据集共享、持续更新</strong>——记录的是「该位置在数据集上历来有多难」，而非逐样本属性。min-max 归一化得显著图 <span class="arithmatex">\( s \in [0,1]^{C \times N} \)</span>。</p>
+<p><strong>② 端点保持的时间图</strong>。把全局 t 展开为位置专属时间：</p>
+<div class="arithmatex">\[
+\tau_{i,j}(t) = t + m\, s_{i,j}\, t(1-t), \qquad m \in [0,1)
+\]</div>
+<p>三个关键性质：</p>
+<ul>
+<li><strong>端点保持</strong>：<span class="arithmatex">\( \tau(0)=0,\ \tau(1)=1 \)</span> 对任意 <span class="arithmatex">\( s_{i,j} \)</span> 成立——每个位置仍从纯噪声出发、到干净样本结束，只有中间进度被调制，流的分布正确性不被破坏；</li>
+<li><strong>严格单调</strong>：<span class="arithmatex">\( \dot{\tau}_{i,j}(t) = 1 + m\,s_{i,j}(1-2t) &gt; 0 \)</span>（m&lt;1），ODE 良定义；最大偏移在 t=0.5 处，为 <span class="arithmatex">\( m\,s_{i,j}/4 \)</span>；</li>
+<li><strong>可退化</strong>：m=0 恢复 JET 的均匀调度。</li>
+</ul>
+<p><strong>③ 加噪与采样</strong>。<span class="arithmatex">\( z = \tau \odot x_1 + (1-\tau) \odot x_0 \)</span>（τ 沿 patch 维广播），网络改吃时间图 <span class="arithmatex">\( \hat{x}_1 = f_\theta(z, \tau, c) \)</span>。采样的位置专属向量场：</p>
+<div class="arithmatex">\[
+v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j} - z_{i,j}\big)
+\]</div>
+<p>注意那个 <span class="arithmatex">\( \dot{\tau}/(1-\tau) \)</span> 因子——省掉它就等价于按 m=0 积分，位置调度在推理端失效。生成时用<strong>训练得到的同一张</strong> <span class="arithmatex">\( \bar{e} \)</span> 构造 s 与 τ，Heun 或 Euler 积分。</p>
+<h3 id="23">2.3 因子化时空注意力<a class="headerlink" href="#23" title="Permanent link">#</a></h3>
+<p>τ 在通道与 patch 间都不同 → 条件必须解析到 <strong><abbr title="词元，模型处理的最小输入单元">token</abbr> 级</strong>：每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的条件向量 <span class="arithmatex">\( g_{i,j} = \mathrm{TimeEmbed}(\tau_{i,j}) + \mathrm{LabelEmbed}(c) \)</span> 预测每个块 adaLN 的 shift/scale/gate。</p>
+<p>注意力不做 C×N 联合，而是两阶段因子化：<strong>时间条带</strong>（每通道内 N 个 patch 做注意力，捕长程时序）→ <strong>通道条带</strong>（每时间位置的 C 个通道做注意力，显式建模容积传导的跨通道依赖），复杂度 <span class="arithmatex">\( O((CN)^2) \to O(CN^2 + NC^2) \)</span>。（站内对照：这正是 <a href="../../2026-09/0928-cbramod/">CBraMod</a> criss-cross 的结论在生成侧的重演——「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的通道×时间网格该这么数注意力」。）</p>
+<h3 id="24">2.4 四项损失<a class="headerlink" href="#24" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>难度加权重构</strong>：<span class="arithmatex">\( w_{i,j} = 1 + \gamma\sqrt{s_{i,j}} \)</span> 的归一化加权 L1（分母 <span class="arithmatex">\( \mathbb{E}[w] \)</span> 保证尺度与 γ 无关）；</li>
+<li><strong>统计一致性</strong>：逐通道 μ/σ 对齐（同 JET 的 <span class="arithmatex">\( L_{\mathrm{cons}} \)</span>）；</li>
+<li><strong>频率对齐多分辨率频谱一致性</strong>（替换 JET 的时域 TV）：R 个分辨率的 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 幅值谱，每分辨率 = 谱收敛项（Frobenius 比）+ log 幅值 L1 项；评估频带 <span class="arithmatex">\( k &lt; \eta F \)</span> 内加频率权重 <span class="arithmatex">\( w_k \propto k^\alpha \)</span>（η 与下游评估协议的最大频率比对齐），带外置 1——直接补偿幂律谱导致的低频主导梯度；</li>
+<li><strong>相关性</strong>：<span class="arithmatex">\( 1 - \rho_{\mathrm{Pearson}} \)</span>（同 JET）。</li>
+</ol>
+<p>第 3 项与 JET 的路线冲突值得单独记：JET 用时域 TV 正则「压高频噪声」，本文指出<strong>时域平滑约束天然偏置向压制临床相关的高频瞬态</strong>（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 功率谱 1/f^χ，能量最小化主导的梯度天然偏向低频），改到频域显式加权——恰好接住了 <a href="../../2026-09/0923-jet/">JET 笔记</a>里「λ_tv 对高频敏感范式需重新标定」的担忧。</p>
+<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
+<p><strong>设定</strong>：TUEV（16ch 事件分类，被试独立划分）/ BCIC-IV-2a（22ch 运动想象，跨 session）/ SEED-IV（62ch 情绪，trial 级）——通道数、采样率、任务语义差异极大，用于验证位置异质性是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的普遍性质而非单一协议的伪象；P=200 固定，仅 C 与 N 随数据集变化，无数据集特定结构改动。基线全部按原文复现、同划分训练：ESC-GAN（AAAI 2024，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 情绪编辑 GAN）、Diffusion-TS（ICLR 2024）、PaD-TS（AAAI 2025，种群感知扩散）、JET（最强、最直接可比）。合成样本按类配平 1× 混入真实训练集。</p>
+<p><strong>主结果</strong>（EEGNet 做下游裁判，3 种子）：</p>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>TS-FID（Ours / JET 复现）</th>
+<th>相对降幅</th>
+<th>ΔAcc（Ours / JET）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TUEV</td>
+<td>213.92 ± 6.53 / 360.78 ± 9.64</td>
+<td>−40.7%</td>
+<td><strong>9.58 ± 0.47%</strong> / 2.81 ± 0.25%（3.4× 相对增益）</td>
+</tr>
+<tr>
+<td>BCIC-IV-2a</td>
+<td>196.32 ± 7.85 / 518.89 ± 13.47</td>
+<td><strong>−62.2%</strong></td>
+<td>2.58 ± 0.29% / 0.62 ± 0.22%</td>
+</tr>
+<tr>
+<td>SEED-IV</td>
+<td>437.84 ± 11.26 / 748.01 ± 17.83</td>
+<td>−41.5%</td>
+<td>2.61 ± 0.33% / 1.80 ± 0.21%</td>
+</tr>
+</tbody>
+</table>
+<p>GAN / 扩散基线的 TS-FID（412–1103）与 ΔAcc（≤1.7%）全面落后，延续「离散→连续」的进步方向；TUEV 上分类准确率从 No-Aug 的 67.53% 提到 <strong>77.11%</strong>（Macro-F1 ×1.59、Macro-Recall ×1.47）。</p>
+<p><strong>换裁判仍成立</strong>（CBraMod 做下游评估骨干）：ΔAcc 2.39 / 2.74 / 2.15pp，三集仍全面最高（超 JET 0.75 / 1.21 / 0.74pp）——「不是所有时刻同等难」在预训练大模型裁判下同样成立。</p>
+<p><strong>消融</strong>（TUEV，leave-one-out）：</p>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>TS-FID</th>
+<th>ΔAcc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline（= 复现 JET）</td>
+<td>360.78</td>
+<td>2.81%</td>
+</tr>
+<tr>
+<td>w/o 因子化注意力</td>
+<td>241.87</td>
+<td>6.47%</td>
+</tr>
+<tr>
+<td><strong>w/o PATS</strong></td>
+<td><strong>268.53</strong></td>
+<td><strong>5.12%</strong></td>
+</tr>
+<tr>
+<td>w/o 频谱损失</td>
+<td>226.35</td>
+<td>8.03%</td>
+</tr>
+<tr>
+<td>Full</td>
+<td><strong>213.92</strong></td>
+<td><strong>9.58%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>三组件各自必要且互补，<strong>PATS 移除后掉得最深</strong>（两项指标都是），且每个消融版仍明显好于 JET。损失细消融：去频率加权（α=0）219.47/8.41%、单分辨率（R=1）221.83/8.07%、去难度加权重构 217.35/8.72%——频率加权贡献最大（幂律补偿），多分辨率次之，难度加权是 PATS 之上的锦上添花。</p>
+<p><strong>十分位分析</strong>（Figure 4，全文最说服力的证据）：把实例按基线（JET）误差排序分十份，看本框架的相对误差削减：第 1–6 分位 1.3%→4.8% 缓升，7–9 分位回落（4.7%→3.3%），<strong>第 10 分位跳到 14.9%</strong>——收益高度集中在最难的一成位置，正是「少数复现性的难位置（病理放电、瞬态）在均匀调度下被亏待」这一中心假设的直接验证。</p>
+<h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/not-all-eeg-heterogeneity.png" data-desc-position="bottom"><img alt="Figure 1 · 同一段记录内的难度异质性：绿色准平稳背景 / 黄色中等 / 红色高难瞬态，难位置跨样本复现" src="../../../assets/not-all-eeg-heterogeneity.png"></a></p>
+<p><em>Figure 1 · 难度异质示意：准平稳背景与高难瞬态共存于不同通道-时间位置，且同一协议下跨样本复现——难度可做成数据集级位置统计</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/not-all-eeg-framework.png" data-desc-position="bottom"><img alt="Figure 2 · 框架总览：EMA 误差图 → PATS 位置时间图 → 条件化因子化时空 Transformer 预测干净样本；采样按同一调度解 ODE" src="../../../assets/not-all-eeg-framework.png"></a></p>
+<p><em>Figure 2 · 框架总览：(a) 训练——PATS 从 EMA 误差图导出位置时间图，条件化因子化时空 Transformer 预测干净样本；(b) 采样——从高斯噪声出发，按同一位置调度迭代解流 ODE</em></p>
+<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    subgraph T["训练"]
+        A["EEG 样本 x₁（C×N×P，P=200）"] --&gt; B["EMA 误差图 ē（全数据集共享）&lt;br/&gt;→ 归一化显著图 s"]
+        C["高斯噪声 x₀"] --&gt; D["位置加噪&lt;br/&gt;z = τ⊙x₁ + (1−τ)⊙x₀"]
+        E["全局 t --&gt; 时间图 τ_ij = t + m·s_ij·t(1−t)"] --&gt; D
+        B --&gt; E
+        D --&gt; F["因子化时空 Transformer&lt;br/&gt;token 级条件 g_ij = TimeEmbed(τ_ij)+LabelEmbed(c)&lt;br/&gt;时间条带 → 通道条带，adaLN 注入"]
+        F --&gt; G["预测干净样本 x̂₁"]
+        G --&gt; H["四项损失：难度加权 L1 + 统计一致&lt;br/&gt;+ 频率对齐多分辨率频谱 + 相关性"]
+        G -.-&gt;|"误差回流更新 ē"| B
+    end
+    subgraph I["采样"]
+        J["z ~ N(0,I)，t: 0→1"] --&gt; K["同一张 ē 构造 τ&lt;br/&gt;v_ij = τ̇/(1−τ)·(x̂₁−z)"] --&gt; L["生成的 EEG"]
+    end</code></pre>
+<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文 / 工作</th>
+<th>关系说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../2026-09/0923-jet/">JET</a></td>
+<td>直接前作与最强基线，三处修正：① 全局统一调度 → 位置自适应调度（核心）；② 时域 TV 约束压制高频 → 频域显式加权；③ 直接回归向量场 → 干净样本参数化。TS-FID 对其复现值再降 40–62%</td>
+</tr>
+<tr>
+<td><a href="../1017-eegdm/">EEGDM</a></td>
+<td>生成轴线三部曲分工：JET 生成质量 / EEGDM 生成训表征 / 本篇生成调度精细化。难度感知粒度对照：EEGDM <strong>样本级</strong>（类不均衡，逐样本建模）、本篇<strong>位置级</strong>（channel×patch 的数据集统计）——两级难度感知可否叠加是个自然问题</td>
+</tr>
+<tr>
+<td><a href="../../2026-09/0928-cbramod/">CBraMod</a></td>
+<td>两重关系：因子化注意力同族（criss-cross 从判别侧搬到生成侧，O(CN²+NC²) 结论两侧互证）；同时是本文 Table 2 的下游评估裁判</td>
+</tr>
+<tr>
+<td><a href="../../2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> / <a href="../../2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a></td>
+<td>频域约束谱系的延续：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 频谱重构目标 → TFM 频带掩码 → 本文频带加权 <span class="arithmatex">\( w_k \propto k^\alpha \)</span>——「低频会吃掉梯度」的共识从掩码侧一路传导到生成侧</td>
+</tr>
+<tr>
+<td><a href="../../2026-09/0921-rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></td>
+<td>合成增强的两种形态：配置即标签的零噪声仿真 vs 学习式生成——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 没有合规仿真器，学习式生成 + 难度调度是当下的替代路径</td>
+</tr>
+<tr>
+<td>Diffusion-TS / PaD-TS</td>
+<td>被比较的时间序列生成基线（ICLR 2024 / AAAI 2025）；它们的「干净样本重构 + 种群统计约束」思想分别被本文的参数化与统计一致性损失吸收</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>PATS 学到的其实是「采集协议的位置语法」</strong>：EMA 误差图是数据集级统计，前提是难位置跨样本对齐——TUEV 事件中心窗、BCIC cue 对齐窗、SEED trial 窗恰好都满足（都是范式对齐的窗口）。对位置随机化的自由长记录（如随机开窗的 TUAB），「第 j 个 patch 难」不再有跨样本语义，这个假设会弱化。论文未讨论该边界，结论里也只把 instance-level 难度列为 future work——<strong>这个方法的适用域比三个 benchmark 暗示的窄</strong>；</li>
+<li><strong>τ 的调制是三件事打包</strong>：数据侧（每位置噪声水平）、监督侧（难度加权损失）、条件侧（<abbr title="词元，模型处理的最小输入单元">token</abbr> 级时间嵌入）。细消融显示大头在调度本身：去 PATS 掉到 5.12%，仅去难度加权重构只掉到 8.72%——「把监督信号分配对」比「把损失加权调对」更根本；</li>
+<li><strong>可以视为位置粒度的课程学习</strong>：难位置每步被推到更「成熟」（更低噪声）的阶段，等价于给它们更细的终点邻域监督，且端点保持保证不改分布——比传统 curriculum（改数据顺序）优雅，代价是要维护一张与协议绑定的统计图；</li>
+<li><strong>复现口径警示（站内 benchmark 表适用）</strong>：本文复现的 JET 在 TUEV 上 TS-FID=360.78，而 JET 原文报 235.86——差 53%。TS-FID 的特征空间与预处理强依赖论文口径，跨论文数字<strong>不可直接横比</strong>，只应在同一篇的同一口径内比较（本篇内部对比是干净的）；</li>
+<li><strong>一个想看的缺失实验</strong>：EMA 误差图 s 本身的可视化。哪些通道 × 哪些时间段难？如果 s 与已知的伪迹拓扑、放电导联对得上，就是漂亮的可解释性证据（TFM 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 分析、EEGMoE 的专家分工可视化都是这么加分的），论文只给了按难度分层的收益曲线，差最后一步。</li>
+</ul>
+<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<details class="question">
+<summary>Q1 · τ 为什么要端点保持？不保持会怎样？</summary>
+<p>流匹配的正确性依赖「t=0 全体位置处于先验分布、t=1 全体位置处于数据分布」这两个端点。若允许 τ(0)≠0 或 τ(1)≠1，某些位置在轨迹两端就不在正确的分布上——采样从纯噪声出发时，这些位置对应的边缘分布错位，生成的联合分布随之扭曲。t(1−t) 因子在两个端点取 0，正好把调制限制在轨迹内部；严格单调（m&lt;1）保证 ODE 可积且不出现位置间的「时间倒流」。</p>
+</details>
+<details class="question">
+<summary>Q2 · 难度统计为什么用数据集级 EMA，而不是逐样本估计？</summary>
+<p>两个原因：① 逐样本难度在训练早期噪声极大（一个 batch 的误差说明不了该样本的固有难度），而「同一协议下难位置跨样本复现」让数据集级统计有明确的物理对应；② 采样时也需要 τ——逐样本统计在生成时无法获得（没有真值算误差），数据集级 EMA 图可以直接复用，训练与采样调度一致。代价是放弃了实例级敏感度：对「难在非常规位置」的样本无能为力，作者把这列为 future work。</p>
+</details>
+<details class="question">
+<summary>Q3 · 频率加权 w_k ∝ k^α 与 JET 的 TV 正则，都在「救高频」，差别在哪？</summary>
+<p>方向相反。TV 正则在时域惩罚相邻点差异，对高频成分是无差别压制——JET 用它压「无结构的高频噪声」，但临床棘波、瞬态也是高频，被一起压掉了（JET 自己也承认 &gt;15Hz 生成谱轻度衰减是「保守约束」）。本文放弃时域平滑，改在 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 域按频率显式加权：低频能量大但权重低，高频能量小但权重按 k^α 提升——把「哪些频率重要」从隐式（能量）改成显式（可设计的权重），并用 η 与下游评估频带对齐。本质是把先验从「平滑」换成「频谱形状」。</p>
+</details>
+<details class="question">
+<summary>Q4 · 下游增强为什么用 EEGNet 和 CBraMod 两个裁判？</summary>
+<p>单一裁判有偏：EEGNet 从零训练、轻量，合成数据的「可分性」红利容易被放大；CBraMod 是大规模预训练模型，特征已强，合成数据要提供的是「预训练没见过的信息」才能涨分。两个裁判下本文都最高（+9.58pp / +2.74pp），说明增益不是针对弱分类器的伪象。这也是站内已读论文里第一次见到「双裁判」协议——JET 只用了 CBraMod，EEGDM 用下游模型自带协议，本篇的做法更稳。</p>
+</details>
+<div class="admonition abstract">
+<p class="admonition-title">复现速查卡</p>
+<ul>
+<li><strong>代码</strong>：论文未附仓库（arXiv 2608.00048 v1，eess.SP）</li>
+<li><strong>关键设定</strong>：P=200 无重叠 patch；EMA 误差图 β 衰减；margin m ∈ [0,1)；损失权重 λstat/λspec/λcorr、频率指数 α、频带上限 η；Heun/Euler 积分——<strong>具体数值正文未披露</strong>（v1 预印本，细节待后续版本/附录）</li>
+<li><strong>数据</strong>：TUEV（16ch，subject-disjoint）/ BCIC-IV-2a（22ch，cross-session）/ SEED-IV（62ch，trial-level）；合成样本按类配平 1× 混入</li>
+<li><strong>裁判</strong>：EEGNet（从零训练）+ CBraMod（预训练骨干）；3 种子，mean ± std</li>
+<li><strong>复现要点</strong>：采样时务必带 <span class="arithmatex">\( \dot{\tau}/(1-\tau) \)</span> 因子（式 3），漏掉等价于 m=0；EMA 图与训练数据绑定（换数据集需重新积累）</li>
+</ul>
+</div>
+<hr>
+<p><strong>相关阅读</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../1017-eegdm/">EEGDM（生成轴线姊妹篇：扩散训表征）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../../2026-09/0923-jet/">JET（直接前作：条件流匹配 + 生理约束）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../../../basics/generative-lineage/">生成模型脉络（VAE → DDPM → FM）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../../2026-09/0928-cbramod/">CBraMod（因子化注意力同族 + 下游裁判）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
+<!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/load-mathjax.js"></script>
+      
+        <script src="../../../javascripts/giscus.js"></script>
+      
+        <script src="../../../javascripts/progress.js"></script>
+      
+        <script src="../../../javascripts/back-to-top.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

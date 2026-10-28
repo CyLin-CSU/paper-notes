@@ -856,6 +856,41 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/2026-10/1028-not-all-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1028 · Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1432,7 +1467,7 @@
   <span class="md-ellipsis">
     
   
-    十二篇方法对比
+    十三篇方法对比
   
 
     
@@ -1658,7 +1693,7 @@
 
 <h1 id="_1">基座来源：从零训练还是站在巨人肩上<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>十二篇的权重是「自己从零训练」还是「加载现成 Base Model」？结论：<strong>十篇从零训练，两例借底座</strong>——NeuroLM 站在 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 上（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 编码器仍自训），RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 站在 Qwen2.5-VL 上（连信号编码器都不训，最彻底）。本页是<a href="../../comparison/">十二篇方法对比</a>的「基座维度」深读页。</p>
+<p>十三篇的权重是「自己从零训练」还是「加载现成 Base Model」？结论：<strong>十一篇从零训练，两例借底座</strong>——NeuroLM 站在 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 上（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 编码器仍自训），RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 站在 Qwen2.5-VL 上（连信号编码器都不训，最彻底）。本页是<a href="../../comparison/">十三篇方法对比</a>的「基座维度」深读页。</p>
 </blockquote>
 <h2 id="_2">总览表<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
@@ -1726,6 +1761,11 @@
 <td><abbr title="脑电图 Electroencephalogram">EEG</abbr>-ViT encoder + DiT 去噪器完全从零联合训练（架构件 DiT/adaLN-Zero 是设计借鉴，非权重复用）</td>
 </tr>
 <tr>
+<td><a href="../../papers/2026-10/1028-not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a></td>
+<td><strong>从零训练</strong></td>
+<td>流匹配生成 Transformer 从零训练（同 JET：生成路线没有可借的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 底座）</td>
+</tr>
+<tr>
 <td><a href="../../papers/2026-09/0921-rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></td>
 <td><strong>有基座：Qwen2.5-VL</strong></td>
 <td><strong>最彻底的借底座</strong>：IQ→<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图直接复用预训练 VLM 的视觉编码器 + <abbr title="大语言模型 Large Language Model">LLM</abbr> 解码器，不训练任何信号编码器，只在合成指令对上 SFT（8×H200）</td>
@@ -1749,7 +1789,7 @@
 <h2 id="_4">新论文入库提示<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <p>读新论文时记一笔：它的权重是 <strong>from scratch / 加载公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基座（哪家）/ 接 <abbr title="大语言模型 Large Language Model">LLM</abbr>（哪个）</strong> 三者中的哪一种？这决定了它与库里已有论文的可比性，也直接影响<a href="../../comparison/#critique-chain">互怼链</a>的画法。2026 年起第一类正在变多（借现成 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 或 VLM），记录时注明加载的具体 checkpoint 版本。</p>
 <h2 id="_5">关联页面<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<p><a href="../data-landscape/">预训练数据全景</a> · <a href="../multi-task/">多任务与下游适配</a> · <a href="../../comparison/">十二篇方法对比</a></p>
+<p><a href="../data-landscape/">预训练数据全景</a> · <a href="../multi-task/">多任务与下游适配</a> · <a href="../../comparison/">十三篇方法对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
