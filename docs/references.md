@@ -5,7 +5,7 @@ tags: [索引, 参考文献]
 
 # 参考文献索引
 
-十一篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
+十三篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
 ## 基础架构与预训练范式
 
@@ -78,8 +78,9 @@ tags: [索引, 参考文献]
 | neuro2vec | arXiv 2022 | LaBraM | 掩码傅里叶频谱预测的思想来源 |
 | MMM | NeurIPS 2023/2024 | NeuroLM · TFM | 拓扑无关表示（多维位置编码、多级通道层次） |
 | Brant | NeurIPS 2023 | NeuroLM | 颅内 EEG 基础模型（长程依赖+时空联合） |
-| CBraMod | ICLR 2025 | TFM · LUNA · JET · [本站精读](papers/2026-09/0928-cbramod.md) | 十字交叉脑基础模型（EEG-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET 用其作生成数据下游裁判；LUNA 效率对照） |
+| CBraMod | ICLR 2025 | TFM · LUNA · JET · Not-All-EEG · [本站精读](papers/2026-09/0928-cbramod.md) | 十字交叉脑基础模型（EEG-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET / Not-All-EEG 用其作生成数据下游裁判；LUNA 效率对照） |
 | EEGDM | arXiv 2025（v5 2026-10） | [本站精读](papers/2026-10/1017-eegdm.md) | 潜扩散生成目标做 EEG 表征学习：encoder 表示作扩散条件、不 detach 联合优化；类不均衡鲁棒（与 Puah-EEGDM-SSM 撞名） |
+| Not-All-EEG | arXiv 2608.00048（2026-07） | [本站精读](papers/2026-10/1028-not-all-eeg.md) | 位置自适应时间调度的流匹配 EEG 生成：EMA 误差图展开位置时间图（PATS）+ 因子化时空注意力 + 频率加权多分辨率频谱损失；对复现 JET 的 TS-FID 再降 40–62% |
 | CPVT（条件位置编码 CPE） | arXiv 2021 | CBraMod | ACPE 的直接来源：卷积动态生成位置编码，CBraMod 推广为非对称双轴 |
 | CCNet（criss-cross attention） | ICCV 2019 | CBraMod | 十字交叉注意力的视觉出处（单注意力图仿射近似） |
 | CSWin Transformer | CVPR 2022 | CBraMod | 十字形状窗口注意力的视觉出处（CBraMod 双路并行设计参照） |
@@ -87,7 +88,11 @@ tags: [索引, 参考文献]
 | CEReBrO | arXiv 2025 | LUNA | 同组（ETH）前作，交替注意力的效率对照 |
 | FEMBA | arXiv 2025 | LUNA | 双向 Mamba EEG 基础模型，TUAB/TUAR 强基线 |
 | BrainOmni | arXiv 2025 | JET | tokenizer 式损失集的对照（JET 消融证明约束设计更优） |
-| EEG-GAN | arXiv 2018 | JET | EEG 生成任务的对照基线（TS-FID 324–449 档） |
+| EEG-GAN | arXiv 2018 | JET · Not-All-EEG | EEG 生成任务的对照基线（TS-FID 324–449 档） |
+| Diffusion-TS | ICLR 2024 | Not-All-EEG | 可解释通用时序扩散生成器（分解时序表示 + 傅里叶损失），本文扩散基线 |
+| PaD-TS | AAAI 2025 | Not-All-EEG | 种群感知扩散（双通道编码器保跨维相关），本文扩散基线 |
+| ESC-GAN | AAAI 2024 | Not-All-EEG | 情绪子空间约束的 EEG 编辑 GAN（多样性/边界感知损失），本文 GAN 基线 |
+| Back to Basics: Let Denoising Generative Models Denoise | CVPR 2026（Li & He） | Not-All-EEG | 干净样本预测参数化的出处（本文网络直接预测 x̂₁ 再反解向量场） |
 | DeWave | NeurIPS 2023 | EEGPT | 离散 EEG 编码词表（Codex book 概念出处） |
 | EEG2VEC | arXiv 2023 | EEGPT | 对比+重构损失学习 EEG 表示的相关工作 |
 

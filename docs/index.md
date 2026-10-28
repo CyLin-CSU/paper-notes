@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **12** 篇（含 1 篇 RF 跨领域）· NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **13** 篇（含 1 篇 RF 跨领域）· NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。++ctrl+k++ 全文搜索。
 
@@ -15,6 +15,8 @@ title: 首页
 ## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-10-28** · 新增精读 Not-All-EEG（arXiv 2026）：位置自适应时间调度——EMA 误差图把流匹配的全局 t 展开成通道×位置时间图，TS-FID 对 JET 再降 40–62%，生成轴线第三篇
 
 - **2026-10-27** · 对比体系重构：comparison 收敛为枢纽页（速览 + 九维导读 + 战绩/互怼链），维度详解下放六大专题页，各专题覆盖扩至十二篇
 
@@ -127,6 +129,12 @@ title: 首页
 
     以生成训表征：encoder 表示作条件引导**潜扩散**去噪，梯度穿过条件联合优化；TUEV 类不均衡三项最佳。tags: `扩散` `DiT` `类均衡`
 
+- :material-timer-cog:{ .lg .middle } **[Not-All-EEG](papers/2026-10/1028-not-all-eeg.md)** `EEG 生成`
+    ---
+    arXiv 2026 · 流匹配生成
+
+    **位置难度自适应时间调度**：EMA 误差图把全局 t 展开成 C×N 时间图，难的位置先走；对 JET 的 TS-FID 再降 40–62%。tags: `流匹配` `数据增强` `频谱约束`
+
 </div>
 
 ## :material-cube-unfolded: 模型架构基础
@@ -195,13 +203,13 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 12 篇（EEG 9 + 跨领域 RF 1 + EEG 生成 2） |
+| 精读论文 | 13 篇（EEG 9 + 跨领域 RF 1 + EEG 生成 3） |
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 · ICLR ×4 · ICML ×1 · TNNLS ×1 · arXiv ×3（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
-综合对比见 [十二篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——数据 / tokenization / 预训练目标 / 通道异构 / 下游适配 / 基座六大专题深读，模型设计 / 频域 / 规模效率保留在页内 + benchmark 战绩 + 互怼链）。
+综合对比见 [十三篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——数据 / tokenization / 预训练目标 / 通道异构 / 下游适配 / 基座六大专题深读，模型设计 / 频域 / 规模效率保留在页内 + benchmark 战绩 + 互怼链）。
 
 ## :material-comment-processing: 留言板
 

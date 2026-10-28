@@ -5,7 +5,7 @@ tags: [基座模型, 综述]
 
 # 基座来源：从零训练还是站在巨人肩上
 
-> 十二篇的权重是「自己从零训练」还是「加载现成 Base Model」？结论：**十篇从零训练，两例借底座**——NeuroLM 站在 GPT-2 上（EEG 编码器仍自训），RF-GPT 站在 Qwen2.5-VL 上（连信号编码器都不训，最彻底）。本页是[十二篇方法对比](../comparison.md)的「基座维度」深读页。
+> 十三篇的权重是「自己从零训练」还是「加载现成 Base Model」？结论：**十一篇从零训练，两例借底座**——NeuroLM 站在 GPT-2 上（EEG 编码器仍自训），RF-GPT 站在 Qwen2.5-VL 上（连信号编码器都不训，最彻底）。本页是[十三篇方法对比](../comparison.md)的「基座维度」深读页。
 
 ## 总览表
 
@@ -22,6 +22,7 @@ tags: [基座模型, 综述]
 | [EEGMoE](../papers/2026-09/0924-eegmoe.md) | **从零训练** | 1.68M SSMoE 编码器，~142h 认知域语料 |
 | [JET](../papers/2026-09/0923-jet.md) | **从零训练** | 129.9M 生成 Transformer 从零训练（生成路线没有可借的 EEG 底座） |
 | [EEGDM](../papers/2026-10/1017-eegdm.md) | **从零训练** | EEG-ViT encoder + DiT 去噪器完全从零联合训练（架构件 DiT/adaLN-Zero 是设计借鉴，非权重复用） |
+| [Not-All-EEG](../papers/2026-10/1028-not-all-eeg.md) | **从零训练** | 流匹配生成 Transformer 从零训练（同 JET：生成路线没有可借的 EEG 底座） |
 | [RF-GPT](../papers/2026-09/0921-rf-gpt.md) | **有基座：Qwen2.5-VL** | **最彻底的借底座**：IQ→STFT 谱图直接复用预训练 VLM 的视觉编码器 + LLM 解码器，不训练任何信号编码器，只在合成指令对上 SFT（8×H200） |
 
 ## 为什么 EEG 侧几乎都不用现成基座
@@ -46,4 +47,4 @@ tags: [基座模型, 综述]
 
 ## 关联页面
 
-[预训练数据全景](data-landscape.md) · [多任务与下游适配](multi-task.md) · [十二篇方法对比](../comparison.md)
+[预训练数据全景](data-landscape.md) · [多任务与下游适配](multi-task.md) · [十三篇方法对比](../comparison.md)

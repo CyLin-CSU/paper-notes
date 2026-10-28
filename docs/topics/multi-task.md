@@ -5,7 +5,7 @@ tags: [多任务, 迁移学习, 综述]
 
 # 多任务与下游适配
 
-> 「一个模型能不能同时干多种 EEG 任务？」——核心六篇给出三条路线；2025–2026 的扩展论文又带来路线之外的三个新变量（冻结探针之争、生成增强、组件可插拔）。本页是[十二篇方法对比](../comparison.md)的「下游适配维度」深读页。
+> 「一个模型能不能同时干多种 EEG 任务？」——核心六篇给出三条路线；2025–2026 的扩展论文又带来路线之外的三个新变量（冻结探针之争、生成增强、组件可插拔）。本页是[十三篇方法对比](../comparison.md)的「下游适配维度」深读页。
 
 ## 路线总览
 
@@ -67,7 +67,8 @@ NeuroLM 坦言多任务版本仍逊于单任务 SOTA 的 LaBraM（如 TUAB 0.796
 生成式预训练附赠一个掩码重构没有的资产——**生成器本身**：
 
 - **JET**：合成数据增强 SOTA 分类器 CBraMod，ΔAcc +0.017~+0.032 全为正；而 EEG-GAN / 扩散基线的 ΔAcc ≈ 0 甚至为负（生成样本引入分布偏移）；
-- **EEGDM**：扩散模块直接当增强器，CL-Drive Balanced Accuracy +5.4pp（53.57%→58.96%），对样本稀缺的 BCI 任务是独有账目。
+- **EEGDM**：扩散模块直接当增强器，CL-Drive Balanced Accuracy +5.4pp（53.57%→58.96%），对样本稀缺的 BCI 任务是独有账目；
+- **Not-All-EEG**：位置难度自适应调度让增强收益再放大——TUEV 上 ΔAcc +9.58pp（EEGNet 裁判）/ +2.39pp（CBraMod 裁判），且首创**双裁判协议**（从零训练的 EEGNet + 预训练的 CBraMod 各评一遍），排除「合成数据只对弱分类器有效」的伪增益。
 
 ### 变量三 · 组件可插拔：tokenizer 当独立产品
 
@@ -87,4 +88,4 @@ EEG 领域传统 MTL（hard/soft parameter sharing、跨任务预训练）一直
 
 ## 关联页面
 
-[BrainGPT 笔记](../papers/2026-09/0918-braingpt.md) · [NeuroLM 笔记](../papers/2026-09/0918-neurolm.md) · [通道异构的六种解法](spatial.md) · [十二篇方法对比](../comparison.md)
+[BrainGPT 笔记](../papers/2026-09/0918-braingpt.md) · [NeuroLM 笔记](../papers/2026-09/0918-neurolm.md) · [通道异构的六种解法](spatial.md) · [十三篇方法对比](../comparison.md)
