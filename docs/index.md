@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **13** 篇（含 1 篇 RF 跨领域）· NeurIPS / ICLR 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **17** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。++ctrl+k++ 全文搜索。
 
@@ -15,6 +15,14 @@ title: 首页
 ## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-02** · 新增精读 Défossez 语音解码（NMI 2023）：卷积脑模块对比对齐 wav2vec 2.0——3 秒 MEG 千余候选 zero-shot 检索所听语句，站内「语音解码」轴线的源头文献
+
+- **2026-11-02** · 新增精读 SSM2Mel（arXiv 2025）：Mamba+MHSA 交替骨干重建连续语音 mel 谱——语音解码轴线从检索走向回归
+
+- **2026-11-02** · 新增精读 LTFT（IEEE TETCI 2026）：逐频率复值窗口随梯度更新——频域学习从损失端（Not-All-EEG 加权）搬进变换核本身
+
+- **2026-11-02** · 新增轴外精读 NPI（Nature Methods 2025）：把训好的网络当可干预的脑，虚拟扰动读出方向性全脑有效连接——「模型作科学工具」与站内「模型作解码器」对望
 
 - **2026-10-28** · 新增精读 Not-All-EEG（arXiv 2026）：位置自适应时间调度——EMA 误差图把流匹配的全局 t 展开成通道×位置时间图，TS-FID 对 JET 再降 40–62%，生成轴线第三篇
 
@@ -135,6 +143,30 @@ title: 首页
 
     **位置难度自适应时间调度**：EMA 误差图把全局 t 展开成 C×N 时间图，难的位置先走；对 JET 的 TS-FID 再降 40–62%。tags: `流匹配` `数据增强` `频谱约束`
 
+- :material-ear-hearing:{ .lg .middle } **[Défossez 语音解码](papers/2026-11/1102-defossez-speech.md)** `语音解码`
+    ---
+    NMI 2023 · Meta AI · 175 人
+
+    **非侵入语音解码奠基作**：卷积脑模块对齐 wav2vec 2.0，3 秒 MEG 在千余候选里 zero-shot 检出所听语句（top-10 70.7%）。tags: `对比对齐` `MEG` `被试层`
+
+- :material-music-note:{ .lg .middle } **[SSM2Mel](papers/2026-11/1102-ssm2mel.md)** `语音解码`
+    ---
+    arXiv 2025 · 安徽大学
+
+    Mamba+MHSA 交替骨干从 EEG **重建连续语音 mel 谱**：SparrKULee 上 Pearson 0.069，较包络基线 +38%。tags: `S4/Mamba` `被试嵌入` `回归解码`
+
+- :material-chart-bell-curve-cumulative:{ .lg .middle } **[LTFT 可学习时频变换](papers/2026-11/1102-learnable-tf.md)** `时频方法`
+    ---
+    IEEE TETCI 2026 · 山大
+
+    复值窗口本身可训练，**STFT/CWT/S 变换皆特例**：频域学习从损失端搬进变换核——频域维度的方法学延伸。tags: `可学习前端` `Wirtinger 梯度` `信号处理`
+
+- :material-hub-outline:{ .lg .middle } **[NPI 代理脑扰动](papers/2026-11/1102-surrogate-brain.md)** `连接组学`
+    ---
+    Nature Methods 2025 · 南科大
+
+    把神经网络当**可干预的脑**：逐区虚拟扰动读出方向×强度×兴奋/抑制的有效连接，CCEP 613 病人作真实锚点。tags: `因果推断` `fMRI` `轴外`
+
 </div>
 
 ## :material-cube-unfolded: 模型架构基础
@@ -203,7 +235,7 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 13 篇（EEG 9 + 跨领域 RF 1 + EEG 生成 3） |
+| 精读论文 | 17 篇（EEG 9 + 跨领域 RF 1 + EEG 生成 3 + 语音解码 2 + 时频方法 1 + 连接组学 1） |
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 · ICLR ×4 · ICML ×1 · TNNLS ×1 · arXiv ×3（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |

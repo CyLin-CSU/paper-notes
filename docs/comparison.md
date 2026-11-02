@@ -2,7 +2,7 @@
 
 > 全站横向对照的**枢纽页**：一张战绩图 + 一页速览给十三篇定位；九个对比维度的核心分歧在[分维度导读](#dimension-guide)里各用几句话说清，**详细拆解下放到六个主题专题**（数据 / tokenization / 预训练目标 / 通道异构 / 下游适配 / 基座来源），其中暂无专题归属的三个维度（模型设计 / 频域 / 规模效率）全文保留在本页；最后是演进脉络、benchmark 战绩表与论文互怼链。数字均引自各论文自报结果。
 
-十三篇 = 核心六篇（[BIOT](papers/2026-09/0918-biot.md) / [LaBraM](papers/2026-09/0918-labram.md) / [EEGPT](papers/2026-09/0918-eegpt.md) / [BrainGPT](papers/2026-09/0918-braingpt.md) / [NeuroLM](papers/2026-09/0918-neurolm.md) / [TFM-Tokenizer](papers/2026-09/0918-tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展七篇（[CBraMod](papers/2026-09/0928-cbramod.md) / [LUNA](papers/2026-09/0924-luna.md) / [EEGMoE](papers/2026-09/0924-eegmoe.md) / [JET](papers/2026-09/0923-jet.md) / [EEGDM](papers/2026-10/1017-eegdm.md) / [RF-GPT](papers/2026-09/0921-rf-gpt.md) / [Not-All-EEG](papers/2026-10/1028-not-all-eeg.md)，把问题推向异构管理、生成与跨模态、生成调度精细化）。
+十三篇 = 核心六篇（[BIOT](papers/2026-09/0918-biot.md) / [LaBraM](papers/2026-09/0918-labram.md) / [EEGPT](papers/2026-09/0918-eegpt.md) / [BrainGPT](papers/2026-09/0918-braingpt.md) / [NeuroLM](papers/2026-09/0918-neurolm.md) / [TFM-Tokenizer](papers/2026-09/0918-tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展七篇（[CBraMod](papers/2026-09/0928-cbramod.md) / [LUNA](papers/2026-09/0924-luna.md) / [EEGMoE](papers/2026-09/0924-eegmoe.md) / [JET](papers/2026-09/0923-jet.md) / [EEGDM](papers/2026-10/1017-eegdm.md) / [RF-GPT](papers/2026-09/0921-rf-gpt.md) / [Not-All-EEG](papers/2026-10/1028-not-all-eeg.md)，把问题推向异构管理、生成与跨模态、生成调度精细化）。本页对比范围限于这条轴线；站内轴外精读（语音解码 [Défossez](papers/2026-11/1102-defossez-speech.md) / [SSM2Mel](papers/2026-11/1102-ssm2mel.md)、时频方法 [LTFT](papers/2026-11/1102-learnable-tf.md)、连接组学 [NPI](papers/2026-11/1102-surrogate-brain.md)）不参与十三篇排名，见首页论文库。
 
 ## 📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）
 

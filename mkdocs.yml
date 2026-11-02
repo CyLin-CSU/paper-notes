@@ -94,6 +94,11 @@ nav:
       - "2026-10":
           - 1017 · EEGDM (arXiv 2026 · 扩散表征): papers/2026-10/1017-eegdm.md
           - 1028 · Not-All-EEG (arXiv 2026 · 流匹配生成): papers/2026-10/1028-not-all-eeg.md
+      - "2026-11":
+          - 1102 · Défossez 语音解码 (NMI 2023 · 轴线源头): papers/2026-11/1102-defossez-speech.md
+          - 1102 · SSM2Mel (arXiv 2025 · 语音解码): papers/2026-11/1102-ssm2mel.md
+          - 1102 · LTFT (IEEE TETCI 2026 · 时频方法): papers/2026-11/1102-learnable-tf.md
+          - 1102 · NPI (Nature Methods 2025 · 连接组学): papers/2026-11/1102-surrogate-brain.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md

@@ -5,7 +5,7 @@ tags: [索引, 参考文献]
 
 # 参考文献索引
 
-十三篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
+十七篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学轴外的四篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
 ## 基础架构与预训练范式
 
@@ -81,6 +81,10 @@ tags: [索引, 参考文献]
 | CBraMod | ICLR 2025 | TFM · LUNA · JET · Not-All-EEG · [本站精读](papers/2026-09/0928-cbramod.md) | 十字交叉脑基础模型（EEG-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET / Not-All-EEG 用其作生成数据下游裁判；LUNA 效率对照） |
 | EEGDM | arXiv 2025（v5 2026-10） | [本站精读](papers/2026-10/1017-eegdm.md) | 潜扩散生成目标做 EEG 表征学习：encoder 表示作扩散条件、不 detach 联合优化；类不均衡鲁棒（与 Puah-EEGDM-SSM 撞名） |
 | Not-All-EEG | arXiv 2608.00048（2026-07） | [本站精读](papers/2026-10/1028-not-all-eeg.md) | 位置自适应时间调度的流匹配 EEG 生成：EMA 误差图展开位置时间图（PATS）+ 因子化时空注意力 + 频率加权多分辨率频谱损失；对复现 JET 的 TS-FID 再降 40–62% |
+| Défossez et al.（语音感知解码） | Nature Machine Intelligence 2023 | [本站精读](papers/2026-11/1102-defossez-speech.md) | 非侵入语音解码奠基作：卷积 brain module 对齐 wav2vec 2.0（CLIP 式对比），3 秒 MEG 千余候选 zero-shot 检索；多被试联合训练只靠一个被试矩阵 |
+| SSM2Mel | arXiv 2501.10402（2025） | [本站精读](papers/2026-11/1102-ssm2mel.md) | Mamba+MHSA 交替骨干从 EEG 回归连续语音 mel 谱；ESM 被试嵌入调制 + S4-UNet 局部预提取，SparrKULee 基准 |
+| LTFT（可学习时频变换） | IEEE TETCI 2026 | [本站精读](papers/2026-11/1102-learnable-tf.md) | 逐频率自由复值窗口端到端训练（Wirtinger 共轭梯度），STFT/CWT/S 变换皆特例——频域学习从损失端搬进变换核 |
+| NPI（虚拟扰动代理脑） | Nature Methods 2025（arXiv 2301.00148） | [本站精读](papers/2026-11/1102-surrogate-brain.md) | 训 MLP 代理脑做逐区虚拟扰动读方向性有效连接，CCEP 613 病人真实刺激验证——「模型作科学工具」的因果连接组学 |
 | CPVT（条件位置编码 CPE） | arXiv 2021 | CBraMod | ACPE 的直接来源：卷积动态生成位置编码，CBraMod 推广为非对称双轴 |
 | CCNet（criss-cross attention） | ICCV 2019 | CBraMod | 十字交叉注意力的视觉出处（单注意力图仿射近似） |
 | CSWin Transformer | CVPR 2022 | CBraMod | 十字形状窗口注意力的视觉出处（CBraMod 双路并行设计参照） |
