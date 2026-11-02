@@ -1201,7 +1201,7 @@
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 仿真：有真值的三套考核
+        3.1 仿真：三套考核，两套有真值
       
     </span>
   </a>
@@ -1997,7 +1997,7 @@
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 仿真：有真值的三套考核
+        3.1 仿真：三套考核，两套有真值
       
     </span>
   </a>
@@ -2119,7 +2119,7 @@
 
 <h1 id="mapping-effective-connectivity-by-virtually-perturbing-a-surrogate-brain">Mapping Effective Connectivity by Virtually Perturbing a Surrogate Brain<a class="headerlink" href="#mapping-effective-connectivity-by-virtually-perturbing-a-surrogate-brain" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>Nature Methods 2025</strong>（22, 1376–1385；DOI <a href="https://doi.org/10.1038/s41592-025-02654-x">10.1038/s41592-025-02654-x</a>，arXiv 2301.00148 v4，2024-09）· 南方科技大学（+Iowa State / HKUST / HKBU）—— 站内<strong>轴外论文</strong>：不碰 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，不做基础模型，属于「把神经网络当科学工具」的因果连接组学方向。它与站内主线（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练、<abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成）的距离是实实在在的，可借鉴的也不是技术组件，而是一个立意：模型训练完之后，用干预（扰动）而非权重读出/相关指标去问「谁影响谁」。这个「训完的模型当作可干预对象」的用法，正好站在站内 BrainGPT / EEGDM 用法的对面。</p>
+<p><strong>Nature Methods 2025</strong>（22(6), 1376–1385；DOI <a href="https://doi.org/10.1038/s41592-025-02654-x">10.1038/s41592-025-02654-x</a>；期刊卷页与 DOI 来自检索核对，所读 arXiv 2301.00148 v4（2024-09）版 PDF 内无期刊信息）· 南方科技大学（+Iowa State / HKUST / HKBU）—— 站内<strong>轴外论文</strong>：不碰 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，不做基础模型，属于「把神经网络当科学工具」的因果连接组学方向。它与站内主线（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练、<abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成）的距离是实实在在的，可借鉴的也不是技术组件，而是一个立意：模型训练完之后，用干预（扰动）而非权重读出/相关指标去问「谁影响谁」。这个「训完的模型当作可干预对象」的用法，正好站在站内 BrainGPT / EEGDM 用法的对面。</p>
 </blockquote>
 <p><strong>作者</strong>：Zixiang Luo, Kaining Peng, Zhichao Liang, Shengyuan Cai, Chenyu Xu, Dan Li, Yu Hu, Changsong Zhou, Quanying Liu*（通讯，南方科技大学生物医学工程系）</p>
 <div class="admonition abstract">
@@ -2127,7 +2127,7 @@
 <ul>
 <li>核心论点：有效连接（EC）应该按<strong>干预主义的因果定义</strong>来推——扰动一个变量、看另一个变不变——而这在真实人脑上做不到（光遗传/DBS/CCEP 有创且覆盖有限）。NPI（Neural Perturbational Inference）的替代方案：训一个逐被试的 MLP 代理脑模拟脑动力学，然后<strong>在代理模型上做虚拟的「扰动-记录」</strong>，把 EC 读出来</li>
 <li>方法极简：MLP 用前三个时间步预测下一步 <span class="arithmatex">\( \hat{x}_{t+1} = f(x_t, x_{t-1}, x_{t-2}, \theta) \)</span>；对每个源区 i 在每个时刻 t 施加 <span class="arithmatex">\( \Delta e_i \)</span> 冲激（Δ = BOLD 的 0.5 倍标准差），EC 即响应差的期望 <span class="arithmatex">\( \mathrm{EC}_{i\cdot} = \mathbb{E}_t[f(x_t + \Delta e_i) - f(x_t)] \)</span>。作者证明这等价于训练后网络的期望 Jacobian（Supp Note 4）——一个区域对另一个的小信号增益，符号天然给出兴奋/抑制</li>
-<li>三套已知真值的仿真验证全过：RNN 生成数据上 NPI-EC 与真值 <strong>r=0.95</strong>（胜 GC，p&lt;10⁻³）；Sanchez-Romero 公开合成 BOLD 上判别 SC 有无的 <strong>AUC≈1</strong>，胜 GC 与 DCM（9 种拓扑全胜）；66 节点 WBM 上同样胜 GC</li>
+<li>三套仿真验证全过：RNN 生成数据上 NPI-EC 对「扰动-记录」真值 <strong>r=0.95</strong>（胜 GC，p&lt;10⁻³）；Sanchez-Romero 公开合成 BOLD（这套<strong>没有 EC 真值</strong>，以二值化后判别 SC 有无的 AUC 评估）上 <strong>AUC≈1</strong>，胜 GC 与 DCM（9 种拓扑全胜）；66 节点 WBM 上 NPI-EC 贴真值且胜 GC（p&lt;10⁻³）</li>
 <li>真实数据：HCP 800 被试（MMP 360 区）逐被试代理脑 → 群体 Human EBC。模型 FC 对经验 FC <strong>r=0.97</strong>；EC-SC <strong>r=0.42</strong>；HCP 与 ABCD（2000 人）群体 EC <strong>r=0.87</strong>；强度分布拟合对数正态（与小鼠/猕猴示踪的 SC 分布一致）</li>
 <li>最硬的一块验证：与 F-TRACT 的 CCEP 图谱（613 位癫痫病人真实电刺激传播）比，NPI-EC 对 CCEP <strong>r=0.33</strong>，FC 只有 0.20——静息态数据里推出的「因果」确实沾到了真实刺激传播的边，虽然相关量级不算高</li>
 </ul>
@@ -2150,19 +2150,19 @@
 <p>结构 3N → 2N → 0.8N → N（网格搜索定的），损失就是单步预测的 <abbr title="均方误差 Mean Squared Error">MSE</abbr>，Adam lr=10⁻³，60 epoch，单卡 RTX 4080——训练成本小到不像 Nature Methods 的方法，但后面验证做得扎实。逐被试训练（HCP 每人 4×15 分钟数据），所以 EBC 是个体化的。3 步输入比 1 步输入的预测略好（Supp Fig 8）；作者还对比了 CNN/RNN/VAR 等架构做代理，MLP 在 FC 重现与 EC 推断上最好（Supp Table 1）。</p>
 <p>代理模型合格的门槛不是预测精度本身，而是<strong>能否重现区间关系</strong>：把输出递归喂回去做自由生成，生成信号的 FC 与真实 FC 对比。HCP 800 人平均 r=0.97（图 1f 标注 0.97，正文 2.1 节出现 0.98，两处以 0.97 为准）。</p>
 <h3 id="22-ec">2.2 虚拟扰动读 EC<a class="headerlink" href="#22-ec" title="Permanent link">#</a></h3>
-<p>训练完冻结网络，逐源区、逐时刻做冲激扰动：</p>
+<p>训练完冻结网络，逐源区、逐时刻做冲激扰动。扰动加在<strong>网络的输入端</strong>：源区 i 的当前时刻分量 <span class="arithmatex">\( x_t \)</span> 抬高 <span class="arithmatex">\( \Delta \)</span>，历史两步输入、隐层激活、权重都不动（原文 "perturb each input node of the ANN"）：</p>
 <div class="arithmatex">\[
 \mathrm{EC}_{i\cdot} = \mathbb{E}_t\big[\, f(x_t + \Delta e_i,\ x_{t-1},\ x_{t-2}) - f(x_t,\ x_{t-1},\ x_{t-2}) \,\big]
 \]</div>
 <p><span class="arithmatex">\( e_i \)</span> 是第 i 维单位向量，<span class="arithmatex">\( \Delta \)</span> 取 0.5 倍 BOLD 标准差。读出的是 t+1 时刻（fMRI 上即 0.72 s 后）所有目标区的响应差：符号给兴奋/抑制，幅度给强度，源区固定、目标遍历即「一到全」，逐区扫完即全到全。</p>
 <p>三点值得记：</p>
 <ol>
-<li><strong>等价于期望 Jacobian</strong>。单步预测器的冲激响应就是方向导数的有限差分，对所有观测状态取平均，得到的就是训练后网络 Jacobian 的状态均值（Ext Data Fig 2 证实 NPI-EC 与数值 Jacobian 一致）。这给了方法一个干净的理论身份，也划出了它的边界：NPI 读出的是<strong>代理模型在观测状态分布上的局部线性化增益</strong>，不是大扰动下的系统响应；</li>
-<li><strong>状态依赖</strong>。真实刺激的响应随脑状态变（论文引了癫痫病人 DBS 的状态依赖响应），所以他们在每个时刻的状态各扰动一次、再平均——EC 是「典型状态下」的平均效应，不是某一时刻的效应；</li>
+<li><strong>等价于期望 Jacobian</strong>。小 Δ 下，冲激响应差 <span class="arithmatex">\( f(x_t+\Delta e_i) - f(x_t) \approx \Delta\,\partial f/\partial x_i \)</span>，除以 Δ 就是 Jacobian 中「输入 i」对应的那一列（转置过来即 EC 矩阵的第 i 行）；再对所有观测到的状态取平均，得到的就是训练后网络 Jacobian 在<strong>数据的状态分布</strong>上的期望（Supp Note 4）。Ext Data Fig 2 把三方都对上了：数值算出的 ANN Jacobian、NPI-EC、以及 RNN 数据上真值 RNN 的 Jacobian 彼此一致。这给了方法一个干净的理论身份，也划出了它的边界：期望是对「被试实际流经的状态分布」取的，所以这份 EC 同时由网络结构与其状态统计共同决定，读出的是<strong>局部线性化增益</strong>，不是大扰动下的系统响应；</li>
+<li><strong>状态依赖</strong>。真实刺激的响应随脑状态变（论文引了颅内刺激响应随状态变化的病例证据，Scangos et al. 2021 的抑郁症病人单例报道），所以他们在每个时刻的状态各扰动一次、再平均——EC 是「典型状态下」的平均效应，不是某一时刻的效应。次数上这意味着每个源区要做 T 次扰动（单被试 4 个 session 共约 5,000 个时间点），期望就是对这批实际流经的状态取平均；</li>
 <li><strong>扰动幅度小</strong>。Δ=0.5σ 落在小信号区，恰好对应 Jacobian 解释；但 CCEP 的真实刺激是强扰动，两种扰动机制的口径差异是后文验证的一个隐性前提。</li>
 </ol>
 <h2 id="3">3 实验与验证<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<h3 id="31">3.1 仿真：有真值的三套考核<a class="headerlink" href="#31" title="Permanent link">#</a></h3>
+<h3 id="31">3.1 仿真：三套考核，两套有真值<a class="headerlink" href="#31" title="Permanent link">#</a></h3>
 <p>真值 EC 的取得方式与 NPI 同构——直接在生成模型上「扰动-记录」。这个对称设计干净，但要注意它验证的是「NPI 能恢复<strong>生成模型意义上的</strong>扰动响应」，不是生物真值。</p>
 <p><strong>① RNN 生成数据</strong>。<span class="arithmatex">\( dx = [-x + W h(x)]dt + \sigma d\xi \)</span>，<span class="arithmatex">\( h \)</span> 是 tanh，权重矩阵 W（高斯 <span class="arithmatex">\( \mathcal{N}(0, n^{-1/2}) \)</span>）当 SC。NPI-EC 对真值 EC <strong>r=0.95</strong>，GC 明显更差（Wilcoxon p&lt;10⁻³）。两个附带结论：EC-SC 相关显著强于 FC-SC（FC 无方向且有伪连接）；EC 不与 SC 完全重合，作者归因于非线性动力学与噪声——这其实是合理现象而非缺陷。</p>
 <p><strong>② Sanchez-Romero 公开合成 BOLD</strong>（5–10 节点、9 种含环拓扑，无 EC 真值，用二值化后判别 SC 有无的 AUC 评估）：NPI 的 <strong>AUC 接近 1</strong>，九种拓扑全部显著优于 GC 与 DCM。DCM 在这个考核里被比下去有结构性原因——节点数一多，DCM 的参数空间爆炸，本来就不适合大规模网络。</p>
@@ -2171,7 +2171,7 @@
 <h3 id="32-hcp-human-ebc">3.2 真实数据：HCP 上的 Human EBC<a class="headerlink" href="#32-hcp-human-ebc" title="Permanent link">#</a></h3>
 <p>HCP S1200 的 800 人静息态 fMRI（TR 0.72 s，4×15 min，ICA-FIX 去噪，0.01–0.1 Hz 带通），MMP 1.0 图谱 360 个皮层区（19 个皮层下区也放进训练输入以减少未观测区的偏差，EC 只在 360 区上报告）。逐被训代理、逐被扰出 EBC、再群平均。</p>
 <ul>
-<li><strong>结构支撑</strong>：EC（绝对值）对 Demirtaş 等 DSI 衍生的 SC，<strong>r=0.42</strong>。对 fMRI 推出的量来说这个数不低，但也要如实说：EC 与 SC 之间还隔着一半以上的方差；</li>
+<li><strong>结构支撑</strong>：EC（绝对值）对 Demirtaş 等 DSI 衍生的 SC，<strong>r=0.42</strong>。对 fMRI 推出的量来说这个数不低，但也要如实说：r²≈0.18，EC 与 SC 之间还隔着八成以上的未解释方差；</li>
 <li><strong>跨数据集</strong>：HCP 群体 EBC 与 ABCD（2000 人）的 <strong>r=0.87</strong>——不同设备、不同人群、不同年龄段，群体模式的稳定性过得去；</li>
 <li><strong>个体水平</strong>：55% 的 EC 连接在 800 人上显著非零（Bonferroni 校正）；同一被试训练两个不同初始化的 ANN，EC 一致（排除训练随机性）；数据切半的跨 session 一致性<strong>高于</strong>跨被试相关性——方法噪声小于个体差异，EC 才有资格谈个体化。边缘网络（LIM）可靠性最低，作者归因于该区 fMRI 信噪比低，归因诚实；</li>
 <li><strong>图谱稳定性</strong>：Schaefer 100–1000 区上 EC 高度稳定。</li>
@@ -2186,7 +2186,7 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/surrogate-npi-framework.png" data-desc-position="bottom"><img alt="Figure 1 · NPI 框架：观测信号 → 训练代理脑 → 虚拟扰动 → 全脑 EC" src="../../../assets/surrogate-npi-framework.png"></a></p>
 <p><em>Figure 1 · NPI 全流程：(a) 观测的多脑区信号；(b) MLP 学单步动力学；(c) 逐区虚拟扰动；(d) 读出全脑 EC。(e,f) 递归生成验证 FC（r=0.97）；(g,h) 扰动响应差给兴奋（b→a 升）/抑制（b→c 降）；(i) 合成数据上 NPI-EC 对真值 r=0.95；(j) 真实 fMRI 上的 seed-based EC</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/surrogate-human-ebc.png" data-desc-position="bottom"><img alt="Figure 3 · HCP 800 人的群体级 EBC" src="../../../assets/surrogate-human-ebc.png"></a></p>
-<p><em>Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制）；(b–d) 代理脑重现经验 FC（r=0.97）；(e) seed-based EC 的空间模式；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布</em></p>
+<p><em>Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制，色标 Exc/Inh）；(b) 皮层区归入七个功能网络；(c) 模型 FC 对经验 FC r=0.97；(d) 逐网络的 seed-based FC 空间模式；(e) 逐网络的 seed-based EC（红兴奋/蓝抑制）；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布</em></p>
 <h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <pre class="mermaid"><code>flowchart TD
     subgraph S1["① 训代理脑（逐被试）"]
@@ -2196,7 +2196,7 @@
     C --&gt;|是| D
     subgraph S2["② 虚拟扰动-记录"]
         D["冻结网络，枚举 源区 i × 状态 t"] --&gt; E["x_t → x_t + Δ·e_i（Δ=0.5σ）"]
-        E --&gt; F["读 t+1 全区响应差&lt;br/&gt;EC_i· = E_t[f(x_t+Δe_i) − f(x_t)]&lt;br/&gt;（≡ 状态平均 Jacobian 的第 i 行）"]
+        E --&gt; F["读 t+1 全区响应差&lt;br/&gt;EC_i· = E_t[f(x_t+Δe_i) − f(x_t)]&lt;br/&gt;（≡ 状态平均 Jacobian 中源区 i 对应的列）"]
     end
     F --&gt; G["逐区扫完 → all-to-all EBC&lt;br/&gt;方向 × 强度 × 兴奋/抑制符号"]
     G --&gt; H["验证链：RNN 合成 r=0.95 → 公开 BOLD AUC≈1（胜 GC/DCM）→ WBM 胜 GC&lt;br/&gt;→ SC 支撑 r=0.42 → HCP-ABCD r=0.87 → CCEP 613 病人 r=0.33 &gt; FC 0.20"]</code></pre>
@@ -2242,10 +2242,10 @@
 </table>
 <h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>方法的全部重量压在一个迁移假设上</strong>：NPI 真正证明的是「扰动代理模型能恢复代理模型的 EC」（仿真部分，近乎循环），而「代理模型的 EC ≈ 真实脑的 EC」只有 CCEP r=0.33 这一间接证据撑着。论文对此的处理算体面——FC 基线 0.20 摆在旁边——但如果 CCEP 上只追平 FC，整个故事就塌了，所以这 0.13 的差距是全文最要命的数字，值得盯住；</li>
+<li><strong>方法的全部重量压在一个迁移假设上</strong>：NPI 真正证明的是「扰动代理模型能恢复代理模型的 EC」（仿真部分，近乎循环），而「代理模型的 EC ≈ 真实脑的 EC」只有 CCEP r=0.33 这一间接证据撑着。论文对此的处理算体面——FC 基线 0.20 摆在旁边——但如果 CCEP 上只追平 FC，整个故事就塌了，所以这 0.13 的差距是全文最要命的数字，值得盯住。这层假设内部还有一个更细的错位：代理脑的合格标准是<strong>重现 FC</strong>（r=0.97），可 FC 是无方向的二阶统计量，FC 重现得好并不保证扰动响应（期望 Jacobian）也对——两个 FC 几乎相同的动力学系统完全可以有很不一样的局部增益结构。也就是说，被验收的指标和被使用的量不是同一个量，保真度对 EC 的传导在这道缝上没有免费保证；</li>
 <li><strong>小信号扰动 vs 强刺激的口径差是隐藏的裂缝</strong>：Δ=0.5σ 的冲激对应期望 Jacobian，是线性化的小信号增益；CCEP 是大电流强刺激。非线性系统里两者可以不一致。CCEP 验证成立反而暗示皮层响应在这段尺度上近似线性，或者对数正态分布的强度结构在两种口径下都占主导——论文没有讨论这一点，我认为这是比数据量更深的限制；</li>
-<li><strong>fMRI 时间尺度上的「因果」要打折听</strong>：EC 读在 t+1，即 0.72 s 后，而神经因果在毫秒级。HRF 把血流动力学卷进了方向性里（作者在 Supp Fig 13 里做了带 HRF 卷积的扰动变体，算意识到了）。NPI 胜 GC 的部分原因可能是它至少对每个状态做了响应平均，比 GC 的全时段线性回归少受平稳性假设拖累——但把 0.72 s 尺度的方向叫「神经因果传播」，措辞上我认为超出了证据；</li>
-<li><strong>对本站主线的真实启发不在方法在立意</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型社区（含站内读的一串）评价模型好不好的手段全是生成质量与下游判别精度，全是「预测性」指标。NPI 提供了第三种评价：训完的模型能否回答干预性问题。一个在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上预测得准的模型未必在「扰动谁、谁会变」上给出对的结构——如果哪天有人对 BrainGPT 类模型做系统性扰动分析并与真实刺激数据对账，那会是「神经基础模型作为科学工具」的第一次真正考试。</li>
+<li><strong>fMRI 时间尺度上的「因果」要打折听</strong>：EC 读在 t+1，即 0.72 s 后，而神经因果在毫秒级。HRF 把血流动力学卷进了方向性里（作者在 Supp Fig 13、14 里做了带 HRF 卷积、正/负双向冲激的扰动变体，算意识到了）。NPI 胜 GC 的部分原因可能是它至少对每个状态做了响应平均，比 GC 的全时段线性回归少受平稳性假设拖累——但把 0.72 s 尺度的方向叫「神经因果传播」，措辞上我认为超出了证据；</li>
+<li><strong>对本站主线的真实启发不在方法在立意</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型社区（含站内读的一串）评价模型好不好的手段全是生成质量与下游判别精度，全是「预测性」指标。NPI 提供了第三种评价：训完的模型能否回答干预性问题（论文 Discussion 末尾也把「对训练后的代理模型施加更多样的干预」列为下一步工作）。一个在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上预测得准的模型未必在「扰动谁、谁会变」上给出对的结构——如果哪天有人对 BrainGPT 类模型做系统性扰动分析并与真实刺激数据对账，那会是「神经基础模型作为科学工具」的第一次真正考试。</li>
 </ul>
 <h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
 <details class="question">
@@ -2262,14 +2262,18 @@
 </details>
 <details class="question">
 <summary>Q4 · 如果把 NPI 搬到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上，最先坏掉的是哪一环？</summary>
-<p>「区」的定义。NPI 的每个环节都假定 x_t 的分量对应解剖上有因果意义的区域：扰动一个分量 = 刺激一个区，读一个分量 = 记录一个区。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 头表信号是容积传导混合后的投影，电极/源空间分量与解剖区的映射本身就含糊，扰动一个「区」在模型里合法、在解释上悬空；运动伪迹与低信噪比又会让代理模型的单步预测学到大量非神经动力学。 scalp <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做 NPI 之前需要先解决源定位误差传递的问题，颅内 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（ECoG/SEEG）倒是通道-皮层对应更干净，但那又回到数据稀缺的老问题。</p>
+<p>「区」的定义。NPI 的每个环节都假定 x_t 的分量对应解剖上有因果意义的区域：扰动一个分量 = 刺激一个区，读一个分量 = 记录一个区。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 头表信号是容积传导混合后的投影，电极/源空间分量与解剖区的映射本身就含糊，扰动一个「区」在模型里合法、在解释上悬空；运动伪迹与低信噪比又会让代理模型的单步预测学到大量非神经动力学。scalp <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做 NPI 之前需要先解决源定位误差传递的问题，颅内 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（ECoG/SEEG）倒是通道-皮层对应更干净，但那又回到数据稀缺的老问题。</p>
+</details>
+<details class="question">
+<summary>Q5 · 输入只看 3 个时间步（约 2.2 s），这个记忆窗口装得下脑动力学吗？</summary>
+<p>先问它需要装下什么。NPI 学的是单步条件期望 p(x_{t+1} | x_t, x_{t-1}, x_{t-2})，而 fMRI 观测本身是 HRF 低通平滑后的信号，秒级以下的神经动力学在 BOLD 里基本不可见——输入记忆只要覆盖 BOLD 自身的时间结构就到了观测天花板。3 步 ≈ 2.2 s，与 BOLD 自相关的时间尺度同量级；Supp Fig 8 里 3 步输入只比 1 步「略好」也侧面印证了这一点：BOLD 高度自相关，x_{t-1}、x_{t-2} 携带的增量信息本来就不多。但代价在解释端：这样学到的 f 是「观测变量在 0.72 s 网格上的条件期望」，不是神经动力方程，从它的 Jacobian 读出的 EC 天然是 BOLD 尺度的量——所以拿 CCEP 的早期响应对账（Q2 的口径匹配）在逻辑上是自洽的，越过 0.72 s 去谈毫秒级传播才越界。真正的考验在换模态：ECoG 这类毫秒级信号上 3 步窗口明显不够，窗口长度与输入结构要按新模态的时间尺度重新设计。论文把「按模态定制网络结构与扰动协议」写成框架的可扩展方向（Supp Note 3），方向指对了，难度也在这。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>
 <li><strong>代码</strong>：https://github.com/ncclab-sustech/NPI （含自产合成数据；PyTorch，单卡 RTX 4080 级别即可）</li>
 <li><strong>代理</strong>：MLP 3N → 2N → 0.8N → N；输入 = 前 3 个时间步；<abbr title="均方误差 Mean Squared Error">MSE</abbr> 单步损失；Adam lr=10⁻³，60 epoch，batch 100</li>
-<li><strong>扰动</strong>：逐源区逐时刻冲激 <span class="arithmatex">\( \Delta e_i \)</span>，Δ = 0.5×BOLD 标准差；读 t+1 响应差、对全部状态取平均（WBM 口径下读 t+4·TR）</li>
+<li><strong>扰动</strong>：加在输入端当前时刻分量（历史步/权重不动），逐源区逐时刻冲激 <span class="arithmatex">\( \Delta e_i \)</span>，Δ = 0.5×BOLD 标准差；每源区约 T≈5×10³ 次（4×15 min ÷ 0.72 s），读 t+1 响应差、对全部状态取平均（WBM 口径下读 t+4·TR）</li>
 <li><strong>数据口径</strong>：HCP S1200 800 人 rs-fMRI（TR 0.72 s，4×15 min，ICA-FIX，0.01–0.1 Hz）；MMP 360 皮层区 + 19 皮下区入训练；预测评估用前 3 session + 第 4 session 前 60% 训、末 40% 测；EC 推断用全部 4 session</li>
 <li><strong>关键数字</strong>：模型 FC r=0.97（HCP）/ 0.81（WBM）；NPI-EC 对真值 r=0.95（RNN）；EC-SC r=0.42；HCP-ABCD r=0.87；EC-CCEP r=0.33 vs FC-CCEP 0.20</li>
 <li><strong>统计</strong>：相关性用 t 检验；方法对比用 Wilcoxon 符号秩（p&lt;10⁻³）；个体显著性 Bonferroni 校正；分布拟合按 AIC 选型</li>
