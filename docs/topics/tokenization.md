@@ -20,10 +20,11 @@ tags: [tokenization, 综述]
 | [JET](../papers/2026-09/0923-jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
 | [EEGMoE](../papers/2026-09/0924-eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
 | [RF-GPT](../papers/2026-09/0921-rf-gpt.md) | — | 论文未附仓库（底座 Qwen2.5-VL 等组件公开可得） |
-| NeuroRVQ | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
-| BrainRVQ | — | 暂未公开 |
-| [CodeBrain](https://arxiv.org/abs/2506.09110) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
-| NeuroDETR | — | 暂未检索到官方仓库 |
+| [NeuroRVQ](../papers/2026-11/1104-neurorvq.md) | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
+| [BrainRVQ](../papers/2026-11/1104-brainrvq.md) | [keqicmz/BrainRVQ](https://github.com/keqicmz/BrainRVQ) | 代码可访问，权重承诺论文接收后放出 |
+| [CodeBrain](../papers/2026-11/1104-codebrain.md) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
+| [NeuroDETR](../papers/2026-11/1104-neurodetr.md) | — | 暂未检索到官方仓库 |
+| [DELTA](../papers/2026-11/1104-delta.md) | — | 论文未附仓库（NeurIPS 2025 Workshop） |
 
 | 时间 | 论文 | Token 形态 | 词表 | Token 的用途 |
 |---|---|---|---|---|
@@ -32,10 +33,11 @@ tags: [tokenization, 综述]
 | 2024 | [EEGPT](../papers/2026-09/0918-eegpt.md) | 连续 patch embedding | 无 | 模型输入 |
 | 2025 | [NeuroLM](../papers/2026-09/0918-neurolm.md) | 离散码（VQ） | 有（并入 GPT-2 词表） | LLM 的输入 |
 | 2026 | [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) | 离散码（VQ 时频 motif） | 有 | 模型输入 + 可插拔复用 |
-| 2026 | [NeuroRVQ](https://arxiv.org/abs/2510.13068) | 多尺度 RVQ 离散 token | 多尺度、多层码表 | 预训练目标 |
-| 2026 | [BrainRVQ](https://arxiv.org/abs/2602.16951) | 时域 / 频域双 RVQ 离散 token | 双域、多层码表 | 分层预训练目标 |
-| 2026 | [CodeBrain](https://arxiv.org/abs/2506.09110) | 时域 / 频域双 VQ 离散 token | 双域码表 | 预训练目标 |
-| 2026 | [NeuroDETR](https://arxiv.org/abs/2610.20349) | 时间多尺度 / 空间金字塔离散 token | 时间 / 空间码表 | 事件检测模型的输入记忆 |
+| 2026 | [NeuroRVQ](../papers/2026-11/1104-neurorvq.md) | 多尺度 RVQ 离散 token | 多尺度、多层码表 | 预训练目标 |
+| 2026 | [BrainRVQ](../papers/2026-11/1104-brainrvq.md) | 时域 / 频域双 RVQ 离散 token | 双域、多层码表 | 分层预训练目标 |
+| 2026 | [CodeBrain](../papers/2026-11/1104-codebrain.md) | 时域 / 频域双 VQ 离散 token | 双域码表 | 预训练目标 |
+| 2026 | [NeuroDETR](../papers/2026-11/1104-neurodetr.md) | 时间多尺度 / 空间金字塔离散 token | 时间 / 空间码表 | 事件检测模型的输入记忆 |
+| 2025 | [DELTA](../papers/2026-11/1104-delta.md) | RVQ 离散码（词级 EEG） | 自训多层码表 | 掩码语言扩散的输入 |
 
 ## 预处理与归一化异构信号
 
@@ -120,6 +122,6 @@ tags: [tokenization, 综述]
 
 ## 关联论文
 
-[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) · [CBraMod](../papers/2026-09/0928-cbramod.md) · [LUNA](../papers/2026-09/0924-luna.md) · [EEGDM](../papers/2026-10/1017-eegdm.md) · [JET](../papers/2026-09/0923-jet.md) · [EEGMoE](../papers/2026-09/0924-eegmoe.md) · [RF-GPT](../papers/2026-09/0921-rf-gpt.md)
+[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) · [CBraMod](../papers/2026-09/0928-cbramod.md) · [LUNA](../papers/2026-09/0924-luna.md) · [EEGDM](../papers/2026-10/1017-eegdm.md) · [JET](../papers/2026-09/0923-jet.md) · [EEGMoE](../papers/2026-09/0924-eegmoe.md) · [RF-GPT](../papers/2026-09/0921-rf-gpt.md) · [NeuroRVQ](../papers/2026-11/1104-neurorvq.md) · [BrainRVQ](../papers/2026-11/1104-brainrvq.md) · [CodeBrain](../papers/2026-11/1104-codebrain.md) · [NeuroDETR](../papers/2026-11/1104-neurodetr.md) · [DELTA](../papers/2026-11/1104-delta.md)
 
-新增论文原文：[NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。
+新增论文原文：[DELTA](https://arxiv.org/abs/2511.21746)（NeurIPS 2025 Workshop）。

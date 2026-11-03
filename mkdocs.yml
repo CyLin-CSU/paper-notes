@@ -100,6 +100,14 @@ nav:
           - 1102 · SSM2Mel (arXiv 2025 · 语音解码): papers/2026-11/1102-ssm2mel.md
           - 1102 · LTFT (IEEE TETCI 2026 · 时频方法): papers/2026-11/1102-learnable-tf.md
           - 1102 · NPI (Nature Methods 2025 · 连接组学): papers/2026-11/1102-surrogate-brain.md
+          - 1104 · NeuroRVQ (arXiv 2025 · 多尺度RVQ): papers/2026-11/1104-neurorvq.md
+          - 1104 · BrainRVQ (arXiv 2026 · 双域RVQ): papers/2026-11/1104-brainrvq.md
+          - 1104 · CodeBrain (ICLR 2026 · 解耦tokenizer): papers/2026-11/1104-codebrain.md
+          - 1104 · NeuroDETR (arXiv 2026 · 事件token化): papers/2026-11/1104-neurodetr.md
+          - 1104 · DELTA (NeurIPS 2025 WS · 掩码扩散EEG-to-Text): papers/2026-11/1104-delta.md
+          - 1104 · GUIDED (arXiv 2024 · 视觉重建): papers/2026-11/1104-guided.md
+          - 1104 · CrossPT-EEG (arXiv 2024 · 视觉解码基准): papers/2026-11/1104-crosspt-eeg.md
+          - 1104 · EEGArena (arXiv 2026 · 基准评测): papers/2026-11/1104-eegarena.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md

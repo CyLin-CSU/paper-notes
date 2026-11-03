@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **17** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **25** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
 个人论文精读库：记录方法拆解、创新点、流程与个人思考。++ctrl+k++ 全文搜索。
 
@@ -15,6 +15,14 @@ title: 首页
 ## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-04** · tokenization 线五篇齐发：NeuroRVQ（多尺度 RVQ，EEG 重构 MSE 较 LaBraM 降 67 倍）· BrainRVQ（时/频双域 RVQ）· CodeBrain（时/频双码本解耦）· NeuroDETR（VQ 事件记忆 + DETR 式事件检测，8 数据集 F1 全第一）· DELTA（RVQ + 掩码语言扩散 EEG-to-Text）——tokenization 演进页遗留缺口全面占坑
+
+- **2026-11-04** · 新增精读 GUIDED（ATM · arXiv 2024）：EEG 映进 CLIP 空间 + 冻结 SDXL 两阶段引导扩散重建所见图像——站内「视觉重建」轴线第一篇，EEG 与 MEG/fMRI 首次同桌比较
+
+- **2026-11-04** · 新增精读 CrossPT-EEG（arXiv 2024 · 清华）：16 人 × 22 session 视觉解码泛化基准——two-way ID 从被试内 0.95 崩到跨时间 0.51、跨被试 0.49，泛化代价的第一份系统账目
+
+- **2026-11-04** · 新增精读 EEGArena（arXiv 2026）：30 FM × 25 监督基线 × 57 任务 / 23 数据集、五协议 2 万次评测——FM 大多领先但 TUEV 全体塌方，参数量不预测性能，预训练数据 0.6k→30k 小时无平台
 
 - **2026-11-03** · 新增语音模型专题（与主题专题并列）：语音解码轴线按 Tokenization / Pretraining / 下游任务三段横读——脑端不切段、语音端选空间、监督对齐范式与检索/回归/生成三协议
 
@@ -171,6 +179,54 @@ title: 首页
 
     把神经网络当**可干预的脑**：逐区虚拟扰动读出方向×强度×兴奋/抑制的有效连接，CCEP 613 病人作真实锚点。tags: `因果推断` `fMRI` `轴外`
 
+- :material-layers:{ .lg .middle } **[NeuroRVQ](papers/2026-11/1104-neurorvq.md)** `tokenization`
+    ---
+    arXiv 2025 · 5.9M 骨干 · 帝国理工
+
+    4 个多尺度卷积分支 × **逐分支 RVQ** + 圆周相位损失：EEG 重构 MSE 0.016 vs LaBraM 1.071（67 倍）。tags: `RVQ` `多尺度` `相位损失`
+
+- :material-compare:{ .lg .middle } **[BrainRVQ](papers/2026-11/1104-brainrvq.md)** `tokenization`
+    ---
+    arXiv 2026 · 5.82M 参数 · 浙大
+
+    **时/频双路 RVQ** 把同一 patch 拆成两组残差码字，层间 teacher forcing 自回归：CHB-MIT AUC-PR 较 CBraMod +26%。tags: `双域RVQ` `层次自回归` `TUEG`
+
+- :material-code:{ .lg .middle } **[CodeBrain](papers/2026-11/1104-codebrain.md)** `tokenization`
+    ---
+    ICLR 2026 · 15.17M 参数 · NUS
+
+    **时/频双码本解耦** token 化 + SGConv/SWA 多尺度 SSM 骨干：8 任务对 CBraMod 小幅全面领先，token 退守预训练目标。tags: `双码本` `SSM` `多尺度`
+
+- :material-radar:{ .lg .middle } **[NeuroDETR](papers/2026-11/1104-neurodetr.md)** `tokenization`
+    ---
+    arXiv 2026 · 中科院自动化所
+
+    多尺度 VQ「**事件记忆**」+ FOCAL 事件引导 + DETR 式集合预测直接输出事件类别与起止：8 数据集事件级 F1 全部第一。tags: `事件检测` `DETR` `异步`
+
+- :material-text-fields:{ .lg .middle } **[DELTA](papers/2026-11/1104-delta.md)** `EEG-to-Text`
+    ---
+    NeurIPS 2025 WS · 成均馆大学
+
+    自训 RVQ 把 ZuCo 词级 EEG 离散化，**LLaDA-8B 掩码扩散**非自回归生成文本：词级 BLEU-1 21.93，较同 token AR 基线 +5.3 pp。tags: `掩码扩散` `RVQ` `非自回归`
+
+- :material-image:{ .lg .middle } **[GUIDED 视觉重建](papers/2026-11/1104-guided.md)** `视觉解码`
+    ---
+    arXiv 2024 · 3.18M（ATM）· 南科大
+
+    ATM 把 EEG 映进 **CLIP 空间**，先验扩散 + 冻结 SDXL 两阶段重建所见图像：200 类零样本检索 top-1 28.6%，EEG/MEG/fMRI 同桌比较。tags: `视觉重建` `引导扩散` `CLIP`
+
+- :material-image-search:{ .lg .middle } **[CrossPT-EEG](papers/2026-11/1104-crosspt-eeg.md)** `视觉解码`
+    ---
+    arXiv 2024 · 16 人 × 22 session · 清华
+
+    视觉解码**泛化基准**：two-way ID 从被试内 0.95 崩到跨时间 0.51、跨被试 0.49——泛化代价的第一份系统账目。tags: `基准` `跨被试` `跨时间`
+
+- :material-emoji-events:{ .lg .middle } **[EEGArena](papers/2026-11/1104-eegarena.md)** `基准评测`
+    ---
+    arXiv 2026 · 2 万次评测 · 港理工
+
+    30 FM × 25 监督基线 × 57 任务 / 23 数据集：FM 大多领先但 TUEV 全体塌方，**参数量不预测性能**，预训练数据 30k 小时无平台。tags: `基准评测` `FM排名` `监督反超`
+
 </div>
 
 ## :material-cube-unfolded: 模型架构基础
@@ -239,10 +295,10 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 17 篇（EEG 9 + 跨领域 RF 1 + EEG 生成 3 + 语音解码 2 + 时频方法 1 + 连接组学 1） |
+| 精读论文 | 25 篇（EEG 基础模型 9 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1） |
 | 发表跨度 | 2023 – 2026 |
-| 涉及会议/期刊 | NeurIPS ×3 · ICLR ×4 · ICML ×1 · TNNLS ×1 · arXiv ×3（另基础页 ICLR 2022 / CS336） |
-| 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
+| 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×5 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
+| 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 · CodeBrain/BrainRVQ TUEG 9200h+ |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
 综合对比见 [十三篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座五个专题深读，模型设计 / 频域 / 规模效率保留在页内 + benchmark 战绩 + 互怼链）。
