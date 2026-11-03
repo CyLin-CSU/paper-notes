@@ -111,6 +111,8 @@ nav:
       - 通道适配与多任务学习: topics/multi-task.md
       - EEG 预训练数据全景: topics/data-landscape.md
       - 基座来源分析: topics/base-model.md
+  - 语音模型专题:
+      - 语音解码与 Mel 谱建模: topics/speech-models.md
   - 综述: blog-2023-2026.md
   - 十三篇方法对比: comparison.md
   - 索引:

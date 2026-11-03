@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-11-03** · 新增语音模型专题（与主题专题并列）：语音解码轴线按 Tokenization / Pretraining / 下游任务三段横读——脑端不切段、语音端选空间、监督对齐范式与检索/回归/生成三协议
+
 - **2026-11-03** · 重整五个主题专题，合并通道适配与多任务；补入 NeuroRVQ、BrainRVQ、CodeBrain、NeuroDETR，更新写作说明。单篇笔记仍为 17 篇。
 
 - **2026-11-02** · 新增精读 Défossez 语音解码（NMI 2023）：卷积脑模块对比对齐 wav2vec 2.0——3 秒 MEG 千余候选 zero-shot 检索所听语句，站内「语音解码」轴线的源头文献
@@ -226,6 +228,10 @@ title: 首页
 - :material-cube-outline: **[基座来源分析](topics/base-model.md)**
     ---
     主模型与 tokenizer 参数量，区分从零训练和加载现成基座。
+
+- :material-ear-hearing: **[语音模型专题](topics/speech-models.md)**
+    ---
+    脑信号 → 语音：Défossez 检索范式与 SSM2Mel mel 回归的 tokenization / 预训练 / 下游任务横读。
 
 </div>
 
