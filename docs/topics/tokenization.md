@@ -5,6 +5,25 @@ tags: [tokenization, 综述]
 
 # EEG Tokenization 演进
 
+## 论文代码开源情况
+
+| 论文 | 代码 | 备注 |
+|---|---|---|
+| [BIOT](../papers/2026-09/0918-biot.md) | [ycq091044/BIOT](https://github.com/ycq091044/BIOT) | 完整开源 |
+| [LaBraM](../papers/2026-09/0918-labram.md) | [935963004/LaBraM](https://github.com/935963004/LaBraM) | 仅 Base 权重；Large / Huge 未放 |
+| [EEGPT](../papers/2026-09/0918-eegpt.md) | [BINE022/EEGPT](https://github.com/BINE022/EEGPT) | 开源 |
+| [NeuroLM](../papers/2026-09/0918-neurolm.md) | [935963004/NeuroLM](https://github.com/935963004/NeuroLM) | 开源 |
+| [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) | [Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer) | 含预训练权重与全部预处理脚本 |
+| [CBraMod](../papers/2026-09/0928-cbramod.md) | [wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod) | 已进 Braindecode |
+| [LUNA](../papers/2026-09/0924-luna.md) | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | Base / Large / Huge 全系 |
+| [EEGDM](../papers/2026-10/1017-eegdm.md) | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) | 含预处理脚本与训练配置 |
+| [JET](../papers/2026-09/0923-jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
+| [EEGMoE](../papers/2026-09/0924-eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
+| [RF-GPT](../papers/2026-09/0921-rf-gpt.md) | — | 论文未附仓库（底座 Qwen2.5-VL 等组件公开可得） |
+| NeuroRVQ | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
+| BrainRVQ | — | 暂未公开 |
+| [CodeBrain](https://arxiv.org/abs/2506.09110) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
+| NeuroDETR | — | 暂未检索到官方仓库 |
 
 | 时间 | 论文 | Token 形态 | 词表 | Token 的用途 |
 |---|---|---|---|---|
