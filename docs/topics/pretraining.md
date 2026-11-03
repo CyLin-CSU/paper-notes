@@ -5,107 +5,100 @@ tags: [预训练, 综述]
 
 # 预训练范式对比
 
-> 十三篇论文覆盖了自监督学习的**四条路线**：对比学习、掩码建模、自回归、生成（2026 新增），掩码建模内部还在持续进化；RF-GPT 则完全跳过预训练（纯合成 SFT）。本页是[十三篇方法对比](../comparison.md)的「预训练目标维度」深读页。
+## 一、Tokenizer 如何训练
 
-## 四条路线总览
+### 词表
 
-=== "对比学习 · BIOT"
-    扰动版预测原版表示（BYOL 式）：随机丢弃部分通道和 token 得到扰动信号，predictor + 对比损失（温度 T=0.2）让扰动版预测原版表示。
+| 论文 | 码表 | 掩码部分 | 重建部分 | 损失 |
+|---|---|---|---|---|
+| BIOT | 无码表 | — | — | — |
+| LaBraM | VQ 码表 | **不掩码** | **频谱幅值 + 相位** | 幅值 MSE + 相位 MSE + VQ 损失 |
+| EEGPT | 无码表 | — | — | — |
+| BrainGPT | 无码表 | — | — | — |
+| NeuroLM | VQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值** | 信号 MSE + 幅值 MSE + VQ 损失 + EEG–文本域对抗损失 |
+| TFM | VQ 码表 | **时频图** | **时频图** | 时频图 MSE + VQ 损失 |
+| CBraMod | 无码表 | — | — | — |
+| LUNA | 无码表 | — | — | — |
+| EEGMoE | 无码表 | — | — | — |
+| NeuroRVQ | 多尺度 RVQ 码表 | **不掩码** | **频谱幅值 + 相位**，并约束还原信号 | 对数幅值 MSE + 相位余弦损失 + 信号 MSE + commitment loss |
+| BrainRVQ | 时域 / 频域双 RVQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值 + 相位** | 信号 MSE + 幅值 MSE + 相位 MSE + commitment loss |
+| CodeBrain | 时域 / 频域双 VQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值 + 相位** | 重构 MSE + 时域对比损失 + VQ 损失 |
+| NeuroDETR | 时间多尺度 / 空间金字塔 VQ 码表 | **不做随机掩码** | **信号 embedding** | 特征 MSE + commitment loss，与事件检测损失联合训练 |
 
-    预训练语料：PREST + SHHS + Cardiology，共约 1000 万样本。此后没有直接续作——最早期的做法。
 
-=== "掩码建模 · LaBraM / EEGPT / TFM / CBraMod / LUNA / EEGMoE"
-    看一部分、恢复另一部分。各家的「恢复目标」完全不同（见下节进化表）：
+**VQ 的稳定性技巧**：LaBraM / TFM 用 **EMA 更新 codebook**，稳定词表。
 
-    - LaBraM → 预测**离散码字**（BEiT 式，附对称掩码）
-    - EEGPT → 对齐**表示**（JEPA 式）+ 重构原始 patch（MAE 式）
-    - TFM → 重构**掩码频谱图**（频带+时间+对称掩码，训练 tokenizer 本身）
-    - CBraMod → 还原**原始 patch**（MSE 只算被掩位置，全零 mask token）
-    - LUNA → Smooth-L1 重构 + 可见 patch 小系数（α=0.05）参与 + query 特化损失
-    - EEGMoE → L1 重构** embedding**（空间频率编码器输出，不是信号）
+NeuroRVQ / BrainRVQ / NeuroDETR 也用 EMA 更新码表；NeuroDETR 的 VQ 随监督检测一起训练，没有独立的通用 tokenizer 预训练阶段。
 
-=== "自回归 · BrainGPT / NeuroLM"
-    因果地预测下一单元，贴合 EEG 的时序因果结构：
+**对称掩码**（LaBraM 提出，TFM 沿用）：mask 与其补集各做一次——两个互补视角；
+LaBraM 用在主模型码字预测，TFM 用在 tokenizer 训练。
 
-    - BrainGPT → 回归**连续信号值**（单电极，MSE）
-    - NeuroLM → 阶梯掩码下预测**离散码**（因果 LLM，多通道）
 
-=== "生成 · JET / EEGDM / Not-All-EEG（2026 新增）"
-    把「生成整段信号」本身当训练目标，监督信号来自噪声→数据的全域输运：
+## 二、主模型预测目标
 
-    - JET → 条件流匹配：线性插值路径回归向量场，推理解 ODE；质量导向（生成质量论英雄）
-    - EEGDM → 潜扩散：encoder 表示作条件引导 DiT 在 PCA 隐空间去噪；表征导向（下游指标论英雄）
-    - Not-All-EEG → 位置自适应时间调度：EMA 误差图把全局 t 展开成端点保持的位置时间图，监督按历史难度分配（生成路线的第一次内部迭代）
+### ① 对比学习：BIOT
 
-=== "无预训练 · RF-GPT"
-    跨域参照：谱图直接复用现成 VLM 视觉编码器，纯合成数据 SFT（交叉熵只算答案 token）——证明在「底座先验 + 零噪声合成监督」成立时预训练可以整个跳过（EEG 域暂不成立，见[基座来源专题](base-model.md)）。
-
-## 掩码建模：预测目标的进化与回摆
-
-EEG 低信噪比让「掩码后恢复什么」成了核心设计问题，目标一路升级后又出现回摆：
-
-| 代际 | 恢复目标 | 论文 | 动机 |
+| 论文 | 扰动部分 | 预测部分 | 损失 |
 |---|---|---|---|
-| 一代 | 原始波形（MSE） | （LaBraM 前期实验，**失败**） | EEG 随机、非平稳、低信噪比，loss 不收敛 |
-| 二代 | 频谱（DFT 幅值+相位） | LaBraM | 频谱反映神经生理活动且稳定可学 |
-| 2.5 代 | 时域信号 + 频域幅值 | NeuroLM | 发现相位贡献小，砍掉 |
-| 三代 | **表示**（momentum encoder 的特征） | EEGPT | 信号空间难学，就在表示空间对齐（JEPA 思想） |
-| 三代' | 掩码频谱图 | TFM-Tokenizer | 用于训练 tokenizer 本身 |
-| **回摆** | 原始 patch / embedding | CBraMod / LUNA / EEGMoE | 目标退回朴素，靠架构与正则补（见下） |
+| BIOT | **原始信号 patch**（丢弃部分通道和时间片段） | **信号 embedding** | 对比交叉熵 |
 
-**回摆的解读**：2025 年后好几家又用起「最朴素」的目标——CBraMod 直接 MSE 还原原始 patch（4M 参数 10 任务全 SOTA）、LUNA Smooth-L1 还原 patch、EEGMoE L1 重构 embedding。这不等于「三代目标白进化了」，而是说明**目标与架构是互补变量**：当注意力结构匹配了 EEG 的时空网格（CBraMod 十字交叉）、或加了辅助正则（LUNA query 特化、EEGMoE 负载均衡）后，朴素目标也能学出好表示；反之 LaBraM 时代用朴素目标失败，正是因为架构（展平全注意力）与目标（原始波形）两个短板叠加。
+原始与扰动共享 encoder，扰动侧再接 predictor。
 
-另一个证据是 EEGMoE 的目标鲁棒性消融：L1 > 相对定位对比 > L2 > 时序打乱 > Cosine，但差异都不大——**收益在架构不在目标**。
+### ② 掩码建模
 
-## 第四条路线：生成（2026）
+| 论文 | 掩码部分 | 重建 / 预测部分 |
+|---|---|---|
+| LaBraM | **信号 embedding** | **离散 token** |
+| TFM | **离散 token** | **离散 token** |
+| EEGPT | **原始信号 patch** | **信号 embedding + 原始信号 patch** |
+| CBraMod | **原始信号 patch** | **原始信号 patch** |
+| LUNA | **信号 embedding** | **原始信号 patch** |
+| EEGMoE | **信号 embedding** | **信号 embedding** |
+| NeuroRVQ | **信号 embedding** | **离散 token** |
+| BrainRVQ | **信号 embedding** | **离散 token** |
+| CodeBrain | **原始信号 patch** | **离散 token** |
 
-### 为什么掩码重构被围攻
+**方法创新**：
 
-对「掩码/离散补全」范式的三条批评线，从三个不同角度攻击同一目标：
+- **LaBraM**：① **频谱监督的离散词表**，用幅值 + 相位训练 tokenizer，再给主模型提供预测标签；② **对称掩码**，mask 与其补集各训练一次，同一样本获得两个互补视角。
 
-1. **BrainGPT · 因果性批评**：MAE 的双向补全破坏 EEG 的时序因果结构（过去活动影响未来状态）——同架构同损失下 AR 比 MAE 平均高 2%+；
-2. **JET · 连续性批评**：脑活动在高维状态空间平滑演化，离散的去噪/补全步骤与神经信号的连续动力错配；EEG 的三大统计特性（幂律频谱、非平稳动态、重尾幅度）都在惩罚「各向同性噪声假设下优化局部重构精度」的范式；
-3. **EEGDM · 捷径批评**：EEG 强局部自相关下，掩码重构存在**局部插值捷径**——从可见锚点插值即可把被掩 patch 填得八九不离齐，损失低不等于学到全局分布；而「从纯噪声生成完整信号」必须建模全局数据分布。
+- **TFM**：① **单通道时频 motif 词表**，时域与频域双路径捕捉局部模式，不绑定固定通道布局；
 
-### 两条生成路线的分工（与一次内部迭代）
+- **EEGPT**：① **表示对齐 + 信号重构双目标**，路径1映射信号到潜空间进行掩码重构，路径2掩码重构原始信号，两路径最后损失相加。
+- **CBraMod**：① **十字交叉注意力**，分别建模同一时刻的跨通道关系、同一通道的跨时间关系；② **非对称卷积位置编码（ACPE）**，从时空邻域动态生成位置信息。
+- **LUNA**：① **可学习 query查询向量统一通道**，把不同电极布局映射到固定大小的隐空间；② **时间注意力只在隐空间计算**，减少对原始通道数的计算依赖。
+- **EEGMoE**：① **特殊+共享的双专家组**，分别学习域特性与域共性；② **按 token 路由**，Top-K 选择特定专家，共享专家始终参与。
 
-- **JET（质量导向）**：条件流匹配学向量场 \( v_\theta(x_t, t, c) \)，线性插值路径 \( x_t = t x_1 + (1-t) x_0 \) 给出回归目标；三条生理约束（L1 重构隐含 Laplacian 先验 / 一二阶矩统计一致 / 时间全变分 + Pearson 相关）源自 EEG 统计结构而非临时正则。战绩：TS-FID 降 40%+、下游增强 ΔAcc 全正（基线≈0）。注意其拓扑学教训：**零噪声初始化灾难性失败**（TS-FID 1600+）——从单点展开成多模态分布是不可表示的一对多映射；
-- **EEGDM（表征导向）**：EEG encoder 的表示 \( e \)（三个增强视图平均）作扩散条件，关键设计是 **\( e \) 不 detach**——去噪损失经条件反传，encoder 与扩散联合优化，「学一个对去噪最有用的条件」就是表征学习本身。战绩：TUEV 类不均衡指标全场最佳（最稀有类 SPSW 召回 50.3% vs 掩码基线 10–18%）。代价：比同规模掩码重构贵一个量级（4×A100×113h）。
 
-两篇共享同一立场（生成目标须建模全局分布）与同一技术件（adaLN 条件注入：JET 注入时间+类别、EEGDM 注入时间+encoder 表示）。
+- **NeuroRVQ**：① **多尺度 + 多层残差量化**，一个 patch 用多组离散 token 表示；② **相位圆周约束**，用相位的正弦 / 余弦表示计算损失，避免直接回归角度的跳变。
+- **BrainRVQ**：① **时域 / 频域双 RVQ**，分别保留波形与频谱信息；② **粗到细预测码字**，后一级依赖前一级，并优先掩码信息丰富的位置。
+- **CodeBrain**：① **时域 / 频域双码表**，时域额外用对比学习稳定表示；② **全局卷积 SSM + 局部注意力**，分别处理长程关系与局部模式。
 
-**2026 下半场，生成路线开始自我修正（Not-All-EEG）**：批评点不再是掩码范式，而是自己的上一代——JET 的「全局统一时间调度」让所有通道 × 位置拿到完全相同的监督（**分配太平均**，与 EEGDM 批评的「监督太容易」互补）。解法 PATS：训练中维护每个 (通道 × patch) 位置重构误差的 EMA 图，把全局 t 展开成端点保持的位置时间图 \( \tau_{i,j} = t + m\,s_{i,j}\,t(1-t) \)，难位置提前进入低噪声阶段；同时把 JET 的时域 TV 约束（无差别压高频）换成**频率加权的多分辨率频谱损失**（\( w_k \propto k^\alpha \) 对抗幂律谱偏置）。对同口径复现 JET 的 TS-FID 再降 40–62%，按基线误差分层的分析显示收益集中在最难的一成位置（第 10 分位误差削减 14.9%，其余分位 1–5%）——**监督信号怎么分配**本身成了新的设计维度。
+### ③ 自回归：BrainGPT / NeuroLM / BrainRVQ
 
-## 自回归 vs 掩码：范式之争
+| 论文 | 注意力可见范围 | 预测部分 | 损失 |
+|---|---|---|---|
+| BrainGPT | **同通道的当前及过去** | 同通道下一时刻的**原始信号 patch** | MSE |
+| NeuroLM | **所有通道的当前及过去** | 同通道下一时刻的**离散 token** | 交叉熵 |
+| BrainRVQ | **可见 patch + 同一位置较粗层的码字** | 被掩位置下一层的**离散 token** | 分层交叉熵 |
 
-BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）[^t5]：
+BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输入。BrainGPT 开头加电极条件 token；NeuroLM 冻结 VQ encoder、加载 GPT-2 并扩充 EEG 词表。
 
-- **AR 全面优于 MAE，平均 +2% 以上**，与距离度量选择无关（ℓ2 最好，cos 最差）；
-- 理由：EEG 反映连续渐进的信息流，过去活动影响未来状态，单向建模天然贴合；MAE 的双向重构破坏了信号的自然流向；
-- 但注意代价：自回归只能用因果注意力，**看不到未来**——LaBraM/EEGPT 的双向建模在「整段理解型」任务上并非没有优势。
+**NeuroLM 防遗忘**：预训练与指令微调都混入少量纯文本。
 
-## 五种"掩码花样"
+**BrainRVQ 的自回归在码字层级上**：同一 patch 从粗到细预测 RVQ 码字，不是沿时间预测下一个 patch。
 
-1. **对称掩码**（LaBraM 首创，TFM 沿用）：mask 与其补集各做一次 masked modeling——省一次 tokenizer 前向 + 一个样本两个互补视角（数据增强），大模型受益更明显；
-2. **频带+时间掩码**（TFM）：消融显示随机掩码最差，频带掩码最关键（Kappa +8%），加时间掩码 balanced acc 再 +5%——**掩码的结构要匹配信号的结构**；
-3. **阶梯掩码**（NeuroLM）：多通道场景下，同通道 token 预测同通道下一时刻，每个 token 可见所有通道的当前与历史时间步；
-4. **时空联合掩码**（EEGPT）：50% 时间 × 80% 通道同时挖——稀疏视图逼 encoder 输出全局语义（对齐目标的 Information bottleneck 设计）；
-5. **结构化小改**（CBraMod / LUNA）：CBraMod 用 Bernoulli 0.5 随机掩 patch + **全零 mask token**（消融：与可学习 token 无显著差异，省一组参数）；LUNA 让**可见 patch 也以 α=0.05 小系数参与损失**——通道统一模块对所有 token 压缩，可见内容失真会伤下游，小系数既约束隐空间保真又不喧宾夺主。
 
-## 稳定性技巧清单
+### ④ 相关方法：NeuroDETR
 
-各家反复出现的训练技巧，值得记下：
+| 论文 | 输入 | 预测部分 | 训练方式 |
+|---|---|---|---|
+| NeuroDETR | **连续原始信号** | **事件类别 + 起止时间** | 监督事件检测，与 VQ 特征重建联合训练 |
 
-- **EMA 更新目标侧**：LaBraM 更新 codebook、EEGPT 更新 momentum encoder（m=0.01）、JET/EEGDM 训练 EMA 0.9999——防止目标漂移过快；
-- **stop-gradient 成对损失**：codebook loss + commitment loss（VQ 三件套），把编码器和码字的更新解耦；
-- **零初始化的门控**（EEGDM）：adaLN-Zero 的残差前缩放 ρ 零初始化，每个 DiT 块初始为恒等映射——训练起点稳定，生成模型的标准件；
-- **类别均衡采样**（JET）：\( p_i \propto 1/N_c^{\alpha} \) 几乎零成本，直接对应 EEG 数据集的严重不平衡；
-- **混入文本数据**（NeuroLM）：接 LLM 的模型每批喂少量纯文本，防语言能力灾难性遗忘；
-- **只算答案部分的 loss**（NeuroLM 指令微调）：预测更稳定；
-- **LayerNorm 归一化目标**（EEGPT 的 \( L_A \) 和 \( L_R \) 都对目标做 LN）：缓解极端值和协变量偏移。
+**方法创新**：① **FOCAL 事件感知注意力**，把计算集中到可能出现事件的片段；② **时间多尺度 VQ + 空间金字塔 VQ**，形成事件记忆，再由 query 联合预测类别与边界。它不属于上面的随机掩码预训练。
 
-## 关联论文
+### 关联论文
 
-[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) · [CBraMod](../papers/2026-09/0928-cbramod.md) · [LUNA](../papers/2026-09/0924-luna.md) · [EEGMoE](../papers/2026-09/0924-eegmoe.md) · [JET](../papers/2026-09/0923-jet.md) · [EEGDM](../papers/2026-10/1017-eegdm.md) · [RF-GPT](../papers/2026-09/0921-rf-gpt.md)
+[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) · [CBraMod](../papers/2026-09/0928-cbramod.md) · [LUNA](../papers/2026-09/0924-luna.md) · [EEGMoE](../papers/2026-09/0924-eegmoe.md) · [JET](../papers/2026-09/0923-jet.md) · [EEGDM](../papers/2026-10/1017-eegdm.md) · [Not-All-EEG](../papers/2026-10/1028-not-all-eeg.md) · [RF-GPT](../papers/2026-09/0921-rf-gpt.md)
 
-[^t5]: BrainGPT Table V：同一模型架构与参数下，用 cos/ℓ1/ℓ2 三种重构损失对比 MAE 与 AR，AR 平均准确率高 2% 以上，ℓ2 为最优度量。
+新增论文原文：[NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。

@@ -119,7 +119,7 @@ one-liner: "用 Specific+Shared 双专家组把 EEG 的域共性与域特性分�
 | LaBraM / BIOT | 被反超的对照组：癫痫域预训练 → 认知任务下游的域失配是它们复现成绩差的主因（论文归因） |
 | IDMMOE / Seizure-MoE | 早期 EEG-MoE：全专家加权求和，没有选择性路由 |
 | NeuroLM | 同为「多任务统一」但路线不同：NeuroLM 把 EEG 变成 LLM 的外语用指令微调；EEGMoE 在表征层用专家分工 |
-| [通道异构专题](../../topics/spatial.md) | 本篇是「第五种解法」：不统一格式（LaBraM）、不绑定拓扑（EEGPT）、也不抹平（LUNA），而是**解耦路由** |
+| [通道异构专题](../../topics/multi-task.md#channel-adaptation) | 先用统一脑地图处理布局，再用**解耦路由**学习域共性与域特性 |
 
 ## 个人思考
 
@@ -158,4 +158,4 @@ one-liner: "用 Specific+Shared 双专家组把 EEG 的域共性与域特性分�
 
 **相关阅读**
 
-:material-arrow-right: [LUNA（拓扑统一路线，对照阅读）](0924-luna.md) ｜ :material-arrow-left: [JET（流匹配生成）](0923-jet.md) ｜ :material-grid-large: [通道异构的四种解法 → 本篇是第五种](../../topics/spatial.md) ｜ :material-chart-box: [十一篇方法对比](../../comparison.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-right: [LUNA（拓扑统一路线，对照阅读）](0924-luna.md) ｜ :material-arrow-left: [JET（流匹配生成）](0923-jet.md) ｜ :material-grid-large: [通道适配与多任务学习](../../topics/multi-task.md#channel-adaptation) ｜ :material-chart-box: [十一篇方法对比](../../comparison.md) ｜ :material-home: [首页](../../index.md)

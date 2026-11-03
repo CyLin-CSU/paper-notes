@@ -16,6 +16,8 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
+- **2026-11-03** · 重整五个主题专题，合并通道适配与多任务；补入 NeuroRVQ、BrainRVQ、CodeBrain、NeuroDETR，更新写作说明。单篇笔记仍为 17 篇。
+
 - **2026-11-02** · 新增精读 Défossez 语音解码（NMI 2023）：卷积脑模块对比对齐 wav2vec 2.0——3 秒 MEG 千余候选 zero-shot 检索所听语句，站内「语音解码」轴线的源头文献
 
 - **2026-11-02** · 新增精读 SSM2Mel（arXiv 2025）：Mamba+MHSA 交替骨干重建连续语音 mel 谱——语音解码轴线从检索走向回归
@@ -213,9 +215,9 @@ title: 首页
     ---
     对比学习 / 掩码建模 / 自回归三条路线与掩码目标的进化。
 
-- :material-grid-large: **[通道异构的四种解法](topics/spatial.md)**
+- :material-grid-large: **[通道适配与多任务学习](topics/multi-task.md)**
     ---
-    通道 embedding / 空间编码 / 单通道独立 / 图结构整合，跨设备能力的分水岭。
+    脑电大模型的通道表示、空间整合与下游任务共享方式。
 
 - :material-database: **[EEG 预训练数据全景](topics/data-landscape.md)**
     ---
@@ -223,11 +225,7 @@ title: 首页
 
 - :material-cube-outline: **[基座来源分析](topics/base-model.md)**
     ---
-    五篇从零训练，唯一例外 NeuroLM 站在 GPT-2 上——为什么。
-
-- :material-vector-circle: **[多任务三条路线](topics/multi-task.md)**
-    ---
-    逐任务微调 / 共享骨干联合训练 / 指令微调。
+    主模型与 tokenizer 参数量，区分从零训练和加载现成基座。
 
 </div>
 
@@ -241,7 +239,7 @@ title: 首页
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
-综合对比见 [十三篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——数据 / tokenization / 预训练目标 / 通道异构 / 下游适配 / 基座六大专题深读，模型设计 / 频域 / 规模效率保留在页内 + benchmark 战绩 + 互怼链）。
+综合对比见 [十三篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座五个专题深读，模型设计 / 频域 / 规模效率保留在页内 + benchmark 战绩 + 互怼链）。
 
 ## :material-comment-processing: 留言板
 

@@ -1,6 +1,6 @@
 # 十三篇方法对比
 
-> 全站横向对照的**枢纽页**：一张战绩图 + 一页速览给十三篇定位；九个对比维度的核心分歧在[分维度导读](#dimension-guide)里各用几句话说清，**详细拆解下放到六个主题专题**（数据 / tokenization / 预训练目标 / 通道异构 / 下游适配 / 基座来源），其中暂无专题归属的三个维度（模型设计 / 频域 / 规模效率）全文保留在本页；最后是演进脉络、benchmark 战绩表与论文互怼链。数字均引自各论文自报结果。
+> 全站横向对照的**枢纽页**：一张战绩图 + 一页速览给十三篇定位；九个对比维度的核心分歧在[分维度导读](#dimension-guide)里各用几句话说清，**详细拆解下放到五个主题专题**（数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源），其中暂无专题归属的三个维度（模型设计 / 频域 / 规模效率）全文保留在本页；最后是演进脉络、benchmark 战绩表与论文互怼链。数字均引自各论文自报结果。
 
 十三篇 = 核心六篇（[BIOT](papers/2026-09/0918-biot.md) / [LaBraM](papers/2026-09/0918-labram.md) / [EEGPT](papers/2026-09/0918-eegpt.md) / [BrainGPT](papers/2026-09/0918-braingpt.md) / [NeuroLM](papers/2026-09/0918-neurolm.md) / [TFM-Tokenizer](papers/2026-09/0918-tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展七篇（[CBraMod](papers/2026-09/0928-cbramod.md) / [LUNA](papers/2026-09/0924-luna.md) / [EEGMoE](papers/2026-09/0924-eegmoe.md) / [JET](papers/2026-09/0923-jet.md) / [EEGDM](papers/2026-10/1017-eegdm.md) / [RF-GPT](papers/2026-09/0921-rf-gpt.md) / [Not-All-EEG](papers/2026-10/1028-not-all-eeg.md)，把问题推向异构管理、生成与跨模态、生成调度精细化）。本页对比范围限于这条轴线；站内轴外精读（语音解码 [Défossez](papers/2026-11/1102-defossez-speech.md) / [SSM2Mel](papers/2026-11/1102-ssm2mel.md)、时频方法 [LTFT](papers/2026-11/1102-learnable-tf.md)、连接组学 [NPI](papers/2026-11/1102-surrogate-brain.md)）不参与十三篇排名，见首页论文库。
 
@@ -57,15 +57,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 ## 分维度导读 {: #dimension-guide }
 
-十三篇的异同拆成九个维度：前六个各有专题页深读（每页覆盖全部论文、含扩展篇的最新进展），后三个暂无专题归属、全文保留在本页。
+十三篇的异同拆成九个维度：前六个维度由五个专题承接，通道适配与多任务合并在同一页；各专题按页内范围选取论文。后三个维度全文保留在本页。
 
 | 维度 | 核心分歧一句话 | 深读 |
 |---|---|---|
 | ① 预训练数据 | 规模 / 域距离 / 清洗哲学：TUEG 系语料越报越大（2500h→25000h），但清洗质量 > 堆量、域邻近 > 规模、1000h 后边际递减 | [数据全景专题](topics/data-landscape.md) |
 | ② 信号 Tokenization | 切多细（40 点 → 1s）、离不离散（连续 vs VQ 词表）、词表用在哪（预处理 → 训练目标 → 模型输入）——三步跃迁 + 2025–2026 连续派的加固 | [Tokenization 专题](topics/tokenization.md) |
 | ③ 预训练目标 | 对比 / 掩码 / 自回归 / **生成**（2026 新增）四条路线；掩码派内部「掩什么 × 预测什么」的设计空间；对掩码重构的三条批评线 | [预训练范式专题](topics/pretraining.md) |
-| ④ 空间与通道异构 | 六种解法：通道表 / 10-20 编码 / 单通道 / 图结构 / 解耦路由 / query 统一——几何轴抹平、任务轴解耦 | [通道异构专题](topics/spatial.md) |
-| ⑤ 下游适配与多任务 | 逐任务微调 / 联合训练 / 指令微调三条路线之外的新变量：冻结探针 vs 微调的两个极端、生成增强、组件可插拔 | [多任务专题](topics/multi-task.md) |
+| ④ 空间与通道异构 | 通道 embedding / 单通道建模 / 动态位置编码 / 电极坐标编码 / 统一脑地图——区分通道表示与跨通道整合 | [通道适配](topics/multi-task.md#channel-adaptation) |
+| ⑤ 下游适配与多任务 | 逐任务微调 / 冻结 encoder 后逐任务训练 / 多任务联合训练 / 指令微调——区分预训练初始化共享与下游参数共享 | [任务适配](topics/multi-task.md#task-adaptation) |
 | ⑥ 基座来源 | 十三篇里十一篇从零训练，仅两例借底座——NeuroLM 接 GPT-2，RF-GPT 更彻底（连信号编码器都不训，直接复用 VLM） | [基座来源专题](topics/base-model.md) |
 | ⑦ 模型设计 | 注意力计算图如何匹配 EEG 的（通道 × 时间）结构：展平全注意力 → 线性 → 十字交叉 → query 压缩 → MoE 条件计算；「架构 > 规模」的证据 | [本页下文](#mod-architecture) |
 | ⑧ 频域信息 | 频域角色的六级递进：特征工程 → 重构目标 → 输入表示 → 建模对象 → 输入即全部 → 无显式；相位处理的暗线 | [本页下文](#mod-frequency) |

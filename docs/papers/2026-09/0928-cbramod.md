@@ -148,7 +148,7 @@ flowchart LR
 - **ACPE 是被低估的贡献**。它把 CPVT 的「位置编码当卷积副产品」思想推广到非对称双轴。对比 LUNA 的 NeRF 式 3D 坐标编码：ACPE 不需要电极坐标元数据（很多公开数据集没有），从数据里学相对位置——代价是它编码的是「邻域模式」而非绝对空间位置，跨蒙太奇时语义会漂。SEED-V 这个 62 通道未见蒙太奇上，CBraMod（0.4091）确实赢了 LUNA-Huge（0.3900），但 ACPE 学到的仍是「19 通道临床蒙太奇的邻域规律」，面对高密度或可穿戴拓扑能撑多少，论文没测——通道异构问题没有在这里终结，只是换了个表达方式；
 - **「不能冻结」是个诚实的坏消息**。附录 J 显示冻结版 Kappa 从 0.50 直接掉到 0.26，说明 MAE 式重构学到的表征仍高度任务特化，通用性靠微调兑现。对我的 eeg2text-lite（预训练→LoRA→解码）路线这是个提醒：**别指望冻结提取器**，LoRA/全参数微调是必选项——好在与 EEG-FM-Compass 的微调方式结论（LoRA 介于全微调与线性探针之间）方向一致；
 - **1000h 后数据边际递减值得警惕**。这给「堆数据」路线（REVE 的 61,415h、SleepGPT 的 86,335h）打了个问号：至少在 CBraMod 的架构和清洗流程下，9000h 已接近饱和。当然可能只是清洗后数据同质化（19 通道临床 EEG 单一分布）——REVE 的多数据集多样性是否突破这个饱和点，是读 REVE 时要专门验证的问题；
-- **十字交叉 vs 线性注意力的取舍**写进了[通道异构专题](../../topics/spatial.md)：CBraMod 的复杂度 O(Cn² + nC²) 在 C 大时仍平方爆炸，LUNA 的隐空间瓶颈才是高密度的答案。CBraMod 自己在讨论里也承认部署门槛比非基础模型高。
+- **十字交叉 vs 线性注意力的取舍**写进了[通道异构专题](../../topics/multi-task.md#channel-adaptation)：CBraMod 的复杂度 O(Cn² + nC²) 在 C 大时仍平方爆炸，LUNA 的隐空间瓶颈才是高密度的答案。CBraMod 自己在讨论里也承认部署门槛比非基础模型高。
 
 ## 自问自答
 
@@ -180,4 +180,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](0918-labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](0924-luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](0918-tfm-tokenizer.md) ｜ :material-grid-large: [通道异构的解法（ACPE 是第三种）](../../topics/spatial.md) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../../basics/attention-alternatives.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](0918-labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](0924-luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](0918-tfm-tokenizer.md) ｜ :material-grid-large: [通道适配与多任务学习](../../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../../basics/attention-alternatives.md) ｜ :material-home: [首页](../../index.md)
