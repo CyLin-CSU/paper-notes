@@ -1601,14 +1601,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../topics/spatial/" class="md-nav__link">
+      <a href="../../../topics/multi-task/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    通道异构的六种解法
+    通道适配与多任务学习
   
 
     
@@ -1637,34 +1637,6 @@
     
   
     EEG 预训练数据全景
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../topics/multi-task/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    多任务三条路线
   
 
     
@@ -2217,8 +2189,8 @@
 <td>同为「多任务统一」但路线不同：NeuroLM 把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的外语用指令微调；EEGMoE 在表征层用专家分工</td>
 </tr>
 <tr>
-<td><a href="../../../topics/spatial/">通道异构专题</a></td>
-<td>本篇是「第五种解法」：不统一格式（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）、不绑定拓扑（EEGPT）、也不抹平（LUNA），而是<strong>解耦路由</strong></td>
+<td><a href="../../../topics/multi-task/#channel-adaptation">通道异构专题</a></td>
+<td>先用统一脑地图处理布局，再用<strong>解耦路由</strong>学习域共性与域特性</td>
 </tr>
 </tbody>
 </table>
@@ -2259,7 +2231,7 @@
 </div>
 <hr>
 <p><strong>相关阅读</strong></p>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../0924-luna/">LUNA（拓扑统一路线，对照阅读）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0923-jet/">JET（流匹配生成）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../../topics/spatial/">通道异构的四种解法 → 本篇是第五种</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/">十一篇方法对比</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../0924-luna/">LUNA（拓扑统一路线，对照阅读）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0923-jet/">JET（流匹配生成）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/">十一篇方法对比</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

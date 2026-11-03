@@ -1405,14 +1405,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../topics/spatial/" class="md-nav__link">
+      <a href="../topics/multi-task/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    通道异构的六种解法
+    通道适配与多任务学习
   
 
     
@@ -1441,34 +1441,6 @@
     
   
     EEG 预训练数据全景
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../topics/multi-task/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    多任务三条路线
   
 
     
@@ -2086,7 +2058,7 @@
 
 <h1 id="_1">十三篇方法对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>全站横向对照的<strong>枢纽页</strong>：一张战绩图 + 一页速览给十三篇定位；九个对比维度的核心分歧在<a href="#dimension-guide">分维度导读</a>里各用几句话说清，<strong>详细拆解下放到六个主题专题</strong>（数据 / tokenization / 预训练目标 / 通道异构 / 下游适配 / 基座来源），其中暂无专题归属的三个维度（模型设计 / 频域 / 规模效率）全文保留在本页；最后是演进脉络、benchmark 战绩表与论文互怼链。数字均引自各论文自报结果。</p>
+<p>全站横向对照的<strong>枢纽页</strong>：一张战绩图 + 一页速览给十三篇定位；九个对比维度的核心分歧在<a href="#dimension-guide">分维度导读</a>里各用几句话说清，<strong>详细拆解下放到五个主题专题</strong>（数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源），其中暂无专题归属的三个维度（模型设计 / 频域 / 规模效率）全文保留在本页；最后是演进脉络、benchmark 战绩表与论文互怼链。数字均引自各论文自报结果。</p>
 </blockquote>
 <p>十三篇 = 核心六篇（<a href="../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> / <a href="../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> / <a href="../papers/2026-09/0918-eegpt/">EEGPT</a> / <a href="../papers/2026-09/0918-braingpt/">BrainGPT</a> / <a href="../papers/2026-09/0918-neurolm/">NeuroLM</a> / <a href="../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a>，回答「<abbr title="词元，模型处理的最小输入单元">token</abbr> 该是什么、怎么预训练」）+ 2025–2026 扩展七篇（<a href="../papers/2026-09/0928-cbramod/">CBraMod</a> / <a href="../papers/2026-09/0924-luna/">LUNA</a> / <a href="../papers/2026-09/0924-eegmoe/">EEGMoE</a> / <a href="../papers/2026-09/0923-jet/">JET</a> / <a href="../papers/2026-10/1017-eegdm/">EEGDM</a> / <a href="../papers/2026-09/0921-rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a> / <a href="../papers/2026-10/1028-not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a>，把问题推向异构管理、生成与跨模态、生成调度精细化）。本页对比范围限于这条轴线；站内轴外精读（语音解码 <a href="../papers/2026-11/1102-defossez-speech/">Défossez</a> / <a href="../papers/2026-11/1102-ssm2mel/">SSM2Mel</a>、时频方法 <a href="../papers/2026-11/1102-learnable-tf/">LTFT</a>、连接组学 <a href="../papers/2026-11/1102-surrogate-brain/">NPI</a>）不参与十三篇排名，见首页论文库。</p>
 <h2 id="tuev-cohens-kappa">📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）<a class="headerlink" href="#tuev-cohens-kappa" title="Permanent link">#</a></h2>
@@ -2240,7 +2212,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <h2 id="dimension-guide">分维度导读<a class="headerlink" href="#dimension-guide" title="Permanent link">#</a></h2>
-<p>十三篇的异同拆成九个维度：前六个各有专题页深读（每页覆盖全部论文、含扩展篇的最新进展），后三个暂无专题归属、全文保留在本页。</p>
+<p>十三篇的异同拆成九个维度：前六个维度由五个专题承接，通道适配与多任务合并在同一页；各专题按页内范围选取论文。后三个维度全文保留在本页。</p>
 <table>
 <thead>
 <tr>
@@ -2267,13 +2239,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>④ 空间与通道异构</td>
-<td>六种解法：通道表 / 10-20 编码 / 单通道 / 图结构 / 解耦路由 / query 统一——几何轴抹平、任务轴解耦</td>
-<td><a href="../topics/spatial/">通道异构专题</a></td>
+<td>通道 embedding / 单通道建模 / 动态位置编码 / 电极坐标编码 / 统一脑地图——区分通道表示与跨通道整合</td>
+<td><a href="../topics/multi-task/#channel-adaptation">通道适配</a></td>
 </tr>
 <tr>
 <td>⑤ 下游适配与多任务</td>
-<td>逐任务微调 / 联合训练 / 指令微调三条路线之外的新变量：冻结探针 vs 微调的两个极端、生成增强、组件可插拔</td>
-<td><a href="../topics/multi-task/">多任务专题</a></td>
+<td>逐任务微调 / 冻结 encoder 后逐任务训练 / 多任务联合训练 / 指令微调——区分预训练初始化共享与下游参数共享</td>
+<td><a href="../topics/multi-task/#task-adaptation">任务适配</a></td>
 </tr>
 <tr>
 <td>⑥ 基座来源</td>

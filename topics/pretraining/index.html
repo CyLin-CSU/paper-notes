@@ -11,7 +11,7 @@
         <link rel="prev" href="../tokenization/">
       
       
-        <link rel="next" href="../spatial/">
+        <link rel="next" href="../multi-task/">
       
       
         
@@ -1439,55 +1439,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#tokenizer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        四条路线总览
+        一、Tokenizer 如何训练
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        掩码建模：预测目标的进化与回摆
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2026" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第四条路线：生成（2026）
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="第四条路线：生成（2026）">
+    <nav class="md-nav" aria-label="一、Tokenizer 如何训练">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么掩码重构被围攻
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两条生成路线的分工（与一次内部迭代）
+        词表
       
     </span>
   </a>
@@ -1500,46 +1467,74 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vs" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        自回归 vs 掩码：范式之争
+        二、主模型预测目标
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、主模型预测目标">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-biot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ① 对比学习：BIOT
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        五种"掩码花样"
+        ② 掩码建模
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#3-braingpt-neurolm-brainrvq" class="md-nav__link">
     <span class="md-ellipsis">
       
-        稳定性技巧清单
+        ③ 自回归：BrainGPT / NeuroLM / BrainRVQ
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#4-neurodetr" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+        ④ 相关方法：NeuroDETR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1559,14 +1554,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../spatial/" class="md-nav__link">
+      <a href="../multi-task/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    通道异构的六种解法
+    通道适配与多任务学习
   
 
     
@@ -1595,34 +1590,6 @@
     
   
     EEG 预训练数据全景
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../multi-task/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    多任务三条路线
   
 
     
@@ -1862,55 +1829,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#tokenizer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        四条路线总览
+        一、Tokenizer 如何训练
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        掩码建模：预测目标的进化与回摆
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2026" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        第四条路线：生成（2026）
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="第四条路线：生成（2026）">
+    <nav class="md-nav" aria-label="一、Tokenizer 如何训练">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么掩码重构被围攻
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两条生成路线的分工（与一次内部迭代）
+        词表
       
     </span>
   </a>
@@ -1923,46 +1857,74 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vs" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        自回归 vs 掩码：范式之争
+        二、主模型预测目标
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、主模型预测目标">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-biot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ① 对比学习：BIOT
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        五种"掩码花样"
+        ② 掩码建模
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#3-braingpt-neurolm-brainrvq" class="md-nav__link">
     <span class="md-ellipsis">
       
-        稳定性技巧清单
+        ③ 自回归：BrainGPT / NeuroLM / BrainRVQ
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#4-neurodetr" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+        ④ 相关方法：NeuroDETR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1987,152 +1949,274 @@
 
 
 <h1 id="_1">预训练范式对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<blockquote>
-<p>十三篇论文覆盖了自监督学习的<strong>四条路线</strong>：对比学习、掩码建模、自回归、生成（2026 新增），掩码建模内部还在持续进化；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 则完全跳过预训练（纯合成 SFT）。本页是<a href="../../comparison/">十三篇方法对比</a>的「预训练目标维度」深读页。</p>
-</blockquote>
-<h2 id="_2">四条路线总览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">对比学习 · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></label><label for="__tabbed_1_2">掩码建模 · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / TFM / CBraMod / LUNA / EEGMoE</label><label for="__tabbed_1_3">自回归 · BrainGPT / NeuroLM</label><label for="__tabbed_1_4">生成 · JET / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>（2026 新增）</label><label for="__tabbed_1_5">无预训练 · RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>扰动版预测原版表示（BYOL 式）：随机丢弃部分通道和 <abbr title="词元，模型处理的最小输入单元">token</abbr> 得到扰动信号，predictor + 对比损失（温度 T=0.2）让扰动版预测原版表示。</p>
-<p>预训练语料：PREST + SHHS + Cardiology，共约 1000 万样本。此后没有直接续作——最早期的做法。</p>
-</div>
-<div class="tabbed-block">
-<p>看一部分、恢复另一部分。各家的「恢复目标」完全不同（见下节进化表）：</p>
-<ul>
-<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> → 预测<strong>离散码字</strong>（BEiT 式，附对称掩码）</li>
-<li>EEGPT → 对齐<strong>表示</strong>（JEPA 式）+ 重构原始 patch（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）</li>
-<li>TFM → 重构<strong>掩码频谱图</strong>（频带+时间+对称掩码，训练 tokenizer 本身）</li>
-<li>CBraMod → 还原<strong>原始 patch</strong>（<abbr title="均方误差 Mean Squared Error">MSE</abbr> 只算被掩位置，全零 mask <abbr title="词元，模型处理的最小输入单元">token</abbr>）</li>
-<li>LUNA → Smooth-L1 重构 + 可见 patch 小系数（α=0.05）参与 + query 特化损失</li>
-<li>EEGMoE → L1 重构<strong> embedding</strong>（空间频率编码器输出，不是信号）</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p>因果地预测下一单元，贴合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序因果结构：</p>
-<ul>
-<li>BrainGPT → 回归<strong>连续信号值</strong>（单电极，<abbr title="均方误差 Mean Squared Error">MSE</abbr>）</li>
-<li>NeuroLM → 阶梯掩码下预测<strong>离散码</strong>（因果 <abbr title="大语言模型 Large Language Model">LLM</abbr>，多通道）</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p>把「生成整段信号」本身当训练目标，监督信号来自噪声→数据的全域输运：</p>
-<ul>
-<li>JET → 条件流匹配：线性插值路径回归向量场，推理解 ODE；质量导向（生成质量论英雄）</li>
-<li>EEGDM → 潜扩散：encoder 表示作条件引导 DiT 在 PCA 隐空间去噪；表征导向（下游指标论英雄）</li>
-<li>Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> → 位置自适应时间调度：EMA 误差图把全局 t 展开成端点保持的位置时间图，监督按历史难度分配（生成路线的第一次内部迭代）</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p>跨域参照：谱图直接复用现成 VLM 视觉编码器，纯合成数据 SFT（交叉熵只算答案 <abbr title="词元，模型处理的最小输入单元">token</abbr>）——证明在「底座先验 + 零噪声合成监督」成立时预训练可以整个跳过（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 域暂不成立，见<a href="../base-model/">基座来源专题</a>）。</p>
-</div>
-</div>
-</div>
-<h2 id="_3">掩码建模：预测目标的进化与回摆<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比让「掩码后恢复什么」成了核心设计问题，目标一路升级后又出现回摆：</p>
+<h2 id="tokenizer">一、Tokenizer 如何训练<a class="headerlink" href="#tokenizer" title="Permanent link">#</a></h2>
+<h3 id="_2">词表<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
 <table>
 <thead>
 <tr>
-<th>代际</th>
-<th>恢复目标</th>
 <th>论文</th>
-<th>动机</th>
+<th>码表</th>
+<th>掩码部分</th>
+<th>重建部分</th>
+<th>损失</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>一代</td>
-<td>原始波形（<abbr title="均方误差 Mean Squared Error">MSE</abbr>）</td>
-<td>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 前期实验，<strong>失败</strong>）</td>
-<td><abbr title="脑电图 Electroencephalogram">EEG</abbr> 随机、非平稳、低信噪比，loss 不收敛</td>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr>
-<td>二代</td>
-<td>频谱（<abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 幅值+相位）</td>
 <td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>频谱反映神经生理活动且稳定可学</td>
+<td><abbr title="向量量化 Vector Quantization">VQ</abbr> 码表</td>
+<td><strong>不掩码</strong></td>
+<td><strong>频谱幅值 + 相位</strong></td>
+<td>幅值 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 相位 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + <abbr title="向量量化 Vector Quantization">VQ</abbr> 损失</td>
 </tr>
 <tr>
-<td>2.5 代</td>
-<td>时域信号 + 频域幅值</td>
-<td>NeuroLM</td>
-<td>发现相位贡献小，砍掉</td>
-</tr>
-<tr>
-<td>三代</td>
-<td><strong>表示</strong>（momentum encoder 的特征）</td>
 <td>EEGPT</td>
-<td>信号空间难学，就在表示空间对齐（JEPA 思想）</td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr>
-<td>三代'</td>
-<td>掩码频谱图</td>
-<td>TFM-Tokenizer</td>
-<td>用于训练 tokenizer 本身</td>
+<td>BrainGPT</td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr>
-<td><strong>回摆</strong></td>
-<td>原始 patch / embedding</td>
-<td>CBraMod / LUNA / EEGMoE</td>
-<td>目标退回朴素，靠架构与正则补（见下）</td>
+<td>NeuroLM</td>
+<td><abbr title="向量量化 Vector Quantization">VQ</abbr> 码表</td>
+<td><strong>不掩码</strong></td>
+<td><strong>原始信号 patch + 频谱幅值</strong></td>
+<td>信号 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 幅值 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + <abbr title="向量量化 Vector Quantization">VQ</abbr> 损失 + <abbr title="脑电图 Electroencephalogram">EEG</abbr>–文本域对抗损失</td>
+</tr>
+<tr>
+<td>TFM</td>
+<td><abbr title="向量量化 Vector Quantization">VQ</abbr> 码表</td>
+<td><strong>时频图</strong></td>
+<td><strong>时频图</strong></td>
+<td>时频图 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + <abbr title="向量量化 Vector Quantization">VQ</abbr> 损失</td>
+</tr>
+<tr>
+<td>CBraMod</td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>LUNA</td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>EEGMoE</td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>NeuroRVQ</td>
+<td>多尺度 RVQ 码表</td>
+<td><strong>不掩码</strong></td>
+<td><strong>频谱幅值 + 相位</strong>，并约束还原信号</td>
+<td>对数幅值 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 相位余弦损失 + 信号 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + commitment loss</td>
+</tr>
+<tr>
+<td>BrainRVQ</td>
+<td>时域 / 频域双 RVQ 码表</td>
+<td><strong>不掩码</strong></td>
+<td><strong>原始信号 patch + 频谱幅值 + 相位</strong></td>
+<td>信号 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 幅值 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 相位 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + commitment loss</td>
+</tr>
+<tr>
+<td>CodeBrain</td>
+<td>时域 / 频域双 <abbr title="向量量化 Vector Quantization">VQ</abbr> 码表</td>
+<td><strong>不掩码</strong></td>
+<td><strong>原始信号 patch + 频谱幅值 + 相位</strong></td>
+<td>重构 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + 时域对比损失 + <abbr title="向量量化 Vector Quantization">VQ</abbr> 损失</td>
+</tr>
+<tr>
+<td>NeuroDETR</td>
+<td>时间多尺度 / 空间金字塔 <abbr title="向量量化 Vector Quantization">VQ</abbr> 码表</td>
+<td><strong>不做随机掩码</strong></td>
+<td><strong>信号 embedding</strong></td>
+<td>特征 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + commitment loss，与事件检测损失联合训练</td>
 </tr>
 </tbody>
 </table>
-<p><strong>回摆的解读</strong>：2025 年后好几家又用起「最朴素」的目标——CBraMod 直接 <abbr title="均方误差 Mean Squared Error">MSE</abbr> 还原原始 patch（4M 参数 10 任务全 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>）、LUNA Smooth-L1 还原 patch、EEGMoE L1 重构 embedding。这不等于「三代目标白进化了」，而是说明<strong>目标与架构是互补变量</strong>：当注意力结构匹配了 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时空网格（CBraMod 十字交叉）、或加了辅助正则（LUNA query 特化、EEGMoE 负载均衡）后，朴素目标也能学出好表示；反之 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 时代用朴素目标失败，正是因为架构（展平全注意力）与目标（原始波形）两个短板叠加。</p>
-<p>另一个证据是 EEGMoE 的目标鲁棒性消融：L1 &gt; 相对定位对比 &gt; L2 &gt; 时序打乱 &gt; Cosine，但差异都不大——<strong>收益在架构不在目标</strong>。</p>
-<h2 id="2026">第四条路线：生成（2026）<a class="headerlink" href="#2026" title="Permanent link">#</a></h2>
-<h3 id="_4">为什么掩码重构被围攻<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
-<p>对「掩码/离散补全」范式的三条批评线，从三个不同角度攻击同一目标：</p>
-<ol>
-<li><strong>BrainGPT · 因果性批评</strong>：<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的双向补全破坏 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序因果结构（过去活动影响未来状态）——同架构同损失下 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 比 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均高 2%+；</li>
-<li><strong>JET · 连续性批评</strong>：脑活动在高维状态空间平滑演化，离散的去噪/补全步骤与神经信号的连续动力错配；<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的三大统计特性（幂律频谱、非平稳动态、重尾幅度）都在惩罚「各向同性噪声假设下优化局部重构精度」的范式；</li>
-<li><strong>EEGDM · 捷径批评</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 强局部自相关下，掩码重构存在<strong>局部插值捷径</strong>——从可见锚点插值即可把被掩 patch 填得八九不离齐，损失低不等于学到全局分布；而「从纯噪声生成完整信号」必须建模全局数据分布。</li>
-</ol>
-<h3 id="_5">两条生成路线的分工（与一次内部迭代）<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p><strong><abbr title="向量量化 Vector Quantization">VQ</abbr> 的稳定性技巧</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / TFM 用 <strong>EMA 更新 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr></strong>，稳定词表。</p>
+<p>NeuroRVQ / BrainRVQ / NeuroDETR 也用 EMA 更新码表；NeuroDETR 的 <abbr title="向量量化 Vector Quantization">VQ</abbr> 随监督检测一起训练，没有独立的通用 tokenizer 预训练阶段。</p>
+<p><strong>对称掩码</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 提出，TFM 沿用）：mask 与其补集各做一次——两个互补视角；
+<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用在主模型码字预测，TFM 用在 tokenizer 训练。</p>
+<h2 id="_3">二、主模型预测目标<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h3 id="1-biot">① 对比学习：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr><a class="headerlink" href="#1-biot" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>扰动部分</th>
+<th>预测部分</th>
+<th>损失</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
+<td><strong>原始信号 patch</strong>（丢弃部分通道和时间片段）</td>
+<td><strong>信号 embedding</strong></td>
+<td>对比交叉熵</td>
+</tr>
+</tbody>
+</table>
+<p>原始与扰动共享 encoder，扰动侧再接 predictor。</p>
+<h3 id="2">② 掩码建模<a class="headerlink" href="#2" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>掩码部分</th>
+<th>重建 / 预测部分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
+<td><strong>信号 embedding</strong></td>
+<td><strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+</tr>
+<tr>
+<td>TFM</td>
+<td><strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+<td><strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+</tr>
+<tr>
+<td>EEGPT</td>
+<td><strong>原始信号 patch</strong></td>
+<td><strong>信号 embedding + 原始信号 patch</strong></td>
+</tr>
+<tr>
+<td>CBraMod</td>
+<td><strong>原始信号 patch</strong></td>
+<td><strong>原始信号 patch</strong></td>
+</tr>
+<tr>
+<td>LUNA</td>
+<td><strong>信号 embedding</strong></td>
+<td><strong>原始信号 patch</strong></td>
+</tr>
+<tr>
+<td>EEGMoE</td>
+<td><strong>信号 embedding</strong></td>
+<td><strong>信号 embedding</strong></td>
+</tr>
+<tr>
+<td>NeuroRVQ</td>
+<td><strong>信号 embedding</strong></td>
+<td><strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+</tr>
+<tr>
+<td>BrainRVQ</td>
+<td><strong>信号 embedding</strong></td>
+<td><strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+</tr>
+<tr>
+<td>CodeBrain</td>
+<td><strong>原始信号 patch</strong></td>
+<td><strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>方法创新</strong>：</p>
 <ul>
-<li><strong>JET（质量导向）</strong>：条件流匹配学向量场 <span class="arithmatex">\( v_\theta(x_t, t, c) \)</span>，线性插值路径 <span class="arithmatex">\( x_t = t x_1 + (1-t) x_0 \)</span> 给出回归目标；三条生理约束（L1 重构隐含 Laplacian 先验 / 一二阶矩统计一致 / 时间全变分 + Pearson 相关）源自 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 统计结构而非临时正则。战绩：TS-FID 降 40%+、下游增强 ΔAcc 全正（基线≈0）。注意其拓扑学教训：<strong>零噪声初始化灾难性失败</strong>（TS-FID 1600+）——从单点展开成多模态分布是不可表示的一对多映射；</li>
-<li><strong>EEGDM（表征导向）</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> encoder 的表示 <span class="arithmatex">\( e \)</span>（三个增强视图平均）作扩散条件，关键设计是 <strong><span class="arithmatex">\( e \)</span> 不 detach</strong>——去噪损失经条件反传，encoder 与扩散联合优化，「学一个对去噪最有用的条件」就是表征学习本身。战绩：TUEV 类不均衡指标全场最佳（最稀有类 SPSW 召回 50.3% vs 掩码基线 10–18%）。代价：比同规模掩码重构贵一个量级（4×A100×113h）。</li>
-</ul>
-<p>两篇共享同一立场（生成目标须建模全局分布）与同一技术件（adaLN 条件注入：JET 注入时间+类别、EEGDM 注入时间+encoder 表示）。</p>
-<p><strong>2026 下半场，生成路线开始自我修正（Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>）</strong>：批评点不再是掩码范式，而是自己的上一代——JET 的「全局统一时间调度」让所有通道 × 位置拿到完全相同的监督（<strong>分配太平均</strong>，与 EEGDM 批评的「监督太容易」互补）。解法 PATS：训练中维护每个 (通道 × patch) 位置重构误差的 EMA 图，把全局 t 展开成端点保持的位置时间图 <span class="arithmatex">\( \tau_{i,j} = t + m\,s_{i,j}\,t(1-t) \)</span>，难位置提前进入低噪声阶段；同时把 JET 的时域 TV 约束（无差别压高频）换成<strong>频率加权的多分辨率频谱损失</strong>（<span class="arithmatex">\( w_k \propto k^\alpha \)</span> 对抗幂律谱偏置）。对同口径复现 JET 的 TS-FID 再降 40–62%，按基线误差分层的分析显示收益集中在最难的一成位置（第 10 分位误差削减 14.9%，其余分位 1–5%）——<strong>监督信号怎么分配</strong>本身成了新的设计维度。</p>
-<h2 id="vs">自回归 vs 掩码：范式之争<a class="headerlink" href="#vs" title="Permanent link">#</a></h2>
-<p>BrainGPT 给出了同架构、同损失度量下的直接对比（其 Table V）<sup id="fnref:t5"><a class="footnote-ref" href="#fn:t5">1</a></sup>：</p>
-<ul>
-<li><strong><abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 全面优于 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>，平均 +2% 以上</strong>，与距离度量选择无关（ℓ2 最好，cos 最差）；</li>
-<li>理由：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 反映连续渐进的信息流，过去活动影响未来状态，单向建模天然贴合；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的双向重构破坏了信号的自然流向；</li>
-<li>但注意代价：自回归只能用因果注意力，<strong>看不到未来</strong>——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/EEGPT 的双向建模在「整段理解型」任务上并非没有优势。</li>
-</ul>
-<h2 id="_6">五种"掩码花样"<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
-<ol>
-<li><strong>对称掩码</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 首创，TFM 沿用）：mask 与其补集各做一次 masked modeling——省一次 tokenizer 前向 + 一个样本两个互补视角（数据增强），大模型受益更明显；</li>
-<li><strong>频带+时间掩码</strong>（TFM）：消融显示随机掩码最差，频带掩码最关键（Kappa +8%），加时间掩码 balanced acc 再 +5%——<strong>掩码的结构要匹配信号的结构</strong>；</li>
-<li><strong>阶梯掩码</strong>（NeuroLM）：多通道场景下，同通道 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测同通道下一时刻，每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 可见所有通道的当前与历史时间步；</li>
-<li><strong>时空联合掩码</strong>（EEGPT）：50% 时间 × 80% 通道同时挖——稀疏视图逼 encoder 输出全局语义（对齐目标的 Information bottleneck 设计）；</li>
-<li><strong>结构化小改</strong>（CBraMod / LUNA）：CBraMod 用 Bernoulli 0.5 随机掩 patch + <strong>全零 mask <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>（消融：与可学习 <abbr title="词元，模型处理的最小输入单元">token</abbr> 无显著差异，省一组参数）；LUNA 让<strong>可见 patch 也以 α=0.05 小系数参与损失</strong>——通道统一模块对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 压缩，可见内容失真会伤下游，小系数既约束隐空间保真又不喧宾夺主。</li>
-</ol>
-<h2 id="_7">稳定性技巧清单<a class="headerlink" href="#_7" title="Permanent link">#</a></h2>
-<p>各家反复出现的训练技巧，值得记下：</p>
-<ul>
-<li><strong>EMA 更新目标侧</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 更新 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>、EEGPT 更新 momentum encoder（m=0.01）、JET/EEGDM 训练 EMA 0.9999——防止目标漂移过快；</li>
-<li><strong>stop-gradient 成对损失</strong>：<abbr title="码本，离散 token 的可查询向量表">codebook</abbr> loss + commitment loss（<abbr title="向量量化 Vector Quantization">VQ</abbr> 三件套），把编码器和码字的更新解耦；</li>
-<li><strong>零初始化的门控</strong>（EEGDM）：adaLN-Zero 的残差前缩放 ρ 零初始化，每个 DiT 块初始为恒等映射——训练起点稳定，生成模型的标准件；</li>
-<li><strong>类别均衡采样</strong>（JET）：<span class="arithmatex">\( p_i \propto 1/N_c^{\alpha} \)</span> 几乎零成本，直接对应 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集的严重不平衡；</li>
-<li><strong>混入文本数据</strong>（NeuroLM）：接 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的模型每批喂少量纯文本，防语言能力灾难性遗忘；</li>
-<li><strong>只算答案部分的 loss</strong>（NeuroLM 指令微调）：预测更稳定；</li>
-<li><strong>LayerNorm 归一化目标</strong>（EEGPT 的 <span class="arithmatex">\( L_A \)</span> 和 <span class="arithmatex">\( L_R \)</span> 都对目标做 LN）：缓解极端值和协变量偏移。</li>
-</ul>
-<h2 id="_8">关联论文<a class="headerlink" href="#_8" title="Permanent link">#</a></h2>
-<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/2026-09/0928-cbramod/">CBraMod</a> · <a href="../../papers/2026-09/0924-luna/">LUNA</a> · <a href="../../papers/2026-09/0924-eegmoe/">EEGMoE</a> · <a href="../../papers/2026-09/0923-jet/">JET</a> · <a href="../../papers/2026-10/1017-eegdm/">EEGDM</a> · <a href="../../papers/2026-09/0921-rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></p>
-<!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
-
-<div class="footnote">
-<hr>
-<ol>
-<li id="fn:t5">
-<p>BrainGPT Table V：同一模型架构与参数下，用 cos/ℓ1/ℓ2 三种重构损失对比 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 与 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr>，<abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 平均准确率高 2% 以上，ℓ2 为最优度量。&nbsp;<a class="footnote-backref" href="#fnref:t5" title="Jump back to footnote 1 in the text">↩</a></p>
+<li>
+<p><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>：① <strong>频谱监督的离散词表</strong>，用幅值 + 相位训练 tokenizer，再给主模型提供预测标签；② <strong>对称掩码</strong>，mask 与其补集各训练一次，同一样本获得两个互补视角。</p>
 </li>
-</ol>
-</div>
+<li>
+<p><strong>TFM</strong>：① <strong>单通道时频 motif 词表</strong>，时域与频域双路径捕捉局部模式，不绑定固定通道布局；</p>
+</li>
+<li>
+<p><strong>EEGPT</strong>：① <strong>表示对齐 + 信号重构双目标</strong>，路径1映射信号到潜空间进行掩码重构，路径2掩码重构原始信号，两路径最后损失相加。</p>
+</li>
+<li><strong>CBraMod</strong>：① <strong>十字交叉注意力</strong>，分别建模同一时刻的跨通道关系、同一通道的跨时间关系；② <strong>非对称卷积位置编码（ACPE）</strong>，从时空邻域动态生成位置信息。</li>
+<li><strong>LUNA</strong>：① <strong>可学习 query查询向量统一通道</strong>，把不同电极布局映射到固定大小的隐空间；② <strong>时间注意力只在隐空间计算</strong>，减少对原始通道数的计算依赖。</li>
+<li>
+<p><strong>EEGMoE</strong>：① <strong>特殊+共享的双专家组</strong>，分别学习域特性与域共性；② <strong>按 <abbr title="词元，模型处理的最小输入单元">token</abbr> 路由</strong>，Top-K 选择特定专家，共享专家始终参与。</p>
+</li>
+<li>
+<p><strong>NeuroRVQ</strong>：① <strong>多尺度 + 多层残差量化</strong>，一个 patch 用多组离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 表示；② <strong>相位圆周约束</strong>，用相位的正弦 / 余弦表示计算损失，避免直接回归角度的跳变。</p>
+</li>
+<li><strong>BrainRVQ</strong>：① <strong>时域 / 频域双 RVQ</strong>，分别保留波形与频谱信息；② <strong>粗到细预测码字</strong>，后一级依赖前一级，并优先掩码信息丰富的位置。</li>
+<li><strong>CodeBrain</strong>：① <strong>时域 / 频域双码表</strong>，时域额外用对比学习稳定表示；② <strong>全局卷积 SSM + 局部注意力</strong>，分别处理长程关系与局部模式。</li>
+</ul>
+<h3 id="3-braingpt-neurolm-brainrvq">③ 自回归：BrainGPT / NeuroLM / BrainRVQ<a class="headerlink" href="#3-braingpt-neurolm-brainrvq" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>注意力可见范围</th>
+<th>预测部分</th>
+<th>损失</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BrainGPT</td>
+<td><strong>同通道的当前及过去</strong></td>
+<td>同通道下一时刻的<strong>原始信号 patch</strong></td>
+<td><abbr title="均方误差 Mean Squared Error">MSE</abbr></td>
+</tr>
+<tr>
+<td>NeuroLM</td>
+<td><strong>所有通道的当前及过去</strong></td>
+<td>同通道下一时刻的<strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+<td>交叉熵</td>
+</tr>
+<tr>
+<td>BrainRVQ</td>
+<td><strong>可见 patch + 同一位置较粗层的码字</strong></td>
+<td>被掩位置下一层的<strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+<td>分层交叉熵</td>
+</tr>
+</tbody>
+</table>
+<p>BrainGPT / NeuroLM 的掩码限制<strong>注意力可见范围</strong>，不随机挖掉输入。BrainGPT 开头加电极条件 <abbr title="词元，模型处理的最小输入单元">token</abbr>；NeuroLM 冻结 <abbr title="向量量化 Vector Quantization">VQ</abbr> encoder、加载 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 并扩充 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 词表。</p>
+<p><strong>NeuroLM 防遗忘</strong>：预训练与指令微调都混入少量纯文本。</p>
+<p><strong>BrainRVQ 的自回归在码字层级上</strong>：同一 patch 从粗到细预测 RVQ 码字，不是沿时间预测下一个 patch。</p>
+<h3 id="4-neurodetr">④ 相关方法：NeuroDETR<a class="headerlink" href="#4-neurodetr" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>输入</th>
+<th>预测部分</th>
+<th>训练方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NeuroDETR</td>
+<td><strong>连续原始信号</strong></td>
+<td><strong>事件类别 + 起止时间</strong></td>
+<td>监督事件检测，与 <abbr title="向量量化 Vector Quantization">VQ</abbr> 特征重建联合训练</td>
+</tr>
+</tbody>
+</table>
+<p><strong>方法创新</strong>：① <strong>FOCAL 事件感知注意力</strong>，把计算集中到可能出现事件的片段；② <strong>时间多尺度 <abbr title="向量量化 Vector Quantization">VQ</abbr> + 空间金字塔 <abbr title="向量量化 Vector Quantization">VQ</abbr></strong>，形成事件记忆，再由 query 联合预测类别与边界。它不属于上面的随机掩码预训练。</p>
+<h3 id="_4">关联论文<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p><a href="../../papers/2026-09/0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/2026-09/0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/2026-09/0918-eegpt/">EEGPT</a> · <a href="../../papers/2026-09/0918-braingpt/">BrainGPT</a> · <a href="../../papers/2026-09/0918-neurolm/">NeuroLM</a> · <a href="../../papers/2026-09/0918-tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/2026-09/0928-cbramod/">CBraMod</a> · <a href="../../papers/2026-09/0924-luna/">LUNA</a> · <a href="../../papers/2026-09/0924-eegmoe/">EEGMoE</a> · <a href="../../papers/2026-09/0923-jet/">JET</a> · <a href="../../papers/2026-10/1017-eegdm/">EEGDM</a> · <a href="../../papers/2026-10/1028-not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a> · <a href="../../papers/2026-09/0921-rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></p>
+<p>新增论文原文：<a href="https://arxiv.org/abs/2510.13068">NeuroRVQ</a> · <a href="https://arxiv.org/abs/2602.16951">BrainRVQ</a> · <a href="https://arxiv.org/abs/2506.09110">CodeBrain</a> · <a href="https://arxiv.org/abs/2610.20349">NeuroDETR</a>。</p>
+<!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
 

@@ -1640,14 +1640,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../topics/spatial/" class="md-nav__link">
+      <a href="../../../topics/multi-task/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    通道异构的六种解法
+    通道适配与多任务学习
   
 
     
@@ -1676,34 +1676,6 @@
     
   
     EEG 预训练数据全景
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../topics/multi-task/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    多任务三条路线
   
 
     
@@ -2346,7 +2318,7 @@
 <li><strong>ACPE 是被低估的贡献</strong>。它把 CPVT 的「位置编码当卷积副产品」思想推广到非对称双轴。对比 LUNA 的 NeRF 式 3D 坐标编码：ACPE 不需要电极坐标元数据（很多公开数据集没有），从数据里学相对位置——代价是它编码的是「邻域模式」而非绝对空间位置，跨蒙太奇时语义会漂。SEED-V 这个 62 通道未见蒙太奇上，CBraMod（0.4091）确实赢了 LUNA-Huge（0.3900），但 ACPE 学到的仍是「19 通道临床蒙太奇的邻域规律」，面对高密度或可穿戴拓扑能撑多少，论文没测——通道异构问题没有在这里终结，只是换了个表达方式；</li>
 <li><strong>「不能冻结」是个诚实的坏消息</strong>。附录 J 显示冻结版 Kappa 从 0.50 直接掉到 0.26，说明 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式重构学到的表征仍高度任务特化，通用性靠微调兑现。对我的 eeg2text-lite（预训练→LoRA→解码）路线这是个提醒：<strong>别指望冻结提取器</strong>，LoRA/全参数微调是必选项——好在与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 的微调方式结论（LoRA 介于全微调与线性探针之间）方向一致；</li>
 <li><strong>1000h 后数据边际递减值得警惕</strong>。这给「堆数据」路线（REVE 的 61,415h、SleepGPT 的 86,335h）打了个问号：至少在 CBraMod 的架构和清洗流程下，9000h 已接近饱和。当然可能只是清洗后数据同质化（19 通道临床 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 单一分布）——REVE 的多数据集多样性是否突破这个饱和点，是读 REVE 时要专门验证的问题；</li>
-<li><strong>十字交叉 vs 线性注意力的取舍</strong>写进了<a href="../../../topics/spatial/">通道异构专题</a>：CBraMod 的复杂度 O(Cn² + nC²) 在 C 大时仍平方爆炸，LUNA 的隐空间瓶颈才是高密度的答案。CBraMod 自己在讨论里也承认部署门槛比非基础模型高。</li>
+<li><strong>十字交叉 vs 线性注意力的取舍</strong>写进了<a href="../../../topics/multi-task/#channel-adaptation">通道异构专题</a>：CBraMod 的复杂度 O(Cn² + nC²) 在 C 大时仍平方爆炸，LUNA 的隐空间瓶颈才是高密度的答案。CBraMod 自己在讨论里也承认部署门槛比非基础模型高。</li>
 </ul>
 <h2 id="_4">自问自答<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <details class="question">
@@ -2378,7 +2350,7 @@
 </div>
 <hr>
 <p><strong>相关阅读</strong></p>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（最主要对照：神经码字 vs 像素重构）</a> ｜ :material-compress: <a href="../0924-luna/">LUNA（通道线性复杂度的另一极）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 21c-3 0-4.19-4.24-5.45-8.72C10.14 9.04 9 5 7.5 5 4.11 5 4 11.93 4 12H2c0-.37.06-9 5.5-9 3 0 4.21 4.25 5.47 8.74C13.83 14.8 15 19 16.5 19c3.44 0 3.53-6.93 3.53-7h2c0 .37-.06 9-5.53 9"></path></svg></span> <a href="../0918-tfm-tokenizer/">TFM-Tokenizer（ICLR 2026 掩码路线的另一端）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../../topics/spatial/">通道异构的解法（ACPE 是第三种）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../../basics/attention-alternatives/">Attention 替代方案（因子化注意力谱系）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0918-labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（最主要对照：神经码字 vs 像素重构）</a> ｜ :material-compress: <a href="../0924-luna/">LUNA（通道线性复杂度的另一极）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 21c-3 0-4.19-4.24-5.45-8.72C10.14 9.04 9 5 7.5 5 4.11 5 4 11.93 4 12H2c0-.37.06-9 5.5-9 3 0 4.21 4.25 5.47 8.74C13.83 14.8 15 19 16.5 19c3.44 0 3.53-6.93 3.53-7h2c0 .37-.06 9-5.53 9"></path></svg></span> <a href="../0918-tfm-tokenizer/">TFM-Tokenizer（ICLR 2026 掩码路线的另一端）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../../basics/attention-alternatives/">Attention 替代方案（因子化注意力谱系）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
