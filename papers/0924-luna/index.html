@@ -1,0 +1,2534 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="我的论文精读总结库">
+      
+      
+      
+      
+        <link rel="prev" href="../0924-eegmoe/">
+      
+      
+        <link rel="next" href="../0928-cbramod/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis - Paper Notes · 论文阅读笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Paper Notes · 论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换暗色" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换亮色" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Paper Notes · 论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    论文笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    论文笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0918-biot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · BIOT (NeurIPS 2023)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0918-labram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · LaBraM (ICLR 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0918-eegpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · EEGPT (NeurIPS 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0918-braingpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · BrainGPT (arXiv 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0918-neurolm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · NeuroLM (ICLR 2025)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0918-tfm-tokenizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0918 · TFM-Tokenizer (ICLR 2026)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0921-rf-gpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0921 · RF-GPT (arXiv 2026 · 跨领域)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0923-jet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0923 · JET (ICML 2026 · EEG 生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0924-eegmoe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · EEGMoE (TNNLS 2026 · MoE)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0924 · LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-eeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：拓扑异构是 EEG 基础模型的地基问题
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-patch-3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Patch 特征提取（双路 + 3D 空间编码）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-channel-unification-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Channel-Unification Module：拓扑无关的核心
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-patch-wise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Patch-wise 时间编码器 + 双解码器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 训练目标：重构 + query 特化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 复杂度账本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0928-cbramod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0928 · CBraMod (ICLR 2025 · 十字交叉)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1017-eegdm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1017 · EEGDM (arXiv 2026 · 扩散表征)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1028-not-all-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1028 · Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1102-defossez-speech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1102 · Défossez 语音解码 (NMI 2023 · 轴线源头)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1102-ssm2mel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1102 · SSM2Mel (arXiv 2025 · 语音解码)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1102-learnable-tf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1102 · LTFT (IEEE TETCI 2026 · 时频方法)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1102-surrogate-brain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1102 · NPI (Nature Methods 2025 · 连接组学)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-neurorvq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · NeuroRVQ (arXiv 2025 · 多尺度RVQ)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-brainrvq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · BrainRVQ (arXiv 2026 · 双域RVQ)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-codebrain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · CodeBrain (ICLR 2026 · 解耦tokenizer)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-neurodetr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · NeuroDETR (arXiv 2026 · 事件token化)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-delta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · DELTA (NeurIPS 2025 WS · 掩码扩散EEG-to-Text)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-guided/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · GUIDED (arXiv 2024 · 视觉重建)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-crosspt-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · CrossPT-EEG (arXiv 2024 · 视觉解码基准)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1104-eegarena/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1104 · EEGArena (arXiv 2026 · 基准评测)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模型架构基础
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    模型架构基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/lora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LoRA · 低秩适配 (ICLR 2022)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/attention-alternatives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention 替代方案 (CS336 Lec 4)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/generative-lineage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生成模型脉络 (VAE → DDPM → FM)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/gnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图神经网络 (消息传递与 GAT)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主题专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    主题专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预训练范式对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/multi-task/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通道适配与多任务学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/data-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/base-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基座来源分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    语音模型专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    语音模型专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/speech-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    语音解码与 Mel 谱建模
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog-2023-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十三篇方法对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-eeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：拓扑异构是 EEG 基础模型的地基问题
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-patch-3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Patch 特征提取（双路 + 3D 空间编码）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-channel-unification-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Channel-Unification Module：拓扑无关的核心
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-patch-wise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Patch-wise 时间编码器 + 双解码器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 训练目标：重构 + query 特化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 复杂度账本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        要点速览
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis">LUNA: Efficient and Topology-Agnostic Foundation Model for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Signal Analysis<a class="headerlink" href="#luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis" title="Permanent link">#</a></h1>
+<blockquote>
+<p><strong>NeurIPS 2025</strong> · ETH Zürich —— 与 EEGMoE 对照阅读：EEGMoE 解耦「域差异」，LUNA 抹平「拓扑差异」。这是站内已读工作里<strong>第一个把「跨 montage 泛化」和「计算效率」当主贡献</strong>的基础模型。</p>
+</blockquote>
+<p><strong>作者</strong>：Berkay Döner, Thorir Mar Ingolfsson, Luca Benini, Yawei Li（Integrated Systems Laboratory, ETH Zürich）</p>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>痛点有数据：<abbr title="运动想象 Motor Imagery">MI</abbr> 解码器从 PhysioNet 迁到 KU <strong>最多</strong>掉 <strong>14 个百分点</strong>；<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/MMM 在 SEED↔DEAP 蒙特间掉 13–15pp；只保留公共电极的方案要丢掉最多 <strong>80%</strong> 的数据</li>
+<li>核心机制：<strong>Channel-Unification Module</strong>——Q 个学习 query 对 C 个通道的 patch 特征做交叉注意力，压进固定隐空间（置换不变 → 拓扑无关）；之后时间注意力只在这个 Q×E 的隐空间上做</li>
+<li>复杂度：对通道数<strong>线性</strong>（vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 O((S·C)²)、CBraMod 的 O(max(S²,C²))）；论文总括声称对全注意力基线 FLOPs 降 <strong>300×</strong>、显存省最多 <strong>10×</strong>（对 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 这一线性注意力基线的实测对比：8000 通道 4156 GFLOPs vs LUNA-Base 23，约 180×）</li>
+<li>预训练 21,900h（TUEG+Siena，3 种拓扑）；TUAR AUROC <strong>0.921</strong>、TUSL <strong>0.802</strong> 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 81.57%（略低于 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge/CBraMod）；未见 62 通道 SEED-V 落后 CBraMod 2–3pp（论文口径，按其表格实算约 1.9pp；作者坦承对未见拓扑敏感）</li>
+<li>统计实践罕见地严谨：消融差异配对 t 检验（p=0.2136 不显著），用「实践优势」而非「统计显著」措辞</li>
+</ul>
+</div>
+<h2 id="1-eeg">1 问题定位：拓扑异构是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型的地基问题<a class="headerlink" href="#1-eeg" title="Permanent link">#</a></h2>
+<p>每个公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集自定义电极布局，模型换 montage 就崩。论文给的三组数字把问题钉死：运动想象解码器跨数据集最多掉 14pp；<abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 情绪模型（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、MMM）在 SEED 与 DEAP 蒙特之间掉 13–15pp；sEEG 的被试间迁移在无显式空间编码时接近随机。</p>
+<p>现有方案的取舍都不彻底：<strong>每个 montage 训专用模型</strong>（放弃统一）；<strong>只保留公共电极</strong>（丢掉最多 80% 数据）；<strong>通道+时间展平成超长序列</strong>（O((S·C)²) 复杂度，高密度帽直接爆显存）。论文要的是<strong>单一、montage 无关、对电极数高效扩展</strong>的架构。</p>
+<h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
+<h3 id="21-patch-3d">2.1 Patch 特征提取（双路 + 3D 空间编码）<a class="headerlink" href="#21-patch-3d" title="Permanent link">#</a></h3>
+<p>原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> x ∈ R^{B×C×T} 每通道切 S = T/P 个不重叠 patch，两路并行嵌入后求和：</p>
+<ul>
+<li><strong>时域路</strong>：1D 卷积网络（GroupNorm + GELU），与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod 同款；</li>
+<li><strong>频域路</strong>：每个 patch 做 FFT，幅值与相位经 MLP 投影；</li>
+<li><strong>通道位置编码</strong>：对归一化的 <strong>3D 电极坐标</strong>做 NeRF 式正弦编码再过 MLP，加到特征上。注意这是比 10–20 系统离散 embedding 更连续优雅的空间先验——任意位置都有定义。</li>
+</ul>
+<p>预训练时随机掩码部分 <abbr title="词元，模型处理的最小输入单元">token</abbr>（可学习 mask embedding）。</p>
+<h3 id="22-channel-unification-module">2.2 Channel-Unification Module：拓扑无关的核心<a class="headerlink" href="#22-channel-unification-module" title="Permanent link">#</a></h3>
+<p>这是全文的关键创新，思想来自 Set Transformer 的 inducing points 与 PerceiverIO 的隐空间瓶颈：</p>
+<ul>
+<li><strong>Q 个学习 query</strong> <span class="arithmatex">\( Q_{\mathrm{learn}} \in \mathbb{R}^{Q \times E} \)</span>（<strong>无 batch 维</strong>的共享参数，正交初始化），对每个 (batch, patch) 实例的 C 个通道特征做交叉注意力（query→Q，通道特征→K,V）：</li>
+</ul>
+<div class="arithmatex">\[ \mathbf{A}_{\mathrm{out}} = \mathrm{MultiHeadAttention}(\tilde{\mathbf{Q}}, \mathbf{X}', \mathbf{X}') \in \mathbb{R}^{(B \cdot S) \times Q \times E} \]</div>
+<ul>
+<li>再经 FFN + L 层 Transformer（在 Q 维上做自注意力）得到统一表示 <span class="arithmatex">\( X_{\mathrm{unified}} \in \mathbb{R}^{(B \cdot S) \times Q \times E} \)</span>。</li>
+</ul>
+<p>两个性质：<strong>置换不变</strong>（打乱通道顺序输出不变 → 拓扑无关），<strong>对 C 线性</strong>（交叉注意力只算 Q×C 的注意力图）。每个时间 <abbr title="词元，模型处理的最小输入单元">token</abbr> 从此封装的是「该时刻所有通道的聚合信息」，而非单通道片段。</p>
+<h3 id="23-patch-wise">2.3 Patch-wise 时间编码器 + 双解码器<a class="headerlink" href="#23-patch-wise" title="Permanent link">#</a></h3>
+<p>统一表示重排为 <span class="arithmatex">\( X'_{\mathrm{unified}} \in \mathbb{R}^{B \times S \times (Q \cdot E)} \)</span>，用带 <strong>RoPE</strong> 的 Transformer 块建模时间依赖——<strong>有效序列长度从 S·C 降到 S</strong>，这是效率的第二个来源（第一个是 Q ≪ C）。</p>
+<p>解码器按任务分两种：<strong>重构头</strong>（预训练）用 C 个<strong>按通道标签索引</strong>的学习 query 交叉注意力还原各通道 patch 值（电极有重叠的数据集可复用）；<strong>分类头</strong>（微调）用单个聚合 query 生成池化表示过 MLP。</p>
+<h3 id="24-query">2.4 训练目标：重构 + query 特化<a class="headerlink" href="#24-query" title="Permanent link">#</a></h3>
+<p>Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05——让可见部分也承担弱约束）；外加 <strong>query 特化损失</strong>：对通道统一模块的 query-channel 亲和矩阵，惩罚其非对角元素相似度，促使各 query 关注不同空间区域：</p>
+<div class="arithmatex">\[ \mathcal{L}_{\mathrm{spec}} = \frac{\lambda_{\mathrm{spec}}}{B' \cdot Q \cdot (Q-1)} \sum_{b'} \sum_{i} \sum_{j \neq i} \big( (\mathbf{A}_{\mathrm{affinity}} \mathbf{A}_{\mathrm{affinity}}^{\top})_{b',i,j} \big)^2 \]</div>
+<p><strong>预训练规模</strong>：TUEG + Siena 共 <strong>21,900 小时</strong>原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，覆盖 20/22 通道双极 + 29 通道单极共 3 种拓扑，mask 率 0.5。三个模型规格：Base 7M（8 层/Q=4/E=64/hidden 256）、Large 43M（10 层/Q=6/96/576）、Huge 311.4M（24 层/Q=8/128/1024）。</p>
+<h2 id="3">3 复杂度账本<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>瓶颈复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LUNA</strong>（隐空间注意力）</td>
+<td>O(B·S²·Q·E) 或 O(B·S·Q·C·E)</td>
+</tr>
+<tr>
+<td>全注意力（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）</td>
+<td>O(B·S²·C²·E)</td>
+</tr>
+<tr>
+<td>交替注意力（CBraMod，patch 维）</td>
+<td>O(B·S²·C·E)</td>
+</tr>
+<tr>
+<td>交替注意力（CBraMod，通道维）</td>
+<td>O(B·S·C²·E)</td>
+</tr>
+</tbody>
+</table>
+<p>效率曲线（附录 Table 9/10）：patch 数 4000 时 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 2286 GFLOPs vs LUNA-Base 768；<strong>通道数 8000 时 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 4156 GFLOPs / 12.3GB vs LUNA-Base 23 GFLOPs / 2GB</strong>。结论：通道数增加时 LUNA 计算近乎恒定，且 LUNA-Base（7M 参数、16-bit 约 14MB）能塞进可穿戴 SoC 的实时预算——这是同组（ETH 低功耗组）的看家视角。</p>
+<h2 id="4">4 结果<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
+<p><strong>临床 TUH 系</strong>（预训练语料严格排除下游被试与记录）：</p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>LUNA-Huge</th>
+<th>对照</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TUAB（异常检测）</td>
+<td>Bal Acc 81.57% / AUROC 0.8957</td>
+<td><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 82.58% / 0.9162</strong>、CBraMod 82.49% / 0.9156 —— LUNA 落后约 1pp</td>
+</tr>
+<tr>
+<td>TUAR（伪迹检测，5 类）</td>
+<td><strong>AUROC 0.921 ± 0.011</strong></td>
+<td>超 FEMBA-Large 0.915，<abbr title="State Of The Art，当前最先进水平">SOTA</abbr></td>
+</tr>
+<tr>
+<td>TUSL（慢波分类，4 类）</td>
+<td><strong>AUROC 0.802 ± 0.005</strong></td>
+<td>全场最高（FEMBA-Base 0.731）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SEED-V（未见过的 62 通道拓扑）</strong>：LUNA-Huge Bal Acc 0.3900，<strong>落后 CBraMod（0.4091）2–3pp</strong>（论文口径；按其 Table 3 实算约 1.9pp）。作者诚实归因：对未见通道拓扑敏感，可能源于预训练学到的位置编码约束；且 Base→Large 有正向 scaling，Large→Huge 点估计不再提升（0.3918→0.3900，差异在种子方差内——此句为从 Table 3 得出的推断，论文未评价）。</p>
+<p><strong>消融</strong>（TUAB/TUAR）：</p>
+<ul>
+<li><strong>学习 query vs 固定空间区域</strong>（MMM 式）：AUROC 变化仅 -0.004~-0.006，在种子方差内——论文明确强调学习 query 的价值是<strong>实践优势</strong>（数据驱动、无需解剖先验）而非统计显著的指标增益；</li>
+<li><strong>去掉 query 特化损失</strong>：AUROC 降 0.003~0.007（论文正文记 -0.003~-0.006，其 Table 4 与 Table 13 给 TUAR 为 -0.007）；配对 t 检验 <strong>p=0.2136 不显著</strong>（该检验仅针对 TUAR AUROC 这一次比较）；保留它的理由是正则作用——促使 query 学成多样、非冗余的空间滤波器（可视化显示去掉后<strong>两个</strong> query 退化为粗粒度左右侧化模式、<strong>其余</strong> query 宽泛且互相重叠）；</li>
+<li><strong>去掉频域特征</strong>：掉得最多——AUROC 至 -0.011、AUC-PR 至 -0.012（TUAB；论文正文表述为「up to -0.012 AUROC」，与其自身表格略有出入）——时频信息再次被证明是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征的关键补全；</li>
+<li><strong>Q×E 权衡</strong>：固定 Q·E=256 预算下，平衡配置 4×64 最好，16×16（query 多维度小）明显退化。</li>
+</ul>
+<h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/luna-arch.png" data-desc-position="bottom"><img alt="Figure 1 · LUNA 总览：patch + 双路嵌入（1D Conv + FFT）→ Channel-Unification Module（学习 query 交叉注意力压进固定隐空间）→ Patch-wise Temporal Attention → 解码器" src="../../assets/luna-arch.png"></a></p>
+<p><em>Figure 1 · Channel-Unification Module：Q 个学习 query 对 C 通道特征做交叉注意力，时间注意力只在固定隐空间上进行</em></p>
+<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>学习 query + 交叉注意力 = 可微分的「通道压缩器」：任意拓扑 → 固定 Q×E 隐空间，置换不变</li>
+<li>时间序列长度从 S·C 降到 S，通道复杂度从平方到线性——8000 通道时 FLOPs 仅为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180</li>
+<li>TUAR/TUSL 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 略逊 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod 约 1pp；未见拓扑 SEED-V 落后 2–3pp——效率与容量的真实 trade-off</li>
+<li>消融统计实践严谨（t 检验、种子方差、「实践优势」措辞）；频域特征是最不可去的组件</li>
+<li>代码开源（pulp-bio/biofoundation）；LUNA-Base 7M/14MB 面向可穿戴边缘部署</li>
+</ul>
+</div>
+<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文 / 工作</th>
+<th>关系说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EEGMoE（本站同期笔记）</td>
+<td><strong>对照哲学</strong>：LUNA 把拓扑差异当噪声抹平（query 瓶颈），EEGMoE 把域差异当信号解耦（MoE 分工）——作用轴不同（电极几何 vs 任务/数据集），可叠加</td>
+</tr>
+<tr>
+<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / CBraMod</td>
+<td>精度上限对照组：展平/交替注意力的容量优势在 TUAB 上兑现约 1pp，但通道复杂度平方——高密度场景不可行</td>
+</tr>
+<tr>
+<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
+<td>效率路线前作：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 展平后用线性注意力（其原文为 Linformer 式低秩投影），LUNA 先统一通道再全注意力；论文正文 4.3 把 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 作为效率基线，附录 Table 9/10 给出详细对比——8000 通道时 LUNA-Base FLOPs 约为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180</td>
+</tr>
+<tr>
+<td>MMM</td>
+<td>显式拓扑映射前作：预定义解剖区域 + 手工 DE 特征；LUNA 用学习 query + 原始信号端到端（消融显示两者指标相当，但学习 query 免解剖先验）</td>
+</tr>
+<tr>
+<td>Set Transformer / PerceiverIO</td>
+<td>机制来源：inducing points / 隐空间瓶颈，LUNA 加了 3D 电极坐标编码与两种任务解码头（重构/分类）</td>
+</tr>
+<tr>
+<td>Brant / GNN 系</td>
+<td>被绕开的路线：固定拓扑空间编码器 / 预定义邻接图，都需要为动态拓扑打补丁</td>
+</tr>
+<tr>
+<td><a href="../../topics/multi-task/#channel-adaptation">通道异构专题</a></td>
+<td><strong>先统一再建模</strong>：可学习 query 汇聚通道，与通道 embedding 的查表方式不同</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>与 EEGMoE 连读极有收获</strong>：两篇对「异构性」的态度完全相反却都成立——EEGMoE 认为任务/数据集域差异是需要<strong>保留的信号</strong>（专家分工），LUNA 认为电极几何差异是需要<strong>抹掉的噪声</strong>（query 瓶颈）。合起来其实给出了一个二维地图：任务轴用解耦管理、几何轴用统一抹平。一个自然的组合实验是 LUNA 的统一隐空间 + EEGMoE 的 SSMoE 块；</li>
+<li><strong>TUAB 上那 1pp 是「瓶颈税」</strong>：Q 个 query 是信息瓶颈，高密度通道的信息被有损压缩，因此上限略低于全注意力的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod。论文的 Q×E 消融（16×16 明显退化）证实瓶颈容量确实有限。这不是缺陷而是定价——问题是<strong>哪些任务愿意为 300× 效率付 1pp</strong>：高密度研究级 <abbr title="脑电图 Electroencephalogram">EEG</abbr>、长程监测、可穿戴，都是愿意的；</li>
+<li><strong>统计实践是全站已读论文里最严谨的</strong>：报告配对 t 检验并承认 p=0.2136 不显著、把学习 query 的优势明确表述为「实践性而非统计性」、给出 ±0.01 AUROC 的实用等价带。对比之下多数 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 论文把种子方差内的差异包装成 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>——这个措辞标准值得本站的 benchmark 表引用时警惕；</li>
+<li><strong>频域特征消融掉得最多（AUROC 至 -0.011）</strong>又一次印证时频信息的价值——与 TFM（时频 motif 词表）、SleepGPT（时频双流）的结论三方互证。有趣的是 LUNA 只在 patch embedding 里加了 FFT 幅相这一小块，性价比极高；</li>
+<li><strong>位置编码是未见拓扑的阿喀琉斯之踵</strong>：SEED-V 的失利被归因于预训练学到的位置编码绑定了训练拓扑。这提示「连续 3D 坐标编码」（NeRF 式）仍不够泛化——预训练拓扑只覆盖 3 种布局，坐标空间的采样太稀疏。未来做多数据集预训练 + 随机通道 dropout（论文展望）是对的；</li>
+<li><strong>对我的项目</strong>：LUNA-Base（7M、14MB、线性复杂度）是「可穿戴低功耗 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM」的现成参考配置；其「先统一通道再时间建模」的结构与 eeg2text-lite 的单通道设计不冲突——若扩展到多通道可穿戴（如耳 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 多触点），LUNA 的统一模块可直接借用。</li>
+</ul>
+<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<details class="question">
+<summary>Q1 · 为什么先统一通道、再做时间注意力，而不是反过来（先时间再统一）？</summary>
+<p>效率的乘法结构决定的：统一在前，时间注意力只作用于 Q×E 的隐空间（序列长 S）；若反过来，每个通道先做完整时间编码（C 倍计算），统一阶段还要处理 S·C×C 的交叉注意力。统一在前还让「每个时间 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是全通道聚合」成为时间建模的输入归纳偏置——模型从第一层就在学跨通道整合后的动态。代价是空间压缩不可逆，重构头必须从 Q 个 query 里恢复 C 个通道的细节（这也是它需要按通道索引的学习解码 query 的原因）。</p>
+</details>
+<details class="question">
+<summary>Q2 · Q 个 query 是不是信息瓶颈？多大合适？</summary>
+<p>是，而且是设计出来的瓶颈。Q×E 消融显示：固定预算下平衡配置最好（4×64），query 太多维度太小（16×16）反而差——q 数量超过可分辨的空间模式后只是冗余切分，维度不足则每个 query 表达力不够。Base/Large/Huge 依次用 Q=4/6/8 也说明：<strong>Q 应随模型容量温和增长</strong>，而不是堆大。</p>
+</details>
+<details class="question">
+<summary>Q3 · SEED-V 上为什么落后 CBraMod？能修吗？</summary>
+<p>论文自认：SEED-V 的 62 通道拓扑在预训练中未见，位置编码绑定了训练时的三种布局。可行的修复方向论文自己也点了：多数据集预训练扩充拓扑覆盖、随机通道 dropout 增强鲁棒、混合学习/几何嵌入。注意 CBraMod 也未必「泛化更好」——它的交替注意力对输入形状更宽容，但代价是 O(C²) 复杂度，在 62 通道小数据集上付得起，在 256 通道长程监测上付不起。</p>
+</details>
+<details class="question">
+<summary>Q4 · 可见（未掩码）patch 为什么也参与损失？</summary>
+<p>重构损失对可见部分以小系数（α=0.05）加权。直觉是：掩码重构训练信号集中在被掩区域，但通道统一模块对<strong>所有</strong> <abbr title="词元，模型处理的最小输入单元">token</abbr> 做压缩——如果可见 patch 完全不管，隐空间可能对可见内容失真，下游微调（通常不用掩码）就会吃亏。小系数既约束隐空间保真，又不喧宾夺主。</p>
+</details>
+<div class="admonition abstract">
+<p class="admonition-title">复现速查卡</p>
+<ul>
+<li><strong>代码</strong>：<a href="https://github.com/pulp-bio/biofoundation">github.com/pulp-bio/biofoundation</a>（官方开源）</li>
+<li><strong>规格</strong>：Base 7M（8 层/Q=4/query 64/hidden 256/MLP 1024/8 头）、Large 43M（10 层/Q=6/96/576/2304/12 头）、Huge 311.4M（24 层/Q=8/128/1024/4096/16 头）；patch 长 40 时间戳</li>
+<li><strong>预训练</strong>：TUEG+Siena 21,900h（3 拓扑）；AdamW lr 1.25e-4 cosine（min 2.5e-7）、β(0.9,0.98)、wd 0.05；batch 总 8160（Base）/11520（Huge）；60 epoch、warmup 10；Smooth-L1，mask 0.5，可见系数 0.05，query 特化系数 0.8；bf16-mixed；8×A100 约 1 天（Huge 16 卡）</li>
+<li><strong>微调</strong>：lr 1e-4、50 epoch、早停 patience 10、warmup 5、layer-wise lr decay 0.5(B)/0.8(L/H)、drop path 0.1(B/L)/0.2(H)、标签平滑 0.1（多分类）</li>
+<li><strong>预处理</strong>：0.1–75Hz 带通 + 50/60Hz 陷波 + 256Hz 重采样；TUEG/TUAB/TUAR/TUSL 双极（纵联差分，论文附录 A.7 给全电极对）、Siena/SEED-V 单极；逐通道 z-score</li>
+<li><strong>边缘参考</strong>：LUNA-Base 16-bit 约 14MB，GFLOPs 在可穿戴 SoC 实时预算内</li>
+</ul>
+</div>
+<hr>
+<p><strong>相关阅读</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../0924-eegmoe/">EEGMoE（域解耦路线，对照阅读）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../0918-biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（效率前作对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../basics/attention-alternatives/">Attention 替代方案（效率视角）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>
+<!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/load-mathjax.js"></script>
+      
+        <script src="../../javascripts/giscus.js"></script>
+      
+        <script src="../../javascripts/progress.js"></script>
+      
+        <script src="../../javascripts/back-to-top.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
