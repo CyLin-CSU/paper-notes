@@ -1178,17 +1178,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2099,17 +2088,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2191,80 +2169,6 @@
 <li><strong>S 变换</strong>：取 <span class="arithmatex">\( w_f(\xi) = \frac{|f|}{\sqrt{2\pi}} e^{-\xi^2 f^2/2} \)</span>（频率依赖高斯窗），LTFT 恰为标准 S 变换。</li>
 </ul>
 <p>超集关系本身不保证学到更好的变换，但它给了两条实际好处：初始化点（ST）有已知的好性质，且训完的窗口偏离初始化多少、在哪些频率偏离，可以直接当可解释性证据读。</p>
-<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>数据集四个</strong>（详见复现速查卡）：合成 chirp（200 条 1 s 信号，唯一区别是 20 Hz 窄带片段的插入位置，按位置前/后 100 条二分类，i=100/101 只差一个采样点的边界难例）；<abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> Competition II dataset III 运动想象（单被试，C3/Cz/C4，768 点）；Bonn 五类癫痫（Z/O/N/F/S 各 100 段）；SEED 情绪（自建正负二分类子集，600 段、15 被试、62 通道降到 32 通道）。</p>
-<p><strong>网络形态随任务走</strong>：合成与 <abbr title="运动想象 Motor Imagery">MI</abbr> 用「LTFT + 时间轴平均池化 + 线性分类器」（Fig. 3），SEED 同为线性分类器头但<strong>不池化</strong>——每段只有 1 s，50×128×32 谱图直接展平、过一层 BatchNorm 再进线性分类器；Bonn 用「LTFT + CNN + BiLSTM(256) + 逐段输出 + 多数投票」（Fig. 9）。所有对比变换配到与 LTFT 相同的频率范围和谱图尺寸（<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱沿时间轴双三次插值对齐），可学习基线（LEAF/DSTFT/CWConv）按原文默认配置。</p>
-<p><strong>主结果</strong>（Table I，总体准确率 %）：</p>
-<table>
-<thead>
-<tr>
-<th>变换</th>
-<th>合成</th>
-<th><abbr title="运动想象 Motor Imagery">MI</abbr></th>
-<th>Bonn 五类</th>
-<th>SEED 二分类</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr></td>
-<td>—</td>
-<td>82.93</td>
-<td>85.40</td>
-<td>63.00</td>
-</tr>
-<tr>
-<td>CWT（morlet/db4）</td>
-<td>—</td>
-<td>83.07</td>
-<td>88.00</td>
-<td>69.67</td>
-</tr>
-<tr>
-<td>CWConv</td>
-<td>—</td>
-<td>83.71</td>
-<td>84.80</td>
-<td>71.50</td>
-</tr>
-<tr>
-<td>LEAF</td>
-<td>—</td>
-<td>85.06</td>
-<td>88.80</td>
-<td>70.00</td>
-</tr>
-<tr>
-<td>DSTFT</td>
-<td>—</td>
-<td>85.40</td>
-<td>85.80</td>
-<td>70.83</td>
-</tr>
-<tr>
-<td>ST（= 冻结 LTFT）</td>
-<td>95.50</td>
-<td>85.70</td>
-<td>89.00</td>
-<td>73.33</td>
-</tr>
-<tr>
-<td><strong>LTFT</strong></td>
-<td><strong>99.50</strong></td>
-<td><strong>86.95</strong></td>
-<td><strong>91.00</strong></td>
-<td><strong>73.33</strong></td>
-</tr>
-</tbody>
-</table>
-<p>几点解读：</p>
-<ul>
-<li><strong>合成数据是唯一的干净消融</strong>：LTFT 与 ST 只差「窗口是否可训」，99.50 vs 95.50（p&lt;0.05）把可学习性的贡献隔离得很清楚；t-SNE 显示 LTFT 特征线性可分而 ST 特征不可分。<abbr title="运动想象 Motor Imagery">MI</abbr> 上 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 统一用 32 点窗 50% 重叠、未按数据集调参，作者在讨论里承认 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 基线没做敏感性分析；正文另提到未进 Table I 的其余变换（<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 与 CWT 的其他小波变体）在 <abbr title="运动想象 Motor Imagery">MI</abbr> 上落在 82.15–83.07% 区间；</li>
-<li><strong><abbr title="运动想象 Motor Imagery">MI</abbr> 上有过拟合迹象</strong>：平均准确率在 120 epoch 见顶 88.53%，随后回落到 86.95%——作者归因于可学习参数增加 + 数据少（单被试 280 trial）。单次最高 92.14%，超过当年 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 竞赛第一名和近期文献，但注意这是<strong>单被试数据的随机划分</strong>，不是跨被试协议；</li>
-<li><strong>SEED 上与 ST 完全打平（73.33%）</strong>，显著性检验差距边缘。作者没有藏这个结果，反而做了归因：训后窗口与 ST 初始化在 1–50 Hz 几乎重合（L2 距离全程很小）。情绪判别靠的是稳定的谱统计与通道间组织（熵/不对称类模式），没有刻意的瞬态时频模板，高斯窗先验已经够用——<strong>窗口学习的前提是任务存在可复现的瞬态时频特征</strong>；</li>
-<li><strong>窗口可视化是全文最有说服力的部分</strong>：合成数据的窗口偏离集中在 20 Hz（正是插入片段的频率）；<abbr title="运动想象 Motor Imagery">MI</abbr> 在 10–12 Hz（alpha ERD/ERS 的文献位置）；Bonn 集中在 18 Hz 以下、尤其 8–13 Hz alpha 段，18–32 Hz 几乎不动——作者据此认为 O/F/S 三类的判别信息主要在 2–18 Hz；且 100 个随机种子下权重差异的标准差只有 0.005，训练稳定。Bonn 上低频学出小波样函数、高频保留高斯包络——不同频段自发匹配了不同类型的核，正好呼应了「超集」的论证。Fig. 16 的逐段谱图对照补了定性证据：CWConv 沿谱脊呈阶梯状不连续、DSTFT 保留偏宽的 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 样脊线、LEAF 过度平滑，而 LTFT 对 Bonn 单段信号能量聚在 12 Hz 附近；</li>
-<li>ERSP 图（Fig. 14）：LTFT 的 ERD/ERS 能量集中度最高、谱泄漏和时间涂抹最小，C3/C4 半球对比比 ST/<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr>/CWT 都清晰，且没有 CWConv/DSTFT/LEAF 那种可见的表示伪影——神经生理保真度这一层，站内其他频域论文基本没做这种验证。</li>
-</ul>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/lft-overview.png" data-desc-position="bottom"><img alt="Figure 1 · 四种时频变换的对照：STFT 固定窗、CWT 母小波、ST 高斯窗均为预定义，LTFT 的核完全可学习" src="../../assets/lft-overview.png"></a></p>
 <p><em>Figure 1 · 四种时频变换对照：前三行的核是手工预定义的，LTFT（末行）的核完全可学习，谱图每个像素都是学出来的表示</em></p>
@@ -2316,17 +2220,6 @@
 <li><strong>能不能当 TFM 那种 tokenizer 的前端？我现在持保留态度。</strong> 结构上可行：LTFT 谱图替换 TFM 的 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图，切 patch 照旧。但机制上有一个断层：LTFT 的窗口是被<strong>任务分类损失</strong>驱动的，tokenizer 的预训练目标是掩码重构——重构目标下最优窗口趋近于无损表示（窗宽趋零、分辨率拉满），未必对齐下游判别；而如果先在分类任务上预训窗口再搬去 tokenizer，又回到「分开优化」的老问题。更现实的路径可能是 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/LUNA 式的轻量用法：把 LTFT 当作需要极少标注数据的<strong>判别任务前端</strong>（癫痫、<abbr title="运动想象 Motor Imagery">MI</abbr> 这类有清晰瞬态模式的），而不是基础模型的通用 tokenizer。SEED 的平局恰恰圈定了它的适用域；</li>
 <li><strong>评测口径要打折看</strong>。四个数据集里两个是玩具级（合成 chirp、Bonn 是被无数论文刷穿的基准），<abbr title="运动想象 Motor Imagery">MI</abbr> 是单被试随机划分而非跨被试，Bonn 的十折是全数据混合交叉验证，没有被试独立协议；SEED 子集只有 600 段且做了平衡采样。这些协议下 91%、86.95% 的绝对数字与站内 TUEV/TUAB 那类跨被试结果<strong>不可比</strong>。这篇的价值在方法推导与窗口分析那一半，不在 benchmark 数字那一半。</li>
 </ol>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：论文未附仓库（DOI 10.1109/TETCI.2026.3684470）</li>
-<li><strong>核心实现</strong>：逐频率 <span class="arithmatex">\( L_m = \mathrm{IFFT}(X_m \odot W_m) \)</span>，<span class="arithmatex">\( X_m \)</span> 为循环移位谱；0 Hz 处定义为信号均值；窗口梯度 <span class="arithmatex">\( \mathrm{IFFT}(X_m^* \odot \mathrm{FFT}(\Delta_m \odot L_m)) \)</span>，SGDM 更新；<strong>窗口不加正则</strong>，网络参数 L2 <span class="arithmatex">\( \lambda = 0.001 \)</span>；初始化 = ST 频率依赖高斯窗</li>
-<li><strong>数据与协议</strong>：合成 chirp（256 点 @256 Hz，20 Hz 片段插入位置二分类，200 条，十折，500 epoch 全批训练、batch=200）/ <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> Competition II dataset III（<abbr title="运动想象 Motor Imagery">MI</abbr>，C3/Cz/C4，3–9 s 共 768 点，1–40 Hz 五阶 Butterworth + z-score，随机划分，100 种子）/ Bonn（五类，重采样 256 Hz 截断 23 s，切 23 个 1 s 段，多数投票，十折，200 epoch、batch 450；显著性检验用 455–500 epoch 间每 5 epoch 存一个的 10 个模型）/ SEED 二分类子集（正负各 300 段，取每段影片中段 60–180 s 切 1 s @128 Hz，62→32 通道，1–50 Hz，五折）</li>
-<li><strong>谱图尺寸</strong>：合成 32×256（1–32 Hz）；<abbr title="运动想象 Motor Imagery">MI</abbr> 40×768×3（1–40 Hz，池化到 40×96×3）；Bonn 32×256（0–31 Hz，池化到 32×32）；SEED 50×128×32（1–50 Hz，不池化）</li>
-<li><strong>基线对齐注意</strong>：<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 统一 32 点窗 50% 重叠、谱图沿时间双三次插值到原始长度（会引入时间轴平滑）；CWT 尺度按中心频率覆盖目标频带选取；LEAF/DSTFT/CWConv 用原文默认配置、仅改滤波器数与 hop 对齐尺寸</li>
-<li><strong>复现要点</strong>：<abbr title="运动想象 Motor Imagery">MI</abbr> 准确率 120 epoch 见顶，别拿最终 epoch 的数字对齐；跨被试协议论文没做，别拿这些数字与 TUEV/TUAB 类结果横比</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>（损失端频率加权 vs 变换端可学习窗口）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer（<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图 tokenizer，LTFT 的潜在替换对象）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（FFT 能量特征进 embedding）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（<abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 幅相作重构目标）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

@@ -699,28 +699,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 关键发现
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2132,28 +2110,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 关键发现
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2267,181 +2223,6 @@
 <p>主指标用 two-way identification(承 fMRI 重建文献,Ozcelik &amp; VanRullen 2023):每个测试样本随机抽对比样本做二选一判别,重复 k=500 次取平均,chance 0.5;accuracy/F1 放在附录。<strong>注意正文的指标定义措辞含糊</strong>:「randomly select k comparison samples from different categories」与 two-way ID 的通常定义(单次二选一、多次重复)对不上,k 的确切语义要进代码确认。</p>
 <h3 id="24">2.4 被评模型<a class="headerlink" href="#24" title="Permanent link">#</a></h3>
 <p>经典四件套:Ridge、KNN、RandomForest、SVM(DE 特征,核函数与正则/树数/邻居数做了网格)。深度三件套:MLP(两层隐层 256/128 + BN + dropout 0.5)、EEGNet(时域输入,首层卷积核长 = 时间点数之半 = 200)、RGNN(Zhong et al. 2020 的正则化图网络,电极拓扑按设备坐标,加两层 BN)。统一 CE 损失、batch 80、单卡 4090;MLP/EEGNet 用 SGD(lr 1e-3 训 2000 epochs → 1e-4 再训 1000),RGNN 用 Adam 同调度。全部为本基准上重训。清单里没有任何 2021 年后的视觉解码模型——「被测方」比数据集本身旧。</p>
-<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>主表 1:粗粒度任务(40 类)two-way identification(Table 2,† = 显著高于随机 p&lt;0.05)</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>模型</th>
-<th>WT</th>
-<th>CT</th>
-<th>CP</th>
-<th>PT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ridge</td>
-<td>0.861±0.022†</td>
-<td>0.509±0.011</td>
-<td>0.501±0.007</td>
-<td>0.508±0.010</td>
-</tr>
-<tr>
-<td>KNN</td>
-<td>0.892±0.026†</td>
-<td>0.517±0.019</td>
-<td>0.491±0.006</td>
-<td>0.521±0.017</td>
-</tr>
-<tr>
-<td>RandomForest</td>
-<td>0.909±0.031†</td>
-<td>0.511±0.019†</td>
-<td>0.507±0.011</td>
-<td>0.524±0.020†</td>
-</tr>
-<tr>
-<td>SVM</td>
-<td>0.935±0.039†</td>
-<td>0.536±0.018†</td>
-<td>0.506±0.015</td>
-<td>0.544±0.017†</td>
-</tr>
-<tr>
-<td>MLP</td>
-<td>0.938±0.024†</td>
-<td>0.552±0.012†</td>
-<td>0.524±0.016†</td>
-<td>0.570±0.020†</td>
-</tr>
-<tr>
-<td>EEGNet*</td>
-<td>0.878±0.022†</td>
-<td>0.519±0.015†</td>
-<td>0.509±0.012</td>
-<td>0.524±0.022†</td>
-</tr>
-<tr>
-<td>RGNN</td>
-<td>0.933±0.025†</td>
-<td>0.566±0.015†</td>
-<td>0.526±0.018†</td>
-<td>0.585±0.027†</td>
-</tr>
-</tbody>
-</table>
-<p><strong>主表 2:细粒度任务(5 组 8 类平均,Table 3)</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>模型</th>
-<th>WT</th>
-<th>CT</th>
-<th>CP</th>
-<th>PT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ridge</td>
-<td>0.886±0.023†</td>
-<td>0.549±0.017†</td>
-<td>0.495±0.007</td>
-<td>0.543±0.012†</td>
-</tr>
-<tr>
-<td>KNN</td>
-<td>0.909±0.025†</td>
-<td>0.554±0.017†</td>
-<td>0.505±0.010</td>
-<td>0.551±0.015†</td>
-</tr>
-<tr>
-<td>RandomForest</td>
-<td>0.922±0.030†</td>
-<td>0.587±0.022†</td>
-<td>0.511±0.012</td>
-<td>0.595±0.019†</td>
-</tr>
-<tr>
-<td>SVM</td>
-<td>0.949±0.035†</td>
-<td>0.592±0.021†</td>
-<td>0.509±0.019</td>
-<td>0.606±0.022†</td>
-</tr>
-<tr>
-<td>MLP</td>
-<td>0.954±0.026†</td>
-<td>0.617±0.019†</td>
-<td>0.563±0.026†</td>
-<td>0.636±0.027†</td>
-</tr>
-<tr>
-<td>EEGNet*</td>
-<td>0.893±0.023†</td>
-<td>0.566±0.027†</td>
-<td>0.522±0.026†</td>
-<td>0.579±0.025†</td>
-</tr>
-<tr>
-<td>RGNN</td>
-<td>0.945±0.024†</td>
-<td>0.601±0.024†</td>
-<td>0.573±0.028†</td>
-<td>0.634±0.027†</td>
-</tr>
-</tbody>
-</table>
-<p>三条主要读数:① 崩塌幅度——全体模型 WT→CT 掉 0.34–0.40,CT→CP 再掉 0.03–0.05,coarse 口径下经典模型 CP 全部落在 0.49–0.51(chance 0.5),深模型只有 MLP/RGNN 在 CP 显著;② 任务难度排序 WT ≫ PT &gt; CT &gt; CP(Figure 4,MLP 与 RGNN 分布几乎一致),跨被试最难,与跨被试/跨 session 情绪识别文献的共识一致;③ PT 相对 CT 的增益 coarse +0.018–0.019、fine +0.019–0.033,一致但微弱。</p>
-<p><strong>粗 vs 细粒度</strong>:作者用匹配协议对照(随机抽 8 个粗粒度类做 WT,重复 5 次,Figure 3)——线性回归斜率 &gt;1,粗粒度确实更容易。但注意 Table 2/3 <strong>纵向不可比</strong>:fine 的 CT/PT 数字普遍高于 coarse(MLP CT 0.617 vs 0.552),这是 8 类任务比 40 类任务本身更好分,不是细粒度更容易;论文未在正文点破这一层。</p>
-<p><strong>block 设计水分(Table 5 vs 6,80 类 accuracy,chance 1.25%)</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>模型</th>
-<th>Stage 1(block)</th>
-<th>Stage 2(非 block)</th>
-<th>差</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SVM</td>
-<td>0.392</td>
-<td>0.281</td>
-<td>−0.111</td>
-</tr>
-<tr>
-<td>MLP</td>
-<td>0.404</td>
-<td>0.297</td>
-<td>−0.107</td>
-</tr>
-<tr>
-<td>RGNN</td>
-<td>0.405</td>
-<td>0.302</td>
-<td>−0.103</td>
-</tr>
-<tr>
-<td>EEGNet*</td>
-<td>0.260</td>
-<td>0.169</td>
-<td>−0.091</td>
-</tr>
-</tbody>
-</table>
-<p>同一批模型、同为 80 类,Stage 1 比 Stage 2 高 9–11 个点(coarse 口径差更大,MLP 0.534→0.395 达 13.9 个点)。附录 A.5 补了机制证据:按测试集内呈现顺序画准确率,最前几张图显著偏高,30/20 与 20/30 两种划分都出现——block 设计的时间标记直接可测。EEGNet 在两个阶段都垫底(Stage 1 acc 0.260,低于 SVM 的 0.392),作者归因于原版 EEGNet 不是为语义相关任务设计的。</p>
-<p><strong>个体差异</strong>(Table 7 / Figure 5):最好被试的 Stage 1 成绩远超平均(MLP fine 0.888 vs 平均 0.816;RGNN all 0.609 vs 0.405),且被试排名跨模型稳定——「有人天生好解码」的个体差异在这个数据集上肉眼可见。</p>
-<h2 id="4">4 关键发现<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>泛化崩塌的量级被钉死</strong>:被试内 ~0.95 → 跨时间 0.51–0.62 → 跨被试 0.49–0.57。经典模型两步全崩(线性映射学到的就是个体系数),深模型的优势恰好集中在泛化场景——WT 上 SVM/MLP/RGNN 几乎持平,CP 上只剩 RGNN/MLP 显著;</li>
-<li><strong>block 设计的水分 ≈ 9–14 个 accuracy 点</strong>,且可以用「测试集图像呈现顺序」这一单一变量复现;</li>
-<li><strong>朴素跨被试预训练的下界:+0.02–0.03</strong>——不做任何对齐/解耦、只是「先在别人身上训再在自己身上续」,收益存在但薄;</li>
-<li><strong>深模型里 RGNN &gt; EEGNet 的泛化差距</strong>(coarse CP 0.526 vs 0.509)支持图结构归纳偏置(电极拓扑)对跨被试更友好,但绝对值都贴地。</li>
-</ul>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/crosspt-framework.png" data-desc-position="bottom"><img alt="Figure 1 · CrossPT-EEG 数据集构建流程:实验范式 S1–S4、EEG 采集与多粒度标注、两阶段跨时间设计" src="../../assets/crosspt-framework.png"></a></p>
 <p><em>Figure 1 · 上排实验范式:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 戴帽采集 → S1 类别标签呈现(空格键继续)→ S2 注视点 500 ms → S3 RSVP 每图 500 ms(Img1…ImgN)→ S4 随机测试(可选),Next category 回环;左下:连续采集的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 按图像对齐(Img1–Img50),与图像 index、粒度、标签共同入库;右下 Cross-time Stages:Stage 1 每类 N=50 block 呈现(橙/蓝分块)→ 7 天间隔 → Stage 2 每类 N=30/N=20 乱序(紫色为乱序插入的类别);底部 Multi-Granularity Labels:熊猫/高尔夫球为 Coarse,罗威纳/萨摩耶为 Fine。注:图中 S1–S4 步骤标签与图例是 PDF 矢量叠加层,不在内嵌位图里</em></p>
@@ -2495,19 +2276,6 @@
 <li><strong>block 设计水分的 9–14 个点值得记住</strong>。Stage 1 复刻 Spampinato、Stage 2 纠偏,同一数据集内直接给出膨胀幅度;加上 A.5 的「测试集最前几张图准确率异常高」,这是 Li et al. 2020a 之后少有的同库对照证据。站内在 <a href="../guided/">GUIDED</a> 笔记里夸过 THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的 RSVP 协议,本篇补上另一半:非 block 只去掉类内时间标记,去掉不了 session 间漂移——CT 掉的 0.34–0.40 里有多少是协议残余、多少是真实脑状态漂移(7 天间的睡眠、情绪、电极位置),数据集本身给不出答案,这恰是它留下的开放问题;</li>
 <li><strong>基准的「被测方」与「数据方」都不完整</strong>。被测模型停在 2020 年(作者自认),没有 NICE/ATM/Conformer/EEGPT 一代,也没有任何重建任务——它目前更像「泛化协议参照系」而不是「<abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 降落场」。数据侧,Stage 2 只有 6 人(且是自愿参加两阶段的 6 人,自选偏差未讨论),CP 的崩塌数字建立在 6 个测试被试上;80 类对细粒度解码只有 5 组 × 8 类,而 THINGS 有 1,854 概念。另外 v2(2025-12)仍写「review 后公开」、代码还是匿名链——数据可得性是复现前要确认的第一件事,这也限制了它现在作为基准的实际地位。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>:<a href="https://anonymous.4open.science/r/EEG-ImageNet-anonymous-74B0">anonymous.4open.science/r/<abbr title="脑电图 Electroencephalogram">EEG</abbr>-ImageNet-anonymous-74B0</a>(匿名预览链;v2 仍写「数据集 review 后公开」、正式 GitHub 未给——可得性先确认)</li>
-<li><strong>数据</strong>:16 人 × 22 session,87,850 对,20.85 GB;62 通道 × 1000 Hz × 500 ms;<code>.pth</code> 格式(Stage 1 拆两个文件),字段 eeg_data / granularity / subject / label(wnid)/ image(index)/ stage(仅 Stage 2);只给 ImageNet index + wnid,需自行取图</li>
-<li><strong>预处理</strong>:M1+M2 offline linked mastoids 重参考 → 0.5–80 Hz 带通 → 50 Hz 陷波 → 伪迹去除(<strong>方法未披露</strong>);特征窗 40–440 ms;DE 五频段(Welch)</li>
-<li><strong>任务</strong>:WT 同人 Stage 2 内 30/20;CT 本人 Stage 1 → Stage 2;CP 10 人 Stage 1 → 6 人 Stage 2;PT 10 人预训(半 lr 半 epochs)→ 本人 Stage 1 续训;主表平均口径 = 6 名两阶段被试</li>
-<li><strong>训练</strong>:CE 损失、batch 80、单卡 4090;MLP/EEGNet SGD lr 1e-3×2000ep → 1e-4×1000ep(EEGNet 首 conv 核长 200,F1 {8,16,32},D {2,4,8});RGNN Adam 同调度(GCN hidden {100,200,400} × hops {1,2,4} + 2 层 BN)</li>
-<li><strong>指标</strong>:two-way identification,k=500,chance 0.5(<strong>k 的确切语义需进代码确认</strong>)</li>
-<li><strong>关键数字</strong>:two-way ID coarse:MLP 0.938/0.552/0.524/0.570、RGNN 0.933/0.566/0.526/0.585;fine:MLP 0.954/0.617/0.563/0.636;block 水分:80 类 acc MLP 0.404→0.297、coarse 口径 0.534→0.395</li>
-<li><strong>未披露</strong>:伪迹去除细节、Tables 5/6 的划分协议、150 对数据缺口的构成、S1 呈现时长</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg></span> <a href="../guided/">GUIDED · 视觉重建线(被试内上限,与本篇互补)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 13v-2h14v2zm0 6v-2h14v2zM7 7V5h14v2zM3 8V5H2V4h2v4zm-1 9v-1h3v4H2v-1h2v-.5H3v-1h1V17zm2.25-7a.75.75 0 0 1 .75.75c0 .2-.08.39-.21.52L3.12 13H5v1H2v-.92L4 11H2v-1z"></path></svg></span> <a href="../eegarena/">EEGArena(基础模型横评基准,宽度对本篇深度)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../eegpt/">EEGPT(预训练特征提取器,CP 协议的天然候选被测方)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../cbramod/">CBraMod(多数据集预训练,跨被试主张待此基准对账)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(跨被试/跨记录建模的对账对象)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

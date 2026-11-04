@@ -850,17 +850,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2143,17 +2132,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2241,49 +2219,6 @@ h_t = A h_{t-1} + B x_t, \qquad y_t = C h_t + D x_t
 \mathcal{L} = -R + \alpha \times \mathrm{L1}, \qquad \mathrm{L1} = \frac{1}{n} \sum_{i=1}^{n} |\hat{y}_i - y_i|
 \]</div>
 <p><span class="arithmatex">\( R \)</span> 是预测谱与真谱的 Pearson 相关。两项搭配是回归任务的常规操作：L1 管绝对尺度，Pearson 管形状（不受幅值缩放影响）。平衡系数 <span class="arithmatex">\( \alpha \)</span> 的取值全文未披露。</p>
-<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>数据</strong>：SparrKULee（ICASSP 2024 Auditory <abbr title="脑电图 Electroencephalogram">EEG</abbr> Challenge），85 名荷兰语正常听力被试，每人 8–10 段约 15 分钟，听佛兰芒语故事。预处理：多通道维纳滤波去伪迹 → 共平均重参考 → 降采样到 64 Hz。划分 80/10/10（训练/验证/测试）——<strong>按什么维度切没说</strong>，是本篇最大的协议模糊点。</p>
-<p><strong>实现</strong>：PyTorch，1000 epoch，Adam 初始 lr 5e-4，StepLR 每 50 epoch ×0.9；训练用随机裁剪的 5 秒段，推理也是 5 秒分段处理再拼接成完整 mel 谱。</p>
-<p><strong>主结果</strong>（Table I，mel 谱重建 Pearson）：</p>
-<table>
-<thead>
-<tr>
-<th>模型</th>
-<th>Pearson</th>
-<th>相对 VLAAI 提升</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>VLAAI</td>
-<td>0.050</td>
-<td>–</td>
-</tr>
-<tr>
-<td>HappyQuokka</td>
-<td>0.052</td>
-<td>+4%</td>
-</tr>
-<tr>
-<td>ConvConcatNet</td>
-<td>0.058</td>
-<td>+16%</td>
-</tr>
-<tr>
-<td>ConvConcatNet ensembled</td>
-<td>0.063</td>
-<td>+26%</td>
-</tr>
-<tr>
-<td><strong>SSM2Mel</strong></td>
-<td><strong>0.069</strong></td>
-<td><strong>+38%</strong></td>
-</tr>
-</tbody>
-</table>
-<p>同一数据集换包络重建任务（Table II）也领先：SSM2Mel 0.208 vs HappyQuokka 0.185（+14.9%）vs VLAAI 0.161（+29.2%）。正文另给出绝对增量：对 VLAAI / HappyQuokka / ConvConcatNet 分别 +0.019 / +0.017 / +0.011（Section III-C）。注意正文一处笔误：Section III-C 写「achieving a Pearson correlation coefficient of 0.068」，摘要与 Table I 均为 0.069。</p>
-<p><strong>模块消融</strong>（Table III）：去 S4-UNet → 0.057（−0.012，伤最重，表中相对 VLAAI 仍 +14%）；去 ExternalAttention → 0.061（−0.008，+22%）；去 ESM → 0.063（−0.006，+26%）。论文只说三个模块「都关键」，未对下降幅度做排序解读。</p>
-<p><strong>骨干机制对比</strong>（Table IV）：all-Mamba 0.051（仅比 VLAAI 基线高 0.001，相对提升 2%）；all-MHSA 0.057（+14%）；混合 0.069。作者的解读是 Mamba 管时序特征、MHSA 管上下文，互补——但 0.051 这个数字同时说明了另一件事：<strong>在这个 5 秒窗口的协议下，Mamba 自身几乎没有贡献</strong>。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/ssm2mel-framework.png" data-desc-position="bottom"><img alt="Figure 1 · SSM2Mel 总体框架：EEG 加位置编码后经 ESM（Sub-ID 嵌入调制）与 S4-UNet + ExternalAttention 预提取，MHSA/Mamba 交替骨干输出 mel 谱" src="../../assets/ssm2mel-framework.png"></a></p>
 <p><em>Figure 1 · (a) 总体框架——ESM block（右上，Sub-ID 经 LayerNorm 进 MultiHead Attention）→ S4-UNet + ExternalAttention（左下，<span class="arithmatex">\( M_K/M_V \)</span> 共享 memory）→ MHSA/Mamba 交替骨干（ESM 原始特征经四处 ⊕ 并入每块前的残差）→ Linear 出 mel 谱；(b) S4-UNet 的 U 形下采样-上采样，上采样前每级经 n 个 S4 blocks；(c) S4 block = linear → S4 → 残差 → Dropout → LayerNorm；(d) MHSA/mamba block：右列 Pre-Conv → S4-UNet → ffm 前置段，左列 ffm → MHSA/mamba module → conv → ffm 三明治，段间 ½× 缩放残差</em></p>
@@ -2329,17 +2264,6 @@ h_t = A h_{t-1} + B x_t, \qquad y_t = C h_t + D x_t
 <li><strong>消融数据讲了一个和标题不同的故事</strong>：纯 Mamba 0.051 ≈ VLAAI 基线 0.050，去掉 S4-UNet 掉 0.012（消融里最痛的一刀）。也就是说增量主要来自 MHSA + S4-UNet 这对「注意力管全局、S4 管局部」的组合，Mamba 更像被 Jamba/Zamba 的混合结论顺带捎上的组件。这不丢人，但贡献列表里「创新性地使用 Mamba」「首次把 S4-UNet 用于 <abbr title="脑电图 Electroencephalogram">EEG</abbr>」的宣称都比证据响——首次使用和有效使用是两回事；</li>
 <li><strong>被试嵌入（ESM）的泛化边界没人检验，且和站内基础模型轴线的条件注入方向恰好相反</strong>。模型吃 Sub-ID，意味着部署时必须知道当前被试是谁、且该被试见过训练数据。如果 80/10/10 划分按 trial 切（SparrKULee 挑战赛的常规做法），测试段的被试以嵌入形式出现在了训练集里——那么 0.069 里有多少是被试记忆、多少是语音信息，单看这个数字分不开。消融显示去掉 ESM 掉到 0.063，被试信息约占总提升的六分之一，这部分的可泛化性存疑。放到站内的坐标系里看更有意思：<a href="../braingpt/">BrainGPT</a> 的电极词表和 <a href="../eegpt/">EEGPT</a> 的通道名映射表，条件注入的都是<strong>通道身份</strong>（信号来自哪个电极），为的是跨设备、跨数据集迁移，没有一个显式吃被试 ID；ESM 正好反过来，只注入<strong>被试身份</strong>、不注入通道身份。这不是谁对谁错，而是两个目标的对立：通道条件服务「未见数据集上的 zero-shot」，被试条件服务「见过的人在 closed-set 里更好一点」——后者以被试进训练集为前提，而预训练语料跨库拼接时被试 ID 根本没有跨库语义。所以 ESM 这类设计在预训练路线里几乎绝迹，它本质是 subject-dependent 小数据回归的专用技巧；本篇想和基础模型合流（见 Q4），第一件事就是把 Sub-ID 换成可迁移的条件形式；</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：论文未附仓库（arXiv 2501.10402 v1）；通讯团队（安徽大学 Fan Cunhang 组）历史工作有开源习惯，可留意其 GitHub</li>
-<li><strong>数据</strong>：SparrKULee（ICASSP 2024 Auditory <abbr title="脑电图 Electroencephalogram">EEG</abbr> Challenge），85 名荷兰语被试，8–10 段 × 约 15 分钟听故事；预处理 = 多通道维纳滤波 → 共平均重参考 → 64 Hz 降采样；80/10/10 划分（<strong>维度未说明，复现前先确认</strong>）</li>
-<li><strong>训练</strong>：Adam，lr 5e-4，1000 epoch，StepLR 每 50 epoch ×0.9；5 s 随机裁剪，推理 5 s 分段拼接</li>
-<li><strong>损失</strong>：<span class="arithmatex">\( \mathcal{L} = -R + \alpha \cdot \mathrm{L1} \)</span>；<strong>α 取值未披露</strong></li>
-<li><strong>未披露的超参</strong>：α、S4-UNet 层数/通道数/每级 S4 block 数 n、骨干维度、MHSA 头数——5 页 letter 的通病，细节需等扩展版或邮件要配置</li>
-<li><strong>关键数字</strong>：mel 谱 Pearson 0.069（VLAAI 0.050 / ConvConcatNet 集成 0.063）；包络 0.208；消融 w/o S4-UNet 0.057、w/o ExtAtt 0.061、w/o ESM 0.063、all-Mamba 0.051、all-MHSA 0.057</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>（生成轴线姊妹篇：频谱一致性损失可迁移）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../cbramod/">CBraMod（交替混合机制的判别侧版本）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg></span> <a href="../braingpt/">BrainGPT（长序列 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 建模的自回归路线）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（线性复杂度的另一条路）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

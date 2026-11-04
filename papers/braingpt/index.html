@@ -590,17 +590,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#45" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2043,17 +2032,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#45" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2152,13 +2130,6 @@
 <li><strong>任务共享图网络（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）实现多任务兼容与协同</strong>：首个证实多任务联合训练优于逐任务单独训练（joint 比 separate 在 5 个任务上全部提升，MW +3.9%）；</li>
 <li>渐进式时空解耦：<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 管时间（预训练）→ <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 管空间（下游）。</li>
 </ol>
-<h4 id="45">4.5 实验与结果<a class="headerlink" href="#45" title="Permanent link">#</a></h4>
-<ul>
-<li>12 个基准、5 类任务：情绪识别（DEAP/FACED/SEED-IV/SEED-V）、运动想象（MIBCI/BCIC4-1）、认知负荷（EEGMat/STEW）、睡眠分期（EDF/HMC）、跨模态（IMG/SPE）；</li>
-<li>作为<strong>单一 generalist 模型</strong>全面超过各 specialist（含预训练的 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）：Giant 在 ER +5.07%、<abbr title="运动想象 Motor Imagery">MI</abbr> +6.05%、MW +8.50%、SS +11.20%、CM +5.10%；</li>
-<li>消融：模型越大 loss 越低、下游越好；数据越多性能越高（未饱和）；<abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 优于 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>（与损失度量无关，ℓ2 最好）；联合训练优于单独训练（共享电极节点相当于数据增强，小数据任务受益更大）；对未见数据（DREAMER）零训练也有强迁移表示。</li>
-</ul>
-<hr>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/braingpt-overview.png" data-desc-position="bottom"><img alt="Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）" src="../../assets/braingpt-overview.png"></a></p>
 <p><em>Fig. 3 · 总体架构：左=单电极自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>），右=多电极多任务微调（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 图网络）</em></p>
@@ -2191,15 +2162,6 @@
 <li>自回归直接回归连续值（<abbr title="均方误差 Mean Squared Error">MSE</abbr>），绕开了离散化难题——与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 的「先离散再预测」形成两条并行路线。</li>
 <li>电极级拆样本让样本量 ×E 倍膨胀（3750 万），这一数字需要谨慎解读：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 补回。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：论文声明将开源（截至精读时未见仓库，复现前先确认）</li>
-<li><strong>关键超参</strong>：电极词表覆盖 E 个电极；patch 1s × D 采样点；<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 门控前馈（Swish 激活）；预训练 lr 1e-4 / 3 epochs / batch 4096；微调 10 epochs（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 冻结，只训 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）；DeepSpeed Zero2/3 + bf16</li>
-<li><strong>数据</strong>：3750 万单电极样本（≈1B <abbr title="词元，模型处理的最小输入单元">token</abbr>），来自 12 个基准的预训练拆分</li>
-<li><strong>算力参考</strong>：8×A800-80G；Giant 1.09B 需 Zero3 + 梯度检查点</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../eegpt/">上一篇：EEGPT</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../neurolm/">下一篇：NeuroLM</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

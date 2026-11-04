@@ -1259,17 +1259,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2121,17 +2110,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2228,200 +2206,6 @@ z = \tanh\left(W_f \cdot \mathrm{Concat}(y_{\mathrm{sg}}, y_{\mathrm{swa}})\righ
 <p>两路输出 <span class="arithmatex">\( y_1 = \mathrm{Conv}(z) \)</span> 进下一个 block,<span class="arithmatex">\( y_2 = \mathrm{Conv}(z) \)</span> 走 skip connection 汇入总输出。</p>
 <h3 id="24">2.4 预训练目标<a class="headerlink" href="#24" title="Permanent link">#</a></h3>
 <p><abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式:Bernoulli 掩码（r=0.5）,EEGSSM 输出过 1D 卷积预测被掩 patch 在<strong>两个码本</strong>中的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 索引,交叉熵 <span class="arithmatex">\( p(v_i \mid x_i) = \mathrm{softmax}(\mathrm{Conv1D}(y_i)) \)</span>。损失在 epoch 1→6 从 9.04 降到 6.39,epoch 10 后趋平（6.01→5.66）,官方 checkpoint 取 epoch 10——一半理由是防止对 TUEG 过拟合（TUEV/TUAB 同源）。</p>
-<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>数据与协议</strong>:预训练 TUEG,剔除 &lt;5 分钟录音、去首尾 1 分钟、19 通道（10-20 系统）、0.3–75 Hz 带通 + 60 Hz 陷波、200 Hz、30s 非重叠段、剔除幅值 &gt;100 µV 的段、逐值 ÷100 归一,留 1,109,545 段 ≈ 9,246 小时。下游 10 数据集横跨 8 任务（情绪 FACED/SEED-V、睡眠 ISRUC S1/S3、想象语音 BCIC2020-T3、心算压力、癫痫 CHB-MIT、运动想象 SHU-<abbr title="运动想象 Motor Imagery">MI</abbr>、事件 TUEV、异常 TUAB）,通道 6–64、时长 1–30s、类别 2–9。划分以跨被试为主(FACED 80/20/23、ISRUC S3 8:1:1、MentalArithmetic 7:1:1、CHB-MIT 20/2/2、SHU-<abbr title="运动想象 Motor Imagery">MI</abbr> 15/5/5),TUEV/TUAB/BCIC2020-T3 走官方协议;<strong>SEED-V 是例外:每 session 15 个 trial 均分 5/5/5,属于被试内划分</strong>（与 CBraMod 协议一致）,和正文「cross-subject or cross-session」的表述要对读。主协议全量微调 + 3 层 MLP 头（睡眠任务头前再加一层 Transformer 建 20 个 epoch 的序列依赖）,5 seeds 报均值方差;多类用 Kappa 选模型、二类用 AUROC 选模型。下游全部重采样到 200 Hz。</p>
-<p><strong>主结果</strong>（Table 2 摘录,Kappa 多类 / AUROC 二类）:</p>
-<table>
-<thead>
-<tr>
-<th>数据集（指标）</th>
-<th>CodeBrain</th>
-<th>CBraMod</th>
-<th><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></th>
-<th><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></th>
-<th>EEGPT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FACED（Kappa）</td>
-<td><strong>0.5406</strong></td>
-<td>0.5041</td>
-<td>0.4698</td>
-<td>0.4476</td>
-<td>0.4639</td>
-</tr>
-<tr>
-<td>SEED-V（Kappa）</td>
-<td><strong>0.2735</strong></td>
-<td>0.2569</td>
-<td>0.2386</td>
-<td>0.2261</td>
-<td>0.1323</td>
-</tr>
-<tr>
-<td>ISRUC S3（Kappa）</td>
-<td><strong>0.7671</strong></td>
-<td>0.7407</td>
-<td>0.7194</td>
-<td>0.7168</td>
-<td>0.6160</td>
-</tr>
-<tr>
-<td>BCIC2020-T3（Kappa）</td>
-<td><strong>0.5127</strong></td>
-<td>0.4216</td>
-<td>0.3800</td>
-<td>0.3650</td>
-<td>0.0567</td>
-</tr>
-<tr>
-<td>Mental Arithmetic（AUROC）</td>
-<td><strong>0.8707</strong></td>
-<td>0.7905</td>
-<td>0.7721</td>
-<td>0.7536</td>
-<td>0.7162</td>
-</tr>
-<tr>
-<td>CHB-MIT（AUROC）</td>
-<td><strong>0.8961</strong></td>
-<td>0.8892</td>
-<td>0.8679</td>
-<td>0.8761</td>
-<td>0.8438</td>
-</tr>
-<tr>
-<td>CHB-MIT（Balanced Acc）</td>
-<td>0.7273</td>
-<td><strong>0.7398</strong></td>
-<td>0.7075</td>
-<td>0.7068</td>
-<td>0.5481</td>
-</tr>
-</tbody>
-</table>
-<p><strong>附录四数据集与泄漏处理</strong>（Table 5–8 摘录）:TUEV/TUAB 出自 TUEG 语料家族,与预训练同源。作者的处理比惯例诚实——预训练早停到 epoch 10,并另训一版把 TUEV/TUAB 从预训练库剔除的 Excluding 模型:</p>
-<table>
-<thead>
-<tr>
-<th>数据集（指标）</th>
-<th>CodeBrain</th>
-<th>Excluding</th>
-<th>CBraMod</th>
-<th><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TUEV（Kappa）</td>
-<td><strong>0.6912</strong></td>
-<td>0.6838</td>
-<td>0.6772</td>
-<td>0.6637</td>
-</tr>
-<tr>
-<td>TUEV（Balanced Acc）</td>
-<td>0.6428</td>
-<td>0.6375</td>
-<td><strong>0.6671</strong></td>
-<td>0.6409</td>
-</tr>
-<tr>
-<td>TUAB（Balanced Acc）</td>
-<td><strong>0.8294</strong></td>
-<td>0.8288</td>
-<td>0.8289</td>
-<td>0.8140</td>
-</tr>
-<tr>
-<td>TUAB（AUROC）</td>
-<td>0.9030</td>
-<td>0.9012</td>
-<td><strong>0.9227</strong></td>
-<td>0.9022</td>
-</tr>
-<tr>
-<td>ISRUC S1（Kappa）</td>
-<td><strong>0.7476</strong></td>
-<td>–</td>
-<td>0.7442</td>
-<td>0.7231</td>
-</tr>
-<tr>
-<td>SHU-<abbr title="运动想象 Motor Imagery">MI</abbr>（AUROC）</td>
-<td><strong>0.7124</strong></td>
-<td>–</td>
-<td>0.6988</td>
-<td>0.6604</td>
-</tr>
-</tbody>
-</table>
-<p>即:排除泄漏后 TUEV 仍领先,TUAB 与 CBraMod 打平;而 TUAB 的 AUROC/PRAUC、TUEV/CHB-MIT 的 Balanced Acc 这几个输掉的指标,正文主表里看不见。</p>
-<p><strong>消融</strong>（Table 3,Cohen's Kappa,三个数据集）:</p>
-<table>
-<thead>
-<tr>
-<th>配置</th>
-<th>FACED</th>
-<th>SEED-V</th>
-<th>ISRUC S3</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>完整（Dual + CL + SWA + SGConv + Gate）</td>
-<td>0.5406</td>
-<td>0.2735</td>
-<td>0.7671</td>
-</tr>
-<tr>
-<td>单时域码本</td>
-<td>0.4618</td>
-<td>0.2633</td>
-<td>0.7314</td>
-</tr>
-<tr>
-<td>单频域码本</td>
-<td>0.5006</td>
-<td>0.2665</td>
-<td>0.7390</td>
-</tr>
-<tr>
-<td>Mixed 共享码本</td>
-<td>0.4676</td>
-<td>0.2708</td>
-<td>0.7400</td>
-</tr>
-<tr>
-<td>− 对比损失 CL</td>
-<td>0.5222</td>
-<td>0.2589</td>
-<td>0.7558</td>
-</tr>
-<tr>
-<td>− SWA</td>
-<td>0.5192</td>
-<td>0.2561</td>
-<td>0.7359</td>
-</tr>
-<tr>
-<td>− SGConv</td>
-<td><strong>0.1936</strong></td>
-<td>0.2062</td>
-<td>0.6218</td>
-</tr>
-<tr>
-<td>− Gate</td>
-<td>0.2578</td>
-<td>0.2212</td>
-<td>0.5478</td>
-</tr>
-</tbody>
-</table>
-<p>全局卷积与门控是承重墙（去掉即崩,FACED 上 −SGConv 的方差大到 ±0.1637）,SWA/CL 是装修（各 ~0.02）。双码本对单频码本的增益在 FACED +0.040、ISRUC S3 +0.028、SEED-V 仅 +0.007。另有码本贡献专项（Table 4,ISRUC S3）:整个去掉 tokenizer 改原始信号重构 → 0.7503（−0.017）,掩掉 top-50% 高频激活码 → 0.7426（−0.025）——<abbr title="词元，模型处理的最小输入单元">token</abbr> 有贡献,但幅度有限,作者自己声明这不构成「可解释码决定任务结果」的因果。</p>
-<p><strong>设计选择</strong>（附录 K）:mask 率 U 型、0.4–0.6 最优（取 0.5）;码本 4096/4096 折中（2048/2048 时频域码有重复、8192/8192 闲置 3401/1260）;patch 取 1s（SEED-V 上 2s 需大量 padding 崩到 0.1545;ISRUC S3 上 0.5s 碎化纺锤波最差 0.7405）;SGConv 衰减 <span class="arithmatex">\( \alpha = 0.5 \)</span> 全场最优（ISRUC S3 上 α=2.0 掉到 0.5600）。<strong>子带消融</strong>最扎眼:移除 δ/θ/α 任何单个低频带都近随机（SEED-V 去 α 带 Kappa 0.0082）,γ 最耐拆（0.1372）;作者读作「低频结构主导、与情绪生理学一致」。</p>
-<p><strong>Scaling 与效率</strong>:数据 1k→9k 小时 Kappa 持续上升（SEED-V 5k 小时后平台）;模型从 3.96M（3 层/128）到 146.75M（24 层/384）收益递减,8 层 15.17M 是平衡点。计算开销对比（Table 19）:CodeBrain 15.17M 参数 / 4.37G MACs / 8.74G FLOPs,对比 BENDR 959.84M / 25.02G、EEGPT 25.24M / 9.79G,但 CBraMod（4.03M）与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（6.02M）更小。低资源设定（附录 O,linear probe / 10% / 30% few-shot）全数第一,SEED-V 10% few-shot 上 0.1690 对 CBraMod 的 0.0174 差出一个量级——线性探针反而比 few-shot 全量微调稳,说明预训练表征本身有结构。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/codebrain-framework.png" data-desc-position="bottom"><img alt="Figure 2 · CodeBrain 两阶段框架:左 TFDual-Tokenizer,右 EEGSSM 掩码 token 预测" src="../../assets/codebrain-framework.png"></a></p>
 <p><em>Figure 2 · 左（Stage 1）:patched <abbr title="脑电图 Electroencephalogram">EEG</abbr> 过 TFConv（时域 conv 堆叠 ∥ <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr>→conv 堆叠）→ 共享时间位置嵌入 → TF-Encoder → NN 搜索进时/频两个码本;对比损失（段内正对）+ 双 decoder 重构（T-Decoder 原始波形、F-Decoder 幅值/相位）+ <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>/commitment 损失。右（Stage 2）:掩码 patch → 动态位置嵌入 → EEGSSM Block ×N（RMS Norm → Conv+GELU → SGConv ∥ SWA → Tanh⊙Sigmoid 门控 → Conv×2 走 skip）→ Conv1D 出双码本 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测。图注细节:图中「Btach Norm」「Patchfied」为原文拼写笔误</em></p>
@@ -2471,18 +2255,6 @@ z = \tanh\left(W_f \cdot \mathrm{Concat}(y_{\mathrm{sg}}, y_{\mathrm{swa}})\righ
 <li><strong>子带消融的「全崩」是个警报,不是勋章</strong>。移除 δ、θ、α 任何单个低频带都把模型打到近随机(SEED-V 去 α 带 0.0082),而健康的频段归因应该是「一个带一个坑」。更合理的解释是模型对输入分布漂移极度敏感:掩掉一个带会破坏全局统计(如 z-score 口径),整个输入相对预训练分布成了 OOD。这与附录 M 大讲通道丢弃/基线漂移鲁棒性的叙事存在张力——同一模型不可能既「对结构化扰动稳健」又「拆一个频带就崩」;</li>
 <li><strong>增量边际与占坑价值要分开记账</strong>。对 CBraMod 的中位增量只有 0.01–0.03 Kappa,大增益集中在两个小数据集(BCIC2020-T3 共 6,000 样本、Mental Arithmetic 共 1,707 样本),大库任务(TUEV/TUAB)上互有胜负;三个二类指标还输给基线。它的价值更多在「把双码本 + SSM 骨干这条路铺通」:完整消融、scaling 曲线、9k 小时/150M 的外推证据,外加 15M 参数、35 GPU·小时的可复现成本(代码与权重已开源)。典型的占坑之作——坑位本身(解耦 tokenization 的可解释性叙事)比数字更有长期价值,后续 <a href="../brainrvq/">BrainRVQ</a> 等双域工作都站在这条线上。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>:<a href="https://github.com/jingyingma01/CodeBrain">github.com/jingyingma01/CodeBrain</a>(含预训练权重)</li>
-<li><strong>数据</strong>:TUEG 9,246 h(1,109,545 × 30s 段);19 通道 10-20 系统,0.3–75 Hz 带通 + 60 Hz 陷波,200 Hz,&lt;5 min 剔除 + 去首尾 1 min,&gt;100 µV 段剔除,逐值 ÷100;30s 段 → 1s patch,序列 570 = 19×30</li>
-<li><strong>Stage 1 超参</strong>:双码本各 4096×32(随机初始化 + L2 归一);TFConv 通道 {1,8,4}→{8,4,4}、核 (1,15)/(1,3)/(1,3)、首层 stride (1,8);TF-Encoder 12 层 / hidden 200 / 8 头,decoder 3 层;AdamW,峰值 lr 1e-4 → 1e-5 cosine,wd 1e-4,warmup 5,20 epoch,batch 256,对比温度 τ=0.5</li>
-<li><strong>Stage 2 超参</strong>:8 层 / hidden 200;SGConv state 64、双向;SWA 窗 1s;mask 0.5;Adam lr 1e-4 cosine 至 1e-5,wd 5e-3,梯度裁剪 5,dropout 0.1,10 epoch,batch 256</li>
-<li><strong>算力</strong>:tokenizer 6×A100-40G × 约 10 h;骨干 2×A100-40G × 约 24 h;微调各任务配置见论文 Table 12(lr 1e-5~1e-4、batch 16~512)</li>
-<li><strong>未披露/含糊</strong>:下游 3 层 MLP 头的通道聚合具体机制;SGConv 子核基尺寸 d 的取值(Table 11 只给 state 64);式(10) 中 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>/commitment/对比损失的权重系数(公式无权重符号);EEGPT/CBraMod 所用「两层卷积前置/linear 微调」等基线协议细节以各自原文为准</li>
-<li><strong>关键数字</strong>:FACED Kappa 0.5406 / SEED-V 0.2735 / ISRUC S3 0.7671 / TUEV 0.6912(Excl. 0.6838)/ TUAB BAcc 0.8294;15.17M / 8.74G FLOPs;线性探针 SEED-V 0.2302、10% few-shot 0.1690</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进(CodeBrain 已入表)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer(同届另一条时频 tokenization 路线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(单码本 <abbr title="向量量化 Vector Quantization">VQ</abbr> 的源头)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../neurorvq/">NeuroRVQ(多尺度 RVQ 同框对比)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../cbramod/">CBraMod(最强基线与 ACPE 出处)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

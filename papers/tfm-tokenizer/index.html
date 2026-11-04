@@ -940,17 +940,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#65" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2043,17 +2032,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#65" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2153,15 +2131,6 @@
 <li><strong>模型极小</strong>：tokenizer ~1.2M + 下游 ~0.7M ≈ 1.9M，比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（3.2M）、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（5.8M+8.6M）小，性能反而更好；</li>
 <li><abbr title="词元，模型处理的最小输入单元">token</abbr> 质量分析体系：类-<abbr title="词元，模型处理的最小输入单元">token</abbr> 独有性（uniqueness）、类内一致性（检索 precision@K）、频率学习能力（<abbr title="词元，模型处理的最小输入单元">token</abbr> 序列谱熵）、<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率。</li>
 </ol>
-<h4 id="65">6.5 实验与结果<a class="headerlink" href="#65" title="Permanent link">#</a></h4>
-<ul>
-<li>数据集：TUEV、TUAB、CHB-MIT、IIIC Seizure（+ 跨设备 EESM23 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期）；</li>
-<li>两种设定下绝大多数指标-设定组合最优（例外：多数据集 CHB-MIT 的 balanced acc 0.6471 低于 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 0.7068）：多数据集 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比复现 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> +36%）；</li>
-<li>plug-and-play：集成进 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 后 93% 的指标-设定组合有提升（如单数据集 CHB-MIT 上 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 的 AUC-PR 提升 147%）；</li>
-<li>跨设备：ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期（仅 ~8K 标注样本、预训练完全没见过的采集方式）超过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 14%，EEGPT 因固定通道布局无法参与；</li>
-<li>消融：双域联合建模优于单时域（-R）或单频域（-S）变体；masking 策略与比例（频率 0.5 最优）；窗长 0.5s/0.25s hop 其实最好（但为对齐基线统一用 1s/0.5s）；embedding 维度 64 最优；下游 2 层即接近 12 层性能。</li>
-</ul>
-<hr>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/tfm-framework.png" data-desc-position="bottom"><img alt="Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测" src="../../assets/tfm-framework.png"></a></p>
 <p><em>Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测</em></p>
@@ -2194,15 +2163,6 @@
 <li><abbr title="词元，模型处理的最小输入单元">token</abbr> 可解释性分析（如 PLED 类的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 4035 稳定对应'棘波-慢波'周期模式）是把 NLP 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 分析方法迁移到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的漂亮示范。</li>
 <li>作者自认局限：固定窗长可能把大 pattern 切断到不同窗口，导致同一事件被分到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>——这是切分式 tokenization 的共同软肋。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：<a href="https://github.com/Jathurshan0330/TFM-Tokenizer">github.com/Jathurshan0330/TFM-Tokenizer</a>（含预训练权重与全部预处理脚本）</li>
-<li><strong>关键超参</strong>：tokenizer ~1.2M + 下游 ~0.7M；<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 窗 200 点/Hann/hop 100；码本 8192；<abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 64；频带掩码率 0.5 + 时间掩码 + 对称掩码；tokenizer 内<strong>无位置编码</strong>；Ray Tune + Optuna 调参</li>
-<li><strong>数据</strong>：TUEV/TUAB/CHB-MIT/IIIC（遵循 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 划分）；跨设备 EESM23</li>
-<li><strong>算力参考</strong>：无 GPU 规模要求披露——tokenizer 极小，消费级单卡可训</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../neurolm/">上一篇：NeuroLM</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../biot/">下一篇：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

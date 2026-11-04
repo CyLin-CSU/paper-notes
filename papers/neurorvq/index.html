@@ -920,17 +920,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2143,17 +2132,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2241,149 +2219,6 @@ z_1 = \arg\min_{v_1 \in V_1} \|\, \ell_2(p_1) - \ell_2(v_1) \,\|, \qquad p_{i+1}
 <p>四个设计旋钮(patch 长 w、分支数 S、卷积核组、RVQ 深度 N)各自对准模态的谱时特性。S∈{1,2,4} × N∈{1,...,32} 的系统 scaling(小数据集上 50 epoch:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 用 PhysioNet <abbr title="运动想象 Motor Imagery">MI</abbr>、ECG 用 PTB、EMG 用 emg2pose-small):加深码本收益最大;加分支在小 N 时补益明显(各频段单独量化更容易);ECG(信号最刻板)最早饱和,<abbr title="脑电图 Electroencephalogram">EEG</abbr> 持续受益于加深,EMG 最吃深度。最终按算力取 S=4、N=8/8/16。</p>
 <h3 id="25-neurorvq-fm">2.5 NeuroRVQ-FM:刻意简单的下游验证<a class="headerlink" href="#25-neurorvq-fm" title="Permanent link">#</a></h3>
 <p>FM 复用同一多尺度编码器 + Transformer + <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测头,以对称掩码策略(<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 式)0.5 比例做 masked-<abbr title="词元，模型处理的最小输入单元">token</abbr> 预训练(50 epoch、bs 64、AdamW 5e-4),下游接分类头全微调——「刻意保持架构简单以隔离 tokenizer 的贡献」。正文没有说明 FM 输入到底是量化后的离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 还是编码器连续 embedding,只有一句 "operates on the tokenized representation"。FM 预训练语料与 tokenizer 相同,总量(小时数)未披露。</p>
-<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>预训练数据</strong>(Appendix E):<abbr title="脑电图 Electroencephalogram">EEG</abbr> 13 个公开集(BCIC IV-1、Grasp-Lift、PhysioNet <abbr title="运动想象 Motor Imagery">MI</abbr>、bi2015a、Inria、Trujillo×2、SPIS、TUAR、Siena、TUEP、TUSZ,跨运动想象/<abbr title="事件相关电位 Event-Related Potential">ERP</abbr>/静息/伪迹/癫痫)+ <strong>235 h 自采 29 通道运动想象</strong>(私有);ECG 为 PTB + MIMIC-IV-ECG + Chapman-Shaoxing(不含 PTB-XL);EMG 为 emg2pose + emg2qwerty。统一重采样 <abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG 200 Hz、EMG 1000 Hz。算力:4×V100(DGX)。</p>
-<p><strong>重构对比</strong>(tokenzier 层面):</p>
-<ul>
-<li><strong>同数据对照</strong>(Table 12,与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 同语料同划分同预算):NeuroRVQ raw <abbr title="均方误差 Mean Squared Error">MSE</abbr> <strong>0.016</strong> vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 1.071(≈67×);delta 0.006 vs 1.561(注:<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 delta 带误差反高于其 raw 误差,口径未说明);</li>
-<li><strong>OOD 对照</strong>(Table 10,High Gamma 与 Pavlov 工作记忆两数据集):0.084/0.090 vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 1.985/2.004,六个频带全领先;</li>
-<li><strong>BrainOmni 对照</strong>(Table 11):同归一化下 0.275 vs 0.332——但只在 BrainOmni 的公开<strong>样本数据</strong>上比,不是系统基准。</li>
-</ul>
-<p><strong>组件消融</strong>(Table 2,从 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 式 baseline 逐项加料,验证 <abbr title="均方误差 Mean Squared Error">MSE</abbr>):</p>
-<table>
-<thead>
-<tr>
-<th>配置</th>
-<th><abbr title="脑电图 Electroencephalogram">EEG</abbr></th>
-<th>ECG</th>
-<th>EMG</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1 分支 1 码本,<abbr title="均方误差 Mean Squared Error">MSE</abbr> 相位+幅值(<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 式)</td>
-<td>1.509</td>
-<td>1.956</td>
-<td>1.996</td>
-</tr>
-<tr>
-<td>4 分支 8 码本,<abbr title="均方误差 Mean Squared Error">MSE</abbr> 相位+幅值</td>
-<td>0.946</td>
-<td>1.417</td>
-<td>1.651</td>
-</tr>
-<tr>
-<td>+ log(A) + 时域项</td>
-<td>0.603</td>
-<td>0.843</td>
-<td>1.000</td>
-</tr>
-<tr>
-<td>4 分支 8 码本,<strong>相位余弦损失</strong> + <abbr title="均方误差 Mean Squared Error">MSE</abbr> 幅值</td>
-<td>0.167</td>
-<td>0.287</td>
-<td>0.903</td>
-</tr>
-<tr>
-<td>全家桶(相位余弦 + log(A) + 时域)</td>
-<td><strong>0.035</strong></td>
-<td><strong>0.115</strong></td>
-<td><strong>0.447</strong></td>
-</tr>
-</tbody>
-</table>
-<p>多尺度架构贡献 37%(1.509→0.946),单换相位损失 5.7×(0.946→0.167),全组合相对 baseline 43×;且从「相位损失+<abbr title="均方误差 Mean Squared Error">MSE</abbr> 幅值」(0.167)到全家桶(0.035)还有 4.8× 空间——相位、对数幅值、时域三项强协同。</p>
-<p><strong>下游主结果</strong>(Table 1;<abbr title="脑电图 Electroencephalogram">EEG</abbr> 为 Lee et al. 2025a benchmark,10-fold 被试独立 CV,全微调 20 epoch,报 BAcc):</p>
-<table>
-<thead>
-<tr>
-<th>模型</th>
-<th>Motor</th>
-<th><abbr title="事件相关电位 Event-Related Potential">ERP</abbr></th>
-<th>Memory</th>
-<th>Sleep</th>
-<th>Eyes</th>
-<th>Mean</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
-<td>44.3±7.9</td>
-<td>50.0±0.0</td>
-<td>51.0±1.8</td>
-<td>–</td>
-<td>76.3±4.9</td>
-<td>–</td>
-</tr>
-<tr>
-<td>CBraMod</td>
-<td>61.4±10.4</td>
-<td>77.7±5.2</td>
-<td>57.4±3.8</td>
-<td>63.5±4.1</td>
-<td>83.9±4.1</td>
-<td>68.8±5.5</td>
-</tr>
-<tr>
-<td>MIRepNet</td>
-<td>68.9±8.6</td>
-<td>–</td>
-<td>–</td>
-<td>–</td>
-<td>–</td>
-<td>–</td>
-</tr>
-<tr>
-<td>EEGPT</td>
-<td>31.3±3.5</td>
-<td>66.8±14.6</td>
-<td>52.0±1.7</td>
-<td>63.4±4.4</td>
-<td>79.7±3.7</td>
-<td>58.7±5.6</td>
-</tr>
-<tr>
-<td>NeuroGPT</td>
-<td>68.2±8.3</td>
-<td>75.7±4.8</td>
-<td><strong>59.7±2.9</strong></td>
-<td>67.4±3.3</td>
-<td>82.7±3.6</td>
-<td>70.7±4.6</td>
-</tr>
-<tr>
-<td>BrainOmni</td>
-<td>58.5±5.8</td>
-<td>72.3±4.1</td>
-<td>51.8±2.3</td>
-<td>–</td>
-<td>85.2±2.2</td>
-<td>–</td>
-</tr>
-<tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>63.0±7.6</td>
-<td>82.2±4.0</td>
-<td>52.6±2.6</td>
-<td>65.2±3.7</td>
-<td>79.9±4.7</td>
-<td>68.6±4.5</td>
-</tr>
-<tr>
-<td><strong>NeuroRVQ-<abbr title="脑电图 Electroencephalogram">EEG</abbr></strong></td>
-<td><strong>70.0±7.3</strong></td>
-<td><strong>87.6±3.3</strong></td>
-<td>57.4±2.7</td>
-<td><strong>72.8±2.8</strong></td>
-<td><strong>86.9±2.6</strong></td>
-<td><strong>74.9±3.7</strong></td>
-</tr>
-</tbody>
-</table>
-<p>ECG(Table 1B,PTB-XL 10-fold 患者分层):43 类任务 NeuroRVQ-ECG Acc/BAcc <strong>79.17/58.33</strong>,对 ECGFounder 65.51/28.96、HuBERT-ECG 62.49/20.71——BAcc 翻倍;5 类任务 ECGFounder 领先(76.55/65.39 vs 70.19/64.50),论文如实承认。EMG(Table 1C,四任务全胜):Discrete Gestures BAcc 70.80 vs PhysioWave 54.70 / TinyMyo 39.70;NinaPro DB5 Acc 41.36 vs ~25;UCI-EMG 89.43。注意 EMG 协议改成<strong>被试级 7:1:2 切分</strong>(既有工作在被试内跨 repetition 切),绝对数整体低于文献值——作者自认且解释了 NinaPro 去掉 no-gesture 类的原因。from-scratch 消融(Table 14):NinaPro 32.8→41.4(预训练增量最大,恰是标注稀缺场景)、Discrete Gestures 65.9→70.8。</p>
-<p><strong>matched-data 下游对照</strong>(Table 15,两模型同数据同预算重训):Motor 0.700 vs 0.570(+13.0)、Eyes 0.869 vs 0.805(+6.4)大幅领先,但 Memory +0.8、Sleep +1.3 的优势远小于 Table 1 里的 +4.8/+7.6,<abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 未进对照——「同数据也赢」成立,但赢的幅度被数据混合放大过。</p>
-<p><strong>参数量</strong>(Table 16–18):<abbr title="脑电图 Electroencephalogram">EEG</abbr> 5.9M(NeuroGPT 79.5M、EEGPT 25.7M、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 5.8M、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 3.2M、CBraMod 4.9M 但分类头 40–73M);ECG <strong>264K</strong>(vs 30M 级基线);EMG 5.9M。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/neurorvq-framework.png" data-desc-position="bottom"><img alt="Figure 1 · NeuroRVQ tokenizer:多尺度时间编码器 → 共享嵌入 → Transformer → 逐分支 RVQ → Fourier 目标解码" src="../../assets/neurorvq-framework.png"></a></p>
 <p><em>Figure 1 · 下行为主干:Input Biosignal Patches → Multi-Scale Temporal Encoder(S 个分支)→ Transformer Encoder → 多尺度 patch 表示 p1..pS → Lookup operation 进 RVQ Codebooks → Tokenizer Decoder → Reconstructed Patches;上行为放大细节:S 个 Temporal Branch 输出 F1..FS,与 Shared Temporal/Spatial Embeddings 相加成 Combined Embeddings;右侧 RVQ 放大:每分支 R1..RN 各含 V1..VK 个码字。图中只画了架构,损失三项(对数幅值/相位/时域)不在图内</em></p>
@@ -2437,17 +2272,6 @@ z_1 = \arg\min_{v_1 \in V_1} \|\, \ell_2(p_1) - \ell_2(v_1) \,\|, \qquad p_{i+1}
 <li><strong>基准自建 + 参数量矛盾 + 无代码,可复现性打折</strong>。<abbr title="脑电图 Electroencephalogram">EEG</abbr> benchmark 出自同一批作者(Lee、Barmpas 都是本文作者),协议一致是优点,但基线健康度存疑:EEGPT Motor 31.3、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> <abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 50.0±0.0 都是退化水平,无法判断是模型不行还是协议不合适。ECG「264K 骨干胜过 30M 基线」是全文最惊艳的数字,却与 Table 13 的 hidden dimension 200/200/40(<abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/EMG)矛盾——264K 恰是 d=40 的体量,而 Table 18 又把 5.9M(d=200 的体量)记给 EMG;两处必有一处标错。PDF 正文无任何代码链接;</li>
 <li><strong>三个模态三套 tokenizer 三套 FM——这是「设计空间」论文而非「统一模型」论文</strong>。modality-adaptive 的代价是没有任何跨模态共享表征(作者自己列为 future direction),与 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/BrainOmni 的跨模态野心相反。真正可迁移的资产是四个旋钮的调法:采样率定 w、频谱宽度定 N、形态时标定卷积核组——这套方法论对想做「心肌/肌电版 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>」的人比 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 数字更有用。另外 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练语料混着 235 h 自采私有数据,这部分不可复现,复现实验时要有心理预期。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>:论文正文未附仓库(arXiv 2510.13068 v4);站内 tokenization 演进页记载项目页 <a href="https://neurorvq.github.io">neurorvq.github.io</a> 与 HF <a href="https://huggingface.co/ntinosbarmpas/NeuroRVQ">ntinosbarmpas/NeuroRVQ</a>——以项目页为准</li>
-<li><strong>数据</strong>:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 13 公开集(BCIC IV-1 / Grasp-Lift / PhysioNet <abbr title="运动想象 Motor Imagery">MI</abbr> / bi2015a / Inria / Trujillo×2 / SPIS / TUAR / Siena / TUEP / TUSZ)+ 235 h 自采 29ch(私有);ECG PTB + MIMIC-IV-ECG + Chapman-Shaoxing;EMG emg2pose + emg2qwerty;统一重采样 <abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG 200 Hz、EMG 1000 Hz</li>
-<li><strong>Tokenizer</strong>:S=4 分支(<abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG 核 21→3、EMG 51→3,8 滤波器,GroupNorm 4 组);RVQ N=8/8/16,每层 8192 × D=128;encoder 12 层 / decoder 3 层;λ_circle=0.1;bs 256,AdamW 5e-5→1e-5 cosine,100 epoch(warmup 10),wd 1e-4,grad clip 3,layer scale 0.001;4×V100</li>
-<li><strong>FM</strong>:对称掩码 0.5,50 epoch,bs 64,AdamW 5e-4(wd 0.05),encoder depth 12;表载 hidden 200/200/40、heads 10(与参数量表矛盾,见下);下游 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 全微调 20 epoch、10-fold 被试独立 CV;ECG PTB-XL 9+1 fold 患者分层;EMG 被试级 7:1:2、通道拼接+时间平均 + 单线性头</li>
-<li><strong>未披露</strong>:码本更新机制(EMA/重分配)与 L_Q 权重;straight-through 与否;FM 预训练损失具体形式(交叉熵?权重?);w→D=128 投影;ECG/EMG hidden 维度归属(264K ↔ d=40 矛盾);Wrist Velocity Regression 结果;FM 预训练语料总时长</li>
-<li><strong>关键数字</strong>:同数据 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 重构 <abbr title="均方误差 Mean Squared Error">MSE</abbr> 0.016 vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 1.071(67×);消融 baseline→full 1.509→0.035(43×),单换相位损失 0.946→0.167;<abbr title="脑电图 Electroencephalogram">EEG</abbr> mean BAcc 74.9(Motor 70.0 / <abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 87.6 / Sleep 72.8);ECG 43 类 BAcc 58.33(基线 28.96);EMG Discrete Gestures BAcc 70.80;λ_circle=0.1 使 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="均方误差 Mean Squared Error">MSE</abbr> 0.035→0.050;骨干 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 5.9M / ECG 264K(存疑)/ EMG 5.9M</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进(RVQ/多尺度缺口由本篇填补)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v2.06A8.52 8.52 0 0 0 4.05 9H2v6h2.06A8.5 8.5 0 0 0 9 19.95V22h6v-2.06A8.5 8.5 0 0 0 19.95 15H22V9h-2.06A8.52 8.52 0 0 0 15 4.05V2m-4 2h2v2h-2m-2 .25V8h6V6.25c1.18.61 2.14 1.57 2.75 2.75H16v6h1.75A6.4 6.4 0 0 1 15 17.75V16H9v1.75A6.4 6.4 0 0 1 6.25 15H8V9H6.25A6.4 6.4 0 0 1 9 6.25M4 11h2v2H4m14-2h2v2h-2m-7 5h2v2h-2"></path></svg></span> <a href="../brainrvq/">BrainRVQ(RVQ 分支后续:双域 + 层间自回归)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 7A1.5 1.5 0 0 1 4 5.5 1.5 1.5 0 0 1 5.5 4 1.5 1.5 0 0 1 7 5.5 1.5 1.5 0 0 1 5.5 7m15.91 4.58-9-9C12.05 2.22 11.55 2 11 2H4c-1.11 0-2 .89-2 2v7c0 .55.22 1.05.59 1.41l8.99 9c.37.36.87.59 1.42.59s1.05-.23 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.56-.23-1.06-.59-1.42"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(被对照 67× 的单码本 <abbr title="向量量化 Vector Quantization">VQ</abbr> 前作)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer(<abbr title="词元，模型处理的最小输入单元">token</abbr> 作输入的分岔路线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-5v2h5v13l-5-6v9h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-9 15H5l5-6m0-9H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5v2h2V1h-2z"></path></svg></span> <a href="../cbramod/">CBraMod(深骨干 tokenizer 的批评对象)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(连续 patch 路线的崩盘基线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

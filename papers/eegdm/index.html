@@ -1119,56 +1119,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 结果与消融
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3 结果与消融">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-tuev" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 TUEV：类不均衡是最大亮点
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 其他任务与范式对照
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-pca" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 消融：PCA 与增强互补而非各自为战
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2149,56 +2099,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 结果与消融
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3 结果与消融">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-tuev" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 TUEV：类不均衡是最大亮点
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 其他任务与范式对照
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-pca" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 消融：PCA 与增强互补而非各自为战
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2267,68 +2167,6 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegdm-arch.png" data-desc-position="bottom"><img alt="Figure 1 · EEGDM 总体架构：上半为主链（PCA 潜空间 → 扩散加噪 → DiT 去噪 → invPCA 生成）；下半为条件支路（增强视图 → Encoder → 表示 e 与时间步嵌入一起调制 DiT；右下为 adaLN-Zero 块细节）" src="../../assets/eegdm-arch.png"></a></p>
 <p><em>Figure 1 · encoder 表示 <span class="arithmatex">\( e \)</span> 与噪声时间步表示相加后经 MLP 回归 adaLN-Zero 的 <span class="arithmatex">\( \gamma, \beta \)</span>（缩放/平移）与 <span class="arithmatex">\( \rho \)</span>（残差前逐维缩放），条件信息以此方式调制每一层去噪</em></p>
-<h2 id="3">3 结果与消融<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<h3 id="31-tuev">3.1 TUEV：类不均衡是最大亮点<a class="headerlink" href="#31-tuev" title="Permanent link">#</a></h3>
-<p>TUEV 类别比最高 80:1，样本加权指标会失真，论文额外报 G-Mean 与 Macro AUC-ROC。微调版（25M）拿下 <strong>Balanced Accuracy 0.6826 / G-Mean 0.6443 / Macro AUC-ROC 0.9169 三项最佳</strong>；Weighted F1（0.7329）与 Kappa（0.5357）低于 CBraMod（0.8176 / 0.6581）——但逐类拆开看，CBraMod/EEGPT/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的高分以最稀有类（SPSW）召回近零为代价（10–18%），EEGDM 把 SPSW 召回拉到 <strong>50.3%</strong>。一个掩码重构模型在少数类上几乎是随机丢弃的。</p>
-<p>同分布对照实验补得很严谨：把 EEGDM 直接在 TUEV 训练集上预训练，Balanced Accuracy 达 <strong>79.71%</strong>，显著超过同设定、同名的 Puah-EEGDM-SSM（75.57%）——说明跨分布设定下的差距是 TUEG→TUEV 域偏移的代价，不是架构缺陷。</p>
-<h3 id="32">3.2 其他任务与范式对照<a class="headerlink" href="#32" title="Permanent link">#</a></h3>
-<ul>
-<li><strong>TUAB</strong>：Bal Acc 0.8180 与 AUC-PR 0.9085 均为第二（AUC-PR 的最佳是 Puah-EEGDM-SSM 0.9258），AUROC 0.8922 第三（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 0.9022 第二、CBraMod 0.9227 最佳），CBraMod 的 Bal Acc 0.8289 仍领先约 1.1pp；</li>
-<li><strong>DMER（情绪分布预测）</strong>：Chebyshev / Canberra / KL / Cosine / Intersection 五项最佳（Clark 第二）——连续情绪分布任务上扩散预训练的细粒度特征占优；</li>
-<li><strong>SHU-<abbr title="运动想象 Motor Imagery">MI</abbr></strong>：AUROC 0.6996 最佳，Bal Acc 0.6324 第二（CBraMod 0.6370）；<strong>CL-Drive</strong>：Bal Acc 与 Kappa 最佳；<strong>Seed-VII</strong>：Bal Acc 0.2300 最佳。Puah-EEGDM-SSM 在 SHU-<abbr title="运动想象 Motor Imagery">MI</abbr> 上接近随机水平（~50%）被移出对照；</li>
-<li><strong>训练范式对照</strong>（同一 25M <abbr title="脑电图 Electroencephalogram">EEG</abbr>-ViT-Large）：从零训练 0.5825 &lt; 线性探针 0.6010 &lt; 微调 0.6826——预训练贡献约 10 个点，收益来自预训练而非容量；</li>
-<li><strong>线性探针弱于微调</strong>（TUEV 0.6010 vs 0.6826）：生成预训练的表示需要微调兑现，与 CBraMod 冻结实验的结论方向一致。</li>
-</ul>
-<h3 id="33-pca">3.3 消融：PCA 与增强互补而非各自为战<a class="headerlink" href="#33-pca" title="Permanent link">#</a></h3>
-<p>TUEV 三种子消融（Bal Acc / G-Mean / Macro AUC-ROC）：</p>
-<table>
-<thead>
-<tr>
-<th>变体</th>
-<th>PCA</th>
-<th>增强</th>
-<th>Bal Acc</th>
-<th>G-Mean</th>
-<th>Macro AUC</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>✗</td>
-<td>✗</td>
-<td>0.6054</td>
-<td>0.3391 ± 0.2155</td>
-<td>0.8750</td>
-</tr>
-<tr>
-<td>B</td>
-<td>✓</td>
-<td>✗</td>
-<td>0.5805</td>
-<td>0.4578</td>
-<td>0.8592</td>
-</tr>
-<tr>
-<td>C</td>
-<td>✗</td>
-<td>✓</td>
-<td>0.5917</td>
-<td>0.4544</td>
-<td>0.8547</td>
-</tr>
-<tr>
-<td>D</td>
-<td>✓</td>
-<td>✓</td>
-<td><strong>0.6826</strong></td>
-<td><strong>0.6443</strong></td>
-<td><strong>0.9169</strong></td>
-</tr>
-</tbody>
-</table>
-<p>单独启用任一组件 Balanced Accuracy 反而略降，但 <strong>G-Mean 稳定性大幅改善</strong>（基线标准差 ±21.55%（百分数口径），且有一个种子 G-Mean≈0.03——意味着某类召回不到 3%）；联合使用才全面最佳。机理：PCA 作用于去噪目标（压缩至主导结构），增强作用于条件支路（保持跨视图共享信息），两者对齐后条件表示与目标空间的结构匹配。FDR 判别比佐证：0.319 / 0.210 / 0.287 / <strong>0.384</strong>。PCA 维度呈非线性关系（太少丢信息、太多混噪声），20 维最优。</p>
-<p><strong>生成能力的外溢</strong>：扩散模块可直接当数据增强器——在 CL-Drive 上用真实数据的 encoder 表示作条件合成样本，按比例混合使 Balanced Accuracy +5.4pp（53.57%→58.96%）。这是掩码重构模型做不到的。</p>
 <h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -2376,17 +2214,6 @@
 <li><strong>与 JET 连读的收获</strong>：两篇都在回答「生成目标能给 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 带来什么」，但分工清楚——JET 证明生成质量本身（约束设计），EEGDM 证明生成过程的副产品（条件表示）有下游价值。一个自然的组合实验是把 JET 的生理结构约束搬进 EEGDM 的去噪目标，检验类不均衡收益是否进一步增强；</li>
 <li><strong>线性探针弱的诚实呈现</strong>：TUEV 上线性探针 0.6010 仅略高于从零训练的 0.5825、远低于微调的 0.6826，论文没有掩饰。结合 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass「线性探针普遍不够」的结论，「预训练表示的价值靠微调兑现」在生成路线下依然成立。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：<a href="https://github.com/wangsc18/EEGDM">github.com/wangsc18/EEGDM</a>（含预处理脚本与训练配置）</li>
-<li><strong>预训练</strong>：TUEG 19 公共通道（沿用 CBraMod 的通道选取）、200Hz、30s 非重叠样本（570 个 1s patch）；PCA <span class="arithmatex">\( K=20 \)</span>（逐 patch 时间维，特征分解零训练）；encoder <abbr title="脑电图 Electroencephalogram">EEG</abbr>-ViT：1 层 1D conv（512 出、核 200、步幅 200）+ 8 层 Transformer（512/8 头/MLP 2048）+ 平均池化；DiT 8 块（512/8 头，adaLN-Zero，<span class="arithmatex">\( \rho \)</span> 零初始化）；<span class="arithmatex">\( T=1000 \)</span>；损失 <span class="arithmatex">\( \mathcal{L}_{\mathrm{simple}} + \mathcal{L}_{\mathrm{vlb}} \)</span>（<span class="arithmatex">\( \lambda = 1 \)</span>，Improved DDPM 式）</li>
-<li><strong>条件</strong>：<span class="arithmatex">\( m=3 \)</span> 源视图（原样本 + 零掩蔽 0.4s/通道 + 幅值缩放 <span class="arithmatex">\( U[0.8, 1.2] \)</span>），平均池化；<span class="arithmatex">\( e \)</span> 不 detach</li>
-<li><strong>优化</strong>：AdamW lr 5e-4 OneCycleLR（min 5e-5）、wd 0.05、batch 32、EMA 0.9999、梯度裁剪 1；4×A100 约 32.94 万步（约 113 小时）</li>
-<li><strong>下游</strong>：微调不冻结（统一 lr 5e-4，OneCycleLR，30/150 epoch）；线性探针冻结（lr 2e-4/5e-4/2e-3）；任务头为线性预测器；分类交叉熵、分布预测 KL</li>
-<li><strong>评测口径</strong>：TUEV/TUAB 用 16 双极导联官方划分；CL-Drive 10 折按被试划分（subject-wise）交叉验证；SHU-<abbr title="运动想象 Motor Imagery">MI</abbr>/DMER/Seed-VII 被试独立划分——类不均衡任务须同时报 G-Mean / Macro AUC-ROC</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../jet/">JET · 流匹配生成 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（生成轴线姊妹篇）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> <a href="../eegpt/">EEGPT（显式表示约束的轻量版对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../../basics/generative-lineage/">生成模型脉络（DDPM 线的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 落地）</a> ｜ :material-compress: <a href="../cbramod/">CBraMod（掩码重构主线对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

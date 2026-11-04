@@ -1038,17 +1038,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2099,17 +2088,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2226,101 +2204,6 @@
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{geo}} = \lambda_{\mathrm{tv}} \mathcal{L}_{\mathrm{tv}} + \lambda_{\mathrm{corr}} \mathcal{L}_{\mathrm{corr}} = \lambda_{\mathrm{tv}} \, \frac{1}{T} \sum_t \left\| \nabla_t \hat{x}_1 \right\|_1 + \lambda_{\mathrm{corr}} \big( 1 - \rho(x_1, \hat{x}_1) \big) \]</div>
 <p><strong>总目标</strong>：</p>
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{recon}} + \mathcal{L}_{\mathrm{cons}} + \mathcal{L}_{\mathrm{geo}} \]</div>
-<h2 id="4">4 实验与结果<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
-<p><strong>数据</strong>：TUH 语料的三个大规模子集，合计超 10,000 次临床 session，统一 16 通道：</p>
-<table>
-<thead>
-<tr>
-<th>数据集</th>
-<th>任务</th>
-<th>类别</th>
-<th>输入形状</th>
-<th>建模重点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TUAB</td>
-<td>正常/异常二分类</td>
-<td>2</td>
-<td>16 × 2000（10 s @200Hz）</td>
-<td>全局病理分布</td>
-</tr>
-<tr>
-<td>TUEV</td>
-<td>六类事件识别</td>
-<td>6（spsw/gped/pled/eyem/artf/bckg）</td>
-<td>16 × 1000</td>
-<td>细粒度瞬态波形</td>
-</tr>
-<tr>
-<td>TUSZ</td>
-<td>发作/背景二分类</td>
-<td>2</td>
-<td>16 × 1000</td>
-<td>极端非平稳发作动态</td>
-</tr>
-</tbody>
-</table>
-<p><strong>评价协议</strong>（三维度，都用领域定制口径）：</p>
-<ul>
-<li><strong>TS-FID</strong>（生成质量）：注意不是图像 FID——论文在附录 A.3 专门论证了为什么 ImageNet Inception 特征不适合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 谱图（频域<strong>不具备平移不变性</strong>：谱图上竖直平移意味着 10Hz α 节律变成 40Hz γ 节律，神经状态从放松变成主动加工，而 Inception 特征设计上恰恰是平移不变的）；也不适合直接在原始时域上算 FID（<strong>相位敏感</strong>：同一振荡状态相位略移就被判为不同）。TS-FID 因此在<strong>频谱特征空间</strong>计算 Fréchet 距离，对相位不变、严格惩罚功率谱与节律结构的偏差；</li>
-<li><strong>Silhouette</strong>（条件一致性）：用 δ/θ/α/β/γ 五频带 PSD 特征做聚类，检验生成样本是否按病理标签良好分离（排除模式坍塌）；</li>
-<li><strong>∆Acc</strong>（下游实用性）：用生成的合成数据增强一个 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> <abbr title="脑电图 Electroencephalogram">EEG</abbr> 分类器 <strong>CBraMod</strong>，看测试集准确率增益。</li>
-</ul>
-<p><strong>主结果</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>TUAB TS-FID ↓</th>
-<th>TUEV TS-FID ↓</th>
-<th>TUSZ TS-FID ↓</th>
-<th>Silhouette ↑</th>
-<th>∆Acc ↑</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN</td>
-<td>324.18</td>
-<td>448.65</td>
-<td>274.37</td>
-<td>0.667–0.891</td>
-<td>≈ 0 或负</td>
-</tr>
-<tr>
-<td>Vanilla Diffusion</td>
-<td>342.91</td>
-<td>415.82</td>
-<td>300.47</td>
-<td>0.703–0.746</td>
-<td>≈ 0</td>
-</tr>
-<tr>
-<td><strong>JET</strong></td>
-<td><strong>188.27</strong></td>
-<td><strong>235.86</strong></td>
-<td><strong>151.27</strong></td>
-<td><strong>0.983–0.995</strong></td>
-<td><strong>+0.017 ~ +0.032</strong></td>
-</tr>
-</tbody>
-</table>
-<p>三点值得注意：① TS-FID 相对最强基线降幅超过 40%；② 基线方法的 ∆Acc 基本为零甚至为负——生成的样本给分类器引入了噪声或分布偏移，而 JET 的合成数据是<strong>真正分布对齐</strong>的；③ 效率上 JET 32 条 10 秒样本 4.78 s，优于扩散的 7.01 s（<abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 4.12 s 略快但保真度与下游效用差得多），综合是保真度–延迟权衡最优。</p>
-<p><strong>生理结构分析</strong>（论文最有说服力的部分，逐条对应开头的三大挑战）：</p>
-<ul>
-<li><strong>频谱</strong>：生成 PSD 在 δ 频段（0–5Hz，含高幅病理慢波）紧贴真值、无基线失真；α 频段（8–13Hz）能复现出<strong>清晰的 α 峰</strong>而非塌成平滑 1/f 曲线，说明学到了具体的节律特征；15Hz 以上（β/γ）生成谱相对真值<strong>轻度衰减</strong>，论文的解释是选择性地抑制了无结构的高频成分（真实记录该段常被肌电与传感器噪声污染），属于「优先保留生理有意义动态」而非谱坍塌；</li>
-<li><strong>时间动态</strong>：用通道聚合 RMS 包络的线性斜率、以及首末四分位的一二阶矩漂移构造统计量，与留出真数据比 1-Wasserstein 距离（以真对真划分为经验下界）。JET 的三个漂移距离（0.015/0.021/0.018）都在真对真下界的 <strong>2 倍以内</strong>，而 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN（0.065/0.078/0.071）与扩散（0.051/0.063/0.058）明显更远；</li>
-<li><strong>幅度分布</strong>：log-density 直方图显示生成样本同时复现了尖锐的中心峰与重尾衰减；群体多样性上生成与真实的谱方差置信区间大幅重叠，说明没有模式坍塌（高频段生成分布略窄，与上面的「保守约束」一致）。</li>
-</ul>
-<p><strong>消融</strong>：</p>
-<ul>
-<li><strong>噪声空间拓扑</strong>：零噪声初始化 δ(0) 灾难性失败（TS-FID 1615/1964/1958 vs 高斯的 188/236/151）。论文从拓扑角度解释：从单个点出发要把退化的分布展开成复杂多模态分布，是<strong>不可表示的一对多映射</strong>，连续流做不到；高斯先验有全空间支撑，才能把概率质量平滑输运到目标分布；</li>
-<li><strong>约束层级</strong>：只用 <code>L_recon</code> 最差（TUEV 287.81）——纯逐像素距离导致均值化、丢失高频纹理；单项添加中结构约束（<code>L_tv</code>、<code>L_corr</code>）收益最大，<code>L_tv</code> 大幅压高频噪声、<code>L_corr</code> 保证相位对齐；<code>L_cons</code> 是必要的能量包络正则（单独追求平滑或相关会得到物理上不合理的信号）。四项齐全最好（235.86）；</li>
-<li><strong>约束设计 vs tokenizer 式损失</strong>：把 JET 的约束换成 BrainOmni 式的 tokenizer 损失集、同一骨干重训，三个基准全面变差（314.87/471.15/369.28）。论文诚实声明「单个项（L1 重构、Pearson 相关）在先前工作中并非首创」，但强调<strong>这套组合是与原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 结构对齐的</strong>——增益来自约束设计而非单纯增加损失项；</li>
-<li><strong>Patch 大小</strong>：P ∈ {50, 100, 200} 的分布保真度稳定，更细的 patch 对瞬态事件形态略好但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 数翻倍/四倍；P=400 全局与局部质量都退化，故默认 P=200 作为效率–保真折中。</li>
-</ul>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/jet-arch.png" data-desc-position="bottom"><img alt="Figure 7 · JET 架构：原始 EEG → patchify + 加噪 → 线性投影 embedding → L 层 Transformer 块 → unpatch 输出预测波形" src="../../assets/jet-arch.png"></a></p>
 <p><em>Figure 7 · JET 架构：patch 化 tokenization（保留通道身份）→ Transformer 堆叠 → 反 patch 投影回信号维度</em></p>
@@ -2367,17 +2250,6 @@
 <li><strong>论文最诚实的部分</strong>是承认单独损失项并非首创、以及明确报告高频衰减并给出「选择性抑制噪声」的解释。高频段那个 15Hz 以上轻度衰减，反过来也说明当前约束<strong>偏向保守</strong>：TV 正则本质上是惩罚高频，和「保留高频瞬态信息」存在张力。若我要生成对高频敏感的范式（如高频振荡 HFO、γ 节律研究），这个 <code>λ_tv</code> 需要重新标定——这是一个现成的改进切口。（注：附录 D.2 对 &gt;20Hz 的表述与正文 §4.3(3) 的「轻度衰减」不一致，引用时以正文为准。）</li>
 <li><strong>一个可以补的实验</strong>：论文的生理分析缺「生成数据是否真的改善<strong>罕见类</strong>下游性能」的分层报告——∆Acc 是整体准确率，而 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 临床价值恰在罕见病理事件。类别均衡采样 + 生成增强的组合，最该证明的正是「罕见类召回率提升」。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>项目页</strong>：<a href="https://y-research-sbu.github.io/JET/">y-research-sbu.github.io/JET</a>（代码/权重以项目页为准）；论文 arXiv:2605.21280</li>
-<li><strong>关键超参</strong>：AdamW；lr 5×10⁻⁵；batch 256；200 epoch；warmup 5；betas (0.9, 0.95)；EMA 0.9999；label drop 0.1；训练时 <span class="arithmatex">\(t\)</span> 采样 <span class="arithmatex">\(P_{\mathrm{train}}(\mu, \sigma) = (-0.8, 0.8)\)</span>；最小时间 <span class="arithmatex">\(t_\epsilon = 5 \times 10^{-2}\)</span>；patch P = 200</li>
-<li><strong>数据</strong>：TUAB 16×2000（10s @200Hz）/ TUEV 与 TUSZ 16×1000；统一 16 通道；原始幅值统乘 0.01 归一化</li>
-<li><strong>模型</strong>：129.9M 参数；时间轴 patch 数 N = T/P 为 10（TUAB）/ 5（TUEV·TUSZ），但因保留通道身份，实际进入 Transformer 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 序列长度是 C·N = <strong>160 / 80</strong>；adaLN 注入时间与类别条件</li>
-<li><strong>算力参考</strong>：单张 <strong>B200</strong>；训练显存 21.5GB（TUAB）/ 12.5GB（TUEV/TUSZ）；1.16 s/step（batch 256）；推理 32 条 4.78 s（149 ms/条，约 67× 实时）</li>
-<li><strong>推荐起步</strong>：先复现 L1 重构 + <code>L_corr</code> + 类别均衡采样，再加 <code>L_tv</code> / <code>L_cons</code>；<code>λ_tv</code> 需按任务频段重标定</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>（跨领域：时频图 + <abbr title="大语言模型 Large Language Model">LLM</abbr>）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.78 15.3 6 6 2.11-2.16-6-6zm3.72-5.2c-.39 0-.81-.05-1.14-.19L4.97 21.25l-2.11-2.11 7.41-7.4L8.5 9.96l-.72.7-1.45-1.41v2.86l-.7.7-3.52-3.56.7-.7h2.81l-1.4-1.41 3.56-3.56a2.976 2.976 0 0 1 4.22 0L9.89 5.74l1.41 1.4-.71.71 1.79 1.78 1.82-1.88c-.14-.33-.2-.75-.2-1.12a3.49 3.49 0 0 1 3.5-3.52c.59 0 1.11.14 1.58.42L16.41 6.2l1.5 1.5 2.67-2.67c.28.47.42.97.42 1.6 0 1.92-1.55 3.47-3.5 3.47"></path></svg></span> <a href="../../basics/lora/">LoRA · 低秩适配</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../basics/attention-alternatives/">Attention 替代方案</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/">CBraMod 作为本文下游裁判 → <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 笔记</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

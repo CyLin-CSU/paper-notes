@@ -852,67 +852,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与验证
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3 实验与验证">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 仿真：三套考核，两套有真值
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32-hcp-human-ebc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 真实数据：HCP 上的 Human EBC
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-ccep" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 CCEP：唯一贴到真实刺激的验证
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 疾病生物标志探索（结果平平，作者照写）
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2127,67 +2066,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与验证
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3 实验与验证">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 仿真：三套考核，两套有真值
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32-hcp-human-ebc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 真实数据：HCP 上的 Human EBC
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-ccep" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 CCEP：唯一贴到真实刺激的验证
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 疾病生物标志探索（结果平平，作者照写）
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2274,27 +2152,6 @@
 <li><strong>状态依赖</strong>。真实刺激的响应随脑状态变（论文引了颅内刺激响应随状态变化的病例证据，Scangos et al. 2021 的抑郁症病人单例报道），所以他们在每个时刻的状态各扰动一次、再平均——EC 是「典型状态下」的平均效应，不是某一时刻的效应。次数上这意味着每个源区要做 T 次扰动（单被试 4 个 session 共约 5,000 个时间点），期望就是对这批实际流经的状态取平均；</li>
 <li><strong>扰动幅度小</strong>。Δ=0.5σ 落在小信号区，恰好对应 Jacobian 解释；但 CCEP 的真实刺激是强扰动，两种扰动机制的口径差异是后文验证的一个隐性前提。</li>
 </ol>
-<h2 id="3">3 实验与验证<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<h3 id="31">3.1 仿真：三套考核，两套有真值<a class="headerlink" href="#31" title="Permanent link">#</a></h3>
-<p>真值 EC 的取得方式与 NPI 同构——直接在生成模型上「扰动-记录」。这个对称设计干净，但要注意它验证的是「NPI 能恢复<strong>生成模型意义上的</strong>扰动响应」，不是生物真值。</p>
-<p><strong>① RNN 生成数据</strong>。<span class="arithmatex">\( dx = [-x + W h(x)]dt + \sigma d\xi \)</span>，<span class="arithmatex">\( h \)</span> 是 tanh，权重矩阵 W（高斯 <span class="arithmatex">\( \mathcal{N}(0, n^{-1/2}) \)</span>）当 SC。NPI-EC 对真值 EC <strong>r=0.95</strong>，GC 明显更差（Wilcoxon p&lt;10⁻³）。两个附带结论：EC-SC 相关显著强于 FC-SC（FC 无方向且有伪连接）；EC 不与 SC 完全重合，作者归因于非线性动力学与噪声——这其实是合理现象而非缺陷。</p>
-<p><strong>② Sanchez-Romero 公开合成 BOLD</strong>（5–10 节点、9 种含环拓扑，无 EC 真值，用二值化后判别 SC 有无的 AUC 评估）：NPI 的 <strong>AUC 接近 1</strong>，九种拓扑全部显著优于 GC 与 DCM。DCM 在这个考核里被比下去有结构性原因——节点数一多，DCM 的参数空间爆炸，本来就不适合大规模网络。</p>
-<p><strong>③ 66 节点全脑模型（WBM）</strong>。Deco 动态平均场模型 + DSI 真实 SC，HRF 卷积出 BOLD（TR=0.72，与 HCP 一致）。HRF 有延迟，真值 EC 在 t+4·TR 读出。代理脑单步预测精度随步数衰减，但自由生成的 FC 仍与仿真 FC 相关 r=0.81；NPI-EC 与真值高度一致且胜 GC（p&lt;10⁻³）。</p>
-<p><strong>稳健性</strong>（RNN 实验）：对扰动幅度不敏感，噪声增大只缓慢变差；数据长度与网络规模是硬约束——网络越大，可靠推断需要的数据越多。这句话在 Discussion 里被作者自己重申为方法的主要限制。</p>
-<h3 id="32-hcp-human-ebc">3.2 真实数据：HCP 上的 Human EBC<a class="headerlink" href="#32-hcp-human-ebc" title="Permanent link">#</a></h3>
-<p>HCP S1200 的 800 人静息态 fMRI（TR 0.72 s，4×15 min，ICA-FIX 去噪，0.01–0.1 Hz 带通），MMP 1.0 图谱 360 个皮层区（19 个皮层下区也放进训练输入以减少未观测区的偏差，EC 只在 360 区上报告）。逐被训代理、逐被扰出 EBC、再群平均。</p>
-<ul>
-<li><strong>结构支撑</strong>：EC（绝对值）对 Demirtaş 等 DSI 衍生的 SC，<strong>r=0.42</strong>。对 fMRI 推出的量来说这个数不低，但也要如实说：r²≈0.18，EC 与 SC 之间还隔着八成以上的未解释方差；</li>
-<li><strong>跨数据集</strong>：HCP 群体 EBC 与 ABCD（2000 人）的 <strong>r=0.87</strong>——不同设备、不同人群、不同年龄段，群体模式的稳定性过得去；</li>
-<li><strong>个体水平</strong>：55% 的 EC 连接在 800 人上显著非零（Bonferroni 校正）；同一被试训练两个不同初始化的 ANN，EC 一致（排除训练随机性）；数据切半的跨 session 一致性<strong>高于</strong>跨被试相关性——方法噪声小于个体差异，EC 才有资格谈个体化。边缘网络（LIM）可靠性最低，作者归因于该区 fMRI 信噪比低，归因诚实；</li>
-<li><strong>图谱稳定性</strong>：Schaefer 100–1000 区上 EC 高度稳定。</li>
-</ul>
-<p><strong>EBC 本身的发现</strong>：EC 强度对数正态分布（AIC 四分布比选出的，与小鼠/猕猴轴突示踪的 SC 分布一致）；兴奋 EC 最强处多在网络内部，抑制 EC 最强处几乎全在网络间且全为跨半球；兴奋最大强度归一化到 1 时抑制只有 0.22；二值化后 73% 的连接是双向的，与皮层 SC 的经典结论相符。这些分布层面的结论与独立来源的解剖学知识对得上，是我认为比单点相关更可信的一类证据。</p>
-<h3 id="33-ccep">3.3 CCEP：唯一贴到真实刺激的验证<a class="headerlink" href="#33-ccep" title="Permanent link">#</a></h3>
-<p>F-TRACT 项目聚合 613 位癫痫病人的皮层电刺激（CCEP）+ SEEG 记录，给出群体级刺激传播矩阵。NPI-EC（HCP 群体级，同图谱）对 CCEP 左半球 <strong>r=0.33</strong>，FC 对 CCEP 只有 <strong>r=0.20</strong>；dlPFC 作源的输出 EC、PCC 作靶的输入 EC 也都比 FC 更贴 CCEP。</p>
-<p>0.33 不高。但考虑到两边差异悬殊的口径——静息态相关的推断 vs 侵入性强刺激的传播、健康人 vs 癫痫病人、个体刺激 vs 群体聚合——能稳定高出 FC 一截，本身就是「EC 沾到了因果边」的证据。FC 0.20 的基线也提醒：<strong>结构支撑不等于因果</strong>，r=0.42 的 EC-SC 相关里有一部分只是 SC-FC 本来就有的共变。</p>
-<h3 id="34">3.4 疾病生物标志探索（结果平平，作者照写）<a class="headerlink" href="#34" title="Permanent link">#</a></h3>
-<p>ABIDE（自闭症）与 ADNI（阿尔茨海默）上，EC 分类病人/对照的表现<strong>与 FC 相当</strong>，没有超越。论文把这写成「EC 可作 FC 的可行替代」，但「相当」就是相当——方向性信息能否兑现为临床增益，这里没有给出证据。这两页值得用挑剔的眼光读。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/surrogate-npi-framework.png" data-desc-position="bottom"><img alt="Figure 1 · NPI 框架：观测信号 → 训练代理脑 → 虚拟扰动 → 全脑 EC" src="../../assets/surrogate-npi-framework.png"></a></p>
 <p><em>Figure 1 · NPI 全流程：(a) 观测的多脑区信号；(b) MLP 学单步动力学；(c) 逐区虚拟扰动；(d) 读出全脑 EC。(e,f) 递归生成验证 FC（r=0.97）；(g,h) 扰动响应差给兴奋（b→a 升）/抑制（b→c 降）；(i) 合成数据上 NPI-EC 对真值 r=0.95；(j) 真实 fMRI 上的 seed-based EC</em></p>
@@ -2347,18 +2204,6 @@
 <li><strong>fMRI 时间尺度上的「因果」要打折听</strong>：EC 读在 t+1，即 0.72 s 后，而神经因果在毫秒级。HRF 把血流动力学卷进了方向性里（作者在 Supp Fig 13、14 里做了带 HRF 卷积、正/负双向冲激的扰动变体，算意识到了）。NPI 胜 GC 的部分原因可能是它至少对每个状态做了响应平均，比 GC 的全时段线性回归少受平稳性假设拖累——但把 0.72 s 尺度的方向叫「神经因果传播」，措辞上我认为超出了证据；</li>
 <li><strong>对本站主线的真实启发不在方法在立意</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型社区（含站内读的一串）评价模型好不好的手段全是生成质量与下游判别精度，全是「预测性」指标。NPI 提供了第三种评价：训完的模型能否回答干预性问题（论文 Discussion 末尾也把「对训练后的代理模型施加更多样的干预」列为下一步工作）。一个在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上预测得准的模型未必在「扰动谁、谁会变」上给出对的结构——如果哪天有人对 BrainGPT 类模型做系统性扰动分析并与真实刺激数据对账，那会是「神经基础模型作为科学工具」的第一次真正考试。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：https://github.com/ncclab-sustech/NPI （含自产合成数据；PyTorch，单卡 RTX 4080 级别即可）</li>
-<li><strong>代理</strong>：MLP 3N → 2N → 0.8N → N；输入 = 前 3 个时间步；<abbr title="均方误差 Mean Squared Error">MSE</abbr> 单步损失；Adam lr=10⁻³，60 epoch，batch 100</li>
-<li><strong>扰动</strong>：加在输入端当前时刻分量（历史步/权重不动），逐源区逐时刻冲激 <span class="arithmatex">\( \Delta e_i \)</span>，Δ = 0.5×BOLD 标准差；每源区约 T≈5×10³ 次（4×15 min ÷ 0.72 s），读 t+1 响应差、对全部状态取平均（WBM 口径下读 t+4·TR）</li>
-<li><strong>数据口径</strong>：HCP S1200 800 人 rs-fMRI（TR 0.72 s，4×15 min，ICA-FIX，0.01–0.1 Hz）；MMP 360 皮层区 + 19 皮下区入训练；预测评估用前 3 session + 第 4 session 前 60% 训、末 40% 测；EC 推断用全部 4 session</li>
-<li><strong>关键数字</strong>：模型 FC r=0.97（HCP）/ 0.81（WBM）；NPI-EC 对真值 r=0.95（RNN）；EC-SC r=0.42；HCP-ABCD r=0.87；EC-CCEP r=0.33 vs FC-CCEP 0.20</li>
-<li><strong>统计</strong>：相关性用 t 检验；方法对比用 Wilcoxon 符号秩（p&lt;10⁻³）；个体显著性 Bonferroni 校正；分布拟合按 AIC 选型</li>
-<li><strong>复现要点</strong>：二值化 EBC 的阈值是「保留 80% 绝对强度」（绝对值 0.06）；扰动响应有状态依赖，漏掉逐状态平均会引入偏差；SC 对照用 Demirtaş et al. 的 DSI 流线矩阵（0–1 缩放后 log 变换）</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../braingpt/">BrainGPT（同样训代理模型，但作表征工具而非实验对象）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../eegdm/">EEGDM（模型作生成工具 vs 本篇作科学工具）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../eegmoe/">EEGMoE（被试间差异的另一种处理）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

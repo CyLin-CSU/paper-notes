@@ -1073,28 +1073,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验设置
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2110,28 +2088,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验设置
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2207,85 +2163,6 @@
 <p><strong>Stage 1 自监督预训练</strong>：随机掩码 embedding，SSMoE 重构被掩表示，L1 重构损失 + <strong>负载均衡辅助损失</strong>（防 Top-K 路由把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 都塞给少数过载专家）：</p>
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{pretrain}} = \mathcal{L}_1 + \alpha \mathcal{L}_{\mathrm{aux}}, \qquad \alpha = 1 \times 10^{-4} \]</div>
 <p><strong>Stage 2 有监督微调</strong>：继承预训练的域解耦编码器，接<strong>单层线性分类头</strong>，交叉熵微调。</p>
-<h2 id="3">3 实验设置<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p>9 个数据集、3 类任务，<strong>6 个用于预训练、3 个用于微调验证</strong>（LOSO 逐被试交叉验证，A800-80G）：</p>
-<table>
-<thead>
-<tr>
-<th>任务</th>
-<th>预训练数据</th>
-<th>微调/验证数据</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>情绪识别 ER</td>
-<td>DREAMER（22.9h）、SEED（45h）、MAHNOB-HCI（12.2h）</td>
-<td>DEAP（21.3h，valence/arousal 二分类 ×2）</td>
-</tr>
-<tr>
-<td>运动想象 <abbr title="运动想象 Motor Imagery">MI</abbr></td>
-<td>EEGMMIDB（47.2h）、BCIC IV-1（8.2h）</td>
-<td>BCIC4-2a（5.8h，四分类）</td>
-</tr>
-<tr>
-<td>心理负荷 MWL</td>
-<td>EEGMat（6h）</td>
-<td>STEW（3.8h，三分类）</td>
-</tr>
-</tbody>
-</table>
-<p><strong>注意预训练总量只有约 142 小时</strong>——「large-scale」在这里是相对这 9 个小数据集而言，与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 2500h 不是一回事。</p>
-<h2 id="4">4 结果<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>基准</th>
-<th>EEGMoE</th>
-<th>专用 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 对照（论文口径）</th>
-<th>复现的自监督基线</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>DEAP-V（ACC%）</td>
-<td><strong>59.40 ± 7.10</strong></td>
-<td>EEGFuseNet 56.44（+2.96）</td>
-<td>EEGNet 57.18 / <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 53.35 / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 56.83</td>
-</tr>
-<tr>
-<td>DEAP-A（ACC%）</td>
-<td><strong>62.73 ± 11.39</strong></td>
-<td>EEGFuseNet 58.55（+4.18）</td>
-<td>EEGNet 61.33 / <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 60.88 / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 58.72</td>
-</tr>
-<tr>
-<td>BCIC4-2a（ACC%）</td>
-<td><strong>47.92 ± 11.53</strong></td>
-<td>DeepCNN 41.91（+6.01）</td>
-<td>EEGNet 45.66 / Seizure-MoE 46.23 / <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 41.10 / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 29.59</td>
-</tr>
-<tr>
-<td>STEW（ACC%）</td>
-<td><strong>72.41 ± 18.99</strong></td>
-<td>STEW 模型 69.20（+3.21）</td>
-<td>LGGNet 71.85 / <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 69.70 / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 52.49</td>
-</tr>
-</tbody>
-</table>
-<p>（注：论文的对照口径是与 EEGFuseNet/DeepCNN/STEW 模型三个专用 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 比；DEAP-A 表内另有 TAS-Net 60.51 高于 EEGFuseNet，故 62.73 对全表最强的领先幅度小于 4.18。）</p>
-<p>对自监督同行的优势最有信息量：<strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 在 BCIC4-2a 上复现只有 29.59</strong>。作者的归因值得记住——<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的预训练语料以癫痫临床数据为主，与下游认知任务差异过大，域失配拖垮了迁移。</p>
-<p><strong>消融</strong>（avg 为四基准平均 ACC）：</p>
-<ul>
-<li><strong>预训练有效</strong>：从零训练 59.25 vs 继承预训练 60.62；</li>
-<li><strong>两组专家都不可少</strong>（总专家数固定为 4 排除参数量干扰）：去掉 Specific 组 59.73、去掉 Shared 组 58.18、默认 Top-K 2 + Shared 2 为 60.62；</li>
-<li><strong>SSMoE 架构本身有效</strong>：与「激活参数等价」模型（0.89M，59.73）和「总参数等价」模型（1.68M，58.91）比，EEGMoE（总 1.68M/激活 0.89M，60.62）以相当或更低的计算量胜出——收益来自域解耦而非参数量；</li>
-<li><strong>专家数量</strong>：候选 6 / Top-K 2 / Shared 2 最优；Top-K=2 即够（每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 组合少数域专家即可），Shared 多于 1 个普遍有益；</li>
-<li><strong>预训练目标很鲁棒</strong>：L1（60.62）&gt; 相对定位对比 RP（60.10）&gt; L2（59.66）&gt; 时序打乱 TS（59.33）&gt; Cosine（58.33），差异不大——说明收益来自架构对多种预训练范式的兼容性；</li>
-<li><strong>融合方式</strong>：简单相加（60.62）&gt; 注意力融合（57.15）&gt; 门控融合（56.46）——复杂融合反而有害；</li>
-<li><strong>掩码率</strong>：0.4 最优，0.2→0.8 呈倒 U 型（太低训练不足，太高重构太难）。</li>
-</ul>
-<p><strong>可视化（最有说服力的证据）</strong>：Fig. 5 显示 ER 偏好激活专家 1/3/5、<abbr title="运动想象 Motor Imagery">MI</abbr> 偏好 1/4/6（少用 3/5）、MWL 偏好专家 2（少用 1）；Fig. 6 反向看每个专家的「业务构成」——专家 1/3/5 主要处理 ER、专家 2/4 主要处理 MWL、专家 6 主要处理 <abbr title="运动想象 Motor Imagery">MI</abbr>。两个视角互相印证：<strong>路由真的把任务分配给了不同的专家</strong>。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegmoe-arch.png" data-desc-position="bottom"><img alt="Figure 2 · EEGMoE 总体架构：4-D 预处理 → 空间/频率编码器 → 域解耦编码器（MHSA + SSMoE 块：Top-K Specific 专家组 + Soft Shared 专家组）" src="../../assets/eegmoe-arch.png"></a></p>
 <p><em>Figure 2 · SSMoE 块细节：Specific Router 按 <abbr title="词元，模型处理的最小输入单元">token</abbr> 选 Top-K=2 个特定专家，Shared Router 让 2 个共享专家对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 全程参与</em></p>
@@ -2332,16 +2209,6 @@
 <li><strong>掩码的是 embedding 而非原始信号</strong>：预训练目标是重构空间/频率编码器输出的 embedding，不是重建波形。这与 CBraMod（重构 raw patch）形成对比——重构 embedding 更容易（信息已压缩），但学到的动态也受限于编码器的表达能力；</li>
 <li><strong>DEAP 上 STD 高达 7–11 个百分点</strong>（LOSO 逐被试波动大），和基线同量级——跨被试方差这个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 老大难并没有被 MoE 化解，域解耦按数据集/任务分工，但「被试内差异」这层域没有被显式建模。IDMMOE 按被试分配子空间的思路其实可以叠上来。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：论文声明「code and model will be released」，精读时未见公开仓库链接</li>
-<li><strong>模型</strong>：空间/频率编码器 MLP hidden 64→128；域解耦编码器 hidden 512、注意力头 4、Top-K 2、Shared 专家 2、掩码率 0.4；总参数 1.68M / 激活 0.89M</li>
-<li><strong>训练</strong>：AdamW；预训练 lr 1e-4、5 epoch、warmup 0.05、batch 64、负载均衡权重 1e-4；微调 lr 1e-3、batch 128、DEAP 35 / BCIC4-2a 50 / STEW 15 epoch；线性分类头 + 交叉熵</li>
-<li><strong>数据</strong>：预训练 6 数据集约 142h；微调 DEAP / BCIC4-2a / STEW，LOSO 交叉验证；4-D 输入（时间 × 5 频带 × 9×9 脑地图）</li>
-<li><strong>算力参考</strong>：NVIDIA A800-SXM4-80G；模型极小，消费级单卡可复现</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../luna/">LUNA（拓扑统一路线，对照阅读）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../jet/">JET（流匹配生成）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十一篇方法对比</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

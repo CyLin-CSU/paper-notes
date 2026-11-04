@@ -520,17 +520,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#25" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2043,17 +2032,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#25" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2148,16 +2126,6 @@
 <li>对称掩码策略（效率 + 数据多样性）；</li>
 <li>大规模 scaling 实验（数据量 1~2500 小时 × 模型 Base/Large/Huge），证实 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 领域也遵循 scaling law（Huge 模型在万小时级数据上仍会持续提升）。</li>
 </ol>
-<h4 id="25">2.5 实验与结果<a class="headerlink" href="#25" title="Permanent link">#</a></h4>
-<ul>
-<li>下游：TUAB（异常检测）、TUEV（事件分类）、SEED-V（情绪）、MoBI（步态回归）；</li>
-<li>大幅领先 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（其 TUEV 0.5281/Kappa 0.5273、TUAB 0.7959），且随模型规模递进：TUEV 0.6409（Base）→0.6616（Huge）、Kappa 0.6637→0.6745，TUAB 0.8140（Base）→0.8258（Huge）；</li>
-<li>重要消融：</li>
-<li>去掉 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 直接重构原始信号/频谱（Setting 2/3）：低层任务（TUAB）还行，高层任务（TUEV）明显掉——<strong>离散语义 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr> 对高层任务至关重要</strong>；</li>
-<li>去掉空间 embedding：预训练不收敛，下游大幅下降；</li>
-<li>线性探针崩到 0.346；微调后 8 层（0.6541）与 4 层（0.6611）和全量微调（0.6409）相当甚至略好 → 依赖微调但不必全量。</li>
-</ul>
-<hr>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/labram-arch.png" data-desc-position="bottom"><img alt="Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer" src="../../assets/labram-arch.png"></a></p>
 <p><em>Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer</em></p>
@@ -2192,15 +2160,6 @@
 <li>线性探针在 TUEV 崩到 0.346，说明其表示与全量微调强绑定——对比 EEGPT 把 linear probing 做成核心卖点。</li>
 <li>对称掩码让一个样本产生 mask/补集两个互补视角，既是效率技巧（省一次 tokenizer 前向）也是数据增强（大模型受益更明显）。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：<a href="https://github.com/935963004/LaBraM">github.com/935963004/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>（PyTorch 2.0.1 + CUDA 11.8）</li>
-<li><strong>关键超参</strong>：码本 8192×64；patch 200 点（1s）；掩码率 0.5 + 对称掩码；Base 5.8M（12 层/200 维/10 头）；lr 5e-4 cosine；EMA 0.996；温度未用于掩码（交叉熵）</li>
-<li><strong>数据</strong>：约 2500h / 20 数据集（TUSZ 1138h 为主力）；下游 TUAB/TUEV 划分严格沿用 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></li>
-<li><strong>算力参考</strong>：8×A800；Huge 369M 需分布式并行（论文未披露细节，此为推测）</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../biot/">上一篇：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../eegpt/">下一篇：EEGPT</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

@@ -695,17 +695,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#55" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2043,17 +2032,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#55" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2147,13 +2125,6 @@
 <li><abbr title="脑电图 Electroencephalogram">EEG</abbr> 词表并入 <abbr title="大语言模型 Large Language Model">LLM</abbr> 词表的「外语」接入范式；配 VAE/ELBO 理论解释；</li>
 <li>最大变体 1.7B 参数（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 信号处理领域当时最大）。</li>
 </ol>
-<h4 id="55">5.5 实验与结果<a class="headerlink" href="#55" title="Permanent link">#</a></h4>
-<ul>
-<li>下游 6 数据集：TUAB、TUEV、SEED（情绪）、HMC（睡眠分期）、Workload（认知负荷）、TUSL（慢波分类）；</li>
-<li>单模型多任务推理，性能接近多数单任务基线（作者坦言仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>，但具备零样板泛化到新任务/新 prompt 的潜力）；</li>
-<li>消融：多通道自回归预训练对所有任务显著有益；指令选项乱序（shuffle）在数据充足的 TUEV/HMC 上鲁棒（说明模型确实理解了问题语义），小数据 TUSL 上受损；预训练 20 epoch 最优；注意力可视化显示浅层处理文本问题、深层聚焦 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 生成答案，多数数据集信息汇聚到 Cz 通道。</li>
-</ul>
-<hr>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/neurolm-tokenizer.png" data-desc-position="bottom"><img alt="Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（GRL 梯度反转）" src="../../assets/neurolm-tokenizer.png"></a></p>
 <p><em>Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（<abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 梯度反转）</em></p>
@@ -2188,15 +2159,6 @@
 <li><abbr title="脑电图 Electroencephalogram">EEG</abbr>-text 没有成对数据 → 只能做粗粒度的空间对齐，这是当前范式的天花板；附录展望了'用预定义句子描述 <abbr title="脑电图 Electroencephalogram">EEG</abbr> + 对比损失'的细粒度对齐方向。</li>
 <li>阶梯掩码是'把语言的自回归搬到多通道信号'的干净答案：同通道 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测同通道下一时刻，每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 可见所有通道的当前与历史。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：<a href="https://github.com/935963004/NeuroLM">github.com/935963004/NeuroLM</a>（PyTorch 2.2.2 + CUDA 12.1）</li>
-<li><strong>关键超参</strong>：<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 基座（B/L/XL = 254M/500M/1696M）；码本 8192×128；序列最长 1024（短则零填充+掩码注意力）；patch 200 点；<abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 系数 λ 从 0 渐增；推理取 argmax 而非 beam search</li>
-<li><strong>数据</strong>：约 25000h（TUEG ~24000h 为主力）；每批混入少量纯文本防遗忘</li>
-<li><strong>算力参考</strong>：8×A100-80G</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../braingpt/">上一篇：BrainGPT</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../tfm-tokenizer/">下一篇：TFM-Tokenizer</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

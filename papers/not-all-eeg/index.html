@@ -1154,17 +1154,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2121,17 +2110,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2228,80 +2206,6 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 <li><strong>相关性</strong>：<span class="arithmatex">\( 1 - \rho_{\mathrm{Pearson}} \)</span>（同 JET）。</li>
 </ol>
 <p>第 3 项与 JET 的路线冲突值得单独记：JET 用时域 TV 正则「压高频噪声」，本文指出<strong>时域平滑约束天然偏置向压制临床相关的高频瞬态</strong>（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 功率谱 1/f^χ，能量最小化主导的梯度天然偏向低频），改到频域显式加权——恰好接住了 <a href="../jet/">JET 笔记</a>里「λ_tv 对高频敏感范式需重新标定」的担忧。</p>
-<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>设定</strong>：TUEV（16ch 事件分类，被试独立划分）/ BCIC-IV-2a（22ch 运动想象，跨 session）/ SEED-IV（62ch 情绪，trial 级）——通道数、采样率、任务语义差异极大，用于验证位置异质性是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的普遍性质而非单一协议的伪象；P=200 固定，仅 C 与 N 随数据集变化，无数据集特定结构改动。基线全部按原文复现、同划分训练：ESC-GAN（AAAI 2024，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 情绪编辑 GAN）、Diffusion-TS（ICLR 2024）、PaD-TS（AAAI 2025，种群感知扩散）、JET（最强、最直接可比）。合成样本按类配平 1× 混入真实训练集。</p>
-<p><strong>主结果</strong>（EEGNet 做下游裁判，3 种子）：</p>
-<table>
-<thead>
-<tr>
-<th>数据集</th>
-<th>TS-FID（Ours / JET 复现）</th>
-<th>相对降幅</th>
-<th>ΔAcc（Ours / JET）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TUEV</td>
-<td>213.92 ± 6.53 / 360.78 ± 9.64</td>
-<td>−40.7%</td>
-<td><strong>9.58 ± 0.47%</strong> / 2.81 ± 0.25%（3.4× 相对增益）</td>
-</tr>
-<tr>
-<td>BCIC-IV-2a</td>
-<td>196.32 ± 7.85 / 518.89 ± 13.47</td>
-<td><strong>−62.2%</strong></td>
-<td>2.58 ± 0.29% / 0.62 ± 0.22%</td>
-</tr>
-<tr>
-<td>SEED-IV</td>
-<td>437.84 ± 11.26 / 748.01 ± 17.83</td>
-<td>−41.5%</td>
-<td>2.61 ± 0.33% / 1.80 ± 0.21%</td>
-</tr>
-</tbody>
-</table>
-<p>GAN / 扩散基线的 TS-FID（412–1103）与 ΔAcc（≤1.7%）全面落后，延续「离散→连续」的进步方向；TUEV 上分类准确率从 No-Aug 的 67.53% 提到 <strong>77.11%</strong>（Macro-F1 ×1.59、Macro-Recall ×1.47）。</p>
-<p><strong>换裁判仍成立</strong>（CBraMod 做下游评估骨干）：ΔAcc 2.39 / 2.74 / 2.15pp，三集仍全面最高（超 JET 0.75 / 1.21 / 0.74pp）——「不是所有时刻同等难」在预训练大模型裁判下同样成立。</p>
-<p><strong>消融</strong>（TUEV，leave-one-out）：</p>
-<table>
-<thead>
-<tr>
-<th>配置</th>
-<th>TS-FID</th>
-<th>ΔAcc</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Baseline（= 复现 JET）</td>
-<td>360.78</td>
-<td>2.81%</td>
-</tr>
-<tr>
-<td>w/o 因子化注意力</td>
-<td>241.87</td>
-<td>6.47%</td>
-</tr>
-<tr>
-<td><strong>w/o PATS</strong></td>
-<td><strong>268.53</strong></td>
-<td><strong>5.12%</strong></td>
-</tr>
-<tr>
-<td>w/o 频谱损失</td>
-<td>226.35</td>
-<td>8.03%</td>
-</tr>
-<tr>
-<td>Full</td>
-<td><strong>213.92</strong></td>
-<td><strong>9.58%</strong></td>
-</tr>
-</tbody>
-</table>
-<p>三组件各自必要且互补，<strong>PATS 移除后掉得最深</strong>（两项指标都是），且每个消融版仍明显好于 JET。损失细消融：去频率加权（α=0）219.47/8.41%、单分辨率（R=1）221.83/8.07%、去难度加权重构 217.35/8.72%——频率加权贡献最大（幂律补偿），多分辨率次之，难度加权是 PATS 之上的锦上添花。</p>
-<p><strong>十分位分析</strong>（Figure 4，全文最说服力的证据）：把实例按基线（JET）误差排序分十份，看本框架的相对误差削减：第 1–6 分位 1.3%→4.8% 缓升，7–9 分位回落（4.7%→3.3%），<strong>第 10 分位跳到 14.9%</strong>——收益高度集中在最难的一成位置，正是「少数复现性的难位置（病理放电、瞬态）在均匀调度下被亏待」这一中心假设的直接验证。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/not-all-eeg-heterogeneity.png" data-desc-position="bottom"><img alt="Figure 1 · 同一段记录内的难度异质性：绿色准平稳背景 / 黄色中等 / 红色高难瞬态，难位置跨样本复现" src="../../assets/not-all-eeg-heterogeneity.png"></a></p>
 <p><em>Figure 1 · 难度异质示意：准平稳背景与高难瞬态共存于不同通道-时间位置，且同一协议下跨样本复现——难度可做成数据集级位置统计</em></p>
@@ -2350,16 +2254,6 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 <li><strong>复现口径警示（站内 benchmark 表适用）</strong>：本文复现的 JET 在 TUEV 上 TS-FID=360.78，而 JET 原文报 235.86——差 53%。TS-FID 的特征空间与预处理强依赖论文口径，跨论文数字<strong>不可直接横比</strong>，只应在同一篇的同一口径内比较（本篇内部对比是干净的）；</li>
 <li><strong>一个想看的缺失实验</strong>：EMA 误差图 s 本身的可视化。哪些通道 × 哪些时间段难？如果 s 与已知的伪迹拓扑、放电导联对得上，就是漂亮的可解释性证据（TFM 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 分析、EEGMoE 的专家分工可视化都是这么加分的），论文只给了按难度分层的收益曲线，差最后一步。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：论文未附仓库（arXiv 2608.00048 v1，eess.SP）</li>
-<li><strong>关键设定</strong>：P=200 无重叠 patch；EMA 误差图 β 衰减；margin m ∈ [0,1)；损失权重 λstat/λspec/λcorr、频率指数 α、频带上限 η；Heun/Euler 积分——<strong>具体数值正文未披露</strong>（v1 预印本，细节待后续版本/附录）</li>
-<li><strong>数据</strong>：TUEV（16ch，subject-disjoint）/ BCIC-IV-2a（22ch，cross-session）/ SEED-IV（62ch，trial-level）；合成样本按类配平 1× 混入</li>
-<li><strong>裁判</strong>：EEGNet（从零训练）+ CBraMod（预训练骨干）；3 种子，mean ± std</li>
-<li><strong>复现要点</strong>：采样时务必带 <span class="arithmatex">\( \dot{\tau}/(1-\tau) \)</span> 因子（式 3），漏掉等价于 m=0；EMA 图与训练数据绑定（换数据集需重新积累）</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../eegdm/">EEGDM（生成轴线姊妹篇：扩散训表征）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../jet/">JET（直接前作：条件流匹配 + 生理约束）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../../basics/generative-lineage/">生成模型脉络（VAE → DDPM → FM）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../cbramod/">CBraMod（因子化注意力同族 + 下游裁判）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

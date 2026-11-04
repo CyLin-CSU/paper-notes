@@ -1318,78 +1318,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 核心发现
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3 核心发现">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 总排名:领先是真实的,但分设定
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 监督基线反超的两种场景
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-scaling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 预训练收益:随标签变多而变大,数据 scaling 持续有效
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-scaling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 参数不 scaling,通道灵活者占优
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-lessons" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 论文自述的 Lessons(摘要五条 + 我们的评估)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2160,78 +2088,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 核心发现
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3 核心发现">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 总排名:领先是真实的,但分设定
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2 监督基线反超的两种场景
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-scaling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 预训练收益:随标签变多而变大,数据 scaling 持续有效
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-scaling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 参数不 scaling,通道灵活者占优
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-lessons" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4 论文自述的 Lessons(摘要五条 + 我们的评估)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2302,93 +2158,6 @@
 \bar{r}_m = \frac{1}{|T_m|} \sum_{t \in T_m} \mathrm{rank}_t\!\left( \frac{r^{\mathrm{BA}}_{m,t} + r^{\mathrm{F1}}_{m,t} + r^{\kappa}_{m,t}}{3} \right)
 \]</div>
 <p>另有 Top-5 计数(进入任务前五的次数);双极 / 非双极设定分开排名。协议 II 的预训练增益定义为同架构 Full-FT 与随机初始化 Scratch-ST 的差:<span class="arithmatex">\( \bar{G}_m(d) = \bar{s}_m(d, \mathrm{Full\text{-}FT}) - \bar{s}_m(d, \mathrm{Scratch\text{-}ST}) \)</span>,在 6 档标签预算 {2%, 5%, 10%, 25%, 50%, 100%} 下配对比较。协议 IV 另用参数位移 <span class="arithmatex">\( P_{s,t} = \|\theta^{\mathrm{post}}_{s,t} - \theta^{\mathrm{pre}}_s\|_2 / \|\theta^{\mathrm{pre}}_s\|_2 \)</span> 与逐层 1−CKA 度量微调改变了什么。</p>
-<h2 id="3">3 核心发现<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<h3 id="31">3.1 总排名:领先是真实的,但分设定<a class="headerlink" href="#31" title="Permanent link">#</a></h3>
-<table>
-<thead>
-<tr>
-<th>平均秩榜单</th>
-<th>前列(全为 FM)</th>
-<th>第一个监督基线</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>非双极</td>
-<td>REVE-base → ST-EEGFormer-small → LEAD → HEAR-large</td>
-<td>U-Sleep(约第 9)</td>
-</tr>
-<tr>
-<td>双极</td>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> six-datasets → <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> shhs-prest → <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> prest-16ch</td>
-<td>SleepEEGNet(约第 8,Top-5 计数第一但系覆盖任务更多所致)</td>
-</tr>
-</tbody>
-</table>
-<p>具体任务上更直观:TUEV Task1 WS(双极)前三全是 FM——ST-EEGFormer-small 92.62、Uni-DMFM-base 92.21、ST-EEGFormer-base 91.55,CBraMod 88.13,最强的通用基线 BiDANN 仅 76.47;CAP-Sleep Task1 WS 由 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 三变体包揽(75.82 / 75.72 / 74.91),最好基线 SleepEEGNet 73.97。<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 通道受限,非双极任务整列缺席(unsupported)。</p>
-<h3 id="32">3.2 监督基线反超的两种场景<a class="headerlink" href="#32" title="Permanent link">#</a></h3>
-<table>
-<thead>
-<tr>
-<th>场景</th>
-<th>结果</th>
-<th>解读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TUEV Task1 CS(4 类事件)</td>
-<td>基线 TMSA-Net 49.95 第一;FM 最高仅 39.87</td>
-<td>跨被试设定全体塌方,WS→CS 的落差比 FM vs 基线的差距更大</td>
-</tr>
-<tr>
-<td>HGD Task3 WS(二分类 <abbr title="运动想象 Motor Imagery">MI</abbr>)</td>
-<td>ShallowConvNet(2017)96.01 第一,EEGPT 95.93 第二</td>
-<td>二分类大方差任务,经典 CNN 仍能赢</td>
-</tr>
-<tr>
-<td>MigraineDB 系列(9 任务)</td>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / EEGPT / LUNA-large 等多个 100.00 并列</td>
-<td>天花板效应,排名无意义</td>
-</tr>
-</tbody>
-</table>
-<p>反超的共性:CS 塌方与任务饱和都不是「基线更强」而是「协议暴露弱点」——FM 的优势在 WS、在非双极、在难任务上兑现,论文对此没有回避。</p>
-<h3 id="33-scaling">3.3 预训练收益:随标签变多而变大,数据 scaling 持续有效<a class="headerlink" href="#33-scaling" title="Permanent link">#</a></h3>
-<p>协议 II(10 个 FM 架构配对对照)的均值曲线:末轮增益随标签预算从 <strong>+0.4%(2%)单调涨到 +8.2%(100%)</strong>,预算 ≥25% 后 10/10 模型为正;首轮增益 8/10 为正。协议 IV(固定 REVE-base 架构与目标函数,只动预训练数据 0.6k→30k 小时):</p>
-<table>
-<thead>
-<tr>
-<th>0.6k→30k h</th>
-<th>Full-FT</th>
-<th>Linear Probe</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>被试内(WS)</td>
-<td>+6.69 pp</td>
-<td>+5.97 pp</td>
-</tr>
-<tr>
-<td>跨被试(CS)</td>
-<td>+4.22 pp</td>
-<td>+1.89 pp</td>
-</tr>
-</tbody>
-</table>
-<p>机制侧写最有信息量:预训练数据越多,Full-FT 的参数位移越小(约 0.12→0.03)而输出层表征变化(1−CKA,0.7→0.9+)越大;逐层看,小数据预训练的适配集中在最后几层,15k–30k h 后<strong>中间层</strong>表征也开始重组、早期层保持稳定——大数据预训练学到的是「可以被下游高效重组」的表征。</p>
-<h3 id="34-scaling">3.4 参数不 scaling,通道灵活者占优<a class="headerlink" href="#34-scaling" title="Permanent link">#</a></h3>
-<p>协议 III:30 个 FM 变体横截面上参数量(1–600M,log 轴)与平均性能无单调关系——REVE-base(69M)&gt; REVE-large(408M),ST-EEGFormer-small(32.7M)&gt; 其 base(110.9M)/ large(328.4M)版。论文自己声明这是观察性结论,架构/数据/训练策略全部混淆,不能归因于参数本身。协议 V:10 个 FM(6 通道受限:CBraMod / CodeBrain / CSBrain / EEGPT / NeuroRVQ / ST-EEGFormer-small;4 通道灵活:REVE-base / HEAR×2 / LEAD)按任务相关电极子集逐步减通道,通道灵活组在<strong>所有</strong>保留比例下绝对性能都更高。</p>
-<h2 id="4-lessons">4 论文自述的 Lessons(摘要五条 + 我们的评估)<a class="headerlink" href="#4-lessons" title="Permanent link">#</a></h2>
-<ol>
-<li><strong>FM 在多数任务上胜过强监督基线,非双极设定下优势最大</strong>——成立,但论文同时承认对双极特化模型(如 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>)跨设定比较会低估前者,双极榜 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 横扫就是注脚;</li>
-<li><strong>预训练改善早期优化与最终性能,且标签越多增益越大越稳</strong>——本篇最反直觉也最扎实的一条(架构配对 + 6 档预算),直接推翻「预训练是小样本技巧」的流行叙事;小样本下 FM 的优势主要是优化稳定性(基线大量 50.00 坍缩),红利兑现要等标签;</li>
-<li><strong>参数量与性能无一致正相关</strong>——方向上支持站内「架构 &gt; 规模」;但它是跨家族观察,不是受控结论,REVE-base 赢 REVE-large 也可能只是大数据小模型的常规剧本;</li>
-<li><strong>固定架构下预训练数据 scaling 持续有效</strong>——全文含金量最高的受控实验:0.6k→30k h 无平台,配 CKS/位移分析给出了「为什么」;论文据此把「扩充预训练数据」点名为下一步最有希望的方向;</li>
-<li><strong>通道灵活模型绝对性能更高</strong>——成立但混淆未拆:REVE/HEAR/LEAD 恰好是最新、预训练数据最大的模型,通道灵活性与数据规模两个变量纠缠在一起;</li>
-<li>隐含的第六条(Section 4):<strong>没有全能冠军</strong>——论文拒绝给出单一排名,改为 8 维度(任务性能 ×2、预训练有效性 ×3、覆盖与效率 ×3)+ 用户自定义权重 <span class="arithmatex">\( U_m(w) = \sum_j w_j z_{m,j} \)</span> 的雷达图选型框架:REVE-base 强在排名与低标注、HEAR-large 强在微调增益、CBraMod 强在覆盖与吞吐、LEAD 强在参数效率。</li>
-</ol>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegarena-framework.png" data-desc-position="bottom"><img alt="Figure 1 · EEG-Arena 总览:(A) 开源软件包三接口;(B) 55 模型与 23 数据集 / 57 任务;(C) 五协议对应 RQ1–RQ5" src="../../assets/eegarena-framework.png"></a></p>
 <p><em>Figure 1 · (A) 软件包:数据标准化(HDF5)→ 数据 / 模型 / 评估三接口,统一 trainer + evaluator,79,000+ 行代码;(B) 30 FM + 25 基线(2021–2026)与 7 范式 57 任务;(C) 协议 I 大横评、II 预训练收益 × 6 档标签预算、III 模型规模、IV 预训练数据 0.6k–30k h、V 通道子集鲁棒性</em></p>
@@ -2442,17 +2211,6 @@
 <li><strong>对站内 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / CBraMod / <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 结论的冲击是分化而非通杀</strong>:<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 在其设计域内被追认为最强 FM(站内评分偏低了它在本域的价值);CBraMod 的领先方向被外部复现;<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 base 版与 EEGPT 双双平庸化——2024 世代(掩码重构 + 通道受限)在 2026 的强基线面前整体失色,而 2025–2026 的 REVE / HEAR / LEAD / ST-EEGFormer 包揽非双极前列,代际差主要落在「通道灵活性 + 预训练数据规模」两个轴上。站内 <a href="../../comparison/">comparison.md</a> 的 TUEV/TUAB 战绩表今后引用时要加一句:自报数字,<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Arena 已提供统一口径的替代参照;</li>
 <li><strong>「数据是 scaling 轴」的判决要和站内的「边际递减」论放在一起读</strong>。站内数据专题的递减结论出自 TUEG 系清洗语料的自我对比(数据质量与域距离混在其中),而协议 IV 是干净的单变量实验——唯一的漏洞是它只做了 REVE-base 一个架构、一个目标函数,30k h 恰约等于 REVE 原始配方,「递减论错了」还太早,更稳的表述是:清洗带来的递减没有挡住数据量的持续收益,两件事可以同时为真。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>:eeg.fm/benchmarks(平台)与 eeg.fm/leaderboards(排行榜);79,000+ 行代码、23,000+ 行文档,数据统一 HDF5,接受 GDF/EDF</li>
-<li><strong>协议 I</strong>:三指标 = B-ACC(二分类)/ macro-F1(多分类)/ Cohen's κ;平均秩 + Top-5;双极、非双极分开;验证集选 checkpoint;预训练数据重叠任务剔除(红 E)、不兼容组合标 unsupported</li>
-<li><strong>协议 II</strong>:Full-FT vs 同架构 Scratch-ST;预算 {2, 5, 10, 25, 50, 100}%;验证/测试集固定、只子采样训练集;10 个 FM</li>
-<li><strong>协议 IV</strong>:REVE-base(69M)固定架构与优化,预训练数据 {0.6k, 1.5k, 3k, 7.5k, 15k, 30k} h;Full-FT + Linear Probe × WS/CS;度量 = 参数位移 + 逐层 1−CKA</li>
-<li><strong>协议 V</strong>:6 受限(CBraMod/CodeBrain/CSBrain/EEGPT/NeuroRVQ/ST-small)vs 4 灵活(REVE-base/HEAR-base/HEAR-large/LEAD);保留比例 ρ = 缩减通道数/全通道数</li>
-<li><strong>关键数字</strong>:非双极前四 REVE-base / ST-small / LEAD / HEAR-large;末轮增益 0.4%→8.2%;+6.69pp(WS)/+4.22pp(CS);REVE-base 69M &gt; REVE-large 408M</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m6.2 2.44 11.9 11.9 2.12-2.12 1.41 1.41-2.47 2.47 3.18 3.18c.39.39.39 1.02 0 1.41l-.71.71a.996.996 0 0 1-1.41 0L17 18.23l-2.44 2.47-1.41-1.41 2.12-2.12-11.9-11.9V2.44zM15.89 10l4.74-4.74V2.44H17.8l-4.74 4.74zm-4.95 5-2.83-2.87-2.21 2.21-2.12-2.12-1.41 1.41 2.47 2.47-3.18 3.19a.996.996 0 0 0 0 1.41l.71.71c.39.39 1.02.39 1.41 0L7 18.23l2.44 2.47 1.41-1.41-2.12-2.12z"></path></svg></span> <a href="../cbramod/">CBraMod(「架构&gt;规模」证据链在本榜被外部复现)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m5.86 10.31C16.23 21.22 14.28 22.45 12 23c-2.56-.61-4.7-2.07-6.42-4.37C3.86 16.34 3 13.8 3 11V5l9-4 9 4v6c0 2.39-.64 4.61-1.92 6.67l-2.91-2.91c.52-.79.83-1.76.83-2.76a5 5 0 0 0-5-5 5 5 0 0 0-5 5 5 5 0 0 0 5 5c1 0 1.97-.31 2.76-.83z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(双极设定内被追认为最强 FM)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 9A1.5 1.5 0 0 0 7 7.5 1.5 1.5 0 0 0 5.5 6 1.5 1.5 0 0 0 4 7.5 1.5 1.5 0 0 0 5.5 9m11.91 2.58c.36.36.59.86.59 1.42 0 .55-.22 1.05-.59 1.41l-5 5a1.996 1.996 0 0 1-2.83 0l-6.99-6.99C2.22 12.05 2 11.55 2 11V6c0-1.11.89-2 2-2h5c.55 0 1.05.22 1.41.58zm-3.87-5.87 1-1 6.87 6.87c.37.36.59.87.59 1.42s-.22 1.05-.58 1.41l-5.38 5.38-1-1L20.75 13z"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer(泛化项被本榜扣分的警示)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5A2.5 2.5 0 0 0 10.5 1 2.5 2.5 0 0 0 8 3.5V5H4a2 2 0 0 0-2 2v3.8h1.5c1.5 0 2.7 1.2 2.7 2.7S5 16.2 3.5 16.2H2V20a2 2 0 0 0 2 2h3.8v-1.5c0-1.5 1.2-2.7 2.7-2.7s2.7 1.2 2.7 2.7V22H17a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> <a href="../neurorvq/">NeuroRVQ(同批笔记:高方差画像与本榜一致)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

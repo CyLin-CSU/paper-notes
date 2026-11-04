@@ -461,17 +461,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#15" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2060,17 +2049,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#15" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.5 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2189,14 +2167,6 @@
 <li><strong>线性注意力 Transformer</strong> 解决多通道长句子的二次复杂度问题（低秩 E/F 投影，注意力图 N×N → N×d）；</li>
 <li>频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 CHB-MIT、IIIC 与可穿戴 HAR 任务尤其有用；</li>
 </ol>
-<h4 id="15">1.5 实验与结果<a class="headerlink" href="#15" title="Permanent link">#</a></h4>
-<ul>
-<li>预训练语料：500 万静息 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（PREST）+ 500 万睡眠 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（SHHS）+ ECG（Cardiology）；</li>
-<li>下游 9 个数据集：CHB-MIT（癫痫检测）、IIIC Seizure（发作分型）、TUAB（异常检测）、TUEV（事件分类）、PTB-XL（心律失常）、HAR（动作识别）等；</li>
-<li>结论：监督设定下超过 SPaRCNet、ContraWR、CNN-Transformer、FFCL、ST-Transformer 等基线；带缺失设定下性能下降最少；跨数据集预训练（6 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集）进一步提升（如 CHB-MIT balanced acc 从 0.664 提到 0.707）。</li>
-<li>附录消融：更高采样率对高频敏感任务（IIIC）略好；<abbr title="词元，模型处理的最小输入单元">token</abbr> 太长（&gt;1-2s）导致句子变短、性能会有下降；更大重叠 p 略好。</li>
-</ul>
-<hr>
 <h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -2226,15 +2196,6 @@
 <li>线性注意力的 E/F 投影把注意力图固定为 N×d，隐含假设'全局信息可压缩进 d 个摘要位'——分类任务够用，但牺牲了精细的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 间路由能力。</li>
 <li>频域在这里只是特征工程（FFT 能量 → FCN），模型本体仍在连续域运行——这为后来 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 的显式时频建模埋下了演进伏笔。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：<a href="https://github.com/ycq091044/BIOT">github.com/ycq091044/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a>（PyTorch Lightning 1.6.4 / Torch 1.13.1）</li>
-<li><strong>关键超参</strong>：4 层 Transformer × 8 头；低秩投影 d≪N；<abbr title="词元，模型处理的最小输入单元">token</abbr> 1s/重叠 0.5s；<abbr title="脑电图 Electroencephalogram">EEG</abbr> 重采样 200Hz；Adam lr=1e-3；温度 T=0.2（无监督预训练）</li>
-<li><strong>数据</strong>：预训练 PREST+SHHS（约 1000 万样本，SHHS 需在 sleepdata.org 申请）；16 个标准双极导联</li>
-<li><strong>算力参考</strong>：8×RTX A6000，单任务训练 max epoch 100</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../tfm-tokenizer/">上一篇：TFM-Tokenizer</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../labram/">下一篇：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

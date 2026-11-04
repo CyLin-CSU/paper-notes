@@ -524,17 +524,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2121,17 +2110,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 实验与结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2219,61 +2197,6 @@
 <p>三个候选逐个试：直接回归 Mel（Base）、端到端联合学的潜表征（Deep Mel，与 brain module 同构的卷积栈、去掉被试层）、以及预训练 <strong>wav2vec2-large-xlsr-53</strong>（56,000 小时、53 种语言，取最后 4 层 transformer 激活平均）。Deep Mel 只见过四个数据集里的音频，wav2vec 见过 56,000 小时——结果（Table 2）预训练路线全面胜出。作者的解读接在他们自己组的脑编码文献上：自监督语音模型的激活可以线性映射到脑响应，所以对齐它是在「借」一个已被验证与脑表征兼容的空间。</p>
 <h3 id="24">2.4 训练与评测<a class="headerlink" href="#24" title="Permanent link">#</a></h3>
 <p>Adam，lr <span class="arithmatex">\( 3\times10^{-4} \)</span>，batch 256，一个 epoch 定义为 1,200 次更新，验证集 10 个 epoch 无提升即停，两张 V100 16GB。评测三种口径：段级 top-10（主指标，作者明说段级候选太多、top-1 会低估模型解码到的信息）、词级 top-1/top-10（对测试集每个词取词首前 500 ms 至 2.5 s 的 3 s 窗，把候选段按词分组、对同词各段的概率求和）、以及解释性分析（ridge 回归预测 decoder 给正确词的 softmax 概率，五组特征：音素 d=60（Phonemizer）、zipf 词频 d=1、词性 d=15、词向量 d=300（spaCy）、短语向量 d=1,024（Laser），词袋嵌入即段内词向量求和；5 折交叉验证后与真值算 Pearson R）。</p>
-<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>主表（Table 2，top-10 段级准确率 %，3 次随机初始化）</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>模型</th>
-<th>Brennan (<abbr title="脑电图 Electroencephalogram">EEG</abbr>)</th>
-<th>Broderick (<abbr title="脑电图 Electroencephalogram">EEG</abbr>)</th>
-<th>Gwilliams (MEG)</th>
-<th>Schoffelen (MEG)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Random</td>
-<td>5.3</td>
-<td>0.5</td>
-<td>0.7</td>
-<td>0.8</td>
-</tr>
-<tr>
-<td>Base（回归 Mel）</td>
-<td>6.0</td>
-<td>1.0</td>
-<td>12.4</td>
-<td>20.6</td>
-</tr>
-<tr>
-<td>+ Contrastive</td>
-<td>8.0</td>
-<td>9.7</td>
-<td>55.1</td>
-<td>55.1</td>
-</tr>
-<tr>
-<td>+ Deep Mel</td>
-<td>24.7</td>
-<td>15.4</td>
-<td>64.4</td>
-<td>61.2</td>
-</tr>
-<tr>
-<td>+ wav2vec 2.0</td>
-<td><strong>25.7</strong></td>
-<td><strong>17.7</strong></td>
-<td><strong>70.7</strong></td>
-<td><strong>67.5</strong></td>
-</tr>
-</tbody>
-</table>
-<p>三条增量各自清晰：对比损失换掉回归是最大的一跳（MEG 上 +34.5 到 +42.7pp，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上只有 +2.0 到 +8.7pp）；给 Mel 谱加深层编码器（Deep Mel）再 +6 到 +17pp；换成预训练 wav2vec 特征又 +1 到 +6pp（MEG 上约 +6pp，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上仅 +1 到 +2pp）。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上绝对数字低一个台阶，但相对排序完全一致——结论对模态稳健。</p>
-<p><strong>MEG 与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的差距是模态性的</strong>。为排除「MEG 数据更多、通道更多」的混淆，作者做了同质化对照：三个数据集各裁到 128 通道、19 名被试、相同的被试平均录音时长，结果 MEG 仍以 30.3% / 31.7% 显著高于 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（全部 P &lt; 10⁻⁶）。作者留了限定语：还没做过同一批被试同时戴 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 和 MEG 听同样刺激的实验，所以严格说这是「设备类型强相关」而非因果定论——但论文自己也承认没预料到差距这么大。机制上不难理解：头皮 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 经过颅骨的容积传导低通，高频时间结构所剩无几，而 3 秒段检索恰恰吃时间精度。</p>
-<p><strong>被试数曲线</strong>（Fig. 2c）：固定评测前 10% 被试，训练被试数从少到多，两个 MEG 数据集上 top-10 单调上升。单模型 + 每被试一个 1×1 卷积就吃下了个体差异，这是「脑记录基础模型」这条路线最直接的可行性证据。</p>
-<p><strong>与侵入式对照</strong>（作者做得很克制，限定语给足）：50 词闭集里，本模型词级 top-1 平均 22.7%（最好被试 42.9%，Supplementary A.9），侵入式的 Moses et al. 是 39.5%；若候选词嵌在句子语境里，本模型平均 top-1 超 72.5%、最好被试 92.2–95.9%（Fig. 2b），反超 Moses 的 74%。感知 vs 产出的脑基础不同，这个对比只能当量级参考，不能当胜负。</p>
-<p><strong>解释性分析</strong>（Fig. 3、Fig. 4）：Fig. 3 先给定性一瞥——五个代表被试（20–80 分位）听「Thank you for coming, Ed」时，decoder 在每个词位置输出的候选词按 log 概率定字号，正确词多居前列。定量上，用各层语言特征去预测 decoder 给正确词的概率，短语嵌入与词袋嵌入的解释力最强（均 P &lt; 10⁻²³），词向量 P &lt; 10⁻⁸，词性 P &lt; 0.004，词频与音素更弱（Fig. 4 中音素的 R 接近零）。表征层级越高解释力越强，decoder 主要在用词汇-语境语义信息检索，而不是声学匹配。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/defossez-fig1-overview.png" data-desc-position="bottom"><img alt="Figure 1 · 总体框架：脑模块与 wav2vec 2.0 分别编码脑信号与语音，CLIP 损失对齐；评测时在候选段上做零样本检索" src="../../assets/defossez-fig1-overview.png"></a></p>
 <p><em>Figure 1 · 左：speech module（wav2vec 2.0 的卷积 + Transformer）把 3 秒语音映为 <span class="arithmatex">\( Y \)</span>；右：brain module（空间注意力 + 被试块 + 卷积栈）把 <span class="arithmatex">\( C\times T \)</span> 的脑信号映为 <span class="arithmatex">\( Z \)</span>；顶部为评测协议——对每个脑表征 <span class="arithmatex">\( Z_i \)</span> 给 <span class="arithmatex">\( N \)</span> 个候选段逐一打内积分，即零样本检索；两空间以 CLIP 对比损失对齐，<span class="arithmatex">\( N \)</span> 名被试共享除被试层外的全部权重</em></p>
@@ -2321,17 +2244,6 @@
 <li><strong>解释性分析有个没拆开的循环</strong>。结论说「decoder 主要依赖语义表征」，但 decoder 的目标空间是 wav2vec 2.0，而 wav2vec 特征本身就以词汇-语义成分为主（作者自己的引用文献 54、55 说它线性映射脑响应）。用短语嵌入解释 decoder 输出时，有多少是脑的属性、多少只是目标特征的属性？一个干净的对照是：拿在声学层面匹配但不语义相关的候选，看 decoder 是否真的放弃声学匹配。论文没做这一步，所以这个结论我打八折收下；</li>
 <li><strong>MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 差距对站内的警示</strong>。站内现有语音解码工作全部在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做（SSM2Mel 的 SparrKULee），本篇的同质化对照说明这个差距是模态性的——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做语音解码，天花板可能天然低一截。SSM2Mel 的 0.069 Pearson 贴地，部分原因也许不在模型而在模态上限。做 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语音解码的 baseline 设计时，应该把「换到 MEG 会好多少」当作一个校准问题记住。</li>
 </ul>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>代码</strong>：github.com/facebookresearch/brainmagick（CC-NC-BY 4.0；论文数据与音频由各数据集作者提供，许可各异）</li>
-<li><strong>数据</strong>：Broderick 2019（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 128ch × 19 人 × 19.2 h，《老人与海》）；Brennan &amp; Hale 2019（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 60ch × 33 人 × 6.7 h，《爱丽丝》）；Schoffelen 2019（MEG 273ch × 96 人 × 80.9 h，荷兰语句子与词表，Donders Repository 注册下载）；Gwilliams 2022（MEG 208ch × 27 人 × 56.2 h，MASC 语料，CC0）。划分 70/20/10，同一句子的所有重复固定在同一 split，测试段限定词首前 500 ms 有词的 3 s 窗</li>
-<li><strong>预处理</strong>：重采样 120 Hz → baseline correction（减前 0.5 s 均值）→ robust scaler → 截断 &gt;20σ；无需 ICA/autoreject（Supplementary A.3–A.4 验证）</li>
-<li><strong>模型</strong>：SpatialAttention(270, K=32 谐波) → 1×1 Conv → 被试层 <span class="arithmatex">\( M_s\in\mathbb{R}^{270\times270} \)</span> → 5×(膨胀卷积 ×2 残差 + GLU 卷积) → 两层 1×1 收尾；输入前移 150 ms；目标 = wav2vec2-large-xlsr-53 末 4 层平均；Mel 基线用 120 Mel bands、<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> frame 512 / hop 128 @16 kHz、log(ε+Mel) ε=10⁻⁵</li>
-<li><strong>训练</strong>：Adam lr 3e-4，batch 256，1 epoch = 1,200 updates，验证 10 epoch 早停，2×V100 16GB；CLIP 损失单向、无温度参数，负例取 batch 内其余样本</li>
-<li><strong>评测</strong>：段级 top-10 为主指标；词级 = 候选段按词聚合求概率和；解释性 = ridge 回归 + 5 折交叉验证 Pearson R</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../ssm2mel/">SSM2Mel（语音解码轴线的回归端：<abbr title="脑电图 Electroencephalogram">EEG</abbr>→mel 谱）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"></path></svg></span> <a href="../braingpt/">BrainGPT（自回归因果 Transformer 的语言解码）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../eegpt/">EEGPT（多被试 patch+通道 embedding 的另一解法）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>
