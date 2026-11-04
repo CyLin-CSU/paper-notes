@@ -1,0 +1,2508 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="我的论文精读总结库">
+      
+      
+      
+      
+        <link rel="prev" href="../biot/">
+      
+      
+        <link rel="next" href="../labram/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Decoding Speech Perception from Non-invasive Brain Recordings - Paper Notes · 论文阅读笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#decoding-speech-perception-from-non-invasive-brain-recordings" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Paper Notes · 论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Decoding Speech Perception from Non-invasive Brain Recordings
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换暗色" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换亮色" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Paper Notes · 论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    论文笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    论文笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../biot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BIOT (NeurIPS 2023)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Défossez 语音解码 (NMI 2023 · 轴线源头)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Défossez 语音解码 (NMI 2023 · 轴线源头)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：非侵入 + 自然语音的两难
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题形式化与 CLIP 损失
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-brain-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Brain module：一个为「多设备、多被试」设计的卷积栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-speech-module-wav2vec-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Speech module：把表征格式的选择题交给 wav2vec 2.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 训练与评测
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 实验与结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../labram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LaBraM (ICLR 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGPT (NeurIPS 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../braingpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BrainGPT (arXiv 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guided/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GUIDED (arXiv 2024 · 视觉重建)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crosspt-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CrossPT-EEG (arXiv 2024 · 视觉解码基准)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neurolm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeuroLM (ICLR 2025)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../luna/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cbramod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CBraMod (ICLR 2025 · 十字交叉)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssm2mel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSM2Mel (arXiv 2025 · 语音解码)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../surrogate-brain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NPI (Nature Methods 2025 · 连接组学)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neurorvq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeuroRVQ (arXiv 2025 · 多尺度RVQ)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DELTA (NeurIPS WS 2025 · 掩码扩散EEG-to-Text)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tfm-tokenizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TFM-Tokenizer (ICLR 2026)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rf-gpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RF-GPT (arXiv 2026 · 跨领域)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JET (ICML 2026 · EEG 生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegmoe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGMoE (TNNLS 2026 · MoE)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegdm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGDM (arXiv 2026 · 扩散表征)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../not-all-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../learnable-tf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LTFT (IEEE TETCI 2026 · 时频方法)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brainrvq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BrainRVQ (arXiv 2026 · 双域RVQ)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codebrain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBrain (ICLR 2026 · 解耦tokenizer)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neurodetr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeuroDETR (arXiv 2026 · 事件token化)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegarena/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGArena (arXiv 2026 · 基准评测)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模型架构基础
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    模型架构基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/lora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LoRA · 低秩适配 (ICLR 2022)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/attention-alternatives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention 替代方案 (CS336 Lec 4)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/generative-lineage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生成模型脉络 (VAE → DDPM → FM)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/gnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图神经网络 (消息传递与 GAT)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主题专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    主题专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预训练范式对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/multi-task/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通道适配与多任务学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/data-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/base-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基座来源分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    语音模型专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    语音模型专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/speech-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    语音解码与 Mel 谱建模
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog-2023-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十三篇方法对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：非侵入 + 自然语音的两难
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 问题形式化与 CLIP 损失
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-brain-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Brain module：一个为「多设备、多被试」设计的卷积栈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-speech-module-wav2vec-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Speech module：把表征格式的选择题交给 wav2vec 2.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 训练与评测
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 实验与结果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="decoding-speech-perception-from-non-invasive-brain-recordings">Decoding Speech Perception from Non-invasive Brain Recordings<a class="headerlink" href="#decoding-speech-perception-from-non-invasive-brain-recordings" title="Permanent link">#</a></h1>
+<blockquote>
+<p><strong>Nature Machine Intelligence 2023</strong>（vol.5，1097–1107）· Meta AI（Paris）+ Inria Saclay + ENS —— 站内<strong>「语音解码」轴线的源头文献</strong>。<a href="../ssm2mel/">SSM2Mel</a>（同日精读，<abbr title="脑电图 Electroencephalogram">EEG</abbr>→mel 回归）是这条线的另一端：本篇确立的「对比对齐自监督语音特征 + 候选集检索」范式，是此后非侵入语音解码工作绕不开的出发点，也是站内基础模型轴线（脑信号 vs 语音/语言模型的表征对齐）在解码侧的镜像。</p>
+</blockquote>
+<p><strong>作者</strong>：Alexandre Défossez, Charlotte Caucheteux, Jérémy Rapin, Ori Kabeli, Jean-Rémi King（Meta AI；Caucheteux 兼 Inria，King 兼 ENS）</p>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>任务定义：给 3 秒 MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 片段，在 <strong>1,000+ 候选语音段</strong>里检索出被试实际听到的那一段（zero-shot——测试集 15–40% 的词训练时没见过也能做，Table 1 的 word overlap 为 60–85%）；四个公开数据集共 <strong>175 名被试</strong>（MEG 123 人 / <abbr title="脑电图 Electroencephalogram">EEG</abbr> 52 人，英语 3 个 + 荷兰语 1 个）</li>
+<li>结果：MEG top-10 段级准确率 <strong>70.7%</strong>（Gwilliams）/ 67.5%（Schoffelen），平均 top-1 最高 41.3%（Extended Data Fig. 1），最好被试 top-1 超 80%；超半数样本真段排前二。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 只有 <strong>17.7% / 25.7%</strong>——但把通道数、录音时长、被试数全部配平后差距仍在（Mann–Whitney 全部 P &lt; 10⁻⁶），是模态差距不是数据差距</li>
+<li>方法主线：卷积 brain module（空间注意力 → 被试专属 1×1 卷积 → 5 块膨胀卷积）与 wav2vec 2.0 特征做 <strong>CLIP 对比对齐</strong>；直接回归 Mel 谱的基线被「宽带不可分辨成分」拖死，对比损失一项在 Gwilliams 上把 top-10 从 12.4% 拉到 55.1%（+42.7pp）</li>
+<li>目标特征三连跳：Mel 回归 → 对比 Mel → 对比 Deep Mel → <strong>对比 wav2vec 2.0</strong>，逐级上升且用 56,000 小时语音预训练的 wav2vec 特征最好——脑里能对上的语音表征以高层语义为主</li>
+<li>被试层只有一个 <span class="arithmatex">\( 270\times270 \)</span> 矩阵 + 多被试联合训练，性能随训练被试数单调上升——被试特异性被压成了一个低维重映射，这是全文对站内最有迁移价值的一条工程结论</li>
+</ul>
+</div>
+<h2 id="1">1 问题定位：非侵入 + 自然语音的两难<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
+<p>论文开篇把领域处境摆得很直白：侵入式已经做出实绩（Willett 手写 90 字符/分、Metzger 拼写 CER 6.13%），但要开颅；非侵入的 MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 信号噪、跨被试漂移大，所以以往工作要么单被试训练，要么只解码极小的词表（文献里最多也就 10 个词、83% 准确率的量级）。两条路都到不了「自然语言 + 可穿戴」的交点。</p>
+<p>作者选择的破局点有两处，都在换假设而不是换模型：</p>
+<ol>
+<li><strong>单被试 → 大队列联合训练</strong>。MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的跨被试变异性不必靠复杂的 per-subject 预处理流水线吸收，可以只留一个被试专属层让网络自己学；</li>
+<li><strong>人工特征 → 自监督语音模型的目标空间</strong>。脑里到底用什么格式编码语音是未解问题，与其猜（Mel、音素、字母），不如直接对齐一个在大规模语音上学到的表征空间——这步把「表征格式」的问题外包给了 wav2vec 2.0。</li>
+</ol>
+<p>评测协议也跟着换了：不是分类（词表固定），是<strong>候选集检索</strong>——给定脑信号，对测试集全部 3 秒段算相似度排序。测试段的词与训练词表有 15–40% 不重叠（Table 1 的 word overlap 60–85%），所以这是真 zero-shot，而不是闭集分类换了个说法。</p>
+<h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
+<h3 id="21-clip">2.1 问题形式化与 CLIP 损失<a class="headerlink" href="#21-clip" title="Permanent link">#</a></h3>
+<p>设 <span class="arithmatex">\( X \in \mathbb{R}^{C\times T} \)</span> 是脑信号段（<span class="arithmatex">\( C \)</span> 传感器数、<span class="arithmatex">\( T \)</span> 时间步），<span class="arithmatex">\( Y \in \mathbb{R}^{F\times T} \)</span> 是对应语音表征。传统做法是回归 <span class="arithmatex">\( \hat{Y}=f_{\mathrm{reg}}(X) \)</span> 最小化 <span class="arithmatex">\( L_2 \)</span>。论文对回归失败的诊断很具体：Mel 谱的各维度重要性极不均衡（极低频与语音基本无关、各频带幅值差几个数量级），<span class="arithmatex">\( L_2 \)</span> 平等对待所有维度后，模型输出被一个<strong>不可分辨的宽带成分</strong>主导——Extended Data Fig. 4 里回归出的 Mel 谱只是一团模糊的能量轮廓，分不出词。</p>
+<p>解法是换目标：不预测 <span class="arithmatex">\( Y \)</span> 本身，只要求 <span class="arithmatex">\( Z=f(X) \)</span> 与正样本 <span class="arithmatex">\( Y \)</span> 的内积在候选中最大。取 batch 内其余 <span class="arithmatex">\( N-1 \)</span> 个样本做负例，用 softmax 近似后验：</p>
+<div class="arithmatex">\[
+\hat{p}_j = \frac{e^{\langle Z,\, \bar{Y}_j\rangle}}{\sum_{j'=1}^{N} e^{\langle Z,\, \bar{Y}_{j'}\rangle}}, \qquad
+\mathcal{L}_{\mathrm{CLIP}}(p,\hat{p}) = -\langle Z, Y\rangle + \log\Big(\sum_{j'=1}^{N} e^{\langle Z,\, \bar{Y}_{j'}\rangle}\Big)
+\]</div>
+<p>动机上这是把「逐维拟合」改成「可分辨性」：损失只关心正确段在 batch 里排第一，模型自己去找 Mel/wav2vec 空间里那些对判别有用的维度并自动配好尺度。训练时负例来自 batch（形式化描述为从数据集采样 <span class="arithmatex">\( N-1 \)</span> 个负例，训练实现按 CLIP 惯例取 batch 内其余样本），测试时负例是<strong>测试集全部其他段</strong>——这就是检索评测本身。与标准 CLIP 还有两处不同值得记：对齐是<strong>单向</strong>的，softmax 只沿「脑信号 → 语音候选」一个方向做，没有语音到脑的反向项；公式里也<strong>没有温度参数</strong>，内积直接进 softmax（式 2、3 均如此）。</p>
+<h3 id="22-brain-module">2.2 Brain module：一个为「多设备、多被试」设计的卷积栈<a class="headerlink" href="#22-brain-module" title="Permanent link">#</a></h3>
+<p>输入是 120 Hz 重采样后的原始信号（不做 ICA、不做伪迹剔除），结构四层递进（Extended Data Fig. 4e）：</p>
+<ul>
+<li><strong>空间注意力</strong>：传感器三维坐标先经 MNE-Python 的 find_layout 投影到保留通道间距离的 2D 平面，再归一化到 [0,1]。每个输出通道 <span class="arithmatex">\( j \)</span> 学一个定义在该平面上的函数 <span class="arithmatex">\( a_j(x,y) \)</span>，在傅里叶空间参数化——每轴只取 <span class="arithmatex">\( K=32 \)</span> 个低频谐波（式 4），等价于强制 <span class="arithmatex">\( a_j \)</span> 在传感器平面上平滑变化。论文只给了设计没给动机，为什么这样合理要自己补一步：相邻传感器看到高度重叠的皮层源，权重地形没有理由逐通道跳变，截断傅里叶级数正是「平滑地形」的参数化表达（学到的地形见 Extended Data Fig. 5——除 Brennan 外，均落在听觉刺激的典型激活通道上）。对 <span class="arithmatex">\( a_j \)</span> 在各传感器位置取值做 softmax 得到混合权重，把任意数目、任意布局的传感器重映射到固定 <span class="arithmatex">\( D_1=270 \)</span> 通道。另有两个实现细节：<span class="arithmatex">\( a_j \)</span> 是周期函数，坐标向内缩 0.1 留边距；spatial dropout 随机采一个位置、从 softmax 里删掉半径 0.2 内的传感器（正则化）。原意是让一个模型跨四个数据集（不同设备、不同导联数）共享权重，结果发现这层本身就把精度抬上去了（Extended Data Fig. 2 消融确认）——归纳偏置的意外收益；</li>
+<li><strong>被试层</strong>：每个被试一个 <span class="arithmatex">\( M_s \in \mathbb{R}^{270\times270} \)</span> 的 1×1 卷积，紧跟空间注意力之后。跨被试的全部个体差异只由这一个矩阵吸收。多数据集联合训练的细节论文写得很少：只说「所有被试共享除被试层外的全部权重」，batch 内如何混采四个数据集没有写明（要看 brainmagick 代码）；验证协议是每个数据集内部按 70/20/10 划分，验证集约为测试集一半大小（Table 1 注），同一句子的所有重复固定在同一 split，早停只看验证损失；</li>
+<li><strong>5 块 × 3 层膨胀卷积</strong>：前两层残差连接（膨胀率 <span class="arithmatex">\( 2^{2k \bmod 5} \)</span> 与 <span class="arithmatex">\( 2^{2k+1 \bmod 5} \)</span>，核宽 3）、BatchNorm + GELU、输出 320 通道；第三层输出 640 通道用 <strong>GLU</strong> 减半。全程保持时间分辨率不变；</li>
+<li>两个收尾 1×1 卷积映到 <span class="arithmatex">\( F \)</span> 维（wav2vec 特征空间 1,024 维）。</li>
+</ul>
+<p>两个工程细节值得记：脑信号整体<strong>前移 150 ms</strong> 补偿刺激-响应延迟；归一化只用 baseline correction（减前 0.5 s 均值）+ robust scaler + <strong>截断 20 个标准差以外的离群值</strong>—— Supplementary 实验说截断是训练能否收敛的关键，且这套极简预处理与 autoreject 这类完整清洗流程效果持平。</p>
+<h3 id="23-speech-module-wav2vec-20">2.3 Speech module：把表征格式的选择题交给 wav2vec 2.0<a class="headerlink" href="#23-speech-module-wav2vec-20" title="Permanent link">#</a></h3>
+<p>三个候选逐个试：直接回归 Mel（Base）、端到端联合学的潜表征（Deep Mel，与 brain module 同构的卷积栈、去掉被试层）、以及预训练 <strong>wav2vec2-large-xlsr-53</strong>（56,000 小时、53 种语言，取最后 4 层 transformer 激活平均）。Deep Mel 只见过四个数据集里的音频，wav2vec 见过 56,000 小时——结果（Table 2）预训练路线全面胜出。作者的解读接在他们自己组的脑编码文献上：自监督语音模型的激活可以线性映射到脑响应，所以对齐它是在「借」一个已被验证与脑表征兼容的空间。</p>
+<h3 id="24">2.4 训练与评测<a class="headerlink" href="#24" title="Permanent link">#</a></h3>
+<p>Adam，lr <span class="arithmatex">\( 3\times10^{-4} \)</span>，batch 256，一个 epoch 定义为 1,200 次更新，验证集 10 个 epoch 无提升即停，两张 V100 16GB。评测三种口径：段级 top-10（主指标，作者明说段级候选太多、top-1 会低估模型解码到的信息）、词级 top-1/top-10（对测试集每个词取词首前 500 ms 至 2.5 s 的 3 s 窗，把候选段按词分组、对同词各段的概率求和）、以及解释性分析（ridge 回归预测 decoder 给正确词的 softmax 概率，五组特征：音素 d=60（Phonemizer）、zipf 词频 d=1、词性 d=15、词向量 d=300（spaCy）、短语向量 d=1,024（Laser），词袋嵌入即段内词向量求和；5 折交叉验证后与真值算 Pearson R）。</p>
+<h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
+<p><strong>主表（Table 2，top-10 段级准确率 %，3 次随机初始化）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Brennan (<abbr title="脑电图 Electroencephalogram">EEG</abbr>)</th>
+<th>Broderick (<abbr title="脑电图 Electroencephalogram">EEG</abbr>)</th>
+<th>Gwilliams (MEG)</th>
+<th>Schoffelen (MEG)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Random</td>
+<td>5.3</td>
+<td>0.5</td>
+<td>0.7</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>Base（回归 Mel）</td>
+<td>6.0</td>
+<td>1.0</td>
+<td>12.4</td>
+<td>20.6</td>
+</tr>
+<tr>
+<td>+ Contrastive</td>
+<td>8.0</td>
+<td>9.7</td>
+<td>55.1</td>
+<td>55.1</td>
+</tr>
+<tr>
+<td>+ Deep Mel</td>
+<td>24.7</td>
+<td>15.4</td>
+<td>64.4</td>
+<td>61.2</td>
+</tr>
+<tr>
+<td>+ wav2vec 2.0</td>
+<td><strong>25.7</strong></td>
+<td><strong>17.7</strong></td>
+<td><strong>70.7</strong></td>
+<td><strong>67.5</strong></td>
+</tr>
+</tbody>
+</table>
+<p>三条增量各自清晰：对比损失换掉回归是最大的一跳（MEG 上 +34.5 到 +42.7pp，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上只有 +2.0 到 +8.7pp）；给 Mel 谱加深层编码器（Deep Mel）再 +6 到 +17pp；换成预训练 wav2vec 特征又 +1 到 +6pp（MEG 上约 +6pp，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上仅 +1 到 +2pp）。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上绝对数字低一个台阶，但相对排序完全一致——结论对模态稳健。</p>
+<p><strong>MEG 与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的差距是模态性的</strong>。为排除「MEG 数据更多、通道更多」的混淆，作者做了同质化对照：三个数据集各裁到 128 通道、19 名被试、相同的被试平均录音时长，结果 MEG 仍以 30.3% / 31.7% 显著高于 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（全部 P &lt; 10⁻⁶）。作者留了限定语：还没做过同一批被试同时戴 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 和 MEG 听同样刺激的实验，所以严格说这是「设备类型强相关」而非因果定论——但论文自己也承认没预料到差距这么大。机制上不难理解：头皮 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 经过颅骨的容积传导低通，高频时间结构所剩无几，而 3 秒段检索恰恰吃时间精度。</p>
+<p><strong>被试数曲线</strong>（Fig. 2c）：固定评测前 10% 被试，训练被试数从少到多，两个 MEG 数据集上 top-10 单调上升。单模型 + 每被试一个 1×1 卷积就吃下了个体差异，这是「脑记录基础模型」这条路线最直接的可行性证据。</p>
+<p><strong>与侵入式对照</strong>（作者做得很克制，限定语给足）：50 词闭集里，本模型词级 top-1 平均 22.7%（最好被试 42.9%，Supplementary A.9），侵入式的 Moses et al. 是 39.5%；若候选词嵌在句子语境里，本模型平均 top-1 超 72.5%、最好被试 92.2–95.9%（Fig. 2b），反超 Moses 的 74%。感知 vs 产出的脑基础不同，这个对比只能当量级参考，不能当胜负。</p>
+<p><strong>解释性分析</strong>（Fig. 3、Fig. 4）：Fig. 3 先给定性一瞥——五个代表被试（20–80 分位）听「Thank you for coming, Ed」时，decoder 在每个词位置输出的候选词按 log 概率定字号，正确词多居前列。定量上，用各层语言特征去预测 decoder 给正确词的概率，短语嵌入与词袋嵌入的解释力最强（均 P &lt; 10⁻²³），词向量 P &lt; 10⁻⁸，词性 P &lt; 0.004，词频与音素更弱（Fig. 4 中音素的 R 接近零）。表征层级越高解释力越强，decoder 主要在用词汇-语境语义信息检索，而不是声学匹配。</p>
+<h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/defossez-fig1-overview.png" data-desc-position="bottom"><img alt="Figure 1 · 总体框架：脑模块与 wav2vec 2.0 分别编码脑信号与语音，CLIP 损失对齐；评测时在候选段上做零样本检索" src="../../assets/defossez-fig1-overview.png"></a></p>
+<p><em>Figure 1 · 左：speech module（wav2vec 2.0 的卷积 + Transformer）把 3 秒语音映为 <span class="arithmatex">\( Y \)</span>；右：brain module（空间注意力 + 被试块 + 卷积栈）把 <span class="arithmatex">\( C\times T \)</span> 的脑信号映为 <span class="arithmatex">\( Z \)</span>；顶部为评测协议——对每个脑表征 <span class="arithmatex">\( Z_i \)</span> 给 <span class="arithmatex">\( N \)</span> 个候选段逐一打内积分，即零样本检索；两空间以 CLIP 对比损失对齐，<span class="arithmatex">\( N \)</span> 名被试共享除被试层外的全部权重</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/defossez-brainmodule.png" data-desc-position="bottom"><img alt="Extended Data Fig. 4 · 设计选择（A–D）与 brain module 逐层结构（E）" src="../../assets/defossez-brainmodule.png"></a></p>
+<p><em>Extended Data Fig. 4 · A–D 是同一被试「Thank you for coming, Ed」的 Mel 重建对照：回归基线（B）只剩模糊能量轮廓，对比损失（C）恢复频带结构，换 wav2vec 目标（D）最干净；E 是 brain module 逐层结构——SpatialAttention(270) → Conv(270, K=1) → 被试专属 SubjectLayer(270, S) → 5 块膨胀卷积（GLU 减半）→ 两层 1×1 收尾到 <span class="arithmatex">\( F \)</span> 维</em></p>
+<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    subgraph S["Speech module（冻结）"]
+        A["原始语音波形"] --&gt; B["wav2vec2-large-xlsr-53&lt;br/&gt;最后 4 层平均 → Y ∈ R^(F×T)"]
+    end
+    subgraph Bm["Brain module（训练）"]
+        C["原始 MEG/EEG X ∈ R^(C×T)&lt;br/&gt;120 Hz，前移 150 ms&lt;br/&gt;baseline correction + clamp 20σ"] --&gt; D["空间注意力&lt;br/&gt;傅里叶参数化传感器位置函数&lt;br/&gt;→ 270 通道"]
+        D --&gt; E["被试层：1×1 Conv（每被试一个 270×270 矩阵）"]
+        E --&gt; F["5 块 × 3 层膨胀卷积&lt;br/&gt;残差 + BN + GELU，GLU 减半"]
+        F --&gt; G["两层 1×1 Conv → Z ∈ R^(F×T)"]
+    end
+    B --&gt; H["CLIP 损失&lt;br/&gt;batch 内负例，softmax 内积"]
+    G --&gt; H
+    subgraph E2["评测：zero-shot 检索"]
+        I["测试脑片段"] --&gt; G2["Brain module → Z"]
+        J["测试集全部 3 s 段（1000+）"] --&gt; K["候选 Y"]
+        G2 --&gt; L["内积排序 → top-10"]
+        K --&gt; L
+    end</code></pre>
+<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文 / 工作</th>
+<th>关系说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../ssm2mel/">SSM2Mel</a></td>
+<td>语音解码轴线的两端：本篇（2023）是<strong>检索范式</strong>——不产出声学信号，在候选集里排序，数字漂亮但永远受候选集约束；SSM2Mel（2025）是<strong>回归范式</strong>——直接 <abbr title="脑电图 Electroencephalogram">EEG</abbr>→mel 谱，Pearson 0.069 贴着噪声地板。两者目标空间也不同：wav2vec 高层语义 vs mel 低层声学。SSM2Mel 的 SparrKULee（85 人荷兰语 <abbr title="脑电图 Electroencephalogram">EEG</abbr>）与本篇的 Schoffelen（96 人荷兰语 MEG）是同一语言的姊妹数据集，可交叉参照</td>
+</tr>
+<tr>
+<td><a href="../braingpt/">BrainGPT</a></td>
+<td>同为「对齐外部语言模型表征」，结构选择相反：本篇用判别式对比 + 卷积，BrainGPT 用自回归 + 因果 Transformer 生成式预测。本篇 Discussion 点名的下一步是补一个不需要候选集的生成模块，BrainGPT 可视为这个方向的后续</td>
+</tr>
+<tr>
+<td><a href="../eegpt/">EEGPT</a></td>
+<td>处理多被试/多数据集的两种答案：本篇用一个空间注意力层把任意导联布局归一到 270 通道 + 每被试一个 1×1 卷积；EEGPT 用 patch + 通道 embedding 拼接。本篇的被试层数值极小（一个矩阵），对评估「被试嵌入该多大」是个参照点</td>
+</tr>
+<tr>
+<td><a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
+<td>预处理哲学两极：本篇证明 baseline correction + 截断 20σ 就够、与 autoreject 持平；<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 走重采样/归一化的规范化路线。两者共同点是把跨设备异构性压进模型而非压进预处理</td>
+</tr>
+<tr>
+<td><a href="../cbramod/">CBraMod</a></td>
+<td>轴线分工：CBraMod 用脑信号自监督预训练通用表征；本篇反向——用外部（语音）模型的特征监督脑解码。两条「预训练方向」在 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（脑信号蒸馏 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征）处汇合</td>
+</tr>
+<tr>
+<td>wav2vec 2.0 / CLIP</td>
+<td>目标空间与损失函数的直接来源：wav2vec 2.0 提供 56,000 小时语音的自监督表征（末 4 层平均），CLIP 提供跨模态对比框架。本文的贡献不在两者本身，而在验证「自监督语音特征可线性对齐脑活动」在解码任务上成立</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>检索范式是绕道而非终点</strong>。对比学习赢回归，赢在把「逐维拟合」换成「可分辨性」，但代价是解码器只会排序、不会生成——给定脑信号，它能在 1,000 个候选里挑出那句，却无法输出候选集之外的一个词。作者在 Discussion 里自己承认要补生成模块。这个限制和 SSM2Mel 形成精确的互补：回归路线输出自由但信噪比贴地，检索路线信噪比可用但被候选集圈死。真正的语音解码（想象语音、病人产出）两个都得过生成关；</li>
+<li><strong>被试层小得令人意外，这个结论可能被低估了</strong>。270×270 的一个矩阵就吸收了跨被试差异，且训练被试越多整体越好——这暗示 MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的被试特异性主要不是深层表征差异，而是「传感器几何 + 个体解剖」的低维重映射。对站内基础模型轴线的直接影响：EEGPT、CBraMod 这类多被试预训练模型里的被试建模，可能根本不需要复杂的 per-subject adapter，一个线性映射加一个位置先验就够了。当然边界要留：本文只测了被动听觉，主动任务或临床人群里被试差异的维度可能高得多；</li>
+<li><strong>解释性分析有个没拆开的循环</strong>。结论说「decoder 主要依赖语义表征」，但 decoder 的目标空间是 wav2vec 2.0，而 wav2vec 特征本身就以词汇-语义成分为主（作者自己的引用文献 54、55 说它线性映射脑响应）。用短语嵌入解释 decoder 输出时，有多少是脑的属性、多少只是目标特征的属性？一个干净的对照是：拿在声学层面匹配但不语义相关的候选，看 decoder 是否真的放弃声学匹配。论文没做这一步，所以这个结论我打八折收下；</li>
+<li><strong>MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 差距对站内的警示</strong>。站内现有语音解码工作全部在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做（SSM2Mel 的 SparrKULee），本篇的同质化对照说明这个差距是模态性的——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做语音解码，天花板可能天然低一截。SSM2Mel 的 0.069 Pearson 贴地，部分原因也许不在模型而在模态上限。做 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语音解码的 baseline 设计时，应该把「换到 MEG 会好多少」当作一个校准问题记住。</li>
+</ul>
+<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<details class="question">
+<summary>Q1 · 回归为什么输得这么彻底？对比学习到底改了什么？</summary>
+<p>回归的 <span class="arithmatex">\( L_2 \)</span> 假设目标各维度同等重要、尺度合适——Mel 谱两条都不满足：极低频与语音无关，各频带幅值差数量级。结果是梯度被宽带能量成分主导，模型学出一个对一切语音都长得一样的平均谱（Extended Data Fig. 4B）。对比损失只问一件事：这段脑信号与正确语音的内积是否压过 batch 里其余样本。它自动选出有判别力的维度、自动配尺度，把「哪些语音特征脑里真的有」变成模型自己学的问题。数字上这一换在 Gwilliams 上值 +42.7pp，比换任何表征都大。</p>
+</details>
+<details class="question">
+<summary>Q2 · top-10 70.7% 意味着什么？离「能用的语音解码」还差几步？</summary>
+<p>意味着 3 秒非侵入信号里保留了足够信息，从一千多个候选中把正确段排进前十、且半数样本排进前二——非侵入信号的信息量此前被系统性低估了。但离可用还有三步：① 检索不是生成，需要候选集，想象语音没有候选集；② 评测段限定在固定词位（词首前 500 ms）开始的窗口，更自由的分段下性能未验证；③ 被试间方差大，最好与最差被试差数倍，队列平均数字掩盖了个体差异。作者给的路线图（换产出模型 + 加生成模块 + 室温磁强计）每步都是独立的大工程。</p>
+</details>
+<details class="question">
+<summary>Q3 · 空间注意力层为什么值得单独记住？</summary>
+<p>设计动机是工程性的：四个数据集导联数从 60 到 273、布局各异，要一个模型全吃，就需要一个把任意传感器布局映到固定维度的模块。作者用傅里叶参数化的 2D 位置函数加 softmax 实现，每个输出通道学出一张传感器权重地形图（Extended Data Fig. 5 显示学到的地形与听觉皮层投影吻合）。意外的收获是这层作为归纳偏置本身提精度——「传感器位置」这个被大多数深度学习工作丢掉的先验被显式编码回去了。对站内做 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的工作，这层是现成可搬的：通道拓扑信息不该靠打平后让网络重新发明。</p>
+</details>
+<details class="question">
+<summary>Q4 · 对站内基础模型预训练轴线，这篇的方法论能反哺什么？</summary>
+<p>本篇是「外部模型 → 脑解码」的对齐，站内主线（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、CBraMod）是「脑信号 → 通用表征」的自监督。两者共享一个可检验的命题：脑活动与自监督模型表征存在线性对应。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用脑信号蒸馏自己的表征，方向是把脑知识搬进模型；本篇反过来把模型知识当作脑解码的靶子。反哺点在评测协议：对比检索这个 zero-shot 口径（不训练分类头、直接测表征可分性）比下游分类微调更能区分「表征里有没有信息」和「分类头学没学好」，站内的预训练评估表可以加这一列。</p>
+</details>
+<div class="admonition abstract">
+<p class="admonition-title">复现速查卡</p>
+<ul>
+<li><strong>代码</strong>：github.com/facebookresearch/brainmagick（CC-NC-BY 4.0；论文数据与音频由各数据集作者提供，许可各异）</li>
+<li><strong>数据</strong>：Broderick 2019（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 128ch × 19 人 × 19.2 h，《老人与海》）；Brennan &amp; Hale 2019（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 60ch × 33 人 × 6.7 h，《爱丽丝》）；Schoffelen 2019（MEG 273ch × 96 人 × 80.9 h，荷兰语句子与词表，Donders Repository 注册下载）；Gwilliams 2022（MEG 208ch × 27 人 × 56.2 h，MASC 语料，CC0）。划分 70/20/10，同一句子的所有重复固定在同一 split，测试段限定词首前 500 ms 有词的 3 s 窗</li>
+<li><strong>预处理</strong>：重采样 120 Hz → baseline correction（减前 0.5 s 均值）→ robust scaler → 截断 &gt;20σ；无需 ICA/autoreject（Supplementary A.3–A.4 验证）</li>
+<li><strong>模型</strong>：SpatialAttention(270, K=32 谐波) → 1×1 Conv → 被试层 <span class="arithmatex">\( M_s\in\mathbb{R}^{270\times270} \)</span> → 5×(膨胀卷积 ×2 残差 + GLU 卷积) → 两层 1×1 收尾；输入前移 150 ms；目标 = wav2vec2-large-xlsr-53 末 4 层平均；Mel 基线用 120 Mel bands、<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> frame 512 / hop 128 @16 kHz、log(ε+Mel) ε=10⁻⁵</li>
+<li><strong>训练</strong>：Adam lr 3e-4，batch 256，1 epoch = 1,200 updates，验证 10 epoch 早停，2×V100 16GB；CLIP 损失单向、无温度参数，负例取 batch 内其余样本</li>
+<li><strong>评测</strong>：段级 top-10 为主指标；词级 = 候选段按词聚合求概率和；解释性 = ridge 回归 + 5 折交叉验证 Pearson R</li>
+</ul>
+</div>
+<hr>
+<p><strong>相关阅读</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../ssm2mel/">SSM2Mel（语音解码轴线的回归端：<abbr title="脑电图 Electroencephalogram">EEG</abbr>→mel 谱）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"></path></svg></span> <a href="../braingpt/">BrainGPT（自回归因果 Transformer 的语言解码）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../eegpt/">EEGPT（多被试 patch+通道 embedding 的另一解法）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>
+<!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/load-mathjax.js"></script>
+      
+        <script src="../../javascripts/giscus.js"></script>
+      
+        <script src="../../javascripts/progress.js"></script>
+      
+        <script src="../../javascripts/back-to-top.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

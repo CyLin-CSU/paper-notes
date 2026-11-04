@@ -1,0 +1,2533 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="我的论文精读总结库">
+      
+      
+      
+      
+        <link rel="prev" href="../ssm2mel/">
+      
+      
+        <link rel="next" href="../neurorvq/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Mapping Effective Connectivity by Virtually Perturbing a Surrogate Brain - Paper Notes · 论文阅读笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mapping-effective-connectivity-by-virtually-perturbing-a-surrogate-brain" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-header__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Paper Notes · 论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mapping Effective Connectivity by Virtually Perturbing a Surrogate Brain
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换暗色" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换亮色" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Paper Notes · 论文阅读笔记" class="md-nav__button md-logo" aria-label="Paper Notes · 论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Paper Notes · 论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CyLin-CSU/paper-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    CyLin-CSU/paper-notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    论文笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    论文笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../biot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BIOT (NeurIPS 2023)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../defossez-speech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Défossez 语音解码 (NMI 2023 · 轴线源头)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../labram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LaBraM (ICLR 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGPT (NeurIPS 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../braingpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BrainGPT (arXiv 2024)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guided/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GUIDED (arXiv 2024 · 视觉重建)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crosspt-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CrossPT-EEG (arXiv 2024 · 视觉解码基准)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neurolm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeuroLM (ICLR 2025)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../luna/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cbramod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CBraMod (ICLR 2025 · 十字交叉)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ssm2mel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSM2Mel (arXiv 2025 · 语音解码)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NPI (Nature Methods 2025 · 连接组学)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NPI (Nature Methods 2025 · 连接组学)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-ec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：EC 的干预定义在人类身上无人能做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-mlp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 代理脑：三步输入 MLP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-ec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 虚拟扰动读 EC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 实验与验证
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 实验与验证">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 仿真：三套考核，两套有真值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-hcp-human-ebc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 真实数据：HCP 上的 Human EBC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ccep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 CCEP：唯一贴到真实刺激的验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 疾病生物标志探索（结果平平，作者照写）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neurorvq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeuroRVQ (arXiv 2025 · 多尺度RVQ)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DELTA (NeurIPS WS 2025 · 掩码扩散EEG-to-Text)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tfm-tokenizer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TFM-Tokenizer (ICLR 2026)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rf-gpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RF-GPT (arXiv 2026 · 跨领域)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JET (ICML 2026 · EEG 生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegmoe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGMoE (TNNLS 2026 · MoE)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegdm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGDM (arXiv 2026 · 扩散表征)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../not-all-eeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Not-All-EEG (arXiv 2026 · 流匹配生成)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../learnable-tf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LTFT (IEEE TETCI 2026 · 时频方法)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brainrvq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BrainRVQ (arXiv 2026 · 双域RVQ)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codebrain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBrain (ICLR 2026 · 解耦tokenizer)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../neurodetr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeuroDETR (arXiv 2026 · 事件token化)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eegarena/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEGArena (arXiv 2026 · 基准评测)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    模型架构基础
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    模型架构基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/lora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LoRA · 低秩适配 (ICLR 2022)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/attention-alternatives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention 替代方案 (CS336 Lec 4)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/generative-lineage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生成模型脉络 (VAE → DDPM → FM)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics/gnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图神经网络 (消息传递与 GAT)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主题专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    主题专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG Tokenization 演进
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预训练范式对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/multi-task/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通道适配与多任务学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/data-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 预训练数据全景
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/base-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基座来源分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    语音模型专题
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    语音模型专题
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../topics/speech-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    语音解码与 Mel 谱建模
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog-2023-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    综述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十三篇方法对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    索引
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考文献索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-ec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 问题定位：EC 的干预定义在人类身上无人能做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-mlp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 代理脑：三步输入 MLP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-ec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 虚拟扰动读 EC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 实验与验证
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 实验与验证">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 仿真：三套考核，两套有真值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-hcp-human-ebc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 真实数据：HCP 上的 Human EBC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ccep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 CCEP：唯一贴到真实刺激的验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 疾病生物标志探索（结果平平，作者照写）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与其他论文的关系
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        个人思考
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自问自答
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="mapping-effective-connectivity-by-virtually-perturbing-a-surrogate-brain">Mapping Effective Connectivity by Virtually Perturbing a Surrogate Brain<a class="headerlink" href="#mapping-effective-connectivity-by-virtually-perturbing-a-surrogate-brain" title="Permanent link">#</a></h1>
+<blockquote>
+<p><strong>Nature Methods 2025</strong>（22(6), 1376–1385；DOI <a href="https://doi.org/10.1038/s41592-025-02654-x">10.1038/s41592-025-02654-x</a>；期刊卷页与 DOI 来自检索核对，所读 arXiv 2301.00148 v4（2024-09）版 PDF 内无期刊信息）· 南方科技大学（+Iowa State / HKUST / HKBU）—— 站内<strong>轴外论文</strong>：不碰 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，不做基础模型，属于「把神经网络当科学工具」的因果连接组学方向。它与站内主线（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练、<abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成）的距离是实实在在的，可借鉴的也不是技术组件，而是一个立意：模型训练完之后，用干预（扰动）而非权重读出/相关指标去问「谁影响谁」。这个「训完的模型当作可干预对象」的用法，正好站在站内 BrainGPT / EEGDM 用法的对面。</p>
+</blockquote>
+<p><strong>作者</strong>：Zixiang Luo, Kaining Peng, Zhichao Liang, Shengyuan Cai, Chenyu Xu, Dan Li, Yu Hu, Changsong Zhou, Quanying Liu*（通讯，南方科技大学生物医学工程系）</p>
+<div class="admonition abstract">
+<p class="admonition-title">TL;DR</p>
+<ul>
+<li>核心论点：有效连接（EC）应该按<strong>干预主义的因果定义</strong>来推——扰动一个变量、看另一个变不变——而这在真实人脑上做不到（光遗传/DBS/CCEP 有创且覆盖有限）。NPI（Neural Perturbational Inference）的替代方案：训一个逐被试的 MLP 代理脑模拟脑动力学，然后<strong>在代理模型上做虚拟的「扰动-记录」</strong>，把 EC 读出来</li>
+<li>方法极简：MLP 用前三个时间步预测下一步 <span class="arithmatex">\( \hat{x}_{t+1} = f(x_t, x_{t-1}, x_{t-2}, \theta) \)</span>；对每个源区 i 在每个时刻 t 施加 <span class="arithmatex">\( \Delta e_i \)</span> 冲激（Δ = BOLD 的 0.5 倍标准差），EC 即响应差的期望 <span class="arithmatex">\( \mathrm{EC}_{i\cdot} = \mathbb{E}_t[f(x_t + \Delta e_i) - f(x_t)] \)</span>。作者证明这等价于训练后网络的期望 Jacobian（Supp Note 4）——一个区域对另一个的小信号增益，符号天然给出兴奋/抑制</li>
+<li>三套仿真验证全过：RNN 生成数据上 NPI-EC 对「扰动-记录」真值 <strong>r=0.95</strong>（胜 GC，p&lt;10⁻³）；Sanchez-Romero 公开合成 BOLD（这套<strong>没有 EC 真值</strong>，以二值化后判别 SC 有无的 AUC 评估）上 <strong>AUC≈1</strong>，胜 GC 与 DCM（9 种拓扑全胜）；66 节点 WBM 上 NPI-EC 贴真值且胜 GC（p&lt;10⁻³）</li>
+<li>真实数据：HCP 800 被试（MMP 360 区）逐被试代理脑 → 群体 Human EBC。模型 FC 对经验 FC <strong>r=0.97</strong>；EC-SC <strong>r=0.42</strong>；HCP 与 ABCD（2000 人）群体 EC <strong>r=0.87</strong>；强度分布拟合对数正态（与小鼠/猕猴示踪的 SC 分布一致）</li>
+<li>最硬的一块验证：与 F-TRACT 的 CCEP 图谱（613 位癫痫病人真实电刺激传播）比，NPI-EC 对 CCEP <strong>r=0.33</strong>，FC 只有 0.20——静息态数据里推出的「因果」确实沾到了真实刺激传播的边，虽然相关量级不算高</li>
+</ul>
+</div>
+<h2 id="1-ec">1 问题定位：EC 的干预定义在人类身上无人能做<a class="headerlink" href="#1-ec" title="Permanent link">#</a></h2>
+<p>EC、SC、FC 三个概念里，SC 是解剖布线（扩散 MRI 示踪），FC 是统计依赖（无方向、有伪连接），EC 才是有方向的因果影响。作者开篇把 EC 的金标准钉在「扰动并记录」上：光遗传、DBS、CCEP 都是真扰动，但都有创、空间覆盖受限，不可能对全脑逐区做。</p>
+<p>计算方法两条路各有病灶，论文的归因很清楚：</p>
+<ul>
+<li><strong>模型依赖的路（DCM）</strong>：EC 定义为状态空间模型里的耦合参数，结论依赖模型假设，模型失配直接偏置结果；</li>
+<li><strong>模型无关的路（GC）</strong>：能判方向，但强度测不准、兴奋/抑制分不开。GC 本质是预测性改进，不是干预；</li>
+<li>还有一条近年路线：直接拿训练后 RNN 的权重矩阵当 EC。论文引了 Das &amp; Fiete（Nature Neuroscience 2020）的批评——强循环网络里从活动反推连接有<strong>系统性误差</strong>，学到的权重没有理由等于底层 EC，区域数量一大更不可信。</li>
+</ul>
+<p>NPI 的立场是：别从模型权重里读因果，把模型当<strong>可干预的替身</strong>，用与实验神经科学同构的「扰动-记录」协议在模型内部做实验。这一定义对齐 Pearl/Woodward 的操作主义因果观（论文明确引了 Pearl《Causality》），因此推出来的 EC 与光遗传式的实验 EC 在语义上同族——这是它区别于 GC/DCM 的关键卖点，也是后面 CCEP 验证能成立的逻辑前提。</p>
+<h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
+<h3 id="21-mlp">2.1 代理脑：三步输入 MLP<a class="headerlink" href="#21-mlp" title="Permanent link">#</a></h3>
+<p>把 N 个脑区的集体活动记为 <span class="arithmatex">\( x_t \in \mathbb{R}^N \)</span>，代理模型是一个纯前馈 MLP：</p>
+<div class="arithmatex">\[
+\hat{x}_{t+1} = f(x_t,\ x_{t-1},\ x_{t-2},\ \theta)
+\]</div>
+<p>结构 3N → 2N → 0.8N → N（网格搜索定的），损失就是单步预测的 <abbr title="均方误差 Mean Squared Error">MSE</abbr>，Adam lr=10⁻³，60 epoch，单卡 RTX 4080——训练成本小到不像 Nature Methods 的方法，但后面验证做得扎实。逐被试训练（HCP 每人 4×15 分钟数据），所以 EBC 是个体化的。3 步输入比 1 步输入的预测略好（Supp Fig 8）；作者还对比了 CNN/RNN/VAR 等架构做代理，MLP 在 FC 重现与 EC 推断上最好（Supp Table 1）。</p>
+<p>代理模型合格的门槛不是预测精度本身，而是<strong>能否重现区间关系</strong>：把输出递归喂回去做自由生成，生成信号的 FC 与真实 FC 对比。HCP 800 人平均 r=0.97（图 1f 标注 0.97，正文 2.1 节出现 0.98，两处以 0.97 为准）。</p>
+<h3 id="22-ec">2.2 虚拟扰动读 EC<a class="headerlink" href="#22-ec" title="Permanent link">#</a></h3>
+<p>训练完冻结网络，逐源区、逐时刻做冲激扰动。扰动加在<strong>网络的输入端</strong>：源区 i 的当前时刻分量 <span class="arithmatex">\( x_t \)</span> 抬高 <span class="arithmatex">\( \Delta \)</span>，历史两步输入、隐层激活、权重都不动（原文 "perturb each input node of the ANN"）：</p>
+<div class="arithmatex">\[
+\mathrm{EC}_{i\cdot} = \mathbb{E}_t\big[\, f(x_t + \Delta e_i,\ x_{t-1},\ x_{t-2}) - f(x_t,\ x_{t-1},\ x_{t-2}) \,\big]
+\]</div>
+<p><span class="arithmatex">\( e_i \)</span> 是第 i 维单位向量，<span class="arithmatex">\( \Delta \)</span> 取 0.5 倍 BOLD 标准差。读出的是 t+1 时刻（fMRI 上即 0.72 s 后）所有目标区的响应差：符号给兴奋/抑制，幅度给强度，源区固定、目标遍历即「一到全」，逐区扫完即全到全。</p>
+<p>三点值得记：</p>
+<ol>
+<li><strong>等价于期望 Jacobian</strong>。小 Δ 下，冲激响应差 <span class="arithmatex">\( f(x_t+\Delta e_i) - f(x_t) \approx \Delta\,\partial f/\partial x_i \)</span>，除以 Δ 就是 Jacobian 中「输入 i」对应的那一列（转置过来即 EC 矩阵的第 i 行）；再对所有观测到的状态取平均，得到的就是训练后网络 Jacobian 在<strong>数据的状态分布</strong>上的期望（Supp Note 4）。Ext Data Fig 2 把三方都对上了：数值算出的 ANN Jacobian、NPI-EC、以及 RNN 数据上真值 RNN 的 Jacobian 彼此一致。这给了方法一个干净的理论身份，也划出了它的边界：期望是对「被试实际流经的状态分布」取的，所以这份 EC 同时由网络结构与其状态统计共同决定，读出的是<strong>局部线性化增益</strong>，不是大扰动下的系统响应；</li>
+<li><strong>状态依赖</strong>。真实刺激的响应随脑状态变（论文引了颅内刺激响应随状态变化的病例证据，Scangos et al. 2021 的抑郁症病人单例报道），所以他们在每个时刻的状态各扰动一次、再平均——EC 是「典型状态下」的平均效应，不是某一时刻的效应。次数上这意味着每个源区要做 T 次扰动（单被试 4 个 session 共约 5,000 个时间点），期望就是对这批实际流经的状态取平均；</li>
+<li><strong>扰动幅度小</strong>。Δ=0.5σ 落在小信号区，恰好对应 Jacobian 解释；但 CCEP 的真实刺激是强扰动，两种扰动机制的口径差异是后文验证的一个隐性前提。</li>
+</ol>
+<h2 id="3">3 实验与验证<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
+<h3 id="31">3.1 仿真：三套考核，两套有真值<a class="headerlink" href="#31" title="Permanent link">#</a></h3>
+<p>真值 EC 的取得方式与 NPI 同构——直接在生成模型上「扰动-记录」。这个对称设计干净，但要注意它验证的是「NPI 能恢复<strong>生成模型意义上的</strong>扰动响应」，不是生物真值。</p>
+<p><strong>① RNN 生成数据</strong>。<span class="arithmatex">\( dx = [-x + W h(x)]dt + \sigma d\xi \)</span>，<span class="arithmatex">\( h \)</span> 是 tanh，权重矩阵 W（高斯 <span class="arithmatex">\( \mathcal{N}(0, n^{-1/2}) \)</span>）当 SC。NPI-EC 对真值 EC <strong>r=0.95</strong>，GC 明显更差（Wilcoxon p&lt;10⁻³）。两个附带结论：EC-SC 相关显著强于 FC-SC（FC 无方向且有伪连接）；EC 不与 SC 完全重合，作者归因于非线性动力学与噪声——这其实是合理现象而非缺陷。</p>
+<p><strong>② Sanchez-Romero 公开合成 BOLD</strong>（5–10 节点、9 种含环拓扑，无 EC 真值，用二值化后判别 SC 有无的 AUC 评估）：NPI 的 <strong>AUC 接近 1</strong>，九种拓扑全部显著优于 GC 与 DCM。DCM 在这个考核里被比下去有结构性原因——节点数一多，DCM 的参数空间爆炸，本来就不适合大规模网络。</p>
+<p><strong>③ 66 节点全脑模型（WBM）</strong>。Deco 动态平均场模型 + DSI 真实 SC，HRF 卷积出 BOLD（TR=0.72，与 HCP 一致）。HRF 有延迟，真值 EC 在 t+4·TR 读出。代理脑单步预测精度随步数衰减，但自由生成的 FC 仍与仿真 FC 相关 r=0.81；NPI-EC 与真值高度一致且胜 GC（p&lt;10⁻³）。</p>
+<p><strong>稳健性</strong>（RNN 实验）：对扰动幅度不敏感，噪声增大只缓慢变差；数据长度与网络规模是硬约束——网络越大，可靠推断需要的数据越多。这句话在 Discussion 里被作者自己重申为方法的主要限制。</p>
+<h3 id="32-hcp-human-ebc">3.2 真实数据：HCP 上的 Human EBC<a class="headerlink" href="#32-hcp-human-ebc" title="Permanent link">#</a></h3>
+<p>HCP S1200 的 800 人静息态 fMRI（TR 0.72 s，4×15 min，ICA-FIX 去噪，0.01–0.1 Hz 带通），MMP 1.0 图谱 360 个皮层区（19 个皮层下区也放进训练输入以减少未观测区的偏差，EC 只在 360 区上报告）。逐被训代理、逐被扰出 EBC、再群平均。</p>
+<ul>
+<li><strong>结构支撑</strong>：EC（绝对值）对 Demirtaş 等 DSI 衍生的 SC，<strong>r=0.42</strong>。对 fMRI 推出的量来说这个数不低，但也要如实说：r²≈0.18，EC 与 SC 之间还隔着八成以上的未解释方差；</li>
+<li><strong>跨数据集</strong>：HCP 群体 EBC 与 ABCD（2000 人）的 <strong>r=0.87</strong>——不同设备、不同人群、不同年龄段，群体模式的稳定性过得去；</li>
+<li><strong>个体水平</strong>：55% 的 EC 连接在 800 人上显著非零（Bonferroni 校正）；同一被试训练两个不同初始化的 ANN，EC 一致（排除训练随机性）；数据切半的跨 session 一致性<strong>高于</strong>跨被试相关性——方法噪声小于个体差异，EC 才有资格谈个体化。边缘网络（LIM）可靠性最低，作者归因于该区 fMRI 信噪比低，归因诚实；</li>
+<li><strong>图谱稳定性</strong>：Schaefer 100–1000 区上 EC 高度稳定。</li>
+</ul>
+<p><strong>EBC 本身的发现</strong>：EC 强度对数正态分布（AIC 四分布比选出的，与小鼠/猕猴轴突示踪的 SC 分布一致）；兴奋 EC 最强处多在网络内部，抑制 EC 最强处几乎全在网络间且全为跨半球；兴奋最大强度归一化到 1 时抑制只有 0.22；二值化后 73% 的连接是双向的，与皮层 SC 的经典结论相符。这些分布层面的结论与独立来源的解剖学知识对得上，是我认为比单点相关更可信的一类证据。</p>
+<h3 id="33-ccep">3.3 CCEP：唯一贴到真实刺激的验证<a class="headerlink" href="#33-ccep" title="Permanent link">#</a></h3>
+<p>F-TRACT 项目聚合 613 位癫痫病人的皮层电刺激（CCEP）+ SEEG 记录，给出群体级刺激传播矩阵。NPI-EC（HCP 群体级，同图谱）对 CCEP 左半球 <strong>r=0.33</strong>，FC 对 CCEP 只有 <strong>r=0.20</strong>；dlPFC 作源的输出 EC、PCC 作靶的输入 EC 也都比 FC 更贴 CCEP。</p>
+<p>0.33 不高。但考虑到两边差异悬殊的口径——静息态相关的推断 vs 侵入性强刺激的传播、健康人 vs 癫痫病人、个体刺激 vs 群体聚合——能稳定高出 FC 一截，本身就是「EC 沾到了因果边」的证据。FC 0.20 的基线也提醒：<strong>结构支撑不等于因果</strong>，r=0.42 的 EC-SC 相关里有一部分只是 SC-FC 本来就有的共变。</p>
+<h3 id="34">3.4 疾病生物标志探索（结果平平，作者照写）<a class="headerlink" href="#34" title="Permanent link">#</a></h3>
+<p>ABIDE（自闭症）与 ADNI（阿尔茨海默）上，EC 分类病人/对照的表现<strong>与 FC 相当</strong>，没有超越。论文把这写成「EC 可作 FC 的可行替代」，但「相当」就是相当——方向性信息能否兑现为临床增益，这里没有给出证据。这两页值得用挑剔的眼光读。</p>
+<h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/surrogate-npi-framework.png" data-desc-position="bottom"><img alt="Figure 1 · NPI 框架：观测信号 → 训练代理脑 → 虚拟扰动 → 全脑 EC" src="../../assets/surrogate-npi-framework.png"></a></p>
+<p><em>Figure 1 · NPI 全流程：(a) 观测的多脑区信号；(b) MLP 学单步动力学；(c) 逐区虚拟扰动；(d) 读出全脑 EC。(e,f) 递归生成验证 FC（r=0.97）；(g,h) 扰动响应差给兴奋（b→a 升）/抑制（b→c 降）；(i) 合成数据上 NPI-EC 对真值 r=0.95；(j) 真实 fMRI 上的 seed-based EC</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/surrogate-human-ebc.png" data-desc-position="bottom"><img alt="Figure 3 · HCP 800 人的群体级 EBC" src="../../assets/surrogate-human-ebc.png"></a></p>
+<p><em>Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制，色标 Exc/Inh）；(b) 皮层区归入七个功能网络；(c) 模型 FC 对经验 FC r=0.97；(d) 逐网络的 seed-based FC 空间模式；(e) 逐网络的 seed-based EC（红兴奋/蓝抑制）；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布</em></p>
+<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    subgraph S1["① 训代理脑（逐被试）"]
+        A["rs-fMRI：N 区 × T 时刻&lt;br/&gt;（HCP 4×15 min，360 区）"] --&gt; B["MLP：x_{t+1} = f(x_t, x_{t-1}, x_{t-2})&lt;br/&gt;单步 MSE，60 epoch"]
+        B --&gt; C{"代理合格？&lt;br/&gt;递归生成的 FC 对经验 FC r=0.97"}
+    end
+    C --&gt;|是| D
+    subgraph S2["② 虚拟扰动-记录"]
+        D["冻结网络，枚举 源区 i × 状态 t"] --&gt; E["x_t → x_t + Δ·e_i（Δ=0.5σ）"]
+        E --&gt; F["读 t+1 全区响应差&lt;br/&gt;EC_i· = E_t[f(x_t+Δe_i) − f(x_t)]&lt;br/&gt;（≡ 状态平均 Jacobian 中源区 i 对应的列）"]
+    end
+    F --&gt; G["逐区扫完 → all-to-all EBC&lt;br/&gt;方向 × 强度 × 兴奋/抑制符号"]
+    G --&gt; H["验证链：RNN 合成 r=0.95 → 公开 BOLD AUC≈1（胜 GC/DCM）→ WBM 胜 GC&lt;br/&gt;→ SC 支撑 r=0.42 → HCP-ABCD r=0.87 → CCEP 613 病人 r=0.33 &gt; FC 0.20"]</code></pre>
+<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>站内三篇候选对照都查过，没有与本篇的真实对话（本篇不引它们，主题坐标系也不同），下面如实标注；本篇真正的参照系是经典 EC 方法。</p>
+<table>
+<thead>
+<tr>
+<th>论文 / 工作</th>
+<th>关系说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../braingpt/">BrainGPT</a></td>
+<td>都把神经网络训成神经信号的代理模型，用途相反：BrainGPT 是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上的表征/解码工具（模型输出是目的），NPI 把代理模型当<strong>被解剖的对象</strong>（模型只是扰动实验的容器）。站内 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型训完后是否也能这样扰动出「区间因果」，本篇提供了模板，但 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的源定位模糊与容积传导会让「区」的定义先出问题——暂无直接对话</td>
+</tr>
+<tr>
+<td><a href="../eegdm/">EEGDM</a></td>
+<td>两种「模型作工具」的分工：EEGDM 用生成模型产数据训表征，模型是数据工厂；NPI 用模型做反事实实验，模型是实验室。同一个代理模型在两个框架里甚至可以复用——暂无直接对话</td>
+</tr>
+<tr>
+<td><a href="../eegmoe/">EEGMoE</a></td>
+<td>被试间差异的两种处理：EEGMoE 用专家分化吸收个体差异，NPI 逐被试训代理并用「跨 session 一致性 &gt; 跨被试相关性」证明个体信号大于方法噪声。两个证据可以互相支撑，但技术上没有交集——暂无直接对话</td>
+</tr>
+<tr>
+<td>Granger 因果</td>
+<td>论文的主要对比基线，三套仿真全胜（r=0.95 那套 p&lt;10⁻³）。GC 是预测性定义，方向判得动、强度与符号测不准；NPI 的干预主义定义与实验 EC 同族，这是它敢叫 EC 而 GC 不敢的差别</td>
+</tr>
+<tr>
+<td>DCM</td>
+<td>模型依赖路线的代表。EC 定义为状态空间耦合参数，节点一多参数爆炸（66 节点上 DCM 实际不可用，公开合成数据上被 NPI 以 AUC 显著压制）。但 DCM 在小规模、假设充分时有完整的统计推断框架，NPI 没有等价物</td>
+</tr>
+<tr>
+<td>Das &amp; Fiete（2020）</td>
+<td>本篇动机的直接来源之一：强循环网络中从活动反推连接有系统性误差。NPI 的回答是绕开权重读出，改做行为学式的扰动实验</td>
+</tr>
+<tr>
+<td>Pearl / Woodward 的因果观</td>
+<td>NPI 的 EC 定义显式对齐干预主义因果（do-操作/操作主义），是全文语义合法性的地基——EC 推得对不对，取决于「代理模型的扰动响应 ≈ 真实脑的扰动响应」这个迁移假设，而这是全文唯一无法直接验证的一环（CCEP 只是间接证据）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>方法的全部重量压在一个迁移假设上</strong>：NPI 真正证明的是「扰动代理模型能恢复代理模型的 EC」（仿真部分，近乎循环），而「代理模型的 EC ≈ 真实脑的 EC」只有 CCEP r=0.33 这一间接证据撑着。论文对此的处理算体面——FC 基线 0.20 摆在旁边——但如果 CCEP 上只追平 FC，整个故事就塌了，所以这 0.13 的差距是全文最要命的数字，值得盯住。这层假设内部还有一个更细的错位：代理脑的合格标准是<strong>重现 FC</strong>（r=0.97），可 FC 是无方向的二阶统计量，FC 重现得好并不保证扰动响应（期望 Jacobian）也对——两个 FC 几乎相同的动力学系统完全可以有很不一样的局部增益结构。也就是说，被验收的指标和被使用的量不是同一个量，保真度对 EC 的传导在这道缝上没有免费保证；</li>
+<li><strong>小信号扰动 vs 强刺激的口径差是隐藏的裂缝</strong>：Δ=0.5σ 的冲激对应期望 Jacobian，是线性化的小信号增益；CCEP 是大电流强刺激。非线性系统里两者可以不一致。CCEP 验证成立反而暗示皮层响应在这段尺度上近似线性，或者对数正态分布的强度结构在两种口径下都占主导——论文没有讨论这一点，我认为这是比数据量更深的限制；</li>
+<li><strong>fMRI 时间尺度上的「因果」要打折听</strong>：EC 读在 t+1，即 0.72 s 后，而神经因果在毫秒级。HRF 把血流动力学卷进了方向性里（作者在 Supp Fig 13、14 里做了带 HRF 卷积、正/负双向冲激的扰动变体，算意识到了）。NPI 胜 GC 的部分原因可能是它至少对每个状态做了响应平均，比 GC 的全时段线性回归少受平稳性假设拖累——但把 0.72 s 尺度的方向叫「神经因果传播」，措辞上我认为超出了证据；</li>
+<li><strong>对本站主线的真实启发不在方法在立意</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型社区（含站内读的一串）评价模型好不好的手段全是生成质量与下游判别精度，全是「预测性」指标。NPI 提供了第三种评价：训完的模型能否回答干预性问题（论文 Discussion 末尾也把「对训练后的代理模型施加更多样的干预」列为下一步工作）。一个在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上预测得准的模型未必在「扰动谁、谁会变」上给出对的结构——如果哪天有人对 BrainGPT 类模型做系统性扰动分析并与真实刺激数据对账，那会是「神经基础模型作为科学工具」的第一次真正考试。</li>
+</ul>
+<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<details class="question">
+<summary>Q1 · NPI 的 EC 为什么敢叫「因果」，比 GC 强在哪？</summary>
+<p>因为定义本身换了。GC 的因果定义是「知道了 X 的过去，能否改进对 Y 的预测」——纯预测性，混杂路径全靠回归吸收；NPI 的定义是「对 X 施加扰动，Y 变不变」——与光遗传/CCEP 的实验语义同构，符号（兴奋/抑制）和强度都在响应差里直接给出。但要诚实：NPI 的「干预」发生在代理模型内部而非真实脑上，它的因果性是「模型内因果」，对真实脑的效力取决于代理保真度。论文的合法叙事是仿真验证（有真值）+ CCEP 间接验证（无真值），两层证据的性质不同，不能混着说。</p>
+</details>
+<details class="question">
+<summary>Q2 · 扰动一次、读 t+1，这么短的窗口能捕到多跳的传播吗？</summary>
+<p>捕不到，这是设计选择而非疏漏。EC_i· 只取 t+1 时刻的响应差，等价于 Jacobian 的一步直接效应；间接路径（i→j→k）的贡献不会出现在 EC_i· 的 k 列里，或者只以被 j 的直接效应污染的形式出现。WBM 实验里真值 EC 也取 t+4·TR 那一点，作者用「HRF 延迟后的响应差」保持了两边口径一致。所以 NPI 映射的是「一步直达的有效连接」，不是全时长信息流——对照 CCEP（刺激后早期响应也以直接通路为主）恰好口径匹配，这可能是 r=0.33 能成立的部分原因。</p>
+</details>
+<details class="question">
+<summary>Q3 · 逐被试训 800 个代理脑，为什么不训一个群体大模型？</summary>
+<p>论文的取舍在 Discussion 里露了口风：ANN 的灵活性支持「预训练群体模型 + 微调个体模型」的路线（他们引了 Brant-2 这类脑信号基础模型），本文没做。逐被训练的好处是 EC 的个体差异可以做可靠性分析（跨 session &gt; 跨被试那条关键结果就是这么来的）；代价是每人只有 60 分钟 fMRI，小数据训 MLP 靠的是任务本身简单（单步预测）而不是模型先验。数据效率是作者自己承认的第一限制——这一条恰好是站内基础模型思路（大规模预训练补个体数据不足）能接手的接口。</p>
+</details>
+<details class="question">
+<summary>Q4 · 如果把 NPI 搬到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上，最先坏掉的是哪一环？</summary>
+<p>「区」的定义。NPI 的每个环节都假定 x_t 的分量对应解剖上有因果意义的区域：扰动一个分量 = 刺激一个区，读一个分量 = 记录一个区。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 头表信号是容积传导混合后的投影，电极/源空间分量与解剖区的映射本身就含糊，扰动一个「区」在模型里合法、在解释上悬空；运动伪迹与低信噪比又会让代理模型的单步预测学到大量非神经动力学。scalp <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做 NPI 之前需要先解决源定位误差传递的问题，颅内 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（ECoG/SEEG）倒是通道-皮层对应更干净，但那又回到数据稀缺的老问题。</p>
+</details>
+<details class="question">
+<summary>Q5 · 输入只看 3 个时间步（约 2.2 s），这个记忆窗口装得下脑动力学吗？</summary>
+<p>先问它需要装下什么。NPI 学的是单步条件期望 p(x_{t+1} | x_t, x_{t-1}, x_{t-2})，而 fMRI 观测本身是 HRF 低通平滑后的信号，秒级以下的神经动力学在 BOLD 里基本不可见——输入记忆只要覆盖 BOLD 自身的时间结构就到了观测天花板。3 步 ≈ 2.2 s，与 BOLD 自相关的时间尺度同量级；Supp Fig 8 里 3 步输入只比 1 步「略好」也侧面印证了这一点：BOLD 高度自相关，x_{t-1}、x_{t-2} 携带的增量信息本来就不多。但代价在解释端：这样学到的 f 是「观测变量在 0.72 s 网格上的条件期望」，不是神经动力方程，从它的 Jacobian 读出的 EC 天然是 BOLD 尺度的量——所以拿 CCEP 的早期响应对账（Q2 的口径匹配）在逻辑上是自洽的，越过 0.72 s 去谈毫秒级传播才越界。真正的考验在换模态：ECoG 这类毫秒级信号上 3 步窗口明显不够，窗口长度与输入结构要按新模态的时间尺度重新设计。论文把「按模态定制网络结构与扰动协议」写成框架的可扩展方向（Supp Note 3），方向指对了，难度也在这。</p>
+</details>
+<div class="admonition abstract">
+<p class="admonition-title">复现速查卡</p>
+<ul>
+<li><strong>代码</strong>：https://github.com/ncclab-sustech/NPI （含自产合成数据；PyTorch，单卡 RTX 4080 级别即可）</li>
+<li><strong>代理</strong>：MLP 3N → 2N → 0.8N → N；输入 = 前 3 个时间步；<abbr title="均方误差 Mean Squared Error">MSE</abbr> 单步损失；Adam lr=10⁻³，60 epoch，batch 100</li>
+<li><strong>扰动</strong>：加在输入端当前时刻分量（历史步/权重不动），逐源区逐时刻冲激 <span class="arithmatex">\( \Delta e_i \)</span>，Δ = 0.5×BOLD 标准差；每源区约 T≈5×10³ 次（4×15 min ÷ 0.72 s），读 t+1 响应差、对全部状态取平均（WBM 口径下读 t+4·TR）</li>
+<li><strong>数据口径</strong>：HCP S1200 800 人 rs-fMRI（TR 0.72 s，4×15 min，ICA-FIX，0.01–0.1 Hz）；MMP 360 皮层区 + 19 皮下区入训练；预测评估用前 3 session + 第 4 session 前 60% 训、末 40% 测；EC 推断用全部 4 session</li>
+<li><strong>关键数字</strong>：模型 FC r=0.97（HCP）/ 0.81（WBM）；NPI-EC 对真值 r=0.95（RNN）；EC-SC r=0.42；HCP-ABCD r=0.87；EC-CCEP r=0.33 vs FC-CCEP 0.20</li>
+<li><strong>统计</strong>：相关性用 t 检验；方法对比用 Wilcoxon 符号秩（p&lt;10⁻³）；个体显著性 Bonferroni 校正；分布拟合按 AIC 选型</li>
+<li><strong>复现要点</strong>：二值化 EBC 的阈值是「保留 80% 绝对强度」（绝对值 0.06）；扰动响应有状态依赖，漏掉逐状态平均会引入偏差；SC 对照用 Demirtaş et al. 的 DSI 流线矩阵（0–1 缩放后 log 变换）</li>
+</ul>
+</div>
+<hr>
+<p><strong>相关阅读</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../braingpt/">BrainGPT（同样训代理模型，但作表征工具而非实验对象）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../eegdm/">EEGDM（模型作生成工具 vs 本篇作科学工具）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../eegmoe/">EEGMoE（被试间差异的另一种处理）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>
+<!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/load-mathjax.js"></script>
+      
+        <script src="../../javascripts/giscus.js"></script>
+      
+        <script src="../../javascripts/progress.js"></script>
+      
+        <script src="../../javascripts/back-to-top.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
