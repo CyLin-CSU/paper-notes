@@ -871,17 +871,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2153,17 +2142,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2257,13 +2235,6 @@ h_t = A h_{t-1} + B x_t, \qquad y_t = C h_t + D x_t
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>38% 的相对提升建立在 0.050 的绝对值上，这点必须先说破</strong>。Pearson 0.069 意味着重建谱与真谱的相关仍然贴地——对照包络任务的 0.208，频带结构信息在头皮 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 里基本被颅骨低通滤掉了。这条轴线的根本瓶颈是信噪比而不是架构：从 VLAAI（2023）到本篇（2025），四个模型折腾两年，mel 任务绝对值只从 0.050 挪到 0.069。架构创新在这个任务上的边际收益天花板可见，指望 Mamba 之类的工具突破物理衰减不现实；</li>
-<li><strong>「长序列」的卖点和 5 秒裁剪的实现是矛盾的</strong>。64 Hz 下 5 秒只有 320 个时间步，训练如此，推理也是 5 秒分段再拼接——Mamba 相对 Transformer 的优势区间在千步以上，320 步根本用不上。真正的分钟级连续解码需要跨窗状态传递或滑窗重叠推理，论文都没做。标题里 State Space Model 的叙事，在协议层面被自己的预处理拆掉了；</li>
-<li><strong>消融数据讲了一个和标题不同的故事</strong>：纯 Mamba 0.051 ≈ VLAAI 基线 0.050，去掉 S4-UNet 掉 0.012（消融里最痛的一刀）。也就是说增量主要来自 MHSA + S4-UNet 这对「注意力管全局、S4 管局部」的组合，Mamba 更像被 Jamba/Zamba 的混合结论顺带捎上的组件。这不丢人，但贡献列表里「创新性地使用 Mamba」「首次把 S4-UNet 用于 <abbr title="脑电图 Electroencephalogram">EEG</abbr>」的宣称都比证据响——首次使用和有效使用是两回事；</li>
-<li><strong>被试嵌入（ESM）的泛化边界没人检验，且和站内基础模型轴线的条件注入方向恰好相反</strong>。模型吃 Sub-ID，意味着部署时必须知道当前被试是谁、且该被试见过训练数据。如果 80/10/10 划分按 trial 切（SparrKULee 挑战赛的常规做法），测试段的被试以嵌入形式出现在了训练集里——那么 0.069 里有多少是被试记忆、多少是语音信息，单看这个数字分不开。消融显示去掉 ESM 掉到 0.063，被试信息约占总提升的六分之一，这部分的可泛化性存疑。放到站内的坐标系里看更有意思：<a href="../braingpt/">BrainGPT</a> 的电极词表和 <a href="../eegpt/">EEGPT</a> 的通道名映射表，条件注入的都是<strong>通道身份</strong>（信号来自哪个电极），为的是跨设备、跨数据集迁移，没有一个显式吃被试 ID；ESM 正好反过来，只注入<strong>被试身份</strong>、不注入通道身份。这不是谁对谁错，而是两个目标的对立：通道条件服务「未见数据集上的 zero-shot」，被试条件服务「见过的人在 closed-set 里更好一点」——后者以被试进训练集为前提，而预训练语料跨库拼接时被试 ID 根本没有跨库语义。所以 ESM 这类设计在预训练路线里几乎绝迹，它本质是 subject-dependent 小数据回归的专用技巧；本篇想和基础模型合流（见 Q4），第一件事就是把 Sub-ID 换成可迁移的条件形式；</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>（生成轴线姊妹篇：频谱一致性损失可迁移）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../cbramod/">CBraMod（交替混合机制的判别侧版本）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"></path></svg></span> <a href="../braingpt/">BrainGPT（长序列 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 建模的自回归路线）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（线性复杂度的另一条路）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

@@ -1337,17 +1337,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2175,17 +2164,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2318,13 +2296,6 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>量化本身贡献不大，贡献大的是「量化 × 事件引导」的耦合</strong>。M1（时间量化→连续）平均只掉 1–2 pp，2×2 里无引导时量化增益 0.91 pp——单看这些数字，「离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 化」在检测里的直接收益是温和的；交互项 2.06 说明 <abbr title="词元，模型处理的最小输入单元">token</abbr> 化的红利要靠 FOCAL 的稀疏路由「兑付」。这和 tokenization 线一贯的叙事（词表本身多重要）不同：在这个任务里，词表是配合事件稀疏性才有意义的，单卖词表卖不出价；</li>
-<li><strong>事件占比决定 FOCAL 的价值，也框定了这套方法的主场</strong>。BNCI2020/HDOP/TUSZ 覆盖 27%/6.15%/3.18%，去 FOCAL 掉 13.18/6.14/17.08；Broderick 69% 只掉 0.89，且领先幅度最薄（+0.54）。稀疏长记录（TUSZ 256 s 窗、63 s 平均事件）才是事件引导的主场——这恰好是「异步检测」的初心场景：临床监测里事件本来就少。反过来说，密集事件数据集上这套机制接近空转，选数据集时要有预期；</li>
-<li><strong>免 NMS 的结构性优势 vs 按数据集调 Ne 的隐忧</strong>。DETR 集合预测免掉置信度阈值和 NMS 超参，但换来一个同样要调的 <span class="arithmatex">\( N_e \)</span>：HDOP 上 16→24 崩 11.74 pp 且非单调，论文自己承认「更大的查询预算并不稳定带来提升」。8 个数据集 8 套 <span class="arithmatex">\( N_e \)</span>，主表好看的背后是每数据集验证集选参——不算作弊（选择只在验证集），但「统一框架跨范式泛化」的叙事要打点折扣：真正统一的是架构，不是配置；</li>
-<li><strong>站内 tokenization 坐标系里，这是 <abbr title="词元，模型处理的最小输入单元">token</abbr> 用途的第三格，但码表的可复用性还是空白</strong>。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 当预训练目标 → TFM/NeuroLM 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 当模型输入 → NeuroDETR 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 当检测头的「工作记忆」，第一次和变长输出任务绑定。但它没有预训练阶段：码表从各检测任务的特征里 EMA 出来，8 个数据集各自训各自的码表，和 NeuroRVQ/CodeBrain 那种大规模预训练词表不是一回事。「事件记忆」能不能像 motif 词表那样跨数据集复用、甚至跨范式迁移，本文没测——这是这条线下一个自然的坑位。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进（站内主线，本文补上「事件驱动」一格）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2v6H2V2zM2 22v-6h2v6zm3-10c0 1.11-.89 2-2 2a2 2 0 1 1 2-2m19-6v12c0 1.11-.89 2-2 2H10a2 2 0 0 1-2-2v-4l-2-2 2-2V6a2 2 0 0 1 2-2h12c1.11 0 2 .89 2 2"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（<abbr title="词元，模型处理的最小输入单元">token</abbr> 只当预训练目标的起点）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer（时频 motif 词表的可插拔用法）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../neurorvq/">NeuroRVQ（多尺度 RVQ 的预训练路线）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3h2v2H5v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5h2v2H5c-1.07-.27-2-.9-2-2v-4a2 2 0 0 0-2-2H0v-2h1a2 2 0 0 0 2-2V5a2 2 0 0 1 2-2m14 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3zm-7 12a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-4 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m8 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> <a href="../codebrain/">CodeBrain（双域解耦码表）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

@@ -1245,17 +1245,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2131,17 +2120,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2259,13 +2237,6 @@ S_{c,a} = \alpha_1 \tilde{S}_{neural} + \alpha_2 \tilde{S}_{clean} + \alpha_3 \t
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>「consistently outperforms」与明细账之间有一段距离</strong>。8 个数据集里真正拉开的是 Mental Workload(+0.071 AUROC)和 CHB-MIT AUC-PR(+0.096);TUEV +0.013、SHU-<abbr title="运动想象 Motor Imagery">MI</abbr> +0.018 是小胜,PhysioNet +0.001、SEED-V +0.003 落在 5-seed 标准差内,TUAB 排序指标反输 CBraMod 0.023。诚实的读法是:<strong>在同源语料(TUEG ⊃ TUAB/TUEV)的临床任务上有实质或边际增益,在运动想象/情绪这类「语料外」任务上基本打平</strong>——而后者才是检验 tokenization 质量而非语料熟悉度的试金石。摘要的营销措辞与表格的混合证据,阅读时要拿第 3 节那张 8 行对照表压一压;</li>
-<li><strong>「双域」的「双」到编码器为止是假的——这不是缺点,但这笔账论文没算</strong>。共享编码器输出同一个 h,两套码本量化同一向量,时/频分化完全由两个解码器的重构目标(波形 vs 幅相)反向逼出来;Fig. 1 却在频域支路画了 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 模块,与正文「<abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 只提供重构目标」的表述矛盾(图文各说各话,复现前必须问作者)。对照 CodeBrain 的独立时/频编码器,BrainRVQ 的双域是码本层的便宜版——消融证明便宜版也有效(去任一码本都掉分),但同一 h 进两套 8192×3 码本,6 个 <abbr title="词元，模型处理的最小输入单元">token</abbr>/patch 里有多少是冗余编码?一个零成本的检验:用时域 <abbr title="词元，模型处理的最小输入单元">token</abbr> 互预测频域 <abbr title="词元，模型处理的最小输入单元">token</abbr>,看互信息有多高;</li>
-<li><strong>层次自回归是全文最硬的贡献,但 teacher forcing 的软肋也被 λ 藏起来了</strong>。独立预测消融平均 −8.3%,是四个组件里代价最大的;L0 29% &gt; L1 22% &gt; L2 14% 的精度单调性与 λ=[1, 0.5, 0.25] 的加权设计自洽。不过训练条件于真值码、推理条件于自己的预测,exposure bias 沿三层链累积——恰好最细层(误差最会滚雪球的那层)权重被压到 0.25,这个问题从损失函数视角里消失了。论文没做 scheduled sampling,也没报告推理态(自回归条件)下的重构质量与训练态差多少;</li>
-<li><strong>同源语料 + 同源评测的泄漏疑云,是整条 TUEG 预训练线的系统性盲区</strong>。TUEG 与 TUAB/TUEV 同属 Temple 大学医院语料,论文未声明是否把评测集的被试/时段从预训练语料中剔除;CBraMod、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 TUH 版本同样没说,所以横向 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 仍共享这一混淆。BrainRVQ 在 TUEV/TUAB 上对 CBraMod 的增量本来就薄(Kappa +0.013、BalAcc +0.002/−0.002),若有残留泄漏,这几个数字的解读要更保守。值得表扬的是工程务实:5.82M 参数、6×A800 约 32 h 跑完两阶段预训练,且 scaling 曲线(1k→9k h、4→12 层)未见饱和——这套配方的天花板远没摸到,小模型 + 单机构语料是目前证据下最划算的区间。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../neurorvq/">NeuroRVQ(RVQ 分支先行者:多尺度卷积单时域)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v2.06A8.52 8.52 0 0 0 4.05 9H2v6h2.06A8.5 8.5 0 0 0 9 19.95V22h6v-2.06A8.5 8.5 0 0 0 19.95 15H22V9h-2.06A8.52 8.52 0 0 0 15 4.05V2m-4 2h2v2h-2m-2 .25V8h6V6.25c1.18.61 2.14 1.57 2.75 2.75H16v6h1.75A6.4 6.4 0 0 1 15 17.75V16H9v1.75A6.4 6.4 0 0 1 6.25 15H8V9H6.25A6.4 6.4 0 0 1 9 6.25M4 11h2v2H4m14-2h2v2h-2m-7 5h2v2h-2"></path></svg></span> <a href="../codebrain/">CodeBrain(双域 <abbr title="向量量化 Vector Quantization">VQ</abbr> + Mamba 的最近竞品)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 7A1.5 1.5 0 0 1 4 5.5 1.5 1.5 0 0 1 5.5 4 1.5 1.5 0 0 1 7 5.5 1.5 1.5 0 0 1 5.5 7m15.91 4.58-9-9C12.05 2.22 11.55 2 11 2H4c-1.11 0-2 .89-2 2v7c0 .55.22 1.05.59 1.41l8.99 9c.37.36.87.59 1.42.59s1.05-.23 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.56-.23-1.06-.59-1.42"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(单层 <abbr title="向量量化 Vector Quantization">VQ</abbr> + <abbr title="词元，模型处理的最小输入单元">token</abbr> 作目标的范式起点)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer(<abbr title="词元，模型处理的最小输入单元">token</abbr> 作输入的可插拔路线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-5v2h5v13l-5-6v9h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-9 15H5l5-6m0-9H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5v2h2V1h-2z"></path></svg></span> <a href="../cbramod/">CBraMod(同语料最强基线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 10H5L3 8l2-2h6V3l1-1 1 1v1h6l2 2-2 2h-6v2h6l2 2-2 2h-6v6a2 2 0 0 1 2 2H9a2 2 0 0 1 2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

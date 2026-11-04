@@ -1129,17 +1129,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2109,17 +2098,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2206,14 +2184,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>「条件即表示」是全文最值得记的设计</strong>。EEGPT 用对齐损失显式约束表示（轻量），EEGDM 把表示直接当生成条件且不 detach——梯度信号从「让两个表示相似」变成「让整段信号能被重建」。后者贵得多（要背一个扩散模型），但训练信号也更丰富：去噪器在每个时间步、每个噪声水平都在向 encoder 要信息，encoder 被迫蒸馏源与目标之间的显著共性。代价同样明显：预训练 4×A100×113 小时，比同规模的掩码重构贵一个量级；</li>
-<li><strong>类不均衡收益不是玄学</strong>。掩码重构基线在 TUEV 少数类召回 10–18%，本质是预训练目标与类别频率无关、但下游交叉熵按频率偏向多数类——而扩散目标逐样本建模，表示对每个样本的「可重建性」不依赖类别身份，微调后少数类可分性更好。G-Mean 那个 ±21.55% 的标准差（一个种子 0.03）是最有力的证据：某些掩码重构模型的「<abbr title="State Of The Art，当前最先进水平">SOTA</abbr>」建立在整体放弃一个类之上。这也提示 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 式的统一 benchmark 应该把类均衡指标列为标配；</li>
-<li><strong>PCA 隐空间是极致的工程克制</strong>。LDM 原版用学习的 VAE 隐空间，EEGDM 换成零训练的线性 PCA（K=20）——省掉一个要训的自编码器，代价是线性子空间只保留主导方差。消融显示这恰好和条件支路形成互补对齐（PCA 管目标、增强管条件），「两个都不单独涨、一起才涨」是很少见的消融形态，说明贡献在交互项；</li>
-<li><strong>与 JET 连读的收获</strong>：两篇都在回答「生成目标能给 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 带来什么」，但分工清楚——JET 证明生成质量本身（约束设计），EEGDM 证明生成过程的副产品（条件表示）有下游价值。一个自然的组合实验是把 JET 的生理结构约束搬进 EEGDM 的去噪目标，检验类不均衡收益是否进一步增强；</li>
-<li><strong>线性探针弱的诚实呈现</strong>：TUEV 上线性探针 0.6010 仅略高于从零训练的 0.5825、远低于微调的 0.6826，论文没有掩饰。结合 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass「线性探针普遍不够」的结论，「预训练表示的价值靠微调兑现」在生成路线下依然成立。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../jet/">JET · 流匹配生成 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（生成轴线姊妹篇）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> <a href="../eegpt/">EEGPT（显式表示约束的轻量版对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../../basics/generative-lineage/">生成模型脉络（DDPM 线的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 落地）</a> ｜ :material-compress: <a href="../cbramod/">CBraMod（掩码重构主线对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

@@ -720,17 +720,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2131,17 +2120,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2269,13 +2247,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>基准的价值在「下限」而不在「上限」</strong>。WT 0.95 → CT 0.55 → CP 0.52 这条崩塌曲线,是站内视觉解码线所有论文都没系统报过的维度:<a href="../guided/">GUIDED</a> 自己报过被试内 28.64% → 跨被试 11.84% 的腰斩,但那是单模型单数据集;本篇用 7 个模型 × 4 任务 × 2 粒度的受控矩阵说明:跨被试 ≈ 接近重来,跨时间 ≈ 丢掉六成。任何在 THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上刷 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 的工作,宣称「可用于 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr>」之前应该先过 CT/CP 这两关——本篇最大的贡献是把这两关做成了标准化协议;</li>
-<li><strong>「预训练有用」的证据在这里很弱,但方向诚实</strong>。PT 比 CT 只多 0.02–0.03:10 个被试 × 4,000 图的有监督预训练几乎买不到泛化。对照站内基础模型轴线的口径,本篇可以当「朴素预训练收益基线」——新方法的跨被试增益若不超过这个幅度,不足以支撑「预训练表征有跨被试不变性」的宣称。但边界要留:这里的预训练只是「换人训 + 半 lr 续训」,没有任何表征对齐、对抗解耦或通道无关设计,它给的是下界不是方法上限;CP 崩到 0.52 恰恰说明跨被试差异是主矛盾,谁若能在 CP 上把 0.52 拉到 CT 水平,就是下一个值得写的结果;</li>
-<li><strong>block 设计水分的 9–14 个点值得记住</strong>。Stage 1 复刻 Spampinato、Stage 2 纠偏,同一数据集内直接给出膨胀幅度;加上 A.5 的「测试集最前几张图准确率异常高」,这是 Li et al. 2020a 之后少有的同库对照证据。站内在 <a href="../guided/">GUIDED</a> 笔记里夸过 THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的 RSVP 协议,本篇补上另一半:非 block 只去掉类内时间标记,去掉不了 session 间漂移——CT 掉的 0.34–0.40 里有多少是协议残余、多少是真实脑状态漂移(7 天间的睡眠、情绪、电极位置),数据集本身给不出答案,这恰是它留下的开放问题;</li>
-<li><strong>基准的「被测方」与「数据方」都不完整</strong>。被测模型停在 2020 年(作者自认),没有 NICE/ATM/Conformer/EEGPT 一代,也没有任何重建任务——它目前更像「泛化协议参照系」而不是「<abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 降落场」。数据侧,Stage 2 只有 6 人(且是自愿参加两阶段的 6 人,自选偏差未讨论),CP 的崩塌数字建立在 6 个测试被试上;80 类对细粒度解码只有 5 组 × 8 类,而 THINGS 有 1,854 概念。另外 v2(2025-12)仍写「review 后公开」、代码还是匿名链——数据可得性是复现前要确认的第一件事,这也限制了它现在作为基准的实际地位。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg></span> <a href="../guided/">GUIDED · 视觉重建线(被试内上限,与本篇互补)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 13v-2h14v2zm0 6v-2h14v2zM7 7V5h14v2zM3 8V5H2V4h2v4zm-1 9v-1h3v4H2v-1h2v-.5H3v-1h1V17zm2.25-7a.75.75 0 0 1 .75.75c0 .2-.08.39-.21.52L3.12 13H5v1H2v-.92L4 11H2v-1z"></path></svg></span> <a href="../eegarena/">EEGArena(基础模型横评基准,宽度对本篇深度)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../eegpt/">EEGPT(预训练特征提取器,CP 协议的天然候选被测方)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../cbramod/">CBraMod(多数据集预训练,跨被试主张待此基准对账)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(跨被试/跨记录建模的对账对象)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

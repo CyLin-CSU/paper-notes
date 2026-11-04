@@ -1543,17 +1543,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2199,17 +2188,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2232,31 +2210,13 @@
 
 <h1 id="vae-ddpm-flow-matching">生成模型三代脉络：VAE → DDPM → Flow Matching<a class="headerlink" href="#vae-ddpm-flow-matching" title="Permanent link">#</a></h1>
 <blockquote>
-<p>「模型架构基础」第三篇。<strong>结构为脉络优先</strong>：第 1 节以严格的叙述把三代模型的核心思想与演进逻辑一次讲清，看懂第 1 节即获得整体框架；其后各节将脉络落到公式，供按需查阅。落地实例见站内 <a href="../../papers/jet/">JET 笔记</a>。</p>
+<p><strong>学习笔记 · 综合整理</strong></p>
 </blockquote>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR · 每代一句话</p>
-<ul>
-<li><strong>VAE</strong>：引入隐变量 <span class="arithmatex">\( z \)</span>，encoder 将数据编码为隐空间中的后验分布并约束其逼近标准正态先验（KL 正则）；生成即从先验采样、经 decoder 单步重构。<strong>缺陷：单步重构的最优解是条件均值，输出模糊。</strong></li>
-<li><strong>DDPM</strong>：前向过程是固定、无参数的马尔可夫加噪链，学习其逆向的逐步去噪转移核；生成即从纯噪声出发迭代去噪。<strong>缺陷：采样需上百步迭代，噪声调度依赖人工设计。</strong></li>
-<li><strong>Flow Matching</strong>：直接回归连接噪声分布与数据分布的概率路径速度场；生成即沿 ODE 积分，路径可直化至少步乃至一步。<strong>DDPM 在特定路径与参数化选择下退化为它的特例。</strong></li>
-</ul>
-</div>
 <h2 id="1">1 脉络总览（先读这节）<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p><strong>起点问题</strong>：生成建模要求从数据分布中采样，但数据的概率密度写不出显式公式，归一化常数（配分函数）不可算——这是三代模型共同面对的障碍。三代方法对应三种绕开归一化常数的路线：优化变分下界、马尔可夫链上的逐步去噪（等价于得分匹配）、概率路径速度场回归。</p>
 <p><strong>VAE——变分推断路线</strong>。既然密度不可写，就不再对 <span class="arithmatex">\( p(x) \)</span> 直接做最大似然：encoder 把每条数据映射为隐空间中的一个后验分布 <span class="arithmatex">\( q_\phi(z|x) \)</span>，以 KL 项将全体后验约束到标准正态先验附近；decoder 学习从先验中的采样点重构数据。生成时从先验采样、单步解码即可。<strong>代价是模糊</strong>：decoder 采用逐维独立的高斯似然时，其最优输出是所有可能样本的条件均值——多模态的答案被平均成单一输出。</p>
 <p><strong>DDPM——分步去噪路线</strong>。模糊的根源在于要求网络单步给出完整样本。DDPM 将生成拆解为一条马尔可夫链上的多步小修正：前向加噪链固定且无参数，网络只需学习每步去除一小份噪声的逆向转移；任何一步都不必一次性预测完整样本，输出因此显著更锐利。<strong>新代价有二</strong>：采样需上百步迭代；每步去噪幅度的噪声调度表 <span class="arithmatex">\( \beta_t \)</span> 由人工设计。</p>
 <p><strong>Flow Matching——速度场路线</strong>。去噪只是「把噪声分布输运到数据分布」的一种具体实现。Flow Matching 直接学习完成这个输运的速度场：在噪声与数据之间定义概率路径（常取线性插值），网络回归路径上每点的瞬时速度；生成即从噪声出发沿速度场做 ODE 积分。路径是设计自由度——可以取直线、可以直化（rectify）到少步乃至一步采样；DDPM 的手工调度在这个视角下只是无数可选路径中的一族。</p>
-<pre class="mermaid"><code>flowchart TD
-    Q0["起点：从数据分布采样&lt;br/&gt;但密度无显式公式、归一化常数不可算"] --&gt; A
-    A["第一代 VAE：变分推断&lt;br/&gt;encoder 输出后验 q(z|x)，KL 约束到标准正态先验&lt;br/&gt;decoder 从先验采样单步重构"] --&gt; P1["缺陷：单步重构输出条件均值&lt;br/&gt;生成模糊"]
-    P1 --&gt; B["第二代 DDPM：马尔可夫去噪&lt;br/&gt;前向加噪链固定无参数&lt;br/&gt;网络学习逐步去噪的逆向过程"]
-    B --&gt; P2["缺陷：上百步迭代采样慢&lt;br/&gt;噪声调度依赖人工设计"]
-    P2 --&gt; C["第三代 Flow Matching：速度场回归&lt;br/&gt;在噪声与数据间定义概率路径&lt;br/&gt;网络回归路径上每点的速度，ODE 积分采样"]
-    C --&gt; P3["现状：SD3 / Flux / JET 的标配&lt;br/&gt;路径可直化，支持少步 / 一步生成"]
-    style P1 fill:#fff3e0,stroke:#ffb74d,color:#3e2723
-    style P2 fill:#fff3e0,stroke:#ffb74d,color:#3e2723
-    style P3 fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20</code></pre>
 <p><strong>演进规律</strong>：每一代针对上一代的核心缺陷——VAE 的模糊催生 DDPM 的分步去噪；DDPM 的慢采样与手工调度催生 Flow Matching 的路径自由。抓住这条因果链，后面的公式即可各归其位。</p>
 <h2 id="2-vae">2 第一代 · VAE：变分下界与隐空间正则<a class="headerlink" href="#2-vae" title="Permanent link">#</a></h2>
 <div class="admonition note">
@@ -2361,23 +2321,6 @@
 <li><strong>FM 线</strong> → JET 本体：线性插值路径 + 三条生理约束（在 FM 损失之外施加结构正则）；</li>
 <li><strong>先验的拓扑要求三代一致</strong>：JET 的「零噪声初始化灾难性失败」（TS-FID 1600+）是「先验必须非退化、具有全空间支撑」的实证——VAE 的标准正态先验、DDPM 的 <span class="arithmatex">\( x_T \)</span>、FM 的 <span class="arithmatex">\( x_0 \)</span> 无一例外。</li>
 </ul>
-<h2 id="_4">自问自答<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么 VAE 模糊而扩散锐利？</summary>
-<p>根源在单步回归的均值坍缩：逐维独立高斯似然下，最优解码器的输出是条件均值——多模态的候选答案被平均为单一模糊输出。DDPM 将单步生成拆解为上千个小去噪步，每步仅处理小残差、采样中的随机项维持多样性，任何一步都无需一次性预测完整样本。<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 是另一条修复路径：隐变量离散化后重构目标变为离散码预测，绕开连续情形下的均值坍缩。</p>
-</details>
-<details class="question">
-<summary>Q2 · Flow Matching 与 DDPM 是什么关系？</summary>
-<p>同一家族的两种参数化：将 FM 的线性插值换成扩散的 <span class="arithmatex">\( \sqrt{\bar{\alpha}_t} \)</span> 插值、回归目标从速度换成噪声，即还原为 DDPM——故 DDPM 是 FM 的特例。实际差异有三：FM 的插值路径自由（直线 / 最优传输），DDPM 的由调度表决定；FM 回归速度场、采样为确定性 ODE；DDPM 反向采样含随机项（SDE 视角），少步采样时随机项有助于覆盖多模态分布。</p>
-</details>
-<details class="question">
-<summary>Q3 · 边缘速度场没有真值，为何对配对样本回归即可？</summary>
-<p>边缘速度场是条件速度在配对分布下的期望：<span class="arithmatex">\( u_t(x) = \mathbb{E}[x_1 - x_0 \mid x_t = x] \)</span>。<abbr title="均方误差 Mean Squared Error">MSE</abbr> 回归的最优解恰为条件期望——因此对随机采样的配对 <span class="arithmatex">\( (x_0, x_1) \)</span> 做回归，其梯度与直接对边缘场回归一致。这与「DDPM 预测噪声等价于预测得分」是同构逻辑：都在用可采样的条件量替代不可计算的边缘量。</p>
-</details>
-<details class="question">
-<summary>Q4 · 为什么三代模型的先验都要求非退化？</summary>
-<p>从单个点出发把退化分布展开为复杂多模态的数据分布，是一对多的映射——连续流（ODE）无法表示；只有具有全空间支撑的随机先验（如高斯）才能为输运提供覆盖数据支撑的自由度。JET 的消融给出实证：零噪声初始化下 TS-FID 从 188 崩溃至 1615 以上，且任何损失权重组合都无法恢复——这是结构性不可表示，而非超参数问题。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">关键文献速查</p>
 <ul>

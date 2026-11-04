@@ -1007,17 +1007,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2075,17 +2064,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2178,13 +2156,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 时频路线的启示</strong>：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 证明了「频谱图当图片 + 现成 VLM + 合成指令 SFT」可以完全绕开自监督预训练。这条路搬到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的瓶颈在数据侧：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 没有「标准波形生成器」级别的合规仿真器，做不到 RF 这种配置即标签的零噪声监督——但睡眠纺锤波/棘波注入仿真、受控范式重放是部分替代；</li>
-<li><strong>「通用 VLM 随机猜」这个阴性结果和阳性结果同样值钱</strong>：<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5 级模型读不懂 RF 谱图，同理大概率也读不懂 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 谱图——「看起来像图」不等于「有先验」，模态接地没有捷径；</li>
-<li><strong>IQ 不平衡最伤</strong>对一切时频输入方案是普适警示：通道间失配制造的镜像/交叉泄漏在时频图上是结构性破坏。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的电极阻抗失配、工频干扰本质同类，做时频图输入方案时值得专门做敏感性分析；</li>
-<li>与六篇 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 论文相比最大的方法论差异是<strong>预训练的缺位</strong>：六篇都在卷「怎么预训练」，这篇把宝全押在 VLM 底座的通用视觉语义 + 合成数据的零噪声监督上——是工程主义路线的极端样本。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../tfm-tokenizer/">上一篇：TFM-Tokenizer</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19H4.09L14.18 4.43l1.64 1.14-4.54 6.56c1.61.83 2.72 2.49 2.72 4.41 0 .16 0 .31-.03.46H20zM7.91 17h4.05c.04-.15.04-.3.04-.46 0-1.26-.76-2.32-1.86-2.76z"></path></svg></span> <a href="../../basics/lora/">LoRA · 低秩适配</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

@@ -1555,17 +1555,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2153,17 +2142,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2186,7 +2164,7 @@
 
 <h1 id="_1">图神经网络：消息传递、图注意力与表达力边界<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>「模型架构基础」第四篇。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的电极天然构成图：节点是电极，边可以来自空间距离、密度模板或功能连接。站内 <a href="../../papers/braingpt/">BrainGPT</a> 的任务共享电极图（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>）用的正是图注意力网络——本页补齐它的机制基础，并把图视角与 <a href="../attention-alternatives/">Attention 替代方案</a>、<a href="../../topics/multi-task/#channel-adaptation">通道异构专题</a>接通。</p>
+<p><strong>学习笔记 · 综合整理</strong></p>
 </blockquote>
 <h2 id="1">1 为什么需要图神经网络<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p><strong>数据的三种形态</strong>。CNN 处理网格（图像：平移不变的局部算子），序列模型处理序列（文本、<abbr title="脑电图 Electroencephalogram">EEG</abbr> 时间片：位置已知且有先后次序）。第三种形态——<strong>图</strong>——两者都覆盖不了：分子（原子为点、化学键为边）、社交网络、知识图谱，以及电极系统。图多出两个结构性难点：</p>
@@ -2224,30 +2202,6 @@
 <li><strong>与 LUNA 的对照</strong>：LUNA 的学习 query 瓶颈可以看作「全连接图上的一次注意力聚合 + 固定隐空间」，而 GNN 允许把 3D 电极坐标、距离先验写进边权——前者完全数据驱动，后者带关系归纳偏置，两者的取舍就是「要不要给拓扑先验」；</li>
 <li><strong>与 Transformer 的关系</strong>：全连接图上的消息传递就是集合上的自注意力。Transformer 可视为「无先验边的 GNN」，GNN 是「带结构先验的稀疏注意力」——这条线与 <a href="../attention-alternatives/">Attention 替代方案</a>里压缩注意力成本的各种做法在动机上汇合：把算力花在有结构意义的连接上。</li>
 </ul>
-<h2 id="_2">自问自答<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · GCN 的对称归一化为什么优于按度平均？</summary>
-<p>按度平均（<span class="arithmatex">\( D^{-1} A \））是非对称算子：高度数邻居的影响被压低，但特征变换不对称会破坏与拉普拉斯谱的对应，且数值上高度数/低度数节点的更新幅度失衡。对称归一化 \( \tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} \)</span> 让一条边对两端的影响互为转置，等价于在谱域做实对称滤波——特征值实、特征向量正交，训练更稳。实践中两者差距不大，但对称版是文献默认。</p>
-</details>
-<details class="question">
-<summary>Q2 · <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 与 Transformer 注意力的本质区别是什么？</summary>
-<p>三点：<strong>稀疏性来源</strong>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 只在图的边上算，Transformer 全对计算）；<strong>位置信息</strong>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 不需要位置编码，图结构即位置——打乱节点编号注意力系数随之置换，语义不变；Transformer 必须显式注入位置，<a href="../attention-alternatives/">Attention 替代方案</a>里 RoPE 等机制都是在补这件事）；<strong>深度语义</strong>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 每层扩散一跳，深度换感受野且受限于过平滑；Transformer 一层就是全局感受野）。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上两者的真实差异在数据假设：电极拓扑稳定时 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 的先验免费，拓扑多变时 LUNA 式的置换不变瓶颈更稳。</p>
-</details>
-<details class="question">
-<summary>Q3 · 过平滑的机制是什么，和 RNN 的梯度消失是一回事吗？</summary>
-<p>机制不同但同源——都是反复乘同一（近）收缩算子。谱域看：归一化邻接矩阵的特征值落在 <span class="arithmatex">\([-1, 1]\)</span>，<span class="arithmatex">\( k \)</span> 次幂把每个频率分量衰减 <span class="arithmatex">\( |\lambda|^k \)</span>，只有 <span class="arithmatex">\( \lambda = \pm 1 \)</span>（连通分量的常数信号）不衰减，于是各节点表示趋向其所在连通分量的均值。RNN 的梯度消失是时间方向上同一个数学现象（雅可比幂），所以缓解手段也同构：残差（跳连保底）、门控（RetNet/HGRN 式的衰减系数相当于学一个谱滤波器）、以及干脆少层数。</p>
-</details>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>框架</strong>：PyG（<code>torch_geometric</code>，<code>GCNConv</code> / <code>GATConv</code> / <code>GINConv</code>）或 DGL；两者均支持 batch 多图与边特征</li>
-<li><strong>GCN</strong>：<code>GCNConv(in, out)</code>；输入须传 <code>edge_index</code>（2×E 的边表）与可选 <code>edge_weight</code>；2–3 层足够，层数加深需配残差</li>
-<li><strong><abbr title="图注意力网络 Graph Attention Network">GAT</abbr></strong>：<code>GATConv(in, out, heads=K, concat=True/False)</code>，负斜率默认 0.2（LeakyReLU）；<abbr title="脑电图 Electroencephalogram">EEG</abbr> 电极图典型做法：节点=电极 embedding，边=全连接 + masking（BrainGPT <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 方案）或 k 近邻/功能连接阈值</li>
-<li><strong>图级读出</strong>：节点任务直接读节点表示；整图任务用 sum 池化（保表达力）或注意力池化</li>
-<li><strong>站点相关实现参照</strong>：BrainGPT <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr> × K 层 + masking + 残差 + pre-norm），机制拆解见其笔记 §3.2(c)</li>
-<li><strong>检验工具</strong>：表达力验收用 1-WL 可分的合成图对；过平滑用层深-节点表示余弦相似度曲线监控</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"></path></svg></span> <a href="../../papers/braingpt/">BrainGPT · 任务共享电极图 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>（<abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 落地）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../topics/multi-task/#channel-adaptation">通道异构的解法 · 图结构整合</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../attention-alternatives/">Attention 替代方案（效率视角汇合）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../generative-lineage/">生成模型脉络（同系列基础页）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

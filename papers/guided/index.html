@@ -685,17 +685,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2131,17 +2120,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2253,13 +2231,6 @@ p(I,\, z_E,\, z_I) = p(z_I \mid z_E)\; p(I \mid z_I)
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>「接近 fMRI」要拆开读</strong>。高层 CLIP 指标 0.786 对 fMRI 的 0.917–0.942,差 0.13;低层 PixCorr 0.160 对 0.305,差近一倍;SSIM 0.345 vs 0.366 几乎持平——但 SSIM 对模糊图不敏感,而 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 低层管线输出的本来就是 img2img 之前的模糊图,这项持平的说服力有限。真正立得住的是两件事:同管线 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 全面超过 MEG(0.160 vs 0.104),以及 200-way 检索 28.64% 的量级。诚实的结论是「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 拿到了视觉重建的牌桌门票」,不是「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 追平 fMRI」;Discussion 里 "performance close to fMRI" 的措辞比 Table 1 的数字响。fMRI 那几行还是别的数据集(NSD)、别的被试,跨数据集横比本就只能看量级;</li>
-<li><strong>生成质量的大头是 SDXL 的,不是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的</strong>。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 对最终图像的全部贡献是一个 1024 维语义向量加一张模糊图:先验扩散在 ImageNet 量级配对上训练、SDXL + IP-Adapter 冻结渲染、guidance scale 可调。Fig. 6d 恰好暴露了这点——调 w 可以在「贴合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语义」与「图像多样性」之间滑动,而「多样性」意味着模型在补全 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 根本没有提供的高层先验之外的细节。评估端只用 CLIP 检索式语义对齐、无任何分布级指标(无 FID),低层证据 PixCorr/SSIM 又只在单被试上报——「重建了图像」与「从 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 恢复了图像细节」之间的距离,这篇论文没有工具去度量;</li>
-<li><strong>证据边界:检索是硬的,逐像素重建是软的</strong>。分类/检索端证据最硬:200 个从未见过的概念、chance 0.5% 下 top-1 28.64%,RSVP 协议堵住了 block 设计的自相关漏洞,这一步把「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 里有没有足够的概念级语义信息」回答成了「有」。但逐像素重建端,0.160 的 PixCorr 相对 fMRI 的 0.305 更接近「结构性轮廓存在」而非「图像被恢复」——两张图语义相同、外观不同,CLIP 检索照样给高分。论文自己提供的最诚实证据反而是 Fig. 14 的 best/median/worst 分层:worst 组「语义与低层特征都被改变」;</li>
-<li><strong>协议三折扣与工程成色</strong>。①报训练过程中最高测试精度(原话 "We take the highest test accuracy in the training process as the statistical result")——测试集选模,所有对比方法同规则所以内部可比,但绝对数字系统性偏乐观;②重建表只报被试 8(检索最好的被试),无跨被试均值与方差;③测试集 80 次重复平均(<abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 提 SNR)、训练不平均——在线 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 拿不到 80 次重复,这是离线解码上限。跨被试 28.64 → 11.84 的腰斩说明被试差异仍是主矛盾,被试 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只救已知被试。最后,组件层面每一样都有出处(CLIP 对齐承 B.D./NICE、先验承 DALL-E 2/Mind's Eye、渲染用现成 SDXL/IP-Adapter),ATM 的消融也是渐进改良而非机制创新(位置编码可有可无、<abbr title="词元，模型处理的最小输入单元">token</abbr> 策略才是生死线)——这是一篇系统集成的 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 论文,作为 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 视觉解码的参照点价值极大,但「tailored encoder」的叙事比消融证据响;全文神经科学含金量最高的部分反而是时间窗与脑区分析。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg></span> <a href="../eegdm/">EEGDM · 条件扩散的反向用法(以生成训表征)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 16V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-11-4 2.03 2.71L16 11l4 5H8M2 6v14a2 2 0 0 0 2 2h14v-2H4V6"></path></svg></span> <a href="../not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>(生成轴线:位置自适应调度)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../jet/">JET(流匹配生成 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的质量标杆)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"></path></svg></span> <a href="../defossez-speech/">Défossez 语音解码(感知解码姊妹线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

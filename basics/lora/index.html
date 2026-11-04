@@ -1368,28 +1368,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#13-gpt-3-175b" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.3 效率账本（GPT-3 175B）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#14" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.4 实践速查
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1416,17 +1394,6 @@
     <span class="md-ellipsis">
       
         1.7 在 EEG 大模型语境下怎么用
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2043,28 +2010,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#13-gpt-3-175b" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.3 效率账本（GPT-3 175B）
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#14" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.4 实践速查
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2097,17 +2042,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2130,18 +2064,9 @@
 
 <h1 id="lora-low-rank-adaptation-of-large-language-models">LoRA: Low-Rank Adaptation of Large Language Models<a class="headerlink" href="#lora-low-rank-adaptation-of-large-language-models" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>ICLR 2022</strong> · Microsoft ——「模型架构基础」系列第一篇：先讲透原论文，再给变体族谱与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 大模型语境下的用法。</p>
+<p><strong>ICLR 2022</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>核心假设：预训练权重适配下游任务时的<strong>更新量本征秩很低</strong>——不需要动整个矩阵</li>
-<li>做法：冻结 W₀，并行旁路学习 ΔW = BA（B 置零初始化、A 高斯初始化），输出乘 α/r</li>
-<li>收益：<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-3 175B 的可训练参数降 <strong>10000 倍</strong>、checkpoint 从 350GB 缩到 35MB、显存需求降 3 倍，且<strong>推理零额外延迟</strong>（旁路可合并进原权重）</li>
-<li>原论文只把 LoRA 挂在注意力的 Wq、Wv 上就够；r=4~8 是最常见的档位</li>
-</ul>
-</div>
 <h4 id="11">1.1 动机：全量微调的三重困境<a class="headerlink" href="#11" title="Permanent link">#</a></h4>
 <p>大模型落地的标准流程是「预训练 + 适配下游任务」，主流做法全量微调（更新所有权重），但它有三重代价：</p>
 <ol>
@@ -2157,89 +2082,11 @@
 <p>参数量的账很好算：</p>
 <div class="arithmatex">\[ \underbrace{d \times k}_{\text{全量微调}} \;\longrightarrow\; \underbrace{r \times (d + k)}_{\text{LoRA}} \]</div>
 <p>以 d = k = 12288、r = 8 为例：全量 1.5 亿参数的更新空间被压到约 20 万，压缩比约 768 倍。</p>
-<pre class="mermaid"><code>flowchart LR
-    x["输入 x"] --&gt; W0["W0（冻结）"]
-    x --&gt; A["A：r×k 可训练·高斯初始化"]
-    A --&gt; B["B：d×r 可训练·零初始化"]
-    B --&gt; S["缩放 ×(alpha/r)"]
-    W0 --&gt; P(("＋"))
-    S --&gt; P
-    P --&gt; h["输出 h"]</code></pre>
 <p><strong>两个关键性质</strong>：</p>
 <ul>
 <li><strong>推理零延迟</strong>：训练完成后 W′ = W₀ + (α/r)BA 可以直接合并成一个新的权重矩阵，推理路径与原模型完全一致——这是相对 Adapter 的决定性优势；</li>
 <li><strong>任务切换轻</strong>：预训练底座只存一份，每个任务只存一个几 MB 的 A、B 对，换任务即换 adapter，还能对多个 adapter 做加权组合（任务算术）。</li>
 </ul>
-<h4 id="13-gpt-3-175b">1.3 效率账本（<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-3 175B）<a class="headerlink" href="#13-gpt-3-175b" title="Permanent link">#</a></h4>
-<table>
-<thead>
-<tr>
-<th>指标</th>
-<th>全量微调</th>
-<th>LoRA</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>可训练参数</td>
-<td>175B</td>
-<td>约 37.7M（<strong>降 10000 倍</strong>）</td>
-</tr>
-<tr>
-<td>Checkpoint 大小</td>
-<td>350GB</td>
-<td>35MB</td>
-</tr>
-<tr>
-<td>训练显存</td>
-<td>—</td>
-<td>降至约 <strong>1/3</strong></td>
-</tr>
-<tr>
-<td>推理延迟</td>
-<td>基准</td>
-<td><strong>零增加</strong>（合并后无差别）</td>
-</tr>
-</tbody>
-</table>
-<h4 id="14">1.4 实践速查<a class="headerlink" href="#14" title="Permanent link">#</a></h4>
-<table>
-<thead>
-<tr>
-<th>超参</th>
-<th>原论文做法</th>
-<th>通行实践</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>挂在哪些矩阵</td>
-<td>只挂注意力 <strong>Wq、Wv</strong>（该组合质量最好）</td>
-<td>预算充足时扩展到全部注意力 + MLP 投影</td>
-</tr>
-<tr>
-<td>秩 r</td>
-<td>r=1 在部分任务（WS）上就够；加大 r 不一定更好</td>
-<td><strong>r = 4~8</strong> 起步，任务复杂再升到 16/64</td>
-</tr>
-<tr>
-<td>缩放 α</td>
-<td>常数超参，除以 r 稳定更新量</td>
-<td><strong>α = r 或 2r</strong>，调 r 时不必重调学习率</td>
-</tr>
-<tr>
-<td>学习率</td>
-<td>与全量微调接近</td>
-<td>adapter 用比全量微调高一个量级的 lr</td>
-</tr>
-<tr>
-<td>丢弃</td>
-<td>—</td>
-<td>旁路加 dropout 0.05~0.1 防过拟合</td>
-</tr>
-</tbody>
-</table>
-<p>一个反直觉的消融结论：<strong>单纯增大 r 而不扩大挂载的矩阵类型，质量往往不升反降</strong>——说明低秩子空间本身容量已够，瓶颈在「把 LoRA 放到哪些层」。</p>
 <h4 id="15">1.5 为什么低秩有效，以及它的局限<a class="headerlink" href="#15" title="Permanent link">#</a></h4>
 <p><strong>有效性</strong>：原论文的子空间分析显示，用不同随机种子、不同 r 学到的 ΔWg 高度共享同一个子空间（相似度随 r 增大趋平）——增大会 r 并不会引入更多有用方向，佐证了「更新量本征秩低」的假设。</p>
 <p><strong>局限</strong>：</p>
@@ -2288,32 +2135,6 @@
 <li><strong><abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据普遍偏小</strong>，全量微调容易过拟合且灾难性遗忘预训练知识——低秩约束本身即正则。建议从 <strong>r=4~8、只挂注意力 q/v</strong> 起步，任务简单时甚至可以只调分类头 + LoRA；</li>
 <li>这也是 eeg2text-lite 项目「预训练 → LoRA → 解码」路线的理论支点：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 到文本/解码器的适配任务数据量小、映射偏移有限，处于 LoRA 的甜点区。</li>
 </ul>
-<h2 id="_1">自问自答<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么 A 用高斯、B 置零？反过来行不行？</summary>
-<p>目标是训练起点 ΔW = BA = 0（从预训练模型无损出发），同时梯度能流动。B 置零、A 随机：B 的梯度 ∝ A·(上游梯度) 非零，可以启动学习。若反过来 A 置零、B 随机，A 的梯度 ∝ B·(上游梯度) 同样非零——理论上也能启动，但通行的实现（原论文与 PEFT）都是 B 置零。若两者都置零，梯度恒为零，旁路永远学不动。</p>
-</details>
-<details class="question">
-<summary>Q2 · α/r 这个缩放为什么除以 r？</summary>
-<p>把不同 r 下的旁路输出量级拉平，使得扫 r 时不用连带重调学习率——α 才是真正控制适配强度的旋钮。rsLoRA 后续指出 α/r 在大 r 时会让更新量衰减过快，改用 α/√r 更稳。</p>
-</details>
-<details class="question">
-<summary>Q3 · LoRA 和 Adapter / Prefix-tuning 的本质区别？</summary>
-<p>Adapter 是<strong>串行</strong>插入（层与层之间），推理时多一串前向计算，有延迟；Prefix-tuning 占用输入序列的上下文窗口。LoRA 是<strong>并行旁路</strong>，推理时可完全合并进权重，零延迟、不占上下文——这决定了它成为部署侧的事实标准。</p>
-</details>
-<details class="question">
-<summary>Q4 · 推理时多个任务怎么共存？</summary>
-<p>底座 W₀ 只存一份，每个任务存独立的 A、B 对（各几 MB）。切换任务时合并对应的 (α/r)BA 即可；也可以对多个 adapter 做线性组合实现任务插值，或按 batch 动态路由。</p>
-</details>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>官方代码</strong>：<a href="https://github.com/microsoft/LoRA">github.com/microsoft/LoRA</a>；实践首选 HuggingFace <strong>PEFT</strong>：<code>LoraConfig(r=8, lora_alpha=16, target_modules=["q_proj","v_proj"], lora_dropout=0.05)</code></li>
-<li><strong>关键超参</strong>：r=4~8、α=r 或 2r、dropout 0.05、adapter 学习率比全量微调高一个量级（约 1e-4~3e-4）</li>
-<li><strong><abbr title="脑电图 Electroencephalogram">EEG</abbr> 建议</strong>：小数据场景从 r=4~8、只挂注意力 q/v 起步；底座可量化（QLoRA 思路）再省一档显存</li>
-<li><strong>算力参考</strong>：LoRA 本身极轻——瓶颈在底座前向，底座 4-bit 量化后单卡即可微调数 B 参数的模型</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">六篇方法对比</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.99.99 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.32.17.53.5.53.88zM12 4.15 6.04 7.5 12 10.85l5.96-3.35zM5 15.91l6 3.38v-6.71L5 9.21zm14 0v-6.7l-6 3.37v6.71z"></path></svg></span> <a href="../../topics/base-model/">基座来源分析</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"></path></svg></span> <a href="../../papers/neurolm/">NeuroLM（<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 底座，LoRA 可直接套用）</a></p>

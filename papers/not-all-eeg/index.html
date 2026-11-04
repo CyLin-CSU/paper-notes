@@ -1175,17 +1175,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2131,17 +2120,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2246,14 +2224,6 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>PATS 学到的其实是「采集协议的位置语法」</strong>：EMA 误差图是数据集级统计，前提是难位置跨样本对齐——TUEV 事件中心窗、BCIC cue 对齐窗、SEED trial 窗恰好都满足（都是范式对齐的窗口）。对位置随机化的自由长记录（如随机开窗的 TUAB），「第 j 个 patch 难」不再有跨样本语义，这个假设会弱化。论文未讨论该边界，结论里也只把 instance-level 难度列为 future work——<strong>这个方法的适用域比三个 benchmark 暗示的窄</strong>；</li>
-<li><strong>τ 的调制是三件事打包</strong>：数据侧（每位置噪声水平）、监督侧（难度加权损失）、条件侧（<abbr title="词元，模型处理的最小输入单元">token</abbr> 级时间嵌入）。细消融显示大头在调度本身：去 PATS 掉到 5.12%，仅去难度加权重构只掉到 8.72%——「把监督信号分配对」比「把损失加权调对」更根本；</li>
-<li><strong>可以视为位置粒度的课程学习</strong>：难位置每步被推到更「成熟」（更低噪声）的阶段，等价于给它们更细的终点邻域监督，且端点保持保证不改分布——比传统 curriculum（改数据顺序）优雅，代价是要维护一张与协议绑定的统计图；</li>
-<li><strong>复现口径警示（站内 benchmark 表适用）</strong>：本文复现的 JET 在 TUEV 上 TS-FID=360.78，而 JET 原文报 235.86——差 53%。TS-FID 的特征空间与预处理强依赖论文口径，跨论文数字<strong>不可直接横比</strong>，只应在同一篇的同一口径内比较（本篇内部对比是干净的）；</li>
-<li><strong>一个想看的缺失实验</strong>：EMA 误差图 s 本身的可视化。哪些通道 × 哪些时间段难？如果 s 与已知的伪迹拓扑、放电导联对得上，就是漂亮的可解释性证据（TFM 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 分析、EEGMoE 的专家分工可视化都是这么加分的），论文只给了按难度分层的收益曲线，差最后一步。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../eegdm/">EEGDM（生成轴线姊妹篇：扩散训表征）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../jet/">JET（直接前作：条件流匹配 + 生理约束）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../../basics/generative-lineage/">生成模型脉络（VAE → DDPM → FM）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../cbramod/">CBraMod（因子化注意力同族 + 下游裁判）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

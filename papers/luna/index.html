@@ -801,17 +801,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2153,17 +2142,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2288,15 +2266,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>与 EEGMoE 连读极有收获</strong>：两篇对「异构性」的态度完全相反却都成立——EEGMoE 认为任务/数据集域差异是需要<strong>保留的信号</strong>（专家分工），LUNA 认为电极几何差异是需要<strong>抹掉的噪声</strong>（query 瓶颈）。合起来其实给出了一个二维地图：任务轴用解耦管理、几何轴用统一抹平。一个自然的组合实验是 LUNA 的统一隐空间 + EEGMoE 的 SSMoE 块；</li>
-<li><strong>TUAB 上那 1pp 是「瓶颈税」</strong>：Q 个 query 是信息瓶颈，高密度通道的信息被有损压缩，因此上限略低于全注意力的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod。论文的 Q×E 消融（16×16 明显退化）证实瓶颈容量确实有限。这不是缺陷而是定价——问题是<strong>哪些任务愿意为 300× 效率付 1pp</strong>：高密度研究级 <abbr title="脑电图 Electroencephalogram">EEG</abbr>、长程监测、可穿戴，都是愿意的；</li>
-<li><strong>统计实践是全站已读论文里最严谨的</strong>：报告配对 t 检验并承认 p=0.2136 不显著、把学习 query 的优势明确表述为「实践性而非统计性」、给出 ±0.01 AUROC 的实用等价带。对比之下多数 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 论文把种子方差内的差异包装成 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>——这个措辞标准值得本站的 benchmark 表引用时警惕；</li>
-<li><strong>频域特征消融掉得最多（AUROC 至 -0.011）</strong>又一次印证时频信息的价值——与 TFM（时频 motif 词表）、SleepGPT（时频双流）的结论三方互证。有趣的是 LUNA 只在 patch embedding 里加了 FFT 幅相这一小块，性价比极高；</li>
-<li><strong>位置编码是未见拓扑的阿喀琉斯之踵</strong>：SEED-V 的失利被归因于预训练学到的位置编码绑定了训练拓扑。这提示「连续 3D 坐标编码」（NeRF 式）仍不够泛化——预训练拓扑只覆盖 3 种布局，坐标空间的采样太稀疏。未来做多数据集预训练 + 随机通道 dropout（论文展望）是对的；</li>
-<li><strong>对我的项目</strong>：LUNA-Base（7M、14MB、线性复杂度）是「可穿戴低功耗 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM」的现成参考配置；其「先统一通道再时间建模」的结构与 eeg2text-lite 的单通道设计不冲突——若扩展到多通道可穿戴（如耳 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 多触点），LUNA 的统一模块可直接借用。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../eegmoe/">EEGMoE（域解耦路线，对照阅读）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（效率前作对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../basics/attention-alternatives/">Attention 替代方案（效率视角）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

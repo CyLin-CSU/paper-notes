@@ -1468,17 +1468,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2119,17 +2108,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2152,36 +2130,11 @@
 
 <h1 id="attention">Attention 替代方案：从线性注意力到稀疏注意力<a class="headerlink" href="#attention" title="Permanent link">#</a></h1>
 <blockquote>
-<p>整理自 <strong>Stanford CS336（Language Modeling from Scratch）Lecture 4</strong> 关于 attention alternatives 的部分（MoE 之前）。原讲义把这条线当作 MoE 的铺垫：两者都在问同一个问题——<strong>怎么在固定算力下塞进更多参数/更长的上下文</strong>。</p>
+<p><strong>Stanford CS336 Lecture 4（MoE 之前部分）</strong></p>
 </blockquote>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>长上下文下注意力的成本随序列长度<strong>平方增长</strong>且逐渐压过 FFN，这是整条替代路线的动机</li>
-<li>关键恒等式：<span class="arithmatex">\( \rho \)</span> 取恒等时 <span class="arithmatex">\( (QK^{\top})V = Q(K^{\top}V) \)</span>——把平方换成线性，代价是失去 softmax 的选择性</li>
-<li>由此得到<strong>对偶性</strong>：并行二次形式用于训练、串行线性形式（RNN 形态）用于推理</li>
-<li>补回表达力的路径：加数据依赖门控（Mamba-2）→ 再加选择性擦除（Gated DeltaNet）</li>
-<li>工程上没人纯用线性层：<strong>混合堆叠</strong>是当前主流（MiniMax M1 7:1、Nemotron 3 ~3:1、Qwen3.5 3:1）</li>
-<li>另一条路是不改架构而改注意力范围：<strong>DSA 稀疏注意力</strong>（DeepSeek-V3.2 / GLM），靠轻量 indexer 选 top-k</li>
-</ul>
-</div>
 <h2 id="1">1 动机：上下文在涨，注意力成本也在涨<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p>2018–2025 年主流模型的上下文窗口从千级涨到百万级甚至千万级。问题在于标准注意力的成本随序列长度<strong>平方增长</strong>，而 FFN 部分是线性的——序列一长，注意力就成了时间与显存的主要开销来源，且占比随长度扩大。于是「如何控制注意力的成本」成为一条独立的研究路线。</p>
 <p>讲义把解决思路分成三层，前两层是「沿用现有注意力但省钱」，第三层才是改数学：</p>
-<pre class="mermaid"><code>flowchart TD
-    A["长上下文成本问题"] --&gt; B["① 稀疏模式&lt;br/&gt;局部/跨步/固定窗口 · 手工设计的掩码"]
-    A --&gt; C["② 局部+全局交替&lt;br/&gt;多数层局部、少数层全局"]
-    A --&gt; D["③ 系统工程&lt;br/&gt;FlashAttention 类 kernel 融合"]
-    A --&gt; E["④ 改注意力数学"]
-    B --&gt; F["不改渐近复杂度&lt;br/&gt;收益有限"]
-    C --&gt; F
-    D --&gt; F
-    E --&gt; G["线性注意力"]
-    G --&gt; H["+门控 = Mamba-2"]
-    H --&gt; I["+选择性擦除 = Gated DeltaNet"]
-    G --&gt; J["混合堆叠&lt;br/&gt;线性层与全注意力按比例交错"]
-    I --&gt; J
-    A --&gt; K["⑤ 不改架构改范围&lt;br/&gt;稀疏选择 DSA"]</code></pre>
 <p><strong>基础工具箱（① ② ③）</strong>——都在 O(n²) 的渐近复杂度内做优化：</p>
 <table>
 <thead>
@@ -2314,16 +2267,6 @@
 <p>一句话概括演进：<strong>状态从向量变矩阵（外积写入，容量更大）→ 衰减从固定变数据依赖（该记多久自己学）→ 从累加变先擦后写（delta rule）。</strong></p>
 <h2 id="6">6 工程实践：混合堆叠已成主流<a class="headerlink" href="#6" title="Permanent link">#</a></h2>
 <p>纯线性层目前还打不过全注意力（尤其在需要精确回忆的任务上），所以近一年的落地形态都是<strong>按比例交错</strong>：多数层用线性/SSM，少数层保留全注意力。</p>
-<pre class="mermaid"><code>flowchart LR
-    subgraph M1["MiniMax M1 · 7:1"]
-        A1["7×线性注意力（Lightning）"] --&gt; B1["1×全注意力"]
-    end
-    subgraph N3["Nemotron 3 · ~3:1"]
-        A2["Mamba-2 + MoE 为主干"] --&gt; B2["少量全注意力层插入"]
-    end
-    subgraph Q3["Qwen3.5 / Qwen3-Next · 3:1"]
-        A3["3×Gated DeltaNet"] --&gt; B3["1×Gated Attention"]
-    end</code></pre>
 <ul>
 <li><strong>MiniMax M1</strong>：7 层线性（Lightning Attention）配 1 层全注意力的 7:1 混合，配合 MoE；讲义给出的消融里，hybrid-lightning 在多数推理类基准上优于等价 softmax 版本（BBH、DROP、MATH、ARC-C、WG 等指标上升，个别如 CMMLU 略有下降），并展现出<strong>随上下文长度近似线性</strong>的成本增长；</li>
 <li><strong>Nemotron 3</strong>：以 Mamba-2 + MoE 为骨干、按固定模式插入极少数全注意力层（讲义图里的层序大致是连续若干 Mamba 块后插一个注意力块），在推理基准与超长上下文任务上达到同级模型的水平，同时吞吐更好；</li>
@@ -2350,33 +2293,6 @@
 <li><strong>GDN / Mamba 类模型在生理信号上已是常见选择</strong>：恒定状态 + 线性推理的特性天然契合「可穿戴设备上做长时低功耗推理」的需求，这也是为什么 SSM 一系在 <abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/PPG 的轻量部署工作里出现频率很高；</li>
 <li><strong>一个值得注意的取舍</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的很多任务是「精确回忆型」（找出某次发作的开始时刻、某个导联的特定波形），而混合研究显示这类任务正是线性层最吃亏的地方——如果做长时 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型，混合比例这个旋钮值得专门做消融，而不是照搬语言模型的 3:1。</li>
 </ul>
-<h2 id="_1">自问自答<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 既然 <span class="arithmatex">\( (QK^{\top})V = Q(K^{\top}V) \)</span> 只是换个顺序，为什么不直接全用？</summary>
-<p>因为恒等式成立的前提是 <span class="arithmatex">\( \rho \)</span> 为恒等。一旦要保留 softmax（它带来注意力分布的选择性——让 query 聚焦少数 key），结合律就不成立，右边的推导不再等价。线性注意力的代价就在这：能换顺序，但换掉之后就必须放弃 softmax，表达力靠后续的门控与擦除机制补回来。另一个实际代价是「状态容量」——把任意长的历史压进固定大小的 <span class="arithmatex">\( d_k \times d_v \)</span> 状态，天然是瓶颈。</p>
-</details>
-<details class="question">
-<summary>Q2 · 门控（γ）到底解决了什么问题？</summary>
-<p>固定衰减意味着所有位置用同一个遗忘速率，而真实序列的「该记多久」是随内容变化的：一段关键信息可能需要长期保留，噪声应当快速遗忘。让 <span class="arithmatex">\( \gamma_t = f(x_t) \)</span> 把遗忘速率变成输入的函数，模型就能按内容动态决定记忆深度。GDN 在此之上再加 <span class="arithmatex">\( \beta \)</span> 与擦除项，把「遗忘」从整体衰减细化成「按 key 方向定向清除」。</p>
-</details>
-<details class="question">
-<summary>Q3 · 混合架构为什么非要保留少量全注意力层？</summary>
-<p>因为线性/SSM 层的状态是固定容量的压缩记忆，做<strong>精确检索</strong>（从长历史里精确取回某一项信息）时先天吃亏——这正是 ByteDance 的研究在召回类任务上观察到的现象：线性比例越高、召回越差。保留少数全注意力层，相当于在压缩记忆之外留了一条「无损直通通道」，专门服务需要精确定位的依赖关系。比例因此是能力与成本的折中旋钮，而不是越线性越好。</p>
-</details>
-<details class="question">
-<summary>Q4 · DSA 和线性注意力是竞争关系吗？</summary>
-<p>更像是两种不同的省钱方式，可以叠加。线性注意力改的是<strong>每层的注意力数学</strong>（平方→线性，但需要重新训练或改造架构）；DSA 改的是<strong>每次注意力看多少 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>（top-k 稀疏选择，且能后置适配到已有稠密模型）。前者更激进、收益更大但要动训练配方；后者更兼容、工程落地成本低。GLM 的消融还提示了一个共同规律：<strong>在长上下文能力上，底座是要参与训练的</strong>，纯外挂式的轻量适配在极长上下文会掉点。</p>
-</details>
-<div class="admonition abstract">
-<p class="admonition-title">复现速查卡</p>
-<ul>
-<li><strong>原讲义</strong>：<a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_04.pdf">CS336 lecture_04.pdf</a>（本页只整理 MoE 之前的部分）</li>
-<li><strong>核心公式</strong>：线性注意力结合律 <span class="arithmatex">\( (QK^{\top})V = Q(K^{\top}V) \)</span>；递推形式 <span class="arithmatex">\( S_t = S_{t-1} + k_t v_t^{\top} \)</span>；Mamba-2 加 <span class="arithmatex">\( \gamma_t \)</span>；GDN 加 <span class="arithmatex">\( \beta_t \)</span> 与 <span class="arithmatex">\( (I - \beta_t k_t k_t^{\top}) \)</span> 擦除项</li>
-<li><strong>沿革线索</strong>：Shen et al. 2018 / Katharopoulos 2020（线性注意力）→ RetNet（衰减）→ Mamba-2（数据依赖门控）→ Gated DeltaNet（delta rule）→ 混合堆叠 → DSA（稀疏选择）</li>
-<li><strong>落地参考</strong>：MiniMax M1（7:1 线性/全注意力）、Nemotron 3（Mamba-2+MoE 骨干）、Qwen3.5/Next（3:1 GDN/Attention，Gated Attention + Zero-Centered RMSNorm）、DeepSeek-V3.2 与 GLM（DSA）</li>
-<li><strong>要点</strong>：混合比例在召回能力与效率间折中；DSA 可后置适配但长上下文仍需底座参与训练</li>
-</ul>
-</div>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19H4.09L14.18 4.43l1.64 1.14-4.54 6.56c1.61.83 2.72 2.49 2.72 4.41 0 .16 0 .31-.03.46H20zM7.91 17h4.05c.04-.15.04-.3.04-.46 0-1.26-.76-2.32-1.86-2.76z"></path></svg></span> <a href="../lora/">LoRA · 低秩适配</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../../papers/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（线性注意力的工程实例）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

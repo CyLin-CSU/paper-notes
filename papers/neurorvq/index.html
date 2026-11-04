@@ -941,17 +941,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2153,17 +2142,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2265,13 +2243,6 @@ z_1 = \arg\min_{v_1 \in V_1} \|\, \ell_2(p_1) - \ell_2(v_1) \,\|, \qquad p_{i+1}
 </tr>
 </tbody>
 </table>
-<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>「损失设计 &gt; 架构」的叙事把协同效应记错账</strong>。摘要与讨论反复强调 phase-aware loss 是最大改进,单看行消融(0.946→0.167,5.7×)确实压过架构的 37%;但从「相位损失+<abbr title="均方误差 Mean Squared Error">MSE</abbr> 幅值」(0.167)到全家桶(0.035)还有 4.8× 的空间——即对数幅值与时域项的增益<strong>依赖</strong>相位表示先摆正,反之亦然。更诚实的读法是:相位表示是使能器(enabler),43× 是三项联合的数字。另外别忽略 baseline 本身是 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 式配置,「43×」里有一部分是 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的相位 <abbr title="均方误差 Mean Squared Error">MSE</abbr> 太病态贡献的;</li>
-<li><strong>标题里的 Generative 至今没有兑现</strong>。全文只有 masked modeling + 判别式下游,RVQ 层次结构的真正红利——coarse-to-fine 生成、AudioLM 式条件生成——一个实验都没有。对站内 <a href="../../topics/tokenization/">tokenization 演进页</a> 记录的「与自然语言对齐/生成」遗留问题,这篇只交了 tokenizer 半张卷:高保真重构是生成的必要前提,但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 目前连下游输入都不是(TFM 路线),更不是生成序列。v1 到 v4 相隔半年仍在补 baseline,生成的部分大概率在后续工作里;</li>
-<li><strong>基准自建 + 参数量矛盾 + 无代码,可复现性打折</strong>。<abbr title="脑电图 Electroencephalogram">EEG</abbr> benchmark 出自同一批作者(Lee、Barmpas 都是本文作者),协议一致是优点,但基线健康度存疑:EEGPT Motor 31.3、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> <abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 50.0±0.0 都是退化水平,无法判断是模型不行还是协议不合适。ECG「264K 骨干胜过 30M 基线」是全文最惊艳的数字,却与 Table 13 的 hidden dimension 200/200/40(<abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/EMG)矛盾——264K 恰是 d=40 的体量,而 Table 18 又把 5.9M(d=200 的体量)记给 EMG;两处必有一处标错。PDF 正文无任何代码链接;</li>
-<li><strong>三个模态三套 tokenizer 三套 FM——这是「设计空间」论文而非「统一模型」论文</strong>。modality-adaptive 的代价是没有任何跨模态共享表征(作者自己列为 future direction),与 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/BrainOmni 的跨模态野心相反。真正可迁移的资产是四个旋钮的调法:采样率定 w、频谱宽度定 N、形态时标定卷积核组——这套方法论对想做「心肌/肌电版 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>」的人比 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 数字更有用。另外 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练语料混着 235 h 自采私有数据,这部分不可复现,复现实验时要有心理预期。</li>
-</ul>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进(RVQ/多尺度缺口由本篇填补)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v2.06A8.52 8.52 0 0 0 4.05 9H2v6h2.06A8.5 8.5 0 0 0 9 19.95V22h6v-2.06A8.5 8.5 0 0 0 19.95 15H22V9h-2.06A8.52 8.52 0 0 0 15 4.05V2m-4 2h2v2h-2m-2 .25V8h6V6.25c1.18.61 2.14 1.57 2.75 2.75H16v6h1.75A6.4 6.4 0 0 1 15 17.75V16H9v1.75A6.4 6.4 0 0 1 6.25 15H8V9H6.25A6.4 6.4 0 0 1 9 6.25M4 11h2v2H4m14-2h2v2h-2m-7 5h2v2h-2"></path></svg></span> <a href="../brainrvq/">BrainRVQ(RVQ 分支后续:双域 + 层间自回归)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 7A1.5 1.5 0 0 1 4 5.5 1.5 1.5 0 0 1 5.5 4 1.5 1.5 0 0 1 7 5.5 1.5 1.5 0 0 1 5.5 7m15.91 4.58-9-9C12.05 2.22 11.55 2 11 2H4c-1.11 0-2 .89-2 2v7c0 .55.22 1.05.59 1.41l8.99 9c.37.36.87.59 1.42.59s1.05-.23 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.56-.23-1.06-.59-1.42"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(被对照 67× 的单码本 <abbr title="向量量化 Vector Quantization">VQ</abbr> 前作)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer(<abbr title="词元，模型处理的最小输入单元">token</abbr> 作输入的分岔路线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-5v2h5v13l-5-6v9h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-9 15H5l5-6m0-9H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5v2h2V1h-2z"></path></svg></span> <a href="../cbramod/">CBraMod(深骨干 tokenizer 的批评对象)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(连续 patch 路线的崩盘基线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>
