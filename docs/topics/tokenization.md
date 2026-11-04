@@ -28,45 +28,86 @@ tags: [tokenization, 综述]
 
 | 时间 | 论文 | Token 形态 | 词表 | Token 的用途 |
 |---|---|---|---|---|
-| 2023 | [BIOT](../papers/biot.md) | 原始信号片段（1s） | 无 | 模型输入 |
-| 2024 | [LaBraM](../papers/labram.md) | 离散码（VQ，8192） | 有 | **仅作预训练目标**，推理时丢弃 |
-| 2024 | [EEGPT](../papers/eegpt.md) | 连续 patch embedding | 无 | 模型输入 |
-| 2025 | [NeuroLM](../papers/neurolm.md) | 离散码（VQ） | 有（并入 GPT-2 词表） | LLM 的输入 |
-| 2026 | [TFM-Tokenizer](../papers/tfm-tokenizer.md) | 离散码（VQ 时频 motif） | 有 | 模型输入 + 可插拔复用 |
-| 2026 | [NeuroRVQ](../papers/neurorvq.md) | 多尺度 RVQ 离散 token | 多尺度、多层码表 | 预训练目标 |
-| 2026 | [BrainRVQ](../papers/brainrvq.md) | 时域 / 频域双 RVQ 离散 token | 双域、多层码表 | 分层预训练目标 |
-| 2026 | [CodeBrain](../papers/codebrain.md) | 时域 / 频域双 VQ 离散 token | 双域码表 | 预训练目标 |
+| 2023 | [BIOT](../papers/biot.md) | 信号 embedding（STFT 频谱帧投影） | 无码表 | 模型输入 |
+| 2024 | [LaBraM](../papers/labram.md) | 离散 token（VQ） | 有 | **仅作预训练目标**，推理时丢弃 |
+| 2024 | [EEGPT](../papers/eegpt.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2024 | [BrainGPT](../papers/braingpt.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2025 | [NeuroLM](../papers/neurolm.md) | 离散 token（VQ） | 有（并入 GPT-2 词表） | LLM 的输入 |
+| 2026 | [TFM-Tokenizer](../papers/tfm-tokenizer.md) | 离散 token（时频 motif） | 有 | 模型输入 + 可插拔复用 |
+| 2025 | [CBraMod](../papers/cbramod.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2025 | [LUNA](../papers/luna.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2026 | [EEGMoE](../papers/eegmoe.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2025 | [NeuroRVQ](../papers/neurorvq.md) | 离散 token（多尺度 RVQ） | 多尺度、多层码表 | 预训练目标 |
+| 2026 | [BrainRVQ](../papers/brainrvq.md) | 离散 token（双域 RVQ） | 双域、多层码表 | 分层预训练目标 |
+| 2026 | [CodeBrain](../papers/codebrain.md) | 离散 token（双域 VQ） | 双域码表 | 预训练目标 |
 | 2026 | [NeuroDETR](../papers/neurodetr.md) | 时间多尺度 / 空间金字塔离散 token | 时间 / 空间码表 | 事件检测模型的输入记忆 |
-| 2025 | [DELTA](../papers/delta.md) | RVQ 离散码（词级 EEG） | 自训多层码表 | 掩码语言扩散的输入 |
+| 2025 | [DELTA](../papers/delta.md) | 离散 token（词级 RVQ） | 自训多层码表 | 掩码语言扩散的输入 |
 
 ## 预处理与归一化异构信号
 
-- **重采样**：BIOT / CBraMod / EEGDM / JET 统一 200Hz；EEGPT / LUNA 统一 256Hz。
+**重采样**：
 
-    滤波：LUNA 0.1–75Hz 带通 + 50/60Hz 陷波，CBraMod 0.3–75Hz 带通 + 60Hz 陷波；
-- **归一化的四种方式**：BIOT 逐通道除以绝对幅值 **95 分位数**；LUNA 逐通道 **z-score**；CBraMod 以 **100µV 为单位**归一；JET 幅值整体 **×0.01**。
+- **BIOT / CBraMod / EEGDM / JET**：统一到 200Hz。
+
+- **EEGPT / LUNA**：统一到 256Hz。
+
+**滤波与归一化**：
+
+- **BIOT**：逐通道除以绝对幅值的 95 分位数。
+
+- **CBraMod**：0.3–75Hz 带通、60Hz 陷波，以 100µV 为单位归一。
+
+- **LUNA**：0.1–75Hz 带通、50/60Hz 陷波，逐通道 z-score。
+
+- **JET**：信号幅值整体乘 0.01。
 
 ## 片段细粒度
 
-- **patch 时间长度**：
+**patch 长度与重叠**：
 
-    LUNA 最细（40 个时间点，256Hz 约 0.16s），EEGPT 250ms（64 点）
+- **LUNA**：40 点，256Hz 下约 0.16s。
 
-    主流200点，在200Hz下 **1s** （BIOT / LaBraM / TFM / CBraMod / EEGDM / JET）
+- **EEGPT**：64 点，256Hz 下为 250ms。
 
-    粒度选择与「motif 通常持续亚秒到数秒」的生理直觉大体一致；
-- **重叠与否**：BIOT 与 TFM 使用重叠窗口（0.5s）；BrainRVQ / CodeBrain 使用 1s 非重叠 patch。不同方法的切分口径单独记录；
-- **切分对象**：主流「时域信号每通道独立切」；
+- **BIOT**：1s STFT 窗，步长 0.5s；每个时间帧的频谱投影为 token。
 
-    几个例外：**EEGMoE**，先分 5 个频带（δ 1–4 / θ 4–8 / α 8–14 / β 14–31 / γ 31–45Hz）、按头皮位置摆成 2-D 网格再堆成 4-D 脑地图 X ∈ R^{T×F×H×W}；**RF-GPT 把整个 STFT 时频图当一张 512×512 图片**切 14×14 patch（1369 个 token）。
+- **TFM**：1s 窗、0.5s 步长，每个窗内继续建模时频结构。
+
+- **LaBraM / CBraMod / EEGDM / JET**：主要使用 1s patch。
+
+- **BrainRVQ / CodeBrain**：使用 1s 非重叠 patch。
+
+**其他输入组织方式**：
+
+- **EEGMoE**：先分频带，再按电极位置摆成脑地图，用空间与频率编码器提取表示。
+
+- **RF-GPT**：把 STFT 时频图作为图片输入视觉语言模型。
+
+- **DELTA**：按词语组织 EEG 特征，切分单位由配对阅读任务确定。
 
 ## 对token切分的总结
 
-**新增方法的切分**：NeuroRVQ 在 patch 内用多尺度卷积，再逐尺度做 RVQ；BrainRVQ 把同一 patch 分成时域 / 频域两组残差码字；CodeBrain 使用时域 / 频域双码表。NeuroDETR 从连续信号特征构造多尺度时间 token 与脑区 token，不按统一 1s patch 比较。
+- **NeuroRVQ**：在 patch 内用多尺度卷积提取表示，每个尺度分别做 RVQ。
+
+- **BrainRVQ**：同一 patch 分别量化为时域与频域两组残差码字。
+
+- **CodeBrain**：时域与频域分别使用独立码表，给主模型提供预测目标。
+
+- **NeuroDETR**：从连续信号构造多尺度时间 token 与脑区 token，作为事件检测的输入记忆。
+
+- **DELTA**：按阅读词语组织 EEG 特征，用 RVQ 得到离散 token，再接入语言模型。
 
 **把异构信号规则切段，统一成连续 token**：好处是 tokenizer 免训练、时域信息保留，坏处是 token 只是切分的产物，没有数据驱动的词表，谈不上语义单元；
 
-**学神经词表**，LabraM的词表只当掩码预训练的目标、推理时被丢弃；到 NeuroLM 和 TFM——前者把码字并入 GPT-2 词表换来单模型多任务的指令推理，后者把时频 motif 词表做成可插拔组件。
+**词表用在哪里**：
+
+- **LaBraM**：离散 token 作为预训练目标，分类时保留主模型。
+
+- **NeuroLM**：把离散 token 并入 GPT-2 词表，用指令组织下游任务。
+
+- **TFM**：离散 token 作为主模型输入，tokenizer 可以接入不同骨干。
+
+- **DELTA**：离散 token 作为 EEG-to-Text 的条件输入，由语言模型生成文本。
 
 ## 切分token方法的加固与新形态
 
@@ -81,7 +122,7 @@ tags: [tokenization, 综述]
 
 | 论文 | 时域 | 频域 | 空间/通道 | 时间位置 |
 |---|---|---|---|---|
-| BIOT | —（切段即 token） | FFT 能量 → FCN | 可学习通道表 | 正弦相对位置编码 |
+| BIOT | — | STFT 幅值 → 线性投影 | 可学习通道表 | 正弦相对位置编码 |
 | LaBraM / NeuroLM | temporal conv | 重构目标，不进 token | 10-20 空间表 | 可学习时间表 |
 | EEGPT | patch embedding | 无显式 | 通道 codex book | predictor 内 RoPE |
 | TFM | 线性投影 + GeLU | **频率 patch →  Transformer → 门控聚合** | 单通道，下游加通道 embedding | **tokenizer 内无** |
@@ -93,7 +134,11 @@ tags: [tokenization, 综述]
 | NeuroDETR | 连续信号卷积骨干 | 无显式频域输入 | 电极坐标混合 + 脑区分组 | 正弦位置编码 |
 
 
-两个规律：频域几乎都以双分支相加/拼接的方式进入 embedding 层；空间与位置编码基本是查表，或者是动态可学习。
+- **CBraMod / LUNA**：把时域与频域特征合成信号 embedding。
+
+- **LaBraM / NeuroRVQ / BrainRVQ**：用频谱信息训练词表，频谱也是重构目标。
+
+- **CodeBrain**：输入与词表重构均使用频域信息。
 
 ## 关键技术分歧
 
@@ -101,7 +146,7 @@ tags: [tokenization, 综述]
 
 | 方案 | 做法 | 问题 |
 |---|---|---|
-| BIOT | FFT 能量向量 → FCN | 丢失相位；1s 窗过粗，时域任务（P300）吃亏 |
+| BIOT | STFT 频谱帧 → 线性投影 | 丢失相位；1s 窗过粗，时域任务（P300）吃亏 |
 | LaBraM | DFT 幅值+相位作重构目标 | 相位贡献小（NeuroLM 实验证实） |
 | NeuroLM | 时域信号 + DFT 幅值双 decoder | — |
 | TFM | 频率轴切 patch + 频率 Transformer + 门控聚合 | **显式建模窗内跨频段依赖**，最彻底 |
@@ -119,6 +164,18 @@ tags: [tokenization, 综述]
     采用Multi-scale patch输入，多尺度重建损失。
 
 - **与自然语言对齐**：LaBraM/NeuroLM 都展望过把神经码与语言词汇对齐。
+
+## 相关前端与解码方式
+
+- **[LTFT](../papers/learnable-tf.md)**：直接学习时频变换的窗口，输出时频图；前端与下游网络一起训练，不建立离散码表。
+
+- **[GUIDED](../papers/guided.md)**：用通道注意力与时空卷积把 EEG 编码为信号 embedding，再投影到 CLIP 图像表示空间，不建立离散码表。
+
+- **[Défossez](../papers/defossez-speech.md)**：连续卷积提取脑信号表示，对齐语音模型的 embedding。
+
+- **[SSM2Mel](../papers/ssm2mel.md)**：连续 EEG 特征经过状态空间模型与注意力，输出 mel 时频图。这里时频图是预测目标。
+
+LTFT 学时频变换，TFM 在时频图上学离散词表，前端变换与词表训练需要分开看。
 
 ## 关联论文
 

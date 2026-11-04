@@ -5,7 +5,7 @@ tags: [基座模型, 模型规模, 综述]
 
 # 基座来源与模型参数量
 
-原有九篇之外，加入 NeuroRVQ、BrainRVQ、CodeBrain 与 NeuroDETR。**架构借鉴与预训练权重复用分开看**；NeuroDETR 标为监督事件检测，不按通用预训练模型解释。
+**架构借鉴与预训练权重复用分开看**。主模型与 tokenizer 分别统计，配对解码使用的外部基座另列。
 
 ## 总览表
 
@@ -25,7 +25,24 @@ tags: [基座模型, 模型规模, 综述]
 | [CodeBrain](https://arxiv.org/abs/2506.09110) | **从零训练** | 15.17M（EEGSSM） | 未单列 | tokenizer 提供预训练目标，分类时微调主模型 |
 | [NeuroDETR](https://arxiv.org/abs/2610.20349) | **监督训练，未报告外部基座** | 未单列 | 未单列，与检测模型联合训练 | 事件检测模型，不填作通用预训练 backbone |
 
-**参数口径**：M = 百万，B = 十亿；主模型与 tokenizer 分开统计。“—”表示无独立离散 tokenizer。EEGPT 按官方 Large encoder 结构估算；NeuroLM 的基座数字不包含扩词与新增模块，论文含 VQ encoder 的总量不作为 LLM 参数量。
+**参数口径**：M = 百万，B = 十亿；主模型与 tokenizer 分开统计。“—”表示无独立离散 tokenizer。
+
+- **EEGPT**：按官方 Large encoder 结构估算。
+
+- **NeuroLM**：基座数字不包含扩词与新增模块，含 VQ encoder 的总量不作为 LLM 参数量。
+
+## 配对解码方法的权重来源
+
+| 论文 | 训练的脑信号模型 | 复用的预训练模型 | 参数量口径 |
+|---|---|---|---|
+| [DELTA](../papers/delta.md) | RVQ tokenizer 从零训练 | LLaDA-8B，用 QLoRA 适配 | 主模型为 8B 基座；tokenizer 未单列 |
+| [GUIDED](../papers/guided.md) | ATM encoder 与 EEG 条件扩散先验 | CLIP、SDXL 等视觉模型 | ATM encoder 约 3.18M；不把冻结视觉模型计入脑端参数量 |
+| [Défossez](../papers/defossez-speech.md) | 卷积脑信号 encoder 从零训练 | 冻结的 wav2vec 2.0 | 脑端参数量未在本专题单列 |
+| [SSM2Mel](../papers/ssm2mel.md) | EEG 到 mel 的监督模型从零训练 | 未加载外部预训练基座 | 主模型参数量未单列 |
+
+- **LTFT**：学习的是时频窗口与任务网络，不依赖外部预训练权重。
+
+- **CrossPT-EEG / EEGArena**：属于数据与评测基准，不作为一款主模型统计参数量。
 
 ## 关联页面
 

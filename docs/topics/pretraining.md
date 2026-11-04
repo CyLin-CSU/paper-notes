@@ -24,14 +24,18 @@ tags: [预训练, 综述]
 | BrainRVQ | 时域 / 频域双 RVQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值 + 相位** | 信号 MSE + 幅值 MSE + 相位 MSE + commitment loss |
 | CodeBrain | 时域 / 频域双 VQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值 + 相位** | 重构 MSE + 时域对比损失 + VQ 损失 |
 | NeuroDETR | 时间多尺度 / 空间金字塔 VQ 码表 | **不做随机掩码** | **信号 embedding** | 特征 MSE + commitment loss，与事件检测损失联合训练 |
+| DELTA | RVQ 码表 | **不掩码** | **词级 EEG 特征** | 特征 MSE + VQ 损失 |
 
 
 **VQ 的稳定性技巧**：LaBraM / TFM 用 **EMA 更新 codebook**，稳定词表。
 
-NeuroRVQ / BrainRVQ / NeuroDETR 也用 EMA 更新码表；NeuroDETR 的 VQ 随监督检测一起训练，没有独立的通用 tokenizer 预训练阶段。
+**NeuroDETR**：VQ 随监督检测一起训练，没有独立的通用 tokenizer 预训练阶段。
 
 **对称掩码**（LaBraM 提出，TFM 沿用）：mask 与其补集各做一次——两个互补视角；
-LaBraM 用在主模型码字预测，TFM 用在 tokenizer 训练。
+
+- **LaBraM**：用于主模型的离散 token 预测。
+
+- **TFM**：用于 tokenizer 的时频图重建。
 
 
 ## 二、主模型预测目标
@@ -82,7 +86,11 @@ LaBraM 用在主模型码字预测，TFM 用在 tokenizer 训练。
 | NeuroLM | **所有通道的当前及过去** | 同通道下一时刻的**离散 token** | 交叉熵 |
 | BrainRVQ | **可见 patch + 同一位置较粗层的码字** | 被掩位置下一层的**离散 token** | 分层交叉熵 |
 
-BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输入。BrainGPT 开头加电极条件 token；NeuroLM 冻结 VQ encoder、加载 GPT-2 并扩充 EEG 词表。
+BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输入。
+
+- **BrainGPT**：在序列开头加入电极条件 token，预测下一时刻的原始信号 patch。
+
+- **NeuroLM**：冻结 VQ encoder，加载 GPT-2 并扩充 EEG 词表，预测下一时刻的离散 token。
 
 **NeuroLM 防遗忘**：预训练与指令微调都混入少量纯文本。
 
@@ -96,6 +104,28 @@ BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输
 | NeuroDETR | **连续原始信号** | **事件类别 + 起止时间** | 监督事件检测，与 VQ 特征重建联合训练 |
 
 **方法创新**：① **FOCAL 事件感知注意力**，把计算集中到可能出现事件的片段；② **时间多尺度 VQ + 空间金字塔 VQ**，形成事件记忆，再由 query 联合预测类别与边界。它不属于上面的随机掩码预训练。
+
+### ⑤ 配对解码与前端训练
+
+| 论文 | 训练输入 | 预测 / 对齐目标 |
+|---|---|---|
+| [DELTA](../papers/delta.md) | 被掩 EEG token；EEG token + 被掩文本 token | 第一阶段预测 EEG token；第二阶段预测文本 token |
+| [GUIDED](../papers/guided.md) | EEG 与配对图像 | CLIP 图像 embedding；生成阶段学习图像先验 |
+| [Défossez](../papers/defossez-speech.md) | 脑信号与配对语音 | 语音 embedding |
+| [SSM2Mel](../papers/ssm2mel.md) | EEG 与配对语音 | mel 时频图 |
+| [LTFT](../papers/learnable-tf.md) | EEG 与任务标签 | 分类标签 |
+
+- **DELTA**：先训练 RVQ tokenizer，再用掩码 EEG token 适配 LLaDA；文本微调时保留 EEG 条件，只掩码文本。
+
+- **GUIDED**：脑端对齐预训练 CLIP 的图像 embedding；重建图像时，再训练 EEG 条件的扩散先验。
+
+- **Défossez**：冻结语音模型，用配对数据对比对齐脑信号与语音表示。
+
+- **SSM2Mel**：直接监督回归 mel 时频图，未设置独立的自监督预训练阶段。
+
+- **LTFT**：分类损失同时更新时频窗口与下游网络，未设置独立的 tokenizer 训练阶段。
+
+这几种方法的输出目标不同，配对解码与通用 EEG 表示预训练分开列。
 
 ### 关联论文
 
