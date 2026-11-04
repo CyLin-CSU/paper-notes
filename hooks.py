@@ -84,3 +84,48 @@ def on_page_content(html, page, **kwargs):
     if "<!-- ACTIVITY_CALENDAR -->" in html:
         html = html.replace("<!-- ACTIVITY_CALENDAR -->", _activity_calendar())
     return html
+
+
+# 兼容去掉阅读日期前缀之前的论文链接。
+PAPER_REDIRECTS = {
+    '0918-biot': 'biot',
+    '0918-braingpt': 'braingpt',
+    '0918-eegpt': 'eegpt',
+    '0918-labram': 'labram',
+    '0918-neurolm': 'neurolm',
+    '0918-tfm-tokenizer': 'tfm-tokenizer',
+    '0921-rf-gpt': 'rf-gpt',
+    '0923-jet': 'jet',
+    '0924-eegmoe': 'eegmoe',
+    '0924-luna': 'luna',
+    '0928-cbramod': 'cbramod',
+    '1017-eegdm': 'eegdm',
+    '1028-not-all-eeg': 'not-all-eeg',
+    '1102-defossez-speech': 'defossez-speech',
+    '1102-learnable-tf': 'learnable-tf',
+    '1102-ssm2mel': 'ssm2mel',
+    '1102-surrogate-brain': 'surrogate-brain',
+    '1104-brainrvq': 'brainrvq',
+    '1104-codebrain': 'codebrain',
+    '1104-crosspt-eeg': 'crosspt-eeg',
+    '1104-delta': 'delta',
+    '1104-eegarena': 'eegarena',
+    '1104-guided': 'guided',
+    '1104-neurodetr': 'neurodetr',
+    '1104-neurorvq': 'neurorvq',
+}
+
+
+def on_post_build(config, **kwargs):
+    site = pathlib.Path(config["site_dir"])
+    for old, new in PAPER_REDIRECTS.items():
+        target = f"../{new}/"
+        page = site / "papers" / old / "index.html"
+        page.parent.mkdir(parents=True, exist_ok=True)
+        page.write_text(
+            '<!doctype html><html lang="zh"><meta charset="utf-8">'
+            f'<meta http-equiv="refresh" content="0; url={target}">'
+            '<meta name="robots" content="noindex"><title>页面已迁移</title>'
+            f'<a href="{target}">打开论文笔记</a></html>',
+            encoding="utf-8",
+        )

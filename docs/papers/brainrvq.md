@@ -13,7 +13,7 @@ one-liner: "共享编码器 + 时/频双路 RVQ(2×3 层×8192 码本)把同一 
 ---
 # BrainRVQ: A High-Fidelity EEG Foundation Model via Dual-Domain Residual Quantization and Hierarchical Autoregression
 
-> **arXiv 2026**(eess.SP 预印本 v1,2026-02-18,ICML 模板正文 9 页 + 附录 A–J)· 浙江大学工业控制技术国家重点实验室 + 米兰理工 + 中科院深圳先进院 —— 站内 tokenization 线 **RVQ 分支的第二篇**:[NeuroRVQ](1104-neurorvq.md) 先把 RVQ 搬进 EEG(多尺度卷积、单时域),本文把「双域」补上——同一个 patch 同时量化出时域、频域两组残差码字,再用层间自回归把 coarse-to-fine 结构写进预训练目标。token 用法上它与 [LaBraM](0918-labram.md) 同范式(只当预训练目标、推理丢弃),而非 [TFM-Tokenizer](0918-tfm-tokenizer.md) 的「token 作下游输入」;双域的最近竞品是 [CodeBrain](1104-codebrain.md)(独立时/频编码器 + 双 VQ),但两者互相不比较。演进口径见 [Tokenization 演进](../topics/tokenization.md)。
+> **arXiv 2026**(eess.SP 预印本 v1,2026-02-18,ICML 模板正文 9 页 + 附录 A–J)· 浙江大学工业控制技术国家重点实验室 + 米兰理工 + 中科院深圳先进院 —— 站内 tokenization 线 **RVQ 分支的第二篇**:[NeuroRVQ](neurorvq.md) 先把 RVQ 搬进 EEG(多尺度卷积、单时域),本文把「双域」补上——同一个 patch 同时量化出时域、频域两组残差码字,再用层间自回归把 coarse-to-fine 结构写进预训练目标。token 用法上它与 [LaBraM](labram.md) 同范式(只当预训练目标、推理丢弃),而非 [TFM-Tokenizer](tfm-tokenizer.md) 的「token 作下游输入」;双域的最近竞品是 [CodeBrain](codebrain.md)(独立时/频编码器 + 双 VQ),但两者互相不比较。演进口径见 [Tokenization 演进](../topics/tokenization.md)。
 
 **作者**:Mingzhe Cui, Tao Chen*, Yang Jiao, Yiqin Wang, Lei Xie, Yi Pan, Luca Mainardi(浙江大学;Yang Jiao、Yi Pan 来自中科院深圳先进院;Luca Mainardi、Tao Chen 挂米兰理工;通讯作者 Tao Chen,chentao98@zju.edu.cn)
 
@@ -186,13 +186,13 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [LaBraM](0918-labram.md) | 范式直系:同走「token 只当预训练目标、推理丢弃、下游微调连续编码器」路线;LaBraM 的单层时域 VQ 正是本文批评的「单域 + 扁平量化」,换成了双域 3 层 RVQ |
-| [NeuroRVQ](1104-neurorvq.md) | RVQ 分支姊妹篇:NeuroRVQ 用多尺度卷积在**单时域**做 RVQ、以重构保真为主卖点;BrainRVQ 共享编码器 + **双域双码本** + 层间自回归。两篇对相位的态度不同——NeuroRVQ 用圆周相位损失处理角度周期性,BrainRVQ 直接 MSE 重构相位(平均 r 只有 0.577) |
-| [CodeBrain](1104-codebrain.md) | 「双域 tokenization」的最近竞品,也是本文最该比而没比的对手:CodeBrain 用独立时/频卷积编码器 + 双 VQ 码本 + Mamba 骨干,BrainRVQ 用共享 Transformer 编码器 + 双 RVQ + BERT 式掩码 AR——双域在编码器层(前者)还是码本层(后者)是两条可对照的设计路线 |
-| [CBraMod](0928-cbramod.md) | 最强基线与同语料同伴:同为 TUEG 预训练、同为 TUAB/TUEV 官方划分;监测指标口径 8 个数据集 7 胜 1 负(唯一败仗 TUAB),另有 CHB-MIT BalAcc、TUAB AUC-PR 两个次指标落后,且 7 胜里 4 场在噪声内——「超越 CBraMod」的成色要按任务拆开看 |
-| [TFM-Tokenizer](0918-tfm-tokenizer.md) | token 用法的分岔口:TFM 把离散 token 做成下游输入与可插拔组件;BrainRVQ 与 LaBraM 一样让 token 止步于预训练目标——RVQ 的层次结构目前只用来「教」编码器,没进入推理链路 |
-| [NeuroLM](0918-neurolm.md) | 层次化的两种含义:NeuroLM 的层次在词表层级(VQ 码并入 GPT-2 词表),BrainRVQ 的层次在 RVQ 深度(层间自回归);NeuroLM 曾实验证实相位重构对下游贡献很小,与本文保留全权重相位损失形成张力 |
-| [BIOT](0918-biot.md) | 预训练语料口径的对照:BIOT 官方权重是多生物信号混合预训练(EEG+ECG+HAR),本文表格统一说成「TUH 预训练」——复现横向对比时注意 BIOT 的语料其实不同源 |
+| [LaBraM](labram.md) | 范式直系:同走「token 只当预训练目标、推理丢弃、下游微调连续编码器」路线;LaBraM 的单层时域 VQ 正是本文批评的「单域 + 扁平量化」,换成了双域 3 层 RVQ |
+| [NeuroRVQ](neurorvq.md) | RVQ 分支姊妹篇:NeuroRVQ 用多尺度卷积在**单时域**做 RVQ、以重构保真为主卖点;BrainRVQ 共享编码器 + **双域双码本** + 层间自回归。两篇对相位的态度不同——NeuroRVQ 用圆周相位损失处理角度周期性,BrainRVQ 直接 MSE 重构相位(平均 r 只有 0.577) |
+| [CodeBrain](codebrain.md) | 「双域 tokenization」的最近竞品,也是本文最该比而没比的对手:CodeBrain 用独立时/频卷积编码器 + 双 VQ 码本 + Mamba 骨干,BrainRVQ 用共享 Transformer 编码器 + 双 RVQ + BERT 式掩码 AR——双域在编码器层(前者)还是码本层(后者)是两条可对照的设计路线 |
+| [CBraMod](cbramod.md) | 最强基线与同语料同伴:同为 TUEG 预训练、同为 TUAB/TUEV 官方划分;监测指标口径 8 个数据集 7 胜 1 负(唯一败仗 TUAB),另有 CHB-MIT BalAcc、TUAB AUC-PR 两个次指标落后,且 7 胜里 4 场在噪声内——「超越 CBraMod」的成色要按任务拆开看 |
+| [TFM-Tokenizer](tfm-tokenizer.md) | token 用法的分岔口:TFM 把离散 token 做成下游输入与可插拔组件;BrainRVQ 与 LaBraM 一样让 token 止步于预训练目标——RVQ 的层次结构目前只用来「教」编码器,没进入推理链路 |
+| [NeuroLM](neurolm.md) | 层次化的两种含义:NeuroLM 的层次在词表层级(VQ 码并入 GPT-2 词表),BrainRVQ 的层次在 RVQ 深度(层间自回归);NeuroLM 曾实验证实相位重构对下游贡献很小,与本文保留全权重相位损失形成张力 |
+| [BIOT](biot.md) | 预训练语料口径的对照:BIOT 官方权重是多生物信号混合预训练(EEG+ECG+HAR),本文表格统一说成「TUH 预训练」——复现横向对比时注意 BIOT 的语料其实不同源 |
 | SoundStream / EnCodec / AudioLM | RVQ 与 coarse-to-fine 自回归的出处:本文是音频压缩/生成范式在 EEG 掩码预训练上的一次较完整移植(级联码本 + 层间 teacher forcing + 层加权) |
 
 ## 个人思考
@@ -232,4 +232,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-vector-link: [NeuroRVQ(RVQ 分支先行者:多尺度卷积单时域)](1104-neurorvq.md) ｜ :material-vector-circle: [CodeBrain(双域 VQ + Mamba 的最近竞品)](1104-codebrain.md) ｜ :material-tag: [LaBraM(单层 VQ + token 作目标的范式起点)](0918-labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的可插拔路线)](0918-tfm-tokenizer.md) ｜ :material-compare: [CBraMod(同语料最强基线)](0928-cbramod.md) ｜ :material-routes: [Tokenization 演进](../topics/tokenization.md) ｜ :material-home: [首页](../index.md)
+:material-vector-link: [NeuroRVQ(RVQ 分支先行者:多尺度卷积单时域)](neurorvq.md) ｜ :material-vector-circle: [CodeBrain(双域 VQ + Mamba 的最近竞品)](codebrain.md) ｜ :material-tag: [LaBraM(单层 VQ + token 作目标的范式起点)](labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的可插拔路线)](tfm-tokenizer.md) ｜ :material-compare: [CBraMod(同语料最强基线)](cbramod.md) ｜ :material-routes: [Tokenization 演进](../topics/tokenization.md) ｜ :material-home: [首页](../index.md)

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-论文笔记助手：新增笔记（按月份归档）+ 自动更新首页时间线。
+论文笔记助手：新增笔记（按论文名命名）+ 自动更新首页时间线。
 
 用法（在 paper-notes 目录下，pythonProject1 环境）：
   python new_note.py note <slug> "论文标题"      # 例：python new_note.py note cbramod "CBraMod"
   python new_note.py log "更新说明文字"          # 例：python new_note.py log "新增 CBraMod 精读"
 
-note 子命令会在 docs/papers/YYYY-MM/ 下按当天日期生成模板文件（含架构图占位）；
-之后记得在 mkdocs.yml 的 nav 里登记。
+note 子命令会生成 docs/papers/<slug>.md（含架构图占位），文件名不带阅读日期；
+之后核对发表年份，在 mkdocs.yml 的 nav 里按发表年份登记。
 log 子命令会在首页时间线插入今天的条目，并自动刷新"最近更新"日期。
 """
 import datetime
@@ -43,7 +43,7 @@ one-liner: ""
 
 ## 架构图
 
-![架构图占位](../../assets/占位.png)
+![架构图占位](../assets/占位.png)
 *把论文架构图放到 docs/assets/ 后替换上面的路径与说明*
 
 ## 创新点
@@ -68,16 +68,16 @@ def today() -> str:
 
 def cmd_note(slug: str, title: str) -> None:
     d = datetime.date.today()
-    month_dir = DOCS / "papers" / d.strftime("%Y-%m")
-    month_dir.mkdir(parents=True, exist_ok=True)
-    out = month_dir / f"{d.strftime('%m%d')}-{slug}.md"
+    papers_dir = DOCS / "papers"
+    papers_dir.mkdir(parents=True, exist_ok=True)
+    out = papers_dir / f"{slug}.md"
     if out.exists():
         print(f"[!] 已存在：{out}")
         sys.exit(1)
     out.write_text(TEMPLATE.format(title=title, today=d.isoformat(), year=d.year), encoding="utf-8")
     print(f"[+] 已创建 {out}")
     print(f"[i] 记得在 mkdocs.yml 的 nav 里登记：\n"
-          f'      - {d.strftime("%m%d")} · {title}: papers/{d.strftime("%Y-%m")}/{out.name}')
+          f'      - {title} (会议/期刊 发表年份): papers/{out.name}')
 
 
 def cmd_log(message: str) -> None:

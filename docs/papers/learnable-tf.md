@@ -13,7 +13,7 @@ one-liner: "把时频变换的复值窗口本身做成可训练参数：每个�
 ---
 # Learnable Time-Frequency Transform With Application to EEG Signal Analysis
 
-> **IEEE TETCI 2026**（vol.10 no.5, pp.3555–3570，2026-04-28 上线）· 山东大学集成电路学院 —— 站内**频域维度**的方法学论文。站内已有的一串工作（[BIOT](0918-biot.md)、[LaBraM](0918-labram.md)、[TFM-Tokenizer](0918-tfm-tokenizer.md)、[LUNA](0924-luna.md)、[Not-All-EEG](1028-not-all-eeg.md)）都在「固定 DFT/STFT + 下游学习」的框架里打转，这篇把自由度直接放进了变换核本身，可作 tokenization 专题的频域前端延伸。
+> **IEEE TETCI 2026**（vol.10 no.5, pp.3555–3570，2026-04-28 上线）· 山东大学集成电路学院 —— 站内**频域维度**的方法学论文。站内已有的一串工作（[BIOT](biot.md)、[LaBraM](labram.md)、[TFM-Tokenizer](tfm-tokenizer.md)、[LUNA](luna.md)、[Not-All-EEG](not-all-eeg.md)）都在「固定 DFT/STFT + 下游学习」的框架里打转，这篇把自由度直接放进了变换核本身，可作 tokenization 专题的频域前端延伸。
 
 **作者**：Guoyang Liu, Lan Tian, Weidong Zhou\*（通讯，山东大学）
 
@@ -125,11 +125,11 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [BIOT](0918-biot.md) | BIOT 把 FFT 能量特征直接喂进 embedding，DFT 是**固定的特征提取器**；LTFT 问的是这个提取器本身能不能训。前者接受固定谱的次优性换效率，后者付出复值参数的代价换任务适配 |
-| [LaBraM](0918-labram.md) | LaBraM 用 DFT 幅相作为**重构目标**（预测频域掩码 token），固定 DFT 在监督信号端；LTFT 让变换端可训。两者可以叠加：可学习变换的谱同样可以做掩码重构目标 |
-| [TFM-Tokenizer](0918-tfm-tokenizer.md) | 最直接的候选组合：TFM 用固定 STFT 谱图切 patch + 频率 Transformer 做 tokenizer。LTFT 理论上可替换其 STFT 前端，但**预训练目标不是分类损失**，窗口往哪学是个未解决的问题（见个人思考 3） |
-| [LUNA](0924-luna.md) | LUNA 的 FFT 幅相双路也是固定变换 + 下游学习；与 TFM 同属「接受固定变换、在表示层学习」一派 |
-| [Not-All-EEG](1028-not-all-eeg.md) | 互补的两端：其频率加权谱损失 \( w_k \propto k^\alpha \) 在**损失端**手工设计频率重要性，LTFT 在**变换端**让频率重要性自己长出来（Bonn 上自动集中到 18 Hz 以下）。前者显式可控，后者数据驱动，可解释性殊途同归（都能指出哪些频段在起作用） |
+| [BIOT](biot.md) | BIOT 把 FFT 能量特征直接喂进 embedding，DFT 是**固定的特征提取器**；LTFT 问的是这个提取器本身能不能训。前者接受固定谱的次优性换效率，后者付出复值参数的代价换任务适配 |
+| [LaBraM](labram.md) | LaBraM 用 DFT 幅相作为**重构目标**（预测频域掩码 token），固定 DFT 在监督信号端；LTFT 让变换端可训。两者可以叠加：可学习变换的谱同样可以做掩码重构目标 |
+| [TFM-Tokenizer](tfm-tokenizer.md) | 最直接的候选组合：TFM 用固定 STFT 谱图切 patch + 频率 Transformer 做 tokenizer。LTFT 理论上可替换其 STFT 前端，但**预训练目标不是分类损失**，窗口往哪学是个未解决的问题（见个人思考 3） |
+| [LUNA](luna.md) | LUNA 的 FFT 幅相双路也是固定变换 + 下游学习；与 TFM 同属「接受固定变换、在表示层学习」一派 |
+| [Not-All-EEG](not-all-eeg.md) | 互补的两端：其频率加权谱损失 \( w_k \propto k^\alpha \) 在**损失端**手工设计频率重要性，LTFT 在**变换端**让频率重要性自己长出来（Bonn 上自动集中到 18 Hz 以下）。前者显式可控，后者数据驱动，可解释性殊途同归（都能指出哪些频段在起作用） |
 | LEAF / DSTFT / CWConv | 论文内的直接被比较对象：LEAF（Gabor 约束）、CWConv（固定母小波只学尺度平移）、DSTFT（STFT 超参连续化）都往核里塞先验，LTFT 的卖点是去掉先验后的超集地位。注意论文自己也引了 EfficientLEAF 的结论：可学习前端**并不稳定优于固定滤波器组**——这一警告对 LTFT 同样适用，SEED 打平就是例证 |
 | S 变换谱系（作者组前作） | 作者组 2020 年起做 S 变换癫痫检测、S 变换 ECG 质量，这篇本质是把自家用了多年的手工 ST 升级为可训练版本：初始化 = ST，冻结 = ST 基线，实验设计带着这个自证结构 |
 
@@ -170,4 +170,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [Not-All-EEG（损失端频率加权 vs 变换端可学习窗口）](1028-not-all-eeg.md) ｜ :material-creation: [TFM-Tokenizer（STFT 谱图 tokenizer，LTFT 的潜在替换对象）](0918-tfm-tokenizer.md) ｜ :material-waveform: [BIOT（FFT 能量特征进 embedding）](0918-biot.md) ｜ :material-chart-timeline-variant: [LaBraM（DFT 幅相作重构目标）](0918-labram.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [Not-All-EEG（损失端频率加权 vs 变换端可学习窗口）](not-all-eeg.md) ｜ :material-creation: [TFM-Tokenizer（STFT 谱图 tokenizer，LTFT 的潜在替换对象）](tfm-tokenizer.md) ｜ :material-waveform: [BIOT（FFT 能量特征进 embedding）](biot.md) ｜ :material-chart-timeline-variant: [LaBraM（DFT 幅相作重构目标）](labram.md) ｜ :material-home: [首页](../index.md)

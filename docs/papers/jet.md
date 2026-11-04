@@ -215,4 +215,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-arrow-left: [RF-GPT（跨领域：时频图 + LLM）](0921-rf-gpt.md) ｜ :material-hammer-wrench: [LoRA · 低秩适配](../basics/lora.md) ｜ :material-vector-polyline: [Attention 替代方案](../basics/attention-alternatives.md) ｜ :material-heart-pulse: [CBraMod 作为本文下游裁判 → BIOT 笔记](0918-biot.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [RF-GPT（跨领域：时频图 + LLM）](rf-gpt.md) ｜ :material-hammer-wrench: [LoRA · 低秩适配](../basics/lora.md) ｜ :material-vector-polyline: [Attention 替代方案](../basics/attention-alternatives.md) ｜ :material-heart-pulse: [CBraMod 作为本文下游裁判 → BIOT 笔记](biot.md) ｜ :material-home: [首页](../index.md)

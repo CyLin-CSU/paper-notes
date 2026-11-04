@@ -13,7 +13,7 @@ one-liner: "ATM 把整段 EEG 映进 CLIP 空间,轻量先验扩散 + 冻结 SDX
 ---
 # Visual Decoding and Reconstruction via EEG Embeddings with Guided Diffusion
 
-> **arXiv 2024**(2403.07721 v7,2024-10-04,cs.HC,Preprint under review)· 南方科技大学生物医学工程系(Quanying Liu 组,ncclab)——站内**「视觉重建」轴线的第一篇**:不同于 [JET](0923-jet.md)、[EEGDM](1017-eegdm.md)、[Not-All-EEG](1028-not-all-eeg.md) 的 EEG→EEG 生成,这条线回答的是「头皮脑电里到底存了多少所见图像」,方向是 EEG→CLIP 嵌入→图像。与 [EEGDM](1017-eegdm.md) 恰成条件扩散的一对反向用法:那边以生成训表征,这边以表征驱生成;与 [Défossez 语音解码](1102-defossez-speech.md) 同属「预训练嵌入空间 + 轻量神经编码器」的感知解码范式。注意:社区/文件名惯称 GUIDED,但正文并未给整套框架命名,只给编码器命名为 ATM(Adaptive Thinking Mapper)。
+> **arXiv 2024**(2403.07721 v7,2024-10-04,cs.HC,Preprint under review)· 南方科技大学生物医学工程系(Quanying Liu 组,ncclab)——站内**「视觉重建」轴线的第一篇**:不同于 [JET](jet.md)、[EEGDM](eegdm.md)、[Not-All-EEG](not-all-eeg.md) 的 EEG→EEG 生成,这条线回答的是「头皮脑电里到底存了多少所见图像」,方向是 EEG→CLIP 嵌入→图像。与 [EEGDM](eegdm.md) 恰成条件扩散的一对反向用法:那边以生成训表征,这边以表征驱生成;与 [Défossez 语音解码](defossez-speech.md) 同属「预训练嵌入空间 + 轻量神经编码器」的感知解码范式。注意:社区/文件名惯称 GUIDED,但正文并未给整套框架命名,只给编码器命名为 ATM(Adaptive Thinking Mapper)。
 
 **作者**:Dongyang Li\*、Chen Wei\*(共同一作)、Shiying Li、Jiachen Zou、Haoyang Qin、Quanying Liu\*(通讯)——全部来自南方科技大学生物医学工程系
 
@@ -168,9 +168,9 @@ flowchart TD
 | Mind's Eye(Scotti et al.)/ DALL-E 2 | 先验扩散思想的来源:fMRI 对比学习 + 扩散先验;本篇将其压成轻量 U-Net 并以 EEG 嵌入为条件 |
 | Takagi & Nishimoto / Ozcelik & VanRullen | fMRI 潜扩散重建线,Table 1 上排的参照系——「接近 fMRI」宣称的对照对象 |
 | BraVL / BrainCLIP | fMRI 侧 CLIP 对齐零样本分类对照(Table 6);BraVL 吃视觉+文本三模态,EEG 侧 ATM 50-way 17.40 仍占先 |
-| [EEGDM](1017-eegdm.md) | 条件扩散的反向用法:EEGDM 用 EEG→EEG 生成**训表征**(梯度穿过条件、PCA 潜空间、DiT);本篇用 EEG→CLIP→图像,**扩散只消费嵌入**、不为表征服务——同一机制,两种目标函数 |
-| [Not-All-EEG](1028-not-all-eeg.md) / [JET](0923-jet.md) | 站内生成轴线(EEG→EEG,生成质量/调度导向)与本篇(EEG→图像)对「生成」一词的两种语义;管线毫无交集 |
-| [Défossez 语音解码](1102-defossez-speech.md) | 感知解码姊妹线:语音包络 vs 视觉语义;同走「预训练大模型嵌入空间 + 轻量神经编码器」,也共享「EEG 分数反超 MEG」式的跨模态意外(语音是 MEG/ECoG 占优) |
+| [EEGDM](eegdm.md) | 条件扩散的反向用法:EEGDM 用 EEG→EEG 生成**训表征**(梯度穿过条件、PCA 潜空间、DiT);本篇用 EEG→CLIP→图像,**扩散只消费嵌入**、不为表征服务——同一机制,两种目标函数 |
+| [Not-All-EEG](not-all-eeg.md) / [JET](jet.md) | 站内生成轴线(EEG→EEG,生成质量/调度导向)与本篇(EEG→图像)对「生成」一词的两种语义;管线毫无交集 |
+| [Défossez 语音解码](defossez-speech.md) | 感知解码姊妹线:语音包络 vs 视觉语义;同走「预训练大模型嵌入空间 + 轻量神经编码器」,也共享「EEG 分数反超 MEG」式的跨模态意外(语音是 MEG/ECoG 占优) |
 
 ## 个人思考
 
@@ -209,4 +209,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-eye: [EEGDM · 条件扩散的反向用法(以生成训表征)](1017-eegdm.md) ｜ :material-image-multiple: [Not-All-EEG(生成轴线:位置自适应调度)](1028-not-all-eeg.md) ｜ :material-creation: [JET(流匹配生成 EEG 的质量标杆)](0923-jet.md) ｜ :material-waveform: [Défossez 语音解码(感知解码姊妹线)](1102-defossez-speech.md) ｜ :material-home: [首页](../index.md)
+:material-eye: [EEGDM · 条件扩散的反向用法(以生成训表征)](eegdm.md) ｜ :material-image-multiple: [Not-All-EEG(生成轴线:位置自适应调度)](not-all-eeg.md) ｜ :material-creation: [JET(流匹配生成 EEG 的质量标杆)](jet.md) ｜ :material-waveform: [Défossez 语音解码(感知解码姊妹线)](defossez-speech.md) ｜ :material-home: [首页](../index.md)

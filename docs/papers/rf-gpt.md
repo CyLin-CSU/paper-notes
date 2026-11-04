@@ -175,4 +175,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：TFM-Tokenizer](0918-tfm-tokenizer.md) ｜ :material-angle-acute: [LoRA · 低秩适配](../basics/lora.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [上一篇：TFM-Tokenizer](tfm-tokenizer.md) ｜ :material-angle-acute: [LoRA · 低秩适配](../basics/lora.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-home: [首页](../index.md)

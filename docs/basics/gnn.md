@@ -11,7 +11,7 @@ one-liner: "网格与序列之外的第三种数据形态：置换不变的消�
 ---
 # 图神经网络：消息传递、图注意力与表达力边界
 
-> 「模型架构基础」第四篇。EEG 的电极天然构成图：节点是电极，边可以来自空间距离、密度模板或功能连接。站内 [BrainGPT](../papers/0918-braingpt.md) 的任务共享电极图（TEG）用的正是图注意力网络——本页补齐它的机制基础，并把图视角与 [Attention 替代方案](attention-alternatives.md)、[通道异构专题](../topics/multi-task.md#channel-adaptation)接通。
+> 「模型架构基础」第四篇。EEG 的电极天然构成图：节点是电极，边可以来自空间距离、密度模板或功能连接。站内 [BrainGPT](../papers/braingpt.md) 的任务共享电极图（TEG）用的正是图注意力网络——本页补齐它的机制基础，并把图视角与 [Attention 替代方案](attention-alternatives.md)、[通道异构专题](../topics/multi-task.md#channel-adaptation)接通。
 
 ## 1 为什么需要图神经网络
 
@@ -58,7 +58,7 @@ Veličković et al.（2018）把「邻居多重要」交给学习：对每条边
 
 其中 \( \| \) 表示向量拼接，注意力只依赖端点特征对（与图的具体大小无关），多头独立计算后拼接。与 Transformer 自注意力的三点差别：注意力只在**已有的边**上计算（局部而非全局）；不输入位置编码——位置信息由图结构本身承担，天然置换等变；复杂度对边数线性而非节点数平方。
 
-[BrainGPT](../papers/0918-braingpt.md) 的 TEG 是 GAT 的直接应用：全局电极图以可学习向量作节点，GAT 计算节点相关性，再加 masking 系数 \( \beta_{mn} \)（同子图取 1、否则取 0），让同一 batch 里不同任务只在自己激活的电极子图内交互，\( K \) 层堆叠加残差与 pre-norm。
+[BrainGPT](../papers/braingpt.md) 的 TEG 是 GAT 的直接应用：全局电极图以可学习向量作节点，GAT 计算节点相关性，再加 masking 系数 \( \beta_{mn} \)（同子图取 1、否则取 0），让同一 batch 里不同任务只在自己激活的电极子图内交互，\( K \) 层堆叠加残差与 pre-norm。
 
 ## 5 表达力边界与过平滑
 
@@ -68,7 +68,7 @@ Veličković et al.（2018）把「邻居多重要」交给学习：对每条边
 
 ## 6 在 EEG 语境中的位置
 
-- **BrainGPT 的 TEG**：全连接电极图 + GAT + masking 系数的多任务方案——「图注意力」与「任务共享参数」的组合，机制详见其[站内笔记](../papers/0918-braingpt.md)；
+- **BrainGPT 的 TEG**：全连接电极图 + GAT + masking 系数的多任务方案——「图注意力」与「任务共享参数」的组合，机制详见其[站内笔记](../papers/braingpt.md)；
 - **功能连接图**：边由通道间相关/同步性定义（可显式计算，也可像 GraphSleepNet 那样把邻接矩阵设为可学习参数）——这是[通道异构专题](../topics/multi-task.md#channel-adaptation)里「图结构整合」解法的载体，GNN 是它的执行器；
 - **与 LUNA 的对照**：LUNA 的学习 query 瓶颈可以看作「全连接图上的一次注意力聚合 + 固定隐空间」，而 GNN 允许把 3D 电极坐标、距离先验写进边权——前者完全数据驱动，后者带关系归纳偏置，两者的取舍就是「要不要给拓扑先验」；
 - **与 Transformer 的关系**：全连接图上的消息传递就是集合上的自注意力。Transformer 可视为「无先验边的 GNN」，GNN 是「带结构先验的稀疏注意力」——这条线与 [Attention 替代方案](attention-alternatives.md)里压缩注意力成本的各种做法在动机上汇合：把算力花在有结构意义的连接上。
@@ -99,4 +99,4 @@ Veličković et al.（2018）把「邻居多重要」交给学习：对每条边
 
 **相关阅读**
 
-:material-brain: [BrainGPT · 任务共享电极图 TEG（GAT 的 EEG 落地）](../papers/0918-braingpt.md) ｜ :material-grid-large: [通道异构的解法 · 图结构整合](../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（效率视角汇合）](attention-alternatives.md) ｜ :material-chart-timeline-variant: [生成模型脉络（同系列基础页）](generative-lineage.md) ｜ :material-home: [首页](../index.md)
+:material-brain: [BrainGPT · 任务共享电极图 TEG（GAT 的 EEG 落地）](../papers/braingpt.md) ｜ :material-grid-large: [通道异构的解法 · 图结构整合](../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（效率视角汇合）](attention-alternatives.md) ｜ :material-chart-timeline-variant: [生成模型脉络（同系列基础页）](generative-lineage.md) ｜ :material-home: [首页](../index.md)

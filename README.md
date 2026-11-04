@@ -1,6 +1,6 @@
 # 论文笔记站点 · 说明与操作文档
 
-更新日期：2026-11-03
+更新日期：2026-11-04
 
 [在线站点](https://cylin-csu.github.io/paper-notes/) · [GitHub 仓库](https://github.com/CyLin-CSU/paper-notes)
 
@@ -10,7 +10,7 @@
 |---|---|
 | 工作区 `C:\Users\ChengyeLin.LINOUP-XIAOXIN1\Desktop\paper-notes` | 说明文档、BrainLLM 资料与站点工程 |
 | 工作区下的 `paper-notes/` | **Git 仓库与 MkDocs 工程，构建和发布都在这里执行** |
-| `docs/papers/` | 单篇论文笔记，按阅读月份归档，目前 17 篇 |
+| `docs/papers/` | 单篇论文笔记，直接放在此目录，文件名不带阅读日期，目前 25 篇 |
 | `docs/topics/` | 五个主题专题，跨论文做宏观对照 |
 | `docs/assets/` | 论文图与站点图片 |
 | `docs/comparison.md` | 综合比较入口，覆盖范围以页面说明为准 |
@@ -32,7 +32,7 @@
 
 原 `spatial.md` 已并入 `multi-task.md`，通道适配与多任务不再拆成两页。
 
-新增论文可以**先加入主题专题，暂不创建单篇页面**。本次新增 NeuroRVQ、BrainRVQ、CodeBrain、NeuroDETR，直接链接原文；独立笔记数量仍为 17 篇。生成式模型与跨领域论文是否纳入，按当前任务明确范围，不自动扩展。
+新增论文可以**先加入主题专题，暂不创建单篇页面**。尚无单篇页面时直接链接原文，创建笔记后改为站内链接。生成式模型与跨领域论文是否纳入，按当前任务明确范围，不自动扩展。
 
 ## 三、写作约定
 
@@ -41,6 +41,7 @@
 - **表格只放同一层级的信息**。例如掩码建模用“论文 / 掩码部分 / 重建或预测部分”，不塞网络层数、掩码比例等实现细节。
 - **同义术语统一**。同类目标统一写“原始信号 patch”“信号 embedding”“离散 token”“时频图”；不因为细节不同就换一个名字。
 - **实质区别保留**。输入连续表示与输入离散 token 不混写；下一时间步预测与 RVQ 层级预测不混写；监督事件检测不当成掩码预训练。
+- **首页卡片保持简洁**。发表信息、一句核心方法、两个标签；实验数字与详细对比放单篇笔记，不堆机构、模块缩写和强弱评价。
 - **特色设计放表外**。每篇 1–2 点，写清组件做什么，不重复整张表。
 - **句子短，直接说机制**。例如“可学习 query 汇聚通道”“冻结 encoder，只训练分类头”，少用口号、强弱排名和连续比喻。
 - **细节按问题取舍**。损失对 tokenizer 训练有区分价值时保留；宏观掩码表可以不列损失。具体公式、超参数与完整实验放单篇笔记。
@@ -82,11 +83,11 @@ cd C:\Users\ChengyeLin.LINOUP-XIAOXIN1\Desktop\paper-notes\paper-notes
 python new_note.py note <slug> "论文标题"
 ```
 
-脚本按当天日期生成 `docs/papers/YYYY-MM/MMDD-slug.md`。阅读日期与发表年份分开填写，`year`、`venue`、作者和链接需要人工核对。
+脚本生成 `docs/papers/<slug>.md`，例如 `labram.md`。阅读日期只记在元数据 `date` 中；导航和首页按发表年份排序，导航显示“论文名（会议/期刊 年份）”。`year`、`venue`、作者和链接需要人工核对。
 
 正文按“问题定位 → 方法 → 关键设计 → 实验与结果 → 与其他论文的关系 → 个人思考”组织。图、公式、流程与问答按需要补充，不为了填模板凑内容。
 
-- 图片保存到 `docs/assets/`，月度笔记用 `../../assets/文件名.png` 引用。
+- 图片保存到 `docs/assets/`，论文笔记用 `../assets/文件名.png` 引用。
 - 使用 `extract_figs.py` 前，检查其 `ZOTERO` 与 `OUT` 路径，确保图片输出到当前工程的 `docs/assets/`。
 - 新页面登记到 `mkdocs.yml`，再更新首页卡片与实际阅读统计。
 - 需要时补充 `datasets.md`、`references.md`，并运行 `python new_note.py log "更新说明"` 记录首页时间线。
@@ -132,7 +133,7 @@ git push origin master
 | 独立公式 | `\[ ... \]` |
 | 折叠问答 | `??? question "问题"`，正文缩进 4 个空格 |
 | 提示框 | `!!! note "标题"`，正文缩进 4 个空格 |
-| 图片 | `![图名](../../assets/文件名.png)` |
+| 图片 | `![图名](../assets/文件名.png)` |
 | 术语提示 | 在 `docs/includes/abbreviations.md` 中维护 |
 
 用 Python 写含 LaTeX 的 Markdown 时，使用原始字符串，避免 `\t`、`\n` 等转义破坏公式。表格单元格保持在同一行。

@@ -46,7 +46,7 @@ one-liner: ""
 
 ## 架构图
 
-![架构图占位](../../assets/待补充.png)
+![架构图占位](../assets/待补充.png)
 *把论文架构图放到 docs/assets/ 后替换上面的路径与说明*
 
 ## 创新点
@@ -95,8 +95,8 @@ def import_file(path: pathlib.Path, slug_override: str | None = None) -> pathlib
     data = json.loads(raw)
     items = data if isinstance(data, list) else [data]
     d = datetime.date.today()
-    month_dir = DOCS / "papers" / d.strftime("%Y-%m")
-    month_dir.mkdir(parents=True, exist_ok=True)
+    papers_dir = DOCS / "papers"
+    papers_dir.mkdir(parents=True, exist_ok=True)
 
     created = []
     for item in items:
@@ -109,7 +109,7 @@ def import_file(path: pathlib.Path, slug_override: str | None = None) -> pathlib
             first = (info["authors"][0] if info["authors"] else "anon")
             first = re.sub(r"[^a-zA-Z]", "", first).lower() or "anon"
             slug = f"{first}{info['year'] or d.year}"
-        out = month_dir / f"{d.strftime('%m%d')}-{slug}.md"
+        out = papers_dir / f"{slug}.md"
         if out.exists():
             print(f"[!] 已存在，跳过：{out.name}")
             continue
@@ -125,7 +125,7 @@ def import_file(path: pathlib.Path, slug_override: str | None = None) -> pathlib
         out.write_text(fm, encoding="utf-8")
         created.append((out, info))
         print(f"[+] 已创建 {out.relative_to(ROOT)}")
-        print(f"[i] nav 登记：  {d.strftime('%m%d')} · {info['title'][:40]}: papers/{d.strftime('%Y-%m')}/{out.name}")
+        print(f"[i] nav 登记：  {info['title'][:40]} ({info['venue']} {info['year']}): papers/{out.name}")
     return created
 
 

@@ -13,7 +13,7 @@ one-liner: "Mamba+MHSA 混合骨干从非侵入 EEG 重建连续语音 mel 谱�
 ---
 # SSM2Mel: State Space Model to Reconstruct Mel Spectrogram from the EEG
 
-> **arXiv 2025**（eess.SP 预印本 v1，2025-01-03，ICASSP 体量的 5 页 letter）· 安徽大学计算机学院 + 阿里巴巴新加坡 —— 站内**「语音解码」轴线的第一篇**：目标不是 EEG 表征或 EEG 生成，而是 EEG → 连续声学特征（mel 谱）的跨模态回归。与基础模型轴线（[BrainGPT](0918-braingpt.md)、[CBraMod](0928-cbramod.md)）的分工不同：那边在积累通用表征，这边只回答一个具体问题——头皮脑电里到底还剩多少语音信息。
+> **arXiv 2025**（eess.SP 预印本 v1，2025-01-03，ICASSP 体量的 5 页 letter）· 安徽大学计算机学院 + 阿里巴巴新加坡 —— 站内**「语音解码」轴线的第一篇**：目标不是 EEG 表征或 EEG 生成，而是 EEG → 连续声学特征（mel 谱）的跨模态回归。与基础模型轴线（[BrainGPT](braingpt.md)、[CBraMod](cbramod.md)）的分工不同：那边在积累通用表征，这边只回答一个具体问题——头皮脑电里到底还剩多少语音信息。
 
 **作者**：Cunhang Fan, Sheng Zhang, Jingjing Zhang, Zexu Pan, Zhao Lv（安徽大学；Zexu Pan 来自阿里巴巴新加坡；通讯作者原文标注不清，未确认）
 
@@ -127,11 +127,11 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [BrainGPT](0918-braingpt.md) | 长序列 EEG 建模的两种下注：BrainGPT 用自回归 Transformer + 大规模多数据集预训练赌 scaling；本篇用 SSM 线性复杂度 + 单数据集有监督回归。讽刺的是本篇训练/推理都在 5 s 窗上，Mamba 的长上下文优势没有被行使——「长序列」问题在这两个工作里的处理深度差一个量级 |
-| [CBraMod](0928-cbramod.md) | 「单一机制不够，交替混合」结论的两侧互证：CBraMod 交替空间/时间双路注意力（1D conv patch 编码），本篇交替注意力/SSM。都发现混合优于任一单独机制，但 CBraMod 有 12 数据集的系统验证，本篇只有单数据集三个点的对比 |
-| [BIOT](0918-biot.md) | 同追线性复杂度的两条路：BIOT 用逐通道切段 + 线性注意力，本篇用 SSM 递归。BIOT 面向跨格式预训练，本篇面向单任务回归——没有预训练，被试嵌入就是它唯一的「个性化」手段 |
-| [EEGPT](0918-eegpt.md) | 轴线对照：EEGPT 是通用特征提取器（10M 参数，linear probing 到各任务），本篇是端到端任务特化模型。一个自然的未验证想法：用 EEGPT/CBraMod 的预训练特征替换本篇的 S4-UNet 预提取，能否白捡提升——本文完全没碰这条线 |
-| [Not-All-EEG](1028-not-all-eeg.md) | 生成轴线与本篇共享「连续信号回归」的损失设计问题：Not-All-EEG 用多分辨率 STFT 频谱一致性损失对抗幂律谱偏置，本篇只有 L1+Pearson、无任何频域约束——mel 谱任务天然是频域目标，这是可以白捡的改进点 |
+| [BrainGPT](braingpt.md) | 长序列 EEG 建模的两种下注：BrainGPT 用自回归 Transformer + 大规模多数据集预训练赌 scaling；本篇用 SSM 线性复杂度 + 单数据集有监督回归。讽刺的是本篇训练/推理都在 5 s 窗上，Mamba 的长上下文优势没有被行使——「长序列」问题在这两个工作里的处理深度差一个量级 |
+| [CBraMod](cbramod.md) | 「单一机制不够，交替混合」结论的两侧互证：CBraMod 交替空间/时间双路注意力（1D conv patch 编码），本篇交替注意力/SSM。都发现混合优于任一单独机制，但 CBraMod 有 12 数据集的系统验证，本篇只有单数据集三个点的对比 |
+| [BIOT](biot.md) | 同追线性复杂度的两条路：BIOT 用逐通道切段 + 线性注意力，本篇用 SSM 递归。BIOT 面向跨格式预训练，本篇面向单任务回归——没有预训练，被试嵌入就是它唯一的「个性化」手段 |
+| [EEGPT](eegpt.md) | 轴线对照：EEGPT 是通用特征提取器（10M 参数，linear probing 到各任务），本篇是端到端任务特化模型。一个自然的未验证想法：用 EEGPT/CBraMod 的预训练特征替换本篇的 S4-UNet 预提取，能否白捡提升——本文完全没碰这条线 |
+| [Not-All-EEG](not-all-eeg.md) | 生成轴线与本篇共享「连续信号回归」的损失设计问题：Not-All-EEG 用多分辨率 STFT 频谱一致性损失对抗幂律谱偏置，本篇只有 L1+Pearson、无任何频域约束——mel 谱任务天然是频域目标，这是可以白捡的改进点 |
 | VLAAI / HappyQuokka / ConvConcatNet | 直接前作与基线（2023–2024 ICASSP Auditory Challenge 系）：包络 → mel 谱的目标升级线，本篇把这条线的 SOTA 从 0.063 推到 0.069 |
 
 ## 个人思考
@@ -139,7 +139,7 @@ flowchart TD
 - **38% 的相对提升建立在 0.050 的绝对值上，这点必须先说破**。Pearson 0.069 意味着重建谱与真谱的相关仍然贴地——对照包络任务的 0.208，频带结构信息在头皮 EEG 里基本被颅骨低通滤掉了。这条轴线的根本瓶颈是信噪比而不是架构：从 VLAAI（2023）到本篇（2025），四个模型折腾两年，mel 任务绝对值只从 0.050 挪到 0.069。架构创新在这个任务上的边际收益天花板可见，指望 Mamba 之类的工具突破物理衰减不现实；
 - **「长序列」的卖点和 5 秒裁剪的实现是矛盾的**。64 Hz 下 5 秒只有 320 个时间步，训练如此，推理也是 5 秒分段再拼接——Mamba 相对 Transformer 的优势区间在千步以上，320 步根本用不上。真正的分钟级连续解码需要跨窗状态传递或滑窗重叠推理，论文都没做。标题里 State Space Model 的叙事，在协议层面被自己的预处理拆掉了；
 - **消融数据讲了一个和标题不同的故事**：纯 Mamba 0.051 ≈ VLAAI 基线 0.050，去掉 S4-UNet 掉 0.012（消融里最痛的一刀）。也就是说增量主要来自 MHSA + S4-UNet 这对「注意力管全局、S4 管局部」的组合，Mamba 更像被 Jamba/Zamba 的混合结论顺带捎上的组件。这不丢人，但贡献列表里「创新性地使用 Mamba」「首次把 S4-UNet 用于 EEG」的宣称都比证据响——首次使用和有效使用是两回事；
-- **被试嵌入（ESM）的泛化边界没人检验，且和站内基础模型轴线的条件注入方向恰好相反**。模型吃 Sub-ID，意味着部署时必须知道当前被试是谁、且该被试见过训练数据。如果 80/10/10 划分按 trial 切（SparrKULee 挑战赛的常规做法），测试段的被试以嵌入形式出现在了训练集里——那么 0.069 里有多少是被试记忆、多少是语音信息，单看这个数字分不开。消融显示去掉 ESM 掉到 0.063，被试信息约占总提升的六分之一，这部分的可泛化性存疑。放到站内的坐标系里看更有意思：[BrainGPT](0918-braingpt.md) 的电极词表和 [EEGPT](0918-eegpt.md) 的通道名映射表，条件注入的都是**通道身份**（信号来自哪个电极），为的是跨设备、跨数据集迁移，没有一个显式吃被试 ID；ESM 正好反过来，只注入**被试身份**、不注入通道身份。这不是谁对谁错，而是两个目标的对立：通道条件服务「未见数据集上的 zero-shot」，被试条件服务「见过的人在 closed-set 里更好一点」——后者以被试进训练集为前提，而预训练语料跨库拼接时被试 ID 根本没有跨库语义。所以 ESM 这类设计在预训练路线里几乎绝迹，它本质是 subject-dependent 小数据回归的专用技巧；本篇想和基础模型合流（见 Q4），第一件事就是把 Sub-ID 换成可迁移的条件形式；
+- **被试嵌入（ESM）的泛化边界没人检验，且和站内基础模型轴线的条件注入方向恰好相反**。模型吃 Sub-ID，意味着部署时必须知道当前被试是谁、且该被试见过训练数据。如果 80/10/10 划分按 trial 切（SparrKULee 挑战赛的常规做法），测试段的被试以嵌入形式出现在了训练集里——那么 0.069 里有多少是被试记忆、多少是语音信息，单看这个数字分不开。消融显示去掉 ESM 掉到 0.063，被试信息约占总提升的六分之一，这部分的可泛化性存疑。放到站内的坐标系里看更有意思：[BrainGPT](braingpt.md) 的电极词表和 [EEGPT](eegpt.md) 的通道名映射表，条件注入的都是**通道身份**（信号来自哪个电极），为的是跨设备、跨数据集迁移，没有一个显式吃被试 ID；ESM 正好反过来，只注入**被试身份**、不注入通道身份。这不是谁对谁错，而是两个目标的对立：通道条件服务「未见数据集上的 zero-shot」，被试条件服务「见过的人在 closed-set 里更好一点」——后者以被试进训练集为前提，而预训练语料跨库拼接时被试 ID 根本没有跨库语义。所以 ESM 这类设计在预训练路线里几乎绝迹，它本质是 subject-dependent 小数据回归的专用技巧；本篇想和基础模型合流（见 Q4），第一件事就是把 Sub-ID 换成可迁移的条件形式；
 
 ## 自问自答
 
@@ -171,4 +171,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [Not-All-EEG（生成轴线姊妹篇：频谱一致性损失可迁移）](1028-not-all-eeg.md) ｜ :material-creation: [CBraMod（交替混合机制的判别侧版本）](0928-cbramod.md) ｜ :material-account-group: [BrainGPT（长序列 EEG 建模的自回归路线）](0918-braingpt.md) ｜ :material-heart-pulse: [BIOT（线性复杂度的另一条路）](0918-biot.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [Not-All-EEG（生成轴线姊妹篇：频谱一致性损失可迁移）](not-all-eeg.md) ｜ :material-creation: [CBraMod（交替混合机制的判别侧版本）](cbramod.md) ｜ :material-account-group: [BrainGPT（长序列 EEG 建模的自回归路线）](braingpt.md) ｜ :material-heart-pulse: [BIOT（线性复杂度的另一条路）](biot.md) ｜ :material-home: [首页](../index.md)

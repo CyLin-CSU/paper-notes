@@ -13,7 +13,7 @@ one-liner: "时/频双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干:8
 ---
 # CodeBrain: Bridging Decoupled Tokenizer and Multi-Scale Architecture for EEG Foundation Model
 
-> **ICLR 2026**（arXiv 2506.09110，v4 2026-05-11）· 新加坡国立大学 Saw Swee Hock 公共卫生学院（兼 NUS 数据科学研究所、NUS 广州研究院）+ 南洋理工 CCDS + 中科院自动化所脑网络组 —— 站内 [Tokenization 演进](../topics/tokenization.md)线上 2026 梯队的占坑之作。谱系上,[LaBraM](0918-labram.md) 学出了词表但 token 只当掩码目标、[NeuroLM](0918-neurolm.md) 把码字并进 GPT-2 词表、[TFM-Tokenizer](0918-tfm-tokenizer.md) 把 token 做成可插拔输入;CodeBrain 不争「token 当不当输入」,而是去填「tokenizer 与下游架构作为整体联合设计」这个缺口——时/频双码本 + SSM 系多尺度骨干,一个模型包干两阶段。
+> **ICLR 2026**（arXiv 2506.09110，v4 2026-05-11）· 新加坡国立大学 Saw Swee Hock 公共卫生学院（兼 NUS 数据科学研究所、NUS 广州研究院）+ 南洋理工 CCDS + 中科院自动化所脑网络组 —— 站内 [Tokenization 演进](../topics/tokenization.md)线上 2026 梯队的占坑之作。谱系上,[LaBraM](labram.md) 学出了词表但 token 只当掩码目标、[NeuroLM](neurolm.md) 把码字并进 GPT-2 词表、[TFM-Tokenizer](tfm-tokenizer.md) 把 token 做成可插拔输入;CodeBrain 不争「token 当不当输入」,而是去填「tokenizer 与下游架构作为整体联合设计」这个缺口——时/频双码本 + SSM 系多尺度骨干,一个模型包干两阶段。
 
 **作者**：Jingying Ma\*, Feng Wu\*（共同一作）, Qika Lin†, Yucheng Xing, Chenyu Liu, Ziyu Jia†, Mengling Feng（†通讯；NUS / NTU / 中科院自动化所）
 
@@ -29,7 +29,7 @@ one-liner: "时/频双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干:8
 
 论文给现有 EFM 列了三条罪状。**其一,混合 tokenizer 混淆异质模式**:VQ-VAE 框架从图像搬来（LaBraM、TFM 均在此列），图像特征同质所以单码本够用,但 EEG 的时域波形与频域结构反映大脑活动的不同侧面——同一个 patch 在一个域匹配、在另一个域可能发散,单一混合码本会「撞码」,削弱表征容量,也让 token 难以对齐临床可解释的神经事件或频谱节律。**其二,全连接注意力与脑结构错配**:多数 EFM 用 Transformer 自注意力,而脑的小世界拓扑是「稀疏全局依赖 + 强局部相关」,全连接设计既贵（二次复杂度）又不合生理。**其三,patch 即 token 丢掉 patch 内部结构**:每个 patch 压成单个 token 后,patch 内部的瞬态神经事件（睡眠 K-复杂波、纺锤波等短时波形）没有专门机制去建模。
 
-站内坐标:这三条分别对着 [LaBraM](0918-labram.md)（单码本、token 只当目标）、[CBraMod](0928-cbramod.md)（Transformer 骨干）与 [BIOT](0918-biot.md)（切段即 token）。CodeBrain 的答案是把三件事各换一个组件:双码本、卷积 SSM+滑窗注意力的混合骨干、显式的 patch 内注意力层。
+站内坐标:这三条分别对着 [LaBraM](labram.md)（单码本、token 只当目标）、[CBraMod](cbramod.md)（Transformer 骨干）与 [BIOT](biot.md)（切段即 token）。CodeBrain 的答案是把三件事各换一个组件:双码本、卷积 SSM+滑窗注意力的混合骨干、显式的 patch 内注意力层。
 
 ## 2 方法
 
@@ -171,20 +171,20 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [LaBraM](0918-labram.md) | token 只作预训练目标的同款范式,但 LaBraM 是单码本 + 只做频域重构（原始信号重构不收敛）;CodeBrain 用 TFConv + 对比正则把时域重构治好（附录 F 实测 LaBraM 框架内损失卡在 0.128–0.131),再把一个码本拆成两个 |
-| [TFM-Tokenizer](0918-tfm-tokenizer.md) | 同届 ICLR 2026 的对手路线:单通道时频 motif 词表、token 当可插拔**输入**、tokenizer 内去掉位置编码;CodeBrain 多通道联合嵌入、token 当**目标**。两个「时频」含义不同——TFM 是窗内跨频段依赖建模,CodeBrain 是时/频两套码本分家 |
-| [CBraMod](0928-cbramod.md) | 最强基线 + ACPE 出处;同用 TUEG 但 CBraMod 预训练 40 epoch、CodeBrain 早停 10 epoch 且补了 Excluding 重训——泄漏处理比前辈规范。数据上 CodeBrain 以 15M 对 4M 参数换全面小胜 |
-| [NeuroLM](0918-neurolm.md) | token 用法的另一极:码字并入 GPT-2 词表做指令推理;CodeBrain 完全不碰语言对齐,靠「解码器重构什么」来定义 token 语义 |
-| [NeuroRVQ](1104-neurorvq.md) / [BrainRVQ](1104-brainrvq.md) | 2026 年「把码本做复杂」的三条路同框:NeuroRVQ 单码本内多尺度 RVQ(由粗到细),BrainRVQ 时/频双 RVQ(残差、多层码表),CodeBrain 时/频双 VQ(并列、单层)——双域并列是其中最保守的形态 |
-| [NeuroDETR](1104-neurodetr.md) | 「多尺度」的另一种解法:NeuroDETR 把多尺度做在 token 切分上(时间多尺度 + 空间金字塔),CodeBrain 把多尺度做在骨干内核上(多尺度卷积核 + patch 内/间两级注意力) |
-| [BIOT](0918-biot.md) / [EEGPT](0918-eegpt.md) | 对照组:BIOT 连续 patch token(无量化)在多数任务落后;EEGPT 在本篇多个数据集上表现异常(ISRUC S1 仅 0.2223、BCIC2020-T3 0.0567),疑似微调协议不适配,读表时需留意 |
+| [LaBraM](labram.md) | token 只作预训练目标的同款范式,但 LaBraM 是单码本 + 只做频域重构（原始信号重构不收敛）;CodeBrain 用 TFConv + 对比正则把时域重构治好（附录 F 实测 LaBraM 框架内损失卡在 0.128–0.131),再把一个码本拆成两个 |
+| [TFM-Tokenizer](tfm-tokenizer.md) | 同届 ICLR 2026 的对手路线:单通道时频 motif 词表、token 当可插拔**输入**、tokenizer 内去掉位置编码;CodeBrain 多通道联合嵌入、token 当**目标**。两个「时频」含义不同——TFM 是窗内跨频段依赖建模,CodeBrain 是时/频两套码本分家 |
+| [CBraMod](cbramod.md) | 最强基线 + ACPE 出处;同用 TUEG 但 CBraMod 预训练 40 epoch、CodeBrain 早停 10 epoch 且补了 Excluding 重训——泄漏处理比前辈规范。数据上 CodeBrain 以 15M 对 4M 参数换全面小胜 |
+| [NeuroLM](neurolm.md) | token 用法的另一极:码字并入 GPT-2 词表做指令推理;CodeBrain 完全不碰语言对齐,靠「解码器重构什么」来定义 token 语义 |
+| [NeuroRVQ](neurorvq.md) / [BrainRVQ](brainrvq.md) | 2026 年「把码本做复杂」的三条路同框:NeuroRVQ 单码本内多尺度 RVQ(由粗到细),BrainRVQ 时/频双 RVQ(残差、多层码表),CodeBrain 时/频双 VQ(并列、单层)——双域并列是其中最保守的形态 |
+| [NeuroDETR](neurodetr.md) | 「多尺度」的另一种解法:NeuroDETR 把多尺度做在 token 切分上(时间多尺度 + 空间金字塔),CodeBrain 把多尺度做在骨干内核上(多尺度卷积核 + patch 内/间两级注意力) |
+| [BIOT](biot.md) / [EEGPT](eegpt.md) | 对照组:BIOT 连续 patch token(无量化)在多数任务落后;EEGPT 在本篇多个数据集上表现异常(ISRUC S1 仅 0.2223、BCIC2020-T3 0.0567),疑似微调协议不适配,读表时需留意 |
 
 ## 个人思考
 
 - **「桥接」的实际含义与 token 的退守**。标题喊 Bridging,但对照站内 tokenization 线的演进方向(LaBraM 目标 → NeuroLM 词表 → TFM 输入),CodeBrain 的 token 用法其实**退回**了 LaBraM 范式:Stage 2 吃原始 patch、token 只是被预测的标签,推理时 tokenizer 整个丢弃,下游模型拿不到任何离散接口。真正被「桥」起来的是两阶段的设计耦合——下游预测的监督信号由 Stage 1 的双码本定义、骨干的多尺度假设与 tokenizer 的域分解呼应。所以它填的缺口是「tokenizer 与架构的联合设计」,不是「token 作为模型接口」;拿它和 TFM 比「谁的 token 更可用」会问错问题;
 - **双码本的收益要按数据集拆开看**。Dual 对 Mixed 的差距:FACED +0.073、ISRUC S3 +0.027、SEED-V 仅 +0.003(0.2735 vs 0.2708);对单频码本 SEED-V 也只 +0.007。也就是说「二次扩展表征空间」的收益在情绪任务上几乎归零,理论命题(Proposition 2.1)的实证支撑并不均匀——「二次扩空间」的字面事实成立(每 patch 一个码字变成一对,组合空间 4096² ≈ 1678 万),但「判别力随之提升」只在部分任务上兑现。消融里真正普适的结论反而是骨干侧的:SGConv 和 Gate 拆谁都崩;
 - **子带消融的「全崩」是个警报,不是勋章**。移除 δ、θ、α 任何单个低频带都把模型打到近随机(SEED-V 去 α 带 0.0082),而健康的频段归因应该是「一个带一个坑」。更合理的解释是模型对输入分布漂移极度敏感:掩掉一个带会破坏全局统计(如 z-score 口径),整个输入相对预训练分布成了 OOD。这与附录 M 大讲通道丢弃/基线漂移鲁棒性的叙事存在张力——同一模型不可能既「对结构化扰动稳健」又「拆一个频带就崩」;
-- **增量边际与占坑价值要分开记账**。对 CBraMod 的中位增量只有 0.01–0.03 Kappa,大增益集中在两个小数据集(BCIC2020-T3 共 6,000 样本、Mental Arithmetic 共 1,707 样本),大库任务(TUEV/TUAB)上互有胜负;三个二类指标还输给基线。它的价值更多在「把双码本 + SSM 骨干这条路铺通」:完整消融、scaling 曲线、9k 小时/150M 的外推证据,外加 15M 参数、35 GPU·小时的可复现成本(代码与权重已开源)。典型的占坑之作——坑位本身(解耦 tokenization 的可解释性叙事)比数字更有长期价值,后续 [BrainRVQ](1104-brainrvq.md) 等双域工作都站在这条线上。
+- **增量边际与占坑价值要分开记账**。对 CBraMod 的中位增量只有 0.01–0.03 Kappa,大增益集中在两个小数据集(BCIC2020-T3 共 6,000 样本、Mental Arithmetic 共 1,707 样本),大库任务(TUEV/TUAB)上互有胜负;三个二类指标还输给基线。它的价值更多在「把双码本 + SSM 骨干这条路铺通」:完整消融、scaling 曲线、9k 小时/150M 的外推证据,外加 15M 参数、35 GPU·小时的可复现成本(代码与权重已开源)。典型的占坑之作——坑位本身(解耦 tokenization 的可解释性叙事)比数字更有长期价值,后续 [BrainRVQ](brainrvq.md) 等双域工作都站在这条线上。
 
 ## 自问自答
 
@@ -194,7 +194,7 @@ flowchart TD
 
 ??? question "Q2 · token 在这套系统里承担什么?能不能拿走?"
 
-    只承担预训练目标。Table 4 给了直接答案:整个去掉 tokenizer 改原始信号重构,ISRUC S3 Kappa 0.7671→0.7503(−0.017);把 top-50% 高频激活码换成占位符,→0.7426(−0.025)。token 化的贡献真实但不大,且「token 可解释」与「任务收益」之间论文自己承认没有因果关系(附录 B 开头声明)。想验证 token 接口价值,得看 [TFM-Tokenizer](0918-tfm-tokenizer.md) 那种把 token 喂给下游的设定——CodeBrain 没做这个实验。
+    只承担预训练目标。Table 4 给了直接答案:整个去掉 tokenizer 改原始信号重构,ISRUC S3 Kappa 0.7671→0.7503(−0.017);把 top-50% 高频激活码换成占位符,→0.7426(−0.025)。token 化的贡献真实但不大,且「token 可解释」与「任务收益」之间论文自己承认没有因果关系(附录 B 开头声明)。想验证 token 接口价值,得看 [TFM-Tokenizer](tfm-tokenizer.md) 那种把 token 喂给下游的设定——CodeBrain 没做这个实验。
 
 ??? question "Q3 · 预训练语料泄漏怎么处理的?可信度如何?"
 
@@ -202,7 +202,7 @@ flowchart TD
 
 ??? question "Q4 · SGConv 和 Mamba 什么关系?为什么消融不对照 Mamba?"
 
-    SGConv 出自 Li et al. 2022(长卷积脉络,与 S5/H3 同源):把 SSM 展成全局卷积核、FFT 计算 \( O(N \log N) \),再加对数间隔子核与指数衰减做稀疏化;Mamba 是选择性递推分支。两者都是「Transformer 之外的线性复杂度选项」,序列长 570 时卷积形态并行更省。可惜附录 L 的骨干替换实验只对照了 CNN/LSTM/Transformer(参数 16.22M/17.35M/21.2M,SGConv 15.17M 最小、FLOPs 8.74G 最低),没有 Mamba——「SSM 骨干适合 EEG」这个主张在论文内部缺了最有信息量的那个对照组,只能靠站内 [SSM2Mel](1102-ssm2mel.md) 一类的外部证据旁敲。
+    SGConv 出自 Li et al. 2022(长卷积脉络,与 S5/H3 同源):把 SSM 展成全局卷积核、FFT 计算 \( O(N \log N) \),再加对数间隔子核与指数衰减做稀疏化;Mamba 是选择性递推分支。两者都是「Transformer 之外的线性复杂度选项」,序列长 570 时卷积形态并行更省。可惜附录 L 的骨干替换实验只对照了 CNN/LSTM/Transformer(参数 16.22M/17.35M/21.2M,SGConv 15.17M 最小、FLOPs 8.74G 最低),没有 Mamba——「SSM 骨干适合 EEG」这个主张在论文内部缺了最有信息量的那个对照组,只能靠站内 [SSM2Mel](ssm2mel.md) 一类的外部证据旁敲。
 
 !!! abstract "复现速查卡"
     - **代码**:[github.com/jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain)(含预训练权重)
@@ -217,4 +217,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-vector-link: [Tokenization 演进(CodeBrain 已入表)](../topics/tokenization.md) ｜ :material-creation: [TFM-Tokenizer(同届另一条时频 tokenization 路线)](0918-tfm-tokenizer.md) ｜ :material-account-group: [LaBraM(单码本 VQ 的源头)](0918-labram.md) ｜ :material-chart-box: [NeuroRVQ(多尺度 RVQ 同框对比)](1104-neurorvq.md) ｜ :material-heart-pulse: [CBraMod(最强基线与 ACPE 出处)](0928-cbramod.md) ｜ :material-home: [首页](../index.md)
+:material-vector-link: [Tokenization 演进(CodeBrain 已入表)](../topics/tokenization.md) ｜ :material-creation: [TFM-Tokenizer(同届另一条时频 tokenization 路线)](tfm-tokenizer.md) ｜ :material-account-group: [LaBraM(单码本 VQ 的源头)](labram.md) ｜ :material-chart-box: [NeuroRVQ(多尺度 RVQ 同框对比)](neurorvq.md) ｜ :material-heart-pulse: [CBraMod(最强基线与 ACPE 出处)](cbramod.md) ｜ :material-home: [首页](../index.md)

@@ -134,9 +134,9 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [BrainGPT](0918-braingpt.md) | 都把神经网络训成神经信号的代理模型，用途相反：BrainGPT 是 EEG 上的表征/解码工具（模型输出是目的），NPI 把代理模型当**被解剖的对象**（模型只是扰动实验的容器）。站内 EEG 基础模型训完后是否也能这样扰动出「区间因果」，本篇提供了模板，但 EEG 的源定位模糊与容积传导会让「区」的定义先出问题——暂无直接对话 |
-| [EEGDM](1017-eegdm.md) | 两种「模型作工具」的分工：EEGDM 用生成模型产数据训表征，模型是数据工厂；NPI 用模型做反事实实验，模型是实验室。同一个代理模型在两个框架里甚至可以复用——暂无直接对话 |
-| [EEGMoE](0924-eegmoe.md) | 被试间差异的两种处理：EEGMoE 用专家分化吸收个体差异，NPI 逐被试训代理并用「跨 session 一致性 > 跨被试相关性」证明个体信号大于方法噪声。两个证据可以互相支撑，但技术上没有交集——暂无直接对话 |
+| [BrainGPT](braingpt.md) | 都把神经网络训成神经信号的代理模型，用途相反：BrainGPT 是 EEG 上的表征/解码工具（模型输出是目的），NPI 把代理模型当**被解剖的对象**（模型只是扰动实验的容器）。站内 EEG 基础模型训完后是否也能这样扰动出「区间因果」，本篇提供了模板，但 EEG 的源定位模糊与容积传导会让「区」的定义先出问题——暂无直接对话 |
+| [EEGDM](eegdm.md) | 两种「模型作工具」的分工：EEGDM 用生成模型产数据训表征，模型是数据工厂；NPI 用模型做反事实实验，模型是实验室。同一个代理模型在两个框架里甚至可以复用——暂无直接对话 |
+| [EEGMoE](eegmoe.md) | 被试间差异的两种处理：EEGMoE 用专家分化吸收个体差异，NPI 逐被试训代理并用「跨 session 一致性 > 跨被试相关性」证明个体信号大于方法噪声。两个证据可以互相支撑，但技术上没有交集——暂无直接对话 |
 | Granger 因果 | 论文的主要对比基线，三套仿真全胜（r=0.95 那套 p<10⁻³）。GC 是预测性定义，方向判得动、强度与符号测不准；NPI 的干预主义定义与实验 EC 同族，这是它敢叫 EC 而 GC 不敢的差别 |
 | DCM | 模型依赖路线的代表。EC 定义为状态空间耦合参数，节点一多参数爆炸（66 节点上 DCM 实际不可用，公开合成数据上被 NPI 以 AUC 显著压制）。但 DCM 在小规模、假设充分时有完整的统计推断框架，NPI 没有等价物 |
 | Das & Fiete（2020） | 本篇动机的直接来源之一：强循环网络中从活动反推连接有系统性误差。NPI 的回答是绕开权重读出，改做行为学式的扰动实验 |
@@ -184,4 +184,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](0918-braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](1017-eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](0924-eegmoe.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](eegmoe.md) ｜ :material-home: [首页](../index.md)

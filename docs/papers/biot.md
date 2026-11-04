@@ -172,4 +172,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：TFM-Tokenizer](0918-tfm-tokenizer.md) ｜ :material-arrow-right: [下一篇：LaBraM](0918-labram.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十三篇方法对比](../comparison.md)
+:material-arrow-left: [上一篇：TFM-Tokenizer](tfm-tokenizer.md) ｜ :material-arrow-right: [下一篇：LaBraM](labram.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十三篇方法对比](../comparison.md)

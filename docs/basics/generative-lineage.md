@@ -11,7 +11,7 @@ one-liner: "三代生成模型的严格主线：变分下界 → 马尔可夫去
 ---
 # 生成模型三代脉络：VAE → DDPM → Flow Matching
 
-> 「模型架构基础」第三篇。**结构为脉络优先**：第 1 节以严格的叙述把三代模型的核心思想与演进逻辑一次讲清，看懂第 1 节即获得整体框架；其后各节将脉络落到公式，供按需查阅。落地实例见站内 [JET 笔记](../papers/0923-jet.md)。
+> 「模型架构基础」第三篇。**结构为脉络优先**：第 1 节以严格的叙述把三代模型的核心思想与演进逻辑一次讲清，看懂第 1 节即获得整体框架；其后各节将脉络落到公式，供按需查阅。落地实例见站内 [JET 笔记](../papers/jet.md)。
 
 !!! abstract "TL;DR · 每代一句话"
     - **VAE**：引入隐变量 \( z \)，encoder 将数据编码为隐空间中的后验分布并约束其逼近标准正态先验（KL 正则）；生成即从先验采样、经 decoder 单步重构。**缺陷：单步重构的最优解是条件均值，输出模糊。**
@@ -66,7 +66,7 @@ KL 项 ≥ 0，故 ELBO 是对数似然的下界且可计算。将其展开即�
 
 *VAE 架构与损失分解：\( x \to q_\phi(z|x) \to p(z) \to p_\theta(x|z) \) 的完整链路；图中 KL 闭式解 \( \frac{1}{2}\sum_i(\sigma_i^2 + \mu_i^2 - \log\sigma_i^2 - 1) \) 即上文正则项的逐维展开*
 
-**模糊的机制（脉络中那句话的严格版）**：decoder 逐维独立高斯似然的最优解是所有可能样本的**条件均值**——多模态答案被平均成单一模糊输出。decoder 过强时还会发生**后验坍缩**（KL 项将 \( q \) 压向先验，隐变量不再携带信息）。**分支**：VQ-VAE（2017）将连续隐变量替换为离散 codebook（commitment loss + stop-gradient，弃用 KL）——即 [LaBraM](../papers/0918-labram.md) / [NeuroLM](../papers/0918-neurolm.md) / [TFM-Tokenizer](../papers/0918-tfm-tokenizer.md) 的 tokenizer 血统。
+**模糊的机制（脉络中那句话的严格版）**：decoder 逐维独立高斯似然的最优解是所有可能样本的**条件均值**——多模态答案被平均成单一模糊输出。decoder 过强时还会发生**后验坍缩**（KL 项将 \( q \) 压向先验，隐变量不再携带信息）。**分支**：VQ-VAE（2017）将连续隐变量替换为离散 codebook（commitment loss + stop-gradient，弃用 KL）——即 [LaBraM](../papers/labram.md) / [NeuroLM](../papers/neurolm.md) / [TFM-Tokenizer](../papers/tfm-tokenizer.md) 的 tokenizer 血统。
 
 ## 3 第二代 · DDPM：马尔可夫链与逐步去噪
 
@@ -135,8 +135,8 @@ Flow Matching（Lipman et al. 2022）解决了连续归一化流「训练需在 
 
 ## 7 在 EEG 语境中的位置
 
-- **VQ-VAE 分支** → 已精读的 [LaBraM](../papers/0918-labram.md)（神经码本 + 频谱重构目标）/ [NeuroLM](../papers/0918-neurolm.md)（码字并入 LLM 词表）/ [TFM](../papers/0918-tfm-tokenizer.md)（时频 motif 词表）；
-- **DDPM 线** → [JET](../papers/0923-jet.md) 的 Vanilla Diffusion 基线与 EEG-GAN 对照。LaBraM 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；[EEGDM](../papers/1017-eegdm.md) 把条件潜扩散（PCA 隐空间 + DiT）整个用作表征学习目标——encoder 表示当扩散条件且不 detach，生成即表征；
+- **VQ-VAE 分支** → 已精读的 [LaBraM](../papers/labram.md)（神经码本 + 频谱重构目标）/ [NeuroLM](../papers/neurolm.md)（码字并入 LLM 词表）/ [TFM](../papers/tfm-tokenizer.md)（时频 motif 词表）；
+- **DDPM 线** → [JET](../papers/jet.md) 的 Vanilla Diffusion 基线与 EEG-GAN 对照。LaBraM 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；[EEGDM](../papers/eegdm.md) 把条件潜扩散（PCA 隐空间 + DiT）整个用作表征学习目标——encoder 表示当扩散条件且不 detach，生成即表征；
 - **FM 线** → JET 本体：线性插值路径 + 三条生理约束（在 FM 损失之外施加结构正则）；
 - **先验的拓扑要求三代一致**：JET 的「零噪声初始化灾难性失败」（TS-FID 1600+）是「先验必须非退化、具有全空间支撑」的实证——VAE 的标准正态先验、DDPM 的 \( x_T \)、FM 的 \( x_0 \) 无一例外。
 
@@ -166,10 +166,10 @@ Flow Matching（Lipman et al. 2022）解决了连续归一化流「训练需在 
     - **Score SDE**：Song et al., *Score-Based Generative Modeling through SDEs*, ICLR 2021（arXiv:2011.13456）
     - **Flow Matching**：Lipman et al., arXiv:2210.02747（2022）
     - **Rectified Flow**：Liu et al., *Flow Straight and Fast*, arXiv:2209.03003（2022）
-    - **EEG 落点**：[JET（ICML 2026）](../papers/0923-jet.md)——线性插值 + 生理约束的本站精读
+    - **EEG 落点**：[JET（ICML 2026）](../papers/jet.md)——线性插值 + 生理约束的本站精读
 
 ---
 
 **相关阅读**
 
-:material-creation: [JET · 流匹配生成 EEG（本站精读）](../papers/0923-jet.md) ｜ :material-angle-acute: [LoRA · 低秩适配](lora.md) ｜ :material-vector-polyline: [Attention 替代方案](attention-alternatives.md) ｜ :material-heart-pulse: [LaBraM（VQ-VAE 分支的 EEG 实现）](../papers/0918-labram.md) ｜ :material-home: [首页](../index.md)
+:material-creation: [JET · 流匹配生成 EEG（本站精读）](../papers/jet.md) ｜ :material-angle-acute: [LoRA · 低秩适配](lora.md) ｜ :material-vector-polyline: [Attention 替代方案](attention-alternatives.md) ｜ :material-heart-pulse: [LaBraM（VQ-VAE 分支的 EEG 实现）](../papers/labram.md) ｜ :material-home: [首页](../index.md)

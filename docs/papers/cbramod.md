@@ -133,13 +133,13 @@ flowchart LR
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [LaBraM](0918-labram.md) | 最主要对照：同用 TUEG 系语料，LaBraM 全注意力 + 神经码字预测，CBraMod 双路并行注意力 + 像素重构——4M 打 369M（LaBraM-Huge，TUEV/TUAB 数字引自 LaBraM 原文；其 Large/Huge 权重未开源，作者只自行微调了 LaBraM-Base） |
-| [BIOT](0918-biot.md) | 另一基础模型基线：BIOT 线性注意力逐通道处理但**限 18 通道**（超出要拆多个模型），CBraMod 无此限制 |
-| [EEGPT](0918-eegpt.md) | 同为掩码系但走「表示对齐 + 重构」双目标；EEGPT 固定 58 通道表，CBraMod 用 ACPE 动态编码——通道适应的两种哲学 |
-| [TFM-Tokenizer](0918-tfm-tokenizer.md) | 同为 ICLR（2026 vs 2025）的掩码预训练，路线相反：TFM 单通道 + 时频 motif 离散词表，CBraMod 多通道 + 原始信号连续重构；EEG-FM-Compass 统一 benchmark 里 CBraMod 综合**第 1**、TFM **第 20**（垫底） |
-| [LUNA](0924-luna.md) | 复杂度对照组：LUNA 对通道线性（O(S·C·Q)），CBraMod 是 O(Cn²+nC²)——高密度通道场景 LUNA 更优（8000 通道时 FLOPs 1/180），小通道场景 CBraMod 精度上限更高（TUAB 上 +1pp） |
+| [LaBraM](labram.md) | 最主要对照：同用 TUEG 系语料，LaBraM 全注意力 + 神经码字预测，CBraMod 双路并行注意力 + 像素重构——4M 打 369M（LaBraM-Huge，TUEV/TUAB 数字引自 LaBraM 原文；其 Large/Huge 权重未开源，作者只自行微调了 LaBraM-Base） |
+| [BIOT](biot.md) | 另一基础模型基线：BIOT 线性注意力逐通道处理但**限 18 通道**（超出要拆多个模型），CBraMod 无此限制 |
+| [EEGPT](eegpt.md) | 同为掩码系但走「表示对齐 + 重构」双目标；EEGPT 固定 58 通道表，CBraMod 用 ACPE 动态编码——通道适应的两种哲学 |
+| [TFM-Tokenizer](tfm-tokenizer.md) | 同为 ICLR（2026 vs 2025）的掩码预训练，路线相反：TFM 单通道 + 时频 motif 离散词表，CBraMod 多通道 + 原始信号连续重构；EEG-FM-Compass 统一 benchmark 里 CBraMod 综合**第 1**、TFM **第 20**（垫底） |
+| [LUNA](luna.md) | 复杂度对照组：LUNA 对通道线性（O(S·C·Q)），CBraMod 是 O(Cn²+nC²)——高密度通道场景 LUNA 更优（8000 通道时 FLOPs 1/180），小通道场景 CBraMod 精度上限更高（TUAB 上 +1pp） |
 | CCNet / CSWin（视觉前作） | 机制来源：CCNet 的 criss-cross 是单注意力图仿射近似，CSWin 十字窗口启发双路设计——CBraMod 把「十字交叉」从图像搬到 EEG 并论证了为什么 EEG 更需要（图像没有时间轴） |
-| [JET](0923-jet.md) | 互补轴线：JET 用 FM 生成 EEG（结构先验进损失），CBraMod 用注意力结构先验做判别表征——两条「EEG 结构先验」路线分头走 |
+| [JET](jet.md) | 互补轴线：JET 用 FM 生成 EEG（结构先验进损失），CBraMod 用注意力结构先验做判别表征——两条「EEG 结构先验」路线分头走 |
 | [EEG-FM-Compass](../blog-2023-2026.md) | 外部裁判：12 FM × 9 数据集统一重测，CBraMod 平均秩 6.56 综合第一，防泄漏版仍第一——本文自报的 SOTA 经第三方复核成立 |
 
 ## 个人思考
@@ -180,4 +180,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](0918-labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](0924-luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](0918-tfm-tokenizer.md) ｜ :material-grid-large: [通道适配与多任务学习](../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../basics/attention-alternatives.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](tfm-tokenizer.md) ｜ :material-grid-large: [通道适配与多任务学习](../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../basics/attention-alternatives.md) ｜ :material-home: [首页](../index.md)

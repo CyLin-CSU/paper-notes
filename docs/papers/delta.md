@@ -13,7 +13,7 @@ one-liner: "自训 RVQ tokenizer 把 ZuCo 词级 EEG 离散成多层码字,LLaDA
 ---
 # DELTA: Language Diffusion-based EEG-to-Text Architecture
 
-> **NeurIPS 2025 Workshop**(39th NeurIPS Workshop *Foundation Models for the Brain and Body*,arXiv 2511.21746v1,2025-11-22)· 韩国团队(MODULABS + 成均馆大学,正文 5 页 letter)——站内 **EEG-to-Text 正线的第一篇精读**:Wang & Ji 2022 的 open-vocabulary EEG-To-Text、DeWave 这些工作此前只散落在 [Tokenization 演进](../topics/tokenization.md) 的外围叙述里,本文是「离散 token + 生成式 LLM」在这条线上的占坑之作。与 [BrainGPT](0918-braingpt.md) 共享「EEG 当语言序列建模」的直觉但走向另一分支:那边自回归攒 generalist 表征,这边把 RVQ 码字接进掩码扩散 LLM 直接生成文本——token 侧则接上 [LaBraM](0918-labram.md) / [NeuroLM](0918-neurolm.md) 的码字演进线。
+> **NeurIPS 2025 Workshop**(39th NeurIPS Workshop *Foundation Models for the Brain and Body*,arXiv 2511.21746v1,2025-11-22)· 韩国团队(MODULABS + 成均馆大学,正文 5 页 letter)——站内 **EEG-to-Text 正线的第一篇精读**:Wang & Ji 2022 的 open-vocabulary EEG-To-Text、DeWave 这些工作此前只散落在 [Tokenization 演进](../topics/tokenization.md) 的外围叙述里,本文是「离散 token + 生成式 LLM」在这条线上的占坑之作。与 [BrainGPT](braingpt.md) 共享「EEG 当语言序列建模」的直觉但走向另一分支:那边自回归攒 generalist 表征,这边把 RVQ 码字接进掩码扩散 LLM 直接生成文本——token 侧则接上 [LaBraM](labram.md) / [NeuroLM](neurolm.md) 的码字演进线。
 
 **作者**:MinGyu Jeon(MODULABS)、HyoBin Kim(成均馆大学)——两人共同一作(\* 标注),无通讯作者与导师署名;资助方 Brian Impact Foundation(韩国非营利组织)。两位作者的分工与机构关系原文未说明。
 
@@ -125,20 +125,20 @@ flowchart TD
 | 论文 / 工作 | 关系说明 |
 |---|---|
 | DeWave(Duan et al., NeurIPS 2023) | 真正的直接前作:离散 EEG 波编码 → 文本翻译(VQ + AR seq2seq)。DELTA 把 VQ 升级为 RVQ、AR 换成掩码扩散,但全文只引用、不对比——最该同台的角色缺席 |
-| [BrainGPT](0918-braingpt.md) | 同走「EEG 当语言序列」的 LLM 路线:BrainGPT 自回归预训练攒 generalist 表征(连续 patch),DELTA 离散 token + 扩散直接解 EEG-to-Text;一个攒表征、一个解任务,结论里「large-scale pre-training」的展望正是两者的合流点 |
-| [NeuroLM](0918-neurolm.md) | 「神经码进语言模型」的自回归版:NeuroLM 把 VQ 码字并入 GPT-2 词表做多任务指令推理,DELTA 把 RVQ 码作扩散 LLM 的条件提示——同构的两分支,解码机制(AR vs 掩码扩散)与注入方式(词表并层 vs 前缀拼接)都不同 |
-| [LaBraM](0918-labram.md) / [TFM-Tokenizer](0918-tfm-tokenizer.md) | token 用途演进的两端:LaBraM 的 VQ 码只当预训练目标、推理时丢弃;TFM 把码字做成可插拔输入组件;DELTA 的 RVQ 码则是生成模型推理时的实时条件——token 从「训练目标」一路走到「生成条件」 |
-| [EEGDM](1017-eegdm.md) | 扩散条件注入的镜像:EEGDM 用 EEG encoder 表示作条件引导潜扩散**生成 EEG**(生成即表征),DELTA 用 EEG token 作条件引导掩码扩散**生成文本**;都是拼接/调制式注入,方向相反 |
-| [BrainRVQ](1104-brainrvq.md) | 同批 RVQ tokenization:BrainRVQ 时/频双路 RVQ(2×3 层×8192)服务表征预训练与层级自回归重构,DELTA 单路 RVQ 直接服务跨模态文本生成——RVQ 从音频压缩(SoundStream/EnCodec)搬进 EEG 的两个不同落点 |
-| [NeuroDETR](1104-neurodetr.md) | 离散 token 的第三种去向:多尺度时间/空间码当事件检测模型的「记忆」;与本文共同印证 2025–26 tokenization 线的趋势——token 不再只是重构目标,开始驱动下游生成/检测机制 |
+| [BrainGPT](braingpt.md) | 同走「EEG 当语言序列」的 LLM 路线:BrainGPT 自回归预训练攒 generalist 表征(连续 patch),DELTA 离散 token + 扩散直接解 EEG-to-Text;一个攒表征、一个解任务,结论里「large-scale pre-training」的展望正是两者的合流点 |
+| [NeuroLM](neurolm.md) | 「神经码进语言模型」的自回归版:NeuroLM 把 VQ 码字并入 GPT-2 词表做多任务指令推理,DELTA 把 RVQ 码作扩散 LLM 的条件提示——同构的两分支,解码机制(AR vs 掩码扩散)与注入方式(词表并层 vs 前缀拼接)都不同 |
+| [LaBraM](labram.md) / [TFM-Tokenizer](tfm-tokenizer.md) | token 用途演进的两端:LaBraM 的 VQ 码只当预训练目标、推理时丢弃;TFM 把码字做成可插拔输入组件;DELTA 的 RVQ 码则是生成模型推理时的实时条件——token 从「训练目标」一路走到「生成条件」 |
+| [EEGDM](eegdm.md) | 扩散条件注入的镜像:EEGDM 用 EEG encoder 表示作条件引导潜扩散**生成 EEG**(生成即表征),DELTA 用 EEG token 作条件引导掩码扩散**生成文本**;都是拼接/调制式注入,方向相反 |
+| [BrainRVQ](brainrvq.md) | 同批 RVQ tokenization:BrainRVQ 时/频双路 RVQ(2×3 层×8192)服务表征预训练与层级自回归重构,DELTA 单路 RVQ 直接服务跨模态文本生成——RVQ 从音频压缩(SoundStream/EnCodec)搬进 EEG 的两个不同落点 |
+| [NeuroDETR](neurodetr.md) | 离散 token 的第三种去向:多尺度时间/空间码当事件检测模型的「记忆」;与本文共同印证 2025–26 tokenization 线的趋势——token 不再只是重构目标,开始驱动下游生成/检测机制 |
 | Jo et al. 2024「Are EEG-to-Text models working?」 | 评测批判的来源:teacher-forcing 高估、无 teacher-forcing 下接近随机——DELTA 以此立论并不用 teacher-forcing 评测,但没有与任何已发表 EEG-to-Text 数字对表 |
 
 ## 个人思考
 
 - **5 pp 的领先建立在「8B 对亿级」的不对称上,「扩散优于 AR」没有被干净地验证**。基线 BART/T5 的具体规格论文未披露,但即使按 T5-large(7.7 亿)算,与 LLaDA-8B(80 亿)也差一个量级——QLoRA 冻住的只是底座权重,预训练语言能力差距原封不动地带进了对比。要支撑「非自回归复原更适合噪声 EEG」这个核心主张,最起码需要同规模对照:LLaDA-8B 换 AR 解码做同协议微调,或找一个 8B 级 AR LLM 对打。论文一个都没做。摘要的「up to 5.37 points」要与这条对读:提升真实存在,归因完全不明;
-- **RVQ 是标题的第一个词,却是全文唯一没有对照的组件**。三个基线吃的都是同一套 RVQ token——没有「连续 840 维特征直接进 LM」的基线,「RVQ 逐层编码核心特征、滤掉噪声」这一动机性宣称(从音频压缩搬来的直觉)在本文任何实验里都没被检验。对比站内 tokenization 线的惯例:[LaBraM](0918-labram.md) 有 tokenizer 与随机初始化的消融,[TFM-Tokenizer](0918-tfm-tokenizer.md) 用 plug-and-play 换头验证 token 质量,DELTA 的 tokenizer 是免检组件;加上码本自训于 ZuCo(跨数据集语义存疑)、层数尺寸未披露、无代码——RVQ 这半篇目前既不可复现也不可评估;
+- **RVQ 是标题的第一个词,却是全文唯一没有对照的组件**。三个基线吃的都是同一套 RVQ token——没有「连续 840 维特征直接进 LM」的基线,「RVQ 逐层编码核心特征、滤掉噪声」这一动机性宣称(从音频压缩搬来的直觉)在本文任何实验里都没被检验。对比站内 tokenization 线的惯例:[LaBraM](labram.md) 有 tokenizer 与随机初始化的消融,[TFM-Tokenizer](tfm-tokenizer.md) 用 plug-and-play 换头验证 token 质量,DELTA 的 tokenizer 是免检组件;加上码本自训于 ZuCo(跨数据集语义存疑)、层数尺寸未披露、无代码——RVQ 这半篇目前既不可复现也不可评估;
 - **绝对值贴地,加一处内部矛盾,提醒这批数字只能当排序用**。WER 全线 110–148% 意味着输出与参考在词序列层面基本对不上,BLEU-1 21.9% 的单字重叠离可用文本很远——「语义对齐改善」是真的,「能解码」还早。更扎眼的是 Pegasus 词级行:ROUGE-1 三项全 0 却拿到全场最低 WER 99.69,两者几乎不可能同时成立,评测脚本大概率有 bug(空输出或截断的特殊处理)。全表无方差、无显著性检验,单次运行里 0.37 对 0.31 这类 BLEU-4 差异不宜过度解读;
-- **7 页 letter 给了范式一个占位,没给范式一份证据**。掩码扩散该交的三件套——消融(RVQ 对连续输入、有无 EEG 预训练、掩码调度敏感性)、采样步数-质量曲线、同规模 AR 对照——一件都没有;「EEG token 预训练」用的还是 ZuCo 自己的两万句,「large-scale」名不副实,8B 模型在小数据上的跨模态适应全靠 early stopping 兜底。但占位价值是真的:tokenization 演进线(NeuroRVQ/BrainRVQ/CodeBrain 在卷码字结构)第一次有了「离散 token → 生成式 LLM」的端到端落点,与 [NeuroLM](0918-neurolm.md) 的 AR 分支构成对偶。复现前最想知道的两个数:每词多少 token(决定 8B 模型吃多长的序列)、码本层数与尺寸(决定 840 维向量被压到什么分辨率)。
+- **7 页 letter 给了范式一个占位,没给范式一份证据**。掩码扩散该交的三件套——消融(RVQ 对连续输入、有无 EEG 预训练、掩码调度敏感性)、采样步数-质量曲线、同规模 AR 对照——一件都没有;「EEG token 预训练」用的还是 ZuCo 自己的两万句,「large-scale」名不副实,8B 模型在小数据上的跨模态适应全靠 early stopping 兜底。但占位价值是真的:tokenization 演进线(NeuroRVQ/BrainRVQ/CodeBrain 在卷码字结构)第一次有了「离散 token → 生成式 LLM」的端到端落点,与 [NeuroLM](neurolm.md) 的 AR 分支构成对偶。复现前最想知道的两个数:每词多少 token(决定 8B 模型吃多长的序列)、码本层数与尺寸(决定 840 维向量被压到什么分辨率)。
 
 ## 自问自答
 
@@ -170,4 +170,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [BrainRVQ(同批笔记:双域 RVQ 码字服务表征预训练)](1104-brainrvq.md) ｜ :material-vector-link: [Tokenization 演进(离散 token 的完整谱系)](../topics/tokenization.md) ｜ :material-creation: [NeuroLM(神经码进 LLM 词表的自回归版)](0918-neurolm.md) ｜ :material-account-group: [BrainGPT(EEG 当语言序列的自回归预训练)](0918-braingpt.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [BrainRVQ(同批笔记:双域 RVQ 码字服务表征预训练)](brainrvq.md) ｜ :material-vector-link: [Tokenization 演进(离散 token 的完整谱系)](../topics/tokenization.md) ｜ :material-creation: [NeuroLM(神经码进 LLM 词表的自回归版)](neurolm.md) ｜ :material-account-group: [BrainGPT(EEG 当语言序列的自回归预训练)](braingpt.md) ｜ :material-home: [首页](../index.md)

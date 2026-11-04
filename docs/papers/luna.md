@@ -163,4 +163,4 @@ Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05—�
 
 **相关阅读**
 
-:material-arrow-left: [EEGMoE（域解耦路线，对照阅读）](0924-eegmoe.md) ｜ :material-heart-pulse: [BIOT（效率前作对照）](0918-biot.md) ｜ :material-grid-large: [通道适配与多任务学习](../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（效率视角）](../basics/attention-alternatives.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [EEGMoE（域解耦路线，对照阅读）](eegmoe.md) ｜ :material-heart-pulse: [BIOT（效率前作对照）](biot.md) ｜ :material-grid-large: [通道适配与多任务学习](../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（效率视角）](../basics/attention-alternatives.md) ｜ :material-home: [首页](../index.md)
