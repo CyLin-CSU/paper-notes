@@ -59,17 +59,6 @@ LaBraM: Large Brain Model (ICLR 2024)
 5. 对称掩码策略（效率 + 数据多样性）；
 6. 大规模 scaling 实验（数据量 1~2500 小时 × 模型 Base/Large/Huge），证实 EEG 领域也遵循 scaling law（Huge 模型在万小时级数据上仍会持续提升）。
 
-#### 2.5 实验与结果
-
-- 下游：TUAB（异常检测）、TUEV（事件分类）、SEED-V（情绪）、MoBI（步态回归）；
-- 大幅领先 BIOT（其 TUEV 0.5281/Kappa 0.5273、TUAB 0.7959），且随模型规模递进：TUEV 0.6409（Base）→0.6616（Huge）、Kappa 0.6637→0.6745，TUAB 0.8140（Base）→0.8258（Huge）；
-- 重要消融：
-  - 去掉 codebook 直接重构原始信号/频谱（Setting 2/3）：低层任务（TUAB）还行，高层任务（TUEV）明显掉——**离散语义 codebook 对高层任务至关重要**；
-  - 去掉空间 embedding：预训练不收敛，下游大幅下降；
-  - 线性探针崩到 0.346；微调后 8 层（0.6541）与 4 层（0.6611）和全量微调（0.6409）相当甚至略好 → 依赖微调但不必全量。
-
----
-
 ## 架构图
 
 ![Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer](../assets/labram-arch.png)
@@ -93,12 +82,6 @@ LaBraM: Large Brain Model (ICLR 2024)
 - 最有价值的发现是重构域的选择：EEG 低信噪比导致重构原始波形不收敛 → 改为频谱目标。这一思路后来被 NeuroLM（去掉相位）和 TFM（掩码频谱图）继续演进。
 - 线性探针在 TUEV 崩到 0.346，说明其表示与全量微调强绑定——对比 EEGPT 把 linear probing 做成核心卖点。
 - 对称掩码让一个样本产生 mask/补集两个互补视角，既是效率技巧（省一次 tokenizer 前向）也是数据增强（大模型受益更明显）。
-
-!!! abstract "复现速查卡"
-    - **代码**：[github.com/935963004/LaBraM](https://github.com/935963004/LaBraM)（PyTorch 2.0.1 + CUDA 11.8）
-    - **关键超参**：码本 8192×64；patch 200 点（1s）；掩码率 0.5 + 对称掩码；Base 5.8M（12 层/200 维/10 头）；lr 5e-4 cosine；EMA 0.996；温度未用于掩码（交叉熵）
-    - **数据**：约 2500h / 20 数据集（TUSZ 1138h 为主力）；下游 TUAB/TUEV 划分严格沿用 BIOT
-    - **算力参考**：8×A800；Huge 369M 需分布式并行（论文未披露细节，此为推测）
 
 ---
 

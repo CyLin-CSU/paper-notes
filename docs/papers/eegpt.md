@@ -77,15 +77,6 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 4. **Linear probing 达到 SOTA**：证明学到的特征本身足够通用，小样本下游免微调；
 5. 参数规模 scaling law 实证：\( \mathrm{ACC} = (33.6 \cdot N)^{0.029} \)、\( \mathcal{L}_R = (0.72 \cdot N)^{-0.014} \)。
 
-#### 3.5 实验与结果
-
-- 预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；
-- 下游：BCIC-2A/2B（运动想象）、Sleep-EDFx（睡眠分期）、KaggleERN、PhysioP300（ERP）、TUAB、TUEV；
-- 结果：TUEV 上比 BIOT 提升 9.5% balanced acc；与 BENDR/BIOT/LaBraM 对比在多个任务领先（其中仅 BENDR 为全量微调，BIOT/LaBraM 同样采用线性探针协议）；
-- 消融：去掉对齐损失 \( L_A \) 下游掉 6%~9%；去掉 predictor 会导致表示坍塌（重构 loss 不下降）；去掉 skip connection 掉 1%~3%；summary token 数量 S=4 较优。
-
----
-
 ## 架构图
 
 ![Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构](../assets/eegpt-arch.png)
@@ -105,12 +96,6 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 - 把 linear probing 当评估协议本身就是贡献：冻结 encoder 后性能完全归因于表示质量，排除了微调技巧的干扰。
 - 「encoder 看被 mask 的稀疏部分、momentum encoder 看全量」的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。
 - 附录证明去掉 predictor 会表示坍塌（重构 loss 不再下降）——对齐分支必须保留 query/位置等余量，防止模型走捷径。
-
-!!! abstract "复现速查卡"
-    - **代码**：[github.com/BINE022/EEGPT](https://github.com/BINE022/EEGPT)
-    - **关键超参**：58 电极 / 256Hz / 输入 4s；patch 64 点（250ms）；掩码 50% 时间 × 80% 通道；momentum 动量 0.01；最优变体 large：d=512、8 层、4 个 summary token；AdamW OneCycle（2.5e-4 起）
-    - **数据**：预训练 PhysioMI + HGD + TSU + SEED + M3CV；下游 7 数据集
-    - **算力参考**：8×RTX 3090，200 epochs，bf16；下游只训线性层所以极轻
 
 ---
 

@@ -72,25 +72,6 @@ Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05—�
 
 效率曲线（附录 Table 9/10）：patch 数 4000 时 BIOT 2286 GFLOPs vs LUNA-Base 768；**通道数 8000 时 BIOT 4156 GFLOPs / 12.3GB vs LUNA-Base 23 GFLOPs / 2GB**。结论：通道数增加时 LUNA 计算近乎恒定，且 LUNA-Base（7M 参数、16-bit 约 14MB）能塞进可穿戴 SoC 的实时预算——这是同组（ETH 低功耗组）的看家视角。
 
-## 4 结果
-
-**临床 TUH 系**（预训练语料严格排除下游被试与记录）：
-
-| 基准 | LUNA-Huge | 对照 |
-|---|---|---|
-| TUAB（异常检测） | Bal Acc 81.57% / AUROC 0.8957 | **LaBraM-Huge 82.58% / 0.9162**、CBraMod 82.49% / 0.9156 —— LUNA 落后约 1pp |
-| TUAR（伪迹检测，5 类） | **AUROC 0.921 ± 0.011** | 超 FEMBA-Large 0.915，SOTA |
-| TUSL（慢波分类，4 类） | **AUROC 0.802 ± 0.005** | 全场最高（FEMBA-Base 0.731） |
-
-**SEED-V（未见过的 62 通道拓扑）**：LUNA-Huge Bal Acc 0.3900，**落后 CBraMod（0.4091）2–3pp**（论文口径；按其 Table 3 实算约 1.9pp）。作者诚实归因：对未见通道拓扑敏感，可能源于预训练学到的位置编码约束；且 Base→Large 有正向 scaling，Large→Huge 点估计不再提升（0.3918→0.3900，差异在种子方差内——此句为从 Table 3 得出的推断，论文未评价）。
-
-**消融**（TUAB/TUAR）：
-
-- **学习 query vs 固定空间区域**（MMM 式）：AUROC 变化仅 -0.004~-0.006，在种子方差内——论文明确强调学习 query 的价值是**实践优势**（数据驱动、无需解剖先验）而非统计显著的指标增益；
-- **去掉 query 特化损失**：AUROC 降 0.003~0.007（论文正文记 -0.003~-0.006，其 Table 4 与 Table 13 给 TUAR 为 -0.007）；配对 t 检验 **p=0.2136 不显著**（该检验仅针对 TUAR AUROC 这一次比较）；保留它的理由是正则作用——促使 query 学成多样、非冗余的空间滤波器（可视化显示去掉后**两个** query 退化为粗粒度左右侧化模式、**其余** query 宽泛且互相重叠）；
-- **去掉频域特征**：掉得最多——AUROC 至 -0.011、AUC-PR 至 -0.012（TUAB；论文正文表述为「up to -0.012 AUROC」，与其自身表格略有出入）——时频信息再次被证明是 EEG 表征的关键补全；
-- **Q×E 权衡**：固定 Q·E=256 预算下，平衡配置 4×64 最好，16×16（query 多维度小）明显退化。
-
 ## 架构图
 
 ![Figure 1 · LUNA 总览：patch + 双路嵌入（1D Conv + FFT）→ Channel-Unification Module（学习 query 交叉注意力压进固定隐空间）→ Patch-wise Temporal Attention → 解码器](../assets/luna-arch.png)
@@ -117,14 +98,6 @@ Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05—�
 - **频域特征消融掉得最多（AUROC 至 -0.011）**又一次印证时频信息的价值——与 TFM（时频 motif 词表）、SleepGPT（时频双流）的结论三方互证。有趣的是 LUNA 只在 patch embedding 里加了 FFT 幅相这一小块，性价比极高；
 - **位置编码是未见拓扑的阿喀琉斯之踵**：SEED-V 的失利被归因于预训练学到的位置编码绑定了训练拓扑。这提示「连续 3D 坐标编码」（NeRF 式）仍不够泛化——预训练拓扑只覆盖 3 种布局，坐标空间的采样太稀疏。未来做多数据集预训练 + 随机通道 dropout（论文展望）是对的；
 - **对我的项目**：LUNA-Base（7M、14MB、线性复杂度）是「可穿戴低功耗 EEG FM」的现成参考配置；其「先统一通道再时间建模」的结构与 eeg2text-lite 的单通道设计不冲突——若扩展到多通道可穿戴（如耳 EEG 多触点），LUNA 的统一模块可直接借用。
-
-!!! abstract "复现速查卡"
-    - **代码**：[github.com/pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation)（官方开源）
-    - **规格**：Base 7M（8 层/Q=4/query 64/hidden 256/MLP 1024/8 头）、Large 43M（10 层/Q=6/96/576/2304/12 头）、Huge 311.4M（24 层/Q=8/128/1024/4096/16 头）；patch 长 40 时间戳
-    - **预训练**：TUEG+Siena 21,900h（3 拓扑）；AdamW lr 1.25e-4 cosine（min 2.5e-7）、β(0.9,0.98)、wd 0.05；batch 总 8160（Base）/11520（Huge）；60 epoch、warmup 10；Smooth-L1，mask 0.5，可见系数 0.05，query 特化系数 0.8；bf16-mixed；8×A100 约 1 天（Huge 16 卡）
-    - **微调**：lr 1e-4、50 epoch、早停 patience 10、warmup 5、layer-wise lr decay 0.5(B)/0.8(L/H)、drop path 0.1(B/L)/0.2(H)、标签平滑 0.1（多分类）
-    - **预处理**：0.1–75Hz 带通 + 50/60Hz 陷波 + 256Hz 重采样；TUEG/TUAB/TUAR/TUSL 双极（纵联差分，论文附录 A.7 给全电极对）、Siena/SEED-V 单极；逐通道 z-score
-    - **边缘参考**：LUNA-Base 16-bit 约 14MB，GFLOPs 在可穿戴 SoC 实时预算内
 
 ---
 

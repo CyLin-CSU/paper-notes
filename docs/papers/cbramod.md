@@ -78,38 +78,6 @@ FC 重构头从表示还原被掩 patch，MSE 损失**只算被掩位置**（MAE
 
 *Figure 3 · criss-cross 注意力机制：空间条带（同一时刻跨通道）与时间条带（同一通道跨时刻）两路并行，各占一半注意力头*
 
-## 4 结果与消融
-
-### 4.1 主结果：10 任务 12 数据集全 SOTA
-
-| 任务 / 数据集 | CBraMod（4.0M） | 最强基线 | 差距 |
-|---|---|---|---|
-| 情绪 FACED（9 类） | Kappa **0.5041** | LaBraM-Base 0.4698 | +3.4pp |
-| 情绪 SEED-V（5 类，开源 16 人版） | Kappa **0.2569** | LaBraM 0.2386 | +1.8pp |
-| 运动想象 PhysioNet-MI（4 类） | Kappa **0.5222** | LaBraM 0.4912 | +3.1pp |
-| 运动想象 SHU-MI（2 类） | AUROC **0.6988** | BIOT 0.6609 | +3.8pp |
-| 睡眠分期 ISRUC（5 类） | Kappa **0.7442** | LaBraM 0.7231 | +2.1pp |
-| 癫痫检测 CHB-MIT | Bal Acc **0.7398** | LaBraM 0.7075 | +3.2pp |
-| 想象语音 BCIC2020-3（5 类） | Kappa **0.4216** | LaBraM 0.3800 | +4.2pp |
-| 抑郁诊断 Mumtaz2016 | Bal Acc **0.9560** | LaBraM 0.9409 | +1.5pp |
-| 警觉度回归 SEED-VIG | Pearson **0.6459** | BIOT 0.5996 | +4.6pp |
-| 心理压力检测 MentalArithmetic | Bal Acc **0.7256** | LaBraM 0.6909 | +3.5pp |
-| 事件分类 TUEV（6 类） | Bal Acc **0.6671** | LaBraM-**Huge**(369M) 0.6616 | +0.6pp |
-| 异常检测 TUAB | Bal Acc **0.8289** / AUC-PR 0.9258 | LaBraM-Huge 0.8258 / 0.9204 | +0.3pp |
-
-两个防泄漏版本值得单独记：TUEV/TUAB 都是 TUEG 的子集，作者**剔除后重新预训练**再评——TUAB 0.8249 / TUEV 0.6659，仍然 SOTA。这是站内已读论文里少见地把「预训练包含下游数据」摆在明面上处理的（NeuroLM/LaBraM 均未做）。
-
-### 4.2 关键消融
-
-- **注意力机制对比**（图 4）：全注意力最差；CCNet 式 criss-cross 略好于全注意力但显著差于 CBraMod；轴向注意力好于全注意力但仍不及 CBraMod。全注意力垫底印证了 570 patch 超出建模范围；双路并行优于串行（轴向）说明两类依赖应该**同时**建模而不是排队（注：原文未直接比较轴向与 CCNet 的相对高下，两者均劣于本文方案是明确结论）；
-- **位置编码对比**：w/o PE < APE < CPE < ACPE——APE 输给 CPE 说明「动态生成」比「绝对绑定」重要，CPE 输给 ACPE 说明「非对称」比「对称」重要；
-- **预训练消融**（表 4）：清洗版 > 脏数据版 > 不预训练，且清洗版**方差最小**——脏数据不仅拉低均值还放大不稳定；
-- **架构 vs 数据**（附录 G，全文最干净的一张牌）：把 BIOT / LaBraM 的架构搬到 CBraMod 的 9000h 语料上重训，BIOT(ours) ≈ BIOT(original)，LaBraM(ours) 仅小幅提升，而 CBraMod 全面碾压 LaBraM(ours)——**换数据没用，换架构才有用**；
-- **Scaling**（附录 F）：预训练数据 1h→9000h 单调提升但 **1000h 后边际递减**；模型 0.1M→4M 持续提升，作者明确声明不外推 scaling law；
-- **微调消融**（附录 J）：冻结 backbone 只训分类头**性能崩塌**（FACED Kappa 0.5041→0.2579）——CBraMod 目前**不能当 CLIP 式冻结特征提取器**，但冻结版仍好过 BIOT/LaBraM 冻结版；30% 低资源微调下优势保持（附录 K）；
-- **成本**（附录 O，CHB-MIT 16ch 10s 输入）：318.9M FLOPs——比 BIOT（483M）/ LaBraM-Base（483M）省 1/3，criss-cross 是四种注意力变体里最省的；
-- **可解释性**（附录 P）：Grad-CAM 地形图左右手对称、patch 相关热图呈十字形状且**深层出现非局部依赖**——分层结构让 criss-cross 之外的全局交互也能学到。
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |
@@ -130,14 +98,6 @@ FC 重构头从表示还原被掩 patch，MSE 损失**只算被掩位置**（MAE
 - **「不能冻结」是个诚实的坏消息**。附录 J 显示冻结版 Kappa 从 0.50 直接掉到 0.26，说明 MAE 式重构学到的表征仍高度任务特化，通用性靠微调兑现。对我的 eeg2text-lite（预训练→LoRA→解码）路线这是个提醒：**别指望冻结提取器**，LoRA/全参数微调是必选项——好在与 EEG-FM-Compass 的微调方式结论（LoRA 介于全微调与线性探针之间）方向一致；
 - **1000h 后数据边际递减值得警惕**。这给「堆数据」路线（REVE 的 61,415h、SleepGPT 的 86,335h）打了个问号：至少在 CBraMod 的架构和清洗流程下，9000h 已接近饱和。当然可能只是清洗后数据同质化（19 通道临床 EEG 单一分布）——REVE 的多数据集多样性是否突破这个饱和点，是读 REVE 时要专门验证的问题；
 - **十字交叉 vs 线性注意力的取舍**写进了[通道异构专题](../topics/multi-task.md#channel-adaptation)：CBraMod 的复杂度 O(Cn² + nC²) 在 C 大时仍平方爆炸，LUNA 的隐空间瓶颈才是高密度的答案。CBraMod 自己在讨论里也承认部署门槛比非基础模型高。
-
-!!! abstract "复现速查卡"
-    - **代码**：[github.com/wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod)（官方开源，已进 Braindecode）
-    - **规格**：4.0M 参数；12 层 criss-cross transformer，hidden 200 / FF 800 / 8 头（4S+4T）；patch 编码 3 层 1D CNN（核 49/3/3，stride 25/1/1）；ACPE 1 层 2D depthwise conv 核 (19,7)
-    - **预训练**：TUEG 清洗版 1,109,545 样本 >9000h（19 通道 10-20 系统，0.3-75Hz 带通，60Hz 陷波，200Hz，30s 样本，>100µV 剔除，单位 100µV）；patch 1s；mask 50% 全零 token；AdamW lr 5e-4 / wd 5e-2 / cosine（min 1e-5）/ batch 128 / 40 epoch；4×A5000 约 5 天
-    - **微调**：重构头换成展平 + MLP 任务头；AdamW lr 1e-4 / wd 5e-2 / cosine / batch 64 / 50 epoch；标签平滑 0.1（多分类）；二分类 BCE、回归 MSE；所有下游统一重采样 200Hz、patch 1s
-    - **防泄漏协议**：TUAB/TUEV 从预训练剔除后重训版本权重若公开可直接用；下游 5 种子取均值±方差，二分类看 Bal Acc / AUC-PR / AUROC（AUROC 为早停指标），多分类看 Bal Acc / Kappa / Weighted F1（Kappa 为早停指标）
-    - **成本参考**：CHB-MIT 16ch×10s 输入 318.9M FLOPs（criss-cross 比全注意力变体省 32%）
 
 ---
 

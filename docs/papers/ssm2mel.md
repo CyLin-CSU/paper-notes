@@ -67,28 +67,6 @@ S4 把 \( A, B \) 离散化（\(\bar{A}, \bar{B}\)）并做结构化约束；Mam
 
 \( R \) 是预测谱与真谱的 Pearson 相关。两项搭配是回归任务的常规操作：L1 管绝对尺度，Pearson 管形状（不受幅值缩放影响）。平衡系数 \( \alpha \) 的取值全文未披露。
 
-## 3 实验与结果
-
-**数据**：SparrKULee（ICASSP 2024 Auditory EEG Challenge），85 名荷兰语正常听力被试，每人 8–10 段约 15 分钟，听佛兰芒语故事。预处理：多通道维纳滤波去伪迹 → 共平均重参考 → 降采样到 64 Hz。划分 80/10/10（训练/验证/测试）——**按什么维度切没说**，是本篇最大的协议模糊点。
-
-**实现**：PyTorch，1000 epoch，Adam 初始 lr 5e-4，StepLR 每 50 epoch ×0.9；训练用随机裁剪的 5 秒段，推理也是 5 秒分段处理再拼接成完整 mel 谱。
-
-**主结果**（Table I，mel 谱重建 Pearson）：
-
-| 模型 | Pearson | 相对 VLAAI 提升 |
-|---|---|---|
-| VLAAI | 0.050 | – |
-| HappyQuokka | 0.052 | +4% |
-| ConvConcatNet | 0.058 | +16% |
-| ConvConcatNet ensembled | 0.063 | +26% |
-| **SSM2Mel** | **0.069** | **+38%** |
-
-同一数据集换包络重建任务（Table II）也领先：SSM2Mel 0.208 vs HappyQuokka 0.185（+14.9%）vs VLAAI 0.161（+29.2%）。正文另给出绝对增量：对 VLAAI / HappyQuokka / ConvConcatNet 分别 +0.019 / +0.017 / +0.011（Section III-C）。注意正文一处笔误：Section III-C 写「achieving a Pearson correlation coefficient of 0.068」，摘要与 Table I 均为 0.069。
-
-**模块消融**（Table III）：去 S4-UNet → 0.057（−0.012，伤最重，表中相对 VLAAI 仍 +14%）；去 ExternalAttention → 0.061（−0.008，+22%）；去 ESM → 0.063（−0.006，+26%）。论文只说三个模块「都关键」，未对下降幅度做排序解读。
-
-**骨干机制对比**（Table IV）：all-Mamba 0.051（仅比 VLAAI 基线高 0.001，相对提升 2%）；all-MHSA 0.057（+14%）；混合 0.069。作者的解读是 Mamba 管时序特征、MHSA 管上下文，互补——但 0.051 这个数字同时说明了另一件事：**在这个 5 秒窗口的协议下，Mamba 自身几乎没有贡献**。
-
 ## 架构图
 
 ![Figure 1 · SSM2Mel 总体框架：EEG 加位置编码后经 ESM（Sub-ID 嵌入调制）与 S4-UNet + ExternalAttention 预提取，MHSA/Mamba 交替骨干输出 mel 谱](../assets/ssm2mel-framework.png)
@@ -112,14 +90,6 @@ S4 把 \( A, B \) 离散化（\(\bar{A}, \bar{B}\)）并做结构化约束；Mam
 - **「长序列」的卖点和 5 秒裁剪的实现是矛盾的**。64 Hz 下 5 秒只有 320 个时间步，训练如此，推理也是 5 秒分段再拼接——Mamba 相对 Transformer 的优势区间在千步以上，320 步根本用不上。真正的分钟级连续解码需要跨窗状态传递或滑窗重叠推理，论文都没做。标题里 State Space Model 的叙事，在协议层面被自己的预处理拆掉了；
 - **消融数据讲了一个和标题不同的故事**：纯 Mamba 0.051 ≈ VLAAI 基线 0.050，去掉 S4-UNet 掉 0.012（消融里最痛的一刀）。也就是说增量主要来自 MHSA + S4-UNet 这对「注意力管全局、S4 管局部」的组合，Mamba 更像被 Jamba/Zamba 的混合结论顺带捎上的组件。这不丢人，但贡献列表里「创新性地使用 Mamba」「首次把 S4-UNet 用于 EEG」的宣称都比证据响——首次使用和有效使用是两回事；
 - **被试嵌入（ESM）的泛化边界没人检验，且和站内基础模型轴线的条件注入方向恰好相反**。模型吃 Sub-ID，意味着部署时必须知道当前被试是谁、且该被试见过训练数据。如果 80/10/10 划分按 trial 切（SparrKULee 挑战赛的常规做法），测试段的被试以嵌入形式出现在了训练集里——那么 0.069 里有多少是被试记忆、多少是语音信息，单看这个数字分不开。消融显示去掉 ESM 掉到 0.063，被试信息约占总提升的六分之一，这部分的可泛化性存疑。放到站内的坐标系里看更有意思：[BrainGPT](braingpt.md) 的电极词表和 [EEGPT](eegpt.md) 的通道名映射表，条件注入的都是**通道身份**（信号来自哪个电极），为的是跨设备、跨数据集迁移，没有一个显式吃被试 ID；ESM 正好反过来，只注入**被试身份**、不注入通道身份。这不是谁对谁错，而是两个目标的对立：通道条件服务「未见数据集上的 zero-shot」，被试条件服务「见过的人在 closed-set 里更好一点」——后者以被试进训练集为前提，而预训练语料跨库拼接时被试 ID 根本没有跨库语义。所以 ESM 这类设计在预训练路线里几乎绝迹，它本质是 subject-dependent 小数据回归的专用技巧；本篇想和基础模型合流（见 Q4），第一件事就是把 Sub-ID 换成可迁移的条件形式；
-
-!!! abstract "复现速查卡"
-    - **代码**：论文未附仓库（arXiv 2501.10402 v1）；通讯团队（安徽大学 Fan Cunhang 组）历史工作有开源习惯，可留意其 GitHub
-    - **数据**：SparrKULee（ICASSP 2024 Auditory EEG Challenge），85 名荷兰语被试，8–10 段 × 约 15 分钟听故事；预处理 = 多通道维纳滤波 → 共平均重参考 → 64 Hz 降采样；80/10/10 划分（**维度未说明，复现前先确认**）
-    - **训练**：Adam，lr 5e-4，1000 epoch，StepLR 每 50 epoch ×0.9；5 s 随机裁剪，推理 5 s 分段拼接
-    - **损失**：\( \mathcal{L} = -R + \alpha \cdot \mathrm{L1} \)；**α 取值未披露**
-    - **未披露的超参**：α、S4-UNet 层数/通道数/每级 S4 block 数 n、骨干维度、MHSA 头数——5 页 letter 的通病，细节需等扩展版或邮件要配置
-    - **关键数字**：mel 谱 Pearson 0.069（VLAAI 0.050 / ConvConcatNet 集成 0.063）；包络 0.208；消融 w/o S4-UNet 0.057、w/o ExtAtt 0.061、w/o ESM 0.063、all-Mamba 0.051、all-MHSA 0.057
 
 ---
 

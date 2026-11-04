@@ -83,54 +83,6 @@ z = \tanh\left(W_f \cdot \mathrm{Concat}(y_{\mathrm{sg}}, y_{\mathrm{swa}})\righ
 
 MAE 式:Bernoulli 掩码（r=0.5）,EEGSSM 输出过 1D 卷积预测被掩 patch 在**两个码本**中的 token 索引,交叉熵 \( p(v_i \mid x_i) = \mathrm{softmax}(\mathrm{Conv1D}(y_i)) \)。损失在 epoch 1→6 从 9.04 降到 6.39,epoch 10 后趋平（6.01→5.66）,官方 checkpoint 取 epoch 10——一半理由是防止对 TUEG 过拟合（TUEV/TUAB 同源）。
 
-## 3 实验与结果
-
-**数据与协议**:预训练 TUEG,剔除 <5 分钟录音、去首尾 1 分钟、19 通道（10-20 系统）、0.3–75 Hz 带通 + 60 Hz 陷波、200 Hz、30s 非重叠段、剔除幅值 >100 µV 的段、逐值 ÷100 归一,留 1,109,545 段 ≈ 9,246 小时。下游 10 数据集横跨 8 任务（情绪 FACED/SEED-V、睡眠 ISRUC S1/S3、想象语音 BCIC2020-T3、心算压力、癫痫 CHB-MIT、运动想象 SHU-MI、事件 TUEV、异常 TUAB）,通道 6–64、时长 1–30s、类别 2–9。划分以跨被试为主(FACED 80/20/23、ISRUC S3 8:1:1、MentalArithmetic 7:1:1、CHB-MIT 20/2/2、SHU-MI 15/5/5),TUEV/TUAB/BCIC2020-T3 走官方协议;**SEED-V 是例外:每 session 15 个 trial 均分 5/5/5,属于被试内划分**（与 CBraMod 协议一致）,和正文「cross-subject or cross-session」的表述要对读。主协议全量微调 + 3 层 MLP 头（睡眠任务头前再加一层 Transformer 建 20 个 epoch 的序列依赖）,5 seeds 报均值方差;多类用 Kappa 选模型、二类用 AUROC 选模型。下游全部重采样到 200 Hz。
-
-**主结果**（Table 2 摘录,Kappa 多类 / AUROC 二类）:
-
-| 数据集（指标） | CodeBrain | CBraMod | LaBraM | BIOT | EEGPT |
-|---|---|---|---|---|---|
-| FACED（Kappa） | **0.5406** | 0.5041 | 0.4698 | 0.4476 | 0.4639 |
-| SEED-V（Kappa） | **0.2735** | 0.2569 | 0.2386 | 0.2261 | 0.1323 |
-| ISRUC S3（Kappa） | **0.7671** | 0.7407 | 0.7194 | 0.7168 | 0.6160 |
-| BCIC2020-T3（Kappa） | **0.5127** | 0.4216 | 0.3800 | 0.3650 | 0.0567 |
-| Mental Arithmetic（AUROC） | **0.8707** | 0.7905 | 0.7721 | 0.7536 | 0.7162 |
-| CHB-MIT（AUROC） | **0.8961** | 0.8892 | 0.8679 | 0.8761 | 0.8438 |
-| CHB-MIT（Balanced Acc） | 0.7273 | **0.7398** | 0.7075 | 0.7068 | 0.5481 |
-
-**附录四数据集与泄漏处理**（Table 5–8 摘录）:TUEV/TUAB 出自 TUEG 语料家族,与预训练同源。作者的处理比惯例诚实——预训练早停到 epoch 10,并另训一版把 TUEV/TUAB 从预训练库剔除的 Excluding 模型:
-
-| 数据集（指标） | CodeBrain | Excluding | CBraMod | LaBraM |
-|---|---|---|---|---|
-| TUEV（Kappa） | **0.6912** | 0.6838 | 0.6772 | 0.6637 |
-| TUEV（Balanced Acc） | 0.6428 | 0.6375 | **0.6671** | 0.6409 |
-| TUAB（Balanced Acc） | **0.8294** | 0.8288 | 0.8289 | 0.8140 |
-| TUAB（AUROC） | 0.9030 | 0.9012 | **0.9227** | 0.9022 |
-| ISRUC S1（Kappa） | **0.7476** | – | 0.7442 | 0.7231 |
-| SHU-MI（AUROC） | **0.7124** | – | 0.6988 | 0.6604 |
-
-即:排除泄漏后 TUEV 仍领先,TUAB 与 CBraMod 打平;而 TUAB 的 AUROC/PRAUC、TUEV/CHB-MIT 的 Balanced Acc 这几个输掉的指标,正文主表里看不见。
-
-**消融**（Table 3,Cohen's Kappa,三个数据集）:
-
-| 配置 | FACED | SEED-V | ISRUC S3 |
-|---|---|---|---|
-| 完整（Dual + CL + SWA + SGConv + Gate） | 0.5406 | 0.2735 | 0.7671 |
-| 单时域码本 | 0.4618 | 0.2633 | 0.7314 |
-| 单频域码本 | 0.5006 | 0.2665 | 0.7390 |
-| Mixed 共享码本 | 0.4676 | 0.2708 | 0.7400 |
-| − 对比损失 CL | 0.5222 | 0.2589 | 0.7558 |
-| − SWA | 0.5192 | 0.2561 | 0.7359 |
-| − SGConv | **0.1936** | 0.2062 | 0.6218 |
-| − Gate | 0.2578 | 0.2212 | 0.5478 |
-
-全局卷积与门控是承重墙（去掉即崩,FACED 上 −SGConv 的方差大到 ±0.1637）,SWA/CL 是装修（各 ~0.02）。双码本对单频码本的增益在 FACED +0.040、ISRUC S3 +0.028、SEED-V 仅 +0.007。另有码本贡献专项（Table 4,ISRUC S3）:整个去掉 tokenizer 改原始信号重构 → 0.7503（−0.017）,掩掉 top-50% 高频激活码 → 0.7426（−0.025）——token 有贡献,但幅度有限,作者自己声明这不构成「可解释码决定任务结果」的因果。
-
-**设计选择**（附录 K）:mask 率 U 型、0.4–0.6 最优（取 0.5）;码本 4096/4096 折中（2048/2048 时频域码有重复、8192/8192 闲置 3401/1260）;patch 取 1s（SEED-V 上 2s 需大量 padding 崩到 0.1545;ISRUC S3 上 0.5s 碎化纺锤波最差 0.7405）;SGConv 衰减 \( \alpha = 0.5 \) 全场最优（ISRUC S3 上 α=2.0 掉到 0.5600）。**子带消融**最扎眼:移除 δ/θ/α 任何单个低频带都近随机（SEED-V 去 α 带 Kappa 0.0082）,γ 最耐拆（0.1372）;作者读作「低频结构主导、与情绪生理学一致」。
-
-**Scaling 与效率**:数据 1k→9k 小时 Kappa 持续上升（SEED-V 5k 小时后平台）;模型从 3.96M（3 层/128）到 146.75M（24 层/384）收益递减,8 层 15.17M 是平衡点。计算开销对比（Table 19）:CodeBrain 15.17M 参数 / 4.37G MACs / 8.74G FLOPs,对比 BENDR 959.84M / 25.02G、EEGPT 25.24M / 9.79G,但 CBraMod（4.03M）与 LaBraM（6.02M）更小。低资源设定（附录 O,linear probe / 10% / 30% few-shot）全数第一,SEED-V 10% few-shot 上 0.1690 对 CBraMod 的 0.0174 差出一个量级——线性探针反而比 few-shot 全量微调稳,说明预训练表征本身有结构。
-
 ## 架构图
 
 ![Figure 2 · CodeBrain 两阶段框架:左 TFDual-Tokenizer,右 EEGSSM 掩码 token 预测](../assets/codebrain-framework.png)
@@ -155,15 +107,6 @@ MAE 式:Bernoulli 掩码（r=0.5）,EEGSSM 输出过 1D 卷积预测被掩 patch
 - **双码本的收益要按数据集拆开看**。Dual 对 Mixed 的差距:FACED +0.073、ISRUC S3 +0.027、SEED-V 仅 +0.003(0.2735 vs 0.2708);对单频码本 SEED-V 也只 +0.007。也就是说「二次扩展表征空间」的收益在情绪任务上几乎归零,理论命题(Proposition 2.1)的实证支撑并不均匀——「二次扩空间」的字面事实成立(每 patch 一个码字变成一对,组合空间 4096² ≈ 1678 万),但「判别力随之提升」只在部分任务上兑现。消融里真正普适的结论反而是骨干侧的:SGConv 和 Gate 拆谁都崩;
 - **子带消融的「全崩」是个警报,不是勋章**。移除 δ、θ、α 任何单个低频带都把模型打到近随机(SEED-V 去 α 带 0.0082),而健康的频段归因应该是「一个带一个坑」。更合理的解释是模型对输入分布漂移极度敏感:掩掉一个带会破坏全局统计(如 z-score 口径),整个输入相对预训练分布成了 OOD。这与附录 M 大讲通道丢弃/基线漂移鲁棒性的叙事存在张力——同一模型不可能既「对结构化扰动稳健」又「拆一个频带就崩」;
 - **增量边际与占坑价值要分开记账**。对 CBraMod 的中位增量只有 0.01–0.03 Kappa,大增益集中在两个小数据集(BCIC2020-T3 共 6,000 样本、Mental Arithmetic 共 1,707 样本),大库任务(TUEV/TUAB)上互有胜负;三个二类指标还输给基线。它的价值更多在「把双码本 + SSM 骨干这条路铺通」:完整消融、scaling 曲线、9k 小时/150M 的外推证据,外加 15M 参数、35 GPU·小时的可复现成本(代码与权重已开源)。典型的占坑之作——坑位本身(解耦 tokenization 的可解释性叙事)比数字更有长期价值,后续 [BrainRVQ](brainrvq.md) 等双域工作都站在这条线上。
-
-!!! abstract "复现速查卡"
-    - **代码**:[github.com/jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain)(含预训练权重)
-    - **数据**:TUEG 9,246 h(1,109,545 × 30s 段);19 通道 10-20 系统,0.3–75 Hz 带通 + 60 Hz 陷波,200 Hz,<5 min 剔除 + 去首尾 1 min,>100 µV 段剔除,逐值 ÷100;30s 段 → 1s patch,序列 570 = 19×30
-    - **Stage 1 超参**:双码本各 4096×32(随机初始化 + L2 归一);TFConv 通道 {1,8,4}→{8,4,4}、核 (1,15)/(1,3)/(1,3)、首层 stride (1,8);TF-Encoder 12 层 / hidden 200 / 8 头,decoder 3 层;AdamW,峰值 lr 1e-4 → 1e-5 cosine,wd 1e-4,warmup 5,20 epoch,batch 256,对比温度 τ=0.5
-    - **Stage 2 超参**:8 层 / hidden 200;SGConv state 64、双向;SWA 窗 1s;mask 0.5;Adam lr 1e-4 cosine 至 1e-5,wd 5e-3,梯度裁剪 5,dropout 0.1,10 epoch,batch 256
-    - **算力**:tokenizer 6×A100-40G × 约 10 h;骨干 2×A100-40G × 约 24 h;微调各任务配置见论文 Table 12(lr 1e-5~1e-4、batch 16~512)
-    - **未披露/含糊**:下游 3 层 MLP 头的通道聚合具体机制;SGConv 子核基尺寸 d 的取值(Table 11 只给 state 64);式(10) 中 codebook/commitment/对比损失的权重系数(公式无权重符号);EEGPT/CBraMod 所用「两层卷积前置/linear 微调」等基线协议细节以各自原文为准
-    - **关键数字**:FACED Kappa 0.5406 / SEED-V 0.2735 / ISRUC S3 0.7671 / TUEV 0.6912(Excl. 0.6838)/ TUAB BAcc 0.8294;15.17M / 8.74G FLOPs;线性探针 SEED-V 0.2302、10% few-shot 0.1690
 
 ---
 

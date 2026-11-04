@@ -41,51 +41,6 @@ one-liner: "30 个 EEG FM × 25 个监督基线 × 57 任务/23 数据集、五�
 
 另有 Top-5 计数(进入任务前五的次数);双极 / 非双极设定分开排名。协议 II 的预训练增益定义为同架构 Full-FT 与随机初始化 Scratch-ST 的差:\( \bar{G}_m(d) = \bar{s}_m(d, \mathrm{Full\text{-}FT}) - \bar{s}_m(d, \mathrm{Scratch\text{-}ST}) \),在 6 档标签预算 {2%, 5%, 10%, 25%, 50%, 100%} 下配对比较。协议 IV 另用参数位移 \( P_{s,t} = \|\theta^{\mathrm{post}}_{s,t} - \theta^{\mathrm{pre}}_s\|_2 / \|\theta^{\mathrm{pre}}_s\|_2 \) 与逐层 1−CKA 度量微调改变了什么。
 
-## 3 核心发现
-
-### 3.1 总排名:领先是真实的,但分设定
-
-| 平均秩榜单 | 前列(全为 FM) | 第一个监督基线 |
-|---|---|---|
-| 非双极 | REVE-base → ST-EEGFormer-small → LEAD → HEAR-large | U-Sleep(约第 9) |
-| 双极 | BIOT six-datasets → BIOT shhs-prest → BIOT prest-16ch | SleepEEGNet(约第 8,Top-5 计数第一但系覆盖任务更多所致) |
-
-具体任务上更直观:TUEV Task1 WS(双极)前三全是 FM——ST-EEGFormer-small 92.62、Uni-DMFM-base 92.21、ST-EEGFormer-base 91.55,CBraMod 88.13,最强的通用基线 BiDANN 仅 76.47;CAP-Sleep Task1 WS 由 BIOT 三变体包揽(75.82 / 75.72 / 74.91),最好基线 SleepEEGNet 73.97。BIOT 通道受限,非双极任务整列缺席(unsupported)。
-
-### 3.2 监督基线反超的两种场景
-
-| 场景 | 结果 | 解读 |
-|---|---|---|
-| TUEV Task1 CS(4 类事件) | 基线 TMSA-Net 49.95 第一;FM 最高仅 39.87 | 跨被试设定全体塌方,WS→CS 的落差比 FM vs 基线的差距更大 |
-| HGD Task3 WS(二分类 MI) | ShallowConvNet(2017)96.01 第一,EEGPT 95.93 第二 | 二分类大方差任务,经典 CNN 仍能赢 |
-| MigraineDB 系列(9 任务) | BIOT / EEGPT / LUNA-large 等多个 100.00 并列 | 天花板效应,排名无意义 |
-
-反超的共性:CS 塌方与任务饱和都不是「基线更强」而是「协议暴露弱点」——FM 的优势在 WS、在非双极、在难任务上兑现,论文对此没有回避。
-
-### 3.3 预训练收益:随标签变多而变大,数据 scaling 持续有效
-
-协议 II(10 个 FM 架构配对对照)的均值曲线:末轮增益随标签预算从 **+0.4%(2%)单调涨到 +8.2%(100%)**,预算 ≥25% 后 10/10 模型为正;首轮增益 8/10 为正。协议 IV(固定 REVE-base 架构与目标函数,只动预训练数据 0.6k→30k 小时):
-
-| 0.6k→30k h | Full-FT | Linear Probe |
-|---|---|---|
-| 被试内(WS) | +6.69 pp | +5.97 pp |
-| 跨被试(CS) | +4.22 pp | +1.89 pp |
-
-机制侧写最有信息量:预训练数据越多,Full-FT 的参数位移越小(约 0.12→0.03)而输出层表征变化(1−CKA,0.7→0.9+)越大;逐层看,小数据预训练的适配集中在最后几层,15k–30k h 后**中间层**表征也开始重组、早期层保持稳定——大数据预训练学到的是「可以被下游高效重组」的表征。
-
-### 3.4 参数不 scaling,通道灵活者占优
-
-协议 III:30 个 FM 变体横截面上参数量(1–600M,log 轴)与平均性能无单调关系——REVE-base(69M)> REVE-large(408M),ST-EEGFormer-small(32.7M)> 其 base(110.9M)/ large(328.4M)版。论文自己声明这是观察性结论,架构/数据/训练策略全部混淆,不能归因于参数本身。协议 V:10 个 FM(6 通道受限:CBraMod / CodeBrain / CSBrain / EEGPT / NeuroRVQ / ST-EEGFormer-small;4 通道灵活:REVE-base / HEAR×2 / LEAD)按任务相关电极子集逐步减通道,通道灵活组在**所有**保留比例下绝对性能都更高。
-
-## 4 论文自述的 Lessons(摘要五条 + 我们的评估)
-
-1. **FM 在多数任务上胜过强监督基线,非双极设定下优势最大**——成立,但论文同时承认对双极特化模型(如 BIOT)跨设定比较会低估前者,双极榜 BIOT 横扫就是注脚;
-2. **预训练改善早期优化与最终性能,且标签越多增益越大越稳**——本篇最反直觉也最扎实的一条(架构配对 + 6 档预算),直接推翻「预训练是小样本技巧」的流行叙事;小样本下 FM 的优势主要是优化稳定性(基线大量 50.00 坍缩),红利兑现要等标签;
-3. **参数量与性能无一致正相关**——方向上支持站内「架构 > 规模」;但它是跨家族观察,不是受控结论,REVE-base 赢 REVE-large 也可能只是大数据小模型的常规剧本;
-4. **固定架构下预训练数据 scaling 持续有效**——全文含金量最高的受控实验:0.6k→30k h 无平台,配 CKS/位移分析给出了「为什么」;论文据此把「扩充预训练数据」点名为下一步最有希望的方向;
-5. **通道灵活模型绝对性能更高**——成立但混淆未拆:REVE/HEAR/LEAD 恰好是最新、预训练数据最大的模型,通道灵活性与数据规模两个变量纠缠在一起;
-6. 隐含的第六条(Section 4):**没有全能冠军**——论文拒绝给出单一排名,改为 8 维度(任务性能 ×2、预训练有效性 ×3、覆盖与效率 ×3)+ 用户自定义权重 \( U_m(w) = \sum_j w_j z_{m,j} \) 的雷达图选型框架:REVE-base 强在排名与低标注、HEAR-large 强在微调增益、CBraMod 强在覆盖与吞吐、LEAD 强在参数效率。
-
 ## 架构图
 
 ![Figure 1 · EEG-Arena 总览:(A) 开源软件包三接口;(B) 55 模型与 23 数据集 / 57 任务;(C) 五协议对应 RQ1–RQ5](../assets/eegarena-framework.png)
@@ -111,14 +66,6 @@ one-liner: "30 个 EEG FM × 25 个监督基线 × 57 任务/23 数据集、五�
 - **统一管线刻意保留了一个不统一:预处理**。这是全场最微妙的设计决定——FM 保留各自的带通/notch/归一化/窗长(0.85–30 s 跨度),意味着 FM vs 基线的差距里永远混着「输入表征选择」这个隐藏变量,反过来 FM 被自家接口锁死的部分(unsupported 标记)又让它少跑了整个非双极侧。EEG-Arena 量化的是「自带预处理的完整权重」的 FM,不是「表征本身」的 FM;Protocol I 榜单上的差距,有一部分应该记在预处理工程的账上;
 - **对站内 LaBraM / EEGPT / CBraMod / BIOT 结论的冲击是分化而非通杀**:BIOT 在其设计域内被追认为最强 FM(站内评分偏低了它在本域的价值);CBraMod 的领先方向被外部复现;LaBraM 的 base 版与 EEGPT 双双平庸化——2024 世代(掩码重构 + 通道受限)在 2026 的强基线面前整体失色,而 2025–2026 的 REVE / HEAR / LEAD / ST-EEGFormer 包揽非双极前列,代际差主要落在「通道灵活性 + 预训练数据规模」两个轴上。站内 [comparison.md](../comparison.md) 的 TUEV/TUAB 战绩表今后引用时要加一句:自报数字,EEG-Arena 已提供统一口径的替代参照;
 - **「数据是 scaling 轴」的判决要和站内的「边际递减」论放在一起读**。站内数据专题的递减结论出自 TUEG 系清洗语料的自我对比(数据质量与域距离混在其中),而协议 IV 是干净的单变量实验——唯一的漏洞是它只做了 REVE-base 一个架构、一个目标函数,30k h 恰约等于 REVE 原始配方,「递减论错了」还太早,更稳的表述是:清洗带来的递减没有挡住数据量的持续收益,两件事可以同时为真。
-
-!!! abstract "复现速查卡"
-    - **代码**:eeg.fm/benchmarks(平台)与 eeg.fm/leaderboards(排行榜);79,000+ 行代码、23,000+ 行文档,数据统一 HDF5,接受 GDF/EDF
-    - **协议 I**:三指标 = B-ACC(二分类)/ macro-F1(多分类)/ Cohen's κ;平均秩 + Top-5;双极、非双极分开;验证集选 checkpoint;预训练数据重叠任务剔除(红 E)、不兼容组合标 unsupported
-    - **协议 II**:Full-FT vs 同架构 Scratch-ST;预算 {2, 5, 10, 25, 50, 100}%;验证/测试集固定、只子采样训练集;10 个 FM
-    - **协议 IV**:REVE-base(69M)固定架构与优化,预训练数据 {0.6k, 1.5k, 3k, 7.5k, 15k, 30k} h;Full-FT + Linear Probe × WS/CS;度量 = 参数位移 + 逐层 1−CKA
-    - **协议 V**:6 受限(CBraMod/CodeBrain/CSBrain/EEGPT/NeuroRVQ/ST-small)vs 4 灵活(REVE-base/HEAR-base/HEAR-large/LEAD);保留比例 ρ = 缩减通道数/全通道数
-    - **关键数字**:非双极前四 REVE-base / ST-small / LEAD / HEAR-large;末轮增益 0.4%→8.2%;+6.69pp(WS)/+4.22pp(CS);REVE-base 69M > REVE-large 408M
 
 ---
 

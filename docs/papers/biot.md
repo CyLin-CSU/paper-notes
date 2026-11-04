@@ -95,16 +95,6 @@ $$
 3. **线性注意力 Transformer** 解决多通道长句子的二次复杂度问题（低秩 E/F 投影，注意力图 N×N → N×d）；
 4. 频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 CHB-MIT、IIIC 与可穿戴 HAR 任务尤其有用；
 
-#### 1.5 实验与结果
-
-- 预训练语料：500 万静息 EEG（PREST）+ 500 万睡眠 EEG（SHHS）+ ECG（Cardiology）；
-- 下游 9 个数据集：CHB-MIT（癫痫检测）、IIIC Seizure（发作分型）、TUAB（异常检测）、TUEV（事件分类）、PTB-XL（心律失常）、HAR（动作识别）等；
-- 结论：监督设定下超过 SPaRCNet、ContraWR、CNN-Transformer、FFCL、ST-Transformer 等基线；带缺失设定下性能下降最少；跨数据集预训练（6 EEG 数据集）进一步提升（如 CHB-MIT balanced acc 从 0.664 提到 0.707）。
-- 附录消融：更高采样率对高频敏感任务（IIIC）略好；token 太长（>1-2s）导致句子变短、性能会有下降；更大重叠 p 略好。
-
----
-
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |
@@ -117,12 +107,6 @@ $$
 - 逐通道独立切分（缺失段直接丢 token）是它通吃异构格式的根本设计，后续所有工作都继承了这一点。
 - 线性注意力的 E/F 投影把注意力图固定为 N×d，隐含假设'全局信息可压缩进 d 个摘要位'——分类任务够用，但牺牲了精细的 token 间路由能力。
 - 频域在这里只是特征工程（FFT 能量 → FCN），模型本体仍在连续域运行——这为后来 LaBraM/TFM 的显式时频建模埋下了演进伏笔。
-
-!!! abstract "复现速查卡"
-    - **代码**：[github.com/ycq091044/BIOT](https://github.com/ycq091044/BIOT)（PyTorch Lightning 1.6.4 / Torch 1.13.1）
-    - **关键超参**：4 层 Transformer × 8 头；低秩投影 d≪N；token 1s/重叠 0.5s；EEG 重采样 200Hz；Adam lr=1e-3；温度 T=0.2（无监督预训练）
-    - **数据**：预训练 PREST+SHHS（约 1000 万样本，SHHS 需在 sleepdata.org 申请）；16 个标准双极导联
-    - **算力参考**：8×RTX A6000，单任务训练 max epoch 100
 
 ---
 

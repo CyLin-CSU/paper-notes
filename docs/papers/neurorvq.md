@@ -67,47 +67,6 @@ z_1 = \arg\min_{v_1 \in V_1} \|\, \ell_2(p_1) - \ell_2(v_1) \,\|, \qquad p_{i+1}
 
 FM 复用同一多尺度编码器 + Transformer + token 预测头,以对称掩码策略(LaBraM 式)0.5 比例做 masked-token 预训练(50 epoch、bs 64、AdamW 5e-4),下游接分类头全微调——「刻意保持架构简单以隔离 tokenizer 的贡献」。正文没有说明 FM 输入到底是量化后的离散 token 还是编码器连续 embedding,只有一句 "operates on the tokenized representation"。FM 预训练语料与 tokenizer 相同,总量(小时数)未披露。
 
-## 3 实验与结果
-
-**预训练数据**(Appendix E):EEG 13 个公开集(BCIC IV-1、Grasp-Lift、PhysioNet MI、bi2015a、Inria、Trujillo×2、SPIS、TUAR、Siena、TUEP、TUSZ,跨运动想象/ERP/静息/伪迹/癫痫)+ **235 h 自采 29 通道运动想象**(私有);ECG 为 PTB + MIMIC-IV-ECG + Chapman-Shaoxing(不含 PTB-XL);EMG 为 emg2pose + emg2qwerty。统一重采样 EEG/ECG 200 Hz、EMG 1000 Hz。算力:4×V100(DGX)。
-
-**重构对比**(tokenzier 层面):
-
-- **同数据对照**(Table 12,与 LaBraM 同语料同划分同预算):NeuroRVQ raw MSE **0.016** vs LaBraM 1.071(≈67×);delta 0.006 vs 1.561(注:LaBraM 的 delta 带误差反高于其 raw 误差,口径未说明);
-- **OOD 对照**(Table 10,High Gamma 与 Pavlov 工作记忆两数据集):0.084/0.090 vs LaBraM 1.985/2.004,六个频带全领先;
-- **BrainOmni 对照**(Table 11):同归一化下 0.275 vs 0.332——但只在 BrainOmni 的公开**样本数据**上比,不是系统基准。
-
-**组件消融**(Table 2,从 LaBraM 式 baseline 逐项加料,验证 MSE):
-
-| 配置 | EEG | ECG | EMG |
-|---|---|---|---|
-| 1 分支 1 码本,MSE 相位+幅值(LaBraM 式) | 1.509 | 1.956 | 1.996 |
-| 4 分支 8 码本,MSE 相位+幅值 | 0.946 | 1.417 | 1.651 |
-| + log(A) + 时域项 | 0.603 | 0.843 | 1.000 |
-| 4 分支 8 码本,**相位余弦损失** + MSE 幅值 | 0.167 | 0.287 | 0.903 |
-| 全家桶(相位余弦 + log(A) + 时域) | **0.035** | **0.115** | **0.447** |
-
-多尺度架构贡献 37%(1.509→0.946),单换相位损失 5.7×(0.946→0.167),全组合相对 baseline 43×;且从「相位损失+MSE 幅值」(0.167)到全家桶(0.035)还有 4.8× 空间——相位、对数幅值、时域三项强协同。
-
-**下游主结果**(Table 1;EEG 为 Lee et al. 2025a benchmark,10-fold 被试独立 CV,全微调 20 epoch,报 BAcc):
-
-| 模型 | Motor | ERP | Memory | Sleep | Eyes | Mean |
-|---|---|---|---|---|---|---|
-| BIOT | 44.3±7.9 | 50.0±0.0 | 51.0±1.8 | – | 76.3±4.9 | – |
-| CBraMod | 61.4±10.4 | 77.7±5.2 | 57.4±3.8 | 63.5±4.1 | 83.9±4.1 | 68.8±5.5 |
-| MIRepNet | 68.9±8.6 | – | – | – | – | – |
-| EEGPT | 31.3±3.5 | 66.8±14.6 | 52.0±1.7 | 63.4±4.4 | 79.7±3.7 | 58.7±5.6 |
-| NeuroGPT | 68.2±8.3 | 75.7±4.8 | **59.7±2.9** | 67.4±3.3 | 82.7±3.6 | 70.7±4.6 |
-| BrainOmni | 58.5±5.8 | 72.3±4.1 | 51.8±2.3 | – | 85.2±2.2 | – |
-| LaBraM | 63.0±7.6 | 82.2±4.0 | 52.6±2.6 | 65.2±3.7 | 79.9±4.7 | 68.6±4.5 |
-| **NeuroRVQ-EEG** | **70.0±7.3** | **87.6±3.3** | 57.4±2.7 | **72.8±2.8** | **86.9±2.6** | **74.9±3.7** |
-
-ECG(Table 1B,PTB-XL 10-fold 患者分层):43 类任务 NeuroRVQ-ECG Acc/BAcc **79.17/58.33**,对 ECGFounder 65.51/28.96、HuBERT-ECG 62.49/20.71——BAcc 翻倍;5 类任务 ECGFounder 领先(76.55/65.39 vs 70.19/64.50),论文如实承认。EMG(Table 1C,四任务全胜):Discrete Gestures BAcc 70.80 vs PhysioWave 54.70 / TinyMyo 39.70;NinaPro DB5 Acc 41.36 vs ~25;UCI-EMG 89.43。注意 EMG 协议改成**被试级 7:1:2 切分**(既有工作在被试内跨 repetition 切),绝对数整体低于文献值——作者自认且解释了 NinaPro 去掉 no-gesture 类的原因。from-scratch 消融(Table 14):NinaPro 32.8→41.4(预训练增量最大,恰是标注稀缺场景)、Discrete Gestures 65.9→70.8。
-
-**matched-data 下游对照**(Table 15,两模型同数据同预算重训):Motor 0.700 vs 0.570(+13.0)、Eyes 0.869 vs 0.805(+6.4)大幅领先,但 Memory +0.8、Sleep +1.3 的优势远小于 Table 1 里的 +4.8/+7.6,ERP 未进对照——「同数据也赢」成立,但赢的幅度被数据混合放大过。
-
-**参数量**(Table 16–18):EEG 5.9M(NeuroGPT 79.5M、EEGPT 25.7M、LaBraM 5.8M、BIOT 3.2M、CBraMod 4.9M 但分类头 40–73M);ECG **264K**(vs 30M 级基线);EMG 5.9M。
-
 ## 架构图
 
 ![Figure 1 · NeuroRVQ tokenizer:多尺度时间编码器 → 共享嵌入 → Transformer → 逐分支 RVQ → Fourier 目标解码](../assets/neurorvq-framework.png)
@@ -133,14 +92,6 @@ ECG(Table 1B,PTB-XL 10-fold 患者分层):43 类任务 NeuroRVQ-ECG Acc/BAcc **7
 - **标题里的 Generative 至今没有兑现**。全文只有 masked modeling + 判别式下游,RVQ 层次结构的真正红利——coarse-to-fine 生成、AudioLM 式条件生成——一个实验都没有。对站内 [tokenization 演进页](../topics/tokenization.md) 记录的「与自然语言对齐/生成」遗留问题,这篇只交了 tokenizer 半张卷:高保真重构是生成的必要前提,但 token 目前连下游输入都不是(TFM 路线),更不是生成序列。v1 到 v4 相隔半年仍在补 baseline,生成的部分大概率在后续工作里;
 - **基准自建 + 参数量矛盾 + 无代码,可复现性打折**。EEG benchmark 出自同一批作者(Lee、Barmpas 都是本文作者),协议一致是优点,但基线健康度存疑:EEGPT Motor 31.3、BIOT ERP 50.0±0.0 都是退化水平,无法判断是模型不行还是协议不合适。ECG「264K 骨干胜过 30M 基线」是全文最惊艳的数字,却与 Table 13 的 hidden dimension 200/200/40(EEG/ECG/EMG)矛盾——264K 恰是 d=40 的体量,而 Table 18 又把 5.9M(d=200 的体量)记给 EMG;两处必有一处标错。PDF 正文无任何代码链接;
 - **三个模态三套 tokenizer 三套 FM——这是「设计空间」论文而非「统一模型」论文**。modality-adaptive 的代价是没有任何跨模态共享表征(作者自己列为 future direction),与 BIOT/BrainOmni 的跨模态野心相反。真正可迁移的资产是四个旋钮的调法:采样率定 w、频谱宽度定 N、形态时标定卷积核组——这套方法论对想做「心肌/肌电版 LaBraM」的人比 SOTA 数字更有用。另外 EEG 预训练语料混着 235 h 自采私有数据,这部分不可复现,复现实验时要有心理预期。
-
-!!! abstract "复现速查卡"
-    - **代码**:论文正文未附仓库(arXiv 2510.13068 v4);站内 tokenization 演进页记载项目页 [neurorvq.github.io](https://neurorvq.github.io) 与 HF [ntinosbarmpas/NeuroRVQ](https://huggingface.co/ntinosbarmpas/NeuroRVQ)——以项目页为准
-    - **数据**:EEG 13 公开集(BCIC IV-1 / Grasp-Lift / PhysioNet MI / bi2015a / Inria / Trujillo×2 / SPIS / TUAR / Siena / TUEP / TUSZ)+ 235 h 自采 29ch(私有);ECG PTB + MIMIC-IV-ECG + Chapman-Shaoxing;EMG emg2pose + emg2qwerty;统一重采样 EEG/ECG 200 Hz、EMG 1000 Hz
-    - **Tokenizer**:S=4 分支(EEG/ECG 核 21→3、EMG 51→3,8 滤波器,GroupNorm 4 组);RVQ N=8/8/16,每层 8192 × D=128;encoder 12 层 / decoder 3 层;λ_circle=0.1;bs 256,AdamW 5e-5→1e-5 cosine,100 epoch(warmup 10),wd 1e-4,grad clip 3,layer scale 0.001;4×V100
-    - **FM**:对称掩码 0.5,50 epoch,bs 64,AdamW 5e-4(wd 0.05),encoder depth 12;表载 hidden 200/200/40、heads 10(与参数量表矛盾,见下);下游 EEG 全微调 20 epoch、10-fold 被试独立 CV;ECG PTB-XL 9+1 fold 患者分层;EMG 被试级 7:1:2、通道拼接+时间平均 + 单线性头
-    - **未披露**:码本更新机制(EMA/重分配)与 L_Q 权重;straight-through 与否;FM 预训练损失具体形式(交叉熵?权重?);w→D=128 投影;ECG/EMG hidden 维度归属(264K ↔ d=40 矛盾);Wrist Velocity Regression 结果;FM 预训练语料总时长
-    - **关键数字**:同数据 EEG 重构 MSE 0.016 vs LaBraM 1.071(67×);消融 baseline→full 1.509→0.035(43×),单换相位损失 0.946→0.167;EEG mean BAcc 74.9(Motor 70.0 / ERP 87.6 / Sleep 72.8);ECG 43 类 BAcc 58.33(基线 28.96);EMG Discrete Gestures BAcc 70.80;λ_circle=0.1 使 EEG MSE 0.035→0.050;骨干 EEG 5.9M / ECG 264K(存疑)/ EMG 5.9M
 
 ---
 

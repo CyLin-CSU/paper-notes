@@ -65,16 +65,6 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 5. **模型极小**：tokenizer ~1.2M + 下游 ~0.7M ≈ 1.9M，比 BIOT（3.2M）、LaBraM（5.8M+8.6M）小，性能反而更好；
 6. token 质量分析体系：类-token 独有性（uniqueness）、类内一致性（检索 precision@K）、频率学习能力（token 序列谱熵）、token 利用率。
 
-#### 6.5 实验与结果
-
-- 数据集：TUEV、TUAB、CHB-MIT、IIIC Seizure（+ 跨设备 EESM23 ear-EEG 睡眠分期）；
-- 两种设定下绝大多数指标-设定组合最优（例外：多数据集 CHB-MIT 的 balanced acc 0.6471 低于 BIOT 的 0.7068）：多数据集 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比复现 LaBraM +36%）；
-- plug-and-play：集成进 BIOT/LaBraM 后 93% 的指标-设定组合有提升（如单数据集 CHB-MIT 上 LaBraM-TFM 的 AUC-PR 提升 147%）；
-- 跨设备：ear-EEG 睡眠分期（仅 ~8K 标注样本、预训练完全没见过的采集方式）超过 BIOT/LaBraM 14%，EEGPT 因固定通道布局无法参与；
-- 消融：双域联合建模优于单时域（-R）或单频域（-S）变体；masking 策略与比例（频率 0.5 最优）；窗长 0.5s/0.25s hop 其实最好（但为对齐基线统一用 1s/0.5s）；embedding 维度 64 最优；下游 2 层即接近 12 层性能。
-
----
-
 ## 架构图
 
 ![Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测](../assets/tfm-framework.png)
@@ -94,12 +84,6 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 - 去掉位置编码的反直觉设计有消融支撑：PE 会让同一 motif 因出现位置不同学成不同 token → 词表冗余；motif 词表要的正是平移不变性。
 - token 可解释性分析（如 PLED 类的 token 4035 稳定对应'棘波-慢波'周期模式）是把 NLP 的 token 分析方法迁移到 EEG 的漂亮示范。
 - 作者自认局限：固定窗长可能把大 pattern 切断到不同窗口，导致同一事件被分到不同 token——这是切分式 tokenization 的共同软肋。
-
-!!! abstract "复现速查卡"
-    - **代码**：[github.com/Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer)（含预训练权重与全部预处理脚本）
-    - **关键超参**：tokenizer ~1.2M + 下游 ~0.7M；STFT 窗 200 点/Hann/hop 100；码本 8192；token embedding 64；频带掩码率 0.5 + 时间掩码 + 对称掩码；tokenizer 内**无位置编码**；Ray Tune + Optuna 调参
-    - **数据**：TUEV/TUAB/CHB-MIT/IIIC（遵循 BIOT 划分）；跨设备 EESM23
-    - **算力参考**：无 GPU 规模要求披露——tokenizer 极小，消费级单卡可训
 
 ---
 
