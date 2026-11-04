@@ -1640,11 +1640,33 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="三、各自最有特色的设计">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、配对解码如何适配
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、跨被试、跨时间与通道评测
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、跨被试、跨时间与通道评测">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
@@ -2062,11 +2084,33 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="三、各自最有特色的设计">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、配对解码如何适配
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、跨被试、跨时间与通道评测
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、跨被试、跨时间与通道评测">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
@@ -2102,7 +2146,7 @@
 
 
 <h1 id="_1">通道适配与多任务学习<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>先看两件事：<strong>不同通道怎么输入同一个模型，不同任务怎么使用同一个模型</strong>。原有九篇之外，加入 NeuroRVQ、BrainRVQ、CodeBrain；NeuroDETR 作为监督事件检测方法单列训练类型。</p>
+<p>先看两件事：<strong>不同通道怎么输入同一个模型，不同任务怎么使用同一个模型</strong>。通用表示学习、配对解码与基准评测分别说明。</p>
 <h2 id="channel-adaptation">一、通道如何适配<a class="headerlink" href="#channel-adaptation" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -2180,7 +2224,18 @@
 </tr>
 </tbody>
 </table>
-<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、EEGPT、BrainGPT、NeuroLM 的通道表覆盖范围与使用阶段不同，这里统一写成 <strong>通道 embedding</strong>。LUNA 根据电极坐标编码，CBraMod 根据输入邻域动态生成位置编码，EEGMoE 则先在输入端统一电极网格。</p>
+<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、EEGPT、BrainGPT、NeuroLM 的通道表覆盖范围与使用阶段不同，这里统一写成 <strong>通道 embedding</strong>。</p>
+<ul>
+<li>
+<p><strong>LUNA</strong>：根据电极坐标生成编码。</p>
+</li>
+<li>
+<p><strong>CBraMod</strong>：根据输入邻域动态生成位置编码。</p>
+</li>
+<li>
+<p><strong>EEGMoE</strong>：先在输入端统一电极网格。</p>
+</li>
+</ul>
 <h3 id="_2">单通道建模后，空间关系在哪里补<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
 <table>
 <thead>
@@ -2203,7 +2258,14 @@
 </tr>
 </tbody>
 </table>
-<p>两者都先做单通道建模，但 TFM 的主模型预训练已经学习跨通道关系；BrainGPT 的电极图在下游阶段训练。</p>
+<ul>
+<li>
+<p><strong>TFM</strong>：主模型预训练时已经学习跨通道关系。</p>
+</li>
+<li>
+<p><strong>BrainGPT</strong>：下游阶段才通过电极图整合通道。</p>
+</li>
+</ul>
 <h3 id="_3">通道兼容的边界<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
 <ul>
 <li><strong>通道 embedding</strong>：依赖通道标识与已有向量表；缺通道、换通道数，与增加训练时未见的电极不是同一件事。</li>
@@ -2327,8 +2389,67 @@
 <li><strong>CodeBrain</strong>：① <strong>ACPE 动态位置编码</strong>处理通道邻域；② <strong>全局卷积 SSM + 局部注意力</strong>整合信号，分类时使用预训练 encoder。</li>
 <li><strong>NeuroDETR</strong>：① <strong>电极坐标混合 + 脑区分组</strong>保留空间信息；② <strong>query 事件检测头</strong>同时预测类别与起止时间，区别于整段 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的单标签分类。</li>
 </ul>
-<p><strong>两个多任务机制的区别</strong>：BrainGPT 共享的是电极图与骨干，按任务使用不同分类头；NeuroLM 共享的是 <abbr title="大语言模型 Large Language Model">LLM</abbr>，通过文本指令选择任务。能输入多种通道布局，不等于已经验证对未见任务的零样本泛化。</p>
-<h3 id="_5">关联论文<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p><strong>两个多任务机制的区别</strong>：</p>
+<ul>
+<li>
+<p><strong>BrainGPT</strong>：共享电极图与骨干，各任务使用独立分类头。</p>
+</li>
+<li>
+<p><strong>NeuroLM</strong>：共享 <abbr title="大语言模型 Large Language Model">LLM</abbr>，通过文本指令选择任务。</p>
+</li>
+</ul>
+<p>通道布局兼容与未见任务泛化，需要分别验证。</p>
+<h2 id="_5">四、配对解码如何适配<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>通道 / 被试处理</th>
+<th>下游输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../papers/defossez-speech/">Défossez</a></td>
+<td>空间注意力统一通道，每位被试设置独立线性层</td>
+<td>语音候选的相似度</td>
+</tr>
+<tr>
+<td><a href="../../papers/ssm2mel/">SSM2Mel</a></td>
+<td>被试 embedding 调制信号特征</td>
+<td>mel 时频图</td>
+</tr>
+<tr>
+<td><a href="../../papers/delta/">DELTA</a></td>
+<td>词级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征经 RVQ 编码，采用固定的通道与频段配置</td>
+<td>文本 <abbr title="词元，模型处理的最小输入单元">token</abbr></td>
+</tr>
+<tr>
+<td><a href="../../papers/guided/">GUIDED</a></td>
+<td>通道注意力 + 时空卷积提取脑信号表示</td>
+<td>图像候选的相似度，或图像重建条件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>DELTA</strong>：用 QLoRA 适配 LLaDA，<abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为文本生成条件；原文未验证跨任务共享同一套模型。</p>
+</li>
+<li>
+<p><strong>GUIDED</strong>：同一个脑信号表示用于分类、检索与图像重建，但各任务使用的损失与解码模块不同。</p>
+</li>
+</ul>
+<h2 id="_6">五、跨被试、跨时间与通道评测<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
+<ul>
+<li>
+<p><strong><a href="../../papers/crosspt-eeg/">CrossPT-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a></strong>：把被试内、跨被试、跨时间的视觉解码分开评测，检查模型是否依赖特定被试或记录时间。</p>
+</li>
+<li>
+<p><strong><a href="../../papers/eegarena/">EEGArena</a></strong>：统一数据划分、训练与评测接口，同时保留各模型的输入处理；分开比较预训练收益、数据规模和通道兼容性。</p>
+</li>
+</ul>
+<p>多任务共享、跨被试迁移、跨时间迁移是不同问题，需要分别注明训练与测试的数据关系。</p>
+<h3 id="_7">关联论文<a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
 <p><a href="../../papers/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/eegpt/">EEGPT</a> · <a href="../../papers/braingpt/">BrainGPT</a> · <a href="../../papers/neurolm/">NeuroLM</a> · <a href="../../papers/tfm-tokenizer/">TFM</a> · <a href="../../papers/cbramod/">CBraMod</a> · <a href="../../papers/luna/">LUNA</a> · <a href="../../papers/eegmoe/">EEGMoE</a></p>
 <p><a href="../pretraining/">预训练范式对比</a> · <a href="../tokenization/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> Tokenization 演进</a> · <a href="../../comparison/">十三篇方法对比</a></p>
 <p>新增论文原文：<a href="https://arxiv.org/abs/2510.13068">NeuroRVQ</a> · <a href="https://arxiv.org/abs/2602.16951">BrainRVQ</a> · <a href="https://arxiv.org/abs/2506.09110">CodeBrain</a> · <a href="https://arxiv.org/abs/2610.20349">NeuroDETR</a>。</p>

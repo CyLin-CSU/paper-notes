@@ -1652,6 +1652,17 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
+        配对解码方法的权重来源
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         关联页面
       
     </span>
@@ -1962,6 +1973,17 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
+        配对解码方法的权重来源
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         关联页面
       
     </span>
@@ -1990,7 +2012,7 @@
 
 
 <h1 id="_1">基座来源与模型参数量<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>原有九篇之外，加入 NeuroRVQ、BrainRVQ、CodeBrain 与 NeuroDETR。<strong>架构借鉴与预训练权重复用分开看</strong>；NeuroDETR 标为监督事件检测，不按通用预训练模型解释。</p>
+<p><strong>架构借鉴与预训练权重复用分开看</strong>。主模型与 tokenizer 分别统计，配对解码使用的外部基座另列。</p>
 <h2 id="_2">总览表<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -2096,8 +2118,61 @@
 </tr>
 </tbody>
 </table>
-<p><strong>参数口径</strong>：M = 百万，B = 十亿；主模型与 tokenizer 分开统计。“—”表示无独立离散 tokenizer。EEGPT 按官方 Large encoder 结构估算；NeuroLM 的基座数字不包含扩词与新增模块，论文含 <abbr title="向量量化 Vector Quantization">VQ</abbr> encoder 的总量不作为 <abbr title="大语言模型 Large Language Model">LLM</abbr> 参数量。</p>
-<h2 id="_3">关联页面<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p><strong>参数口径</strong>：M = 百万，B = 十亿；主模型与 tokenizer 分开统计。“—”表示无独立离散 tokenizer。</p>
+<ul>
+<li>
+<p><strong>EEGPT</strong>：按官方 Large encoder 结构估算。</p>
+</li>
+<li>
+<p><strong>NeuroLM</strong>：基座数字不包含扩词与新增模块，含 <abbr title="向量量化 Vector Quantization">VQ</abbr> encoder 的总量不作为 <abbr title="大语言模型 Large Language Model">LLM</abbr> 参数量。</p>
+</li>
+</ul>
+<h2 id="_3">配对解码方法的权重来源<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>训练的脑信号模型</th>
+<th>复用的预训练模型</th>
+<th>参数量口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../papers/delta/">DELTA</a></td>
+<td>RVQ tokenizer 从零训练</td>
+<td>LLaDA-8B，用 QLoRA 适配</td>
+<td>主模型为 8B 基座；tokenizer 未单列</td>
+</tr>
+<tr>
+<td><a href="../../papers/guided/">GUIDED</a></td>
+<td>ATM encoder 与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 条件扩散先验</td>
+<td>CLIP、SDXL 等视觉模型</td>
+<td>ATM encoder 约 3.18M；不把冻结视觉模型计入脑端参数量</td>
+</tr>
+<tr>
+<td><a href="../../papers/defossez-speech/">Défossez</a></td>
+<td>卷积脑信号 encoder 从零训练</td>
+<td>冻结的 wav2vec 2.0</td>
+<td>脑端参数量未在本专题单列</td>
+</tr>
+<tr>
+<td><a href="../../papers/ssm2mel/">SSM2Mel</a></td>
+<td><abbr title="脑电图 Electroencephalogram">EEG</abbr> 到 mel 的监督模型从零训练</td>
+<td>未加载外部预训练基座</td>
+<td>主模型参数量未单列</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>LTFT</strong>：学习的是时频窗口与任务网络，不依赖外部预训练权重。</p>
+</li>
+<li>
+<p><strong>CrossPT-<abbr title="脑电图 Electroencephalogram">EEG</abbr> / EEGArena</strong>：属于数据与评测基准，不作为一款主模型统计参数量。</p>
+</li>
+</ul>
+<h2 id="_4">关联页面<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <p><a href="../data-landscape/">预训练数据全景</a> · <a href="../multi-task/">通道适配与多任务学习</a> · <a href="../../comparison/">十三篇方法对比</a></p>
 <p>新增论文原文：<a href="https://arxiv.org/abs/2510.13068">NeuroRVQ</a> · <a href="https://arxiv.org/abs/2602.16951">BrainRVQ</a> · <a href="https://arxiv.org/abs/2506.09110">CodeBrain</a> · <a href="https://arxiv.org/abs/2610.20349">NeuroDETR</a>。</p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->

@@ -1614,11 +1614,22 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="预训练数据">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配对数据与评测数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配对数据与评测数据">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
@@ -1956,11 +1967,22 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="预训练数据">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配对数据与评测数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="配对数据与评测数据">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         关联论文
@@ -2089,8 +2111,80 @@
 </tbody>
 </table>
 <p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 这里列的是无监督预训练的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据；ECG 与跨数据集监督训练属于其他实验设定，不计入这 1000 万片段。</p>
-<p>NeuroRVQ 另有 ECG / EMG 数据，本表只列 <abbr title="脑电图 Electroencephalogram">EEG</abbr>；NeuroDETR 列的是监督任务数据，不与其他方法的预训练规模直接比较。BrainRVQ 与 CodeBrain 的小时数为各自原文的近似口径。</p>
-<h3 id="_2">关联论文<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<ul>
+<li>
+<p><strong>NeuroRVQ</strong>：另有 ECG / EMG 数据，本表只列 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，各模态分别训练。</p>
+</li>
+<li>
+<p><strong>NeuroDETR</strong>：列的是监督事件检测数据，没有独立通用预训练语料。</p>
+</li>
+<li>
+<p><strong>BrainRVQ</strong>：报告约 9200h 清洗后的 TUEG。</p>
+</li>
+<li>
+<p><strong>CodeBrain</strong>：报告约 9246h 清洗后的 TUEG。小时数按各自原文保留。</p>
+</li>
+</ul>
+<h2 id="_2">配对数据与评测数据<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>数据来源</th>
+<th>数据用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../papers/defossez-speech/">Défossez</a></td>
+<td>4 个脑信号–语音配对数据集，含 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 与 MEG</td>
+<td>训练语音表示对齐，评测候选检索</td>
+</tr>
+<tr>
+<td><a href="../../papers/ssm2mel/">SSM2Mel</a></td>
+<td>SparrKULee</td>
+<td>监督训练 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 到 mel 时频图的映射</td>
+</tr>
+<tr>
+<td><a href="../../papers/delta/">DELTA</a></td>
+<td>ZuCo 1.0 + 2.0</td>
+<td>训练词级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> tokenizer，适配文本生成模型</td>
+</tr>
+<tr>
+<td><a href="../../papers/guided/">GUIDED</a></td>
+<td>THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr>；另验证 MEG 迁移</td>
+<td>训练脑信号与图像表示的对齐</td>
+</tr>
+<tr>
+<td><a href="../../papers/crosspt-eeg/">CrossPT-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a></td>
+<td>16 位被试的视觉 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，包含两阶段采集</td>
+<td>跨被试、跨时间评测</td>
+</tr>
+<tr>
+<td><a href="../../papers/eegarena/">EEGArena</a></td>
+<td>23 个公开数据集，构成 57 个下游任务</td>
+<td>统一比较模型与训练协议</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>DELTA</strong>：tokenizer 与语言模型的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 适配均使用 ZuCo 训练数据，不把它计为额外的大规模通用语料。</p>
+</li>
+<li>
+<p><strong>CrossPT-<abbr title="脑电图 Electroencephalogram">EEG</abbr></strong>：两阶段记录用于区分跨被试和跨时间迁移。</p>
+</li>
+<li>
+<p><strong>EEGArena</strong>：数据规模指评测覆盖面，不表示所有模型共同使用这些数据预训练。</p>
+</li>
+<li>
+<p><strong><a href="../../papers/learnable-tf/">LTFT</a></strong>：在监督任务中学习时频前端，没有单列通用预训练语料。</p>
+</li>
+<li>
+<p><strong><a href="../../papers/surrogate-brain/">NPI</a></strong>：使用 fMRI 训练代理脑并做虚拟扰动，单独作为有效连接方法参考，不计入 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据规模。</p>
+</li>
+</ul>
+<h3 id="_3">关联论文<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
 <p><a href="../../papers/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/eegpt/">EEGPT</a> · <a href="../../papers/braingpt/">BrainGPT</a> · <a href="../../papers/neurolm/">NeuroLM</a> · <a href="../../papers/tfm-tokenizer/">TFM</a> · <a href="../../papers/cbramod/">CBraMod</a> · <a href="../../papers/luna/">LUNA</a> · <a href="../../papers/eegmoe/">EEGMoE</a></p>
 <p><a href="../../datasets/">数据集索引</a> · <a href="../pretraining/">预训练范式对比</a> · <a href="../multi-task/">通道适配与多任务学习</a> · <a href="../../comparison/">十三篇方法对比</a></p>
 <p>新增论文原文：<a href="https://arxiv.org/abs/2510.13068">NeuroRVQ</a> · <a href="https://arxiv.org/abs/2602.16951">BrainRVQ</a> · <a href="https://arxiv.org/abs/2506.09110">CodeBrain</a> · <a href="https://arxiv.org/abs/2610.20349">NeuroDETR</a>。</p>

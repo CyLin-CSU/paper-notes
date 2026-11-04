@@ -1638,6 +1638,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⑤ 配对解码与前端训练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2110,6 +2121,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⑤ 配对解码与前端训练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,12 +2272,26 @@
 <td><strong>信号 embedding</strong></td>
 <td>特征 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + commitment loss，与事件检测损失联合训练</td>
 </tr>
+<tr>
+<td>DELTA</td>
+<td>RVQ 码表</td>
+<td><strong>不掩码</strong></td>
+<td><strong>词级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征</strong></td>
+<td>特征 <abbr title="均方误差 Mean Squared Error">MSE</abbr> + <abbr title="向量量化 Vector Quantization">VQ</abbr> 损失</td>
+</tr>
 </tbody>
 </table>
 <p><strong><abbr title="向量量化 Vector Quantization">VQ</abbr> 的稳定性技巧</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / TFM 用 <strong>EMA 更新 <abbr title="码本，离散 token 的可查询向量表">codebook</abbr></strong>，稳定词表。</p>
-<p>NeuroRVQ / BrainRVQ / NeuroDETR 也用 EMA 更新码表；NeuroDETR 的 <abbr title="向量量化 Vector Quantization">VQ</abbr> 随监督检测一起训练，没有独立的通用 tokenizer 预训练阶段。</p>
-<p><strong>对称掩码</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 提出，TFM 沿用）：mask 与其补集各做一次——两个互补视角；
-<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用在主模型码字预测，TFM 用在 tokenizer 训练。</p>
+<p><strong>NeuroDETR</strong>：<abbr title="向量量化 Vector Quantization">VQ</abbr> 随监督检测一起训练，没有独立的通用 tokenizer 预训练阶段。</p>
+<p><strong>对称掩码</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 提出，TFM 沿用）：mask 与其补集各做一次——两个互补视角；</p>
+<ul>
+<li>
+<p><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>：用于主模型的离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测。</p>
+</li>
+<li>
+<p><strong>TFM</strong>：用于 tokenizer 的时频图重建。</p>
+</li>
+</ul>
 <h2 id="_3">二、主模型预测目标<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <h3 id="1-biot">① 对比学习：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr><a class="headerlink" href="#1-biot" title="Permanent link">#</a></h3>
 <table>
@@ -2387,7 +2423,15 @@
 </tr>
 </tbody>
 </table>
-<p>BrainGPT / NeuroLM 的掩码限制<strong>注意力可见范围</strong>，不随机挖掉输入。BrainGPT 开头加电极条件 <abbr title="词元，模型处理的最小输入单元">token</abbr>；NeuroLM 冻结 <abbr title="向量量化 Vector Quantization">VQ</abbr> encoder、加载 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 并扩充 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 词表。</p>
+<p>BrainGPT / NeuroLM 的掩码限制<strong>注意力可见范围</strong>，不随机挖掉输入。</p>
+<ul>
+<li>
+<p><strong>BrainGPT</strong>：在序列开头加入电极条件 <abbr title="词元，模型处理的最小输入单元">token</abbr>，预测下一时刻的原始信号 patch。</p>
+</li>
+<li>
+<p><strong>NeuroLM</strong>：冻结 <abbr title="向量量化 Vector Quantization">VQ</abbr> encoder，加载 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 并扩充 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 词表，预测下一时刻的离散 <abbr title="词元，模型处理的最小输入单元">token</abbr>。</p>
+</li>
+</ul>
 <p><strong>NeuroLM 防遗忘</strong>：预训练与指令微调都混入少量纯文本。</p>
 <p><strong>BrainRVQ 的自回归在码字层级上</strong>：同一 patch 从粗到细预测 RVQ 码字，不是沿时间预测下一个 patch。</p>
 <h3 id="4-neurodetr">④ 相关方法：NeuroDETR<a class="headerlink" href="#4-neurodetr" title="Permanent link">#</a></h3>
@@ -2410,6 +2454,61 @@
 </tbody>
 </table>
 <p><strong>方法创新</strong>：① <strong>FOCAL 事件感知注意力</strong>，把计算集中到可能出现事件的片段；② <strong>时间多尺度 <abbr title="向量量化 Vector Quantization">VQ</abbr> + 空间金字塔 <abbr title="向量量化 Vector Quantization">VQ</abbr></strong>，形成事件记忆，再由 query 联合预测类别与边界。它不属于上面的随机掩码预训练。</p>
+<h3 id="5">⑤ 配对解码与前端训练<a class="headerlink" href="#5" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>训练输入</th>
+<th>预测 / 对齐目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../papers/delta/">DELTA</a></td>
+<td>被掩 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr>；<abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> + 被掩文本 <abbr title="词元，模型处理的最小输入单元">token</abbr></td>
+<td>第一阶段预测 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr>；第二阶段预测文本 <abbr title="词元，模型处理的最小输入单元">token</abbr></td>
+</tr>
+<tr>
+<td><a href="../../papers/guided/">GUIDED</a></td>
+<td><abbr title="脑电图 Electroencephalogram">EEG</abbr> 与配对图像</td>
+<td>CLIP 图像 embedding；生成阶段学习图像先验</td>
+</tr>
+<tr>
+<td><a href="../../papers/defossez-speech/">Défossez</a></td>
+<td>脑信号与配对语音</td>
+<td>语音 embedding</td>
+</tr>
+<tr>
+<td><a href="../../papers/ssm2mel/">SSM2Mel</a></td>
+<td><abbr title="脑电图 Electroencephalogram">EEG</abbr> 与配对语音</td>
+<td>mel 时频图</td>
+</tr>
+<tr>
+<td><a href="../../papers/learnable-tf/">LTFT</a></td>
+<td><abbr title="脑电图 Electroencephalogram">EEG</abbr> 与任务标签</td>
+<td>分类标签</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong>DELTA</strong>：先训练 RVQ tokenizer，再用掩码 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 适配 LLaDA；文本微调时保留 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 条件，只掩码文本。</p>
+</li>
+<li>
+<p><strong>GUIDED</strong>：脑端对齐预训练 CLIP 的图像 embedding；重建图像时，再训练 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 条件的扩散先验。</p>
+</li>
+<li>
+<p><strong>Défossez</strong>：冻结语音模型，用配对数据对比对齐脑信号与语音表示。</p>
+</li>
+<li>
+<p><strong>SSM2Mel</strong>：直接监督回归 mel 时频图，未设置独立的自监督预训练阶段。</p>
+</li>
+<li>
+<p><strong>LTFT</strong>：分类损失同时更新时频窗口与下游网络，未设置独立的 tokenizer 训练阶段。</p>
+</li>
+</ul>
+<p>这几种方法的输出目标不同，配对解码与通用 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表示预训练分开列。</p>
 <h3 id="_4">关联论文<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
 <p><a href="../../papers/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/eegpt/">EEGPT</a> · <a href="../../papers/braingpt/">BrainGPT</a> · <a href="../../papers/neurolm/">NeuroLM</a> · <a href="../../papers/tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/cbramod/">CBraMod</a> · <a href="../../papers/luna/">LUNA</a> · <a href="../../papers/eegmoe/">EEGMoE</a> · <a href="../../papers/jet/">JET</a> · <a href="../../papers/eegdm/">EEGDM</a> · <a href="../../papers/not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a> · <a href="../../papers/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></p>
 <p>新增论文原文：<a href="https://arxiv.org/abs/2510.13068">NeuroRVQ</a> · <a href="https://arxiv.org/abs/2602.16951">BrainRVQ</a> · <a href="https://arxiv.org/abs/2506.09110">CodeBrain</a> · <a href="https://arxiv.org/abs/2610.20349">NeuroDETR</a>。</p>
