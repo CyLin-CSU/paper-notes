@@ -466,17 +466,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2043,17 +2032,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2145,29 +2123,6 @@
 <li><strong>线性注意力 Transformer</strong> 解决多通道长句子的二次复杂度问题（低秩 E/F 投影，注意力图 N×N → N×d）；</li>
 <li>频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 CHB-MIT、IIIC 与可穿戴 HAR 任务尤其有用；</li>
 </ol>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM / EEGPT / BrainGPT / TFM-Tokenizer</td>
-<td>全部把 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 作为公共对照组——事实上的 baseline 标尺</td>
-</tr>
-<tr>
-<td>TFM-Tokenizer</td>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>-TFM：仅把 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的输入 patch 投影替换为 TFM <abbr title="词元，模型处理的最小输入单元">token</abbr>，93% 指标-设定组合有提升 → 骨干仍有价值，弱在输入表示</td>
-</tr>
-<tr>
-<td>EEGPT（附录 F）</td>
-<td>批评其 FFT 只保留频谱能量、丢失相位，且 1s patch 的 FFT 过粗 → <abbr title="事件相关电位 Event-Related Potential">ERP</abbr>/P300 等时域任务表现差（PhysioP300 仅 0.5485）</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../tfm-tokenizer/">上一篇：TFM-Tokenizer</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../labram/">下一篇：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

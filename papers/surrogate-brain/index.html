@@ -862,17 +862,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2065,17 +2054,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2135,46 +2113,6 @@
 <p><em>Figure 1 · NPI 全流程：(a) 观测的多脑区信号；(b) MLP 学单步动力学；(c) 逐区虚拟扰动；(d) 读出全脑 EC。(e,f) 递归生成验证 FC（r=0.97）；(g,h) 扰动响应差给兴奋（b→a 升）/抑制（b→c 降）；(i) 合成数据上 NPI-EC 对真值 r=0.95；(j) 真实 fMRI 上的 seed-based EC</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/surrogate-human-ebc.png" data-desc-position="bottom"><img alt="Figure 3 · HCP 800 人的群体级 EBC" src="../../assets/surrogate-human-ebc.png"></a></p>
 <p><em>Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制，色标 Exc/Inh）；(b) 皮层区归入七个功能网络；(c) 模型 FC 对经验 FC r=0.97；(d) 逐网络的 seed-based FC 空间模式；(e) 逐网络的 seed-based EC（红兴奋/蓝抑制）；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<p>站内三篇候选对照都查过，没有与本篇的真实对话（本篇不引它们，主题坐标系也不同），下面如实标注；本篇真正的参照系是经典 EC 方法。</p>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../braingpt/">BrainGPT</a></td>
-<td>都把神经网络训成神经信号的代理模型，用途相反：BrainGPT 是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上的表征/解码工具（模型输出是目的），NPI 把代理模型当<strong>被解剖的对象</strong>（模型只是扰动实验的容器）。站内 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型训完后是否也能这样扰动出「区间因果」，本篇提供了模板，但 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的源定位模糊与容积传导会让「区」的定义先出问题——暂无直接对话</td>
-</tr>
-<tr>
-<td><a href="../eegdm/">EEGDM</a></td>
-<td>两种「模型作工具」的分工：EEGDM 用生成模型产数据训表征，模型是数据工厂；NPI 用模型做反事实实验，模型是实验室。同一个代理模型在两个框架里甚至可以复用——暂无直接对话</td>
-</tr>
-<tr>
-<td><a href="../eegmoe/">EEGMoE</a></td>
-<td>被试间差异的两种处理：EEGMoE 用专家分化吸收个体差异，NPI 逐被试训代理并用「跨 session 一致性 &gt; 跨被试相关性」证明个体信号大于方法噪声。两个证据可以互相支撑，但技术上没有交集——暂无直接对话</td>
-</tr>
-<tr>
-<td>Granger 因果</td>
-<td>论文的主要对比基线，三套仿真全胜（r=0.95 那套 p&lt;10⁻³）。GC 是预测性定义，方向判得动、强度与符号测不准；NPI 的干预主义定义与实验 EC 同族，这是它敢叫 EC 而 GC 不敢的差别</td>
-</tr>
-<tr>
-<td>DCM</td>
-<td>模型依赖路线的代表。EC 定义为状态空间耦合参数，节点一多参数爆炸（66 节点上 DCM 实际不可用，公开合成数据上被 NPI 以 AUC 显著压制）。但 DCM 在小规模、假设充分时有完整的统计推断框架，NPI 没有等价物</td>
-</tr>
-<tr>
-<td>Das &amp; Fiete（2020）</td>
-<td>本篇动机的直接来源之一：强循环网络中从活动反推连接有系统性误差。NPI 的回答是绕开权重读出，改做行为学式的扰动实验</td>
-</tr>
-<tr>
-<td>Pearl / Woodward 的因果观</td>
-<td>NPI 的 EC 定义显式对齐干预主义因果（do-操作/操作主义），是全文语义合法性的地基——EC 推得对不对，取决于「代理模型的扰动响应 ≈ 真实脑的扰动响应」这个迁移假设，而这是全文唯一无法直接验证的一环（CCEP 只是间接证据）</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../braingpt/">BrainGPT（同样训代理模型，但作表征工具而非实验对象）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../eegdm/">EEGDM（模型作生成工具 vs 本篇作科学工具）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../eegmoe/">EEGMoE（被试间差异的另一种处理）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

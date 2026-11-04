@@ -1234,17 +1234,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2109,17 +2098,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2194,49 +2172,6 @@ S_{c,a} = \alpha_1 \tilde{S}_{neural} + \alpha_2 \tilde{S}_{clean} + \alpha_3 \t
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/brainrvq-framework.png" data-desc-position="bottom"><img alt="Figure 1 · BrainRVQ 总体框架:(A) DD-RVQ tokenizer;(B) 层次自回归掩码预训练;(C) 下游适配" src="../../assets/brainrvq-framework.png"></a></p>
 <p><em>Figure 1 · (A) DD-RVQ for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Tokenization——异构 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 经 Neural Transformer Encoder 得潜在表示,时域支路直接进 RVQ(quantize_t),频域支路经 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 进 RVQ(quantize_f),各自 3 层码本级联,Decoder_t 重构波形、Decoder_f 重构幅值与相位,Embedding Loss + 重构损失联合优化(图中右上角的「Restruction Loss」为原文拼写错误);(B) Pre-training Process——Information Masking 选高信息 patch,Temporal Conv → Transformer Blocks → Hierarchical RVQ Predictor 逐层自回归预测 <abbr title="词元，模型处理的最小输入单元">token</abbr>(Z^(l) 条件于前层);(C) Downstream Tasks——预训练编码器接任务头微调</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td>范式直系:同走「<abbr title="词元，模型处理的最小输入单元">token</abbr> 只当预训练目标、推理丢弃、下游微调连续编码器」路线;<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的单层时域 <abbr title="向量量化 Vector Quantization">VQ</abbr> 正是本文批评的「单域 + 扁平量化」,换成了双域 3 层 RVQ</td>
-</tr>
-<tr>
-<td><a href="../neurorvq/">NeuroRVQ</a></td>
-<td>RVQ 分支姊妹篇:NeuroRVQ 用多尺度卷积在<strong>单时域</strong>做 RVQ、以重构保真为主卖点;BrainRVQ 共享编码器 + <strong>双域双码本</strong> + 层间自回归。两篇对相位的态度不同——NeuroRVQ 用圆周相位损失处理角度周期性,BrainRVQ 直接 <abbr title="均方误差 Mean Squared Error">MSE</abbr> 重构相位(平均 r 只有 0.577)</td>
-</tr>
-<tr>
-<td><a href="../codebrain/">CodeBrain</a></td>
-<td>「双域 tokenization」的最近竞品,也是本文最该比而没比的对手:CodeBrain 用独立时/频卷积编码器 + 双 <abbr title="向量量化 Vector Quantization">VQ</abbr> 码本 + Mamba 骨干,BrainRVQ 用共享 Transformer 编码器 + 双 RVQ + BERT 式掩码 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr>——双域在编码器层(前者)还是码本层(后者)是两条可对照的设计路线</td>
-</tr>
-<tr>
-<td><a href="../cbramod/">CBraMod</a></td>
-<td>最强基线与同语料同伴:同为 TUEG 预训练、同为 TUAB/TUEV 官方划分;监测指标口径 8 个数据集 7 胜 1 负(唯一败仗 TUAB),另有 CHB-MIT BalAcc、TUAB AUC-PR 两个次指标落后,且 7 胜里 4 场在噪声内——「超越 CBraMod」的成色要按任务拆开看</td>
-</tr>
-<tr>
-<td><a href="../tfm-tokenizer/">TFM-Tokenizer</a></td>
-<td><abbr title="词元，模型处理的最小输入单元">token</abbr> 用法的分岔口:TFM 把离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 做成下游输入与可插拔组件;BrainRVQ 与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 一样让 <abbr title="词元，模型处理的最小输入单元">token</abbr> 止步于预训练目标——RVQ 的层次结构目前只用来「教」编码器,没进入推理链路</td>
-</tr>
-<tr>
-<td><a href="../neurolm/">NeuroLM</a></td>
-<td>层次化的两种含义:NeuroLM 的层次在词表层级(<abbr title="向量量化 Vector Quantization">VQ</abbr> 码并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表),BrainRVQ 的层次在 RVQ 深度(层间自回归);NeuroLM 曾实验证实相位重构对下游贡献很小,与本文保留全权重相位损失形成张力</td>
-</tr>
-<tr>
-<td><a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td>预训练语料口径的对照:<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 官方权重是多生物信号混合预训练(<abbr title="脑电图 Electroencephalogram">EEG</abbr>+ECG+HAR),本文表格统一说成「TUH 预训练」——复现横向对比时注意 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的语料其实不同源</td>
-</tr>
-<tr>
-<td>SoundStream / EnCodec / AudioLM</td>
-<td>RVQ 与 coarse-to-fine 自回归的出处:本文是音频压缩/生成范式在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 掩码预训练上的一次较完整移植(级联码本 + 层间 teacher forcing + 层加权)</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../neurorvq/">NeuroRVQ(RVQ 分支先行者:多尺度卷积单时域)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v2.06A8.52 8.52 0 0 0 4.05 9H2v6h2.06A8.5 8.5 0 0 0 9 19.95V22h6v-2.06A8.5 8.5 0 0 0 19.95 15H22V9h-2.06A8.52 8.52 0 0 0 15 4.05V2m-4 2h2v2h-2m-2 .25V8h6V6.25c1.18.61 2.14 1.57 2.75 2.75H16v6h1.75A6.4 6.4 0 0 1 15 17.75V16H9v1.75A6.4 6.4 0 0 1 6.25 15H8V9H6.25A6.4 6.4 0 0 1 9 6.25M4 11h2v2H4m14-2h2v2h-2m-7 5h2v2h-2"></path></svg></span> <a href="../codebrain/">CodeBrain(双域 <abbr title="向量量化 Vector Quantization">VQ</abbr> + Mamba 的最近竞品)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 7A1.5 1.5 0 0 1 4 5.5 1.5 1.5 0 0 1 5.5 4 1.5 1.5 0 0 1 7 5.5 1.5 1.5 0 0 1 5.5 7m15.91 4.58-9-9C12.05 2.22 11.55 2 11 2H4c-1.11 0-2 .89-2 2v7c0 .55.22 1.05.59 1.41l8.99 9c.37.36.87.59 1.42.59s1.05-.23 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.56-.23-1.06-.59-1.42"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(单层 <abbr title="向量量化 Vector Quantization">VQ</abbr> + <abbr title="词元，模型处理的最小输入单元">token</abbr> 作目标的范式起点)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer(<abbr title="词元，模型处理的最小输入单元">token</abbr> 作输入的可插拔路线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-5v2h5v13l-5-6v9h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-9 15H5l5-6m0-9H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5v2h2V1h-2z"></path></svg></span> <a href="../cbramod/">CBraMod(同语料最强基线)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 10H5L3 8l2-2h6V3l1-1 1 1v1h6l2 2-2 2h-6v2h6l2 2-2 2h-6v6a2 2 0 0 1 2 2H9a2 2 0 0 1 2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

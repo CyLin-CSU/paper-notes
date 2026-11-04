@@ -1048,17 +1048,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2087,17 +2076,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2185,41 +2163,6 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/jet-arch.png" data-desc-position="bottom"><img alt="Figure 7 · JET 架构：原始 EEG → patchify + 加噪 → 线性投影 embedding → L 层 Transformer 块 → unpatch 输出预测波形" src="../../assets/jet-arch.png"></a></p>
 <p><em>Figure 7 · JET 架构：patch 化 tokenization（保留通道身份）→ Transformer 堆叠 → 反 patch 投影回信号维度</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CBraMod</td>
-<td>本文用它做下游效用评估的骨干分类器——生成质量最终由它的准确率增益来背书，是生成侧的「裁判」</td>
-</tr>
-<tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / TFM-Tokenizer</td>
-<td>谱域对照：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 把频谱当<strong>重构目标</strong>学表示、TFM 把时频图当<strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>；JET 直接生成<strong>原始时域波形</strong>，只在损失函数里通过 TV/相关约束间接控制频谱</td>
-</tr>
-<tr>
-<td>NeuroLM / BrainGPT</td>
-<td>那些是「解码/表示」轴线（<abbr title="脑电图 Electroencephalogram">EEG</abbr> → 语义），JET 是「生成」轴线（噪声 → <abbr title="脑电图 Electroencephalogram">EEG</abbr>）——本笔记是站内第一篇生成向论文</td>
-</tr>
-<tr>
-<td><abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN / Vanilla Diffusion</td>
-<td>本文的两个直接对照基线，两者在 TS-FID 与下游增强上都被大幅超越</td>
-</tr>
-<tr>
-<td>MEG-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / GPT2MEG</td>
-<td>论文批评的对象：它们对 MEG 做自回归生成，依赖<strong>离散化表示</strong>，与神经信号的连续本性先天错位</td>
-</tr>
-<tr>
-<td>SleepGPT（待读清单）</td>
-<td>对照：SleepGPT 是「时频编码器 + 生成式预训练 + 多任务解码」的大模型路线（用生成能力做增强与伪迹修复），JET 是「流匹配 + 原始波形」的专用生成器路线</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>（跨领域：时频图 + <abbr title="大语言模型 Large Language Model">LLM</abbr>）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.78 15.3 6 6 2.11-2.16-6-6zm3.72-5.2c-.39 0-.81-.05-1.14-.19L4.97 21.25l-2.11-2.11 7.41-7.4L8.5 9.96l-.72.7-1.45-1.41v2.86l-.7.7-3.52-3.56.7-.7h2.81l-1.4-1.41 3.56-3.56a2.976 2.976 0 0 1 4.22 0L9.89 5.74l1.41 1.4-.71.71 1.79 1.78 1.82-1.88c-.14-.33-.2-.75-.2-1.12a3.49 3.49 0 0 1 3.5-3.52c.59 0 1.11.14 1.58.42L16.41 6.2l1.5 1.5 2.67-2.67c.28.47.42.97.42 1.6 0 1.92-1.55 3.47-3.5 3.47"></path></svg></span> <a href="../../basics/lora/">LoRA · 低秩适配</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../basics/attention-alternatives/">Attention 替代方案</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/">CBraMod 作为本文下游裁判 → <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 笔记</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

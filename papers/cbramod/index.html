@@ -836,17 +836,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2153,17 +2142,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2224,49 +2202,6 @@
 <p><em>Figure 2 · 预训练总览：左上切段+掩码，右上 ACPE 从邻域动态生成位置编码，右下 12 层 criss-cross 块，左下只重构被掩 patch</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/cbramod-block.png" data-desc-position="bottom"><img alt="Figure 3 · Criss-Cross Transformer Block：(a) pre-norm 块结构；(b) 8 头劈成 S-Attention（竖条带）与 T-Attention（横条带）并行后 concat" src="../../assets/cbramod-block.png"></a></p>
 <p><em>Figure 3 · criss-cross 注意力机制：空间条带（同一时刻跨通道）与时间条带（同一通道跨时刻）两路并行，各占一半注意力头</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td>最主要对照：同用 TUEG 系语料，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 全注意力 + 神经码字预测，CBraMod 双路并行注意力 + 像素重构——4M 打 369M（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge，TUEV/TUAB 数字引自 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 原文；其 Large/Huge 权重未开源，作者只自行微调了 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base）</td>
-</tr>
-<tr>
-<td><a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td>另一基础模型基线：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 线性注意力逐通道处理但<strong>限 18 通道</strong>（超出要拆多个模型），CBraMod 无此限制</td>
-</tr>
-<tr>
-<td><a href="../eegpt/">EEGPT</a></td>
-<td>同为掩码系但走「表示对齐 + 重构」双目标；EEGPT 固定 58 通道表，CBraMod 用 ACPE 动态编码——通道适应的两种哲学</td>
-</tr>
-<tr>
-<td><a href="../tfm-tokenizer/">TFM-Tokenizer</a></td>
-<td>同为 ICLR（2026 vs 2025）的掩码预训练，路线相反：TFM 单通道 + 时频 motif 离散词表，CBraMod 多通道 + 原始信号连续重构；<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 统一 benchmark 里 CBraMod 综合<strong>第 1</strong>、TFM <strong>第 20</strong>（垫底）</td>
-</tr>
-<tr>
-<td><a href="../luna/">LUNA</a></td>
-<td>复杂度对照组：LUNA 对通道线性（O(S·C·Q)），CBraMod 是 O(Cn²+nC²)——高密度通道场景 LUNA 更优（8000 通道时 FLOPs 1/180），小通道场景 CBraMod 精度上限更高（TUAB 上 +1pp）</td>
-</tr>
-<tr>
-<td>CCNet / CSWin（视觉前作）</td>
-<td>机制来源：CCNet 的 criss-cross 是单注意力图仿射近似，CSWin 十字窗口启发双路设计——CBraMod 把「十字交叉」从图像搬到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 并论证了为什么 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 更需要（图像没有时间轴）</td>
-</tr>
-<tr>
-<td><a href="../jet/">JET</a></td>
-<td>互补轴线：JET 用 FM 生成 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（结构先验进损失），CBraMod 用注意力结构先验做判别表征——两条「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 结构先验」路线分头走</td>
-</tr>
-<tr>
-<td><a href="../../blog-2023-2026/"><abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass</a></td>
-<td>外部裁判：12 FM × 9 数据集统一重测，CBraMod 平均秩 6.56 综合第一，防泄漏版仍第一——本文自报的 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 经第三方复核成立</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（最主要对照：神经码字 vs 像素重构）</a> ｜ :material-compress: <a href="../luna/">LUNA（通道线性复杂度的另一极）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 21c-3 0-4.19-4.24-5.45-8.72C10.14 9.04 9 5 7.5 5 4.11 5 4 11.93 4 12H2c0-.37.06-9 5.5-9 3 0 4.21 4.25 5.47 8.74C13.83 14.8 15 19 16.5 19c3.44 0 3.53-6.93 3.53-7h2c0 .37-.06 9-5.53 9"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer（ICLR 2026 掩码路线的另一端）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 0 1 2-2m0 2v7h7V4zm0 16h7v-7H4zm16 0v-7h-7v7zm0-16h-7v7h7z"></path></svg></span> <a href="../../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3v6h2.95l2 6H6v6h6v-4.59L17.41 11H22V5h-6v4.57L10.59 15H9.06l-2-6H8V3M4 5h2v2H4m14 0h2v2h-2M8 17h2v2H8Z"></path></svg></span> <a href="../../basics/attention-alternatives/">Attention 替代方案（因子化注意力谱系）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

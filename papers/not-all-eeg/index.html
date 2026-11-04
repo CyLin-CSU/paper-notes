@@ -1164,17 +1164,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2109,17 +2098,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2189,41 +2167,6 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 <p><em>Figure 1 · 难度异质示意：准平稳背景与高难瞬态共存于不同通道-时间位置，且同一协议下跨样本复现——难度可做成数据集级位置统计</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/not-all-eeg-framework.png" data-desc-position="bottom"><img alt="Figure 2 · 框架总览：EMA 误差图 → PATS 位置时间图 → 条件化因子化时空 Transformer 预测干净样本；采样按同一调度解 ODE" src="../../assets/not-all-eeg-framework.png"></a></p>
 <p><em>Figure 2 · 框架总览：(a) 训练——PATS 从 EMA 误差图导出位置时间图，条件化因子化时空 Transformer 预测干净样本；(b) 采样——从高斯噪声出发，按同一位置调度迭代解流 ODE</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../jet/">JET</a></td>
-<td>直接前作与最强基线，三处修正：① 全局统一调度 → 位置自适应调度（核心）；② 时域 TV 约束压制高频 → 频域显式加权；③ 直接回归向量场 → 干净样本参数化。TS-FID 对其复现值再降 40–62%</td>
-</tr>
-<tr>
-<td><a href="../eegdm/">EEGDM</a></td>
-<td>生成轴线三部曲分工：JET 生成质量 / EEGDM 生成训表征 / 本篇生成调度精细化。难度感知粒度对照：EEGDM <strong>样本级</strong>（类不均衡，逐样本建模）、本篇<strong>位置级</strong>（channel×patch 的数据集统计）——两级难度感知可否叠加是个自然问题</td>
-</tr>
-<tr>
-<td><a href="../cbramod/">CBraMod</a></td>
-<td>两重关系：因子化注意力同族（criss-cross 从判别侧搬到生成侧，O(CN²+NC²) 结论两侧互证）；同时是本文 Table 2 的下游评估裁判</td>
-</tr>
-<tr>
-<td><a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> / <a href="../tfm-tokenizer/">TFM-Tokenizer</a></td>
-<td>频域约束谱系的延续：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 频谱重构目标 → TFM 频带掩码 → 本文频带加权 <span class="arithmatex">\( w_k \propto k^\alpha \)</span>——「低频会吃掉梯度」的共识从掩码侧一路传导到生成侧</td>
-</tr>
-<tr>
-<td><a href="../rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></td>
-<td>合成增强的两种形态：配置即标签的零噪声仿真 vs 学习式生成——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 没有合规仿真器，学习式生成 + 难度调度是当下的替代路径</td>
-</tr>
-<tr>
-<td>Diffusion-TS / PaD-TS</td>
-<td>被比较的时间序列生成基线（ICLR 2024 / AAAI 2025）；它们的「干净样本重构 + 种群统计约束」思想分别被本文的参数化与统计一致性损失吸收</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../eegdm/">EEGDM（生成轴线姊妹篇：扩散训表征）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../jet/">JET（直接前作：条件流匹配 + 生理约束）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../../basics/generative-lineage/">生成模型脉络（VAE → DDPM → FM）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../cbramod/">CBraMod（因子化注意力同族 + 下游裁判）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

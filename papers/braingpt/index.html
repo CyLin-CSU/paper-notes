@@ -600,17 +600,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2031,17 +2020,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2111,29 +2089,6 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/braingpt-overview.png" data-desc-position="bottom"><img alt="Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）" src="../../assets/braingpt-overview.png"></a></p>
 <p><em>Fig. 3 · 总体架构：左=单电极自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>），右=多电极多任务微调（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 图网络）</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>NeuroLM</td>
-<td>两种多任务方案的对照：BrainGPT 用 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 联合微调（保留任务头），NeuroLM 用指令微调（统一到文本生成）</td>
-</tr>
-<tr>
-<td>EEGPT</td>
-<td>互补验证了 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练的 scaling law（模型/数据规模均正相关）</td>
-</tr>
-<tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
-<td>范式之争的直接证据：同设定下自回归（<abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr>）优于双向掩码（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>）2%+</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../eegpt/">上一篇：EEGPT</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../neurolm/">下一篇：NeuroLM</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

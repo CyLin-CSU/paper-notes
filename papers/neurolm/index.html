@@ -705,17 +705,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2031,17 +2020,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2108,29 +2086,6 @@
 <p><em>Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（<abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 梯度反转）</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/neurolm-training.png" data-desc-position="bottom"><img alt="Figure 3 · 两阶段：多通道自回归预训练（左）→ 多任务指令微调（右）" src="../../assets/neurolm-training.png"></a></p>
 <p><em>Figure 3 · 两阶段：多通道自回归预训练（左）→ 多任务指令微调（右）</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>同团队续作：tokenizer 继承 <abbr title="向量量化 Vector Quantization">VQ</abbr> + 频谱思想，但改为时域+幅值双域重构（发现相位贡献小）</td>
-</tr>
-<tr>
-<td>BrainGPT</td>
-<td>多任务路线之争的另一方：指令微调 vs 图联合微调</td>
-</tr>
-<tr>
-<td>CLIP 类模型</td>
-<td>对齐思路的差异：因 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-text 无成对数据，选择 space-wise（域分类器+<abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr>）而非 embedding-wise 对齐</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../braingpt/">上一篇：BrainGPT</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../tfm-tokenizer/">下一篇：TFM-Tokenizer</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

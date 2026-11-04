@@ -996,17 +996,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2053,17 +2042,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2125,37 +2103,6 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/rf-gpt-framework.png" data-desc-position="bottom"><img alt="Figure 1 · RF-GPT 框架：基于视觉的 RF 编码器（谱图 → patch → 视觉编码器）+ RF adapter 线性投影 + decoder-only LLM" src="../../assets/rf-gpt-framework.png"></a></p>
 <p><em>Figure 1 · RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 框架总览：频谱图经视觉编码器变成 RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀，<abbr title="大语言模型 Large Language Model">LLM</abbr> 在其条件下生成回答</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TFM-Tokenizer</td>
-<td>同样把 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图当图像切 patch；TFM 从头训 <abbr title="向量量化 Vector Quantization">VQ</abbr> motif 词表，RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 直接复用预训练视觉编码器、完全不学 RF 词表</td>
-</tr>
-<tr>
-<td>SleepGPT（Nature Comms 2026，待读清单）</td>
-<td>同为「时频图 + 大模型」：SleepGPT 走自监督预训练时频编码器（科学发现导向），RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 走纯合成 SFT（工程接口导向）——设计空间两极</td>
-</tr>
-<tr>
-<td>NeuroLM</td>
-<td>都把非文本 <abbr title="词元，模型处理的最小输入单元">token</abbr> 拼在 <abbr title="大语言模型 Large Language Model">LLM</abbr> 前缀；NeuroLM 用 <abbr title="梯度反转层 Gradient Reversal Layer（对抗训练组件）">GRL</abbr> 对齐的离散码字接入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 用现成视觉编码器的连续 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接入现代 VLM</td>
-</tr>
-<tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>对照：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 把频谱当<strong>重构目标</strong>学表示，RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 把频谱图当<strong>唯一输入</strong>做指令跟随</td>
-</tr>
-<tr>
-<td>LoRA（模型架构基础）</td>
-<td>同属「冻结大底座 + 轻量适配」工具箱：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 走 SFT 路线（论文未说明是否全参，按 8×H200 + AdamW 配置推断为全参），小显存场景可换 LoRA（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 迁移的自然选择）</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../tfm-tokenizer/">上一篇：TFM-Tokenizer</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19H4.09L14.18 4.43l1.64 1.14-4.54 6.56c1.61.83 2.72 2.49 2.72 4.41 0 .16 0 .31-.03.46H20zM7.91 17h4.05c.04-.15.04-.3.04-.46 0-1.26-.76-2.32-1.86-2.76z"></path></svg></span> <a href="../../basics/lora/">LoRA · 低秩适配</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

@@ -1118,17 +1118,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2087,17 +2076,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2145,45 +2123,6 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegdm-arch.png" data-desc-position="bottom"><img alt="Figure 1 · EEGDM 总体架构：上半为主链（PCA 潜空间 → 扩散加噪 → DiT 去噪 → invPCA 生成）；下半为条件支路（增强视图 → Encoder → 表示 e 与时间步嵌入一起调制 DiT；右下为 adaLN-Zero 块细节）" src="../../assets/eegdm-arch.png"></a></p>
 <p><em>Figure 1 · encoder 表示 <span class="arithmatex">\( e \)</span> 与噪声时间步表示相加后经 MLP 回归 adaLN-Zero 的 <span class="arithmatex">\( \gamma, \beta \)</span>（缩放/平移）与 <span class="arithmatex">\( \rho \)</span>（残差前逐维缩放），条件信息以此方式调制每一层去噪</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../jet/">JET</a></td>
-<td>生成轴线双子星：JET 用流匹配<strong>直接生成</strong>原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（生成质量导向，TS-FID 论英雄）；EEGDM 用扩散<strong>以生成训表征</strong>（下游指标导向）。同用 adaLN 条件注入（JET 注入 t/类，EEGDM 注入 t/encoder 表示）与「生成目标须建模全局分布」的立场</td>
-</tr>
-<tr>
-<td><a href="../eegpt/">EEGPT</a></td>
-<td>「显式约束表示」的两种解法：EEGPT 加对齐分支 <span class="arithmatex">\( L_A \)</span>（轻，表示空间对齐）；EEGDM 让表示当扩散条件（重，信号空间生成）。同为 25M <abbr title="脑电图 Electroencephalogram">EEG</abbr>-ViT-Large 规模，EEGPT 偏好线性探针、EEGDM 需微调兑现</td>
-</tr>
-<tr>
-<td><a href="../cbramod/">CBraMod</a> / <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td>被批评的掩码重构主线：EEGDM 批评其「局部插值捷径」；TUEV 上互有胜负——CBraMod 赢 Weighted F1/Kappa，EEGDM 赢类均衡指标与少数类召回；TUAB 上 CBraMod 仍领先约 1.1pp</td>
-</tr>
-<tr>
-<td><a href="../braingpt/">BrainGPT</a></td>
-<td>批评 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的另一条线（自回归 vs 双向插值）：三者（BrainGPT/JET/EEGDM）从因果、连续演化、全局生成三个不同角度攻击同一目标</td>
-</tr>
-<tr>
-<td><a href="../../basics/generative-lineage/">生成模型脉络</a></td>
-<td>本文是「DDPM 线」在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征学习上的落地实例：条件潜扩散 = PCA 隐空间（对应 VAE 的隐空间思想，但零训练线性化）+ DDPM 目标 + DiT 骨干 + adaLN-Zero（DiT 标配）</td>
-</tr>
-<tr>
-<td>Puah-EEGDM-SSM（arXiv:2508.14086）</td>
-<td>撞名的另一篇：SSM 进扩散预训练；EEGDM 用 DiT 在 PCA 流形上捕捉跨通道同步与相位关系，同分布对照与多任务上占优（Puah 法在 SHU-<abbr title="运动想象 Motor Imagery">MI</abbr> 近随机）</td>
-</tr>
-<tr>
-<td><a href="../../blog-2023-2026/"><abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass</a></td>
-<td>尚未被该 benchmark 收录——生成式预训练在统一评测下的排名是待验证问题；本文的类均衡指标实践（G-Mean/Macro AUC）值得 benchmark 借鉴</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../jet/">JET · 流匹配生成 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（生成轴线姊妹篇）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> <a href="../eegpt/">EEGPT（显式表示约束的轻量版对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3 14 .5.07L8.07 9.5a1.95 1.95 0 0 1 .52-1.91c.78-.79 2.04-.79 2.82 0 .53.52.7 1.26.52 1.91l2.57 2.57.5-.07c.18 0 .35 0 .5.07l3.57-3.57C19 8.35 19 8.18 19 8a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2c-.18 0-.35 0-.5-.07l-3.57 3.57c.07.15.07.32.07.5a2 2 0 0 1-2 2 2 2 0 0 1-2-2l.07-.5-2.57-2.57c-.32.07-.68.07-1 0L4.93 15.5 5 16a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2"></path></svg></span> <a href="../../basics/generative-lineage/">生成模型脉络（DDPM 线的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 落地）</a> ｜ :material-compress: <a href="../cbramod/">CBraMod（掩码重构主线对照）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

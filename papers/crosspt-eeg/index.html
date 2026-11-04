@@ -709,17 +709,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2109,17 +2098,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2204,49 +2182,6 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/crosspt-framework.png" data-desc-position="bottom"><img alt="Figure 1 · CrossPT-EEG 数据集构建流程:实验范式 S1–S4、EEG 采集与多粒度标注、两阶段跨时间设计" src="../../assets/crosspt-framework.png"></a></p>
 <p><em>Figure 1 · 上排实验范式:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 戴帽采集 → S1 类别标签呈现(空格键继续)→ S2 注视点 500 ms → S3 RSVP 每图 500 ms(Img1…ImgN)→ S4 随机测试(可选),Next category 回环;左下:连续采集的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 按图像对齐(Img1–Img50),与图像 index、粒度、标签共同入库;右下 Cross-time Stages:Stage 1 每类 N=50 block 呈现(橙/蓝分块)→ 7 天间隔 → Stage 2 每类 N=30/N=20 乱序(紫色为乱序插入的类别);底部 Multi-Granularity Labels:熊猫/高尔夫球为 Coarse,罗威纳/萨摩耶为 Fine。注:图中 S1–S4 步骤标签与图例是 PDF 矢量叠加层,不在内嵌位图里</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../guided/">GUIDED / ATM</a></td>
-<td>同轴互补的一对:GUIDED 在 THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上测被试内「上限」(200-way 检索 top-1 28.64%、2-way 94.92%),本篇测泛化「下限」;两者都用 two-way identification 量纲,但协议不可直比(80 次重复 <abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 平均 vs 单 trial、500 ms vs 1000 ms 窗、不同刺激集)</td>
-</tr>
-<tr>
-<td>Things-EEG1/2(Grootswagers/Gifford 2022)</td>
-<td>最直接的对照数据集:THINGS 概念多(1,854/22,248 图)但呈现极短(50/100 ms)、无跨时间设计;本篇 4,000 图、500 ms、多粒度标注 + 两阶段——两边各拿了对方没有的东西</td>
-</tr>
-<tr>
-<td>Spampinato 2017(<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Classification)+ Li et al. 2020a</td>
-<td>Stage 1 直接复刻其 block 范式(40 个粗粒度类同款);Li et al. 2020a 的 block design 批评是方法论依据,Table 5 vs 6 的水分量化与 A.5 时间效应分析就是对该批评的同库复现</td>
-</tr>
-<tr>
-<td><a href="../eegarena/">EEGArena</a></td>
-<td>同为基准但颗粒度互补:EEGArena 用 20,000+ 次评测横评 30 个基础模型 × 57 任务,考「谁的方法强」;本篇只做一个任务族(视觉分类)但把被试/时间两个泛化维度切成受控协议——宽度基准 vs 深度基准</td>
-</tr>
-<tr>
-<td><a href="../eegpt/">EEGPT</a> / <a href="../cbramod/">CBraMod</a></td>
-<td>预训练轴线的「评测缺口」:基础模型论文都声称跨被试/跨数据集泛化,视觉解码侧此前没有受控的跨被试/跨时间协议——本篇的 WT/CT/CP/PT 恰好是它们需要的评测形状,尽管被评清单里还没有它们</td>
-</tr>
-<tr>
-<td><a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td>泛化主张的对账对象:<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 主打跨被试/跨记录的通道无关建模;本篇 CP≈0.50–0.57 的地板说明这类主张在视觉解码任务上必须单独重验</td>
-</tr>
-<tr>
-<td><a href="../eegdm/">EEGDM</a> / <a href="../not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a></td>
-<td>生成线与本篇零交集(那边评生成质量、不评泛化),但生成线的检索指标在 CP 条件下会掉多少,本篇的崩塌数字是预告</td>
-</tr>
-<tr>
-<td>Ozcelik &amp; VanRullen 2023</td>
-<td>主指标的出处:fMRI 重建文献的 two-way identification 被搬进 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 分类基准,使重建线与基准线共享量纲</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg></span> <a href="../guided/">GUIDED · 视觉重建线(被试内上限,与本篇互补)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 13v-2h14v2zm0 6v-2h14v2zM7 7V5h14v2zM3 8V5H2V4h2v4zm-1 9v-1h3v4H2v-1h2v-.5H3v-1h1V17zm2.25-7a.75.75 0 0 1 .75.75c0 .2-.08.39-.21.52L3.12 13H5v1H2v-.92L4 11H2v-1z"></path></svg></span> <a href="../eegarena/">EEGArena(基础模型横评基准,宽度对本篇深度)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../eegpt/">EEGPT(预训练特征提取器,CP 协议的天然候选被测方)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"></path></svg></span> <a href="../cbramod/">CBraMod(多数据集预训练,跨被试主张待此基准对账)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 4A5.5 5.5 0 0 0 2 9.5c0 .5.09 1 .22 1.5H6.3l1.27-3.37c.3-.8 1.48-.88 1.86 0L11.5 13l.59-1.42c.13-.33.48-.58.91-.58h8.78c.13-.5.22-1 .22-1.5A5.5 5.5 0 0 0 16.5 4c-1.86 0-3.5.93-4.5 2.34C11 4.93 9.36 4 7.5 4M3 12.5a1 1 0 0 0-1 1 1 1 0 0 0 1 1h2.44L11 20c1 .9 1 .9 2 0l5.56-5.5H21a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-7.6l-.93 2.3c-.4 1.01-1.55.87-1.92.03L8.5 9.5l-.96 2.33c-.15.38-.49.67-.94.67z"></path></svg></span> <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(跨被试/跨记录建模的对账对象)</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

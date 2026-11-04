@@ -950,17 +950,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2031,17 +2020,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2112,29 +2090,6 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/tfm-framework.png" data-desc-position="bottom"><img alt="Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测" src="../../assets/tfm-framework.png"></a></p>
 <p><em>Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></td>
-<td>直接批评其 <abbr title="词元，模型处理的最小输入单元">token</abbr> '只当训练目标'；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-TFM 实验证明换用 TFM tokenizer 后性能普遍提升</td>
-</tr>
-<tr>
-<td><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></td>
-<td>批评其 FFT 整窗线性投影过于粗糙；<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>-TFM 用 <abbr title="词元，模型处理的最小输入单元">token</abbr> 替换其输入投影后同样提升</td>
-</tr>
-<tr>
-<td>EEGPT</td>
-<td>单通道设计 vs 固定 58 通道布局：ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 实验中 EEGPT 因空间 embedding 无法扩展而缺席</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../neurolm/">上一篇：NeuroLM</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span> <a href="../biot/">下一篇：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../comparison/">十三篇方法对比</a></p>

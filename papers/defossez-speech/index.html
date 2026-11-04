@@ -534,17 +534,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2109,17 +2098,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2180,41 +2158,6 @@
 <p><em>Figure 1 · 左：speech module（wav2vec 2.0 的卷积 + Transformer）把 3 秒语音映为 <span class="arithmatex">\( Y \)</span>；右：brain module（空间注意力 + 被试块 + 卷积栈）把 <span class="arithmatex">\( C\times T \)</span> 的脑信号映为 <span class="arithmatex">\( Z \)</span>；顶部为评测协议——对每个脑表征 <span class="arithmatex">\( Z_i \)</span> 给 <span class="arithmatex">\( N \)</span> 个候选段逐一打内积分，即零样本检索；两空间以 CLIP 对比损失对齐，<span class="arithmatex">\( N \)</span> 名被试共享除被试层外的全部权重</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/defossez-brainmodule.png" data-desc-position="bottom"><img alt="Extended Data Fig. 4 · 设计选择（A–D）与 brain module 逐层结构（E）" src="../../assets/defossez-brainmodule.png"></a></p>
 <p><em>Extended Data Fig. 4 · A–D 是同一被试「Thank you for coming, Ed」的 Mel 重建对照：回归基线（B）只剩模糊能量轮廓，对比损失（C）恢复频带结构，换 wav2vec 目标（D）最干净；E 是 brain module 逐层结构——SpatialAttention(270) → Conv(270, K=1) → 被试专属 SubjectLayer(270, S) → 5 块膨胀卷积（GLU 减半）→ 两层 1×1 收尾到 <span class="arithmatex">\( F \)</span> 维</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../ssm2mel/">SSM2Mel</a></td>
-<td>语音解码轴线的两端：本篇（2023）是<strong>检索范式</strong>——不产出声学信号，在候选集里排序，数字漂亮但永远受候选集约束；SSM2Mel（2025）是<strong>回归范式</strong>——直接 <abbr title="脑电图 Electroencephalogram">EEG</abbr>→mel 谱，Pearson 0.069 贴着噪声地板。两者目标空间也不同：wav2vec 高层语义 vs mel 低层声学。SSM2Mel 的 SparrKULee（85 人荷兰语 <abbr title="脑电图 Electroencephalogram">EEG</abbr>）与本篇的 Schoffelen（96 人荷兰语 MEG）是同一语言的姊妹数据集，可交叉参照</td>
-</tr>
-<tr>
-<td><a href="../braingpt/">BrainGPT</a></td>
-<td>同为「对齐外部语言模型表征」，结构选择相反：本篇用判别式对比 + 卷积，BrainGPT 用自回归 + 因果 Transformer 生成式预测。本篇 Discussion 点名的下一步是补一个不需要候选集的生成模块，BrainGPT 可视为这个方向的后续</td>
-</tr>
-<tr>
-<td><a href="../eegpt/">EEGPT</a></td>
-<td>处理多被试/多数据集的两种答案：本篇用一个空间注意力层把任意导联布局归一到 270 通道 + 每被试一个 1×1 卷积；EEGPT 用 patch + 通道 embedding 拼接。本篇的被试层数值极小（一个矩阵），对评估「被试嵌入该多大」是个参照点</td>
-</tr>
-<tr>
-<td><a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td>预处理哲学两极：本篇证明 baseline correction + 截断 20σ 就够、与 autoreject 持平；<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 走重采样/归一化的规范化路线。两者共同点是把跨设备异构性压进模型而非压进预处理</td>
-</tr>
-<tr>
-<td><a href="../cbramod/">CBraMod</a></td>
-<td>轴线分工：CBraMod 用脑信号自监督预训练通用表征；本篇反向——用外部（语音）模型的特征监督脑解码。两条「预训练方向」在 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（脑信号蒸馏 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表征）处汇合</td>
-</tr>
-<tr>
-<td>wav2vec 2.0 / CLIP</td>
-<td>目标空间与损失函数的直接来源：wav2vec 2.0 提供 56,000 小时语音的自监督表征（末 4 层平均），CLIP 提供跨模态对比框架。本文的贡献不在两者本身，而在验证「自监督语音特征可线性对齐脑活动」在解码任务上成立</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg></span> <a href="../ssm2mel/">SSM2Mel（语音解码轴线的回归端：<abbr title="脑电图 Electroencephalogram">EEG</abbr>→mel 谱）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"></path></svg></span> <a href="../braingpt/">BrainGPT（自回归因果 Transformer 的语言解码）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../eegpt/">EEGPT（多被试 patch+通道 embedding 的另一解法）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>

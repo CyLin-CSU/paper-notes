@@ -1326,17 +1326,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2153,17 +2142,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2253,49 +2231,6 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/neurodetr-framework.png" data-desc-position="bottom"><img alt="Figure 2 · NeuroDETR 总体框架：连续 EEG 经 SimpleConv 骨干（电极坐标混合 + 10 级膨胀卷积）→ FOCAL 事件引导稀疏注意力 → 多尺度时间 VQ 与空间金字塔 VQ 组成事件记忆 → 融合查询 + DETR 解码输出事件集合" src="../../assets/neurodetr-framework.png"></a></p>
 <p><em>Figure 2 · (a) 连续 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 输入与事件集合标注格式；(b) FOCAL：密度头出窗级事件概率，引导局部注意力路由，axial attention 跨窗交互 ×2；(c) 多尺度时间 <abbr title="向量量化 Vector Quantization">VQ</abbr>：各尺度独立码表，池化-插值对齐取平均加时间 <abbr title="位置编码 Positional Encoding">PE</abbr>；(d) 空间金字塔 <abbr title="向量量化 Vector Quantization">VQ</abbr>：混合前的原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 按 1 全头 / 5 脑区 / 12 细簇聚合，密度引导池化 + 跨尺度残差量化（减去量化父层）；(e) 融合与解码：时间/空间双流 ×2 + 门控残差，DETR 解码器 ×4 出 Class/Start/End。左下 Training Objectives：检测损失（L1 边界 + 分类 + GIoU）与辅助损失（边界 focal + 稠密分类 + 预测一致性）。图例：实线箭头 = 特征/<abbr title="词元，模型处理的最小输入单元">token</abbr> 流，橙虚线 = 密度引导，黄虚线 = 训练监督。图中 "Bonudary focal"（应为 Boundary）与 "codebooksacross"（缺空格）为原文图内笔误</em></p>
-<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文 / 工作</th>
-<th>关系说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td><abbr title="向量量化 Vector Quantization">VQ</abbr> 谱系的前辈：<abbr title="词元，模型处理的最小输入单元">token</abbr> 只作掩码预训练目标、推理时丢弃。NeuroDETR 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是检测头每一步都要读的「记忆」——站内 <abbr title="词元，模型处理的最小输入单元">token</abbr> 用途演进表的下一格</td>
-</tr>
-<tr>
-<td><a href="../tfm-tokenizer/">TFM-Tokenizer</a></td>
-<td>同样把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 当模型输入，但 TFM 是固定窗时频 motif 词表 + 分类器；NeuroDETR 是多尺度池化码表 + 集合预测。TFM 作者自认的「固定窗长切断大 pattern」软肋，这里靠多尺度部分缓解，但切分本身仍非自适应</td>
-</tr>
-<tr>
-<td><a href="../neurorvq/">NeuroRVQ</a></td>
-<td>多尺度量化思想的近亲：NeuroRVQ 用多尺度时间卷积 + RVQ 做生成式基础模型的预训练目标；NeuroDETR 时间分支多尺度独立码表、空间分支跨尺度残差量化（层级版 RVQ），服务于检测记忆</td>
-</tr>
-<tr>
-<td><a href="../brainrvq/">BrainRVQ</a> / <a href="../codebrain/">CodeBrain</a></td>
-<td>「拆维度建双码表」的同源变体：两者按时域/频域拆两组码字做预训练目标，NeuroDETR 按时间/空间拆两套码表做检测输入——2026 年 tokenization 的共同动作是「按维度分家」</td>
-</tr>
-<tr>
-<td>DANCE（Meta，2026）</td>
-<td>最强基线与直接前作：Perceiver 式重采样 + 查询解码，特征全程连续；NeuroDETR 整套保留其辅助监督（稠密分类 + 预测一致性），换上离散事件记忆后事件 F1 平均 +4.29 pp</td>
-</tr>
-<tr>
-<td>ActionFormer / DyFADet / DOSED / EventNet</td>
-<td>时序动作检测与生物信号事件检测的移植基线：全部作者自行适配 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（阈值 0.05 + NMS）。NeuroDETR 免 NMS 的集合预测是结构性优势，比较时要把「移植质量」这层不确定性计入（DyFADet 的巨大 SD 是佐证）</td>
-</tr>
-<tr>
-<td>DETR（Carion et al., ECCV 2020）</td>
-<td>方法论母体：查询集合预测、匈牙利匹配、GIoU 损失全套搬到 1D 时间轴；时空版特有的是「记忆」设计——2D 检测的 encoder 特征在这里被替换成两路 <abbr title="向量量化 Vector Quantization">VQ</abbr> 码本</td>
-</tr>
-<tr>
-<td>Défossez et al.（Nat. Mach. Intell. 2023）</td>
-<td>骨干来源：SimpleConv（电极坐标 Fourier 嵌入 + 270 虚拟通道 + 膨胀卷积）原封移植，语音解码的基础设施直接喂给了事件检测</td>
-</tr>
-</tbody>
-</table>
 <hr>
 <p><strong>相关阅读</strong></p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2v-3h-2v3H3V3h11v2h2V3c0-1.11-.89-2-2-2M9 7c-1.11 0-2 .89-2 2v3h2V9h11v11H9v-2H7v2c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2z"></path></svg></span> <a href="../../topics/tokenization/">Tokenization 演进（站内主线，本文补上「事件驱动」一格）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2v6H2V2zM2 22v-6h2v6zm3-10c0 1.11-.89 2-2 2a2 2 0 1 1 2-2m19-6v12c0 1.11-.89 2-2 2H10a2 2 0 0 1-2-2v-4l-2-2 2-2V6a2 2 0 0 1 2-2h12c1.11 0 2 .89 2 2"></path></svg></span> <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（<abbr title="词元，模型处理的最小输入单元">token</abbr> 只当预训练目标的起点）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../tfm-tokenizer/">TFM-Tokenizer（时频 motif 词表的可插拔用法）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"></path></svg></span> <a href="../neurorvq/">NeuroRVQ（多尺度 RVQ 的预训练路线）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 3h2v2H5v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5h2v2H5c-1.07-.27-2-.9-2-2v-4a2 2 0 0 0-2-2H0v-2h1a2 2 0 0 0 2-2V5a2 2 0 0 1 2-2m14 0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h1v2h-1a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2v-2h2v-5a2 2 0 0 1 2-2 2 2 0 0 1-2-2V5h-2V3zm-7 12a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-4 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m8 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1"></path></svg></span> <a href="../codebrain/">CodeBrain（双域解耦码表）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../">首页</a></p>
