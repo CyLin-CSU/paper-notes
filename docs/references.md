@@ -78,21 +78,21 @@ tags: [索引, 参考文献]
 | neuro2vec | arXiv 2022 | LaBraM | 掩码傅里叶频谱预测的思想来源 |
 | MMM | NeurIPS 2023/2024 | NeuroLM · TFM | 拓扑无关表示（多维位置编码、多级通道层次） |
 | Brant | NeurIPS 2023 | NeuroLM | 颅内 EEG 基础模型（长程依赖+时空联合） |
-| CBraMod | ICLR 2025 | TFM · LUNA · JET · Not-All-EEG · [本站精读](papers/2026-09/0928-cbramod.md) | 十字交叉脑基础模型（EEG-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET / Not-All-EEG 用其作生成数据下游裁判；LUNA 效率对照） |
-| EEGDM | arXiv 2025（v5 2026-10） | [本站精读](papers/2026-10/1017-eegdm.md) | 潜扩散生成目标做 EEG 表征学习：encoder 表示作扩散条件、不 detach 联合优化；类不均衡鲁棒（与 Puah-EEGDM-SSM 撞名） |
-| Not-All-EEG | arXiv 2608.00048（2026-07） | [本站精读](papers/2026-10/1028-not-all-eeg.md) | 位置自适应时间调度的流匹配 EEG 生成：EMA 误差图展开位置时间图（PATS）+ 因子化时空注意力 + 频率加权多分辨率频谱损失；对复现 JET 的 TS-FID 再降 40–62% |
-| Défossez et al.（语音感知解码） | Nature Machine Intelligence 2023 | [本站精读](papers/2026-11/1102-defossez-speech.md) | 非侵入语音解码奠基作：卷积 brain module 对齐 wav2vec 2.0（CLIP 式对比），3 秒 MEG 千余候选 zero-shot 检索；多被试联合训练只靠一个被试矩阵 |
-| SSM2Mel | arXiv 2501.10402（2025） | [本站精读](papers/2026-11/1102-ssm2mel.md) | Mamba+MHSA 交替骨干从 EEG 回归连续语音 mel 谱；ESM 被试嵌入调制 + S4-UNet 局部预提取，SparrKULee 基准 |
-| LTFT（可学习时频变换） | IEEE TETCI 2026 | [本站精读](papers/2026-11/1102-learnable-tf.md) | 逐频率自由复值窗口端到端训练（Wirtinger 共轭梯度），STFT/CWT/S 变换皆特例——频域学习从损失端搬进变换核 |
-| NPI（虚拟扰动代理脑） | Nature Methods 2025（arXiv 2301.00148） | [本站精读](papers/2026-11/1102-surrogate-brain.md) | 训 MLP 代理脑做逐区虚拟扰动读方向性有效连接，CCEP 613 病人真实刺激验证——「模型作科学工具」的因果连接组学 |
-| NeuroRVQ | arXiv 2510.13068（2025） | [本站精读](papers/2026-11/1104-neurorvq.md) | 多尺度卷积分支 × 逐分支 RVQ + 圆周相位损失的生物信号 tokenizer：同数据 EEG 重构 MSE 0.016 vs LaBraM 1.071，ECG 43 类 BAcc 较最强基线翻倍 |
-| BrainRVQ | arXiv 2602.16951（2026） | [本站精读](papers/2026-11/1104-brainrvq.md) | 共享编码器 + 时/频双路 RVQ（2×3 层×8192）分层自回归预训练：5.82M 小模型，CHB-MIT AUC-PR 较 CBraMod +26% |
-| CodeBrain | ICLR 2026（arXiv 2506.09110） | [本站精读](papers/2026-11/1104-codebrain.md) | 时间/频率双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干：token 退守预训练目标的「tokenizer-模型桥接」占坑之作 |
-| NeuroDETR | arXiv 2610.20349（2026） | [本站精读](papers/2026-11/1104-neurodetr.md) | 多尺度 VQ「事件记忆」+ FOCAL 事件引导 + DETR 式集合预测：8 数据集异步事件检测事件级 F1 全部第一 |
-| DELTA | NeurIPS 2025 WS（arXiv 2511.21746） | [本站精读](papers/2026-11/1104-delta.md) | 自训 RVQ + LLaDA-8B 掩码语言扩散做非自回归 EEG-to-Text：词级 BLEU-1 21.93，离散生成线占坑之作 |
-| GUIDED（ATM） | arXiv 2403.07721（2024） | [本站精读](papers/2026-11/1104-guided.md) | ATM 编码器把 EEG 映进 CLIP 空间，先验扩散 + 冻结 SDXL 两阶段重建所见图像：200 类零样本检索 top-1 28.6%，EEG 与 MEG/fMRI 同桌比较 |
-| CrossPT-EEG | arXiv 2406.07151（2024） | [本站精读](papers/2026-11/1104-crosspt-eeg.md) | 清华视觉解码泛化基准：16 人 × 22 session × 4000 张 ImageNet 图，two-way ID 被试内 0.95 → 跨时间 0.51 / 跨被试 0.49 的系统账目 |
-| EEG-Arena | arXiv 2609.32743（2026） | [本站精读](papers/2026-11/1104-eegarena.md) | 30 FM × 25 监督基线 × 57 任务 / 23 数据集、五协议 2 万次评测：FM 大多领先，但 TUEV 全体塌方、参数量不预测性能、预训练数据 30k 小时无平台 |
+| CBraMod | ICLR 2025 | TFM · LUNA · JET · Not-All-EEG · [本站精读](papers/0928-cbramod.md) | 十字交叉脑基础模型（EEG-FM-Compass 统一 benchmark 综合第一；TFM 对照组；JET / Not-All-EEG 用其作生成数据下游裁判；LUNA 效率对照） |
+| EEGDM | arXiv 2025（v5 2026-10） | [本站精读](papers/1017-eegdm.md) | 潜扩散生成目标做 EEG 表征学习：encoder 表示作扩散条件、不 detach 联合优化；类不均衡鲁棒（与 Puah-EEGDM-SSM 撞名） |
+| Not-All-EEG | arXiv 2608.00048（2026-07） | [本站精读](papers/1028-not-all-eeg.md) | 位置自适应时间调度的流匹配 EEG 生成：EMA 误差图展开位置时间图（PATS）+ 因子化时空注意力 + 频率加权多分辨率频谱损失；对复现 JET 的 TS-FID 再降 40–62% |
+| Défossez et al.（语音感知解码） | Nature Machine Intelligence 2023 | [本站精读](papers/1102-defossez-speech.md) | 非侵入语音解码奠基作：卷积 brain module 对齐 wav2vec 2.0（CLIP 式对比），3 秒 MEG 千余候选 zero-shot 检索；多被试联合训练只靠一个被试矩阵 |
+| SSM2Mel | arXiv 2501.10402（2025） | [本站精读](papers/1102-ssm2mel.md) | Mamba+MHSA 交替骨干从 EEG 回归连续语音 mel 谱；ESM 被试嵌入调制 + S4-UNet 局部预提取，SparrKULee 基准 |
+| LTFT（可学习时频变换） | IEEE TETCI 2026 | [本站精读](papers/1102-learnable-tf.md) | 逐频率自由复值窗口端到端训练（Wirtinger 共轭梯度），STFT/CWT/S 变换皆特例——频域学习从损失端搬进变换核 |
+| NPI（虚拟扰动代理脑） | Nature Methods 2025（arXiv 2301.00148） | [本站精读](papers/1102-surrogate-brain.md) | 训 MLP 代理脑做逐区虚拟扰动读方向性有效连接，CCEP 613 病人真实刺激验证——「模型作科学工具」的因果连接组学 |
+| NeuroRVQ | arXiv 2510.13068（2025） | [本站精读](papers/1104-neurorvq.md) | 多尺度卷积分支 × 逐分支 RVQ + 圆周相位损失的生物信号 tokenizer：同数据 EEG 重构 MSE 0.016 vs LaBraM 1.071，ECG 43 类 BAcc 较最强基线翻倍 |
+| BrainRVQ | arXiv 2602.16951（2026） | [本站精读](papers/1104-brainrvq.md) | 共享编码器 + 时/频双路 RVQ（2×3 层×8192）分层自回归预训练：5.82M 小模型，CHB-MIT AUC-PR 较 CBraMod +26% |
+| CodeBrain | ICLR 2026（arXiv 2506.09110） | [本站精读](papers/1104-codebrain.md) | 时间/频率双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干：token 退守预训练目标的「tokenizer-模型桥接」占坑之作 |
+| NeuroDETR | arXiv 2610.20349（2026） | [本站精读](papers/1104-neurodetr.md) | 多尺度 VQ「事件记忆」+ FOCAL 事件引导 + DETR 式集合预测：8 数据集异步事件检测事件级 F1 全部第一 |
+| DELTA | NeurIPS 2025 WS（arXiv 2511.21746） | [本站精读](papers/1104-delta.md) | 自训 RVQ + LLaDA-8B 掩码语言扩散做非自回归 EEG-to-Text：词级 BLEU-1 21.93，离散生成线占坑之作 |
+| GUIDED（ATM） | arXiv 2403.07721（2024） | [本站精读](papers/1104-guided.md) | ATM 编码器把 EEG 映进 CLIP 空间，先验扩散 + 冻结 SDXL 两阶段重建所见图像：200 类零样本检索 top-1 28.6%，EEG 与 MEG/fMRI 同桌比较 |
+| CrossPT-EEG | arXiv 2406.07151（2024） | [本站精读](papers/1104-crosspt-eeg.md) | 清华视觉解码泛化基准：16 人 × 22 session × 4000 张 ImageNet 图，two-way ID 被试内 0.95 → 跨时间 0.51 / 跨被试 0.49 的系统账目 |
+| EEG-Arena | arXiv 2609.32743（2026） | [本站精读](papers/1104-eegarena.md) | 30 FM × 25 监督基线 × 57 任务 / 23 数据集、五协议 2 万次评测：FM 大多领先，但 TUEV 全体塌方、参数量不预测性能、预训练数据 30k 小时无平台 |
 | CPVT（条件位置编码 CPE） | arXiv 2021 | CBraMod | ACPE 的直接来源：卷积动态生成位置编码，CBraMod 推广为非对称双轴 |
 | CCNet（criss-cross attention） | ICCV 2019 | CBraMod | 十字交叉注意力的视觉出处（单注意力图仿射近似） |
 | CSWin Transformer | CVPR 2022 | CBraMod | 十字形状窗口注意力的视觉出处（CBraMod 双路并行设计参照） |

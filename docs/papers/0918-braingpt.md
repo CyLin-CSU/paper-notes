@@ -96,7 +96,7 @@ flowchart LR
 
 ## 架构图
 
-![Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）](../../assets/braingpt-overview.png)
+![Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）](../assets/braingpt-overview.png)
 
 *Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）*
 
@@ -152,4 +152,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：EEGPT](0918-eegpt.md) ｜ :material-arrow-right: [下一篇：NeuroLM](0918-neurolm.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#benchmarks)
+:material-arrow-left: [上一篇：EEGPT](0918-eegpt.md) ｜ :material-arrow-right: [下一篇：NeuroLM](0918-neurolm.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../comparison.md#benchmarks)

@@ -99,6 +99,6 @@ BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输
 
 ### 关联论文
 
-[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM-Tokenizer](../papers/2026-09/0918-tfm-tokenizer.md) · [CBraMod](../papers/2026-09/0928-cbramod.md) · [LUNA](../papers/2026-09/0924-luna.md) · [EEGMoE](../papers/2026-09/0924-eegmoe.md) · [JET](../papers/2026-09/0923-jet.md) · [EEGDM](../papers/2026-10/1017-eegdm.md) · [Not-All-EEG](../papers/2026-10/1028-not-all-eeg.md) · [RF-GPT](../papers/2026-09/0921-rf-gpt.md)
+[BIOT](../papers/0918-biot.md) · [LaBraM](../papers/0918-labram.md) · [EEGPT](../papers/0918-eegpt.md) · [BrainGPT](../papers/0918-braingpt.md) · [NeuroLM](../papers/0918-neurolm.md) · [TFM-Tokenizer](../papers/0918-tfm-tokenizer.md) · [CBraMod](../papers/0928-cbramod.md) · [LUNA](../papers/0924-luna.md) · [EEGMoE](../papers/0924-eegmoe.md) · [JET](../papers/0923-jet.md) · [EEGDM](../papers/1017-eegdm.md) · [Not-All-EEG](../papers/1028-not-all-eeg.md) · [RF-GPT](../papers/0921-rf-gpt.md)
 
 新增论文原文：[NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。

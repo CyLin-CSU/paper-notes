@@ -103,11 +103,11 @@ ABIDE（自闭症）与 ADNI（阿尔茨海默）上，EC 分类病人/对照的
 
 ## 架构图
 
-![Figure 1 · NPI 框架：观测信号 → 训练代理脑 → 虚拟扰动 → 全脑 EC](../../assets/surrogate-npi-framework.png)
+![Figure 1 · NPI 框架：观测信号 → 训练代理脑 → 虚拟扰动 → 全脑 EC](../assets/surrogate-npi-framework.png)
 
 *Figure 1 · NPI 全流程：(a) 观测的多脑区信号；(b) MLP 学单步动力学；(c) 逐区虚拟扰动；(d) 读出全脑 EC。(e,f) 递归生成验证 FC（r=0.97）；(g,h) 扰动响应差给兴奋（b→a 升）/抑制（b→c 降）；(i) 合成数据上 NPI-EC 对真值 r=0.95；(j) 真实 fMRI 上的 seed-based EC*
 
-![Figure 3 · HCP 800 人的群体级 EBC](../../assets/surrogate-human-ebc.png)
+![Figure 3 · HCP 800 人的群体级 EBC](../assets/surrogate-human-ebc.png)
 
 *Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制，色标 Exc/Inh）；(b) 皮层区归入七个功能网络；(c) 模型 FC 对经验 FC r=0.97；(d) 逐网络的 seed-based FC 空间模式；(e) 逐网络的 seed-based EC（红兴奋/蓝抑制）；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布*
 
@@ -134,9 +134,9 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [BrainGPT](../2026-09/0918-braingpt.md) | 都把神经网络训成神经信号的代理模型，用途相反：BrainGPT 是 EEG 上的表征/解码工具（模型输出是目的），NPI 把代理模型当**被解剖的对象**（模型只是扰动实验的容器）。站内 EEG 基础模型训完后是否也能这样扰动出「区间因果」，本篇提供了模板，但 EEG 的源定位模糊与容积传导会让「区」的定义先出问题——暂无直接对话 |
-| [EEGDM](../2026-10/1017-eegdm.md) | 两种「模型作工具」的分工：EEGDM 用生成模型产数据训表征，模型是数据工厂；NPI 用模型做反事实实验，模型是实验室。同一个代理模型在两个框架里甚至可以复用——暂无直接对话 |
-| [EEGMoE](../2026-09/0924-eegmoe.md) | 被试间差异的两种处理：EEGMoE 用专家分化吸收个体差异，NPI 逐被试训代理并用「跨 session 一致性 > 跨被试相关性」证明个体信号大于方法噪声。两个证据可以互相支撑，但技术上没有交集——暂无直接对话 |
+| [BrainGPT](0918-braingpt.md) | 都把神经网络训成神经信号的代理模型，用途相反：BrainGPT 是 EEG 上的表征/解码工具（模型输出是目的），NPI 把代理模型当**被解剖的对象**（模型只是扰动实验的容器）。站内 EEG 基础模型训完后是否也能这样扰动出「区间因果」，本篇提供了模板，但 EEG 的源定位模糊与容积传导会让「区」的定义先出问题——暂无直接对话 |
+| [EEGDM](1017-eegdm.md) | 两种「模型作工具」的分工：EEGDM 用生成模型产数据训表征，模型是数据工厂；NPI 用模型做反事实实验，模型是实验室。同一个代理模型在两个框架里甚至可以复用——暂无直接对话 |
+| [EEGMoE](0924-eegmoe.md) | 被试间差异的两种处理：EEGMoE 用专家分化吸收个体差异，NPI 逐被试训代理并用「跨 session 一致性 > 跨被试相关性」证明个体信号大于方法噪声。两个证据可以互相支撑，但技术上没有交集——暂无直接对话 |
 | Granger 因果 | 论文的主要对比基线，三套仿真全胜（r=0.95 那套 p<10⁻³）。GC 是预测性定义，方向判得动、强度与符号测不准；NPI 的干预主义定义与实验 EC 同族，这是它敢叫 EC 而 GC 不敢的差别 |
 | DCM | 模型依赖路线的代表。EC 定义为状态空间耦合参数，节点一多参数爆炸（66 节点上 DCM 实际不可用，公开合成数据上被 NPI 以 AUC 显著压制）。但 DCM 在小规模、假设充分时有完整的统计推断框架，NPI 没有等价物 |
 | Das & Fiete（2020） | 本篇动机的直接来源之一：强循环网络中从活动反推连接有系统性误差。NPI 的回答是绕开权重读出，改做行为学式的扰动实验 |
@@ -184,4 +184,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](../2026-09/0918-braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](../2026-10/1017-eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](../2026-09/0924-eegmoe.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](0918-braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](1017-eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](0924-eegmoe.md) ｜ :material-home: [首页](../index.md)

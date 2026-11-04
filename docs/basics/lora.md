@@ -140,4 +140,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-home: [首页](../index.md) ｜ :material-chart-box: [六篇方法对比](../comparison.md) ｜ :material-cube-outline: [基座来源分析](../topics/base-model.md) ｜ :material-robot: [NeuroLM（GPT-2 底座，LoRA 可直接套用）](../papers/2026-09/0918-neurolm.md)
+:material-home: [首页](../index.md) ｜ :material-chart-box: [六篇方法对比](../comparison.md) ｜ :material-cube-outline: [基座来源分析](../topics/base-model.md) ｜ :material-robot: [NeuroLM（GPT-2 底座，LoRA 可直接套用）](../papers/0918-neurolm.md)

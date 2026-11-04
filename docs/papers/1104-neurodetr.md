@@ -13,7 +13,7 @@ one-liner: "多尺度时间 VQ + 空间金字塔 VQ 组成离散「事件记忆�
 ---
 # NeuroDETR: Multiscale Discrete Spatiotemporal Tokenization for Asynchronous EEG Event Detection
 
-> **arXiv 2026**（cs.LG 预印本 v1，2026-10-14，20 页含附录）· 中科院自动化所脑图谱与类脑智能实验室（通讯 Shuang Qiu / Huiguang He）+ 中关村学院、国科大、武汉大学、华中科技大学 —— 站内 [Tokenization 演进](../../topics/tokenization.md)线上「事件驱动」缺口的占坑之作：[LaBraM](../2026-09/0918-labram.md) 的 token 只当预训练目标（推理时丢弃），[TFM-Tokenizer](../2026-09/0918-tfm-tokenizer.md) 把 token 变成分类器的输入，[NeuroRVQ](1104-neurorvq.md) / [CodeBrain](1104-codebrain.md) 把多尺度/双域 RVQ 用于基础模型预训练——它们全部停在「分类/预训练」，没有一个碰「连续信号上的异步事件检测」。NeuroDETR 第一次把 VQ 码表做成 DETR 检测头的**事件记忆**：token 不再只服务某个损失函数，而是检测器每一步都要读的工作记忆。
+> **arXiv 2026**（cs.LG 预印本 v1，2026-10-14，20 页含附录）· 中科院自动化所脑图谱与类脑智能实验室（通讯 Shuang Qiu / Huiguang He）+ 中关村学院、国科大、武汉大学、华中科技大学 —— 站内 [Tokenization 演进](../topics/tokenization.md)线上「事件驱动」缺口的占坑之作：[LaBraM](0918-labram.md) 的 token 只当预训练目标（推理时丢弃），[TFM-Tokenizer](0918-tfm-tokenizer.md) 把 token 变成分类器的输入，[NeuroRVQ](1104-neurorvq.md) / [CodeBrain](1104-codebrain.md) 把多尺度/双域 RVQ 用于基础模型预训练——它们全部停在「分类/预训练」，没有一个碰「连续信号上的异步事件检测」。NeuroDETR 第一次把 VQ 码表做成 DETR 检测头的**事件记忆**：token 不再只服务某个损失函数，而是检测器每一步都要读的工作记忆。
 
 **作者**：Yaozhi Wen, Kun Zhao, Wei Wei, Haoyang Chen, Kangning Wang, Yi Sun, Shaowei Gu, Dingkun Liu, Shuang Qiu, Huiguang He（中科院自动化所；Haoyang Chen 来自武汉大学、Dingkun Liu 来自华中科技大学；通讯作者 Shuang Qiu、Huiguang He）
 
@@ -172,7 +172,7 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 
 ## 架构图
 
-![Figure 2 · NeuroDETR 总体框架：连续 EEG 经 SimpleConv 骨干（电极坐标混合 + 10 级膨胀卷积）→ FOCAL 事件引导稀疏注意力 → 多尺度时间 VQ 与空间金字塔 VQ 组成事件记忆 → 融合查询 + DETR 解码输出事件集合](../../assets/neurodetr-framework.png)
+![Figure 2 · NeuroDETR 总体框架：连续 EEG 经 SimpleConv 骨干（电极坐标混合 + 10 级膨胀卷积）→ FOCAL 事件引导稀疏注意力 → 多尺度时间 VQ 与空间金字塔 VQ 组成事件记忆 → 融合查询 + DETR 解码输出事件集合](../assets/neurodetr-framework.png)
 
 *Figure 2 · (a) 连续 EEG 输入与事件集合标注格式；(b) FOCAL：密度头出窗级事件概率，引导局部注意力路由，axial attention 跨窗交互 ×2；(c) 多尺度时间 VQ：各尺度独立码表，池化-插值对齐取平均加时间 PE；(d) 空间金字塔 VQ：混合前的原始 EEG 按 1 全头 / 5 脑区 / 12 细簇聚合，密度引导池化 + 跨尺度残差量化（减去量化父层）；(e) 融合与解码：时间/空间双流 ×2 + 门控残差，DETR 解码器 ×4 出 Class/Start/End。左下 Training Objectives：检测损失（L1 边界 + 分类 + GIoU）与辅助损失（边界 focal + 稠密分类 + 预测一致性）。图例：实线箭头 = 特征/token 流，橙虚线 = 密度引导，黄虚线 = 训练监督。图中 "Bonudary focal"（应为 Boundary）与 "codebooksacross"（缺空格）为原文图内笔误*
 
@@ -206,8 +206,8 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [LaBraM](../2026-09/0918-labram.md) | VQ 谱系的前辈：token 只作掩码预训练目标、推理时丢弃。NeuroDETR 的 token 是检测头每一步都要读的「记忆」——站内 token 用途演进表的下一格 |
-| [TFM-Tokenizer](../2026-09/0918-tfm-tokenizer.md) | 同样把 token 当模型输入，但 TFM 是固定窗时频 motif 词表 + 分类器；NeuroDETR 是多尺度池化码表 + 集合预测。TFM 作者自认的「固定窗长切断大 pattern」软肋，这里靠多尺度部分缓解，但切分本身仍非自适应 |
+| [LaBraM](0918-labram.md) | VQ 谱系的前辈：token 只作掩码预训练目标、推理时丢弃。NeuroDETR 的 token 是检测头每一步都要读的「记忆」——站内 token 用途演进表的下一格 |
+| [TFM-Tokenizer](0918-tfm-tokenizer.md) | 同样把 token 当模型输入，但 TFM 是固定窗时频 motif 词表 + 分类器；NeuroDETR 是多尺度池化码表 + 集合预测。TFM 作者自认的「固定窗长切断大 pattern」软肋，这里靠多尺度部分缓解，但切分本身仍非自适应 |
 | [NeuroRVQ](1104-neurorvq.md) | 多尺度量化思想的近亲：NeuroRVQ 用多尺度时间卷积 + RVQ 做生成式基础模型的预训练目标；NeuroDETR 时间分支多尺度独立码表、空间分支跨尺度残差量化（层级版 RVQ），服务于检测记忆 |
 | [BrainRVQ](1104-brainrvq.md) / [CodeBrain](1104-codebrain.md) | 「拆维度建双码表」的同源变体：两者按时域/频域拆两组码字做预训练目标，NeuroDETR 按时间/空间拆两套码表做检测输入——2026 年 tokenization 的共同动作是「按维度分家」 |
 | DANCE（Meta，2026） | 最强基线与直接前作：Perceiver 式重采样 + 查询解码，特征全程连续；NeuroDETR 整套保留其辅助监督（稠密分类 + 预测一致性），换上离散事件记忆后事件 F1 平均 +4.29 pp |
@@ -253,4 +253,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-vector-link: [Tokenization 演进（站内主线，本文补上「事件驱动」一格）](../../topics/tokenization.md) ｜ :material-timeline: [LaBraM（token 只当预训练目标的起点）](../2026-09/0918-labram.md) ｜ :material-chart-box: [TFM-Tokenizer（时频 motif 词表的可插拔用法）](../2026-09/0918-tfm-tokenizer.md) ｜ :material-layers: [NeuroRVQ（多尺度 RVQ 的预训练路线）](1104-neurorvq.md) ｜ :material-code-json: [CodeBrain（双域解耦码表）](1104-codebrain.md) ｜ :material-home: [首页](../../index.md)
+:material-vector-link: [Tokenization 演进（站内主线，本文补上「事件驱动」一格）](../topics/tokenization.md) ｜ :material-timeline: [LaBraM（token 只当预训练目标的起点）](0918-labram.md) ｜ :material-chart-box: [TFM-Tokenizer（时频 motif 词表的可插拔用法）](0918-tfm-tokenizer.md) ｜ :material-layers: [NeuroRVQ（多尺度 RVQ 的预训练路线）](1104-neurorvq.md) ｜ :material-code-json: [CodeBrain（双域解耦码表）](1104-codebrain.md) ｜ :material-home: [首页](../index.md)

@@ -92,7 +92,7 @@ flowchart LR
 
 ## 架构图
 
-![Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测](../../assets/tfm-framework.png)
+![Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测](../assets/tfm-framework.png)
 
 *Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测*
 
@@ -148,4 +148,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：NeuroLM](0918-neurolm.md) ｜ :material-arrow-right: [下一篇：BIOT](0918-biot.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#benchmarks)
+:material-arrow-left: [上一篇：NeuroLM](0918-neurolm.md) ｜ :material-arrow-right: [下一篇：BIOT](0918-biot.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../comparison.md#benchmarks)

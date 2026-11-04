@@ -2,7 +2,7 @@
 
 > 全站横向对照的**枢纽页**：一张战绩图 + 一页速览给十三篇定位；九个对比维度的核心分歧在[分维度导读](#dimension-guide)里各用几句话说清，**详细拆解下放到五个主题专题**（数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源），其中暂无专题归属的三个维度（模型设计 / 频域 / 规模效率）全文保留在本页；最后是演进脉络、benchmark 战绩表与论文互怼链。数字均引自各论文自报结果。
 
-十三篇 = 核心六篇（[BIOT](papers/2026-09/0918-biot.md) / [LaBraM](papers/2026-09/0918-labram.md) / [EEGPT](papers/2026-09/0918-eegpt.md) / [BrainGPT](papers/2026-09/0918-braingpt.md) / [NeuroLM](papers/2026-09/0918-neurolm.md) / [TFM-Tokenizer](papers/2026-09/0918-tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展七篇（[CBraMod](papers/2026-09/0928-cbramod.md) / [LUNA](papers/2026-09/0924-luna.md) / [EEGMoE](papers/2026-09/0924-eegmoe.md) / [JET](papers/2026-09/0923-jet.md) / [EEGDM](papers/2026-10/1017-eegdm.md) / [RF-GPT](papers/2026-09/0921-rf-gpt.md) / [Not-All-EEG](papers/2026-10/1028-not-all-eeg.md)，把问题推向异构管理、生成与跨模态、生成调度精细化）。本页对比范围限于这条轴线；站内轴外精读（语音解码 [Défossez](papers/2026-11/1102-defossez-speech.md) / [SSM2Mel](papers/2026-11/1102-ssm2mel.md)、时频方法 [LTFT](papers/2026-11/1102-learnable-tf.md)、连接组学 [NPI](papers/2026-11/1102-surrogate-brain.md)）不参与十三篇排名，见首页论文库。
+十三篇 = 核心六篇（[BIOT](papers/0918-biot.md) / [LaBraM](papers/0918-labram.md) / [EEGPT](papers/0918-eegpt.md) / [BrainGPT](papers/0918-braingpt.md) / [NeuroLM](papers/0918-neurolm.md) / [TFM-Tokenizer](papers/0918-tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展七篇（[CBraMod](papers/0928-cbramod.md) / [LUNA](papers/0924-luna.md) / [EEGMoE](papers/0924-eegmoe.md) / [JET](papers/0923-jet.md) / [EEGDM](papers/1017-eegdm.md) / [RF-GPT](papers/0921-rf-gpt.md) / [Not-All-EEG](papers/1028-not-all-eeg.md)，把问题推向异构管理、生成与跨模态、生成调度精细化）。本页对比范围限于这条轴线；站内轴外精读（语音解码 [Défossez](papers/1102-defossez-speech.md) / [SSM2Mel](papers/1102-ssm2mel.md)、时频方法 [LTFT](papers/1102-learnable-tf.md)、连接组学 [NPI](papers/1102-surrogate-brain.md)）不参与十三篇排名，见首页论文库。
 
 ## 📊 TUEV Cohen's Kappa 横向对比（多数据集预训练设定）
 
@@ -41,19 +41,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 | 论文 | 发表 | 一句话定位 | 参数量 | 预训练数据 | 代码 |
 |---|---|---|---|---|---|
-| [BIOT](papers/2026-09/0918-biot.md) | NeurIPS 2023 | 逐通道切段 + 线性注意力的跨格式生物信号编码器 | 3.2M | ~1000 万样本（PREST + SHHS + ECG） | ✅ |
-| [LaBraM](papers/2026-09/0918-labram.md) | ICLR 2024 | VQ 神经词表 + 频谱重构 + 掩码码字预测的大规模 EEG 基座 | 5.8M / 46M / 369M（tokenizer 另 8.6M） | ~2500h · 约 20 数据集 | ✅ |
-| [EEGPT](papers/2026-09/0918-eegpt.md) | NeurIPS 2024 | 对齐 + 重构双自监督的通用特征提取器，linear probing 即 SOTA | ~10M（变体 0.4M–101M） | 5 个多范式数据集 | ✅ |
-| [BrainGPT](papers/2026-09/0918-braingpt.md) | arXiv 2024 | 电极级自回归 + 任务共享电极图的首个 EEG generalist | 1.46M–**1.09B** | 3750 万单电极样本（~1B token） | 未放 |
-| [NeuroLM](papers/2026-09/0918-neurolm.md) | ICLR 2025 | 把 EEG 当外语接进 GPT-2：指令微调单模型多任务 | 254M / 500M / 1696M | ~25000h（TUEG 为主） | ✅ |
-| [TFM-Tokenizer](papers/2026-09/0918-tfm-tokenizer.md) | ICLR 2026 | 单通道时频 motif 词表，离散 token 真正作下游输入 | **~1.9M**（tokenizer 1.2M + 下游 0.7M） | 4 个 EEG 数据集 + ear-EEG 跨设备验证 | ✅ |
-| [CBraMod](papers/2026-09/0928-cbramod.md) | ICLR 2025 | 十字交叉注意力 + ACPE：4M 参数 10 任务全 SOTA | 4.0M | TUEG 清洗版 **>9000h**（110 万样本） | ✅ |
-| [LUNA](papers/2026-09/0924-luna.md) | NeurIPS 2025 | 学习 query 压进固定隐空间：拓扑无关 + 通道数线性复杂度 | 7M / 43M / 311.4M | TUEG + Siena **21,900h**（3 种拓扑） | ✅ |
-| [EEGMoE](papers/2026-09/0924-eegmoe.md) | TNNLS 2026 | Specific + Shared 双专家组解耦域差异：解耦保留异构 | 1.68M（激活 0.89M） | 9 数据集 ~142h（认知域） | 未放 |
-| [JET](papers/2026-09/0923-jet.md) | ICML 2026 | 条件流匹配 + 三条生理约束的原始 EEG 生成器 | 129.9M | TUH 三子集（生成器训练即全部） | 项目页 |
-| [EEGDM](papers/2026-10/1017-eegdm.md) | arXiv 2026 | 潜扩散生成目标做表征学习：encoder 表示作条件（不 detach） | 25M（下游 encoder） | TUEG 19ch（30s 样本） | ✅ |
-| [Not-All-EEG](papers/2026-10/1028-not-all-eeg.md) | arXiv 2026 | 位置难度自适应时间调度的流匹配 EEG 生成器（EMA 误差图 → 位置时间图） | 未披露 | 3 数据集（TUEV / BCIC-IV-2a / SEED-IV，生成器训练即全部） | 未附 |
-| [RF-GPT](papers/2026-09/0921-rf-gpt.md) | arXiv 2026 | 射频谱图 + 现成 VLM：零预训练、纯合成 SFT（跨域参照） | 3B / 7B（借 Qwen2.5-VL） | 合成 0.625M 指令对（零人工） | 未附 |
+| [BIOT](papers/0918-biot.md) | NeurIPS 2023 | 逐通道切段 + 线性注意力的跨格式生物信号编码器 | 3.2M | ~1000 万样本（PREST + SHHS + ECG） | ✅ |
+| [LaBraM](papers/0918-labram.md) | ICLR 2024 | VQ 神经词表 + 频谱重构 + 掩码码字预测的大规模 EEG 基座 | 5.8M / 46M / 369M（tokenizer 另 8.6M） | ~2500h · 约 20 数据集 | ✅ |
+| [EEGPT](papers/0918-eegpt.md) | NeurIPS 2024 | 对齐 + 重构双自监督的通用特征提取器，linear probing 即 SOTA | ~10M（变体 0.4M–101M） | 5 个多范式数据集 | ✅ |
+| [BrainGPT](papers/0918-braingpt.md) | arXiv 2024 | 电极级自回归 + 任务共享电极图的首个 EEG generalist | 1.46M–**1.09B** | 3750 万单电极样本（~1B token） | 未放 |
+| [NeuroLM](papers/0918-neurolm.md) | ICLR 2025 | 把 EEG 当外语接进 GPT-2：指令微调单模型多任务 | 254M / 500M / 1696M | ~25000h（TUEG 为主） | ✅ |
+| [TFM-Tokenizer](papers/0918-tfm-tokenizer.md) | ICLR 2026 | 单通道时频 motif 词表，离散 token 真正作下游输入 | **~1.9M**（tokenizer 1.2M + 下游 0.7M） | 4 个 EEG 数据集 + ear-EEG 跨设备验证 | ✅ |
+| [CBraMod](papers/0928-cbramod.md) | ICLR 2025 | 十字交叉注意力 + ACPE：4M 参数 10 任务全 SOTA | 4.0M | TUEG 清洗版 **>9000h**（110 万样本） | ✅ |
+| [LUNA](papers/0924-luna.md) | NeurIPS 2025 | 学习 query 压进固定隐空间：拓扑无关 + 通道数线性复杂度 | 7M / 43M / 311.4M | TUEG + Siena **21,900h**（3 种拓扑） | ✅ |
+| [EEGMoE](papers/0924-eegmoe.md) | TNNLS 2026 | Specific + Shared 双专家组解耦域差异：解耦保留异构 | 1.68M（激活 0.89M） | 9 数据集 ~142h（认知域） | 未放 |
+| [JET](papers/0923-jet.md) | ICML 2026 | 条件流匹配 + 三条生理约束的原始 EEG 生成器 | 129.9M | TUH 三子集（生成器训练即全部） | 项目页 |
+| [EEGDM](papers/1017-eegdm.md) | arXiv 2026 | 潜扩散生成目标做表征学习：encoder 表示作条件（不 detach） | 25M（下游 encoder） | TUEG 19ch（30s 样本） | ✅ |
+| [Not-All-EEG](papers/1028-not-all-eeg.md) | arXiv 2026 | 位置难度自适应时间调度的流匹配 EEG 生成器（EMA 误差图 → 位置时间图） | 未披露 | 3 数据集（TUEV / BCIC-IV-2a / SEED-IV，生成器训练即全部） | 未附 |
+| [RF-GPT](papers/0921-rf-gpt.md) | arXiv 2026 | 射频谱图 + 现成 VLM：零预训练、纯合成 SFT（跨域参照） | 3B / 7B（借 Qwen2.5-VL） | 合成 0.625M 指令对（零人工） | 未附 |
 
 ## 分维度导读 {: #dimension-guide }
 

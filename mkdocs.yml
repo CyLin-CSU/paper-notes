@@ -80,34 +80,31 @@ exclude_docs: |
 nav:
   - 首页: index.md
   - 论文笔记:
-      - "2026-09":
-          - 0918 · BIOT (NeurIPS 2023): papers/2026-09/0918-biot.md
-          - 0918 · LaBraM (ICLR 2024): papers/2026-09/0918-labram.md
-          - 0918 · EEGPT (NeurIPS 2024): papers/2026-09/0918-eegpt.md
-          - 0918 · BrainGPT (arXiv 2024): papers/2026-09/0918-braingpt.md
-          - 0918 · NeuroLM (ICLR 2025): papers/2026-09/0918-neurolm.md
-          - 0918 · TFM-Tokenizer (ICLR 2026): papers/2026-09/0918-tfm-tokenizer.md
-          - 0921 · RF-GPT (arXiv 2026 · 跨领域): papers/2026-09/0921-rf-gpt.md
-          - 0923 · JET (ICML 2026 · EEG 生成): papers/2026-09/0923-jet.md
-          - 0924 · EEGMoE (TNNLS 2026 · MoE): papers/2026-09/0924-eegmoe.md
-          - 0924 · LUNA (NeurIPS 2025 · 拓扑无关): papers/2026-09/0924-luna.md
-          - 0928 · CBraMod (ICLR 2025 · 十字交叉): papers/2026-09/0928-cbramod.md
-      - "2026-10":
-          - 1017 · EEGDM (arXiv 2026 · 扩散表征): papers/2026-10/1017-eegdm.md
-          - 1028 · Not-All-EEG (arXiv 2026 · 流匹配生成): papers/2026-10/1028-not-all-eeg.md
-      - "2026-11":
-          - 1102 · Défossez 语音解码 (NMI 2023 · 轴线源头): papers/2026-11/1102-defossez-speech.md
-          - 1102 · SSM2Mel (arXiv 2025 · 语音解码): papers/2026-11/1102-ssm2mel.md
-          - 1102 · LTFT (IEEE TETCI 2026 · 时频方法): papers/2026-11/1102-learnable-tf.md
-          - 1102 · NPI (Nature Methods 2025 · 连接组学): papers/2026-11/1102-surrogate-brain.md
-          - 1104 · NeuroRVQ (arXiv 2025 · 多尺度RVQ): papers/2026-11/1104-neurorvq.md
-          - 1104 · BrainRVQ (arXiv 2026 · 双域RVQ): papers/2026-11/1104-brainrvq.md
-          - 1104 · CodeBrain (ICLR 2026 · 解耦tokenizer): papers/2026-11/1104-codebrain.md
-          - 1104 · NeuroDETR (arXiv 2026 · 事件token化): papers/2026-11/1104-neurodetr.md
-          - 1104 · DELTA (NeurIPS 2025 WS · 掩码扩散EEG-to-Text): papers/2026-11/1104-delta.md
-          - 1104 · GUIDED (arXiv 2024 · 视觉重建): papers/2026-11/1104-guided.md
-          - 1104 · CrossPT-EEG (arXiv 2024 · 视觉解码基准): papers/2026-11/1104-crosspt-eeg.md
-          - 1104 · EEGArena (arXiv 2026 · 基准评测): papers/2026-11/1104-eegarena.md
+      - 0918 · BIOT (NeurIPS 2023): papers/0918-biot.md
+      - 0918 · LaBraM (ICLR 2024): papers/0918-labram.md
+      - 0918 · EEGPT (NeurIPS 2024): papers/0918-eegpt.md
+      - 0918 · BrainGPT (arXiv 2024): papers/0918-braingpt.md
+      - 0918 · NeuroLM (ICLR 2025): papers/0918-neurolm.md
+      - 0918 · TFM-Tokenizer (ICLR 2026): papers/0918-tfm-tokenizer.md
+      - 0921 · RF-GPT (arXiv 2026 · 跨领域): papers/0921-rf-gpt.md
+      - 0923 · JET (ICML 2026 · EEG 生成): papers/0923-jet.md
+      - 0924 · EEGMoE (TNNLS 2026 · MoE): papers/0924-eegmoe.md
+      - 0924 · LUNA (NeurIPS 2025 · 拓扑无关): papers/0924-luna.md
+      - 0928 · CBraMod (ICLR 2025 · 十字交叉): papers/0928-cbramod.md
+      - 1017 · EEGDM (arXiv 2026 · 扩散表征): papers/1017-eegdm.md
+      - 1028 · Not-All-EEG (arXiv 2026 · 流匹配生成): papers/1028-not-all-eeg.md
+      - 1102 · Défossez 语音解码 (NMI 2023 · 轴线源头): papers/1102-defossez-speech.md
+      - 1102 · SSM2Mel (arXiv 2025 · 语音解码): papers/1102-ssm2mel.md
+      - 1102 · LTFT (IEEE TETCI 2026 · 时频方法): papers/1102-learnable-tf.md
+      - 1102 · NPI (Nature Methods 2025 · 连接组学): papers/1102-surrogate-brain.md
+      - 1104 · NeuroRVQ (arXiv 2025 · 多尺度RVQ): papers/1104-neurorvq.md
+      - 1104 · BrainRVQ (arXiv 2026 · 双域RVQ): papers/1104-brainrvq.md
+      - 1104 · CodeBrain (ICLR 2026 · 解耦tokenizer): papers/1104-codebrain.md
+      - 1104 · NeuroDETR (arXiv 2026 · 事件token化): papers/1104-neurodetr.md
+      - 1104 · DELTA (NeurIPS 2025 WS · 掩码扩散EEG-to-Text): papers/1104-delta.md
+      - 1104 · GUIDED (arXiv 2024 · 视觉重建): papers/1104-guided.md
+      - 1104 · CrossPT-EEG (arXiv 2024 · 视觉解码基准): papers/1104-crosspt-eeg.md
+      - 1104 · EEGArena (arXiv 2026 · 基准评测): papers/1104-eegarena.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md

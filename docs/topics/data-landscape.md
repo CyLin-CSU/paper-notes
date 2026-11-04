@@ -30,7 +30,7 @@ NeuroRVQ 另有 ECG / EMG 数据，本表只列 EEG；NeuroDETR 列的是监督�
 
 ### 关联论文
 
-[BIOT](../papers/2026-09/0918-biot.md) · [LaBraM](../papers/2026-09/0918-labram.md) · [EEGPT](../papers/2026-09/0918-eegpt.md) · [BrainGPT](../papers/2026-09/0918-braingpt.md) · [NeuroLM](../papers/2026-09/0918-neurolm.md) · [TFM](../papers/2026-09/0918-tfm-tokenizer.md) · [CBraMod](../papers/2026-09/0928-cbramod.md) · [LUNA](../papers/2026-09/0924-luna.md) · [EEGMoE](../papers/2026-09/0924-eegmoe.md)
+[BIOT](../papers/0918-biot.md) · [LaBraM](../papers/0918-labram.md) · [EEGPT](../papers/0918-eegpt.md) · [BrainGPT](../papers/0918-braingpt.md) · [NeuroLM](../papers/0918-neurolm.md) · [TFM](../papers/0918-tfm-tokenizer.md) · [CBraMod](../papers/0928-cbramod.md) · [LUNA](../papers/0924-luna.md) · [EEGMoE](../papers/0924-eegmoe.md)
 
 [数据集索引](../datasets.md) · [预训练范式对比](pretraining.md) · [通道适配与多任务学习](multi-task.md) · [十三篇方法对比](../comparison.md)
 

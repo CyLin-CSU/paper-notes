@@ -73,7 +73,7 @@ flowchart TD
 
 !!! note "与原讲义关联的两点"
     - 讲义把这条线追溯到 Shen et al. 2018 与 Katharopoulos 2020（后者的 kernel 化版本即「Transformers are RNNs」），并指出它与 fast weight programmers 的思想相通；
-    - 一个常见的误解是把「线性注意力」理解成「低秩近似注意力」（如 Linformer 把 \( n \times n \) 投影到 \( n \times d \)）。**这里不是近似**：在 \( \rho \) 为恒等的设定下，两种计算顺序给出**完全相同的数值结果**——区别只在计算图与复杂度。[BIOT](../papers/2026-09/0918-biot.md) 走的是低秩近似那条路，两者容易混淆。
+    - 一个常见的误解是把「线性注意力」理解成「低秩近似注意力」（如 Linformer 把 \( n \times n \) 投影到 \( n \times d \)）。**这里不是近似**：在 \( \rho \) 为恒等的设定下，两种计算顺序给出**完全相同的数值结果**——区别只在计算图与复杂度。[BIOT](../papers/0918-biot.md) 走的是低秩近似那条路，两者容易混淆。
 
 ## 3 循环形式与对偶性
 
@@ -176,7 +176,7 @@ flowchart LR
 
 这条线对 EEG 建模不是「隔壁领域的技术」，而是直接可用的工具：
 
-- **BIOT 用的就是线性注意力这一族**——它借鉴 Linformer 式的低秩投影来把多通道长句子压到线性复杂度。读完本节再回看 [BIOT 笔记](../papers/2026-09/0918-biot.md)，可以清楚区分「低秩近似」与「结合律重排」两种省算力的思路；
+- **BIOT 用的就是线性注意力这一族**——它借鉴 Linformer 式的低秩投影来把多通道长句子压到线性复杂度。读完本节再回看 [BIOT 笔记](../papers/0918-biot.md)，可以清楚区分「低秩近似」与「结合律重排」两种省算力的思路；
 - **EEG 的上下文问题比语言更尖锐**：临床长程监测可达数小时到数十小时（如 LaBraM 的 2500 小时语料、NeuroLM 的 25000 小时），若把整段记录当一个序列建模，二次复杂度是硬瓶颈——这正是 SleepGPT（Nature Comms 2026）把「二次复杂度不利于长时/实时场景」列为自身局限的原因；
 - **GDN / Mamba 类模型在生理信号上已是常见选择**：恒定状态 + 线性推理的特性天然契合「可穿戴设备上做长时低功耗推理」的需求，这也是为什么 SSM 一系在 EEG/ECG/PPG 的轻量部署工作里出现频率很高；
 - **一个值得注意的取舍**：EEG 的很多任务是「精确回忆型」（找出某次发作的开始时刻、某个导联的特定波形），而混合研究显示这类任务正是线性层最吃亏的地方——如果做长时 EEG 模型，混合比例这个旋钮值得专门做消融，而不是照搬语言模型的 3:1。
@@ -210,4 +210,4 @@ flowchart LR
 
 **相关阅读**
 
-:material-angle-acute: [LoRA · 低秩适配](lora.md) ｜ :material-sitemap: [Tokenization 演进](../topics/tokenization.md) ｜ :material-heart-pulse: [BIOT（线性注意力的工程实例）](../papers/2026-09/0918-biot.md) ｜ :material-home: [首页](../index.md)
+:material-angle-acute: [LoRA · 低秩适配](lora.md) ｜ :material-sitemap: [Tokenization 演进](../topics/tokenization.md) ｜ :material-heart-pulse: [BIOT（线性注意力的工程实例）](../papers/0918-biot.md) ｜ :material-home: [首页](../index.md)

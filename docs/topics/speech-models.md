@@ -5,7 +5,7 @@ tags: [语音解码, mel谱, wav2vec, 综述]
 
 # 语音模型专题：脑信号 → 语音
 
-> 站内第三条方法轴线：与「基础模型轴线」（EEG → 任务表示）和「生成轴线」（噪声 → EEG）对望，这条线做 **EEG/MEG → 语音**。已精读两篇——[Défossez 语音解码](../papers/2026-11/1102-defossez-speech.md)（NMI 2023，轴线源头，检索范式）与 [SSM2Mel](../papers/2026-11/1102-ssm2mel.md)（arXiv 2025，mel 谱回归范式）；EEG-to-Text 生成式一系（DeWave / EEG2TEXT / DELTA）已下载待读。本页按 **Tokenization / Pretraining / 下游任务** 三段横读。
+> 站内第三条方法轴线：与「基础模型轴线」（EEG → 任务表示）和「生成轴线」（噪声 → EEG）对望，这条线做 **EEG/MEG → 语音**。已精读两篇——[Défossez 语音解码](../papers/1102-defossez-speech.md)（NMI 2023，轴线源头，检索范式）与 [SSM2Mel](../papers/1102-ssm2mel.md)（arXiv 2025，mel 谱回归范式）；EEG-to-Text 生成式一系（DeWave / EEG2TEXT / DELTA）已下载待读。本页按 **Tokenization / Pretraining / 下游任务** 三段横读。
 
 ## 全景
 
@@ -79,4 +79,4 @@ SSM2Mel 反着选 mel：它的任务就是**重建谱图本身**（可听、可�
 
 ## 关联页面
 
-[Défossez 笔记](../papers/2026-11/1102-defossez-speech.md) · [SSM2Mel 笔记](../papers/2026-11/1102-ssm2mel.md) · [Tokenization 演进](tokenization.md) · [预训练范式](pretraining.md) · [多任务与下游适配](multi-task.md) · [十三篇方法对比](../comparison.md)
+[Défossez 笔记](../papers/1102-defossez-speech.md) · [SSM2Mel 笔记](../papers/1102-ssm2mel.md) · [Tokenization 演进](tokenization.md) · [预训练范式](pretraining.md) · [多任务与下游适配](multi-task.md) · [十三篇方法对比](../comparison.md)

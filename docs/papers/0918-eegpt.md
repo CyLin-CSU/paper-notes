@@ -103,7 +103,7 @@ flowchart TD
 
 ## 架构图
 
-![Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构](../../assets/eegpt-arch.png)
+![Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构](../assets/eegpt-arch.png)
 
 *Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构*
 
@@ -159,4 +159,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：LaBraM](0918-labram.md) ｜ :material-arrow-right: [下一篇：BrainGPT](0918-braingpt.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#benchmarks)
+:material-arrow-left: [上一篇：LaBraM](0918-labram.md) ｜ :material-arrow-right: [下一篇：BrainGPT](0918-braingpt.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../comparison.md#benchmarks)

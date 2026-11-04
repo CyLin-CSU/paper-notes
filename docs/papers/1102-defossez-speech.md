@@ -93,11 +93,11 @@ Adam，lr \( 3\times10^{-4} \)，batch 256，一个 epoch 定义为 1,200 次更
 
 ## 架构图
 
-![Figure 1 · 总体框架：脑模块与 wav2vec 2.0 分别编码脑信号与语音，CLIP 损失对齐；评测时在候选段上做零样本检索](../../assets/defossez-fig1-overview.png)
+![Figure 1 · 总体框架：脑模块与 wav2vec 2.0 分别编码脑信号与语音，CLIP 损失对齐；评测时在候选段上做零样本检索](../assets/defossez-fig1-overview.png)
 
 *Figure 1 · 左：speech module（wav2vec 2.0 的卷积 + Transformer）把 3 秒语音映为 \( Y \)；右：brain module（空间注意力 + 被试块 + 卷积栈）把 \( C\times T \) 的脑信号映为 \( Z \)；顶部为评测协议——对每个脑表征 \( Z_i \) 给 \( N \) 个候选段逐一打内积分，即零样本检索；两空间以 CLIP 对比损失对齐，\( N \) 名被试共享除被试层外的全部权重*
 
-![Extended Data Fig. 4 · 设计选择（A–D）与 brain module 逐层结构（E）](../../assets/defossez-brainmodule.png)
+![Extended Data Fig. 4 · 设计选择（A–D）与 brain module 逐层结构（E）](../assets/defossez-brainmodule.png)
 
 *Extended Data Fig. 4 · A–D 是同一被试「Thank you for coming, Ed」的 Mel 重建对照：回归基线（B）只剩模糊能量轮廓，对比损失（C）恢复频带结构，换 wav2vec 目标（D）最干净；E 是 brain module 逐层结构——SpatialAttention(270) → Conv(270, K=1) → 被试专属 SubjectLayer(270, S) → 5 块膨胀卷积（GLU 减半）→ 两层 1×1 收尾到 \( F \) 维*
 
@@ -129,10 +129,10 @@ flowchart TD
 | 论文 / 工作 | 关系说明 |
 |---|---|
 | [SSM2Mel](1102-ssm2mel.md) | 语音解码轴线的两端：本篇（2023）是**检索范式**——不产出声学信号，在候选集里排序，数字漂亮但永远受候选集约束；SSM2Mel（2025）是**回归范式**——直接 EEG→mel 谱，Pearson 0.069 贴着噪声地板。两者目标空间也不同：wav2vec 高层语义 vs mel 低层声学。SSM2Mel 的 SparrKULee（85 人荷兰语 EEG）与本篇的 Schoffelen（96 人荷兰语 MEG）是同一语言的姊妹数据集，可交叉参照 |
-| [BrainGPT](../2026-09/0918-braingpt.md) | 同为「对齐外部语言模型表征」，结构选择相反：本篇用判别式对比 + 卷积，BrainGPT 用自回归 + 因果 Transformer 生成式预测。本篇 Discussion 点名的下一步是补一个不需要候选集的生成模块，BrainGPT 可视为这个方向的后续 |
-| [EEGPT](../2026-09/0918-eegpt.md) | 处理多被试/多数据集的两种答案：本篇用一个空间注意力层把任意导联布局归一到 270 通道 + 每被试一个 1×1 卷积；EEGPT 用 patch + 通道 embedding 拼接。本篇的被试层数值极小（一个矩阵），对评估「被试嵌入该多大」是个参照点 |
-| [BIOT](../2026-09/0918-biot.md) | 预处理哲学两极：本篇证明 baseline correction + 截断 20σ 就够、与 autoreject 持平；BIOT 走重采样/归一化的规范化路线。两者共同点是把跨设备异构性压进模型而非压进预处理 |
-| [CBraMod](../2026-09/0928-cbramod.md) | 轴线分工：CBraMod 用脑信号自监督预训练通用表征；本篇反向——用外部（语音）模型的特征监督脑解码。两条「预训练方向」在 LaBraM（脑信号蒸馏 EEG 表征）处汇合 |
+| [BrainGPT](0918-braingpt.md) | 同为「对齐外部语言模型表征」，结构选择相反：本篇用判别式对比 + 卷积，BrainGPT 用自回归 + 因果 Transformer 生成式预测。本篇 Discussion 点名的下一步是补一个不需要候选集的生成模块，BrainGPT 可视为这个方向的后续 |
+| [EEGPT](0918-eegpt.md) | 处理多被试/多数据集的两种答案：本篇用一个空间注意力层把任意导联布局归一到 270 通道 + 每被试一个 1×1 卷积；EEGPT 用 patch + 通道 embedding 拼接。本篇的被试层数值极小（一个矩阵），对评估「被试嵌入该多大」是个参照点 |
+| [BIOT](0918-biot.md) | 预处理哲学两极：本篇证明 baseline correction + 截断 20σ 就够、与 autoreject 持平；BIOT 走重采样/归一化的规范化路线。两者共同点是把跨设备异构性压进模型而非压进预处理 |
+| [CBraMod](0928-cbramod.md) | 轴线分工：CBraMod 用脑信号自监督预训练通用表征；本篇反向——用外部（语音）模型的特征监督脑解码。两条「预训练方向」在 LaBraM（脑信号蒸馏 EEG 表征）处汇合 |
 | wav2vec 2.0 / CLIP | 目标空间与损失函数的直接来源：wav2vec 2.0 提供 56,000 小时语音的自监督表征（末 4 层平均），CLIP 提供跨模态对比框架。本文的贡献不在两者本身，而在验证「自监督语音特征可线性对齐脑活动」在解码任务上成立 |
 
 ## 个人思考
@@ -172,4 +172,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [SSM2Mel（语音解码轴线的回归端：EEG→mel 谱）](1102-ssm2mel.md) ｜ :material-brain: [BrainGPT（自回归因果 Transformer 的语言解码）](../2026-09/0918-braingpt.md) ｜ :material-layers: [EEGPT（多被试 patch+通道 embedding 的另一解法）](../2026-09/0918-eegpt.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [SSM2Mel（语音解码轴线的回归端：EEG→mel 谱）](1102-ssm2mel.md) ｜ :material-brain: [BrainGPT（自回归因果 Transformer 的语言解码）](0918-braingpt.md) ｜ :material-layers: [EEGPT（多被试 patch+通道 embedding 的另一解法）](0918-eegpt.md) ｜ :material-home: [首页](../index.md)

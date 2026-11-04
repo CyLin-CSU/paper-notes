@@ -13,7 +13,7 @@ one-liner: "4 个多尺度卷积分支 × 逐分支 RVQ(8192 码本 × 8/16 层)
 ---
 # NeuroRVQ: Multi-Scale Biosignal Tokenization for Generative Foundation Models
 
-> **arXiv 2025**(cs.LG,v1 2025-10,精读依据 v4 2026-05-17;正文 10 页 + 附录 A–L)· 帝国理工 + Cogitat 为主(Panagakis 挂雅典 NKUA/Archimedes,Laskaris 挂塞萨洛尼基 AUTh)—— 站内 tokenization 演进线里 **RVQ/多尺度的第一篇**:[TFM-Tokenizer](../2026-09/0918-tfm-tokenizer.md) 之后,把「RVQ + 多尺度 patch 内分解」的缺口填上,并把码本 tokenizer 第一次拓展到 ECG/EMG。token 用法与 [LaBraM](../2026-09/0918-labram.md) 同范式(只当掩码预训练目标);姊妹篇 [BrainRVQ](1104-brainrvq.md) 在其后补「双域 + 层间自回归」。演进口径见 [Tokenization 演进](../../topics/tokenization.md)。
+> **arXiv 2025**(cs.LG,v1 2025-10,精读依据 v4 2026-05-17;正文 10 页 + 附录 A–L)· 帝国理工 + Cogitat 为主(Panagakis 挂雅典 NKUA/Archimedes,Laskaris 挂塞萨洛尼基 AUTh)—— 站内 tokenization 演进线里 **RVQ/多尺度的第一篇**:[TFM-Tokenizer](0918-tfm-tokenizer.md) 之后,把「RVQ + 多尺度 patch 内分解」的缺口填上,并把码本 tokenizer 第一次拓展到 ECG/EMG。token 用法与 [LaBraM](0918-labram.md) 同范式(只当掩码预训练目标);姊妹篇 [BrainRVQ](1104-brainrvq.md) 在其后补「双域 + 层间自回归」。演进口径见 [Tokenization 演进](../topics/tokenization.md)。
 
 **作者**:Konstantinos Barmpas, Na Lee, Dimitrios Chalatsis, William Raftery, Yannis Panagakis, Dimitrios A. Adamos, Nikolaos Laskaris, Alexandros Koliousis, Dario Farina, Stefanos Zafeiriou(帝国理工/Cogitat;通讯作者未标注)
 
@@ -117,7 +117,7 @@ ECG(Table 1B,PTB-XL 10-fold 患者分层):43 类任务 NeuroRVQ-ECG Acc/BAcc **7
 
 ## 架构图
 
-![Figure 1 · NeuroRVQ tokenizer:多尺度时间编码器 → 共享嵌入 → Transformer → 逐分支 RVQ → Fourier 目标解码](../../assets/neurorvq-framework.png)
+![Figure 1 · NeuroRVQ tokenizer:多尺度时间编码器 → 共享嵌入 → Transformer → 逐分支 RVQ → Fourier 目标解码](../assets/neurorvq-framework.png)
 
 *Figure 1 · 下行为主干:Input Biosignal Patches → Multi-Scale Temporal Encoder(S 个分支)→ Transformer Encoder → 多尺度 patch 表示 p1..pS → Lookup operation 进 RVQ Codebooks → Tokenizer Decoder → Reconstructed Patches;上行为放大细节:S 个 Temporal Branch 输出 F1..FS,与 Shared Temporal/Spatial Embeddings 相加成 Combined Embeddings;右侧 RVQ 放大:每分支 R1..RN 各含 V1..VK 个码字。图中只画了架构,损失三项(对数幅值/相位/时域)不在图内*
 
@@ -146,19 +146,19 @@ flowchart TD
 
 | 论文 / 工作 | 关系说明 |
 |---|---|
-| [LaBraM](../2026-09/0918-labram.md) | 范式直系 + 主对手:FM 的对称掩码/token 目标承自 LaBraM;其单码本 VQ + 原始相位 MSE 正是本文批评的「单尺度 + 病态损失」。同数据重构 67×;但 matched 下游对照里 Memory/Sleep 优势仅 +0.8/+1.3——Table 1 的部分优势来自预训练数据混合 |
+| [LaBraM](0918-labram.md) | 范式直系 + 主对手:FM 的对称掩码/token 目标承自 LaBraM;其单码本 VQ + 原始相位 MSE 正是本文批评的「单尺度 + 病态损失」。同数据重构 67×;但 matched 下游对照里 Memory/Sleep 优势仅 +0.8/+1.3——Table 1 的部分优势来自预训练数据混合 |
 | [BrainRVQ](1104-brainrvq.md) | RVQ 分支姊妹篇(本篇先行):BrainRVQ 补「双域两套 RVQ + 层间自回归」,本篇是「单时域多尺度卷积分支 + 逐分支 RVQ」。相位处理正面对立——BrainRVQ 直接 MSE 重构相位(平均 r=0.577),恰是本篇 Appendix A 论证为病态、用余弦方向损失替代的做法 |
 | [CodeBrain](1104-codebrain.md) | 同为「把频谱信息塞进 tokenizer」的竞品但路线不同:CodeBrain 独立时/频编码器 + 双 VQ;本篇用多尺度卷积做**频率尺度**分解(非时/频双域),频域只出现在重构目标里 |
 | BrainOmni | 最近的 RVQ 同类:单 RVQ(EnCodec 式)vs 多尺度逐分支 RVQ;OOD 对照 0.275 vs 0.332——但只在 BrainOmni 公开样本数据上比,且 Sleep 任务因其算力约束缺席 |
-| [TFM-Tokenizer](../2026-09/0918-tfm-tokenizer.md) | token 用法的分岔口:TFM 把时频 motif token 做成下游输入与可插拔组件;本篇 token 止步预训练目标。空间设计也不同:TFM 单通道 channel-agnostic 且 tokenizer 内无位置编码,本篇用电极索引空间表——依赖预训练库的电极列表 |
-| [CBraMod](../2026-09/0928-cbramod.md) | 「深骨干 tokenizer 学出纠缠冗余表征」的批评对象;benchmark 上 68.8 vs 74.9。注意 CBraMod 分类头 40–73M(本篇 0.8–4.8K),参数基线并不完全对齐 |
-| [BIOT](../2026-09/0918-biot.md) | 连续 patch 路线在码本系 benchmark 上的崩盘样本:ERP 50.0±0.0(随机水平)、Motor 44.3——BIOT 因预训练缺基准电极无法测 Sleep;基线是否都调到位无说明 |
-| [NeuroLM](../2026-09/0918-neurolm.md) | 层次化的两种含义 + 相位之争:NeuroLM 的层次在词表层级(VQ 码并入 GPT-2 词表)且实验认为相位重构对下游贡献小;本篇层次在 RVQ 深度并把相位损失当最大功臣——同一段信号处理,两条线结论相反,值得对表实验 |
+| [TFM-Tokenizer](0918-tfm-tokenizer.md) | token 用法的分岔口:TFM 把时频 motif token 做成下游输入与可插拔组件;本篇 token 止步预训练目标。空间设计也不同:TFM 单通道 channel-agnostic 且 tokenizer 内无位置编码,本篇用电极索引空间表——依赖预训练库的电极列表 |
+| [CBraMod](0928-cbramod.md) | 「深骨干 tokenizer 学出纠缠冗余表征」的批评对象;benchmark 上 68.8 vs 74.9。注意 CBraMod 分类头 40–73M(本篇 0.8–4.8K),参数基线并不完全对齐 |
+| [BIOT](0918-biot.md) | 连续 patch 路线在码本系 benchmark 上的崩盘样本:ERP 50.0±0.0(随机水平)、Motor 44.3——BIOT 因预训练缺基准电极无法测 Sleep;基线是否都调到位无说明 |
+| [NeuroLM](0918-neurolm.md) | 层次化的两种含义 + 相位之争:NeuroLM 的层次在词表层级(VQ 码并入 GPT-2 词表)且实验认为相位重构对下游贡献小;本篇层次在 RVQ 深度并把相位损失当最大功臣——同一段信号处理,两条线结论相反,值得对表实验 |
 
 ## 个人思考
 
 - **「损失设计 > 架构」的叙事把协同效应记错账**。摘要与讨论反复强调 phase-aware loss 是最大改进,单看行消融(0.946→0.167,5.7×)确实压过架构的 37%;但从「相位损失+MSE 幅值」(0.167)到全家桶(0.035)还有 4.8× 的空间——即对数幅值与时域项的增益**依赖**相位表示先摆正,反之亦然。更诚实的读法是:相位表示是使能器(enabler),43× 是三项联合的数字。另外别忽略 baseline 本身是 LaBraM 式配置,「43×」里有一部分是 LaBraM 的相位 MSE 太病态贡献的;
-- **标题里的 Generative 至今没有兑现**。全文只有 masked modeling + 判别式下游,RVQ 层次结构的真正红利——coarse-to-fine 生成、AudioLM 式条件生成——一个实验都没有。对站内 [tokenization 演进页](../../topics/tokenization.md) 记录的「与自然语言对齐/生成」遗留问题,这篇只交了 tokenizer 半张卷:高保真重构是生成的必要前提,但 token 目前连下游输入都不是(TFM 路线),更不是生成序列。v1 到 v4 相隔半年仍在补 baseline,生成的部分大概率在后续工作里;
+- **标题里的 Generative 至今没有兑现**。全文只有 masked modeling + 判别式下游,RVQ 层次结构的真正红利——coarse-to-fine 生成、AudioLM 式条件生成——一个实验都没有。对站内 [tokenization 演进页](../topics/tokenization.md) 记录的「与自然语言对齐/生成」遗留问题,这篇只交了 tokenizer 半张卷:高保真重构是生成的必要前提,但 token 目前连下游输入都不是(TFM 路线),更不是生成序列。v1 到 v4 相隔半年仍在补 baseline,生成的部分大概率在后续工作里;
 - **基准自建 + 参数量矛盾 + 无代码,可复现性打折**。EEG benchmark 出自同一批作者(Lee、Barmpas 都是本文作者),协议一致是优点,但基线健康度存疑:EEGPT Motor 31.3、BIOT ERP 50.0±0.0 都是退化水平,无法判断是模型不行还是协议不合适。ECG「264K 骨干胜过 30M 基线」是全文最惊艳的数字,却与 Table 13 的 hidden dimension 200/200/40(EEG/ECG/EMG)矛盾——264K 恰是 d=40 的体量,而 Table 18 又把 5.9M(d=200 的体量)记给 EMG;两处必有一处标错。PDF 正文无任何代码链接;
 - **三个模态三套 tokenizer 三套 FM——这是「设计空间」论文而非「统一模型」论文**。modality-adaptive 的代价是没有任何跨模态共享表征(作者自己列为 future direction),与 BIOT/BrainOmni 的跨模态野心相反。真正可迁移的资产是四个旋钮的调法:采样率定 w、频谱宽度定 N、形态时标定卷积核组——这套方法论对想做「心肌/肌电版 LaBraM」的人比 SOTA 数字更有用。另外 EEG 预训练语料混着 235 h 自采私有数据,这部分不可复现,复现实验时要有心理预期。
 
@@ -192,4 +192,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-vector-link: [Tokenization 演进(RVQ/多尺度缺口由本篇填补)](../../topics/tokenization.md) ｜ :material-vector-circle: [BrainRVQ(RVQ 分支后续:双域 + 层间自回归)](1104-brainrvq.md) ｜ :material-tag: [LaBraM(被对照 67× 的单码本 VQ 前作)](../2026-09/0918-labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的分岔路线)](../2026-09/0918-tfm-tokenizer.md) ｜ :material-compare: [CBraMod(深骨干 tokenizer 的批评对象)](../2026-09/0928-cbramod.md) ｜ :material-heart-pulse: [BIOT(连续 patch 路线的崩盘基线)](../2026-09/0918-biot.md) ｜ :material-home: [首页](../../index.md)
+:material-vector-link: [Tokenization 演进(RVQ/多尺度缺口由本篇填补)](../topics/tokenization.md) ｜ :material-vector-circle: [BrainRVQ(RVQ 分支后续:双域 + 层间自回归)](1104-brainrvq.md) ｜ :material-tag: [LaBraM(被对照 67× 的单码本 VQ 前作)](0918-labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的分岔路线)](0918-tfm-tokenizer.md) ｜ :material-compare: [CBraMod(深骨干 tokenizer 的批评对象)](0928-cbramod.md) ｜ :material-heart-pulse: [BIOT(连续 patch 路线的崩盘基线)](0918-biot.md) ｜ :material-home: [首页](../index.md)

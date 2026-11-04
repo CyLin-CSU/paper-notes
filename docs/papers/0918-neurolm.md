@@ -85,11 +85,11 @@ flowchart TD
 
 ## 架构图
 
-![Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（GRL 梯度反转）](../../assets/neurolm-tokenizer.png)
+![Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（GRL 梯度反转）](../assets/neurolm-tokenizer.png)
 
 *Figure 2 · 文本对齐 tokenizer 训练：时频重构 + 域分类器（GRL 梯度反转）*
 
-![Figure 3 · 两阶段：多通道自回归预训练（左）→ 多任务指令微调（右）](../../assets/neurolm-training.png)
+![Figure 3 · 两阶段：多通道自回归预训练（左）→ 多任务指令微调（右）](../assets/neurolm-training.png)
 
 *Figure 3 · 两阶段：多通道自回归预训练（左）→ 多任务指令微调（右）*
 
@@ -145,4 +145,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：BrainGPT](0918-braingpt.md) ｜ :material-arrow-right: [下一篇：TFM-Tokenizer](0918-tfm-tokenizer.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../../comparison.md#benchmarks)
+:material-arrow-left: [上一篇：BrainGPT](0918-braingpt.md) ｜ :material-arrow-right: [下一篇：TFM-Tokenizer](0918-tfm-tokenizer.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../comparison.md#benchmarks)
