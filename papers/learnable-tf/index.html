@@ -1232,17 +1232,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2175,17 +2164,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2208,19 +2186,9 @@
 
 <h1 id="learnable-time-frequency-transform-with-application-to-eeg-signal-analysis">Learnable Time-Frequency Transform With Application to <abbr title="脑电图 Electroencephalogram">EEG</abbr> Signal Analysis<a class="headerlink" href="#learnable-time-frequency-transform-with-application-to-eeg-signal-analysis" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>IEEE TETCI 2026</strong>（vol.10 no.5, pp.3555–3570，2026-04-28 上线）· 山东大学集成电路学院 —— 站内<strong>频域维度</strong>的方法学论文。站内已有的一串工作（<a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a>、<a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>、<a href="../tfm-tokenizer/">TFM-Tokenizer</a>、<a href="../luna/">LUNA</a>、<a href="../not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a>）都在「固定 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr>/<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> + 下游学习」的框架里打转，这篇把自由度直接放进了变换核本身，可作 tokenization 专题的频域前端延伸。</p>
+<p><strong>IEEE TETCI 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Guoyang Liu, Lan Tian, Weidong Zhou*（通讯，山东大学）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>核心论点：<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr>/CWT/S 变换的窗口或母小波靠人工选，选错了表示就次优；已有可学习前端（LEAF、SincNet、CWConv、DSTFT）又都往核函数里塞结构先验（Gabor、sinc、固定母小波的缩放平移），自由度受限。LTFT 干脆让<strong>每个频率一个完全自由的复值窗口</strong> <span class="arithmatex">\( w_f(\xi) \in \mathbb{C} \)</span>，与下游分类器一起被任务损失端到端训练</li>
-<li>前向就是 S 变换式的频域实现：<span class="arithmatex">\( L_m = \mathrm{IFFT}(X_m \odot W_m) \)</span>，每频率一次 IFFT；反向用 Wirtinger 微分的共轭梯度，梯度有闭式傅里叶形式 <span class="arithmatex">\( \partial E/\partial w_m^* = \mathrm{IFFT}(X_m^* \odot \mathrm{FFT}(\Delta_m \odot L_m)) \)</span>，每频率 <span class="arithmatex">\( O(N\log N) \)</span></li>
-<li>理论上证明了三种退化：<span class="arithmatex">\( w_f = g \)</span> 得任意窗 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr>，<span class="arithmatex">\( w_f \)</span> 取缩放调制母小波得相位校正 CWT，<span class="arithmatex">\( w_f \)</span> 取频率依赖高斯得标准 S 变换——所以初始化就取 S 变换窗口，「从 ST 出发学出任务专属窗口」</li>
-<li>结果：合成 chirp 数据 99.50% vs 冻结窗口的 ST 95.50%（线性分类器，可学习性被干净隔离）；运动想象 86.95% 平均（单次最高 92.14%）、Bonn 五类癫痫 91.00%、SEED 二分类 73.33%——均超过 LEAF/DSTFT/CWConv 与固定变换（Table I），但 <strong>SEED 上与 ST 打平</strong>，作者老实承认情绪任务窗几乎没动</li>
-<li>最好的部分是窗口可视化：合成数据学到的窗口在 20 Hz（插入片段频率）偏离最大，运动想象在 10–12 Hz（alpha ERD/ERS），Bonn 集中在 18 Hz 以下——变换本身成了可解释的证据</li>
-</ul>
-</div>
 <h2 id="1">1 问题定位：窗口选择这个「手工活」<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p>时频谱图进神经网络是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 分类的主流管线，但整条管线里最上游的一步——选什么窗、什么母小波——始终是手工的：<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 的窗长窗型、CWT 的母小波、S 变换的高斯宽度，都按数据分布人工调。混合管线的变换和网络是<strong>分开优化</strong>的，变换端永远拿不到任务损失的梯度。</p>
 <p>已有可学习前端的修法各有保留：LEAF 学 Gabor 滤波器组、SincNet 学 sinc 带通、CWConv 只学母小波的尺度和平移、DSTFT 把 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 超参数连续化。共同点是核函数被约束在特定函数族里，作者认为这限制了适配能力，也不构成一个「一般的」可学习时频变换框架。LTFT 的回答是去掉全部先验：每频率一个复值窗口，实部虚部都训。</p>
@@ -2385,23 +2353,6 @@
 <li><strong>能不能当 TFM 那种 tokenizer 的前端？我现在持保留态度。</strong> 结构上可行：LTFT 谱图替换 TFM 的 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 谱图，切 patch 照旧。但机制上有一个断层：LTFT 的窗口是被<strong>任务分类损失</strong>驱动的，tokenizer 的预训练目标是掩码重构——重构目标下最优窗口趋近于无损表示（窗宽趋零、分辨率拉满），未必对齐下游判别；而如果先在分类任务上预训窗口再搬去 tokenizer，又回到「分开优化」的老问题。更现实的路径可能是 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/LUNA 式的轻量用法：把 LTFT 当作需要极少标注数据的<strong>判别任务前端</strong>（癫痫、<abbr title="运动想象 Motor Imagery">MI</abbr> 这类有清晰瞬态模式的），而不是基础模型的通用 tokenizer。SEED 的平局恰恰圈定了它的适用域；</li>
 <li><strong>评测口径要打折看</strong>。四个数据集里两个是玩具级（合成 chirp、Bonn 是被无数论文刷穿的基准），<abbr title="运动想象 Motor Imagery">MI</abbr> 是单被试随机划分而非跨被试，Bonn 的十折是全数据混合交叉验证，没有被试独立协议；SEED 子集只有 600 段且做了平衡采样。这些协议下 91%、86.95% 的绝对数字与站内 TUEV/TUAB 那类跨被试结果<strong>不可比</strong>。这篇的价值在方法推导与窗口分析那一半，不在 benchmark 数字那一半。</li>
 </ol>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · LTFT 与 LEAF/DSTFT/CWConv 这些可学习前端，差别是本质的还是程度的？</summary>
-<p>程度上更大，但有一个结构性区别：LEAF 把核约束在 Gabor 族、CWConv 只学固定母小波的尺度平移、DSTFT 连续化的是 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 的采样超参数——三者的可学习空间都是某个固定变换的<strong>子流形</strong>。LTFT 的窗口是逐频率自由复值函数，<abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr>/CWT/ST 都是它的低维截面（第 2.3 节的三个构造）。代价是丢掉了函数族先验带来的隐式正则，所以 LTFT 比 LEAF 更吃数据量：<abbr title="运动想象 Motor Imagery">MI</abbr> 上 280 条 trial 撑不住约 1.6 万个窗口实参数，准确率从 120 epoch 的峰值 88.53% 回落到 86.95%；SEED 上与 ST 打平（73.33%）——都是这个 trade-off 的两面。</p>
-</details>
-<details class="question">
-<summary>Q2 · 为什么初始化选 S 变换而不是 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 或小波？</summary>
-<p>三个理由：ST 的频率依赖高斯窗是 LTFT 框架内的合法参数点（式 25），初始化即合法变换，不用投影；作者组 2020 年起的前作证明 ST 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上是好基线，起点不亏；实验设计上「LTFT vs 冻结 LTFT」成了最干净的消融——合成数据 99.50 vs 95.50 的差距里没有实现差异、没有尺寸对齐问题，纯粹是可学习性的贡献。这种把自家前作变成消融基线的做法，比 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 那个「统一 32 点窗不调参」的基线可信得多。</p>
-</details>
-<details class="question">
-<summary>Q3 · 复值参数不能直接用常规反向传播吧，它是怎么训的？</summary>
-<p>用 Wirtinger 微分：实值损失对复参数 <span class="arithmatex">\( w \)</span> 的最速下降方向是共轭梯度 <span class="arithmatex">\( \partial E/\partial w^* \)</span>。这篇的巧妙处是闭式化：上游梯度 <span class="arithmatex">\( \Delta \)</span> 由自动微分拿到后，窗口梯度整理成 <span class="arithmatex">\( \mathrm{IFFT}(X_m^* \odot \mathrm{FFT}(\Delta_m \odot L_m)) \)</span>——两个 FFT、两次逐点乘、一个 IFFT，每频率 <span class="arithmatex">\( O(N\log N) \)</span>、<span class="arithmatex">\( L_m \)</span> 前向直接复用，与前向同阶复杂度，完全不需要手写复数自动微分。工程上这意味着 LTFT 可以是一个几十行的自定义层，这也是我认为它比 DEGram（sinc 滤波 + 时频注意力）那类方案更容易被吸收的原因。</p>
-</details>
-<details class="question">
-<summary>Q4 · SEED 上的平局是失败还是特性？</summary>
-<p>我倾向于读作特性，但它的作者没把话说满。窗口训后几乎不动，说明梯度认为高斯先验已是最优——情绪判别靠稳定谱统计而非瞬态模板时，改窗没有收益空间。这其实给了 LTFT 一个免费的「任务诊断」用途：<strong>训练前后窗口的 L2 距离图本身就是任务是否存在瞬态时频特征的检验统计量</strong>。合成/<abbr title="运动想象 Motor Imagery">MI</abbr>/Bonn 三张距离图各有清晰的峰（20 Hz / 10–12 Hz / &lt;18 Hz），SEED 全平——比事后归因分析更直接。缺点是这需要真的训一遍才能诊断，没有更便宜的先验判据。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

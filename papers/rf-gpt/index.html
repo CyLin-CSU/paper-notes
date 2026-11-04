@@ -1022,7 +1022,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -1033,29 +1033,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2134,7 +2112,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -2145,29 +2123,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2196,18 +2152,9 @@
 
 <h1 id="rf-gpt-teaching-ai-to-see-the-wireless-world">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>: Teaching AI to See the Wireless World<a class="headerlink" href="#rf-gpt-teaching-ai-to-see-the-wireless-world" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>arXiv 2026</strong>（eess.SP, 2602.14833）· Khalifa University / 浙江大学 / Université de Lorraine —— 跨领域精读：这是「时频图 + 大模型」在<strong>射频域</strong>的完整落地，与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 时频路线互为镜像参照。</p>
+<p><strong>arXiv 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Hang Zou, Yu Tian, Bohao Wang, Lina Bariah, Samson Lasaulce, Chongwen Huang, Mérouane Debbah</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>提出 <strong>RFLM</strong>（radio-frequency language model）概念并给出首个实现 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>：IQ 波形 → <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 时频图 → <strong>直接复用预训练 VLM 的视觉编码器</strong> → 线性 adapter → 解码器 <abbr title="大语言模型 Large Language Model">LLM</abbr> 生成 RF-grounded 回答</li>
-<li>完全跳过自监督预训练：6 种无线技术的<strong>标准合规波形生成器</strong>造出 ~12,000 场景，「配置即标签」确定性 captioning + 文本 <abbr title="大语言模型 Large Language Model">LLM</abbr> 合成 <strong>0.625M 指令对，零人工标注</strong></li>
-<li>通用 VLM（Qwen2.5-VL、<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5）精心 prompt 后仍<strong>接近随机猜测</strong>；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 在技术识别达 <strong>99.6% joint 准确率</strong>，5 个 benchmark 全面碾压</li>
-<li>消融最扎心的一条：<strong>IQ 不平衡是最具破坏性的损伤</strong>（镜像/交叉泄漏直接毁掉视觉结构）——对所有「时频图当图片」的方案都是普适警示</li>
-</ul>
-</div>
 <h4 id="1">1 问题定位<a class="headerlink" href="#1" title="Permanent link">#</a></h4>
 <p><abbr title="大语言模型 Large Language Model">LLM</abbr> 与多模态模型已统一了文本、视觉、音频，唯独<strong>射频（RF）信号</strong>——无线通信、雷达、ISAC 的物理层载体——没有被纳入基础模型框架。两侧各有困境：</p>
 <ul>
@@ -2315,17 +2262,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/rf-gpt-framework.png" data-desc-position="bottom"><img alt="Figure 1 · RF-GPT 框架：基于视觉的 RF 编码器（谱图 → patch → 视觉编码器）+ RF adapter 线性投影 + decoder-only LLM" src="../../assets/rf-gpt-framework.png"></a></p>
 <p><em>Figure 1 · RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 框架总览：频谱图经视觉编码器变成 RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀，<abbr title="大语言模型 Large Language Model">LLM</abbr> 在其条件下生成回答</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>RFLM 概念首作：频谱图 → 现成 VLM 视觉编码器 → RF <abbr title="词元，模型处理的最小输入单元">token</abbr> 前缀 → <abbr title="大语言模型 Large Language Model">LLM</abbr> 回答，<strong>零 RF 预训练</strong></li>
-<li>纯合成数据飞轮：6 种技术标准波形 + 确定性 captioning + <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-OSS-120B 合成 0.625M 指令对，零人工标注</li>
-<li>WTR 99.6% joint、数信号 98%；通用 VLM（含 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5）精心 prompt 仍随机猜——<strong>模态接地必须靠专门 SFT</strong></li>
-<li>IQ 不平衡是最具破坏性的损伤（镜像伪影破坏视觉结构）；3 epoch 效率 = ViT-H 30 epoch</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2356,30 +2293,13 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>对 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 时频路线的启示</strong>：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 证明了「频谱图当图片 + 现成 VLM + 合成指令 SFT」可以完全绕开自监督预训练。这条路搬到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的瓶颈在数据侧：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 没有「标准波形生成器」级别的合规仿真器，做不到 RF 这种配置即标签的零噪声监督——但睡眠纺锤波/棘波注入仿真、受控范式重放是部分替代；</li>
 <li><strong>「通用 VLM 随机猜」这个阴性结果和阳性结果同样值钱</strong>：<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5 级模型读不懂 RF 谱图，同理大概率也读不懂 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 谱图——「看起来像图」不等于「有先验」，模态接地没有捷径；</li>
 <li><strong>IQ 不平衡最伤</strong>对一切时频输入方案是普适警示：通道间失配制造的镜像/交叉泄漏在时频图上是结构性破坏。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的电极阻抗失配、工频干扰本质同类，做时频图输入方案时值得专门做敏感性分析；</li>
 <li>与六篇 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 论文相比最大的方法论差异是<strong>预训练的缺位</strong>：六篇都在卷「怎么预训练」，这篇把宝全押在 VLM 底座的通用视觉语义 + 合成数据的零噪声监督上——是工程主义路线的极端样本。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 幅值谱丢了相位，为什么 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 不在乎，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 却要重构幅值+相位？</summary>
-<p>目标不同。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用重构学通用表示，相位携带波形精细结构信息，是表示学习的一部分；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 是任务驱动的判别式 SFT，其任务（调制族/技术/计数/重叠）是波形的<strong>多对一映射</strong>，只依赖时频能量分布。论文专门讨论了 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 相位恢复文献（合适冗余/支撑假设下、至多差一个全局相位即可由幅值恢复信号），但明确声明不重构波形、只要任务属性——「丰富但有损」的前端够用。</p>
-</details>
-<details class="question">
-<summary>Q2 · 为什么不自己训一个 RF 前端编码器？</summary>
-<p>两个动机：① 异构性——RF 跨技术的载频/带宽/采样率差异巨大，单一 raw-IQ tokenizer 难以同时高效适配窄带、宽带、多标准；② <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 已是有效的特征提取器，而图像预训练的视觉编码器自带通用语义结构，对「长得像图像」的谱图开箱即用。消融间接支撑：分辨率越高收益越大（224→512 各难度 +8~10 点），说明视觉路径确实在利用时频细节。</p>
-</details>
-<details class="question">
-<summary>Q3 · 纯合成数据训出的模型能信吗？</summary>
-<p>作者自认局限：grounding 全部来自合成、只支持单输入谱图，真实 OTA 数据、多天线、ISAC 留作未来。合成→真实的域差在 RF 尤其尖锐（真实硬件损伤与干扰谱远比仿真复杂）。但硬币另一面：配置对象逐字入元数据，训练信号<strong>零噪声</strong>——这是任何人工标注都给不了的精度，0.625M 对的规模也正因此才可行。</p>
-</details>
-<details class="question">
-<summary>Q4 · 相比六篇 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 论文，这篇最值得「偷」的是什么？</summary>
-<p>三样：① 五级信息分层的 captioning 设计（把元数据按「视觉可辨/需元数据」×「全局/单信号」组织，按难度选择性出题）可直接迁移到任何生理信号仿真；② 拒绝采样保证「标准合规」的思想 = 数据质量前置校验；③ 用「通用模型随机猜」做阴性对照来论证接地必要性——<abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 论文很少做这个对照。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

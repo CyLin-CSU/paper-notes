@@ -1313,17 +1313,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2197,17 +2186,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2230,20 +2208,9 @@
 
 <h1 id="codebrain-bridging-decoupled-tokenizer-and-multi-scale-architecture-for-eeg-foundation-model">CodeBrain: Bridging Decoupled Tokenizer and Multi-Scale Architecture for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Foundation Model<a class="headerlink" href="#codebrain-bridging-decoupled-tokenizer-and-multi-scale-architecture-for-eeg-foundation-model" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>ICLR 2026</strong>（arXiv 2506.09110，v4 2026-05-11）· 新加坡国立大学 Saw Swee Hock 公共卫生学院（兼 NUS 数据科学研究所、NUS 广州研究院）+ 南洋理工 CCDS + 中科院自动化所脑网络组 —— 站内 <a href="../../topics/tokenization/">Tokenization 演进</a>线上 2026 梯队的占坑之作。谱系上,<a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> 学出了词表但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只当掩码目标、<a href="../neurolm/">NeuroLM</a> 把码字并进 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表、<a href="../tfm-tokenizer/">TFM-Tokenizer</a> 把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 做成可插拔输入;CodeBrain 不争「<abbr title="词元，模型处理的最小输入单元">token</abbr> 当不当输入」,而是去填「tokenizer 与下游架构作为整体联合设计」这个缺口——时/频双码本 + SSM 系多尺度骨干,一个模型包干两阶段。</p>
+<p><strong>ICLR 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Jingying Ma*, Feng Wu*（共同一作）, Qika Lin†, Yucheng Xing, Chenyu Liu, Ziyu Jia†, Mengling Feng（†通讯；NUS / NTU / 中科院自动化所）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>两阶段 EFM:Stage 1 <strong>TFDual-Tokenizer</strong> 把 patch 表征分别量化进<strong>时域/频域两个独立码本</strong>（各 4096×32）——频域分支重构幅值+相位，时域分支重构原始波形并加 SimCLR 对比正则（治 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>「原始信号重构不收敛」的老病）；Stage 2 <strong>EEGSSM</strong>（8 层 15.17M）= SGConv 结构化全局卷积 + SWA 滑窗注意力 + WaveNet 式门控，掩码 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测（mask 率 0.5）</li>
-<li>预训练 TUEG <strong>9,246 小时</strong>（19 通道 10-20 系统、200 Hz、1s 非重叠 patch、序列长 570 = 19 通道 × 30 patch）；tokenizer 6×A100 约 10 h、骨干 2×A100 约 24 h——算力门槛远低于同类</li>
-<li>8 任务 10 数据集全量微调、5 seeds:对最强基线 CBraMod 全线小胜——FACED Kappa <strong>0.5406</strong> vs 0.5041、SEED-V <strong>0.2735</strong> vs 0.2569、ISRUC S3 <strong>0.7671</strong> vs 0.7407;最大增益在 BCIC2020-T3（<strong>+0.0911</strong>,21.6%）与 Mental Arithmetic（AUROC <strong>+0.0802</strong>,10.1%）两个小数据集</li>
-<li>诚实处与丢分处:TUEV/TUAB 与预训练库 TUEG 同源,专设 Excluding 重训行且 TUEV 仍占优（0.6838 vs 0.6772）;但 CHB-MIT Balanced Acc（0.7273 vs <strong>0.7398</strong>）、TUAB AUROC/PRAUC（0.9030/0.9100 vs <strong>0.9227/0.9258</strong>）三处输给 CBraMod,正文只在附录轻描淡写</li>
-<li>消融:去 SGConv 崩得最狠（FACED 0.5406→0.1936）,Gate 次之（→0.2578）,SWA/CL 各贡献约 0.02;双码本 &gt; 单频 &gt; Mixed ≈ 单时;<strong>SWA 窗长 1 最优</strong>——它实际做的是 patch 内建模而非跨 patch 局部上下文</li>
-<li>可解释性是事后定性:类特异 <abbr title="词元，模型处理的最小输入单元">token</abbr> 检索出 N3 慢波（40.4% 激活 patch 含慢波）、δ 优势（18.3%）、N2 纺锤波等;论文自己承认「不意味着特定可解释码直接决定任务结果」</li>
-</ul>
-</div>
 <h2 id="1-patch-token">1 问题定位:单码本、全连接注意力、patch 即 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的三宗罪<a class="headerlink" href="#1-patch-token" title="Permanent link">#</a></h2>
 <p>论文给现有 EFM 列了三条罪状。<strong>其一,混合 tokenizer 混淆异质模式</strong>:<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 框架从图像搬来（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、TFM 均在此列），图像特征同质所以单码本够用,但 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时域波形与频域结构反映大脑活动的不同侧面——同一个 patch 在一个域匹配、在另一个域可能发散,单一混合码本会「撞码」,削弱表征容量,也让 <abbr title="词元，模型处理的最小输入单元">token</abbr> 难以对齐临床可解释的神经事件或频谱节律。<strong>其二,全连接注意力与脑结构错配</strong>:多数 EFM 用 Transformer 自注意力,而脑的小世界拓扑是「稀疏全局依赖 + 强局部相关」,全连接设计既贵（二次复杂度）又不合生理。<strong>其三,patch 即 <abbr title="词元，模型处理的最小输入单元">token</abbr> 丢掉 patch 内部结构</strong>:每个 patch 压成单个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 后,patch 内部的瞬态神经事件（睡眠 K-复杂波、纺锤波等短时波形）没有专门机制去建模。</p>
 <p>站内坐标:这三条分别对着 <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>（单码本、<abbr title="词元，模型处理的最小输入单元">token</abbr> 只当目标）、<a href="../cbramod/">CBraMod</a>（Transformer 骨干）与 <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a>（切段即 <abbr title="词元，模型处理的最小输入单元">token</abbr>）。CodeBrain 的答案是把三件事各换一个组件:双码本、卷积 SSM+滑窗注意力的混合骨干、显式的 patch 内注意力层。</p>
@@ -2544,23 +2511,6 @@ z = \tanh\left(W_f \cdot \mathrm{Concat}(y_{\mathrm{sg}}, y_{\mathrm{swa}})\righ
 <li><strong>子带消融的「全崩」是个警报,不是勋章</strong>。移除 δ、θ、α 任何单个低频带都把模型打到近随机(SEED-V 去 α 带 0.0082),而健康的频段归因应该是「一个带一个坑」。更合理的解释是模型对输入分布漂移极度敏感:掩掉一个带会破坏全局统计(如 z-score 口径),整个输入相对预训练分布成了 OOD。这与附录 M 大讲通道丢弃/基线漂移鲁棒性的叙事存在张力——同一模型不可能既「对结构化扰动稳健」又「拆一个频带就崩」;</li>
 <li><strong>增量边际与占坑价值要分开记账</strong>。对 CBraMod 的中位增量只有 0.01–0.03 Kappa,大增益集中在两个小数据集(BCIC2020-T3 共 6,000 样本、Mental Arithmetic 共 1,707 样本),大库任务(TUEV/TUAB)上互有胜负;三个二类指标还输给基线。它的价值更多在「把双码本 + SSM 骨干这条路铺通」:完整消融、scaling 曲线、9k 小时/150M 的外推证据,外加 15M 参数、35 GPU·小时的可复现成本(代码与权重已开源)。典型的占坑之作——坑位本身(解耦 tokenization 的可解释性叙事)比数字更有长期价值,后续 <a href="../brainrvq/">BrainRVQ</a> 等双域工作都站在这条线上。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 「解耦」到底解耦了什么?</summary>
-<p>不是输入级:时/频两路在 TFConv 里拼接成同一个联合嵌入,两个码本对的是同一个 <span class="arithmatex">\( \tilde{e}_i \)</span>(式 3)。真正分开的是<strong>码本 + 重构目标</strong>:两套 4096 码字、两个 decoder、两个监督域(波形 vs 幅相),<abbr title="码本，离散 token 的可查询向量表">codebook</abbr>/commitment 损失各算各的。所以「二次扩展」的精确含义是每 patch 的输出从 1 个码字变成 <span class="arithmatex">\( (v_t, v_f) \)</span> 对,组合空间 <span class="arithmatex">\( K^2 \)</span>;而 Mixed 消融(共享码本联合重构两个域)差出的 0.073(FACED)是「分家」本身的净收益。</p>
-</details>
-<details class="question">
-<summary>Q2 · <abbr title="词元，模型处理的最小输入单元">token</abbr> 在这套系统里承担什么?能不能拿走?</summary>
-<p>只承担预训练目标。Table 4 给了直接答案:整个去掉 tokenizer 改原始信号重构,ISRUC S3 Kappa 0.7671→0.7503(−0.017);把 top-50% 高频激活码换成占位符,→0.7426(−0.025)。<abbr title="词元，模型处理的最小输入单元">token</abbr> 化的贡献真实但不大,且「<abbr title="词元，模型处理的最小输入单元">token</abbr> 可解释」与「任务收益」之间论文自己承认没有因果关系(附录 B 开头声明)。想验证 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接口价值,得看 <a href="../tfm-tokenizer/">TFM-Tokenizer</a> 那种把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 喂给下游的设定——CodeBrain 没做这个实验。</p>
-</details>
-<details class="question">
-<summary>Q3 · 预训练语料泄漏怎么处理的?可信度如何?</summary>
-<p>TUEV/TUAB ⊂ TUEG。三重处理:预训练早停 epoch 10(损失 6.01 后趋平的「保守检查点」叙事);附录 I 给 Excluding 行(从 TUEG 剔除两库重训);正文承诺与所有基线统一数据划分、5 seeds。结果:排除泄漏后 TUEV Kappa 0.6838 仍超 CBraMod 0.6772,TUAB BAcc 0.8288 与 CBraMod 0.8289 打平。可信,但注意 TUAB 的 AUROC/PRAUC 本来就输(0.9030/0.9100 vs 0.9227/0.9258),以及 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 在 TUEV/TUAB 上用的是其原生 23 通道设定、EEGPT 用两层卷积前置——基线间微调协议并不完全同一,作者在附录承认并保留各自设定。</p>
-</details>
-<details class="question">
-<summary>Q4 · SGConv 和 Mamba 什么关系?为什么消融不对照 Mamba?</summary>
-<p>SGConv 出自 Li et al. 2022(长卷积脉络,与 S5/H3 同源):把 SSM 展成全局卷积核、FFT 计算 <span class="arithmatex">\( O(N \log N) \)</span>,再加对数间隔子核与指数衰减做稀疏化;Mamba 是选择性递推分支。两者都是「Transformer 之外的线性复杂度选项」,序列长 570 时卷积形态并行更省。可惜附录 L 的骨干替换实验只对照了 CNN/LSTM/Transformer(参数 16.22M/17.35M/21.2M,SGConv 15.17M 最小、FLOPs 8.74G 最低),没有 Mamba——「SSM 骨干适合 <abbr title="脑电图 Electroencephalogram">EEG</abbr>」这个主张在论文内部缺了最有信息量的那个对照组,只能靠站内 <a href="../ssm2mel/">SSM2Mel</a> 一类的外部证据旁敲。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

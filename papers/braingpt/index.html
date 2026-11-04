@@ -626,7 +626,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -637,29 +637,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2112,7 +2090,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -2123,29 +2101,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2242,16 +2198,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/braingpt-overview.png" data-desc-position="bottom"><img alt="Fig. 3 · 总体架构：左=单电极自回归预训练（ETE），右=多电极多任务微调（TEG 图网络）" src="../../assets/braingpt-overview.png"></a></p>
 <p><em>Fig. 3 · 总体架构：左=单电极自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>），右=多电极多任务微调（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 图网络）</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>最大 1.09B（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 领域当时最大）；3750 万单电极样本 / 约 1B <abbr title="词元，模型处理的最小输入单元">token</abbr></li>
-<li>12 个基准 × 5 类任务，单一 generalist 全面超过 specialist：SS +11.2%、MW +8.5%</li>
-<li><abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 比 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均高 2%+（同架构同损失对比）；联合训练全面优于逐任务训练（MW +3.9%）</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2274,29 +2221,12 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 的多任务信息不在图结构里，而在「共享参数被多任务梯度共同更新」：电极节点 <span class="arithmatex">\( V_m \)</span> 是跨任务的原型记忆，电极集重叠即共享交集——小任务 MW 的 +3.9% 正来源于此。</li>
 <li>自回归直接回归连续值（<abbr title="均方误差 Mean Squared Error">MSE</abbr>），绕开了离散化难题——与 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 的「先离散再预测」形成两条并行路线。</li>
 <li>电极级拆样本让样本量 ×E 倍膨胀（3750 万），这一数字需要谨慎解读：单电极序列丢掉了跨电极同步信息，空间整合完全依赖下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 补回。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么自回归比掩码建模更适合 <abbr title="脑电图 Electroencephalogram">EEG</abbr>？</summary>
-<p>论文的消融（同架构、同损失度量）显示 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 全面优于 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均 2% 以上：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 反映连续渐进的信息流，过去活动影响未来状态，因果的 next-<abbr title="词元，模型处理的最小输入单元">token</abbr> 预测天然贴合；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的双向补全破坏了这种时序因果结构。且 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 预测的是真实未来而非被人为挖空的部分，任务更难、学到的表示更强。</p>
-</details>
-<details class="question">
-<summary>Q2 · <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 图里到底存了什么多任务信息？</summary>
-<p>图结构本身不存任务信息。多任务信息来自训练方式：节点向量 <span class="arithmatex">\( V_m \)</span>（电极原型）和 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重是所有任务的梯度共同更新的共享参数——同一电极被多个任务使用时，它的 <span class="arithmatex">\( V_m \)</span> 同时接收多个任务的监督信号。推理时输入的电极集决定激活哪个子图（β mask），任务头决定读出。若两个任务电极集完全不相交，空间层面的共享就只剩 <abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 权重。</p>
-</details>
-<details class="question">
-<summary>Q3 · 电极级拆样本有什么代价？</summary>
-<p>样本量乘以电极数倍增（3750 万）存在水分：单电极序列丢掉了跨电极的同步信息（空间关系、参考电极的共模成分），预训练学到的只是单电极时序动力学，空间整合完全押注在下游 <abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr> 上——这就是作者所说的渐进式时空解耦。</p>
-</details>
-<details class="question">
-<summary>Q4 · 末尾追加的 special <abbr title="词元，模型处理的最小输入单元">token</abbr> c 为什么能聚合成全局表示？</summary>
-<p><abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> 是因果（单向）注意力：序列末尾的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 天然能注意到它之前的所有 <abbr title="词元，模型处理的最小输入单元">token</abbr>。把 c 放在每个电极序列的最后，它的输出位置就自动汇聚了该电极整段时序的信息，类似 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 里用最后一个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 做分类。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

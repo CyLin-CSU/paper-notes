@@ -987,17 +987,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2175,17 +2164,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2208,19 +2186,9 @@
 
 <h1 id="delta-language-diffusion-based-eeg-to-text-architecture">DELTA: Language Diffusion-based <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text Architecture<a class="headerlink" href="#delta-language-diffusion-based-eeg-to-text-architecture" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>NeurIPS 2025 Workshop</strong>(39th NeurIPS Workshop <em>Foundation Models for the Brain and Body</em>,arXiv 2511.21746v1,2025-11-22)· 韩国团队(MODULABS + 成均馆大学,正文 5 页 letter)——站内 <strong><abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 正线的第一篇精读</strong>:Wang &amp; Ji 2022 的 open-vocabulary <abbr title="脑电图 Electroencephalogram">EEG</abbr>-To-Text、DeWave 这些工作此前只散落在 <a href="../../topics/tokenization/">Tokenization 演进</a> 的外围叙述里,本文是「离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> + 生成式 <abbr title="大语言模型 Large Language Model">LLM</abbr>」在这条线上的占坑之作。与 <a href="../braingpt/">BrainGPT</a> 共享「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 当语言序列建模」的直觉但走向另一分支:那边自回归攒 generalist 表征,这边把 RVQ 码字接进掩码扩散 <abbr title="大语言模型 Large Language Model">LLM</abbr> 直接生成文本——<abbr title="词元，模型处理的最小输入单元">token</abbr> 侧则接上 <a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> / <a href="../neurolm/">NeuroLM</a> 的码字演进线。</p>
+<p><strong>NeurIPS 2025 Workshop</strong></p>
 </blockquote>
 <p><strong>作者</strong>:MinGyu Jeon(MODULABS)、HyoBin Kim(成均馆大学)——两人共同一作(* 标注),无通讯作者与导师署名;资助方 Brian Impact Foundation(韩国非营利组织)。两位作者的分工与机构关系原文未说明。</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>任务:开放词汇 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text,ZuCo 1.0 + 2.0 合并(128 通道 500 Hz → 去噪后选 105 通道,NR + TSR 两种阅读任务),25,616 句按 80/10/10 切分、同一句文本不跨集合;<strong>评测全程无 teacher-forcing</strong>——以此回应 Jo et al. 2024 对该领域评测虚高的批判</li>
-<li>两段式:自训 <strong>RVQ tokenizer</strong>(105 通道 × 8 带通频段 = 840 维词级向量 → 1D conv encoder → n 层残差 <abbr title="向量量化 Vector Quantization">VQ</abbr>,标准 <abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 三项损失)把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成离散 <abbr title="词元，模型处理的最小输入单元">token</abbr>;<strong>LLaDA-8B(QLoRA)两阶段</strong>——先在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 上做掩码复原预训练,再把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 当前缀提示、对被掩码文本做去噪 SFT</li>
-<li>结果:词级特征 BLEU-1 <strong>21.93</strong> / ROUGE-1 F <strong>17.24</strong> / WER 110.03,较同一 RVQ <abbr title="词元，模型处理的最小输入单元">token</abbr> 输入下重训的最强 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 基线 T5 BLEU-1 +5.29 pp、较 BART ROUGE-1 F +5.37 pp(摘要口径的「up to 5.37 points」);句子级 14.82 / 7.26 全面小胜但 ROUGE-1 F 对 T5 只 +0.11;词级 BLEU-4 0.76 微输 T5 的 0.81,词级 WER 反而输 BART(110.03 vs 108.43)</li>
-<li>范式卖点:非自回归并行去噪替代逐步生成——一步错的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 可被后续步修正,规避 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 误差累积;案例分析显示语义解码失败时句法框架仍保留(「(Name) (Dates) was a (Profession).」)</li>
-<li>打折:所谓「over existing <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>」只是跟自家重训的 BART/Pegasus/T5 比,<abbr title="脑电图 Electroencephalogram">EEG</abbr>-To-Text/DeWave 等前作零对比;基线与 8B 主模型差一个量级的参数,「扩散优于 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr>」与「大模型优于小模型」混杂;RVQ 无连续特征对照、全文零消融;码本层数/尺寸、学习率、采样步数全部未披露,无代码</li>
-</ul>
-</div>
 <h2 id="1-eeg-to-text">1 问题定位:<abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 的两处不稳定<a class="headerlink" href="#1-eeg-to-text" title="Permanent link">#</a></h2>
 <p><abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 的既有谱系:Wang &amp; Ji 2022 的 open-vocabulary 方法把词级 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征直接映射进语言模型,DeWave(Duan et al., NeurIPS 2023)用离散 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 波编码做翻译,Thought2Text(2024)借 <abbr title="大语言模型 Large Language Model">LLM</abbr> 做文本生成。作者引用 Jo et al. 2024 的「Are <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text models working?」指出要害:大量已发表结果靠 teacher-forcing 评测撑着,<strong>不用 teacher-forcing 时,当前模型其实没有克服 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 固有的低信噪比</strong>(顺带一提,这句论断的支撑引用给的是 Jiang et al. 2019——一篇去伪迹综述,与 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 评测无关,引用错位)。</p>
 <p>局限被摆成两条。信号侧:连续 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 波形本身不稳定,高被试间差异 + 极端噪声之下,直接映射方法的输出「近似处理随机值」(引 Jo et al. 2024);生成侧:<abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 模型(BART/T5/Pegasus 这类 seq2seq)逐步生成、上一步的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是下一步的输入,噪声 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 里推错一个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 就会级联放大整句质量(此处引的 Wang et al. 2022 是 Self-Consistency 思维链论文,与误差累积无关——又一处引用错位,见疑点清单)。</p>
@@ -2436,23 +2404,6 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 <li><strong>绝对值贴地,加一处内部矛盾,提醒这批数字只能当排序用</strong>。WER 全线 110–148% 意味着输出与参考在词序列层面基本对不上,BLEU-1 21.9% 的单字重叠离可用文本很远——「语义对齐改善」是真的,「能解码」还早。更扎眼的是 Pegasus 词级行:ROUGE-1 三项全 0 却拿到全场最低 WER 99.69,两者几乎不可能同时成立,评测脚本大概率有 bug(空输出或截断的特殊处理)。全表无方差、无显著性检验,单次运行里 0.37 对 0.31 这类 BLEU-4 差异不宜过度解读;</li>
 <li><strong>7 页 letter 给了范式一个占位,没给范式一份证据</strong>。掩码扩散该交的三件套——消融(RVQ 对连续输入、有无 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练、掩码调度敏感性)、采样步数-质量曲线、同规模 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 对照——一件都没有;「<abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 预训练」用的还是 ZuCo 自己的两万句,「large-scale」名不副实,8B 模型在小数据上的跨模态适应全靠 early stopping 兜底。但占位价值是真的:tokenization 演进线(NeuroRVQ/BrainRVQ/CodeBrain 在卷码字结构)第一次有了「离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> → 生成式 <abbr title="大语言模型 Large Language Model">LLM</abbr>」的端到端落点,与 <a href="../neurolm/">NeuroLM</a> 的 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 分支构成对偶。复现前最想知道的两个数:每词多少 <abbr title="词元，模型处理的最小输入单元">token</abbr>(决定 8B 模型吃多长的序列)、码本层数与尺寸(决定 840 维向量被压到什么分辨率)。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 「提升 5.37 points」到底跟谁比?能跟 BrainTranslator / DeWave 的公开数字对表吗?</summary>
-<p>跟自家重训基线比:词级 ROUGE-1 F 17.24 对 BART 11.87(+5.37,即摘要口径),BLEU-1 21.93 对 T5 16.64(+5.29)。不能与前作对表——数据协议不同(合并 ZuCo 1.0+2.0、按句子内容切分、无 teacher-forcing),而已发表 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 数字大多带 teacher-forcing 污染,直接比反而对 DELTA 不利也不公平。但要指出:贡献列表里「significant performance improvements over existing <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> models」过强了,实验里没有任何一个 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 专用模型(<abbr title="脑电图 Electroencephalogram">EEG</abbr>-To-Text、BrainTranslator、NPT、DeWave 一个都没出现),<abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 的说法只在对自家基线时成立。</p>
-</details>
-<details class="question">
-<summary>Q2 · 「句子级特征」和「词级特征」差在哪?为什么词级全面更好?</summary>
-<p>ZuCo 同时发布句子级(整句聚合的眼动-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征)与词级(逐词特征)两种特征文件,DELTA 两种都当输入条件测。词级普遍好 5–10 pp,论文的解释只有一句「句子级聚合破坏了对 WER 至关重要的词序信息」——机制上说得通的部分是:逐词特征保留了词与眼动/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 段的时间对齐结构,给非自回归解码器提供了隐对齐线索;但为什么 BLEU/ROUGE 也一起掉,没有展开。句子级特征的确切聚合方式论文未说明,只能回 ZuCo 官方文档找。</p>
-</details>
-<details class="question">
-<summary>Q3 · mask ratio t~U(0,1) 是什么?推理时的 Remask 是同款吗?</summary>
-<p>训练时每个样本随机采一个掩码比例 t,把输入按比例掩掉(图 1b 的 Masking 模块),损失对整个 t 区间求期望——这是 LLaDA 原版训练目标,DELTA 的公式 3/4 中的 t 就是这个分布;t→1 对应推理的起点(全掩码)。推理的固定步数迭代 + 每步 Remask 对应 LLaDA 的低置信度重掩策略,但 DELTA 用的是哪种重掩规则、步数多少,都没写——这是复现生成质量时最要命的缺口,因为采样超参对扩散 LM 的影响不亚于训练超参。</p>
-</details>
-<details class="question">
-<summary>Q4 · 复现需要补齐哪些论文没给的数字?</summary>
-<p>清单:码本层数 n 与每层尺寸、conv encoder 结构与每词 <abbr title="词元，模型处理的最小输入单元">token</abbr> 数(决定序列长度)、105 通道名单、β 取值、LoRA rank、学习率、轮数与 early stopping 判据、采样步数、Remask 策略、「time series characteristics」的定义与去向。协议侧两个疑点也要先确认:被试是否跨 train/test 重叠(几乎必然,即 subject-dependent 设定,则被试泛化完全没被测过);25,616 的(被试, 句子)实例构成。这些不补齐,不仅结果无法复现,连「提升来自扩散还是来自 8B」都无法归因。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

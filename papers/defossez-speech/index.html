@@ -578,17 +578,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2197,17 +2186,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2230,19 +2208,9 @@
 
 <h1 id="decoding-speech-perception-from-non-invasive-brain-recordings">Decoding Speech Perception from Non-invasive Brain Recordings<a class="headerlink" href="#decoding-speech-perception-from-non-invasive-brain-recordings" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>Nature Machine Intelligence 2023</strong>（vol.5，1097–1107）· Meta AI（Paris）+ Inria Saclay + ENS —— 站内<strong>「语音解码」轴线的源头文献</strong>。<a href="../ssm2mel/">SSM2Mel</a>（同日精读，<abbr title="脑电图 Electroencephalogram">EEG</abbr>→mel 回归）是这条线的另一端：本篇确立的「对比对齐自监督语音特征 + 候选集检索」范式，是此后非侵入语音解码工作绕不开的出发点，也是站内基础模型轴线（脑信号 vs 语音/语言模型的表征对齐）在解码侧的镜像。</p>
+<p><strong>Nature Machine Intelligence 2023</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Alexandre Défossez, Charlotte Caucheteux, Jérémy Rapin, Ori Kabeli, Jean-Rémi King（Meta AI；Caucheteux 兼 Inria，King 兼 ENS）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>任务定义：给 3 秒 MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 片段，在 <strong>1,000+ 候选语音段</strong>里检索出被试实际听到的那一段（zero-shot——测试集 15–40% 的词训练时没见过也能做，Table 1 的 word overlap 为 60–85%）；四个公开数据集共 <strong>175 名被试</strong>（MEG 123 人 / <abbr title="脑电图 Electroencephalogram">EEG</abbr> 52 人，英语 3 个 + 荷兰语 1 个）</li>
-<li>结果：MEG top-10 段级准确率 <strong>70.7%</strong>（Gwilliams）/ 67.5%（Schoffelen），平均 top-1 最高 41.3%（Extended Data Fig. 1），最好被试 top-1 超 80%；超半数样本真段排前二。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 只有 <strong>17.7% / 25.7%</strong>——但把通道数、录音时长、被试数全部配平后差距仍在（Mann–Whitney 全部 P &lt; 10⁻⁶），是模态差距不是数据差距</li>
-<li>方法主线：卷积 brain module（空间注意力 → 被试专属 1×1 卷积 → 5 块膨胀卷积）与 wav2vec 2.0 特征做 <strong>CLIP 对比对齐</strong>；直接回归 Mel 谱的基线被「宽带不可分辨成分」拖死，对比损失一项在 Gwilliams 上把 top-10 从 12.4% 拉到 55.1%（+42.7pp）</li>
-<li>目标特征三连跳：Mel 回归 → 对比 Mel → 对比 Deep Mel → <strong>对比 wav2vec 2.0</strong>，逐级上升且用 56,000 小时语音预训练的 wav2vec 特征最好——脑里能对上的语音表征以高层语义为主</li>
-<li>被试层只有一个 <span class="arithmatex">\( 270\times270 \)</span> 矩阵 + 多被试联合训练，性能随训练被试数单调上升——被试特异性被压成了一个低维重映射，这是全文对站内最有迁移价值的一条工程结论</li>
-</ul>
-</div>
 <h2 id="1">1 问题定位：非侵入 + 自然语音的两难<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p>论文开篇把领域处境摆得很直白：侵入式已经做出实绩（Willett 手写 90 字符/分、Metzger 拼写 CER 6.13%），但要开颅；非侵入的 MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 信号噪、跨被试漂移大，所以以往工作要么单被试训练，要么只解码极小的词表（文献里最多也就 10 个词、83% 准确率的量级）。两条路都到不了「自然语言 + 可穿戴」的交点。</p>
 <p>作者选择的破局点有两处，都在换假设而不是换模型：</p>
@@ -2394,23 +2362,6 @@
 <li><strong>解释性分析有个没拆开的循环</strong>。结论说「decoder 主要依赖语义表征」，但 decoder 的目标空间是 wav2vec 2.0，而 wav2vec 特征本身就以词汇-语义成分为主（作者自己的引用文献 54、55 说它线性映射脑响应）。用短语嵌入解释 decoder 输出时，有多少是脑的属性、多少只是目标特征的属性？一个干净的对照是：拿在声学层面匹配但不语义相关的候选，看 decoder 是否真的放弃声学匹配。论文没做这一步，所以这个结论我打八折收下；</li>
 <li><strong>MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 差距对站内的警示</strong>。站内现有语音解码工作全部在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做（SSM2Mel 的 SparrKULee），本篇的同质化对照说明这个差距是模态性的——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做语音解码，天花板可能天然低一截。SSM2Mel 的 0.069 Pearson 贴地，部分原因也许不在模型而在模态上限。做 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语音解码的 baseline 设计时，应该把「换到 MEG 会好多少」当作一个校准问题记住。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 回归为什么输得这么彻底？对比学习到底改了什么？</summary>
-<p>回归的 <span class="arithmatex">\( L_2 \)</span> 假设目标各维度同等重要、尺度合适——Mel 谱两条都不满足：极低频与语音无关，各频带幅值差数量级。结果是梯度被宽带能量成分主导，模型学出一个对一切语音都长得一样的平均谱（Extended Data Fig. 4B）。对比损失只问一件事：这段脑信号与正确语音的内积是否压过 batch 里其余样本。它自动选出有判别力的维度、自动配尺度，把「哪些语音特征脑里真的有」变成模型自己学的问题。数字上这一换在 Gwilliams 上值 +42.7pp，比换任何表征都大。</p>
-</details>
-<details class="question">
-<summary>Q2 · top-10 70.7% 意味着什么？离「能用的语音解码」还差几步？</summary>
-<p>意味着 3 秒非侵入信号里保留了足够信息，从一千多个候选中把正确段排进前十、且半数样本排进前二——非侵入信号的信息量此前被系统性低估了。但离可用还有三步：① 检索不是生成，需要候选集，想象语音没有候选集；② 评测段限定在固定词位（词首前 500 ms）开始的窗口，更自由的分段下性能未验证；③ 被试间方差大，最好与最差被试差数倍，队列平均数字掩盖了个体差异。作者给的路线图（换产出模型 + 加生成模块 + 室温磁强计）每步都是独立的大工程。</p>
-</details>
-<details class="question">
-<summary>Q3 · 空间注意力层为什么值得单独记住？</summary>
-<p>设计动机是工程性的：四个数据集导联数从 60 到 273、布局各异，要一个模型全吃，就需要一个把任意传感器布局映到固定维度的模块。作者用傅里叶参数化的 2D 位置函数加 softmax 实现，每个输出通道学出一张传感器权重地形图（Extended Data Fig. 5 显示学到的地形与听觉皮层投影吻合）。意外的收获是这层作为归纳偏置本身提精度——「传感器位置」这个被大多数深度学习工作丢掉的先验被显式编码回去了。对站内做 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的工作，这层是现成可搬的：通道拓扑信息不该靠打平后让网络重新发明。</p>
-</details>
-<details class="question">
-<summary>Q4 · 对站内基础模型预训练轴线，这篇的方法论能反哺什么？</summary>
-<p>本篇是「外部模型 → 脑解码」的对齐，站内主线（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、CBraMod）是「脑信号 → 通用表征」的自监督。两者共享一个可检验的命题：脑活动与自监督模型表征存在线性对应。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用脑信号蒸馏自己的表征，方向是把脑知识搬进模型；本篇反过来把模型知识当作脑解码的靶子。反哺点在评测协议：对比检索这个 zero-shot 口径（不训练分类头、直接测表征可分性）比下游分类微调更能区分「表征里有没有信息」和「分类头学没学好」，站内的预训练评估表可以加这一列。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

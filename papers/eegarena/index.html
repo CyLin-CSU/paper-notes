@@ -1433,17 +1433,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2297,17 +2286,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2330,20 +2308,9 @@
 
 <h1 id="benchmarking-eeg-foundation-models-at-scale-lessons-from-20000-evaluations">Benchmarking <abbr title="脑电图 Electroencephalogram">EEG</abbr> Foundation Models at Scale: Lessons from 20,000 Evaluations<a class="headerlink" href="#benchmarking-eeg-foundation-models-at-scale-lessons-from-20000-evaluations" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>arXiv 2026</strong>(cs.LG 预印本 v1,2026-09-26,91 页)· 香港理工大学数据科学与 AI 系 + 利物浦大学 + 西交利物浦大学(通讯 Jibin Wu,Kay Chen Tan 参与)——站内<strong>第一篇「基准评测」类笔记</strong>,也是对 <a href="../../comparison/">comparison.md</a> 既有结论的第一次大规模外部检验:站内十三篇里 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / CBraMod / TFM / NeuroRVQ 都进了同一擂台,「架构 &gt; 规模」「清洗质量 &gt; 堆量」等站内结论在这里被逐条对账。</p>
+<p><strong>arXiv 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>:Zhige Chen、Shu Peng、Chengxuan Qin(三人共同一作)、Rui Liu、Rui Yang、Kay Chen Tan、Jibin Wu(通讯,港理工)</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>规模:30 个 FM 变体(20 个家族,<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/LUNA/ST-EEGFormer/SleepFM 各 3 个变体)+ 25 个监督基线(含传统方法 YASA)× 23 数据集 / 57 任务 / 7 范式,五协议共 20,000+ 次评测;开源 79,000 行代码 + 23,000 行文档 + 在线排行榜(eeg.fm)</li>
-<li>总排名:<strong>FM 在多数任务上压过强监督基线,非双极导联设定下优势最大</strong>——平均秩榜前四全是 FM(REVE-base / ST-EEGFormer-small / LEAD / HEAR-large),第一个基线 U-Sleep 约第 9;双极设定下 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 三个变体包揽前三</li>
-<li>监督反超的两种场景:跨被试 TUEV 全线塌方(基线 TMSA-Net 49.95 第一,FM 最高仅 39.87);HGD Task3 WS 被 2017 年的 ShallowConvNet 拿走第一(96.01 vs EEGPT 95.93)</li>
-<li>最反直觉的 lesson:<strong>预训练红利随下游标签增多而变大</strong>——末轮增益从 2% 预算的 +0.4% 涨到 100% 预算的 +8.2%,与「小样本才需要预训练」的直觉相反;8/10 模型第 1 个 epoch 就有正增益(优化启动优势)</li>
-<li>scaling 判决:参数量与下游性能<strong>无一致正相关</strong>(REVE-base 69M 打过 REVE-large 408M、ST-EEGFormer-small 32.7M 打过 328M 版);但固定架构下预训练数据 0.6k→30k 小时带来 Full-FT +6.69pp(被试内)/ +4.22pp(跨被试)的持续增益——数据才是 scaling 轴</li>
-<li>需要打折的地方:全文无显著性检验;平均秩的有效模型集合逐任务不同(SleepEEGNet 的 Top-5 榜首部分是覆盖面红利);协议 II/IV 只覆盖 10 个模型、1 个架构;channel-flexible 结论与「最新代际 + 最大预训练数据」混淆未拆</li>
-</ul>
-</div>
 <h2 id="1-eeg-fm">1 问题定位:给 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 补一场有强对手的擂台赛<a class="headerlink" href="#1-eeg-fm" title="Permanent link">#</a></h2>
 <p>论文的出发点是既有基准的结构性缺陷(Table 1 清点了 11 个同类基准):监督基线普遍缺席或偏弱(<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Bench、<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Bench 为 0,最多的 NeuralBench 也只有 8 个),且 FM 之间的排名把架构、参数量、预训练数据混在一起,赢了也说不清赢在哪。最终精度一个数字,还回答不了「预训练到底带来了什么」。<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Arena 的答案是把问题拆成五个 RQ:FM 对强基线(RQ1)、预训练收益及其随标签量的变化(RQ2)、参数量 scaling(RQ3)、预训练数据 scaling(RQ4)、通道配置鲁棒性(RQ5)——前一个靠大覆盖面横评,后四个靠受控对照实验,这是它区别于纯排行榜的地方。</p>
 <h2 id="2">2 基准设计<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
@@ -2513,23 +2480,6 @@
 <li><strong>对站内 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / CBraMod / <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 结论的冲击是分化而非通杀</strong>:<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 在其设计域内被追认为最强 FM(站内评分偏低了它在本域的价值);CBraMod 的领先方向被外部复现;<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 base 版与 EEGPT 双双平庸化——2024 世代(掩码重构 + 通道受限)在 2026 的强基线面前整体失色,而 2025–2026 的 REVE / HEAR / LEAD / ST-EEGFormer 包揽非双极前列,代际差主要落在「通道灵活性 + 预训练数据规模」两个轴上。站内 <a href="../../comparison/">comparison.md</a> 的 TUEV/TUAB 战绩表今后引用时要加一句:自报数字,<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Arena 已提供统一口径的替代参照;</li>
 <li><strong>「数据是 scaling 轴」的判决要和站内的「边际递减」论放在一起读</strong>。站内数据专题的递减结论出自 TUEG 系清洗语料的自我对比(数据质量与域距离混在其中),而协议 IV 是干净的单变量实验——唯一的漏洞是它只做了 REVE-base 一个架构、一个目标函数,30k h 恰约等于 REVE 原始配方,「递减论错了」还太早,更稳的表述是:清洗带来的递减没有挡住数据量的持续收益,两件事可以同时为真。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 一次「评测」到底指什么?20,000 怎么凑出来的?</summary>
-<p>一次评测 = 1 个模型变体 × 1 个任务 × 1 种设定(WS 或 CS)× 1 种协议条件的完整训练+测试。粗算:协议 I 约 55 模型 × 57 任务 × 2 设定(扣掉 unsupported 与泄漏剔除)+ 协议 II 的 10 模型 × 6 预算 × 2 策略 + 协议 III 的双适配策略 + 协议 IV 的 6 尺度 × 2 策略 × 2 设定 + 协议 V 的 10 模型 × 多个子集。论文没给分解表,无法核对精确构成——引用「20,000」时应表述为「训练+评估运行次数」,不是 20,000 个独立数据集。</p>
-</details>
-<details class="question">
-<summary>Q2 · 平均秩对谁有利?Top-5 计数为什么不能单独看?</summary>
-<p>秩是在「该任务的有效模型集合」里排的,集合随任务变化:SleepEEGNet 只参加睡眠类任务却拿下双极 Top-5 计数第一,论文自己承认部分原因是它参评的双极任务更多。平均秩同样受覆盖面影响——参评任务少的模型方差大、运气好就能冲高。两个指标要一起看,且优先看同覆盖家族内的比较(如 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 三个变体之间、REVE base/large 之间)。</p>
-</details>
-<details class="question">
-<summary>Q3 · 通道灵活模型更高,这个结论能直接采信吗?</summary>
-<p>方向上可信(所有保留比例、所有任务聚合后方向一致,不是单点),归因上要打折:四个灵活模型(REVE/HEAR/LEAD)同时是 2025 代际、预训练数据最大的模型,协议 V 没有控制「同一模型去掉电极编码后还剩多少优势」。真正干净的检验是拿 REVE 加/去电极位置编码做消融——本篇没做。对站内的含义:LUNA(灵活但排名中游)说明灵活性不是充分条件,只是有利条件。</p>
-</details>
-<details class="question">
-<summary>Q4 · 协议 IV 的 30k 小时终点是不是就是 REVE 的原始配方?</summary>
-<p>正文未明说。REVE 原论文预训练规模为约 25,000 名受试者,量级与 30,000 h 相当,30k 点很可能逼近其原生配方(即「再加数据会怎样」仍未回答)。此外六档尺度只有 0.6k–30k,跨度内最陡的增益出现在哪一段正文也没给数值——复现该实验前这两点都要去代码库核对。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

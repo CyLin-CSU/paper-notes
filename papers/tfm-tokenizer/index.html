@@ -976,7 +976,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -987,29 +987,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2112,7 +2090,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -2123,29 +2101,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2242,16 +2198,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/tfm-framework.png" data-desc-position="bottom"><img alt="Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测" src="../../assets/tfm-framework.png"></a></p>
 <p><em>Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>总参数仅 ~1.9M（tokenizer 1.2M + 下游 0.7M），最小的那个反而最强</li>
-<li>多数据集设定 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> +36%）</li>
-<li>跨设备 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期超过 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 14%；plug-and-play 提升 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 93% 指标</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2274,29 +2221,12 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li>去掉位置编码的反直觉设计有消融支撑：<abbr title="位置编码 Positional Encoding">PE</abbr> 会让同一 motif 因出现位置不同学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr> → 词表冗余；motif 词表要的正是平移不变性。</li>
 <li><abbr title="词元，模型处理的最小输入单元">token</abbr> 可解释性分析（如 PLED 类的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 4035 稳定对应'棘波-慢波'周期模式）是把 NLP 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 分析方法迁移到 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的漂亮示范。</li>
 <li>作者自认局限：固定窗长可能把大 pattern 切断到不同窗口，导致同一事件被分到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>——这是切分式 tokenization 的共同软肋。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么 tokenizer 内要去掉位置编码？</summary>
-<p>消融证据：去掉 <abbr title="位置编码 Positional Encoding">PE</abbr> 后 TUEV Kappa 从 0.5119 升到 0.5337，<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率下降（12.87% 到 9.78%）、类独有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 上升。机理：<abbr title="脑电图 Electroencephalogram">EEG</abbr> motif 非平稳，同一模式可出现在任意位置；加了 <abbr title="位置编码 Positional Encoding">PE</abbr>，相同 motif 会因位置不同被学成不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>，造成词表冗余。motif 词表需要的是平移不变性。注意：下游 Transformer 仍有位置编码，去掉的只是 tokenizer 内部的。</p>
-</details>
-<details class="question">
-<summary>Q2 · 频域路径为什么要把频谱窗沿频率轴切 patch？</summary>
-<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的做法是把整个频谱窗直接过一个线性层，频率信息被一次性压缩，模型容易只看能量最大的低频段。沿频率轴切 patch 后用频率 Transformer 建模窗内跨频段依赖，再用 sigmoid 门控聚合——让哪些频段重要变成可学习的决策（睡眠任务可以学会忽略 32Hz 以上）。</p>
-</details>
-<details class="question">
-<summary>Q3 · 为什么频带掩码比随机掩码重要得多？</summary>
-<p>消融：随机掩码 Kappa 0.4772，频带掩码 0.5193（+8%）。随机掩小块太容易靠邻域插值恢复；按频带整条掩掉迫使模型从其他频带和时域上下文推断缺失频段的结构，学到的是跨频段依赖而非局部平滑。</p>
-</details>
-<details class="question">
-<summary>Q4 · 这套 tokenization 的主要局限是什么？</summary>
-<p>作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 <abbr title="词元，模型处理的最小输入单元">token</abbr>（误判为不同 motif）。此外属个人推断（论文仅自认窗长局限）：<abbr title="向量量化 Vector Quantization">VQ</abbr> 硬量化可能吞掉码字边界附近的微小波形差异。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

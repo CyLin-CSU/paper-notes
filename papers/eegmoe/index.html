@@ -1109,7 +1109,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -1120,29 +1120,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2168,7 +2146,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -2179,29 +2157,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2230,19 +2186,9 @@
 
 <h1 id="eegmoe-a-domain-decoupled-mixture-of-experts-model-for-self-supervised-eeg-representation-learning">EEGMoE: A Domain-Decoupled Mixture-of-Experts Model for Self-Supervised <abbr title="脑电图 Electroencephalogram">EEG</abbr> Representation Learning<a class="headerlink" href="#eegmoe-a-domain-decoupled-mixture-of-experts-model-for-self-supervised-eeg-representation-learning" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>IEEE TNNLS vol. 37 no. 8, 2026</strong> · 中科院自动化所 —— 与 LUNA 同日精读的姊妹篇：LUNA 主张把拓扑差异<strong>抹平</strong>，EEGMoE 主张把任务/数据集域差异<strong>解耦保留</strong>——通道异构问题的两条相反哲学。</p>
+<p><strong>IEEE TNNLS 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Xuange Gao, Danli Wang, Yanyan Zhao（State Key Laboratory of Multimodal Artificial Intelligence Systems, CASIA）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>动机：现有自监督预训练<strong>只统一数据格式、不解耦域</strong>，多任务联合训练存在梯度冲突（论文用三个任务的梯度方向可视化实证）</li>
-<li>方法：Transformer 域解耦编码器 + <strong>SSMoE 块</strong>——Specific 专家组 Top-K 路由学域特定表征，Shared 专家组软路由学域共享表征，输出相加</li>
-<li>规模现实：9 个数据集 / 3 类任务（情绪 ER、运动想象 <abbr title="运动想象 Motor Imagery">MI</abbr>、心理负荷 MWL），6 个预训练 + 3 个 LOSO 微调；<strong>总参数仅 1.68M、激活 0.89M</strong></li>
-<li>结果：DEAP-V/A 59.40/62.73、BCIC4-2a 47.92、STEW 72.41，全面超过复现的 EEGNet/TSception/<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Conformer/LGGNet/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></li>
-<li>可解释性是亮点：专家激活分析显示 ER 偏好专家 1/3/5、<abbr title="运动想象 Motor Imagery">MI</abbr> 偏好 1/4/6、MWL 偏好 2——<strong>解耦确实发生了</strong></li>
-</ul>
-</div>
 <h2 id="1">1 问题定位：统一格式 ≠ 学好表征<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p>任务专用 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型（DEAP 上调好的情绪模型换到 <abbr title="运动想象 Motor Imagery">MI</abbr> 就失效）泛化受限，这已是共识；近年的回应是大规模自监督预训练——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、DMAE-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 等把不同数据集<strong>统一成同一格式</strong>喂给一个模型。EEGMoE 对这条路线的批评是：<strong>统一格式只处理了「怎么喂」，没处理「喂进去之后域与域打架」的问题</strong>。</p>
 <p>论文的实证很直观（Fig. 1）：在经典 Transformer 上对 DEAP（ER）、BCIC4-2a（<abbr title="运动想象 Motor Imagery">MI</abbr>）、STEW（MWL）三个任务交替做自监督预训练，把每步梯度更新方向投影到 2-D 参数空间——ER 把参数往右下拉、<abbr title="运动想象 Motor Imagery">MI</abbr> 往左上拉、MWL 往右上拉。<strong>异质域的梯度冲突是真实存在的</strong>，而同质参数硬吃异构数据的后果是域特定细节被抹掉。</p>
@@ -2343,18 +2289,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegmoe-arch.png" data-desc-position="bottom"><img alt="Figure 2 · EEGMoE 总体架构：4-D 预处理 → 空间/频率编码器 → 域解耦编码器（MHSA + SSMoE 块：Top-K Specific 专家组 + Soft Shared 专家组）" src="../../assets/eegmoe-arch.png"></a></p>
 <p><em>Figure 2 · SSMoE 块细节：Specific Router 按 <abbr title="词元，模型处理的最小输入单元">token</abbr> 选 Top-K=2 个特定专家，Shared Router 让 2 个共享专家对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 全程参与</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>SSMoE = Top-K 硬路由（域特性）+ 软路由（域共性），相加融合；负载均衡损失 α=1e-4</li>
-<li>1.68M 总参数 / 0.89M 激活参数——MoE 在这里不是用来 scale，是用来<strong>管理异构性</strong></li>
-<li>四基准全面领先，其中对自监督同行的差距最大（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 复现 BCIC4-2a 仅 29.59）</li>
-<li>专家-任务分工可视化给出解耦成功的直接证据</li>
-<li>相加融合 &gt; 门控/注意力融合；L1 重构 + mask 0.4；架构对预训练目标不敏感</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2389,7 +2324,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>参数量是最好的清醒剂</strong>：1.68M 总参数/0.89M 激活——MoE 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的价值压根不在 scale（那是 NLP 千亿参数的游戏），而在<strong>用条件计算管理异构性</strong>。这也解释了为什么 total-equivalent 模型（1.68M 稠密）反而比 EEGMoE 差：同样的参数量，解耦路由的「分工先验」本身就是收益；</li>
 <li><strong>「large-scale」这个词要打折看</strong>：预训练语料约 142 小时、9 个数据集全是小样本认知任务数据集。这更像一次严肃的多域联合训练研究，而非 NeurIPS 意义上的基础模型工作——它的可扩展性（换更多域、更多数据）恰恰是 MoE 路线的理论优势，但论文没验证；</li>
@@ -2397,23 +2332,6 @@
 <li><strong>掩码的是 embedding 而非原始信号</strong>：预训练目标是重构空间/频率编码器输出的 embedding，不是重建波形。这与 CBraMod（重构 raw patch）形成对比——重构 embedding 更容易（信息已压缩），但学到的动态也受限于编码器的表达能力；</li>
 <li><strong>DEAP 上 STD 高达 7–11 个百分点</strong>（LOSO 逐被试波动大），和基线同量级——跨被试方差这个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 老大难并没有被 MoE 化解，域解耦按数据集/任务分工，但「被试内差异」这层域没有被显式建模。IDMMOE 按被试分配子空间的思路其实可以叠上来。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么 Top-K 路由对应「域特定」、软路由对应「域共享」？这个对应关系是设计出来的还是学出来的？</summary>
-<p>是结构性设计：Top-K 让每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只见少数专家——不同域的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 自然聚到不同专家组合，形成分工（可视化证实）；软路由强制所有专家对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 负责——任何单个专家都必须学到跨域共性，否则在自己不见的域上掉链子。但注意：<strong>哪个专家管哪个域是学出来的</strong>，设计只保证「存在分工的机制」。</p>
-</details>
-<details class="question">
-<summary>Q2 · 为什么相加融合反而比门控/注意力融合好？</summary>
-<p>论文没有给机理证明，只给结果（60.62 vs 57.15/56.46）。一个合理猜测：门控和注意力融合引入了额外的可学习参数来决定「特性和共性怎么混合」，而混合权重本身也要在多域数据上训练——小数据下这些额外自由度更容易学到域偏置；相加把混合问题留给下游微调的注意力层，预训练阶段保持解耦的纯粹性。</p>
-</details>
-<details class="question">
-<summary>Q3 · 预训练只有约 142 小时，凭什么和 2500 小时的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 比？</summary>
-<p>硬比规模确实比不了，但注意两点：① 比较是公平的——基线也在相同的 3 个下游任务上微调，<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的癫痫域语料在这些认知任务上不占便宜反而吃亏（BCIC4-2a 复现 29.59）；② 域邻近性可能比数据量更重要：EEGMoE 的 6 个预训练数据集与下游任务同属认知 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 域（情绪/<abbr title="运动想象 Motor Imagery">MI</abbr>/MWL），分布距离近。这正呼应了 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 笔记里的观察——预训练语料与下游的域距离是迁移成败的第一变量。</p>
-</details>
-<details class="question">
-<summary>Q4 · 这套 MoE 思路对生成式模型（如 JET）适用吗？</summary>
-<p>论文只做了判别式验证，但机制上可迁移：生成模型同样面临「不同病理模式的动态特性冲突」（发作 vs 背景 vs 睡眠纺锤波的频谱结构差异极大）。把 SSMoE 放进去噪/流匹配骨干的 FFN 位置，让不同专家分管不同信号模式、共享专家管普适动态，是顺理成章的延伸——目前站内已读的生成工作（JET/<abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN）都没做这一步。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

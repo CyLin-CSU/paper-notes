@@ -805,7 +805,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -816,29 +816,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2190,7 +2168,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -2201,29 +2179,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2252,19 +2208,9 @@
 
 <h1 id="luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis">LUNA: Efficient and Topology-Agnostic Foundation Model for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Signal Analysis<a class="headerlink" href="#luna-efficient-and-topology-agnostic-foundation-model-for-eeg-signal-analysis" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>NeurIPS 2025</strong> · ETH Zürich —— 与 EEGMoE 对照阅读：EEGMoE 解耦「域差异」，LUNA 抹平「拓扑差异」。这是站内已读工作里<strong>第一个把「跨 montage 泛化」和「计算效率」当主贡献</strong>的基础模型。</p>
+<p><strong>NeurIPS 2025</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Berkay Döner, Thorir Mar Ingolfsson, Luca Benini, Yawei Li（Integrated Systems Laboratory, ETH Zürich）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>痛点有数据：<abbr title="运动想象 Motor Imagery">MI</abbr> 解码器从 PhysioNet 迁到 KU <strong>最多</strong>掉 <strong>14 个百分点</strong>；<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/MMM 在 SEED↔DEAP 蒙特间掉 13–15pp；只保留公共电极的方案要丢掉最多 <strong>80%</strong> 的数据</li>
-<li>核心机制：<strong>Channel-Unification Module</strong>——Q 个学习 query 对 C 个通道的 patch 特征做交叉注意力，压进固定隐空间（置换不变 → 拓扑无关）；之后时间注意力只在这个 Q×E 的隐空间上做</li>
-<li>复杂度：对通道数<strong>线性</strong>（vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 O((S·C)²)、CBraMod 的 O(max(S²,C²))）；论文总括声称对全注意力基线 FLOPs 降 <strong>300×</strong>、显存省最多 <strong>10×</strong>（对 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 这一线性注意力基线的实测对比：8000 通道 4156 GFLOPs vs LUNA-Base 23，约 180×）</li>
-<li>预训练 21,900h（TUEG+Siena，3 种拓扑）；TUAR AUROC <strong>0.921</strong>、TUSL <strong>0.802</strong> 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 81.57%（略低于 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge/CBraMod）；未见 62 通道 SEED-V 落后 CBraMod 2–3pp（论文口径，按其表格实算约 1.9pp；作者坦承对未见拓扑敏感）</li>
-<li>统计实践罕见地严谨：消融差异配对 t 检验（p=0.2136 不显著），用「实践优势」而非「统计显著」措辞</li>
-</ul>
-</div>
 <h2 id="1-eeg">1 问题定位：拓扑异构是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型的地基问题<a class="headerlink" href="#1-eeg" title="Permanent link">#</a></h2>
 <p>每个公开 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集自定义电极布局，模型换 montage 就崩。论文给的三组数字把问题钉死：运动想象解码器跨数据集最多掉 14pp；<abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 情绪模型（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、MMM）在 SEED 与 DEAP 蒙特之间掉 13–15pp；sEEG 的被试间迁移在无显式空间编码时接近随机。</p>
 <p>现有方案的取舍都不彻底：<strong>每个 montage 训专用模型</strong>（放弃统一）；<strong>只保留公共电极</strong>（丢掉最多 80% 数据）；<strong>通道+时间展平成超长序列</strong>（O((S·C)²) 复杂度，高密度帽直接爆显存）。论文要的是<strong>单一、montage 无关、对电极数高效扩展</strong>的架构。</p>
@@ -2361,18 +2307,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/luna-arch.png" data-desc-position="bottom"><img alt="Figure 1 · LUNA 总览：patch + 双路嵌入（1D Conv + FFT）→ Channel-Unification Module（学习 query 交叉注意力压进固定隐空间）→ Patch-wise Temporal Attention → 解码器" src="../../assets/luna-arch.png"></a></p>
 <p><em>Figure 1 · Channel-Unification Module：Q 个学习 query 对 C 通道特征做交叉注意力，时间注意力只在固定隐空间上进行</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>学习 query + 交叉注意力 = 可微分的「通道压缩器」：任意拓扑 → 固定 Q×E 隐空间，置换不变</li>
-<li>时间序列长度从 S·C 降到 S，通道复杂度从平方到线性——8000 通道时 FLOPs 仅为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180</li>
-<li>TUAR/TUSL 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；TUAB 略逊 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod 约 1pp；未见拓扑 SEED-V 落后 2–3pp——效率与容量的真实 trade-off</li>
-<li>消融统计实践严谨（t 检验、种子方差、「实践优势」措辞）；频域特征是最不可去的组件</li>
-<li>代码开源（pulp-bio/biofoundation）；LUNA-Base 7M/14MB 面向可穿戴边缘部署</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2411,7 +2346,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>与 EEGMoE 连读极有收获</strong>：两篇对「异构性」的态度完全相反却都成立——EEGMoE 认为任务/数据集域差异是需要<strong>保留的信号</strong>（专家分工），LUNA 认为电极几何差异是需要<strong>抹掉的噪声</strong>（query 瓶颈）。合起来其实给出了一个二维地图：任务轴用解耦管理、几何轴用统一抹平。一个自然的组合实验是 LUNA 的统一隐空间 + EEGMoE 的 SSMoE 块；</li>
 <li><strong>TUAB 上那 1pp 是「瓶颈税」</strong>：Q 个 query 是信息瓶颈，高密度通道的信息被有损压缩，因此上限略低于全注意力的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/CBraMod。论文的 Q×E 消融（16×16 明显退化）证实瓶颈容量确实有限。这不是缺陷而是定价——问题是<strong>哪些任务愿意为 300× 效率付 1pp</strong>：高密度研究级 <abbr title="脑电图 Electroencephalogram">EEG</abbr>、长程监测、可穿戴，都是愿意的；</li>
@@ -2420,23 +2355,6 @@
 <li><strong>位置编码是未见拓扑的阿喀琉斯之踵</strong>：SEED-V 的失利被归因于预训练学到的位置编码绑定了训练拓扑。这提示「连续 3D 坐标编码」（NeRF 式）仍不够泛化——预训练拓扑只覆盖 3 种布局，坐标空间的采样太稀疏。未来做多数据集预训练 + 随机通道 dropout（论文展望）是对的；</li>
 <li><strong>对我的项目</strong>：LUNA-Base（7M、14MB、线性复杂度）是「可穿戴低功耗 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM」的现成参考配置；其「先统一通道再时间建模」的结构与 eeg2text-lite 的单通道设计不冲突——若扩展到多通道可穿戴（如耳 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 多触点），LUNA 的统一模块可直接借用。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么先统一通道、再做时间注意力，而不是反过来（先时间再统一）？</summary>
-<p>效率的乘法结构决定的：统一在前，时间注意力只作用于 Q×E 的隐空间（序列长 S）；若反过来，每个通道先做完整时间编码（C 倍计算），统一阶段还要处理 S·C×C 的交叉注意力。统一在前还让「每个时间 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是全通道聚合」成为时间建模的输入归纳偏置——模型从第一层就在学跨通道整合后的动态。代价是空间压缩不可逆，重构头必须从 Q 个 query 里恢复 C 个通道的细节（这也是它需要按通道索引的学习解码 query 的原因）。</p>
-</details>
-<details class="question">
-<summary>Q2 · Q 个 query 是不是信息瓶颈？多大合适？</summary>
-<p>是，而且是设计出来的瓶颈。Q×E 消融显示：固定预算下平衡配置最好（4×64），query 太多维度太小（16×16）反而差——q 数量超过可分辨的空间模式后只是冗余切分，维度不足则每个 query 表达力不够。Base/Large/Huge 依次用 Q=4/6/8 也说明：<strong>Q 应随模型容量温和增长</strong>，而不是堆大。</p>
-</details>
-<details class="question">
-<summary>Q3 · SEED-V 上为什么落后 CBraMod？能修吗？</summary>
-<p>论文自认：SEED-V 的 62 通道拓扑在预训练中未见，位置编码绑定了训练时的三种布局。可行的修复方向论文自己也点了：多数据集预训练扩充拓扑覆盖、随机通道 dropout 增强鲁棒、混合学习/几何嵌入。注意 CBraMod 也未必「泛化更好」——它的交替注意力对输入形状更宽容，但代价是 O(C²) 复杂度，在 62 通道小数据集上付得起，在 256 通道长程监测上付不起。</p>
-</details>
-<details class="question">
-<summary>Q4 · 可见（未掩码）patch 为什么也参与损失？</summary>
-<p>重构损失对可见部分以小系数（α=0.05）加权。直觉是：掩码重构训练信号集中在被掩区域，但通道统一模块对<strong>所有</strong> <abbr title="词元，模型处理的最小输入单元">token</abbr> 做压缩——如果可见 patch 完全不管，隐空间可能对可见内容失真，下游微调（通常不用掩码）就会吃亏。小系数既约束隐空间保真，又不喧宾夺主。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

@@ -492,7 +492,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -503,29 +503,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2124,7 +2102,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -2135,29 +2113,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2273,16 +2229,7 @@
 <li>附录消融：更高采样率对高频敏感任务（IIIC）略好；<abbr title="词元，模型处理的最小输入单元">token</abbr> 太长（&gt;1-2s）导致句子变短、性能会有下降；更大重叠 p 略好。</li>
 </ul>
 <hr>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>3.2M 参数；四种学习场景（监督 / 带缺失监督 / 无监督预训练 / 跨任务预训练）</li>
-<li>9 个数据集（<abbr title="脑电图 Electroencephalogram">EEG</abbr>/ECG/HAR）上超过或持平绝大多数基线；带缺失设定下性能衰减最小</li>
-<li>多数据集联合预训练进一步提升：CHB-MIT balanced acc 0.664 → 0.707</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2305,29 +2252,12 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li>逐通道独立切分（缺失段直接丢 <abbr title="词元，模型处理的最小输入单元">token</abbr>）是它通吃异构格式的根本设计，后续所有工作都继承了这一点。</li>
 <li>线性注意力的 E/F 投影把注意力图固定为 N×d，隐含假设'全局信息可压缩进 d 个摘要位'——分类任务够用，但牺牲了精细的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 间路由能力。</li>
 <li>频域在这里只是特征工程（FFT 能量 → FCN），模型本体仍在连续域运行——这为后来 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM 的显式时频建模埋下了演进伏笔。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么逐通道独立切分，而不是所有通道拼在一起切？</summary>
-<p>全通道拼接切分隐含假设通道数固定——换个数据集通道数变了就无法对齐。逐通道切分后每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 天然带通道 embedding，缺哪个通道就把对应 <abbr title="词元，模型处理的最小输入单元">token</abbr> 丢掉，模型结构完全不用改，这是 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 能吃下异构格式的根本原因。</p>
-</details>
-<details class="question">
-<summary>Q2 · FFT 能量特征丢掉了相位，有什么后果？</summary>
-<p>频谱能量只描述有哪些频率、各多强，不描述相位对齐关系。对癫痫检测、情绪等频域主导的任务影响小；但 <abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 类任务（P300 在刺激后约 300ms 的相位锁定偏转）依赖精确的时域波形，EEGPT 报告 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 在 PhysioP300 上仅 0.5485，并把它归因于此。</p>
-</details>
-<details class="question">
-<summary>Q3 · 线性注意力（Linformer 式）牺牲了什么？</summary>
-<p>E/F 投影把 N×N 注意力压成 N×d，隐含假设全局信息可以压缩进 d 个摘要位。代价是丢掉了细粒度的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 间路由——每个 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只能看 d 个全局摘要而非每个具体 <abbr title="词元，模型处理的最小输入单元">token</abbr>。对句子级分类（最后 mean pooling）足够，但不适合需要精确定位关系的任务。</p>
-</details>
-<details class="question">
-<summary>Q4 · 为什么用 mean pooling 而不是 [CLS] <abbr title="词元，模型处理的最小输入单元">token</abbr>？</summary>
-<p>作者实验发现加 [CLS] 的性能略差。可能原因：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的句子 <abbr title="词元，模型处理的最小输入单元">token</abbr> 顺序是按通道依次拼接而非自然语序，[CLS] 汇聚对位置敏感；mean pooling 对所有 <abbr title="词元，模型处理的最小输入单元">token</abbr> 等权平均，更稳健。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

@@ -1190,17 +1190,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2231,17 +2220,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2264,19 +2242,9 @@
 
 <h1 id="eegdm-learning-eeg-representation-with-latent-diffusion-model">EEGDM: Learning <abbr title="脑电图 Electroencephalogram">EEG</abbr> Representation with Latent Diffusion Model<a class="headerlink" href="#eegdm-learning-eeg-representation-with-latent-diffusion-model" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>arXiv 2026</strong>（IEEE 格式预印本，v5）· 清华大学计算机系（普适计算教育部重点实验室）+ 天津大学 —— 站内第二篇「生成轴线」论文：与 <a href="../jet/">JET</a>（流匹配、生成质量导向）互补，EEGDM 把生成目标反过来为<strong>表征学习</strong>服务。名字与 Puah et al. 的 EEGDM（arXiv:2508.14086，本文记作 Puah-EEGDM-SSM）撞名，注意区分。</p>
+<p><strong>arXiv 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Shaocong Wang†, Tong Liu†（共同一作）, Yihan Li, Ming Li, Kairui Wen, Pei Yang, Wenqi Ji, Yong-Jin Liu*（清华）；Minjing Yu（天津大学）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>核心论点：掩码重构在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上有<strong>局部插值捷径</strong>——强局部自相关下，从可见锚点插值即可把被掩 patch 填得八九不离十，损失低不等于学到了全局分布；而「从纯噪声生成完整信号」必须建模全局数据分布</li>
-<li>机制：<abbr title="脑电图 Electroencephalogram">EEG</abbr> encoder 把原始信号与两个通道增强视图编码为紧凑表示 <span class="arithmatex">\( e \)</span>，作为<strong>条件</strong>引导潜扩散模型（PCA 隐空间 + DiT）从噪声重建原信号；关键设计是 <span class="arithmatex">\( e \)</span> <strong>不 detach</strong>——去噪损失经 <span class="arithmatex">\( e \)</span> 反传，encoder 与扩散模型联合优化，「学一个对去噪最有用的条件」就是表征学习本身</li>
-<li>两个工程组件：① 通道增强丰富条件信息（零掩蔽 0.4s + 幅值缩放 [0.8, 1.2]，<span class="arithmatex">\( m=3 \)</span> 视图平均池化）；② patch 沿时间维 PCA 到 <span class="arithmatex">\( K=20 \)</span> 维隐空间做扩散（特征分解求基、零训练），降低去噪目标维度</li>
-<li>结果：6 个下游任务全面有竞争力；最大亮点是<strong>类不均衡鲁棒性</strong>——TUEV（类比 80:1）上 Balanced Accuracy 0.6826 / G-Mean 0.6443 / Macro AUC-ROC 0.9169 全场最佳，最稀有类 SPSW 召回 50.3%（掩码重构基线仅 10–18%）；TUAB Bal Acc 0.8180 仅次于 CBraMod</li>
-<li>消融的干净结论：PCA 与增强<strong>单独用都不涨 Balanced Accuracy，联合才涨</strong>（0.6054→0.6826）；生成模块还能做下游数据增强（CL-Drive +5.4pp）</li>
-</ul>
-</div>
 <h2 id="1">1 问题定位：掩码重构的局部插值捷径<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p>站内已读的三大 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型（<a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>、<a href="../eegpt/">EEGPT</a>、<a href="../cbramod/">CBraMod</a>）全部以掩码重构为预训练目标。EEGDM 对这个目标提出结构性批评：掩码重构是「从可见锚点预测被掩片段」的任务，而 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 有强局部自相关——局部插值就足以把被掩 patch 补到损失很低，模型<strong>不必</strong>捕捉全局生成约束（整体时序模式、跨通道关系）。这与 <a href="../braingpt/">BrainGPT</a> 对 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的批评（双向补全破坏时序因果）、<a href="../jet/">JET</a> 的立场（离散去噪错配神经动态）构成互补的第三条批评线，但落点不同：EEGDM 的解法不是换自回归或换流匹配，而是<strong>把生成模型整个搬进来当训练目标</strong>。</p>
 <p>论据：能从纯噪声合成高保真内容的扩散模型，很可能在生成过程中刻画了数据的性质、结构与动力学——把这些约束压进 encoder，就得到了携带全局语义的表示。</p>
@@ -2421,23 +2389,6 @@
 <li><strong>与 JET 连读的收获</strong>：两篇都在回答「生成目标能给 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 带来什么」，但分工清楚——JET 证明生成质量本身（约束设计），EEGDM 证明生成过程的副产品（条件表示）有下游价值。一个自然的组合实验是把 JET 的生理结构约束搬进 EEGDM 的去噪目标，检验类不均衡收益是否进一步增强；</li>
 <li><strong>线性探针弱的诚实呈现</strong>：TUEV 上线性探针 0.6010 仅略高于从零训练的 0.5825、远低于微调的 0.6826，论文没有掩饰。结合 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass「线性探针普遍不够」的结论，「预训练表示的价值靠微调兑现」在生成路线下依然成立。</li>
 </ul>
-<h2 id="_4">自问自答<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么用零训练的 PCA 而不像 LDM 原版学一个 VAE 隐空间？</summary>
-<p>三个理由：PCA 基由特征分解闭式求得，不引入需要与扩散联合训练的自编码器（少一套不稳定因素）；<abbr title="脑电图 Electroencephalogram">EEG</abbr> patch 的主导方差集中在线性子空间，20 维已够（消融显示太多反而引入噪声污染）；PCA 只作用于去噪目标，表征学习的负担由条件支路的 encoder 承担——隐空间不需要「学会压缩」，只需要「保住主导结构」。代价是线性流形外的细节全靠去噪器与逆变换近似，理论上会限制逐 patch 重建的上限（补充材料仅报告波形与主导节律吻合；「精细高频成分有损」是本笔记由线性子空间性质出发的推断，论文未直接验证）。</p>
-</details>
-<details class="question">
-<summary>Q2 · e 不 detach 到底意味着什么？如果 detach 会怎样？</summary>
-<p><span class="arithmatex">\( \mathcal{L}_{\mathrm{simple}} \)</span> 的梯度路径是 <span class="arithmatex">\( \epsilon_\theta \to e \to f_\phi \)</span>：encoder 收到的训练信号是「你的输出作为条件时，去噪误差有多大」。若 detach，<span class="arithmatex">\( e \)</span> 只是随机初始化网络的输出、没有任何训练信号，encoder 永远学不到东西——所以不 detach 不是技巧而是这套范式的成立前提。这也解释了为什么条件必须是「与目标语义相关」的源视图（原样本+轻增强）：如果条件与目标无关，encoder 只能学到无意义的相关性。</p>
-</details>
-<details class="question">
-<summary>Q3 · 「局部插值捷径」的批评对 CBraMod 这种 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 也成立吗？</summary>
-<p>成立但需要限定。CBraMod 的十字交叉注意力确实以空间/时间条带建模显式削弱了纯局部插值的解，且其防泄漏重训成绩说明泛化是真的——<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Compass 综合第一不是白来的。EEGDM 的批评更准确的说法是：<strong>同等容量下，掩码重构的目标允许模型把容量花在局部统计上</strong>，而 TUEV 少数类召回 10–18% 与 G-Mean 标准差 ±21.55 是这种容量分配偏差的外显。两条路线在类均衡指标上的差距是实打实的，但在 Weighted F1/Kappa 上掩码系仍领先——「哪个目标更好」取决于你用什么指标定义更好。</p>
-</details>
-<details class="question">
-<summary>Q4 · 生成模块在下游完全没用上吗？</summary>
-<p>下游分类只用 encoder（生成模块丢弃，论文明说报告的 25M 对应下游网络）。但扩散模块有一个独特外溢：合成 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 做数据增强（CL-Drive +5.4pp Balanced Accuracy）。这是掩码重构范式结构性做不到的——它们没有生成器。对样本稀缺的 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 任务（如本文用的 CL-Drive），「预训练副产物直接变成增强器」是扩散路线的独有账目。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

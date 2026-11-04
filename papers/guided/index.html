@@ -718,17 +718,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2197,17 +2186,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2230,20 +2208,9 @@
 
 <h1 id="visual-decoding-and-reconstruction-via-eeg-embeddings-with-guided-diffusion">Visual Decoding and Reconstruction via <abbr title="脑电图 Electroencephalogram">EEG</abbr> Embeddings with Guided Diffusion<a class="headerlink" href="#visual-decoding-and-reconstruction-via-eeg-embeddings-with-guided-diffusion" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>arXiv 2024</strong>(2403.07721 v7,2024-10-04,cs.HC,Preprint under review)· 南方科技大学生物医学工程系(Quanying Liu 组,ncclab)——站内<strong>「视觉重建」轴线的第一篇</strong>:不同于 <a href="../jet/">JET</a>、<a href="../eegdm/">EEGDM</a>、<a href="../not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a> 的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>→<abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成,这条线回答的是「头皮脑电里到底存了多少所见图像」,方向是 <abbr title="脑电图 Electroencephalogram">EEG</abbr>→CLIP 嵌入→图像。与 <a href="../eegdm/">EEGDM</a> 恰成条件扩散的一对反向用法:那边以生成训表征,这边以表征驱生成;与 <a href="../defossez-speech/">Défossez 语音解码</a> 同属「预训练嵌入空间 + 轻量神经编码器」的感知解码范式。注意:社区/文件名惯称 GUIDED,但正文并未给整套框架命名,只给编码器命名为 ATM(Adaptive Thinking Mapper)。</p>
+<p><strong>arXiv 2024</strong></p>
 </blockquote>
 <p><strong>作者</strong>:Dongyang Li*、Chen Wei*(共同一作)、Shiying Li、Jiachen Zou、Haoyang Qin、Quanying Liu*(通讯)——全部来自南方科技大学生物医学工程系</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>任务设定:首个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <strong>零样本</strong>视觉解码统一框架——分类、检索、重建三任务共用一套嵌入;测试 200 个图像概念与训练 16,540 个概念<strong>完全不相交</strong>(THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr>,10 被试,RSVP 范式),以往 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 工作只在小类别集上分类</li>
-<li>ATM 编码器(约 3.2M 参数):整段 <abbr title="脑电图 Electroencephalogram">EEG</abbr> <strong>不切 patch</strong>、正弦位置编码、通道注意力层 → 可插拔时空卷积(ATM-S=ShallowNet / ATM-E=EEGNetV4)→ MLP 投影到 CLIP 的 1024 维;被试 <abbr title="词元，模型处理的最小输入单元">token</abbr> 区分已知/未知被试</li>
-<li>生成是两阶段:Stage I 轻量 U-Net 先验扩散以 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 嵌入为条件、CFG(条件 10% 概率置空)把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 嵌入精炼成 CLIP 图像先验;Stage II 冻结 SDXL + IP-Adapter 渲染,辅以 <abbr title="脑电图 Electroencephalogram">EEG</abbr>→VAE latent 低层管线(img2img 强度 0.5)与 GIT caption 语义管线</li>
-<li>数字:200-way 零样本检索 top-1 <strong>28.64%</strong>(被试内)/ <strong>11.84%</strong>(跨被试),超 NICE(19.32 / 8.24);重建(被试 8)PixCorr <strong>0.160</strong>、CLIP <strong>0.786</strong>——低层约为 fMRI 一半、高层差 0.13,但全面超过同管线 MEG</li>
-<li>时间窗与脑区:滑动 100ms 窗在 <strong>200–250ms 达峰</strong>,增长窗 500ms 饱和于约 30% top-1;<abbr title="脑电图 Electroencephalogram">EEG</abbr> 视觉信息集中于 200–400ms(MEG 可持续到 800ms);枕叶贡献最大,额叶/中央区最小</li>
-<li>打折点:报「训练过程中最高测试精度」(测试集选模)、重建表只报被试 8(检索最好的被试)、测试 80 次重复取平均的离线设定、损失权重 λ 与 guidance scale 未披露、prior 扩散的 ImageNet 配对协议未说明</li>
-</ul>
-</div>
 <h2 id="1-fmri-eeg">1 问题定位:把 fMRI 的视觉重建范式搬进 <abbr title="脑电图 Electroencephalogram">EEG</abbr><a class="headerlink" href="#1-fmri-eeg" title="Permanent link">#</a></h2>
 <p>fMRI 视觉解码在 2023 年被「对比学习 + 生成模型」组合推到高潮:<a href="https://arxiv.org/abs/2211.06956">Takagi &amp; Nishimoto</a> 的 LDM 重建、Ozcelik &amp; VanRullen 的潜扩散、Mind's Eye(Scotti et al.)的对比学习 + 扩散先验都能从 fMRI 重建出语义正确的高分辨率图像。但 fMRI 昂贵、不可携、时间分辨率低(~1s 量级),天然不适合 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr>。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 便宜、便携、毫秒级时间分辨率,却长期被认为做不了自然图像解码:低信噪比、低空间分辨率、被试间差异大。</p>
 <p>离这个问题最近的两步:Benchetrit et al.(文中记作 B.D.)在 MEG 上用 CLIP 对齐 + 扩散先验实现近实时重建;Song et al.(NICE)用 ShallowNet 时空卷积做 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 编码器、对比学习对齐,在 THING-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上做出像样的解码。但两者与 fMRI 水平仍有显著差距,作者的归因是「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 视觉解码框架没有被彻底探索」。本文的三个贡献:① 首个 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 零样本分类+检索+重建统一框架(编码器可任意替换);② 精心组装的编码器 ATM,三任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>;③ 两阶段 <abbr title="脑电图 Electroencephalogram">EEG</abbr>→图像生成策略,只用不到 500ms 的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>。</p>
@@ -2276,7 +2243,7 @@ p(I,\, z_E,\, z_I) = p(z_I \mid z_E)\; p(I \mid z_I)
 <div class="arithmatex">\[
 \epsilon^{w}_{\mathrm{prior}}(z_I^t;\, t,\, z_E) = (1+w)\,\epsilon_{\mathrm{prior}}(z_I^t;\, t,\, z_E) - w\,\epsilon_{\mathrm{prior}}(z_I^t;\, t), \qquad w \geq 0
 \]</div>
-<p>训练时以 10% 概率把 <span class="arithmatex">\( z_E \)</span> 替换为空向量;guidance scale <span class="arithmatex">\( w \)</span> 的取值未披露,Fig. 6d 只展示其对「相似度 vs 多样性」的调节。<strong>协议模糊点</strong>:C.1 写「训练使用来自 ImageNet 数据库、超过一百万图像的配对来微调 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 条件扩散模型」——THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 里没有 ImageNet 的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>,这批配对如何构成正文没有解释(见自问自答 Q2)。</p>
+<p>训练时以 10% 概率把 <span class="arithmatex">\( z_E \)</span> 替换为空向量;guidance scale <span class="arithmatex">\( w \)</span> 的取值未披露,Fig. 6d 只展示其对「相似度 vs 多样性」的调节。<strong>协议模糊点</strong>:C.1 写「训练使用来自 ImageNet 数据库、超过一百万图像的配对来微调 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 条件扩散模型」——THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 里没有 ImageNet 的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>,这批配对如何构成正文没有解释。</p>
 <h3 id="24-stage-iisdxl">2.4 Stage II:SDXL 渲染与低层/语义管线<a class="headerlink" href="#24-stage-iisdxl" title="Permanent link">#</a></h3>
 <p>Stage II 用冻结的 SDXL + IP-Adapter 建模 <span class="arithmatex">\( p(I \mid z_I) \)</span>:去噪模型 <span class="arithmatex">\( \epsilon_{\mathrm{SD}}(z_t,\, t,\, z_I) \)</span> 作用于 SDXL VAE 潜变量,IP-Adapter 以双交叉注意力把 CLIP 嵌入 <span class="arithmatex">\( z_I \)</span> 注入 U-Net。两条辅助管线:</p>
 <ul>
@@ -2534,23 +2501,6 @@ p(I,\, z_E,\, z_I) = p(z_I \mid z_E)\; p(I \mid z_I)
 <li><strong>证据边界:检索是硬的,逐像素重建是软的</strong>。分类/检索端证据最硬:200 个从未见过的概念、chance 0.5% 下 top-1 28.64%,RSVP 协议堵住了 block 设计的自相关漏洞,这一步把「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 里有没有足够的概念级语义信息」回答成了「有」。但逐像素重建端,0.160 的 PixCorr 相对 fMRI 的 0.305 更接近「结构性轮廓存在」而非「图像被恢复」——两张图语义相同、外观不同,CLIP 检索照样给高分。论文自己提供的最诚实证据反而是 Fig. 14 的 best/median/worst 分层:worst 组「语义与低层特征都被改变」;</li>
 <li><strong>协议三折扣与工程成色</strong>。①报训练过程中最高测试精度(原话 "We take the highest test accuracy in the training process as the statistical result")——测试集选模,所有对比方法同规则所以内部可比,但绝对数字系统性偏乐观;②重建表只报被试 8(检索最好的被试),无跨被试均值与方差;③测试集 80 次重复平均(<abbr title="事件相关电位 Event-Related Potential">ERP</abbr> 提 SNR)、训练不平均——在线 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 拿不到 80 次重复,这是离线解码上限。跨被试 28.64 → 11.84 的腰斩说明被试差异仍是主矛盾,被试 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只救已知被试。最后,组件层面每一样都有出处(CLIP 对齐承 B.D./NICE、先验承 DALL-E 2/Mind's Eye、渲染用现成 SDXL/IP-Adapter),ATM 的消融也是渐进改良而非机制创新(位置编码可有可无、<abbr title="词元，模型处理的最小输入单元">token</abbr> 策略才是生死线)——这是一篇系统集成的 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 论文,作为 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 视觉解码的参照点价值极大,但「tailored encoder」的叙事比消融证据响;全文神经科学含金量最高的部分反而是时间窗与脑区分析。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 标题的 Guided Diffusion 到底是 Condition 还是 Guidance?</summary>
-<p>主体是 Condition:正文对 Stage I 的自称是 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-Conditioned Diffusion——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 嵌入作为先验扩散的条件输入 <span class="arithmatex">\( \epsilon_{\mathrm{prior}}(z_I^t, t, z_E) \)</span>,用 classifier-free guidance 训练/采样(10% 概率置空条件),不存在外部分类器或梯度引导。标题里的 Guided 更像对整套「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 嵌入引导图像合成」的修辞性概括:Stage II 里真正接近 guidance 语义的是低层管线的 img2img(以 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 对齐的 VAE latent 去噪出模糊图,引导 SDXL 的初始状态,强度 0.5)。审稿语境下说「条件扩散 + CFG + img2img 低层引导」最准确。</p>
-</details>
-<details class="question">
-<summary>Q2 · 先验扩散在 ImageNet 配对上训练,是怎么和 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 配上的?</summary>
-<p>这是全文最大的协议模糊点。C.1 原话:训练使用来自 ImageNet、超过一百万图像的配对来微调 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 条件扩散模型——但 ImageNet 图像没有对应的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>。两种可能的读法:(a) 先在 ImageNet 的 CLIP 嵌入分布上预训练/微调先验(条件侧置空或用图像嵌入自条件),再用 THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的 (z_E, z_I) 对微调;(b) ImageNet 图像配某种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 代理嵌入——正文完全没写。结合背景(该 arXiv 工作的早期版本主实验曾用 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-ImageNet 数据集,本版 v7 已整体换到 THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr>),这句更像版本迭代留下的残留。复现时只能按读法 (a) 猜,且必须读代码仓库确认。</p>
-</details>
-<details class="question">
-<summary>Q3 · 重建评估为什么没有 FID?检索式评估衡量了什么、漏掉了什么?</summary>
-<p>衡量的是「语义对齐 + 与原图的可辨识性」:每条件生成 10 张(10 名被试各一张),生成图 CLIP 嵌入在测试图像全集里检索,看能否找回原图——本质是生成版的 two-way/N-way identification。优点:逐条件、对 200×10 张图的规模友好、fMRI 文献同口径可比;缺点:只度量「哪张图最像」,不度量分布质量——FID 这类指标需要上千样本,10 被试 × 200 条件的规模确实撑不起来,这是小数据零样本设定的结构性限制。漏掉的是:图像的真实感、类内合理性、低层细节保真——这些全靠 PixCorr/SSIM 间接代理,而它们只在被试 8 上报。</p>
-</details>
-<details class="question">
-<summary>Q4 · 和站内的 EEGDM 读起来像「同一套扩散两套用法」,差别到底在哪?</summary>
-<p>方向与账目都相反。EEGDM:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 是输入也是输出,去噪损失经条件表示反传,encoder 与扩散联合优化——扩散是训练目标,产出是表征,生成器在下游被丢弃(只留作数据增强)。本篇:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 只是输入,encoder 由对比损失训练好之后扩散<strong>只消费嵌入</strong>、梯度不回流 encoder,产出是图像本身——扩散是产品,表征是原料。代价结构也不同:本篇 encoder 训练便宜(单卡 4090),贵的是借用整个 SDXL 生态;EEGDM 预训练 4×A100×113 小时但推理时不依赖任何外部大模型。一个直接的实验空白:把本篇的 ATM 嵌入换成 EEGDM 式「以生成为目标训出来的嵌入」,200-way 检索还能涨多少——两条线至今没有人在同一协议下比过。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

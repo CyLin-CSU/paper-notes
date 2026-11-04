@@ -1370,17 +1370,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2241,17 +2230,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2274,19 +2252,9 @@
 
 <h1 id="neurodetr-multiscale-discrete-spatiotemporal-tokenization-for-asynchronous-eeg-event-detection">NeuroDETR: Multiscale Discrete Spatiotemporal Tokenization for Asynchronous <abbr title="脑电图 Electroencephalogram">EEG</abbr> Event Detection<a class="headerlink" href="#neurodetr-multiscale-discrete-spatiotemporal-tokenization-for-asynchronous-eeg-event-detection" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>arXiv 2026</strong>（cs.LG 预印本 v1，2026-10-14，20 页含附录）· 中科院自动化所脑图谱与类脑智能实验室（通讯 Shuang Qiu / Huiguang He）+ 中关村学院、国科大、武汉大学、华中科技大学 —— 站内 <a href="../../topics/tokenization/">Tokenization 演进</a>线上「事件驱动」缺口的占坑之作：<a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只当预训练目标（推理时丢弃），<a href="../tfm-tokenizer/">TFM-Tokenizer</a> 把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 变成分类器的输入，<a href="../neurorvq/">NeuroRVQ</a> / <a href="../codebrain/">CodeBrain</a> 把多尺度/双域 RVQ 用于基础模型预训练——它们全部停在「分类/预训练」，没有一个碰「连续信号上的异步事件检测」。NeuroDETR 第一次把 <abbr title="向量量化 Vector Quantization">VQ</abbr> 码表做成 DETR 检测头的<strong>事件记忆</strong>：<abbr title="词元，模型处理的最小输入单元">token</abbr> 不再只服务某个损失函数，而是检测器每一步都要读的工作记忆。</p>
+<p><strong>arXiv 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>：Yaozhi Wen, Kun Zhao, Wei Wei, Haoyang Chen, Kangning Wang, Yi Sun, Shaowei Gu, Dingkun Liu, Shuang Qiu, Huiguang He（中科院自动化所；Haoyang Chen 来自武汉大学、Dingkun Liu 来自华中科技大学；通讯作者 Shuang Qiu、Huiguang He）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>任务：<strong>异步 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 事件检测</strong>——从连续记录直接输出无序事件集合（类别 + 起止时间），推理时不需要预设事件边界；DETR 式集合预测 + 匈牙利匹配，天然免置信度阈值与 NMS</li>
-<li>方法三件套：<strong>多尺度时间 <abbr title="向量量化 Vector Quantization">VQ</abbr></strong>（多个独立码表接多尺度平均池化，插值对齐取平均加正弦 <abbr title="位置编码 Positional Encoding">PE</abbr> 成时间记忆）+ <strong>空间金字塔 <abbr title="向量量化 Vector Quantization">VQ</abbr></strong>（1 全头 / 5 脑区 / 12 细簇，跨尺度残差量化，在骨干通道混合<strong>之前</strong>保留脑区信号）+ <strong>FOCAL</strong>（密度头预测窗级事件存在概率，超过 0.4 的窗口才做局部注意力，axial attention 保跨窗上下文）</li>
-<li>结果：8 个数据集（P300×2 / 运动想象×2 / 运动执行×2 / 语音 / 癫痫）<strong>事件级 F1 全部第一</strong>，平均 46.70，比最强基线 DANCE +4.29 pp；样本级 F1 7/8 第一，平均 57.50（+3.32 pp）；对最强基线最大领先在 BNCI2015（+8.99 pp）</li>
-<li>消融最有信息量的是 2×2 交互分析：量化的增益从无事件引导的 0.91 pp 涨到有引导的 2.97 pp（交互 2.06 pp）——<strong>离散化与事件引导互相成就</strong>；去掉 FOCAL 在稀疏事件数据集伤最重（TUSZ −17.08、BNCI2020 −13.18，事件占比仅 3.2% / 27%）</li>
-<li>打折的地方：截至精读无官方代码；FOCAL 窗长、时间尺度取值、码表大小、全部损失权重均未披露；解码查询数 Ne 按数据集单独调（HDOP 上 16→24 直接从 52.91 崩到 41.17）；除 DANCE 外基线全是作者自己移植的实现</li>
-</ul>
-</div>
 <h2 id="1">1 问题定位：滑窗的窗长枷锁与「事件记忆」的空缺<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p>异步解码解决的是 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 的真问题：在连续 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 里找行为/生理上有意义的事件，同时给出类别和边界。论文开篇把现有路线分成两层。第一层是滑窗分类：给每个固定长度的窗打「事件/背景」标签——固定窗长与可变的事件时长、边界天然错配，导致检测碎片化或相邻事件粘连，性能对窗口设置和后处理规则高度敏感。第二层是 query-based 检测（DETRtime、DANCE）：把连续 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 直接映射成无序事件集合，每个事件带类别、onset、offset。但现有的 query-based 方法用 cross-attention 把长特征序列聚进固定一组<strong>连续</strong> latent tokens，没有显式组织「跨时间尺度 × 空间区域」的事件线索——而事件响应弱、瞬态、嵌在持续背景活动里，聚合阶段一压缩就可能丢。</p>
 <p>站内坐标：tokenization 演进线到 2026 年已有 <abbr title="向量量化 Vector Quantization">VQ</abbr> 词表（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> → NeuroLM）、时频 motif 词表（TFM-Tokenizer）、多尺度 RVQ（NeuroRVQ）和双域码表（BrainRVQ / CodeBrain），但 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的下游全是分类器或预训练目标。异步检测的输出是<strong>变长集合</strong>，<abbr title="词元，模型处理的最小输入单元">token</abbr> 在这里的新职责是当检测头的「记忆」——本文填的就是这个格子。配套问题是效率与稀疏性：整段记录里事件往往只占百分之几（TUSZ 3.2%、HDOP 6.1%），对全序列做稠密注意力既浪费又引入背景干扰，于是有了 FOCAL 这个「事件驱动」的稀疏化模块。</p>
@@ -2679,23 +2647,6 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 <li><strong>免 NMS 的结构性优势 vs 按数据集调 Ne 的隐忧</strong>。DETR 集合预测免掉置信度阈值和 NMS 超参，但换来一个同样要调的 <span class="arithmatex">\( N_e \)</span>：HDOP 上 16→24 崩 11.74 pp 且非单调，论文自己承认「更大的查询预算并不稳定带来提升」。8 个数据集 8 套 <span class="arithmatex">\( N_e \)</span>，主表好看的背后是每数据集验证集选参——不算作弊（选择只在验证集），但「统一框架跨范式泛化」的叙事要打点折扣：真正统一的是架构，不是配置；</li>
 <li><strong>站内 tokenization 坐标系里，这是 <abbr title="词元，模型处理的最小输入单元">token</abbr> 用途的第三格，但码表的可复用性还是空白</strong>。<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 当预训练目标 → TFM/NeuroLM 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 当模型输入 → NeuroDETR 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 当检测头的「工作记忆」，第一次和变长输出任务绑定。但它没有预训练阶段：码表从各检测任务的特征里 EMA 出来，8 个数据集各自训各自的码表，和 NeuroRVQ/CodeBrain 那种大规模预训练词表不是一回事。「事件记忆」能不能像 motif 词表那样跨数据集复用、甚至跨范式迁移，本文没测——这是这条线下一个自然的坑位。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么不用滑窗分类器做异步检测？本文连对比都排除了它，合理吗？</summary>
-<p>滑窗分类的老问题：固定窗长对不上可变的事件时长与边界，检测碎片化或粘连，还要靠后处理规则拼回事件实例。排除出对比的理由是工程性的：对长记录密集滑动、重叠窗口反复处理同一段信号，计算上不经济（Appendix E.1 明说了）。合理，但要注意代价——读者因此看不到「滑窗 + 后处理」这条传统强基线在同一协议下的数字，本文的相对优势只能在与检测式方法的比较里度量。</p>
-</details>
-<details class="question">
-<summary>Q2 · FOCAL 的「事件驱动」和真正的自适应切分是一回事吗？</summary>
-<p>不是，这是精读后最需要澄清的一点。tokenization 本身仍是<strong>固定</strong>多尺度平均池化——切分粒度由池化尺度决定，与信号内容无关；「事件驱动」只发生在两处：注意力路由（哪些窗做局部注意力）和池化加权（密度概率当池化权重，且 detach）。密度头的粒度受 FOCAL 窗长 <span class="arithmatex">\( w \)</span> 限制，而 <span class="arithmatex">\( w \)</span> 全文未披露。所以准确的定位是：事件驱动思想进入 tokenization 管线的<strong>占坑之作</strong>，不是自适应 tokenization 的终局——密度引导的「软路由」离「按事件边界切 <abbr title="词元，模型处理的最小输入单元">token</abbr>」还差一个可导的边界预测器。</p>
-</details>
-<details class="question">
-<summary>Q3 · 46.70 的事件 F1 平均值算什么水平？跨论文可比吗？</summary>
-<p>不可直接比。基线里除 DANCE 外全是作者自己移植的实现，数字依赖移植质量（DyFADet 的大 SD 已经暴露了不稳定性）；滑窗分类器又被排除，缺一条传统强基线参照。有信息量的两个锚点：一是随机基线在 HDOP 只有 1.51、TUSZ 只有 0.35，说明稀疏事件任务远未饱和，TUSZ 的 25.06 离临床可用还有很大距离；二是统一协议本身（8 数据集、同划分、同指标、同后处理规则）是这篇论文对社区的真实贡献——以后做异步检测的论文大概率会引用这套协议。</p>
-</details>
-<details class="question">
-<summary>Q4 · 复现最大的坑在哪？</summary>
-<p>三个。第一，未披露超参一长串：FOCAL 窗长 <span class="arithmatex">\( w \)</span>、时间尺度集合 <span class="arithmatex">\( \mathcal{S}_t \)</span> 的具体取值、各码表大小 <span class="arithmatex">\( V \)</span>、commitment 权重 <span class="arithmatex">\( \beta \)</span>、空间池化 bin 数 <span class="arithmatex">\( T_s \)</span>、全部损失权重 <span class="arithmatex">\( \lambda_\ast \)</span>、匹配代价权重、融合查询数 <span class="arithmatex">\( N_q \)</span>、高斯宽度 <span class="arithmatex">\( \sigma_{\mathrm{bnd}} \)</span>、钳位下界 <span class="arithmatex">\( \epsilon_{\mathrm{clamp}} \)</span>——Reproducibility Statement 宣称 Section G 给全了超参，实际上 G 只有优化器与训练日程，架构超参大量缺席，而官方仓库截至精读未检索到。第二，<span class="arithmatex">\( N_e \)</span> 每数据集一套（见 Table 4），拿默认值跑会得到明显偏低的数字。第三，数据协议：128 Hz 重采样 + robust scaling、7 数据集按被试分组 5 折 CV、TUSZ 官方划分 + 8 卡训练——混用任何一处都会让数字对不上。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>

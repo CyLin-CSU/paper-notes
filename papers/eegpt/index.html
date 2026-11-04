@@ -591,7 +591,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -602,29 +602,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2112,7 +2090,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        要点速览
+        与其他论文的关系
       
     </span>
   </a>
@@ -2123,29 +2101,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        与其他论文的关系
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         个人思考
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        自问自答
       
     </span>
   </a>
@@ -2245,16 +2201,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegpt-arch.png" data-desc-position="bottom"><img alt="Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构" src="../../assets/eegpt-arch.png"></a></p>
 <p><em>Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构</em></p>
-<h2 id="_2">要点速览<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>~10M 参数（8 个变体 0.4M–101M）；下游只用 linear probing 即达 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr></li>
-<li>TUEV balanced acc 0.6232，比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（0.5281）高 9.5%</li>
-<li>双自监督：表示对齐（<span class="arithmatex">\( L_A \)</span>，JEPA 式）+ 掩码重构（<span class="arithmatex">\( L_R \)</span>，<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）；掩码 50% 时间 × 80% 通道</li>
-</ul>
-</div>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2277,29 +2224,12 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li>把 linear probing 当评估协议本身就是贡献：冻结 encoder 后性能完全归因于表示质量，排除了微调技巧的干扰。</li>
 <li>「encoder 看被 mask 的稀疏部分、momentum encoder 看全量」的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。</li>
 <li>附录证明去掉 predictor 会表示坍塌（重构 loss 不再下降）——对齐分支必须保留 query/位置等余量，防止模型走捷径。</li>
 </ul>
-<h2 id="_5">自问自答<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<details class="question">
-<summary>Q1 · 为什么 encoder 处理的是被 mask 的部分，和 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 正好相反？</summary>
-<p>这是显式表示 z 设计的一部分：encoder 只看 50% 时间 × 80% 通道的稀疏视图，却要靠 predictor 预测全量特征、与看过完整信号的 momentum encoder 对齐——逼着稀疏视图的输出携带全局语义。若 encoder 直接看全量，对齐任务就没有信息瓶颈，学不到这个性质。</p>
-</details>
-<details class="question">
-<summary>Q2 · 去掉 predictor 行不行？</summary>
-<p>附录 Figure 6：去掉 predictor 后对齐目标变成 encoder 与 momentum encoder 直接对齐，两者可以走捷径坍缩到相同输出（表示坍塌），重构 loss 也不再下降。predictor + 可学习 query 提供了必要的不对称性，与 BYOL 需要 predictor 同理。</p>
-</details>
-<details class="question">
-<summary>Q3 · 为什么坚持 linear probing 而不微调？</summary>
-<p>两个动机：一是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 下游标注少，全量微调大模型极易过拟合；二是 linear probing 让性能完全归因于 encoder 的表示质量——它是更严格的通用表示评估协议，EEGPT 在这个协议下超过全量微调的 BENDR，说服力更强。</p>
-</details>
-<details class="question">
-<summary>Q4 · Codex book 怎么处理训练时没见过的通道？</summary>
-<p>它维护通道名到可学习向量的映射表，覆盖常见命名体系，新数据集的通道按名字映射即可。但表是固定的（58 电极），碰到 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 这类体系外通道就没有对应向量——这是它跨设备能力弱于 TFM 单通道方案的原因。</p>
-</details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
 <ul>
