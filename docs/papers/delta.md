@@ -86,13 +86,6 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 | [NeuroDETR](neurodetr.md) | 离散 token 的第三种去向:多尺度时间/空间码当事件检测模型的「记忆」;与本文共同印证 2025–26 tokenization 线的趋势——token 不再只是重构目标,开始驱动下游生成/检测机制 |
 | Jo et al. 2024「Are EEG-to-Text models working?」 | 评测批判的来源:teacher-forcing 高估、无 teacher-forcing 下接近随机——DELTA 以此立论并不用 teacher-forcing 评测,但没有与任何已发表 EEG-to-Text 数字对表 |
 
-## 个人思考
-
-- **5 pp 的领先建立在「8B 对亿级」的不对称上,「扩散优于 AR」没有被干净地验证**。基线 BART/T5 的具体规格论文未披露,但即使按 T5-large(7.7 亿)算,与 LLaDA-8B(80 亿)也差一个量级——QLoRA 冻住的只是底座权重,预训练语言能力差距原封不动地带进了对比。要支撑「非自回归复原更适合噪声 EEG」这个核心主张,最起码需要同规模对照:LLaDA-8B 换 AR 解码做同协议微调,或找一个 8B 级 AR LLM 对打。论文一个都没做。摘要的「up to 5.37 points」要与这条对读:提升真实存在,归因完全不明;
-- **RVQ 是标题的第一个词,却是全文唯一没有对照的组件**。三个基线吃的都是同一套 RVQ token——没有「连续 840 维特征直接进 LM」的基线,「RVQ 逐层编码核心特征、滤掉噪声」这一动机性宣称(从音频压缩搬来的直觉)在本文任何实验里都没被检验。对比站内 tokenization 线的惯例:[LaBraM](labram.md) 有 tokenizer 与随机初始化的消融,[TFM-Tokenizer](tfm-tokenizer.md) 用 plug-and-play 换头验证 token 质量,DELTA 的 tokenizer 是免检组件;加上码本自训于 ZuCo(跨数据集语义存疑)、层数尺寸未披露、无代码——RVQ 这半篇目前既不可复现也不可评估;
-- **绝对值贴地,加一处内部矛盾,提醒这批数字只能当排序用**。WER 全线 110–148% 意味着输出与参考在词序列层面基本对不上,BLEU-1 21.9% 的单字重叠离可用文本很远——「语义对齐改善」是真的,「能解码」还早。更扎眼的是 Pegasus 词级行:ROUGE-1 三项全 0 却拿到全场最低 WER 99.69,两者几乎不可能同时成立,评测脚本大概率有 bug(空输出或截断的特殊处理)。全表无方差、无显著性检验,单次运行里 0.37 对 0.31 这类 BLEU-4 差异不宜过度解读;
-- **7 页 letter 给了范式一个占位,没给范式一份证据**。掩码扩散该交的三件套——消融(RVQ 对连续输入、有无 EEG 预训练、掩码调度敏感性)、采样步数-质量曲线、同规模 AR 对照——一件都没有;「EEG token 预训练」用的还是 ZuCo 自己的两万句,「large-scale」名不副实,8B 模型在小数据上的跨模态适应全靠 early stopping 兜底。但占位价值是真的:tokenization 演进线(NeuroRVQ/BrainRVQ/CodeBrain 在卷码字结构)第一次有了「离散 token → 生成式 LLM」的端到端落点,与 [NeuroLM](neurolm.md) 的 AR 分支构成对偶。复现前最想知道的两个数:每词多少 token(决定 8B 模型吃多长的序列)、码本层数与尺寸(决定 840 维向量被压到什么分辨率)。
-
 ---
 
 **相关阅读**

@@ -6,7 +6,7 @@ title: 首页
 
 > **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **25** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
-个人论文精读库：记录方法拆解、创新点、流程与个人思考。++ctrl+k++ 全文搜索。
+个人论文精读库：记录研究问题、方法拆解与创新设计。++ctrl+k++ 全文搜索。
 
 ## :material-calendar-check: 活跃日程（最近一周）
 
