@@ -13,17 +13,9 @@ one-liner: "时/频双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干:8
 ---
 # CodeBrain: Bridging Decoupled Tokenizer and Multi-Scale Architecture for EEG Foundation Model
 
-> **ICLR 2026**（arXiv 2506.09110，v4 2026-05-11）· 新加坡国立大学 Saw Swee Hock 公共卫生学院（兼 NUS 数据科学研究所、NUS 广州研究院）+ 南洋理工 CCDS + 中科院自动化所脑网络组 —— 站内 [Tokenization 演进](../topics/tokenization.md)线上 2026 梯队的占坑之作。谱系上,[LaBraM](labram.md) 学出了词表但 token 只当掩码目标、[NeuroLM](neurolm.md) 把码字并进 GPT-2 词表、[TFM-Tokenizer](tfm-tokenizer.md) 把 token 做成可插拔输入;CodeBrain 不争「token 当不当输入」,而是去填「tokenizer 与下游架构作为整体联合设计」这个缺口——时/频双码本 + SSM 系多尺度骨干,一个模型包干两阶段。
+> **ICLR 2026**
 
 **作者**：Jingying Ma\*, Feng Wu\*（共同一作）, Qika Lin†, Yucheng Xing, Chenyu Liu, Ziyu Jia†, Mengling Feng（†通讯；NUS / NTU / 中科院自动化所）
-
-!!! abstract "TL;DR"
-    - 两阶段 EFM:Stage 1 **TFDual-Tokenizer** 把 patch 表征分别量化进**时域/频域两个独立码本**（各 4096×32）——频域分支重构幅值+相位，时域分支重构原始波形并加 SimCLR 对比正则（治 LaBraM「原始信号重构不收敛」的老病）；Stage 2 **EEGSSM**（8 层 15.17M）= SGConv 结构化全局卷积 + SWA 滑窗注意力 + WaveNet 式门控，掩码 token 预测（mask 率 0.5）
-    - 预训练 TUEG **9,246 小时**（19 通道 10-20 系统、200 Hz、1s 非重叠 patch、序列长 570 = 19 通道 × 30 patch）；tokenizer 6×A100 约 10 h、骨干 2×A100 约 24 h——算力门槛远低于同类
-    - 8 任务 10 数据集全量微调、5 seeds:对最强基线 CBraMod 全线小胜——FACED Kappa **0.5406** vs 0.5041、SEED-V **0.2735** vs 0.2569、ISRUC S3 **0.7671** vs 0.7407;最大增益在 BCIC2020-T3（**+0.0911**,21.6%）与 Mental Arithmetic（AUROC **+0.0802**,10.1%）两个小数据集
-    - 诚实处与丢分处:TUEV/TUAB 与预训练库 TUEG 同源,专设 Excluding 重训行且 TUEV 仍占优（0.6838 vs 0.6772）;但 CHB-MIT Balanced Acc（0.7273 vs **0.7398**）、TUAB AUROC/PRAUC（0.9030/0.9100 vs **0.9227/0.9258**）三处输给 CBraMod,正文只在附录轻描淡写
-    - 消融:去 SGConv 崩得最狠（FACED 0.5406→0.1936）,Gate 次之（→0.2578）,SWA/CL 各贡献约 0.02;双码本 > 单频 > Mixed ≈ 单时;**SWA 窗长 1 最优**——它实际做的是 patch 内建模而非跨 patch 局部上下文
-    - 可解释性是事后定性:类特异 token 检索出 N3 慢波（40.4% 激活 patch 含慢波）、δ 优势（18.3%）、N2 纺锤波等;论文自己承认「不意味着特定可解释码直接决定任务结果」
 
 ## 1 问题定位:单码本、全连接注意力、patch 即 token 的三宗罪
 
@@ -185,24 +177,6 @@ flowchart TD
 - **双码本的收益要按数据集拆开看**。Dual 对 Mixed 的差距:FACED +0.073、ISRUC S3 +0.027、SEED-V 仅 +0.003(0.2735 vs 0.2708);对单频码本 SEED-V 也只 +0.007。也就是说「二次扩展表征空间」的收益在情绪任务上几乎归零,理论命题(Proposition 2.1)的实证支撑并不均匀——「二次扩空间」的字面事实成立(每 patch 一个码字变成一对,组合空间 4096² ≈ 1678 万),但「判别力随之提升」只在部分任务上兑现。消融里真正普适的结论反而是骨干侧的:SGConv 和 Gate 拆谁都崩;
 - **子带消融的「全崩」是个警报,不是勋章**。移除 δ、θ、α 任何单个低频带都把模型打到近随机(SEED-V 去 α 带 0.0082),而健康的频段归因应该是「一个带一个坑」。更合理的解释是模型对输入分布漂移极度敏感:掩掉一个带会破坏全局统计(如 z-score 口径),整个输入相对预训练分布成了 OOD。这与附录 M 大讲通道丢弃/基线漂移鲁棒性的叙事存在张力——同一模型不可能既「对结构化扰动稳健」又「拆一个频带就崩」;
 - **增量边际与占坑价值要分开记账**。对 CBraMod 的中位增量只有 0.01–0.03 Kappa,大增益集中在两个小数据集(BCIC2020-T3 共 6,000 样本、Mental Arithmetic 共 1,707 样本),大库任务(TUEV/TUAB)上互有胜负;三个二类指标还输给基线。它的价值更多在「把双码本 + SSM 骨干这条路铺通」:完整消融、scaling 曲线、9k 小时/150M 的外推证据,外加 15M 参数、35 GPU·小时的可复现成本(代码与权重已开源)。典型的占坑之作——坑位本身(解耦 tokenization 的可解释性叙事)比数字更有长期价值,后续 [BrainRVQ](brainrvq.md) 等双域工作都站在这条线上。
-
-## 自问自答
-
-??? question "Q1 · 「解耦」到底解耦了什么?"
-
-    不是输入级:时/频两路在 TFConv 里拼接成同一个联合嵌入,两个码本对的是同一个 \( \tilde{e}_i \)(式 3)。真正分开的是**码本 + 重构目标**:两套 4096 码字、两个 decoder、两个监督域(波形 vs 幅相),codebook/commitment 损失各算各的。所以「二次扩展」的精确含义是每 patch 的输出从 1 个码字变成 \( (v_t, v_f) \) 对,组合空间 \( K^2 \);而 Mixed 消融(共享码本联合重构两个域)差出的 0.073(FACED)是「分家」本身的净收益。
-
-??? question "Q2 · token 在这套系统里承担什么?能不能拿走?"
-
-    只承担预训练目标。Table 4 给了直接答案:整个去掉 tokenizer 改原始信号重构,ISRUC S3 Kappa 0.7671→0.7503(−0.017);把 top-50% 高频激活码换成占位符,→0.7426(−0.025)。token 化的贡献真实但不大,且「token 可解释」与「任务收益」之间论文自己承认没有因果关系(附录 B 开头声明)。想验证 token 接口价值,得看 [TFM-Tokenizer](tfm-tokenizer.md) 那种把 token 喂给下游的设定——CodeBrain 没做这个实验。
-
-??? question "Q3 · 预训练语料泄漏怎么处理的?可信度如何?"
-
-    TUEV/TUAB ⊂ TUEG。三重处理:预训练早停 epoch 10(损失 6.01 后趋平的「保守检查点」叙事);附录 I 给 Excluding 行(从 TUEG 剔除两库重训);正文承诺与所有基线统一数据划分、5 seeds。结果:排除泄漏后 TUEV Kappa 0.6838 仍超 CBraMod 0.6772,TUAB BAcc 0.8288 与 CBraMod 0.8289 打平。可信,但注意 TUAB 的 AUROC/PRAUC 本来就输(0.9030/0.9100 vs 0.9227/0.9258),以及 LaBraM 在 TUEV/TUAB 上用的是其原生 23 通道设定、EEGPT 用两层卷积前置——基线间微调协议并不完全同一,作者在附录承认并保留各自设定。
-
-??? question "Q4 · SGConv 和 Mamba 什么关系?为什么消融不对照 Mamba?"
-
-    SGConv 出自 Li et al. 2022(长卷积脉络,与 S5/H3 同源):把 SSM 展成全局卷积核、FFT 计算 \( O(N \log N) \),再加对数间隔子核与指数衰减做稀疏化;Mamba 是选择性递推分支。两者都是「Transformer 之外的线性复杂度选项」,序列长 570 时卷积形态并行更省。可惜附录 L 的骨干替换实验只对照了 CNN/LSTM/Transformer(参数 16.22M/17.35M/21.2M,SGConv 15.17M 最小、FLOPs 8.74G 最低),没有 Mamba——「SSM 骨干适合 EEG」这个主张在论文内部缺了最有信息量的那个对照组,只能靠站内 [SSM2Mel](ssm2mel.md) 一类的外部证据旁敲。
 
 !!! abstract "复现速查卡"
     - **代码**:[github.com/jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain)(含预训练权重)

@@ -13,17 +13,9 @@ one-liner: "共享编码器 + 时/频双路 RVQ(2×3 层×8192 码本)把同一 
 ---
 # BrainRVQ: A High-Fidelity EEG Foundation Model via Dual-Domain Residual Quantization and Hierarchical Autoregression
 
-> **arXiv 2026**(eess.SP 预印本 v1,2026-02-18,ICML 模板正文 9 页 + 附录 A–J)· 浙江大学工业控制技术国家重点实验室 + 米兰理工 + 中科院深圳先进院 —— 站内 tokenization 线 **RVQ 分支的第二篇**:[NeuroRVQ](neurorvq.md) 先把 RVQ 搬进 EEG(多尺度卷积、单时域),本文把「双域」补上——同一个 patch 同时量化出时域、频域两组残差码字,再用层间自回归把 coarse-to-fine 结构写进预训练目标。token 用法上它与 [LaBraM](labram.md) 同范式(只当预训练目标、推理丢弃),而非 [TFM-Tokenizer](tfm-tokenizer.md) 的「token 作下游输入」;双域的最近竞品是 [CodeBrain](codebrain.md)(独立时/频编码器 + 双 VQ),但两者互相不比较。演进口径见 [Tokenization 演进](../topics/tokenization.md)。
+> **arXiv 2026**
 
 **作者**:Mingzhe Cui, Tao Chen*, Yang Jiao, Yiqin Wang, Lei Xie, Yi Pan, Luca Mainardi(浙江大学;Yang Jiao、Yi Pan 来自中科院深圳先进院;Luca Mainardi、Tao Chen 挂米兰理工;通讯作者 Tao Chen,chentao98@zju.edu.cn)
-
-!!! abstract "TL;DR"
-    - 定位:TUEG v2.0.1(14,987 患者 / 26,846 sessions,预处理后 1,109,545 个 30 s 样本 ≈ 9,200 h)单库预训练的 EEG 基础模型,8 个下游数据集(临床异常/事件/癫痫 + 情绪 + 运动想象 + 认知负荷)全微调评估,5 seeds
-    - **DD-RVQ tokenizer**:共享 12 层 Transformer 编码器输出单一潜在表示 h,经**两套并行 RVQ**(各 3 层 × 8192、码字 64 维)量化出时/频两组 token(每 patch 6 个);时域解码器重构波形,频域解码器重构幅值 + 相位,commitment 损失逐层逐域求和(β=1.0),码本 EMA 更新 + ℓ2 归一化
-    - **层次自回归预训练**:把独立逐 token 预测改成 \( P(z_i) = \prod_{l=1}^{L} P(z_i^{(l)} \mid z_i^{(1:l-1)}, X_{\backslash M}) \),teacher forcing 条件于真值码,层权重 \( \lambda_l = 2^{-(l-1)} \);独立预测消融平均 **−8.3%**,是四个组件消融里伤最重的一刀
-    - 主结果:Mental Workload AUROC **0.862**(CBraMod 0.791)、CHB-MIT AUC-PR **0.465**(+26.0% rel)、BCICIV-2a Kappa **0.388**(+10.2% rel)、TUEV Kappa 0.690;但 **TUAB AUROC 0.900 低于 CBraMod 0.923**,PhysioNet/SEED-V 的领先落在 5-seed 噪声内——「consistently outperforms」要打折听
-    - 重要性引导课程掩码:5 指标打分(神经频带比 0.30 / 伪迹惩罚 0.25 / Hjorth 复杂度 0.20 / 不规则性 0.15 / 移动性 0.10),权重 \( w(t) \) 从 0.2 线性升到 0.7;掩码/可见 patch 信息分差 +0.119;随机掩码消融平均 −3.0%
-    - 打折处:「双域」在编码器层面不存在(共享 h,分化全靠损失逼);相位重构平均 r=0.577(SNR 2.0 dB);TUEG 与评测集 TUAB/TUEV 同源且未声明去污染;未比较 CodeBrain/NeuroRVQ 这两个最近的 tokenization 竞品
 
 ## 1 问题定位:单域量化的信息损失与扁平码本的容量天花板
 
@@ -201,24 +193,6 @@ flowchart TD
 - **「双域」的「双」到编码器为止是假的——这不是缺点,但这笔账论文没算**。共享编码器输出同一个 h,两套码本量化同一向量,时/频分化完全由两个解码器的重构目标(波形 vs 幅相)反向逼出来;Fig. 1 却在频域支路画了 DFT 模块,与正文「DFT 只提供重构目标」的表述矛盾(图文各说各话,复现前必须问作者)。对照 CodeBrain 的独立时/频编码器,BrainRVQ 的双域是码本层的便宜版——消融证明便宜版也有效(去任一码本都掉分),但同一 h 进两套 8192×3 码本,6 个 token/patch 里有多少是冗余编码?一个零成本的检验:用时域 token 互预测频域 token,看互信息有多高;
 - **层次自回归是全文最硬的贡献,但 teacher forcing 的软肋也被 λ 藏起来了**。独立预测消融平均 −8.3%,是四个组件里代价最大的;L0 29% > L1 22% > L2 14% 的精度单调性与 λ=[1, 0.5, 0.25] 的加权设计自洽。不过训练条件于真值码、推理条件于自己的预测,exposure bias 沿三层链累积——恰好最细层(误差最会滚雪球的那层)权重被压到 0.25,这个问题从损失函数视角里消失了。论文没做 scheduled sampling,也没报告推理态(自回归条件)下的重构质量与训练态差多少;
 - **同源语料 + 同源评测的泄漏疑云,是整条 TUEG 预训练线的系统性盲区**。TUEG 与 TUAB/TUEV 同属 Temple 大学医院语料,论文未声明是否把评测集的被试/时段从预训练语料中剔除;CBraMod、LaBraM 的 TUH 版本同样没说,所以横向 SOTA 仍共享这一混淆。BrainRVQ 在 TUEV/TUAB 上对 CBraMod 的增量本来就薄(Kappa +0.013、BalAcc +0.002/−0.002),若有残留泄漏,这几个数字的解读要更保守。值得表扬的是工程务实:5.82M 参数、6×A800 约 32 h 跑完两阶段预训练,且 scaling 曲线(1k→9k h、4→12 层)未见饱和——这套配方的天花板远没摸到,小模型 + 单机构语料是目前证据下最划算的区间。
-
-## 自问自答
-
-??? question "Q1 · 「双域」到底双在哪一层?和 CodeBrain 的双域是一回事吗?"
-
-    拆三层看。编码层:**共享**——单个 12 层 Transformer 输出一个 h,这与 CodeBrain(时/频独立卷积编码器)是本质区别;量化层:**双**——两套并行 RVQ(各 3 层 × 8192);重构层:**双**——波形 vs 幅值+相位。所以 BrainRVQ 的双域发生在码本与损失上,CodeBrain 的发生在编码器上。附带一个图文矛盾:正文 2.3.1 说 DFT 只产生幅相重构目标、两个 RVQ 量化的都是同一个 h,Fig. 1 却把 DFT 画在频域 RVQ 之前——若 DFT 特征真进了量化器,正文表述就不完整。这是复现前第一个要向作者确认的点。
-
-??? question "Q2 · CHB-MIT 的 AUC-PR +26% 具体归功于哪个组件?"
-
-    归功不了单一组件。CHB-MIT(AUROC)上的组件消融:去层次 AR −0.053(贡献最大)、去频域码本 −0.041、去时域码本 −0.032、去 RVQ −0.032、随机掩码 −0.018(贡献最小)。正文把 AUC-PR 的大幅领先归因于「重要性掩码迫使模型关注稀疏 ictal 模式」,但 random masking 消融只有 AUROC 口径且差距仅 0.018,论文并没有 AUC-PR 口径的掩码消融支撑这个具体归因。AUC-PR 对 <5% 正类的稀疏检测敏感,0.369→0.465 更可能是整包(双域 + RVQ + AR)的组合效应,单一归因是叙事先行。
-
-??? question "Q3 · 相位重构平均 r 只有 0.577(SNR 2.0 dB),为什么还留着全权重?"
-
-    论文的理由援引音频领域:相位难学但携带同步信息。但两个疑点没处理:一是 NeuroLM 早已实验证实相位对下游贡献很小,本文既没有「去掉相位损失」的消融,也没有像 NeuroRVQ 那样用圆周相位损失处理 ±π 角度跳变——arg 的周期性会让 MSE 损失在边界附近爆炸,r=0.577 可能部分是病态目标所致而非 token 容量不足;二是相位项 MSE(653×10⁻³)比幅值项(64×10⁻³)大一个量级,实际上主导了 L_freq 的梯度方向。相位项到底在学结构还是在学最小化一个病态目标,论文给不出答案。
-
-??? question "Q4 · 能直接跑起来吗?缺什么?"
-
-    算力门槛很低:tokenizer 12 h + 预训练 20 h,6×A800(80GB);模型 5.82M,微调单卡可行。代码已放出(DDRVQ / Pretraining / Downstream 三目录),但 README 自述缺 `data_processor.dataset.ShockDataset` 模块、无依赖锁定环境,tokenizer 与 encoder 权重声明「论文接收后放出」。语料 TUEG 需向 TUH 申请(DUA 约束)。已披露但需读代码补齐的:Table 4 里的「Symmetric loss: True」全文无定义(大概率沿 LaBraM 的对称掩码交换监督,但正文从未解释);频域解码器结构、patch 卷积编码器到 d=200 的投影细节也只在附录表格里露了一角。
 
 !!! abstract "复现速查卡"
     - **代码**:[github.com/keqicmz/BrainRVQ](https://github.com/keqicmz/BrainRVQ)(训练代码已放出;README 自述缺 ShockDataset 依赖、无环境锁定;**权重待论文接收后公开**)

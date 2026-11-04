@@ -13,16 +13,9 @@ one-liner: "自训 RVQ tokenizer 把 ZuCo 词级 EEG 离散成多层码字,LLaDA
 ---
 # DELTA: Language Diffusion-based EEG-to-Text Architecture
 
-> **NeurIPS 2025 Workshop**(39th NeurIPS Workshop *Foundation Models for the Brain and Body*,arXiv 2511.21746v1,2025-11-22)· 韩国团队(MODULABS + 成均馆大学,正文 5 页 letter)——站内 **EEG-to-Text 正线的第一篇精读**:Wang & Ji 2022 的 open-vocabulary EEG-To-Text、DeWave 这些工作此前只散落在 [Tokenization 演进](../topics/tokenization.md) 的外围叙述里,本文是「离散 token + 生成式 LLM」在这条线上的占坑之作。与 [BrainGPT](braingpt.md) 共享「EEG 当语言序列建模」的直觉但走向另一分支:那边自回归攒 generalist 表征,这边把 RVQ 码字接进掩码扩散 LLM 直接生成文本——token 侧则接上 [LaBraM](labram.md) / [NeuroLM](neurolm.md) 的码字演进线。
+> **NeurIPS 2025 Workshop**
 
 **作者**:MinGyu Jeon(MODULABS)、HyoBin Kim(成均馆大学)——两人共同一作(\* 标注),无通讯作者与导师署名;资助方 Brian Impact Foundation(韩国非营利组织)。两位作者的分工与机构关系原文未说明。
-
-!!! abstract "TL;DR"
-    - 任务:开放词汇 EEG-to-Text,ZuCo 1.0 + 2.0 合并(128 通道 500 Hz → 去噪后选 105 通道,NR + TSR 两种阅读任务),25,616 句按 80/10/10 切分、同一句文本不跨集合;**评测全程无 teacher-forcing**——以此回应 Jo et al. 2024 对该领域评测虚高的批判
-    - 两段式:自训 **RVQ tokenizer**(105 通道 × 8 带通频段 = 840 维词级向量 → 1D conv encoder → n 层残差 VQ,标准 VQ-VAE 三项损失)把 EEG 变成离散 token;**LLaDA-8B(QLoRA)两阶段**——先在 EEG token 上做掩码复原预训练,再把 EEG token 当前缀提示、对被掩码文本做去噪 SFT
-    - 结果:词级特征 BLEU-1 **21.93** / ROUGE-1 F **17.24** / WER 110.03,较同一 RVQ token 输入下重训的最强 AR 基线 T5 BLEU-1 +5.29 pp、较 BART ROUGE-1 F +5.37 pp(摘要口径的「up to 5.37 points」);句子级 14.82 / 7.26 全面小胜但 ROUGE-1 F 对 T5 只 +0.11;词级 BLEU-4 0.76 微输 T5 的 0.81,词级 WER 反而输 BART(110.03 vs 108.43)
-    - 范式卖点:非自回归并行去噪替代逐步生成——一步错的 token 可被后续步修正,规避 AR 误差累积;案例分析显示语义解码失败时句法框架仍保留(「(Name) (Dates) was a (Profession).」)
-    - 打折:所谓「over existing SOTA」只是跟自家重训的 BART/Pegasus/T5 比,EEG-To-Text/DeWave 等前作零对比;基线与 8B 主模型差一个量级的参数,「扩散优于 AR」与「大模型优于小模型」混杂;RVQ 无连续特征对照、全文零消融;码本层数/尺寸、学习率、采样步数全部未披露,无代码
 
 ## 1 问题定位:EEG-to-Text 的两处不稳定
 
@@ -139,24 +132,6 @@ flowchart TD
 - **RVQ 是标题的第一个词,却是全文唯一没有对照的组件**。三个基线吃的都是同一套 RVQ token——没有「连续 840 维特征直接进 LM」的基线,「RVQ 逐层编码核心特征、滤掉噪声」这一动机性宣称(从音频压缩搬来的直觉)在本文任何实验里都没被检验。对比站内 tokenization 线的惯例:[LaBraM](labram.md) 有 tokenizer 与随机初始化的消融,[TFM-Tokenizer](tfm-tokenizer.md) 用 plug-and-play 换头验证 token 质量,DELTA 的 tokenizer 是免检组件;加上码本自训于 ZuCo(跨数据集语义存疑)、层数尺寸未披露、无代码——RVQ 这半篇目前既不可复现也不可评估;
 - **绝对值贴地,加一处内部矛盾,提醒这批数字只能当排序用**。WER 全线 110–148% 意味着输出与参考在词序列层面基本对不上,BLEU-1 21.9% 的单字重叠离可用文本很远——「语义对齐改善」是真的,「能解码」还早。更扎眼的是 Pegasus 词级行:ROUGE-1 三项全 0 却拿到全场最低 WER 99.69,两者几乎不可能同时成立,评测脚本大概率有 bug(空输出或截断的特殊处理)。全表无方差、无显著性检验,单次运行里 0.37 对 0.31 这类 BLEU-4 差异不宜过度解读;
 - **7 页 letter 给了范式一个占位,没给范式一份证据**。掩码扩散该交的三件套——消融(RVQ 对连续输入、有无 EEG 预训练、掩码调度敏感性)、采样步数-质量曲线、同规模 AR 对照——一件都没有;「EEG token 预训练」用的还是 ZuCo 自己的两万句,「large-scale」名不副实,8B 模型在小数据上的跨模态适应全靠 early stopping 兜底。但占位价值是真的:tokenization 演进线(NeuroRVQ/BrainRVQ/CodeBrain 在卷码字结构)第一次有了「离散 token → 生成式 LLM」的端到端落点,与 [NeuroLM](neurolm.md) 的 AR 分支构成对偶。复现前最想知道的两个数:每词多少 token(决定 8B 模型吃多长的序列)、码本层数与尺寸(决定 840 维向量被压到什么分辨率)。
-
-## 自问自答
-
-??? question "Q1 · 「提升 5.37 points」到底跟谁比?能跟 BrainTranslator / DeWave 的公开数字对表吗?"
-
-    跟自家重训基线比:词级 ROUGE-1 F 17.24 对 BART 11.87(+5.37,即摘要口径),BLEU-1 21.93 对 T5 16.64(+5.29)。不能与前作对表——数据协议不同(合并 ZuCo 1.0+2.0、按句子内容切分、无 teacher-forcing),而已发表 EEG-to-Text 数字大多带 teacher-forcing 污染,直接比反而对 DELTA 不利也不公平。但要指出:贡献列表里「significant performance improvements over existing SOTA models」过强了,实验里没有任何一个 EEG-to-Text 专用模型(EEG-To-Text、BrainTranslator、NPT、DeWave 一个都没出现),SOTA 的说法只在对自家基线时成立。
-
-??? question "Q2 · 「句子级特征」和「词级特征」差在哪?为什么词级全面更好?"
-
-    ZuCo 同时发布句子级(整句聚合的眼动-EEG 特征)与词级(逐词特征)两种特征文件,DELTA 两种都当输入条件测。词级普遍好 5–10 pp,论文的解释只有一句「句子级聚合破坏了对 WER 至关重要的词序信息」——机制上说得通的部分是:逐词特征保留了词与眼动/EEG 段的时间对齐结构,给非自回归解码器提供了隐对齐线索;但为什么 BLEU/ROUGE 也一起掉,没有展开。句子级特征的确切聚合方式论文未说明,只能回 ZuCo 官方文档找。
-
-??? question "Q3 · mask ratio t~U(0,1) 是什么?推理时的 Remask 是同款吗?"
-
-    训练时每个样本随机采一个掩码比例 t,把输入按比例掩掉(图 1b 的 Masking 模块),损失对整个 t 区间求期望——这是 LLaDA 原版训练目标,DELTA 的公式 3/4 中的 t 就是这个分布;t→1 对应推理的起点(全掩码)。推理的固定步数迭代 + 每步 Remask 对应 LLaDA 的低置信度重掩策略,但 DELTA 用的是哪种重掩规则、步数多少,都没写——这是复现生成质量时最要命的缺口,因为采样超参对扩散 LM 的影响不亚于训练超参。
-
-??? question "Q4 · 复现需要补齐哪些论文没给的数字?"
-
-    清单:码本层数 n 与每层尺寸、conv encoder 结构与每词 token 数(决定序列长度)、105 通道名单、β 取值、LoRA rank、学习率、轮数与 early stopping 判据、采样步数、Remask 策略、「time series characteristics」的定义与去向。协议侧两个疑点也要先确认:被试是否跨 train/test 重叠(几乎必然,即 subject-dependent 设定,则被试泛化完全没被测过);25,616 的(被试, 句子)实例构成。这些不补齐,不仅结果无法复现,连「提升来自扩散还是来自 8B」都无法归因。
 
 !!! abstract "复现速查卡"
     - **代码**:论文未附仓库(arXiv 2511.21746v1),作者无 GitHub 链接;底座 LLaDA-8B 与 QLoRA 组件公开可得,tokenizer 与预处理全靠自建

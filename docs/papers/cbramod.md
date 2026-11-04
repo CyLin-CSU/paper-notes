@@ -13,16 +13,9 @@ one-liner: "空间/时间双路并行注意力的十字交叉 Transformer + 非�
 ---
 # CBraMod: A Criss-Cross Brain Foundation Model for EEG Decoding
 
-> **ICLR 2025** · 浙江大学 + 阿里巴巴 —— EEG-FM-Compass（NSR 2026）12 模型统一 benchmark 的**综合第 1 名**（平均秩 6.56，防泄漏复评仍第 1）。站内第一篇「把注意力结构本身当 EEG 先验」的论文：不换数据、不换 tokenizer，只改注意力怎么数 patch。
+> **ICLR 2025**
 
 **作者**：Jiquan Wang, Sha Zhao\*, Zhiling Luo（阿里）, Yangxuan Zhou, Haiteng Jiang, Shijian Li, Tao Li, Gang Pan\*（浙大大脑机智能重点实验室；\*通讯）
-
-!!! abstract "TL;DR"
-    - 两个动机：① **全注意力一锅炖**忽略 EEG 特有的异构依赖——同通道/同时刻的 patch 依赖更强，而图像只有空间依赖，ViT 式展平把两种轴混在一起；② **电极编号式绝对位置编码**把「通道 ↔ 电极位置」焊死，换参考方案（耳参考/平均参考/双极）就失效
-    - 解法一：**criss-cross transformer**——8 头注意力劈成两半，4 头 S-Attention 只在「同一时刻的全部通道」内做，4 头 T-Attention 只在「同一通道的全部时间段」内做，两路并行，复杂度从 O((Cn)²) 降到 O(Cn² + nC²)
-    - 解法二：**ACPE 非对称条件位置编码**——1 层 2D depthwise 卷积从 patch 邻域动态生成位置编码，卷积核 (19,7) 长边管空间（长程）、短边管时间（短程），任意通道格式都有定义
-    - 预训练：TUEG 清洗后 **1,109,545 个 30 秒样本（>9000h，LaBraM 的 3.5 倍）**，MAE 式掩码重构，mask 50%，全零 mask token，4.0M 参数，4×A5000 五天
-    - 结果：**10 个下游 BCI 任务、12 个公开数据集全部 SOTA**（附录脚注：把审稿人建议的 BCIC-IV-2a 算上实评 13 个数据集）——TUEV 上 4.0M 打过 369M 的 LaBraM-Huge（0.6671 vs 0.6616）；TUAB 0.8289（防泄漏重训版 0.8249 仍 SOTA）；ISRUC 睡眠分期 Kappa 0.7442；附录 G 证明**架构贡献 > 预训练数据贡献**
 
 ## 1 问题定位：两处「照搬 ViT」的不合身
 
@@ -149,24 +142,6 @@ flowchart LR
 - **「不能冻结」是个诚实的坏消息**。附录 J 显示冻结版 Kappa 从 0.50 直接掉到 0.26，说明 MAE 式重构学到的表征仍高度任务特化，通用性靠微调兑现。对我的 eeg2text-lite（预训练→LoRA→解码）路线这是个提醒：**别指望冻结提取器**，LoRA/全参数微调是必选项——好在与 EEG-FM-Compass 的微调方式结论（LoRA 介于全微调与线性探针之间）方向一致；
 - **1000h 后数据边际递减值得警惕**。这给「堆数据」路线（REVE 的 61,415h、SleepGPT 的 86,335h）打了个问号：至少在 CBraMod 的架构和清洗流程下，9000h 已接近饱和。当然可能只是清洗后数据同质化（19 通道临床 EEG 单一分布）——REVE 的多数据集多样性是否突破这个饱和点，是读 REVE 时要专门验证的问题；
 - **十字交叉 vs 线性注意力的取舍**写进了[通道异构专题](../topics/multi-task.md#channel-adaptation)：CBraMod 的复杂度 O(Cn² + nC²) 在 C 大时仍平方爆炸，LUNA 的隐空间瓶颈才是高密度的答案。CBraMod 自己在讨论里也承认部署门槛比非基础模型高。
-
-## 自问自答
-
-??? question "Q1 · 为什么 4:4 劈头？劈 6:2 会怎样？"
-
-    附录 L 实测：6:2 和 2:6 都系统性变差（FACED Kappa：2:6 为 0.4921、6:2 为 0.4910；PhysioNet-MI Kappa：2:6 为 0.4995、6:2 为 0.5013）。结论是空间与时间依赖在 EEG 表征里**同等重要**，没有先验理由偏科。这也反过来给「EEG 是时间序列还是空间拓扑」的争论一个经验答案：两个轴的信息量相当。
-
-??? question "Q2 · S-Attention 和 T-Attention 并行，信息怎么流通的？"
-
-    靠层叠 + 头拼接：每层内 S/T 两路的输出 concat 后过 FFN 进下一层，下一层再做新一轮 S/T。单层内空间信息和时间信息不直接交互（各自条带内注意），但**层的堆叠让交互自然发生**——附录 P.3 的热图显示浅层相关呈严格十字形，深层出现非局部依赖，说明多层结构确实学到了 criss-cross 之外的全局模式。
-
-??? question "Q3 · TUAB/TUEV 的防泄漏重训说明了什么？"
-
-    TUEG 是 TUAB/TUEV 的父集，正常预训练等于「考前见过题」。作者剔除下游数据重新预训练，TUAB 0.8289→0.8249、TUEV 0.6671→0.6659——下降不到半个百分点，SOTA 保住。这说明模型的泛化不是靠背下游数据，同时也给全行业提了个醒：凡是用 TUEG 系预训练的模型（LaBraM/NeuroLM 都算），报 TUAB/TUEV 成绩都该补这组对照。EEG-FM-Compass 专门做了 leakage-aware 复评，CBraMod 仍第一。
-
-??? question "Q4 · 为什么不用可学习的 mask token？"
-
-    试了（附录 N）：可学习 token 与全零 token 无显著差异（FACED Kappa 0.5033 vs 0.5041）。直觉是 mask token 只在预训练出现、下游微调即弃，其参数没有梯度压力去学有意义的语义；MAE 系（图像/时间序列）也大多用固定 token。省掉一组参数和调参负担。
 
 !!! abstract "复现速查卡"
     - **代码**：[github.com/wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod)（官方开源，已进 Braindecode）

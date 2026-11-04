@@ -97,13 +97,6 @@ flowchart LR
 *Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测*
 
 
-## 要点速览
-!!! abstract "TL;DR"
-    - 总参数仅 ~1.9M（tokenizer 1.2M + 下游 0.7M），最小的那个反而最强
-    - 多数据集设定 TUEV Kappa 0.6189（次优 0.5588，+11%）；IIIC Kappa 0.4979（比 LaBraM +36%）
-    - 跨设备 ear-EEG 睡眠分期超过 BIOT/LaBraM 14%；plug-and-play 提升 BIOT/LaBraM 93% 指标
-
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |
@@ -116,27 +109,6 @@ flowchart LR
 - 去掉位置编码的反直觉设计有消融支撑：PE 会让同一 motif 因出现位置不同学成不同 token → 词表冗余；motif 词表要的正是平移不变性。
 - token 可解释性分析（如 PLED 类的 token 4035 稳定对应'棘波-慢波'周期模式）是把 NLP 的 token 分析方法迁移到 EEG 的漂亮示范。
 - 作者自认局限：固定窗长可能把大 pattern 切断到不同窗口，导致同一事件被分到不同 token——这是切分式 tokenization 的共同软肋。
-
-## 自问自答
-
-??? question "Q1 · 为什么 tokenizer 内要去掉位置编码？"
-
-    消融证据：去掉 PE 后 TUEV Kappa 从 0.5119 升到 0.5337，token 利用率下降（12.87% 到 9.78%）、类独有 token 上升。机理：EEG motif 非平稳，同一模式可出现在任意位置；加了 PE，相同 motif 会因位置不同被学成不同 token，造成词表冗余。motif 词表需要的是平移不变性。注意：下游 Transformer 仍有位置编码，去掉的只是 tokenizer 内部的。
-
-
-??? question "Q2 · 频域路径为什么要把频谱窗沿频率轴切 patch？"
-
-    BIOT 的做法是把整个频谱窗直接过一个线性层，频率信息被一次性压缩，模型容易只看能量最大的低频段。沿频率轴切 patch 后用频率 Transformer 建模窗内跨频段依赖，再用 sigmoid 门控聚合——让哪些频段重要变成可学习的决策（睡眠任务可以学会忽略 32Hz 以上）。
-
-
-??? question "Q3 · 为什么频带掩码比随机掩码重要得多？"
-
-    消融：随机掩码 Kappa 0.4772，频带掩码 0.5193（+8%）。随机掩小块太容易靠邻域插值恢复；按频带整条掩掉迫使模型从其他频带和时域上下文推断缺失频段的结构，学到的是跨频段依赖而非局部平滑。
-
-
-??? question "Q4 · 这套 tokenization 的主要局限是什么？"
-
-    作者自认：固定窗长可能把跨越窗口的大 pattern 切断，同一事件被分配到不同 token（误判为不同 motif）。此外属个人推断（论文仅自认窗长局限）：VQ 硬量化可能吞掉码字边界附近的微小波形差异。
 
 !!! abstract "复现速查卡"
     - **代码**：[github.com/Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer)（含预训练权重与全部预处理脚本）

@@ -13,16 +13,9 @@ one-liner: "学习 query + 交叉注意力把任意电极拓扑压进固定隐�
 ---
 # LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis
 
-> **NeurIPS 2025** · ETH Zürich —— 与 EEGMoE 对照阅读：EEGMoE 解耦「域差异」，LUNA 抹平「拓扑差异」。这是站内已读工作里**第一个把「跨 montage 泛化」和「计算效率」当主贡献**的基础模型。
+> **NeurIPS 2025**
 
 **作者**：Berkay Döner, Thorir Mar Ingolfsson, Luca Benini, Yawei Li（Integrated Systems Laboratory, ETH Zürich）
-
-!!! abstract "TL;DR"
-    - 痛点有数据：MI 解码器从 PhysioNet 迁到 KU **最多**掉 **14 个百分点**；BIOT/MMM 在 SEED↔DEAP 蒙特间掉 13–15pp；只保留公共电极的方案要丢掉最多 **80%** 的数据
-    - 核心机制：**Channel-Unification Module**——Q 个学习 query 对 C 个通道的 patch 特征做交叉注意力，压进固定隐空间（置换不变 → 拓扑无关）；之后时间注意力只在这个 Q×E 的隐空间上做
-    - 复杂度：对通道数**线性**（vs LaBraM 的 O((S·C)²)、CBraMod 的 O(max(S²,C²))）；论文总括声称对全注意力基线 FLOPs 降 **300×**、显存省最多 **10×**（对 BIOT 这一线性注意力基线的实测对比：8000 通道 4156 GFLOPs vs LUNA-Base 23，约 180×）
-    - 预训练 21,900h（TUEG+Siena，3 种拓扑）；TUAR AUROC **0.921**、TUSL **0.802** 双 SOTA；TUAB 81.57%（略低于 LaBraM-Huge/CBraMod）；未见 62 通道 SEED-V 落后 CBraMod 2–3pp（论文口径，按其表格实算约 1.9pp；作者坦承对未见拓扑敏感）
-    - 统计实践罕见地严谨：消融差异配对 t 检验（p=0.2136 不显著），用「实践优势」而非「统计显著」措辞
 
 ## 1 问题定位：拓扑异构是 EEG 基础模型的地基问题
 
@@ -104,14 +97,6 @@ Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05—�
 
 *Figure 1 · Channel-Unification Module：Q 个学习 query 对 C 通道特征做交叉注意力，时间注意力只在固定隐空间上进行*
 
-## 要点速览
-!!! abstract "TL;DR"
-    - 学习 query + 交叉注意力 = 可微分的「通道压缩器」：任意拓扑 → 固定 Q×E 隐空间，置换不变
-    - 时间序列长度从 S·C 降到 S，通道复杂度从平方到线性——8000 通道时 FLOPs 仅为 BIOT 的 1/180
-    - TUAR/TUSL 双 SOTA；TUAB 略逊 LaBraM/CBraMod 约 1pp；未见拓扑 SEED-V 落后 2–3pp——效率与容量的真实 trade-off
-    - 消融统计实践严谨（t 检验、种子方差、「实践优势」措辞）；频域特征是最不可去的组件
-    - 代码开源（pulp-bio/biofoundation）；LUNA-Base 7M/14MB 面向可穿戴边缘部署
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |
@@ -132,24 +117,6 @@ Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05—�
 - **频域特征消融掉得最多（AUROC 至 -0.011）**又一次印证时频信息的价值——与 TFM（时频 motif 词表）、SleepGPT（时频双流）的结论三方互证。有趣的是 LUNA 只在 patch embedding 里加了 FFT 幅相这一小块，性价比极高；
 - **位置编码是未见拓扑的阿喀琉斯之踵**：SEED-V 的失利被归因于预训练学到的位置编码绑定了训练拓扑。这提示「连续 3D 坐标编码」（NeRF 式）仍不够泛化——预训练拓扑只覆盖 3 种布局，坐标空间的采样太稀疏。未来做多数据集预训练 + 随机通道 dropout（论文展望）是对的；
 - **对我的项目**：LUNA-Base（7M、14MB、线性复杂度）是「可穿戴低功耗 EEG FM」的现成参考配置；其「先统一通道再时间建模」的结构与 eeg2text-lite 的单通道设计不冲突——若扩展到多通道可穿戴（如耳 EEG 多触点），LUNA 的统一模块可直接借用。
-
-## 自问自答
-
-??? question "Q1 · 为什么先统一通道、再做时间注意力，而不是反过来（先时间再统一）？"
-
-    效率的乘法结构决定的：统一在前，时间注意力只作用于 Q×E 的隐空间（序列长 S）；若反过来，每个通道先做完整时间编码（C 倍计算），统一阶段还要处理 S·C×C 的交叉注意力。统一在前还让「每个时间 token 是全通道聚合」成为时间建模的输入归纳偏置——模型从第一层就在学跨通道整合后的动态。代价是空间压缩不可逆，重构头必须从 Q 个 query 里恢复 C 个通道的细节（这也是它需要按通道索引的学习解码 query 的原因）。
-
-??? question "Q2 · Q 个 query 是不是信息瓶颈？多大合适？"
-
-    是，而且是设计出来的瓶颈。Q×E 消融显示：固定预算下平衡配置最好（4×64），query 太多维度太小（16×16）反而差——q 数量超过可分辨的空间模式后只是冗余切分，维度不足则每个 query 表达力不够。Base/Large/Huge 依次用 Q=4/6/8 也说明：**Q 应随模型容量温和增长**，而不是堆大。
-
-??? question "Q3 · SEED-V 上为什么落后 CBraMod？能修吗？"
-
-    论文自认：SEED-V 的 62 通道拓扑在预训练中未见，位置编码绑定了训练时的三种布局。可行的修复方向论文自己也点了：多数据集预训练扩充拓扑覆盖、随机通道 dropout 增强鲁棒、混合学习/几何嵌入。注意 CBraMod 也未必「泛化更好」——它的交替注意力对输入形状更宽容，但代价是 O(C²) 复杂度，在 62 通道小数据集上付得起，在 256 通道长程监测上付不起。
-
-??? question "Q4 · 可见（未掩码）patch 为什么也参与损失？"
-
-    重构损失对可见部分以小系数（α=0.05）加权。直觉是：掩码重构训练信号集中在被掩区域，但通道统一模块对**所有** token 做压缩——如果可见 patch 完全不管，隐空间可能对可见内容失真，下游微调（通常不用掩码）就会吃亏。小系数既约束隐空间保真，又不喧宾夺主。
 
 !!! abstract "复现速查卡"
     - **代码**：[github.com/pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation)（官方开源）

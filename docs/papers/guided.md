@@ -13,17 +13,9 @@ one-liner: "ATM 把整段 EEG 映进 CLIP 空间,轻量先验扩散 + 冻结 SDX
 ---
 # Visual Decoding and Reconstruction via EEG Embeddings with Guided Diffusion
 
-> **arXiv 2024**(2403.07721 v7,2024-10-04,cs.HC,Preprint under review)· 南方科技大学生物医学工程系(Quanying Liu 组,ncclab)——站内**「视觉重建」轴线的第一篇**:不同于 [JET](jet.md)、[EEGDM](eegdm.md)、[Not-All-EEG](not-all-eeg.md) 的 EEG→EEG 生成,这条线回答的是「头皮脑电里到底存了多少所见图像」,方向是 EEG→CLIP 嵌入→图像。与 [EEGDM](eegdm.md) 恰成条件扩散的一对反向用法:那边以生成训表征,这边以表征驱生成;与 [Défossez 语音解码](defossez-speech.md) 同属「预训练嵌入空间 + 轻量神经编码器」的感知解码范式。注意:社区/文件名惯称 GUIDED,但正文并未给整套框架命名,只给编码器命名为 ATM(Adaptive Thinking Mapper)。
+> **arXiv 2024**
 
 **作者**:Dongyang Li\*、Chen Wei\*(共同一作)、Shiying Li、Jiachen Zou、Haoyang Qin、Quanying Liu\*(通讯)——全部来自南方科技大学生物医学工程系
-
-!!! abstract "TL;DR"
-    - 任务设定:首个 EEG **零样本**视觉解码统一框架——分类、检索、重建三任务共用一套嵌入;测试 200 个图像概念与训练 16,540 个概念**完全不相交**(THINGS-EEG,10 被试,RSVP 范式),以往 EEG 工作只在小类别集上分类
-    - ATM 编码器(约 3.2M 参数):整段 EEG **不切 patch**、正弦位置编码、通道注意力层 → 可插拔时空卷积(ATM-S=ShallowNet / ATM-E=EEGNetV4)→ MLP 投影到 CLIP 的 1024 维;被试 token 区分已知/未知被试
-    - 生成是两阶段:Stage I 轻量 U-Net 先验扩散以 EEG 嵌入为条件、CFG(条件 10% 概率置空)把 EEG 嵌入精炼成 CLIP 图像先验;Stage II 冻结 SDXL + IP-Adapter 渲染,辅以 EEG→VAE latent 低层管线(img2img 强度 0.5)与 GIT caption 语义管线
-    - 数字:200-way 零样本检索 top-1 **28.64%**(被试内)/ **11.84%**(跨被试),超 NICE(19.32 / 8.24);重建(被试 8)PixCorr **0.160**、CLIP **0.786**——低层约为 fMRI 一半、高层差 0.13,但全面超过同管线 MEG
-    - 时间窗与脑区:滑动 100ms 窗在 **200–250ms 达峰**,增长窗 500ms 饱和于约 30% top-1;EEG 视觉信息集中于 200–400ms(MEG 可持续到 800ms);枕叶贡献最大,额叶/中央区最小
-    - 打折点:报「训练过程中最高测试精度」(测试集选模)、重建表只报被试 8(检索最好的被试)、测试 80 次重复取平均的离线设定、损失权重 λ 与 guidance scale 未披露、prior 扩散的 ImageNet 配对协议未说明
 
 ## 1 问题定位:把 fMRI 的视觉重建范式搬进 EEG
 
@@ -75,7 +67,7 @@ Stage I 学 \( p(z_I \mid z_E) \):一个**轻量 U-Net** \( \epsilon_{\mathrm{pr
 \epsilon^{w}_{\mathrm{prior}}(z_I^t;\, t,\, z_E) = (1+w)\,\epsilon_{\mathrm{prior}}(z_I^t;\, t,\, z_E) - w\,\epsilon_{\mathrm{prior}}(z_I^t;\, t), \qquad w \geq 0
 \]
 
-训练时以 10% 概率把 \( z_E \) 替换为空向量;guidance scale \( w \) 的取值未披露,Fig. 6d 只展示其对「相似度 vs 多样性」的调节。**协议模糊点**:C.1 写「训练使用来自 ImageNet 数据库、超过一百万图像的配对来微调 EEG 条件扩散模型」——THINGS-EEG 里没有 ImageNet 的 EEG,这批配对如何构成正文没有解释(见自问自答 Q2)。
+训练时以 10% 概率把 \( z_E \) 替换为空向量;guidance scale \( w \) 的取值未披露,Fig. 6d 只展示其对「相似度 vs 多样性」的调节。**协议模糊点**:C.1 写「训练使用来自 ImageNet 数据库、超过一百万图像的配对来微调 EEG 条件扩散模型」——THINGS-EEG 里没有 ImageNet 的 EEG,这批配对如何构成正文没有解释。
 
 ### 2.4 Stage II:SDXL 渲染与低层/语义管线
 
@@ -178,24 +170,6 @@ flowchart TD
 - **生成质量的大头是 SDXL 的,不是 EEG 的**。EEG 对最终图像的全部贡献是一个 1024 维语义向量加一张模糊图:先验扩散在 ImageNet 量级配对上训练、SDXL + IP-Adapter 冻结渲染、guidance scale 可调。Fig. 6d 恰好暴露了这点——调 w 可以在「贴合 EEG 语义」与「图像多样性」之间滑动,而「多样性」意味着模型在补全 EEG 根本没有提供的高层先验之外的细节。评估端只用 CLIP 检索式语义对齐、无任何分布级指标(无 FID),低层证据 PixCorr/SSIM 又只在单被试上报——「重建了图像」与「从 EEG 恢复了图像细节」之间的距离,这篇论文没有工具去度量;
 - **证据边界:检索是硬的,逐像素重建是软的**。分类/检索端证据最硬:200 个从未见过的概念、chance 0.5% 下 top-1 28.64%,RSVP 协议堵住了 block 设计的自相关漏洞,这一步把「EEG 里有没有足够的概念级语义信息」回答成了「有」。但逐像素重建端,0.160 的 PixCorr 相对 fMRI 的 0.305 更接近「结构性轮廓存在」而非「图像被恢复」——两张图语义相同、外观不同,CLIP 检索照样给高分。论文自己提供的最诚实证据反而是 Fig. 14 的 best/median/worst 分层:worst 组「语义与低层特征都被改变」;
 - **协议三折扣与工程成色**。①报训练过程中最高测试精度(原话 "We take the highest test accuracy in the training process as the statistical result")——测试集选模,所有对比方法同规则所以内部可比,但绝对数字系统性偏乐观;②重建表只报被试 8(检索最好的被试),无跨被试均值与方差;③测试集 80 次重复平均(ERP 提 SNR)、训练不平均——在线 BCI 拿不到 80 次重复,这是离线解码上限。跨被试 28.64 → 11.84 的腰斩说明被试差异仍是主矛盾,被试 token 只救已知被试。最后,组件层面每一样都有出处(CLIP 对齐承 B.D./NICE、先验承 DALL-E 2/Mind's Eye、渲染用现成 SDXL/IP-Adapter),ATM 的消融也是渐进改良而非机制创新(位置编码可有可无、token 策略才是生死线)——这是一篇系统集成的 SOTA 论文,作为 EEG 视觉解码的参照点价值极大,但「tailored encoder」的叙事比消融证据响;全文神经科学含金量最高的部分反而是时间窗与脑区分析。
-
-## 自问自答
-
-??? question "Q1 · 标题的 Guided Diffusion 到底是 Condition 还是 Guidance?"
-
-    主体是 Condition:正文对 Stage I 的自称是 EEG-Conditioned Diffusion——EEG 嵌入作为先验扩散的条件输入 \( \epsilon_{\mathrm{prior}}(z_I^t, t, z_E) \),用 classifier-free guidance 训练/采样(10% 概率置空条件),不存在外部分类器或梯度引导。标题里的 Guided 更像对整套「EEG 嵌入引导图像合成」的修辞性概括:Stage II 里真正接近 guidance 语义的是低层管线的 img2img(以 EEG 对齐的 VAE latent 去噪出模糊图,引导 SDXL 的初始状态,强度 0.5)。审稿语境下说「条件扩散 + CFG + img2img 低层引导」最准确。
-
-??? question "Q2 · 先验扩散在 ImageNet 配对上训练,是怎么和 EEG 配上的?"
-
-    这是全文最大的协议模糊点。C.1 原话:训练使用来自 ImageNet、超过一百万图像的配对来微调 EEG 条件扩散模型——但 ImageNet 图像没有对应的 EEG。两种可能的读法:(a) 先在 ImageNet 的 CLIP 嵌入分布上预训练/微调先验(条件侧置空或用图像嵌入自条件),再用 THINGS-EEG 的 (z_E, z_I) 对微调;(b) ImageNet 图像配某种 EEG 代理嵌入——正文完全没写。结合背景(该 arXiv 工作的早期版本主实验曾用 EEG-ImageNet 数据集,本版 v7 已整体换到 THINGS-EEG),这句更像版本迭代留下的残留。复现时只能按读法 (a) 猜,且必须读代码仓库确认。
-
-??? question "Q3 · 重建评估为什么没有 FID?检索式评估衡量了什么、漏掉了什么?"
-
-    衡量的是「语义对齐 + 与原图的可辨识性」:每条件生成 10 张(10 名被试各一张),生成图 CLIP 嵌入在测试图像全集里检索,看能否找回原图——本质是生成版的 two-way/N-way identification。优点:逐条件、对 200×10 张图的规模友好、fMRI 文献同口径可比;缺点:只度量「哪张图最像」,不度量分布质量——FID 这类指标需要上千样本,10 被试 × 200 条件的规模确实撑不起来,这是小数据零样本设定的结构性限制。漏掉的是:图像的真实感、类内合理性、低层细节保真——这些全靠 PixCorr/SSIM 间接代理,而它们只在被试 8 上报。
-
-??? question "Q4 · 和站内的 EEGDM 读起来像「同一套扩散两套用法」,差别到底在哪?"
-
-    方向与账目都相反。EEGDM:EEG 是输入也是输出,去噪损失经条件表示反传,encoder 与扩散联合优化——扩散是训练目标,产出是表征,生成器在下游被丢弃(只留作数据增强)。本篇:EEG 只是输入,encoder 由对比损失训练好之后扩散**只消费嵌入**、梯度不回流 encoder,产出是图像本身——扩散是产品,表征是原料。代价结构也不同:本篇 encoder 训练便宜(单卡 4090),贵的是借用整个 SDXL 生态;EEGDM 预训练 4×A100×113 小时但推理时不依赖任何外部大模型。一个直接的实验空白:把本篇的 ATM 嵌入换成 EEGDM 式「以生成为目标训出来的嵌入」,200-way 检索还能涨多少——两条线至今没有人在同一协议下比过。
 
 !!! abstract "复现速查卡"
     - **代码**:[github.com/ncclab-sustech/EEG_Image_decode](https://github.com/ncclab-sustech/EEG_Image_decode)(含 ATM 与两阶段生成;正文未披露的超参需进仓库核对)

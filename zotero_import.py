@@ -9,7 +9,7 @@
 说明：
   - Zotero 中选中条目 → 右键 → 导出条目 → 格式选 "CSL JSON" 存到 imports/
   - 自动填写 frontmatter（title/authors/venue/year/arxiv/doi），生成与 new_note.py
-    相同结构的笔记骨架（含架构图占位与自问自答等全部板块）
+    相同结构的笔记骨架（含架构图占位与正文板块）
   - slug 默认取第一作者姓氏小写+年份（如 yang2023），可在命令行覆盖
 """
 import datetime
@@ -62,7 +62,6 @@ one-liner: ""
 
 ## 个人思考
 
-## 自问自答
 """
 
 

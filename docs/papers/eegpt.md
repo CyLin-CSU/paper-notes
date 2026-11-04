@@ -108,13 +108,6 @@ flowchart TD
 *Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构*
 
 
-## 要点速览
-!!! abstract "TL;DR"
-    - ~10M 参数（8 个变体 0.4M–101M）；下游只用 linear probing 即达 SOTA
-    - TUEV balanced acc 0.6232，比 BIOT（0.5281）高 9.5%
-    - 双自监督：表示对齐（\( L_A \)，JEPA 式）+ 掩码重构（\( L_R \)，MAE 式）；掩码 50% 时间 × 80% 通道
-
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |
@@ -127,27 +120,6 @@ flowchart TD
 - 把 linear probing 当评估协议本身就是贡献：冻结 encoder 后性能完全归因于表示质量，排除了微调技巧的干扰。
 - 「encoder 看被 mask 的稀疏部分、momentum encoder 看全量」的反直觉设计，本质是用对齐任务逼迫稀疏视图输出全局语义（式 1→2 的显式表示 z）。
 - 附录证明去掉 predictor 会表示坍塌（重构 loss 不再下降）——对齐分支必须保留 query/位置等余量，防止模型走捷径。
-
-## 自问自答
-
-??? question "Q1 · 为什么 encoder 处理的是被 mask 的部分，和 MAE 正好相反？"
-
-    这是显式表示 z 设计的一部分：encoder 只看 50% 时间 × 80% 通道的稀疏视图，却要靠 predictor 预测全量特征、与看过完整信号的 momentum encoder 对齐——逼着稀疏视图的输出携带全局语义。若 encoder 直接看全量，对齐任务就没有信息瓶颈，学不到这个性质。
-
-
-??? question "Q2 · 去掉 predictor 行不行？"
-
-    附录 Figure 6：去掉 predictor 后对齐目标变成 encoder 与 momentum encoder 直接对齐，两者可以走捷径坍缩到相同输出（表示坍塌），重构 loss 也不再下降。predictor + 可学习 query 提供了必要的不对称性，与 BYOL 需要 predictor 同理。
-
-
-??? question "Q3 · 为什么坚持 linear probing 而不微调？"
-
-    两个动机：一是 EEG 下游标注少，全量微调大模型极易过拟合；二是 linear probing 让性能完全归因于 encoder 的表示质量——它是更严格的通用表示评估协议，EEGPT 在这个协议下超过全量微调的 BENDR，说服力更强。
-
-
-??? question "Q4 · Codex book 怎么处理训练时没见过的通道？"
-
-    它维护通道名到可学习向量的映射表，覆盖常见命名体系，新数据集的通道按名字映射即可。但表是固定的（58 电极），碰到 ear-EEG 这类体系外通道就没有对应向量——这是它跨设备能力弱于 TFM 单通道方案的原因。
 
 !!! abstract "复现速查卡"
     - **代码**：[github.com/BINE022/EEGPT](https://github.com/BINE022/EEGPT)

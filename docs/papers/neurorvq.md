@@ -13,16 +13,9 @@ one-liner: "4 个多尺度卷积分支 × 逐分支 RVQ(8192 码本 × 8/16 层)
 ---
 # NeuroRVQ: Multi-Scale Biosignal Tokenization for Generative Foundation Models
 
-> **arXiv 2025**(cs.LG,v1 2025-10,精读依据 v4 2026-05-17;正文 10 页 + 附录 A–L)· 帝国理工 + Cogitat 为主(Panagakis 挂雅典 NKUA/Archimedes,Laskaris 挂塞萨洛尼基 AUTh)—— 站内 tokenization 演进线里 **RVQ/多尺度的第一篇**:[TFM-Tokenizer](tfm-tokenizer.md) 之后,把「RVQ + 多尺度 patch 内分解」的缺口填上,并把码本 tokenizer 第一次拓展到 ECG/EMG。token 用法与 [LaBraM](labram.md) 同范式(只当掩码预训练目标);姊妹篇 [BrainRVQ](brainrvq.md) 在其后补「双域 + 层间自回归」。演进口径见 [Tokenization 演进](../topics/tokenization.md)。
+> **arXiv 2025**
 
 **作者**:Konstantinos Barmpas, Na Lee, Dimitrios Chalatsis, William Raftery, Yannis Panagakis, Dimitrios A. Adamos, Nikolaos Laskaris, Alexandros Koliousis, Dario Farina, Stefanos Zafeiriou(帝国理工/Cogitat;通讯作者未标注)
-
-!!! abstract "TL;DR"
-    - 定位:模态自适应 tokenizer **家族**——同一架构按模态调 4 个旋钮(patch 长 w、分支数 S、卷积核组、RVQ 深度 N):EEG/ECG 200 Hz(w=1 s / 200 ms)、EMG 1000 Hz(w=200 ms);一律 S=4,N=8/8/16,每层码本 8192 × D=128
-    - 架构:inception 式多尺度 1D 卷积(conv+GroupNorm+GELU+pool ×2,EEG 核 21→3)→ 共享时空嵌入 + 共享 Transformer(12 层)→ **逐分支 RVQ** → 三头解码器重构 log(1+Â)、ĉ、ŝ,逆变换回时域加 MSE 正则
-    - 相位损失是最大功臣:从 MSE 相位(±π 不连续)换成 (ĉ,ŝ)–(cosφ,sinφ) 余弦对齐一项,EEG MSE 0.946→0.167;全组合 1.509→0.035(**43×**);同数据对照 LaBraM tokenizer **0.016 vs 1.071(67×)**,OOD 两个数据集全频带领先
-    - NeuroRVQ-FM:刻意极简的 masked-token 模型(对称掩码 0.5,EEG 5.9M)——EEG 五任务 mean BAcc **74.9**(次优 NeuroGPT 70.7,+4.2);ECG 43 类 BAcc **58.33**(基线 28.96);EMG 四任务全胜,from-scratch 消融证明预训练真有增量
-    - 打折处:同数据下游对照里 Memory/Sleep 优势缩到 +0.8/+1.3(Table 1 是 +4.8/+7.6),部分优势来自预训练数据混合;EEG benchmark 出自同组(Lee et al. 2025a);λ_circle 敏感性自证 0 最优、主结果却用 0.1;ECG 骨干 264K 与超参表 d=200 矛盾;标题承诺 generative 但全文无生成实验;PDF 无代码链接
 
 ## 1 问题定位:tokenizer 是 masked 建模的瓶颈
 
@@ -161,24 +154,6 @@ flowchart TD
 - **标题里的 Generative 至今没有兑现**。全文只有 masked modeling + 判别式下游,RVQ 层次结构的真正红利——coarse-to-fine 生成、AudioLM 式条件生成——一个实验都没有。对站内 [tokenization 演进页](../topics/tokenization.md) 记录的「与自然语言对齐/生成」遗留问题,这篇只交了 tokenizer 半张卷:高保真重构是生成的必要前提,但 token 目前连下游输入都不是(TFM 路线),更不是生成序列。v1 到 v4 相隔半年仍在补 baseline,生成的部分大概率在后续工作里;
 - **基准自建 + 参数量矛盾 + 无代码,可复现性打折**。EEG benchmark 出自同一批作者(Lee、Barmpas 都是本文作者),协议一致是优点,但基线健康度存疑:EEGPT Motor 31.3、BIOT ERP 50.0±0.0 都是退化水平,无法判断是模型不行还是协议不合适。ECG「264K 骨干胜过 30M 基线」是全文最惊艳的数字,却与 Table 13 的 hidden dimension 200/200/40(EEG/ECG/EMG)矛盾——264K 恰是 d=40 的体量,而 Table 18 又把 5.9M(d=200 的体量)记给 EMG;两处必有一处标错。PDF 正文无任何代码链接;
 - **三个模态三套 tokenizer 三套 FM——这是「设计空间」论文而非「统一模型」论文**。modality-adaptive 的代价是没有任何跨模态共享表征(作者自己列为 future direction),与 BIOT/BrainOmni 的跨模态野心相反。真正可迁移的资产是四个旋钮的调法:采样率定 w、频谱宽度定 N、形态时标定卷积核组——这套方法论对想做「心肌/肌电版 LaBraM」的人比 SOTA 数字更有用。另外 EEG 预训练语料混着 235 h 自采私有数据,这部分不可复现,复现实验时要有心理预期。
-
-## 自问自答
-
-??? question "Q1 · 多尺度分支和 EEG 频带是什么对应关系?"
-
-    论文没有画显式映射,但可以从卷积核推:200 Hz 下四分支首轮核 21/15/9/5 对应感受野约 105/75/45/25 ms,即 9.5/13/22/40 Hz 量级——粗分支覆盖 delta–theta 的形态学、细分支伸进 beta–gamma 瞬态;第二轮核减半、池化 (1,2)→(1,4) 把 patch 内时间维压缩。EMG 版把最大核放大到 51(1000 Hz 下 51 ms)以对齐 MUAP 的 5–30 ms 时标。所以「多尺度」的本质是**用卷积感受野当带通滤波器组**,再让每个「频段」有自己的码本——比 EEGMoE 的显式分频带粗糙,但免去了频带划分的先验假设。
-
-??? question "Q2 · 相位损失为什么不直接用 sin/cos 分量的 MSE?"
-
-    Appendix A 的关键洞察是 sin/cos MSE(L_r)虽然解决了 ±π 不连续,但引入了新的梯度病:∂L_r/∂φ̂ = 2sin(φ̂−φ),当预测差约 ±π(最错)时梯度趋零——错误越大学习信号越弱。改成预测 (ĉ,ŝ) 二维向量与单位目标向量做余弦相似度后,梯度正比于预测向量相对目标的正交分量,方向错误越大梯度越大,且 ĉ/ŝ 因共享同一角度而天然耦合。代价是余弦相似度只管方向不管模长,需要 tanh 界限(或可选的 λ_circle 正则)兜底——而敏感性分析显示这个兜底本身有代价(λ=0.1 时 EEG MSE 劣化 43%),主结果仍保守保留。
-
-??? question "Q3 · 五任务平均 +4.2 的优势里,有多少真属于 tokenizer?"
-
-    拆两本账。数据混合账:Table 1 与官方 LaBraM 比是 +6.3(74.9 vs 68.6),但同数据同预算重训的 LaBraM 在 Memory/Sleep/Eyes 上其实更强(0.565/0.715/0.805 vs 官方 0.526/0.652/0.799),matched 对照的 NeuroRVQ 优势只剩 Motor +13.0、Eyes +6.4、Memory +0.8、Sleep +1.3——约三分之二的平均优势能保住,Memory/Sleep 的部分来自预训练语料(13 个公开集 + 235 h 自采)而非架构。架构账:matched 下 Motor +13.0 是硬数字,与重构优势最大的频带(低频形态)对应任务一致。ERP 任务没进 matched 对照,是全文对照矩阵唯一的洞。
-
-??? question "Q4 · 现在能跑起来吗?缺什么?"
-
-    PDF 正文零链接(arXiv 2510.13068 无代码URL);站内 tokenization 演进页记载官方实现挂项目页 neurorvq.github.io 与 Hugging Face(ntinosbarmpas/NeuroRVQ),以项目页为准。就算代码齐,这些坑要先填:码本更新机制与 L_Q 权重未披露;FM 输入是离散 token 还是连续 embedding 未明说;patch 表示 w=200 → 码字 D=128 的投影未写;hidden 维度的 ECG/EMG 归属与参数量表矛盾(见个人思考);Table 13 提到的 Wrist Velocity Regression 实验全文无结果。数据侧 EEG 语料含 TUH 系(TUAR/TUSZ/TUEP/Siena,需 DUA)与 235 h 私有集,后者无法复现。算力门槛低(4×V100 训 tokenizer,FM 更小),单卡微调可行。
 
 !!! abstract "复现速查卡"
     - **代码**:论文正文未附仓库(arXiv 2510.13068 v4);站内 tokenization 演进页记载项目页 [neurorvq.github.io](https://neurorvq.github.io) 与 HF [ntinosbarmpas/NeuroRVQ](https://huggingface.co/ntinosbarmpas/NeuroRVQ)——以项目页为准
