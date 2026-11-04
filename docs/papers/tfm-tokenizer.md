@@ -72,14 +72,6 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 *Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测*
 
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| LaBraM | 直接批评其 token '只当训练目标'；LaBraM-TFM 实验证明换用 TFM tokenizer 后性能普遍提升 |
-| BIOT | 批评其 FFT 整窗线性投影过于粗糙；BIOT-TFM 用 token 替换其输入投影后同样提升 |
-| EEGPT | 单通道设计 vs 固定 58 通道布局：ear-EEG 实验中 EEGPT 因空间 embedding 无法扩展而缺席 |
-
 ---
 
 **相关阅读**

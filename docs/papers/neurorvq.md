@@ -73,19 +73,6 @@ FM 复用同一多尺度编码器 + Transformer + token 预测头,以对称掩�
 
 *Figure 1 · 下行为主干:Input Biosignal Patches → Multi-Scale Temporal Encoder(S 个分支)→ Transformer Encoder → 多尺度 patch 表示 p1..pS → Lookup operation 进 RVQ Codebooks → Tokenizer Decoder → Reconstructed Patches;上行为放大细节:S 个 Temporal Branch 输出 F1..FS,与 Shared Temporal/Spatial Embeddings 相加成 Combined Embeddings;右侧 RVQ 放大:每分支 R1..RN 各含 V1..VK 个码字。图中只画了架构,损失三项(对数幅值/相位/时域)不在图内*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| [LaBraM](labram.md) | 范式直系 + 主对手:FM 的对称掩码/token 目标承自 LaBraM;其单码本 VQ + 原始相位 MSE 正是本文批评的「单尺度 + 病态损失」。同数据重构 67×;但 matched 下游对照里 Memory/Sleep 优势仅 +0.8/+1.3——Table 1 的部分优势来自预训练数据混合 |
-| [BrainRVQ](brainrvq.md) | RVQ 分支姊妹篇(本篇先行):BrainRVQ 补「双域两套 RVQ + 层间自回归」,本篇是「单时域多尺度卷积分支 + 逐分支 RVQ」。相位处理正面对立——BrainRVQ 直接 MSE 重构相位(平均 r=0.577),恰是本篇 Appendix A 论证为病态、用余弦方向损失替代的做法 |
-| [CodeBrain](codebrain.md) | 同为「把频谱信息塞进 tokenizer」的竞品但路线不同:CodeBrain 独立时/频编码器 + 双 VQ;本篇用多尺度卷积做**频率尺度**分解(非时/频双域),频域只出现在重构目标里 |
-| BrainOmni | 最近的 RVQ 同类:单 RVQ(EnCodec 式)vs 多尺度逐分支 RVQ;OOD 对照 0.275 vs 0.332——但只在 BrainOmni 公开样本数据上比,且 Sleep 任务因其算力约束缺席 |
-| [TFM-Tokenizer](tfm-tokenizer.md) | token 用法的分岔口:TFM 把时频 motif token 做成下游输入与可插拔组件;本篇 token 止步预训练目标。空间设计也不同:TFM 单通道 channel-agnostic 且 tokenizer 内无位置编码,本篇用电极索引空间表——依赖预训练库的电极列表 |
-| [CBraMod](cbramod.md) | 「深骨干 tokenizer 学出纠缠冗余表征」的批评对象;benchmark 上 68.8 vs 74.9。注意 CBraMod 分类头 40–73M(本篇 0.8–4.8K),参数基线并不完全对齐 |
-| [BIOT](biot.md) | 连续 patch 路线在码本系 benchmark 上的崩盘样本:ERP 50.0±0.0(随机水平)、Motor 44.3——BIOT 因预训练缺基准电极无法测 Sleep;基线是否都调到位无说明 |
-| [NeuroLM](neurolm.md) | 层次化的两种含义 + 相位之争:NeuroLM 的层次在词表层级(VQ 码并入 GPT-2 词表)且实验认为相位重构对下游贡献小;本篇层次在 RVQ 深度并把相位损失当最大功臣——同一段信号处理,两条线结论相反,值得对表实验 |
-
 ---
 
 **相关阅读**

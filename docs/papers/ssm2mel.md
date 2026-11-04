@@ -73,17 +73,6 @@ S4 把 \( A, B \) 离散化（\(\bar{A}, \bar{B}\)）并做结构化约束；Mam
 
 *Figure 1 · (a) 总体框架——ESM block（右上，Sub-ID 经 LayerNorm 进 MultiHead Attention）→ S4-UNet + ExternalAttention（左下，\( M_K/M_V \) 共享 memory）→ MHSA/Mamba 交替骨干（ESM 原始特征经四处 ⊕ 并入每块前的残差）→ Linear 出 mel 谱；(b) S4-UNet 的 U 形下采样-上采样，上采样前每级经 n 个 S4 blocks；(c) S4 block = linear → S4 → 残差 → Dropout → LayerNorm；(d) MHSA/mamba block：右列 Pre-Conv → S4-UNet → ffm 前置段，左列 ffm → MHSA/mamba module → conv → ffm 三明治，段间 ½× 缩放残差*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| [BrainGPT](braingpt.md) | 长序列 EEG 建模的两种下注：BrainGPT 用自回归 Transformer + 大规模多数据集预训练赌 scaling；本篇用 SSM 线性复杂度 + 单数据集有监督回归。讽刺的是本篇训练/推理都在 5 s 窗上，Mamba 的长上下文优势没有被行使——「长序列」问题在这两个工作里的处理深度差一个量级 |
-| [CBraMod](cbramod.md) | 「单一机制不够，交替混合」结论的两侧互证：CBraMod 交替空间/时间双路注意力（1D conv patch 编码），本篇交替注意力/SSM。都发现混合优于任一单独机制，但 CBraMod 有 12 数据集的系统验证，本篇只有单数据集三个点的对比 |
-| [BIOT](biot.md) | 同追线性复杂度的两条路：BIOT 用逐通道切段 + 线性注意力，本篇用 SSM 递归。BIOT 面向跨格式预训练，本篇面向单任务回归——没有预训练，被试嵌入就是它唯一的「个性化」手段 |
-| [EEGPT](eegpt.md) | 轴线对照：EEGPT 是通用特征提取器（10M 参数，linear probing 到各任务），本篇是端到端任务特化模型。一个自然的未验证想法：用 EEGPT/CBraMod 的预训练特征替换本篇的 S4-UNet 预提取，能否白捡提升——本文完全没碰这条线 |
-| [Not-All-EEG](not-all-eeg.md) | 生成轴线与本篇共享「连续信号回归」的损失设计问题：Not-All-EEG 用多分辨率 STFT 频谱一致性损失对抗幂律谱偏置，本篇只有 L1+Pearson、无任何频域约束——mel 谱任务天然是频域目标，这是可以白捡的改进点 |
-| VLAAI / HappyQuokka / ConvConcatNet | 直接前作与基线（2023–2024 ICASSP Auditory Challenge 系）：包络 → mel 谱的目标升级线，本篇把这条线的 SOTA 从 0.063 推到 0.069 |
-
 ---
 
 **相关阅读**

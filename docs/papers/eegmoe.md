@@ -58,17 +58,6 @@ one-liner: "用 Specific+Shared 双专家组把 EEG 的域共性与域特性分�
 
 *Figure 2 · SSMoE 块细节：Specific Router 按 token 选 Top-K=2 个特定专家，Shared Router 让 2 个共享专家对所有 token 全程参与*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| LUNA（本站同期笔记） | **哲学相反的姊妹篇**：EEGMoE 把域差异当「信号」解耦保留（MoE 分工），LUNA 把拓扑差异当「噪声」统一抹平（query 瓶颈）；且一个作用于任务/数据集轴，一个作用于电极几何轴 |
-| EEGMamba | 都在 EEG 用 MoE：EEGMamba 靠任务 token 引导专家选择、面向**有监督多任务兼容**，EEGMoE 做**自监督细粒度域解耦**（差异在特征层） |
-| LaBraM / BIOT | 被反超的对照组：癫痫域预训练 → 认知任务下游的域失配是它们复现成绩差的主因（论文归因） |
-| IDMMOE / Seizure-MoE | 早期 EEG-MoE：全专家加权求和，没有选择性路由 |
-| NeuroLM | 同为「多任务统一」但路线不同：NeuroLM 把 EEG 变成 LLM 的外语用指令微调；EEGMoE 在表征层用专家分工 |
-| [通道异构专题](../topics/multi-task.md#channel-adaptation) | 先用统一脑地图处理布局，再用**解耦路由**学习域共性与域特性 |
-
 ---
 
 **相关阅读**

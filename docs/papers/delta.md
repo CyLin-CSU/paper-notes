@@ -73,19 +73,6 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 
 *Figure 1 · (a) EEG-RVQ Tokenizer:Channels(105:FP1/AF7/AF3/F1/F3/…/O7)× Band Pass Filtering(8:Theta₁ 4–6 / Theta₂ 6.5–8 / Alpha₁ 8.5–10 / Alpha₂ 10.5–13 / Beta₁ 13.5–18 / Beta₂ 18.5–30 / Gamma₁ 30.5–40 / Gamma₂ 40.5–49.5 Hz)→ 840 EEG Vector → Encoder → VQ 1…VQ n(残差逐层相减,⊕ 汇总 q1…qn)→ Decoder 重建 840 EEG Vector,对外输出 EEG Word Vector Token;(b) LLaDA-based EEG-to-Text 三栏:Pre-Training(EEG token → Masking t~U(0,1) → LLaDA-8B → Masking Predictor)、Fine-Tuning(EEG token 与掩码文本 token 拼接,掩码只挂文本支路)、Sampling(全掩码 → 去噪 → Remask 循环)*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| DeWave(Duan et al., NeurIPS 2023) | 真正的直接前作:离散 EEG 波编码 → 文本翻译(VQ + AR seq2seq)。DELTA 把 VQ 升级为 RVQ、AR 换成掩码扩散,但全文只引用、不对比——最该同台的角色缺席 |
-| [BrainGPT](braingpt.md) | 同走「EEG 当语言序列」的 LLM 路线:BrainGPT 自回归预训练攒 generalist 表征(连续 patch),DELTA 离散 token + 扩散直接解 EEG-to-Text;一个攒表征、一个解任务,结论里「large-scale pre-training」的展望正是两者的合流点 |
-| [NeuroLM](neurolm.md) | 「神经码进语言模型」的自回归版:NeuroLM 把 VQ 码字并入 GPT-2 词表做多任务指令推理,DELTA 把 RVQ 码作扩散 LLM 的条件提示——同构的两分支,解码机制(AR vs 掩码扩散)与注入方式(词表并层 vs 前缀拼接)都不同 |
-| [LaBraM](labram.md) / [TFM-Tokenizer](tfm-tokenizer.md) | token 用途演进的两端:LaBraM 的 VQ 码只当预训练目标、推理时丢弃;TFM 把码字做成可插拔输入组件;DELTA 的 RVQ 码则是生成模型推理时的实时条件——token 从「训练目标」一路走到「生成条件」 |
-| [EEGDM](eegdm.md) | 扩散条件注入的镜像:EEGDM 用 EEG encoder 表示作条件引导潜扩散**生成 EEG**(生成即表征),DELTA 用 EEG token 作条件引导掩码扩散**生成文本**;都是拼接/调制式注入,方向相反 |
-| [BrainRVQ](brainrvq.md) | 同批 RVQ tokenization:BrainRVQ 时/频双路 RVQ(2×3 层×8192)服务表征预训练与层级自回归重构,DELTA 单路 RVQ 直接服务跨模态文本生成——RVQ 从音频压缩(SoundStream/EnCodec)搬进 EEG 的两个不同落点 |
-| [NeuroDETR](neurodetr.md) | 离散 token 的第三种去向:多尺度时间/空间码当事件检测模型的「记忆」;与本文共同印证 2025–26 tokenization 线的趋势——token 不再只是重构目标,开始驱动下游生成/检测机制 |
-| Jo et al. 2024「Are EEG-to-Text models working?」 | 评测批判的来源:teacher-forcing 高估、无 teacher-forcing 下接近随机——DELTA 以此立论并不用 teacher-forcing 评测,但没有与任何已发表 EEG-to-Text 数字对表 |
-
 ---
 
 **相关阅读**

@@ -62,19 +62,6 @@ one-liner: "清华 IR 组的 EEG 视觉解码泛化基准:16 人 × 22 session�
 
 *Figure 1 · 上排实验范式:EEG 戴帽采集 → S1 类别标签呈现(空格键继续)→ S2 注视点 500 ms → S3 RSVP 每图 500 ms(Img1…ImgN)→ S4 随机测试(可选),Next category 回环;左下:连续采集的 EEG 按图像对齐(Img1–Img50),与图像 index、粒度、标签共同入库;右下 Cross-time Stages:Stage 1 每类 N=50 block 呈现(橙/蓝分块)→ 7 天间隔 → Stage 2 每类 N=30/N=20 乱序(紫色为乱序插入的类别);底部 Multi-Granularity Labels:熊猫/高尔夫球为 Coarse,罗威纳/萨摩耶为 Fine。注:图中 S1–S4 步骤标签与图例是 PDF 矢量叠加层,不在内嵌位图里*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| [GUIDED / ATM](guided.md) | 同轴互补的一对:GUIDED 在 THINGS-EEG 上测被试内「上限」(200-way 检索 top-1 28.64%、2-way 94.92%),本篇测泛化「下限」;两者都用 two-way identification 量纲,但协议不可直比(80 次重复 ERP 平均 vs 单 trial、500 ms vs 1000 ms 窗、不同刺激集) |
-| Things-EEG1/2(Grootswagers/Gifford 2022) | 最直接的对照数据集:THINGS 概念多(1,854/22,248 图)但呈现极短(50/100 ms)、无跨时间设计;本篇 4,000 图、500 ms、多粒度标注 + 两阶段——两边各拿了对方没有的东西 |
-| Spampinato 2017(EEG-Classification)+ Li et al. 2020a | Stage 1 直接复刻其 block 范式(40 个粗粒度类同款);Li et al. 2020a 的 block design 批评是方法论依据,Table 5 vs 6 的水分量化与 A.5 时间效应分析就是对该批评的同库复现 |
-| [EEGArena](eegarena.md) | 同为基准但颗粒度互补:EEGArena 用 20,000+ 次评测横评 30 个基础模型 × 57 任务,考「谁的方法强」;本篇只做一个任务族(视觉分类)但把被试/时间两个泛化维度切成受控协议——宽度基准 vs 深度基准 |
-| [EEGPT](eegpt.md) / [CBraMod](cbramod.md) | 预训练轴线的「评测缺口」:基础模型论文都声称跨被试/跨数据集泛化,视觉解码侧此前没有受控的跨被试/跨时间协议——本篇的 WT/CT/CP/PT 恰好是它们需要的评测形状,尽管被评清单里还没有它们 |
-| [BIOT](biot.md) | 泛化主张的对账对象:BIOT 主打跨被试/跨记录的通道无关建模;本篇 CP≈0.50–0.57 的地板说明这类主张在视觉解码任务上必须单独重验 |
-| [EEGDM](eegdm.md) / [Not-All-EEG](not-all-eeg.md) | 生成线与本篇零交集(那边评生成质量、不评泛化),但生成线的检索指标在 CP 条件下会掉多少,本篇的崩塌数字是预告 |
-| Ozcelik & VanRullen 2023 | 主指标的出处:fMRI 重建文献的 two-way identification 被搬进 EEG 分类基准,使重建线与基准线共享量纲 |
-
 ---
 
 **相关阅读**

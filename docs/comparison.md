@@ -151,4 +151,4 @@ flowchart LR
     classDef new fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20
 ```
 
-**解读**：BIOT 是公共对照组；LaBraM 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 token 接入 LLM；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：**CBraMod / LUNA / EEGMoE 的边都指向 LaBraM**——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-EEG 在生成轴线内部迭代；RF-GPT 从跨域视角质疑自训词表的必要性。完整论述见各篇笔记的「与其他论文的关系」板块。
+**解读**：BIOT 是公共对照组；LaBraM 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 token 接入 LLM；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：**CBraMod / LUNA / EEGMoE 的边都指向 LaBraM**——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-EEG 在生成轴线内部迭代；RF-GPT 从跨域视角质疑自训词表的必要性。

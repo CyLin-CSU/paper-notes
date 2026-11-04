@@ -84,19 +84,6 @@ Fig. 10 的对照实验:单阶段(EEG 嵌入直接生成)明显差于两阶段(�
 
 *Figure 2 · 左列:训练块——视觉刺激经 CLIP Image(雪花冻结)与 EEG Encoder(火焰可训练)分别嵌入,⊗ 对比学习对齐,零样本做 Classification / Retrieval(右侧 Image Dataset 给出 antelope / pear / kettle / sausage 候选);推理块 EEG Encoder 亦冻结。右下 Generation 块:EEG 嵌入经 MSE Loss 对齐 VAE image encoder → VAE Latent → VAE image decoder 出低层模糊图;EEG 嵌入 + Noise 进 Diffusion U-Net(×T,可训练)出图像嵌入(高层);两者汇入 IP-Adapter + SDXL-turbo 渲染重建图像;GIT model img2text 从图像嵌入生成 caption(如 "A bunch of colorful, dense fudge.")作文本提示(语义层)。图内 "Generatilon" 系原文笔误*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| B.D.(Benchetrit et al. 2023) | 直接前作与复现基线:MEG 上 CLIP 对齐 + 扩散先验重建;本篇复刻其 MEG 管线进 Table 1,把整套范式搬进 EEG,双损失设计与 B.D. 一致(正文自认 "Following the methodology outlined by Benchetrit et al.") |
-| NICE(Song et al. 2023) | EEG 编码器前作:ShallowNet 时空卷积 + 对比学习;ATM-S 的 TSConv 承其设计,是其检索基线(19.32 → 28.64) |
-| Mind's Eye(Scotti et al.)/ DALL-E 2 | 先验扩散思想的来源:fMRI 对比学习 + 扩散先验;本篇将其压成轻量 U-Net 并以 EEG 嵌入为条件 |
-| Takagi & Nishimoto / Ozcelik & VanRullen | fMRI 潜扩散重建线,Table 1 上排的参照系——「接近 fMRI」宣称的对照对象 |
-| BraVL / BrainCLIP | fMRI 侧 CLIP 对齐零样本分类对照(Table 6);BraVL 吃视觉+文本三模态,EEG 侧 ATM 50-way 17.40 仍占先 |
-| [EEGDM](eegdm.md) | 条件扩散的反向用法:EEGDM 用 EEG→EEG 生成**训表征**(梯度穿过条件、PCA 潜空间、DiT);本篇用 EEG→CLIP→图像,**扩散只消费嵌入**、不为表征服务——同一机制,两种目标函数 |
-| [Not-All-EEG](not-all-eeg.md) / [JET](jet.md) | 站内生成轴线(EEG→EEG,生成质量/调度导向)与本篇(EEG→图像)对「生成」一词的两种语义;管线毫无交集 |
-| [Défossez 语音解码](defossez-speech.md) | 感知解码姊妹线:语音包络 vs 视觉语义;同走「预训练大模型嵌入空间 + 轻量神经编码器」,也共享「EEG 分数反超 MEG」式的跨模态意外(语音是 MEG/ECoG 占优) |
-
 ---
 
 **相关阅读**

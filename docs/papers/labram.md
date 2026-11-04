@@ -70,14 +70,6 @@ LaBraM: Large Brain Model (ICLR 2024)
 *Figure 2 · 上：神经 tokenizer 训练（VQ + 频谱重构）；下：掩码 EEG 建模预训练*
 
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| NeuroLM | 同团队续作：tokenizer 改为时频双域重构 + GRL 文本空间对齐，token 并入 GPT-2 词表 |
-| TFM-Tokenizer | 批评其 token 「只当训练目标、推理时被丢弃」；并入 TFM tokenizer 后（BIOT-TFM/LaBraM-TFM 合计）93% 的指标情形提升 |
-| EEGPT / BrainGPT | 作为预训练基线被比较；BrainGPT 猜测其预训练语料偏癫痫临床域，domain 差异拖累一般下游任务 |
-
 ---
 
 **相关阅读**

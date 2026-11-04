@@ -89,18 +89,6 @@ MAE 式:Bernoulli 掩码（r=0.5）,EEGSSM 输出过 1D 卷积预测被掩 patch
 
 *Figure 2 · 左（Stage 1）:patched EEG 过 TFConv（时域 conv 堆叠 ∥ DFT→conv 堆叠）→ 共享时间位置嵌入 → TF-Encoder → NN 搜索进时/频两个码本;对比损失（段内正对）+ 双 decoder 重构（T-Decoder 原始波形、F-Decoder 幅值/相位）+ codebook/commitment 损失。右（Stage 2）:掩码 patch → 动态位置嵌入 → EEGSSM Block ×N（RMS Norm → Conv+GELU → SGConv ∥ SWA → Tanh⊙Sigmoid 门控 → Conv×2 走 skip）→ Conv1D 出双码本 token 预测。图注细节:图中「Btach Norm」「Patchfied」为原文拼写笔误*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| [LaBraM](labram.md) | token 只作预训练目标的同款范式,但 LaBraM 是单码本 + 只做频域重构（原始信号重构不收敛）;CodeBrain 用 TFConv + 对比正则把时域重构治好（附录 F 实测 LaBraM 框架内损失卡在 0.128–0.131),再把一个码本拆成两个 |
-| [TFM-Tokenizer](tfm-tokenizer.md) | 同届 ICLR 2026 的对手路线:单通道时频 motif 词表、token 当可插拔**输入**、tokenizer 内去掉位置编码;CodeBrain 多通道联合嵌入、token 当**目标**。两个「时频」含义不同——TFM 是窗内跨频段依赖建模,CodeBrain 是时/频两套码本分家 |
-| [CBraMod](cbramod.md) | 最强基线 + ACPE 出处;同用 TUEG 但 CBraMod 预训练 40 epoch、CodeBrain 早停 10 epoch 且补了 Excluding 重训——泄漏处理比前辈规范。数据上 CodeBrain 以 15M 对 4M 参数换全面小胜 |
-| [NeuroLM](neurolm.md) | token 用法的另一极:码字并入 GPT-2 词表做指令推理;CodeBrain 完全不碰语言对齐,靠「解码器重构什么」来定义 token 语义 |
-| [NeuroRVQ](neurorvq.md) / [BrainRVQ](brainrvq.md) | 2026 年「把码本做复杂」的三条路同框:NeuroRVQ 单码本内多尺度 RVQ(由粗到细),BrainRVQ 时/频双 RVQ(残差、多层码表),CodeBrain 时/频双 VQ(并列、单层)——双域并列是其中最保守的形态 |
-| [NeuroDETR](neurodetr.md) | 「多尺度」的另一种解法:NeuroDETR 把多尺度做在 token 切分上(时间多尺度 + 空间金字塔),CodeBrain 把多尺度做在骨干内核上(多尺度卷积核 + patch 内/间两级注意力) |
-| [BIOT](biot.md) / [EEGPT](eegpt.md) | 对照组:BIOT 连续 patch token(无量化)在多数任务落后;EEGPT 在本篇多个数据集上表现异常(ISRUC S1 仅 0.2223、BCIC2020-T3 0.0567),疑似微调协议不适配,读表时需留意 |
-
 ---
 
 **相关阅读**

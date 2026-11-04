@@ -95,14 +95,6 @@ $$
 3. **线性注意力 Transformer** 解决多通道长句子的二次复杂度问题（低秩 E/F 投影，注意力图 N×N → N×d）；
 4. 频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 CHB-MIT、IIIC 与可穿戴 HAR 任务尤其有用；
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| LaBraM / NeuroLM / EEGPT / BrainGPT / TFM-Tokenizer | 全部把 BIOT 作为公共对照组——事实上的 baseline 标尺 |
-| TFM-Tokenizer | BIOT-TFM：仅把 BIOT 的输入 patch 投影替换为 TFM token，93% 指标-设定组合有提升 → 骨干仍有价值，弱在输入表示 |
-| EEGPT（附录 F） | 批评其 FFT 只保留频谱能量、丢失相位，且 1s patch 的 FFT 过粗 → ERP/P300 等时域任务表现差（PhysioP300 仅 0.5485） |
-
 ---
 
 **相关阅读**

@@ -123,19 +123,6 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 
 *Figure 2 · (a) 连续 EEG 输入与事件集合标注格式；(b) FOCAL：密度头出窗级事件概率，引导局部注意力路由，axial attention 跨窗交互 ×2；(c) 多尺度时间 VQ：各尺度独立码表，池化-插值对齐取平均加时间 PE；(d) 空间金字塔 VQ：混合前的原始 EEG 按 1 全头 / 5 脑区 / 12 细簇聚合，密度引导池化 + 跨尺度残差量化（减去量化父层）；(e) 融合与解码：时间/空间双流 ×2 + 门控残差，DETR 解码器 ×4 出 Class/Start/End。左下 Training Objectives：检测损失（L1 边界 + 分类 + GIoU）与辅助损失（边界 focal + 稠密分类 + 预测一致性）。图例：实线箭头 = 特征/token 流，橙虚线 = 密度引导，黄虚线 = 训练监督。图中 "Bonudary focal"（应为 Boundary）与 "codebooksacross"（缺空格）为原文图内笔误*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| [LaBraM](labram.md) | VQ 谱系的前辈：token 只作掩码预训练目标、推理时丢弃。NeuroDETR 的 token 是检测头每一步都要读的「记忆」——站内 token 用途演进表的下一格 |
-| [TFM-Tokenizer](tfm-tokenizer.md) | 同样把 token 当模型输入，但 TFM 是固定窗时频 motif 词表 + 分类器；NeuroDETR 是多尺度池化码表 + 集合预测。TFM 作者自认的「固定窗长切断大 pattern」软肋，这里靠多尺度部分缓解，但切分本身仍非自适应 |
-| [NeuroRVQ](neurorvq.md) | 多尺度量化思想的近亲：NeuroRVQ 用多尺度时间卷积 + RVQ 做生成式基础模型的预训练目标；NeuroDETR 时间分支多尺度独立码表、空间分支跨尺度残差量化（层级版 RVQ），服务于检测记忆 |
-| [BrainRVQ](brainrvq.md) / [CodeBrain](codebrain.md) | 「拆维度建双码表」的同源变体：两者按时域/频域拆两组码字做预训练目标，NeuroDETR 按时间/空间拆两套码表做检测输入——2026 年 tokenization 的共同动作是「按维度分家」 |
-| DANCE（Meta，2026） | 最强基线与直接前作：Perceiver 式重采样 + 查询解码，特征全程连续；NeuroDETR 整套保留其辅助监督（稠密分类 + 预测一致性），换上离散事件记忆后事件 F1 平均 +4.29 pp |
-| ActionFormer / DyFADet / DOSED / EventNet | 时序动作检测与生物信号事件检测的移植基线：全部作者自行适配 EEG（阈值 0.05 + NMS）。NeuroDETR 免 NMS 的集合预测是结构性优势，比较时要把「移植质量」这层不确定性计入（DyFADet 的巨大 SD 是佐证） |
-| DETR（Carion et al., ECCV 2020） | 方法论母体：查询集合预测、匈牙利匹配、GIoU 损失全套搬到 1D 时间轴；时空版特有的是「记忆」设计——2D 检测的 encoder 特征在这里被替换成两路 VQ 码本 |
-| Défossez et al.（Nat. Mach. Intell. 2023） | 骨干来源：SimpleConv（电极坐标 Fourier 嵌入 + 270 虚拟通道 + 膨胀卷积）原封移植，语音解码的基础设施直接喂给了事件检测 |
-
 ---
 
 **相关阅读**

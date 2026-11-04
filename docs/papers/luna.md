@@ -78,18 +78,6 @@ Smooth L1 同时作用于被掩与可见 patch（可见部分系数 α=0.05—�
 
 *Figure 1 · Channel-Unification Module：Q 个学习 query 对 C 通道特征做交叉注意力，时间注意力只在固定隐空间上进行*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| EEGMoE（本站同期笔记） | **对照哲学**：LUNA 把拓扑差异当噪声抹平（query 瓶颈），EEGMoE 把域差异当信号解耦（MoE 分工）——作用轴不同（电极几何 vs 任务/数据集），可叠加 |
-| LaBraM / CBraMod | 精度上限对照组：展平/交替注意力的容量优势在 TUAB 上兑现约 1pp，但通道复杂度平方——高密度场景不可行 |
-| BIOT | 效率路线前作：BIOT 展平后用线性注意力（其原文为 Linformer 式低秩投影），LUNA 先统一通道再全注意力；论文正文 4.3 把 BIOT 作为效率基线，附录 Table 9/10 给出详细对比——8000 通道时 LUNA-Base FLOPs 约为 BIOT 的 1/180 |
-| MMM | 显式拓扑映射前作：预定义解剖区域 + 手工 DE 特征；LUNA 用学习 query + 原始信号端到端（消融显示两者指标相当，但学习 query 免解剖先验） |
-| Set Transformer / PerceiverIO | 机制来源：inducing points / 隐空间瓶颈，LUNA 加了 3D 电极坐标编码与两种任务解码头（重构/分类） |
-| Brant / GNN 系 | 被绕开的路线：固定拓扑空间编码器 / 预定义邻接图，都需要为动态拓扑打补丁 |
-| [通道异构专题](../topics/multi-task.md#channel-adaptation) | **先统一再建模**：可学习 query 汇聚通道，与通道 embedding 的查表方式不同 |
-
 ---
 
 **相关阅读**

@@ -75,16 +75,6 @@ RF token 作为前缀条件驱动自回归解码。实现上完整编码器是�
 
 *Figure 1 · RF-GPT 框架总览：频谱图经视觉编码器变成 RF token 前缀，LLM 在其条件下生成回答*
 
-## 与其他论文的关系
-
-| 论文 / 工作 | 关系说明 |
-|---|---|
-| TFM-Tokenizer | 同样把 STFT 谱图当图像切 patch；TFM 从头训 VQ motif 词表，RF-GPT 直接复用预训练视觉编码器、完全不学 RF 词表 |
-| SleepGPT（Nature Comms 2026，待读清单） | 同为「时频图 + 大模型」：SleepGPT 走自监督预训练时频编码器（科学发现导向），RF-GPT 走纯合成 SFT（工程接口导向）——设计空间两极 |
-| NeuroLM | 都把非文本 token 拼在 LLM 前缀；NeuroLM 用 GRL 对齐的离散码字接入 GPT-2，RF-GPT 用现成视觉编码器的连续 token 接入现代 VLM |
-| LaBraM | 对照：LaBraM 把频谱当**重构目标**学表示，RF-GPT 把频谱图当**唯一输入**做指令跟随 |
-| LoRA（模型架构基础） | 同属「冻结大底座 + 轻量适配」工具箱：RF-GPT 走 SFT 路线（论文未说明是否全参，按 8×H200 + AdamW 配置推断为全参），小显存场景可换 LoRA（EEG 迁移的自然选择） |
-
 ---
 
 **相关阅读**
