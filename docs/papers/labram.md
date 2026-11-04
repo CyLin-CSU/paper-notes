@@ -59,24 +59,6 @@ LaBraM: Large Brain Model (ICLR 2024)
 5. 对称掩码策略（效率 + 数据多样性）；
 6. 大规模 scaling 实验（数据量 1~2500 小时 × 模型 Base/Large/Huge），证实 EEG 领域也遵循 scaling law（Huge 模型在万小时级数据上仍会持续提升）。
 
-#### 2.4 流程
-
-```mermaid
-flowchart TD
-    subgraph S1["阶段一：神经 Tokenizer 训练"]
-        A["EEG channel patch"] --> B["Temporal Encoder"]
-        B --> C["VQ 查表（8192 码本）"]
-        C --> D["Neural Decoder 重构 DFT 幅值 + 相位"]
-    end
-    subgraph S2["阶段二：掩码 EEG 建模"]
-        E["随机掩码 50%（+ 对称掩码）"] --> F["预测被掩 patch 的码字索引"]
-    end
-    subgraph S3["阶段三：下游微调"]
-        G["换任务预测头 + 平均池化"]
-    end
-    S1 --> S2 --> S3
-```
-
 #### 2.5 实验与结果
 
 - 下游：TUAB（异常检测）、TUEV（事件分类）、SEED-V（情绪）、MoBI（步态回归）；

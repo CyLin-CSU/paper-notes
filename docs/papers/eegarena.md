@@ -92,26 +92,6 @@ one-liner: "30 个 EEG FM × 25 个监督基线 × 57 任务/23 数据集、五�
 
 *Figure 1 · (A) 软件包:数据标准化(HDF5)→ 数据 / 模型 / 评估三接口,统一 trainer + evaluator,79,000+ 行代码;(B) 30 FM + 25 基线(2021–2026)与 7 范式 57 任务;(C) 协议 I 大横评、II 预训练收益 × 6 档标签预算、III 模型规模、IV 预训练数据 0.6k–30k h、V 通道子集鲁棒性*
 
-## 流程
-
-```mermaid
-flowchart TD
-    A["异构 EEG 数据<br/>GDF / EDF"] --> B["数据标准化:统一 HDF5 + 预处理脚本"]
-    B --> C["数据接口<br/>WS / CS / LOSO 划分<br/>10-20 / 10-10 / 10-5 / 动态通道"]
-    C --> D["模型接口<br/>FM 专属预处理与输入构造<br/>基线统一代码"]
-    D --> E["统一 trainer + evaluator<br/>同 split · 验证集选 checkpoint · B-ACC / F1 / κ"]
-    E --> F["协议 I:FM vs 监督基线<br/>平均秩 + Top-5 计数(双极/非双极分开)"]
-    E --> G["协议 II:Full-FT vs Scratch-ST<br/>6 档标签预算 2%–100%"]
-    E --> H["协议 III:模型规模 scaling<br/>Full-FT / Linear Probe"]
-    E --> I["协议 IV:预训练数据 scaling<br/>REVE-base 固定架构 0.6k→30k h"]
-    E --> J["协议 V:通道配置鲁棒性<br/>受限 vs 灵活 × 保留比例"]
-    F --> K["五条 Lessons + 8 维选型框架<br/>无全能冠军,按部署场景加权"]
-    G --> K
-    H --> K
-    I --> K
-    J --> K
-```
-
 ## 与其他论文的关系
 
 | 论文 / 站内结论 | 本篇的外部检验 |

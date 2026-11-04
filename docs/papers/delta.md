@@ -96,23 +96,6 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 
 *Figure 1 · (a) EEG-RVQ Tokenizer:Channels(105:FP1/AF7/AF3/F1/F3/…/O7)× Band Pass Filtering(8:Theta₁ 4–6 / Theta₂ 6.5–8 / Alpha₁ 8.5–10 / Alpha₂ 10.5–13 / Beta₁ 13.5–18 / Beta₂ 18.5–30 / Gamma₁ 30.5–40 / Gamma₂ 40.5–49.5 Hz)→ 840 EEG Vector → Encoder → VQ 1…VQ n(残差逐层相减,⊕ 汇总 q1…qn)→ Decoder 重建 840 EEG Vector,对外输出 EEG Word Vector Token;(b) LLaDA-based EEG-to-Text 三栏:Pre-Training(EEG token → Masking t~U(0,1) → LLaDA-8B → Masking Predictor)、Fine-Tuning(EEG token 与掩码文本 token 拼接,掩码只挂文本支路)、Sampling(全掩码 → 去噪 → Remask 循环)*
 
-## 流程
-
-```mermaid
-flowchart TD
-    A["逐词 EEG(105 通道,10-20 系统)"] --> B["带通滤波 8 频段<br/>Theta1 4-6 Hz 至 Gamma2 40.5-49.5 Hz"]
-    B --> C["840 EEG 向量(105 x 8,逐词)"]
-    C --> D["1D 卷积 Encoder,潜特征 Z"]
-    D --> E["RVQ:n 层残差 VQ<br/>zq = Σ c(m, qm)"]
-    E --> F["EEG Word Vector Token 序列"]
-    E -.->|"Decoder 重建 840 维"| G["VQ-VAE 损失<br/>重构 + codebook + β·commitment"]
-    F --> H["阶段一 · EEG token 掩码复原预训练<br/>mask ratio t ~ U(0,1),LLaDA-8B + QLoRA"]
-    H --> I["阶段二 · EEG-to-Text SFT<br/>EEG token 前缀 + 掩码文本 token 拼接"]
-    T["文本 token Y"] --> I
-    I --> K["推理:全掩码序列出发<br/>固定步数迭代去噪 + Remask"]
-    K --> L["非自回归并行生成文本"]
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

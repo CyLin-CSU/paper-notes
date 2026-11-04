@@ -65,18 +65,6 @@ FC 重构头从表示还原被掩 patch，MSE 损失**只算被掩位置**（MAE
 
 ## 3 预训练流水线
 
-```mermaid
-flowchart LR
-    A["TUEG 27,062h 原始临床 EEG<br/>69,652 记录 / 14,987 被试"] --> B["清洗：<5min 剔除<br/>掐头去尾 1min<br/>选 19 个 10-20 公共通道"]
-    B --> C["0.3-75Hz 带通<br/>60Hz 陷波<br/>重采样 200Hz"]
-    C --> D["切 30s 样本<br/>任意点 >100µV 整段剔除<br/>单位 100µV 归一"]
-    D --> E["1,109,545 样本<br/>合计 >9000h"]
-    E --> F["切段 1s/patch<br/>30s → 19×30=570 patch<br/>随机掩码 50%（全零 token）"]
-    F --> G["时频双分支编码<br/>3 层 1D CNN ⊕ rFFT 能量+FC"]
-    G --> H["ACPE<br/>2D depthwise conv 核 (19,7)"]
-    H --> I["12 层 Criss-Cross Transformer<br/>4 头 S-Attn 并行 4 头 T-Attn"]
-    I --> J["FC 重构头<br/>MSE 只算被掩 patch"]
-```
 
 关键数字：清洗环节剔掉了大量脏数据后仍剩 **>9000h**（LaBraM 预训练语料 2,534.78h 的 3.5 倍）；训练配置 AdamW lr 5e-4 / wd 5e-2 / cosine 退火 / batch 128 / 40 epoch，4×RTX A5000 约 5 天。
 

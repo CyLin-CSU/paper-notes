@@ -77,21 +77,6 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 4. **Linear probing 达到 SOTA**：证明学到的特征本身足够通用，小样本下游免微调；
 5. 参数规模 scaling law 实证：\( \mathrm{ACC} = (33.6 \cdot N)^{0.029} \)、\( \mathcal{L}_R = (0.72 \cdot N)^{-0.014} \)。
 
-#### 3.4 流程
-
-```mermaid
-flowchart TD
-    A["EEG 58ch × 4s → 250ms patch"] --> B["掩码 50% 时间 × 80% 通道"]
-    B --> C["Encoder 处理 masked 部分 + Summary Tokens"]
-    B --> D["Momentum Encoder 处理全量（EMA 0.01）"]
-    C --> E["Predictor（RoPE + query）预测全部时段特征"]
-    E --> F["对齐损失 L_A（与 Momentum 输出）"]
-    C --> G["Reconstructor（含 skip）重构 masked 原始 patch"]
-    G --> H["重构损失 L_R"]
-    F --> I["总损失 L = L_A + L_R"]
-    D --> F
-```
-
 #### 3.5 实验与结果
 
 - 预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；

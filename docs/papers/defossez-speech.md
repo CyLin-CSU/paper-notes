@@ -94,29 +94,6 @@ Adam，lr \( 3\times10^{-4} \)，batch 256，一个 epoch 定义为 1,200 次更
 
 *Extended Data Fig. 4 · A–D 是同一被试「Thank you for coming, Ed」的 Mel 重建对照：回归基线（B）只剩模糊能量轮廓，对比损失（C）恢复频带结构，换 wav2vec 目标（D）最干净；E 是 brain module 逐层结构——SpatialAttention(270) → Conv(270, K=1) → 被试专属 SubjectLayer(270, S) → 5 块膨胀卷积（GLU 减半）→ 两层 1×1 收尾到 \( F \) 维*
 
-## 流程
-
-```mermaid
-flowchart TD
-    subgraph S["Speech module（冻结）"]
-        A["原始语音波形"] --> B["wav2vec2-large-xlsr-53<br/>最后 4 层平均 → Y ∈ R^(F×T)"]
-    end
-    subgraph Bm["Brain module（训练）"]
-        C["原始 MEG/EEG X ∈ R^(C×T)<br/>120 Hz，前移 150 ms<br/>baseline correction + clamp 20σ"] --> D["空间注意力<br/>傅里叶参数化传感器位置函数<br/>→ 270 通道"]
-        D --> E["被试层：1×1 Conv（每被试一个 270×270 矩阵）"]
-        E --> F["5 块 × 3 层膨胀卷积<br/>残差 + BN + GELU，GLU 减半"]
-        F --> G["两层 1×1 Conv → Z ∈ R^(F×T)"]
-    end
-    B --> H["CLIP 损失<br/>batch 内负例，softmax 内积"]
-    G --> H
-    subgraph E2["评测：zero-shot 检索"]
-        I["测试脑片段"] --> G2["Brain module → Z"]
-        J["测试集全部 3 s 段（1000+）"] --> K["候选 Y"]
-        G2 --> L["内积排序 → top-10"]
-        K --> L
-    end
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

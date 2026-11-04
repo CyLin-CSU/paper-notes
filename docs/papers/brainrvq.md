@@ -151,29 +151,6 @@ S_{c,a} = \alpha_1 \tilde{S}_{neural} + \alpha_2 \tilde{S}_{clean} + \alpha_3 \t
 
 *Figure 1 · (A) DD-RVQ for EEG Tokenization——异构 EEG 经 Neural Transformer Encoder 得潜在表示,时域支路直接进 RVQ(quantize_t),频域支路经 DFT 进 RVQ(quantize_f),各自 3 层码本级联,Decoder_t 重构波形、Decoder_f 重构幅值与相位,Embedding Loss + 重构损失联合优化(图中右上角的「Restruction Loss」为原文拼写错误);(B) Pre-training Process——Information Masking 选高信息 patch,Temporal Conv → Transformer Blocks → Hierarchical RVQ Predictor 逐层自回归预测 token(Z^(l) 条件于前层);(C) Downstream Tasks——预训练编码器接任务头微调*
 
-## 流程
-
-```mermaid
-flowchart TD
-    A["TUEG v2.0.1 预训练语料(19 ch × 30 s @ 200 Hz,约 9,200 h)"] --> B["1 s 非重叠 patch,序列长 19×30=570"]
-    B --> C["共享 Transformer 编码器(12 层,d=200)"]
-    C --> D["潜在表示 h,ℓ2 归一化"]
-    D --> E["时域 RVQ:3 层 × 8192 码本,码字 64 维,EMA 更新"]
-    D --> F["频域 RVQ:3 层 × 8192 码本,码字 64 维"]
-    B -.->|"DFT 取幅值 A 与相位 φ 作重构目标"| H
-    E --> G["Decoder_t(3 层)重构波形 → L_time"]
-    F --> H["Decoder_f(3 层)重构幅值 + 相位 → L_freq"]
-    E --> I["时域 token z(l),l=1..3"]
-    F --> J["频域 token z(l),l=1..3"]
-    I --> K["重要性评分 S(5 指标加权)+ 课程采样 w: 0.2→0.7"]
-    J --> K
-    K --> L["按 50% 比例掩码,可学习 mask token"]
-    L --> M["预训练编码器 f_theta(12 层,5.82M)"]
-    M --> N["层级预测头 g(l):z(l) 条件于真值 z(1..l-1) 的累加 embedding"]
-    N --> O["teacher forcing,层加权 λ = 1 / 0.5 / 0.25"]
-    M --> P["下游适配:加载编码器 + 池化分类头,端到端微调 8 个数据集"]
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

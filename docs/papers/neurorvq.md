@@ -114,27 +114,6 @@ ECG(Table 1B,PTB-XL 10-fold 患者分层):43 类任务 NeuroRVQ-ECG Acc/BAcc **7
 
 *Figure 1 · 下行为主干:Input Biosignal Patches → Multi-Scale Temporal Encoder(S 个分支)→ Transformer Encoder → 多尺度 patch 表示 p1..pS → Lookup operation 进 RVQ Codebooks → Tokenizer Decoder → Reconstructed Patches;上行为放大细节:S 个 Temporal Branch 输出 F1..FS,与 Shared Temporal/Spatial Embeddings 相加成 Combined Embeddings;右侧 RVQ 放大:每分支 R1..RN 各含 V1..VK 个码字。图中只画了架构,损失三项(对数幅值/相位/时域)不在图内*
 
-## 流程
-
-```mermaid
-flowchart TD
-    A["多变量生物信号 X(C×T)"] --> B["切 patch:P 个 × 长 w<br/>EEG 1s@200Hz / ECG·EMG 200ms"]
-    B --> C["多尺度时间编码器:S=4 分支<br/>1D conv + GroupNorm + GELU + pool ×2"]
-    T["共享时间嵌入 TE"] --> E
-    S["共享空间嵌入 SE(按电极索引)"] --> E
-    C --> E["特征与嵌入相加,跨 S 分支共享"]
-    E --> F["共享 Transformer 编码器(12 层)"]
-    F --> G["多尺度 patch 表示 p1..pS"]
-    G --> H["逐分支 RVQ:N=8(EEG/ECG)/ 16(EMG)<br/>每层 8192 码 × D=128,残差级联"]
-    H --> I["量化表示 p̂1..p̂S(每分支一条 token 序列)"]
-    I --> J["Tokenizer 解码器(3 层)<br/>三头:log(1+Â)/ ĉ / ŝ"]
-    B -.->|"重构目标:Fourier 幅值 A + 相位 φ"| J
-    J --> K["逆 Fourier 变换回时域"]
-    K --> L["总损失 = 对数幅值 MSE + 相位余弦 + 时域 MSE + L_Q"]
-    I --> M["NeuroRVQ-FM:对称掩码 0.5<br/>masked-token 预测(50 epoch)"]
-    M --> N["下游:加载骨干 + 分类头全微调<br/>EEG 5 任务 / ECG PTB-XL / EMG 4 数据集"]
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

@@ -104,23 +104,6 @@ ABIDE（自闭症）与 ADNI（阿尔茨海默）上，EC 分类病人/对照的
 
 *Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制，色标 Exc/Inh）；(b) 皮层区归入七个功能网络；(c) 模型 FC 对经验 FC r=0.97；(d) 逐网络的 seed-based FC 空间模式；(e) 逐网络的 seed-based EC（红兴奋/蓝抑制）；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布*
 
-## 流程
-
-```mermaid
-flowchart TD
-    subgraph S1["① 训代理脑（逐被试）"]
-        A["rs-fMRI：N 区 × T 时刻<br/>（HCP 4×15 min，360 区）"] --> B["MLP：x_{t+1} = f(x_t, x_{t-1}, x_{t-2})<br/>单步 MSE，60 epoch"]
-        B --> C{"代理合格？<br/>递归生成的 FC 对经验 FC r=0.97"}
-    end
-    C -->|是| D
-    subgraph S2["② 虚拟扰动-记录"]
-        D["冻结网络，枚举 源区 i × 状态 t"] --> E["x_t → x_t + Δ·e_i（Δ=0.5σ）"]
-        E --> F["读 t+1 全区响应差<br/>EC_i· = E_t[f(x_t+Δe_i) − f(x_t)]<br/>（≡ 状态平均 Jacobian 中源区 i 对应的列）"]
-    end
-    F --> G["逐区扫完 → all-to-all EBC<br/>方向 × 强度 × 兴奋/抑制符号"]
-    G --> H["验证链：RNN 合成 r=0.95 → 公开 BOLD AUC≈1（胜 GC/DCM）→ WBM 胜 GC<br/>→ SC 支撑 r=0.42 → HCP-ABCD r=0.87 → CCEP 613 病人 r=0.33 > FC 0.20"]
-```
-
 ## 与其他论文的关系
 
 站内三篇候选对照都查过，没有与本篇的真实对话（本篇不引它们，主题坐标系也不同），下面如实标注；本篇真正的参照系是经典 EC 方法。

@@ -65,21 +65,6 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 5. **模型极小**：tokenizer ~1.2M + 下游 ~0.7M ≈ 1.9M，比 BIOT（3.2M）、LaBraM（5.8M+8.6M）小，性能反而更好；
 6. token 质量分析体系：类-token 独有性（uniqueness）、类内一致性（检索 precision@K）、频率学习能力（token 序列谱熵）、token 利用率。
 
-#### 6.4 流程
-
-```mermaid
-flowchart LR
-    subgraph T1["阶段一：Tokenizer 训练（单通道）"]
-        A["原始 patch → Temporal Encoder"] --> F["拼接 → Temporal Transformer → VQ 8192"]
-        B["STFT 频谱窗 → 频率 patch 切分"] --> C["Frequency Transformer"]
-        C --> D["门控聚合"] --> F
-    end
-    F --> G["冻结 tokenizer → token 查表（码字初始化）"]
-    G --> H["下游线性注意力 Transformer"]
-    H --> I["掩码 token 预测（交叉熵）"]
-    I --> J["下游任务微调"]
-```
-
 #### 6.5 实验与结果
 
 - 数据集：TUEV、TUAB、CHB-MIT、IIIC Seizure（+ 跨设备 EESM23 ear-EEG 睡眠分期）；

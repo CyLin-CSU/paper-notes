@@ -69,26 +69,6 @@ RF token 作为前缀条件驱动自回归解码。实现上完整编码器是�
 3. **全自动数据飞轮**：标准合规生成器（拒绝采样保真）+ 「配置即标签」确定性 captioning + 文本 LLM 指令合成，0.625M 对零人工；
 4. **系统化 benchmark 套件**：WBMC/WBOD/WTR/WNUC/NRIE 五族任务，覆盖调制、重叠推理、技术、计数、协议参数抽取，含难度分级与严格匹配准则。
 
-#### 5 流程
-
-```mermaid
-flowchart LR
-    subgraph D["数据合成（零人工）"]
-        A["MATLAB 波形生成器 ×6 技术"] --> B["拒绝采样：标准合规校验"]
-        B --> C["信道/损伤 + 元数据落盘"]
-        C --> E["确定性 captioning（五级信息分层）"]
-        E --> F["GPT-OSS-120B × 任务模板 → 0.625M 指令对"]
-    end
-    subgraph M["RF-GPT"]
-        G["IQ 波形"] --> H["STFT + dB 幅值谱 512×512"]
-        H --> I["视觉编码器 14×14 patch → 1369 RF token"]
-        I --> J["线性 adapter"]
-        J --> K["Qwen2.5-VL 解码器 + 文本指令"]
-    end
-    F --> SFT["SFT：梯度只算答案 token"]
-    K --> SFT
-```
-
 #### 6 实验与结果
 
 - **设置**：Qwen2.5-VL-3B/7B-Instruct 底座 → RF-GPT-3B/7B；3 epoch，AdamW lr 2×10⁻⁴，global batch 256，5% warmup + cosine 衰减，BF16，8×H200（140GB）；STFT Blackman 窗、FFT/窗/hop 均 512、无居中、频轴 fftshift；

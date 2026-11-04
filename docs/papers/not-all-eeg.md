@@ -113,25 +113,6 @@ GAN / 扩散基线的 TS-FID（412–1103）与 ΔAcc（≤1.7%）全面落后�
 
 *Figure 2 · 框架总览：(a) 训练——PATS 从 EMA 误差图导出位置时间图，条件化因子化时空 Transformer 预测干净样本；(b) 采样——从高斯噪声出发，按同一位置调度迭代解流 ODE*
 
-## 流程
-
-```mermaid
-flowchart TD
-    subgraph T["训练"]
-        A["EEG 样本 x₁（C×N×P，P=200）"] --> B["EMA 误差图 ē（全数据集共享）<br/>→ 归一化显著图 s"]
-        C["高斯噪声 x₀"] --> D["位置加噪<br/>z = τ⊙x₁ + (1−τ)⊙x₀"]
-        E["全局 t --> 时间图 τ_ij = t + m·s_ij·t(1−t)"] --> D
-        B --> E
-        D --> F["因子化时空 Transformer<br/>token 级条件 g_ij = TimeEmbed(τ_ij)+LabelEmbed(c)<br/>时间条带 → 通道条带，adaLN 注入"]
-        F --> G["预测干净样本 x̂₁"]
-        G --> H["四项损失：难度加权 L1 + 统计一致<br/>+ 频率对齐多分辨率频谱 + 相关性"]
-        G -.->|"误差回流更新 ē"| B
-    end
-    subgraph I["采样"]
-        J["z ~ N(0,I)，t: 0→1"] --> K["同一张 ē 构造 τ<br/>v_ij = τ̇/(1−τ)·(x̂₁−z)"] --> L["生成的 EEG"]
-    end
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

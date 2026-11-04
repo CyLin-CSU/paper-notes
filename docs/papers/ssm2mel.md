@@ -95,27 +95,6 @@ S4 把 \( A, B \) 离散化（\(\bar{A}, \bar{B}\)）并做结构化约束；Mam
 
 *Figure 1 · (a) 总体框架——ESM block（右上，Sub-ID 经 LayerNorm 进 MultiHead Attention）→ S4-UNet + ExternalAttention（左下，\( M_K/M_V \) 共享 memory）→ MHSA/Mamba 交替骨干（ESM 原始特征经四处 ⊕ 并入每块前的残差）→ Linear 出 mel 谱；(b) S4-UNet 的 U 形下采样-上采样，上采样前每级经 n 个 S4 blocks；(c) S4 block = linear → S4 → 残差 → Dropout → LayerNorm；(d) MHSA/mamba block：右列 Pre-Conv → S4-UNet → ffm 前置段，左列 ffm → MHSA/mamba module → conv → ffm 三明治，段间 ½× 缩放残差*
 
-## 流程
-
-```mermaid
-flowchart TD
-    A["多通道 EEG（64 Hz，5 s 裁剪）"] --> B["Scaled Positional Encoding"]
-    S["Sub-ID one-hot 嵌入 S_E"] --> C
-    B --> C["ESM：MH(P₀, LN(S_E)+S_E) + FFN 残差<br/>被试调制的原始特征"]
-    C --> D["S4-UNet<br/>U 形骨架，上采样前每级 n 个 S4 block"]
-    D --> E["ExternalAttention<br/>线性复杂度共享 memory M_K/M_V"]
-    E --> F["MHSA block"]
-    F --> G["Mamba block（selective SSM）"]
-    G --> H["MHSA block"]
-    H --> I["Mamba block"]
-    C -.->|"旁路：ESM 原始特征<br/>在每块前残差相加（四处 ⊕）"| F
-    C -.-> G
-    C -.-> H
-    C -.-> I
-    I --> J["Linear"] --> K["mel 谱"]
-    L["损失 L = −Pearson + α·L1"] -.->|"监督输出"| K
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

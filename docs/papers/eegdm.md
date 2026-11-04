@@ -55,21 +55,6 @@ ViT 式架构：每通道按 \( \omega \) 长度无重叠切 patch，1 层 1D �
 
 预训练 TUEG：19 个公共通道、200Hz、30 秒非重叠样本（570 个 1s patch）；DiT 8 块、\( T = 1000 \) 扩散步；AdamW lr 5e-4（OneCycleLR）、batch 32、EMA 0.9999；4×A100 约 32.9 万步（约 113 小时），完全从零训练。下游微调 encoder **不冻结**（统一 lr 5e-4），另报线性探针。
 
-```mermaid
-flowchart LR
-    subgraph Cond["条件支路"]
-        A["原始 EEG + 零掩蔽视图 + 幅值缩放视图<br/>（m=3 源视图）"] --> B["共享 ViT Encoder f_φ"]
-        B --> C["平均池化 → 条件表示 e（不 detach）"]
-    end
-    subgraph Diff["去噪目标支路（PCA 隐空间）"]
-        D["EEG 样本 x"] --> E["PCA → z（K=20）"]
-        E --> F["加噪 z_t"]
-        F --> G["DiT 去噪器（8 块，adaLN-Zero）<br/>ε_θ(z_t, t, e)"]
-        G --> H["去噪隐表示 → invPCA → 重建 x̃"]
-    end
-    C -- "e + 时间步嵌入 → γ,β,ρ 调制" --> G
-    G -- "L_simple + L_vlb 经 e 反传" --> B
-```
 
 ## 架构图
 

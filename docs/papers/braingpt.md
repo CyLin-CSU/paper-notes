@@ -68,24 +68,6 @@ GAT 注意力系数（‖ 表示向量拼接）：
 4. **任务共享图网络（TEG）实现多任务兼容与协同**：首个证实多任务联合训练优于逐任务单独训练（joint 比 separate 在 5 个任务上全部提升，MW +3.9%）；
 5. 渐进式时空解耦：ETE 管时间（预训练）→ TEG 管空间（下游）。
 
-#### 4.4 流程
-
-```mermaid
-flowchart LR
-    subgraph Pre["Stage I · 单电极自回归预训练"]
-        A["多电极 EEG 拆成单电极序列"] --> B["拼接电极条件 token"]
-        B --> C["共享 ETE 因果 Transformer"]
-        C --> D["预测下一 token（MSE）"]
-    end
-    subgraph Down["Stage II · 多任务微调"]
-        E["每电极序列末接可学习 token"] --> F["冻结 ETE 提取电极表示"]
-        F --> G["注入全局电极图（子图激活）"]
-        G --> H["GAT 图注意力 ×K 层"]
-        H --> I["池化 → 任务头"]
-    end
-    Pre ==> Down
-```
-
 #### 4.5 实验与结果
 
 - 12 个基准、5 类任务：情绪识别（DEAP/FACED/SEED-IV/SEED-V）、运动想象（MIBCI/BCIC4-1）、认知负荷（EEGMat/STEW）、睡眠分期（EDF/HMC）、跨模态（IMG/SPE）；

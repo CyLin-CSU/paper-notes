@@ -95,20 +95,6 @@ $$
 3. **线性注意力 Transformer** 解决多通道长句子的二次复杂度问题（低秩 E/F 投影，注意力图 N×N → N×d）；
 4. 频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 CHB-MIT、IIIC 与可穿戴 HAR 任务尤其有用；
 
-#### 1.4 流程
-
-```mermaid
-flowchart LR
-    A["原始多通道信号"] --> B["重采样 200Hz"]
-    B --> C["95 分位数归一化"]
-    C --> D["逐通道切段 1s / 重叠 0.5s"]
-    D --> E["缺失 token 丢弃 + 展平成句"]
-    E --> F["token embedding：FFT 能量 + 通道 + 位置"]
-    F --> G["线性 Transformer ×4（低秩 E/F 投影）"]
-    G --> H["mean pooling"]
-    H --> I["ELU + 线性分类头"]
-```
-
 #### 1.5 实验与结果
 
 - 预训练语料：500 万静息 EEG（PREST）+ 500 万睡眠 EEG（SHHS）+ ECG（Cardiology）；

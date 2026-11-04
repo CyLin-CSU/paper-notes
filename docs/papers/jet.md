@@ -89,23 +89,6 @@ EEG 建模的根本瓶颈是数据——高质量临床记录昂贵、需专家�
 
 \[ \mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{recon}} + \mathcal{L}_{\mathrm{cons}} + \mathcal{L}_{\mathrm{geo}} \]
 
-## 3 流程
-
-```mermaid
-flowchart LR
-    subgraph T["训练"]
-        A["EEG 样本 x1"] --> C["线性插值路径<br/>x(t) = t·x1 + (1-t)·x0"]
-        B["高斯噪声 x0"] --> C
-        C --> D["JET Transformer<br/>预测向量场 v(x, t, c)"]
-        D --> E["总损失 = L1 重构 + 统计一致性 + 时空结构"]
-        F["类别均衡采样<br/>p ∝ 1/N^α"] -.-> A
-    end
-    subgraph I["推理"]
-        G["x0 ~ N(0, I)"] --> H["解 ODE<br/>dx/dt = v(x, t, c)"] --> J["生成的 EEG"]
-    end
-    E -.-> H
-```
-
 ## 4 实验与结果
 
 **数据**：TUH 语料的三个大规模子集，合计超 10,000 次临床 session，统一 16 通道：

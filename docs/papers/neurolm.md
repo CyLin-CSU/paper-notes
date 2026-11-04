@@ -58,23 +58,6 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
 4. EEG 词表并入 LLM 词表的「外语」接入范式；配 VAE/ELBO 理论解释；
 5. 最大变体 1.7B 参数（EEG 信号处理领域当时最大）。
 
-#### 5.4 流程
-
-```mermaid
-flowchart TD
-    subgraph P1["阶段一：文本对齐 Tokenizer"]
-        A["EEG patch → VQ Encoder"] --> B["查表 → 时域 / 频域双 Decoder"]
-        A -. "梯度反转 GRL" .-> C["域分类器：EEG 还是文本"]
-    end
-    subgraph P2["阶段二：多通道自回归"]
-        D["码字并入 GPT-2 词表"] --> E["阶梯掩码：同通道预测下一时刻"]
-    end
-    subgraph P3["阶段三：多任务指令微调"]
-        F["EEG tokens + SEP + 文本指令"] --> G["仅对答案部分计算损失"]
-    end
-    P1 --> P2 --> P3
-```
-
 #### 5.5 实验与结果
 
 - 下游 6 数据集：TUAB、TUEV、SEED（情绪）、HMC（睡眠分期）、Workload（认知负荷）、TUSL（慢波分类）；

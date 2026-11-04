@@ -125,32 +125,6 @@ Fig. 10 的对照实验:单阶段(EEG 嵌入直接生成)明显差于两阶段(�
 
 *Figure 2 · 左列:训练块——视觉刺激经 CLIP Image(雪花冻结)与 EEG Encoder(火焰可训练)分别嵌入,⊗ 对比学习对齐,零样本做 Classification / Retrieval(右侧 Image Dataset 给出 antelope / pear / kettle / sausage 候选);推理块 EEG Encoder 亦冻结。右下 Generation 块:EEG 嵌入经 MSE Loss 对齐 VAE image encoder → VAE Latent → VAE image decoder 出低层模糊图;EEG 嵌入 + Noise 进 Diffusion U-Net(×T,可训练)出图像嵌入(高层);两者汇入 IP-Adapter + SDXL-turbo 渲染重建图像;GIT model img2text 从图像嵌入生成 caption(如 "A bunch of colorful, dense fudge.")作文本提示(语义层)。图内 "Generatilon" 系原文笔误*
 
-## 流程
-
-```mermaid
-flowchart TD
-    A["图像刺激 I"] --> B["CLIP Image Encoder(冻结)"]
-    B --> C["图像嵌入 z_I(N×1024)"]
-    D["EEG 序列 E(N×C×T, 0–1000ms)"] --> E["ATM:嵌入 + 通道注意力 → 时空卷积 → MLP 投影"]
-    E --> F["EEG 嵌入 z_E(N×1024)"]
-    C --> G["对比学习 L_CLIP(温度 0.07)"]
-    F --> G
-    F --> H["MSE 回归(生成任务)"]
-    subgraph S1["Stage I · 先验扩散(EEG 嵌入 → CLIP 图像先验)"]
-        I["噪声 z_I^t + 时间步 t"] --> J["轻量 U-Net 先验 ε(z_I^t, t, z_E)"]
-        J --> K["CFG 采样 → CLIP 图像先验 z_I"]
-    end
-    F -.->|"条件:以 0.1 概率置空训练"| J
-    subgraph S2["Stage II · 图像合成(CLIP 先验 → 图像)"]
-        K --> L["SDXL + IP-Adapter(冻结)双交叉注意力"]
-        K --> M["GIT img2text → 文本提示(语义层,可选)"]
-        N["EEG → VAE latent(4×64×64)低层管线"] --> O["VAE decoder 出模糊图 → img2img 强度 0.5"]
-        O --> L
-        M --> L
-        L --> P["重建图像"]
-    end
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

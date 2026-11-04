@@ -112,36 +112,6 @@ one-liner: "清华 IR 组的 EEG 视觉解码泛化基准:16 人 × 22 session�
 
 *Figure 1 · 上排实验范式:EEG 戴帽采集 → S1 类别标签呈现(空格键继续)→ S2 注视点 500 ms → S3 RSVP 每图 500 ms(Img1…ImgN)→ S4 随机测试(可选),Next category 回环;左下:连续采集的 EEG 按图像对齐(Img1–Img50),与图像 index、粒度、标签共同入库;右下 Cross-time Stages:Stage 1 每类 N=50 block 呈现(橙/蓝分块)→ 7 天间隔 → Stage 2 每类 N=30/N=20 乱序(紫色为乱序插入的类别);底部 Multi-Granularity Labels:熊猫/高尔夫球为 Coarse,罗威纳/萨摩耶为 Fine。注:图中 S1–S4 步骤标签与图例是 PDF 矢量叠加层,不在内嵌位图里*
 
-## 流程
-
-```mermaid
-flowchart TD
-    subgraph P["实验范式(S1–S4 循环)"]
-        A["S1 类标签呈现(空格键继续)"] --> B["S2 注视点 500 ms"]
-        B --> C["S3 RSVP:每图 500 ms"]
-        C --> D["S4 随机测试(可选)<br/>未通过类别剔除"]
-        D -->|"Next category"| A
-    end
-    P --> E["62 通道 × 1000 Hz 连续 EEG<br/>+ 图像 index / 粒度 / wnid 标签"]
-    E --> F["预处理:M1+M2 重参考<br/>0.5–80 Hz 带通 + 50 Hz 陷波 + 伪迹去除"]
-    F --> G["特征窗 40–440 ms"]
-    G --> H["DE 频域特征<br/>δ/θ/α/β/γ 五频段 × 62 电极"]
-    G --> I["时域原始段"]
-    H --> J["Ridge / KNN / RF / SVM<br/>MLP / RGNN"]
-    I --> K["EEGNet"]
-    J --> L["two-way identification<br/>k=500,chance 0.5"]
-    K --> L
-    subgraph S["两阶段采集"]
-        M["Stage 1 · 16 人 · block 设计<br/>每类 50 张连续呈现"] -->|"间隔 ≥7 天"| N["Stage 2 · 6 人 · 非 block 乱序<br/>每类 30 训 + 20 测"]
-    end
-    S --> J
-    S --> K
-    L --> O["WT:同一人 Stage 2 内 30 训 / 20 测"]
-    L --> Q["CT:本人 Stage 1 → Stage 2"]
-    L --> R["CP:10 人 Stage 1 → 6 人 Stage 2"]
-    L --> T["PT:10 人 Stage 1 预训<br/>→ 本人 Stage 1 续训 → Stage 2"]
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |

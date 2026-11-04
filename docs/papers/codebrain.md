@@ -137,28 +137,6 @@ MAE 式:Bernoulli 掩码（r=0.5）,EEGSSM 输出过 1D 卷积预测被掩 patch
 
 *Figure 2 · 左（Stage 1）:patched EEG 过 TFConv（时域 conv 堆叠 ∥ DFT→conv 堆叠）→ 共享时间位置嵌入 → TF-Encoder → NN 搜索进时/频两个码本;对比损失（段内正对）+ 双 decoder 重构（T-Decoder 原始波形、F-Decoder 幅值/相位）+ codebook/commitment 损失。右（Stage 2）:掩码 patch → 动态位置嵌入 → EEGSSM Block ×N（RMS Norm → Conv+GELU → SGConv ∥ SWA → Tanh⊙Sigmoid 门控 → Conv×2 走 skip）→ Conv1D 出双码本 token 预测。图注细节:图中「Btach Norm」「Patchfied」为原文拼写笔误*
 
-## 流程
-
-```mermaid
-flowchart TD
-    subgraph S1["Stage 1 · TFDual-Tokenizer 预训练"]
-        A["1s patch x（200 点，逐通道）"] --> B["TFConv：时域 conv 堆叠 ∥ DFT 频域 conv 堆叠，拼接为时频联合嵌入"]
-        B --> C["加共享时间位置嵌入（无通道身份）"]
-        C --> D["TF-Encoder（12 层 Transformer）"]
-        D --> E["NN 搜索：时域码本与频域码本各 4096×32，得 v_t、v_f"]
-        E --> F["T-Decoder 重构原始波形 + SimCLR 对比（段内两半为正对）"]
-        E --> G["F-Decoder 重构幅值 A 与相位 φ（MSE）"]
-        F --> H["codebook + commitment 损失（stop-gradient）"]
-        G --> H
-    end
-    subgraph S2["Stage 2 · EEGSSM 预训练"]
-        I["30s 样本展平：19 通道 × 30 patch = 570 token"] --> J["ACPE 动态位置嵌入（depthwise 2D conv）"]
-        J --> K["EEGSSM Block × 8：RMS Norm → Conv+GELU → SGConv ∥ SWA → Tanh⊙Sigmoid 门控"]
-        K --> L["Conv1D → 对被掩 patch（50%）交叉熵预测双码本 token 索引"]
-    end
-    H -.->|"冻结 tokenizer，生成预测目标"| L
-```
-
 ## 与其他论文的关系
 
 | 论文 / 工作 | 关系说明 |
