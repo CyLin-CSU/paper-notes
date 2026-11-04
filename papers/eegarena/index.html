@@ -1404,17 +1404,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -1423,7 +1412,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2257,17 +2246,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2276,7 +2254,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2414,23 +2392,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegarena-framework.png" data-desc-position="bottom"><img alt="Figure 1 · EEG-Arena 总览:(A) 开源软件包三接口;(B) 55 模型与 23 数据集 / 57 任务;(C) 五协议对应 RQ1–RQ5" src="../../assets/eegarena-framework.png"></a></p>
 <p><em>Figure 1 · (A) 软件包:数据标准化(HDF5)→ 数据 / 模型 / 评估三接口,统一 trainer + evaluator,79,000+ 行代码;(B) 30 FM + 25 基线(2021–2026)与 7 范式 57 任务;(C) 协议 I 大横评、II 预训练收益 × 6 档标签预算、III 模型规模、IV 预训练数据 0.6k–30k h、V 通道子集鲁棒性</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    A["异构 EEG 数据&lt;br/&gt;GDF / EDF"] --&gt; B["数据标准化:统一 HDF5 + 预处理脚本"]
-    B --&gt; C["数据接口&lt;br/&gt;WS / CS / LOSO 划分&lt;br/&gt;10-20 / 10-10 / 10-5 / 动态通道"]
-    C --&gt; D["模型接口&lt;br/&gt;FM 专属预处理与输入构造&lt;br/&gt;基线统一代码"]
-    D --&gt; E["统一 trainer + evaluator&lt;br/&gt;同 split · 验证集选 checkpoint · B-ACC / F1 / κ"]
-    E --&gt; F["协议 I:FM vs 监督基线&lt;br/&gt;平均秩 + Top-5 计数(双极/非双极分开)"]
-    E --&gt; G["协议 II:Full-FT vs Scratch-ST&lt;br/&gt;6 档标签预算 2%–100%"]
-    E --&gt; H["协议 III:模型规模 scaling&lt;br/&gt;Full-FT / Linear Probe"]
-    E --&gt; I["协议 IV:预训练数据 scaling&lt;br/&gt;REVE-base 固定架构 0.6k→30k h"]
-    E --&gt; J["协议 V:通道配置鲁棒性&lt;br/&gt;受限 vs 灵活 × 保留比例"]
-    F --&gt; K["五条 Lessons + 8 维选型框架&lt;br/&gt;无全能冠军,按部署场景加权"]
-    G --&gt; K
-    H --&gt; K
-    I --&gt; K
-    J --&gt; K</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2473,7 +2435,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>20,000 次评测的统计功效来自配对结构,而非显著性检验</strong>。功效的真正来源是三重配对:同 split 同 checkpoint 规则、同架构 Full-FT vs Scratch-ST、三指标名次取均值后对几十个任务聚合——把单次评测的噪声在任务维度上平均掉。但全文没有任何显著性检验或置信区间,平均秩的「有效模型集合」逐任务不同(双极榜 40 个、非双极榜 47 个),覆盖面广的模型天然多拿名次,论文承认 SleepEEGNet 的 Top-5 第一属于此类。读这篇的姿态应该是「模式可信、单点名次存疑」;</li>
 <li><strong>统一管线刻意保留了一个不统一:预处理</strong>。这是全场最微妙的设计决定——FM 保留各自的带通/notch/归一化/窗长(0.85–30 s 跨度),意味着 FM vs 基线的差距里永远混着「输入表征选择」这个隐藏变量,反过来 FM 被自家接口锁死的部分(unsupported 标记)又让它少跑了整个非双极侧。<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Arena 量化的是「自带预处理的完整权重」的 FM,不是「表征本身」的 FM;Protocol I 榜单上的差距,有一部分应该记在预处理工程的账上;</li>

@@ -875,17 +875,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -894,7 +883,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2179,17 +2168,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2198,7 +2176,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2309,24 +2287,7 @@ h_t = A h_{t-1} + B x_t, \qquad y_t = C h_t + D x_t
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/ssm2mel-framework.png" data-desc-position="bottom"><img alt="Figure 1 · SSM2Mel 总体框架：EEG 加位置编码后经 ESM（Sub-ID 嵌入调制）与 S4-UNet + ExternalAttention 预提取，MHSA/Mamba 交替骨干输出 mel 谱" src="../../assets/ssm2mel-framework.png"></a></p>
 <p><em>Figure 1 · (a) 总体框架——ESM block（右上，Sub-ID 经 LayerNorm 进 MultiHead Attention）→ S4-UNet + ExternalAttention（左下，<span class="arithmatex">\( M_K/M_V \)</span> 共享 memory）→ MHSA/Mamba 交替骨干（ESM 原始特征经四处 ⊕ 并入每块前的残差）→ Linear 出 mel 谱；(b) S4-UNet 的 U 形下采样-上采样，上采样前每级经 n 个 S4 blocks；(c) S4 block = linear → S4 → 残差 → Dropout → LayerNorm；(d) MHSA/mamba block：右列 Pre-Conv → S4-UNet → ffm 前置段，左列 ffm → MHSA/mamba module → conv → ffm 三明治，段间 ½× 缩放残差</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    A["多通道 EEG（64 Hz，5 s 裁剪）"] --&gt; B["Scaled Positional Encoding"]
-    S["Sub-ID one-hot 嵌入 S_E"] --&gt; C
-    B --&gt; C["ESM：MH(P₀, LN(S_E)+S_E) + FFN 残差&lt;br/&gt;被试调制的原始特征"]
-    C --&gt; D["S4-UNet&lt;br/&gt;U 形骨架，上采样前每级 n 个 S4 block"]
-    D --&gt; E["ExternalAttention&lt;br/&gt;线性复杂度共享 memory M_K/M_V"]
-    E --&gt; F["MHSA block"]
-    F --&gt; G["Mamba block（selective SSM）"]
-    G --&gt; H["MHSA block"]
-    H --&gt; I["Mamba block"]
-    C -.-&gt;|"旁路：ESM 原始特征&lt;br/&gt;在每块前残差相加（四处 ⊕）"| F
-    C -.-&gt; G
-    C -.-&gt; H
-    C -.-&gt; I
-    I --&gt; J["Linear"] --&gt; K["mel 谱"]
-    L["损失 L = −Pearson + α·L1"] -.-&gt;|"监督输出"| K</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2361,7 +2322,7 @@ h_t = A h_{t-1} + B x_t, \qquad y_t = C h_t + D x_t
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>38% 的相对提升建立在 0.050 的绝对值上，这点必须先说破</strong>。Pearson 0.069 意味着重建谱与真谱的相关仍然贴地——对照包络任务的 0.208，频带结构信息在头皮 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 里基本被颅骨低通滤掉了。这条轴线的根本瓶颈是信噪比而不是架构：从 VLAAI（2023）到本篇（2025），四个模型折腾两年，mel 任务绝对值只从 0.050 挪到 0.069。架构创新在这个任务上的边际收益天花板可见，指望 Mamba 之类的工具突破物理衰减不现实；</li>
 <li><strong>「长序列」的卖点和 5 秒裁剪的实现是矛盾的</strong>。64 Hz 下 5 秒只有 320 个时间步，训练如此，推理也是 5 秒分段再拼接——Mamba 相对 Transformer 的优势区间在千步以上，320 步根本用不上。真正的分钟级连续解码需要跨窗状态传递或滑窗重叠推理，论文都没做。标题里 State Space Model 的叙事，在协议层面被自己的预处理拆掉了；</li>

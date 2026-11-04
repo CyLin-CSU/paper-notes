@@ -1179,17 +1179,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -1198,7 +1187,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2157,17 +2146,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2176,7 +2154,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2329,22 +2307,7 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 <p><em>Figure 1 · 难度异质示意：准平稳背景与高难瞬态共存于不同通道-时间位置，且同一协议下跨样本复现——难度可做成数据集级位置统计</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/not-all-eeg-framework.png" data-desc-position="bottom"><img alt="Figure 2 · 框架总览：EMA 误差图 → PATS 位置时间图 → 条件化因子化时空 Transformer 预测干净样本；采样按同一调度解 ODE" src="../../assets/not-all-eeg-framework.png"></a></p>
 <p><em>Figure 2 · 框架总览：(a) 训练——PATS 从 EMA 误差图导出位置时间图，条件化因子化时空 Transformer 预测干净样本；(b) 采样——从高斯噪声出发，按同一位置调度迭代解流 ODE</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    subgraph T["训练"]
-        A["EEG 样本 x₁（C×N×P，P=200）"] --&gt; B["EMA 误差图 ē（全数据集共享）&lt;br/&gt;→ 归一化显著图 s"]
-        C["高斯噪声 x₀"] --&gt; D["位置加噪&lt;br/&gt;z = τ⊙x₁ + (1−τ)⊙x₀"]
-        E["全局 t --&gt; 时间图 τ_ij = t + m·s_ij·t(1−t)"] --&gt; D
-        B --&gt; E
-        D --&gt; F["因子化时空 Transformer&lt;br/&gt;token 级条件 g_ij = TimeEmbed(τ_ij)+LabelEmbed(c)&lt;br/&gt;时间条带 → 通道条带，adaLN 注入"]
-        F --&gt; G["预测干净样本 x̂₁"]
-        G --&gt; H["四项损失：难度加权 L1 + 统计一致&lt;br/&gt;+ 频率对齐多分辨率频谱 + 相关性"]
-        G -.-&gt;|"误差回流更新 ē"| B
-    end
-    subgraph I["采样"]
-        J["z ~ N(0,I)，t: 0→1"] --&gt; K["同一张 ē 构造 τ&lt;br/&gt;v_ij = τ̇/(1−τ)·(x̂₁−z)"] --&gt; L["生成的 EEG"]
-    end</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2379,7 +2342,7 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>PATS 学到的其实是「采集协议的位置语法」</strong>：EMA 误差图是数据集级统计，前提是难位置跨样本对齐——TUEV 事件中心窗、BCIC cue 对齐窗、SEED trial 窗恰好都满足（都是范式对齐的窗口）。对位置随机化的自由长记录（如随机开窗的 TUAB），「第 j 个 patch 难」不再有跨样本语义，这个假设会弱化。论文未讨论该边界，结论里也只把 instance-level 难度列为 future work——<strong>这个方法的适用域比三个 benchmark 暗示的窄</strong>；</li>
 <li><strong>τ 的调制是三件事打包</strong>：数据侧（每位置噪声水平）、监督侧（难度加权损失）、条件侧（<abbr title="词元，模型处理的最小输入单元">token</abbr> 级时间嵌入）。细消融显示大头在调度本身：去 PATS 掉到 5.12%，仅去难度加权重构只掉到 8.72%——「把监督信号分配对」比「把损失加权调对」更根本；</li>

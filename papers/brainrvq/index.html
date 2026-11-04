@@ -1249,17 +1249,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -1268,7 +1257,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2157,17 +2146,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2176,7 +2154,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2463,26 +2441,7 @@ S_{c,a} = \alpha_1 \tilde{S}_{neural} + \alpha_2 \tilde{S}_{clean} + \alpha_3 \t
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/brainrvq-framework.png" data-desc-position="bottom"><img alt="Figure 1 · BrainRVQ 总体框架:(A) DD-RVQ tokenizer;(B) 层次自回归掩码预训练;(C) 下游适配" src="../../assets/brainrvq-framework.png"></a></p>
 <p><em>Figure 1 · (A) DD-RVQ for <abbr title="脑电图 Electroencephalogram">EEG</abbr> Tokenization——异构 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 经 Neural Transformer Encoder 得潜在表示,时域支路直接进 RVQ(quantize_t),频域支路经 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 进 RVQ(quantize_f),各自 3 层码本级联,Decoder_t 重构波形、Decoder_f 重构幅值与相位,Embedding Loss + 重构损失联合优化(图中右上角的「Restruction Loss」为原文拼写错误);(B) Pre-training Process——Information Masking 选高信息 patch,Temporal Conv → Transformer Blocks → Hierarchical RVQ Predictor 逐层自回归预测 <abbr title="词元，模型处理的最小输入单元">token</abbr>(Z^(l) 条件于前层);(C) Downstream Tasks——预训练编码器接任务头微调</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    A["TUEG v2.0.1 预训练语料(19 ch × 30 s @ 200 Hz,约 9,200 h)"] --&gt; B["1 s 非重叠 patch,序列长 19×30=570"]
-    B --&gt; C["共享 Transformer 编码器(12 层,d=200)"]
-    C --&gt; D["潜在表示 h,ℓ2 归一化"]
-    D --&gt; E["时域 RVQ:3 层 × 8192 码本,码字 64 维,EMA 更新"]
-    D --&gt; F["频域 RVQ:3 层 × 8192 码本,码字 64 维"]
-    B -.-&gt;|"DFT 取幅值 A 与相位 φ 作重构目标"| H
-    E --&gt; G["Decoder_t(3 层)重构波形 → L_time"]
-    F --&gt; H["Decoder_f(3 层)重构幅值 + 相位 → L_freq"]
-    E --&gt; I["时域 token z(l),l=1..3"]
-    F --&gt; J["频域 token z(l),l=1..3"]
-    I --&gt; K["重要性评分 S(5 指标加权)+ 课程采样 w: 0.2→0.7"]
-    J --&gt; K
-    K --&gt; L["按 50% 比例掩码,可学习 mask token"]
-    L --&gt; M["预训练编码器 f_theta(12 层,5.82M)"]
-    M --&gt; N["层级预测头 g(l):z(l) 条件于真值 z(1..l-1) 的累加 embedding"]
-    N --&gt; O["teacher forcing,层加权 λ = 1 / 0.5 / 0.25"]
-    M --&gt; P["下游适配:加载编码器 + 池化分类头,端到端微调 8 个数据集"]</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2525,7 +2484,7 @@ S_{c,a} = \alpha_1 \tilde{S}_{neural} + \alpha_2 \tilde{S}_{clean} + \alpha_3 \t
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>「consistently outperforms」与明细账之间有一段距离</strong>。8 个数据集里真正拉开的是 Mental Workload(+0.071 AUROC)和 CHB-MIT AUC-PR(+0.096);TUEV +0.013、SHU-<abbr title="运动想象 Motor Imagery">MI</abbr> +0.018 是小胜,PhysioNet +0.001、SEED-V +0.003 落在 5-seed 标准差内,TUAB 排序指标反输 CBraMod 0.023。诚实的读法是:<strong>在同源语料(TUEG ⊃ TUAB/TUEV)的临床任务上有实质或边际增益,在运动想象/情绪这类「语料外」任务上基本打平</strong>——而后者才是检验 tokenization 质量而非语料熟悉度的试金石。摘要的营销措辞与表格的混合证据,阅读时要拿第 3 节那张 8 行对照表压一压;</li>
 <li><strong>「双域」的「双」到编码器为止是假的——这不是缺点,但这笔账论文没算</strong>。共享编码器输出同一个 h,两套码本量化同一向量,时/频分化完全由两个解码器的重构目标(波形 vs 幅相)反向逼出来;Fig. 1 却在频域支路画了 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 模块,与正文「<abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 只提供重构目标」的表述矛盾(图文各说各话,复现前必须问作者)。对照 CodeBrain 的独立时/频编码器,BrainRVQ 的双域是码本层的便宜版——消融证明便宜版也有效(去任一码本都掉分),但同一 h 进两套 8192×3 码本,6 个 <abbr title="词元，模型处理的最小输入单元">token</abbr>/patch 里有多少是冗余编码?一个零成本的检验:用时域 <abbr title="词元，模型处理的最小输入单元">token</abbr> 互预测频域 <abbr title="词元，模型处理的最小输入单元">token</abbr>,看互信息有多高;</li>

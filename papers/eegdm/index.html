@@ -2264,19 +2264,6 @@
 <p>增强视图设计（延续对比学习文献中验证有效的两种）：<strong>零掩蔽</strong>（每通道置零连续 0.4s）与<strong>幅值缩放</strong>（整段乘 <span class="arithmatex">\( U[0.8, 1.2] \)</span> 系数），加原样本共三个源视图。增强作用于<strong>条件支路</strong>——迫使 encoder 从扰动视图中保留与目标共享的信息。</p>
 <h3 id="23">2.3 训练设置<a class="headerlink" href="#23" title="Permanent link">#</a></h3>
 <p>预训练 TUEG：19 个公共通道、200Hz、30 秒非重叠样本（570 个 1s patch）；DiT 8 块、<span class="arithmatex">\( T = 1000 \)</span> 扩散步；AdamW lr 5e-4（OneCycleLR）、batch 32、EMA 0.9999；4×A100 约 32.9 万步（约 113 小时），完全从零训练。下游微调 encoder <strong>不冻结</strong>（统一 lr 5e-4），另报线性探针。</p>
-<pre class="mermaid"><code>flowchart LR
-    subgraph Cond["条件支路"]
-        A["原始 EEG + 零掩蔽视图 + 幅值缩放视图&lt;br/&gt;（m=3 源视图）"] --&gt; B["共享 ViT Encoder f_φ"]
-        B --&gt; C["平均池化 → 条件表示 e（不 detach）"]
-    end
-    subgraph Diff["去噪目标支路（PCA 隐空间）"]
-        D["EEG 样本 x"] --&gt; E["PCA → z（K=20）"]
-        E --&gt; F["加噪 z_t"]
-        F --&gt; G["DiT 去噪器（8 块，adaLN-Zero）&lt;br/&gt;ε_θ(z_t, t, e)"]
-        G --&gt; H["去噪隐表示 → invPCA → 重建 x̃"]
-    end
-    C -- "e + 时间步嵌入 → γ,β,ρ 调制" --&gt; G
-    G -- "L_simple + L_vlb 经 e 反传" --&gt; B</code></pre>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/eegdm-arch.png" data-desc-position="bottom"><img alt="Figure 1 · EEGDM 总体架构：上半为主链（PCA 潜空间 → 扩散加噪 → DiT 去噪 → invPCA 生成）；下半为条件支路（增强视图 → Encoder → 表示 e 与时间步嵌入一起调制 DiT；右下为 adaLN-Zero 块细节）" src="../../assets/eegdm-arch.png"></a></p>
 <p><em>Figure 1 · encoder 表示 <span class="arithmatex">\( e \)</span> 与噪声时间步表示相加后经 MLP 回归 adaLN-Zero 的 <span class="arithmatex">\( \gamma, \beta \)</span>（缩放/平移）与 <span class="arithmatex">\( \rho \)</span>（残差前逐维缩放），条件信息以此方式调制每一层去噪</em></p>

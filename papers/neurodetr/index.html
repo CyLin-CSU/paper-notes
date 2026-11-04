@@ -1341,17 +1341,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -1360,7 +1349,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2201,17 +2190,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2220,7 +2198,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2575,29 +2553,7 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/neurodetr-framework.png" data-desc-position="bottom"><img alt="Figure 2 · NeuroDETR 总体框架：连续 EEG 经 SimpleConv 骨干（电极坐标混合 + 10 级膨胀卷积）→ FOCAL 事件引导稀疏注意力 → 多尺度时间 VQ 与空间金字塔 VQ 组成事件记忆 → 融合查询 + DETR 解码输出事件集合" src="../../assets/neurodetr-framework.png"></a></p>
 <p><em>Figure 2 · (a) 连续 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 输入与事件集合标注格式；(b) FOCAL：密度头出窗级事件概率，引导局部注意力路由，axial attention 跨窗交互 ×2；(c) 多尺度时间 <abbr title="向量量化 Vector Quantization">VQ</abbr>：各尺度独立码表，池化-插值对齐取平均加时间 <abbr title="位置编码 Positional Encoding">PE</abbr>；(d) 空间金字塔 <abbr title="向量量化 Vector Quantization">VQ</abbr>：混合前的原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 按 1 全头 / 5 脑区 / 12 细簇聚合，密度引导池化 + 跨尺度残差量化（减去量化父层）；(e) 融合与解码：时间/空间双流 ×2 + 门控残差，DETR 解码器 ×4 出 Class/Start/End。左下 Training Objectives：检测损失（L1 边界 + 分类 + GIoU）与辅助损失（边界 focal + 稠密分类 + 预测一致性）。图例：实线箭头 = 特征/<abbr title="词元，模型处理的最小输入单元">token</abbr> 流，橙虚线 = 密度引导，黄虚线 = 训练监督。图中 "Bonudary focal"（应为 Boundary）与 "codebooksacross"（缺空格）为原文图内笔误</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    X["多通道 EEG X（C×T）"] --&gt; B1["电极坐标 P 经 Fourier 嵌入&lt;br/&gt;空间混合为 270 虚拟通道"]
-    B1 --&gt; B2["Pointwise 投影 + 10 级膨胀时域卷积&lt;br/&gt;H：T×128，时序分辨率保留"]
-    X -.-&gt;|"混合前的原始信号"| S1
-    B2 --&gt; F1["FOCAL 块 ×2：密度头预测窗级事件概率 p&lt;br/&gt;p 超过 0.4 的窗口做局部自注意力"]
-    F1 --&gt; F2["未选中窗口只做背景归一化&lt;br/&gt;Axial attention 跨窗交互 → H'"]
-    F2 --&gt; T1["多尺度平均池化 s1/s2/s3"]
-    T1 --&gt; T2["各尺度独立时间码表 VQ"]
-    T2 --&gt; T3["插值对齐取平均 + 正弦时间 PE&lt;br/&gt;时间记忆 M_t"]
-    S1["1 全头 / 5 脑区 / 12 细簇 按通道名聚合"] --&gt; S2["共享 stem：两层跨步时域卷积"]
-    S2 --&gt; S3["密度引导池化：detach 的 p 加权进 Ts 个 bin"]
-    S3 --&gt; S4["跨尺度残差量化：细层量化减去父层量化输出&lt;br/&gt;各层独立空间码表"]
-    S4 --&gt; S5["尺度嵌入 + sigmoid 门 → 空间记忆 M_s"]
-    T3 --&gt; U1["时间融合 ×2：自注意力 + 滑窗交叉注意力 + FFN"]
-    S5 --&gt; U2["空间融合 ×2（独立参数化）"]
-    U1 --&gt; U3["门控残差 Z = Z_t + g·Z_s，g 初始 0.02"]
-    U2 --&gt; U3
-    U3 --&gt; D1["DETR 事件解码器 ×4：Ne 个查询交叉注意力"]
-    D1 --&gt; D2["Class / Start / End 三个头"]
-    D2 --&gt; D3["丢弃背景查询 → 事件集合（类别·起·止）"]
-    L["检测损失 + 边界 focal + 稠密分类 + 预测一致性"] -.-&gt;|"监督"| D3</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2640,7 +2596,7 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>量化本身贡献不大，贡献大的是「量化 × 事件引导」的耦合</strong>。M1（时间量化→连续）平均只掉 1–2 pp，2×2 里无引导时量化增益 0.91 pp——单看这些数字，「离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 化」在检测里的直接收益是温和的；交互项 2.06 说明 <abbr title="词元，模型处理的最小输入单元">token</abbr> 化的红利要靠 FOCAL 的稀疏路由「兑付」。这和 tokenization 线一贯的叙事（词表本身多重要）不同：在这个任务里，词表是配合事件稀疏性才有意义的，单卖词表卖不出价；</li>
 <li><strong>事件占比决定 FOCAL 的价值，也框定了这套方法的主场</strong>。BNCI2020/HDOP/TUSZ 覆盖 27%/6.15%/3.18%，去 FOCAL 掉 13.18/6.14/17.08；Broderick 69% 只掉 0.89，且领先幅度最薄（+0.54）。稀疏长记录（TUSZ 256 s 窗、63 s 平均事件）才是事件引导的主场——这恰好是「异步检测」的初心场景：临床监测里事件本来就少。反过来说，密集事件数据集上这套机制接近空转，选数据集时要有预期；</li>

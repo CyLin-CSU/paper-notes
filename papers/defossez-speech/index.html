@@ -549,17 +549,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -568,7 +557,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2157,17 +2146,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2176,7 +2154,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2301,26 +2279,7 @@
 <p><em>Figure 1 · 左：speech module（wav2vec 2.0 的卷积 + Transformer）把 3 秒语音映为 <span class="arithmatex">\( Y \)</span>；右：brain module（空间注意力 + 被试块 + 卷积栈）把 <span class="arithmatex">\( C\times T \)</span> 的脑信号映为 <span class="arithmatex">\( Z \)</span>；顶部为评测协议——对每个脑表征 <span class="arithmatex">\( Z_i \)</span> 给 <span class="arithmatex">\( N \)</span> 个候选段逐一打内积分，即零样本检索；两空间以 CLIP 对比损失对齐，<span class="arithmatex">\( N \)</span> 名被试共享除被试层外的全部权重</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/defossez-brainmodule.png" data-desc-position="bottom"><img alt="Extended Data Fig. 4 · 设计选择（A–D）与 brain module 逐层结构（E）" src="../../assets/defossez-brainmodule.png"></a></p>
 <p><em>Extended Data Fig. 4 · A–D 是同一被试「Thank you for coming, Ed」的 Mel 重建对照：回归基线（B）只剩模糊能量轮廓，对比损失（C）恢复频带结构，换 wav2vec 目标（D）最干净；E 是 brain module 逐层结构——SpatialAttention(270) → Conv(270, K=1) → 被试专属 SubjectLayer(270, S) → 5 块膨胀卷积（GLU 减半）→ 两层 1×1 收尾到 <span class="arithmatex">\( F \)</span> 维</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    subgraph S["Speech module（冻结）"]
-        A["原始语音波形"] --&gt; B["wav2vec2-large-xlsr-53&lt;br/&gt;最后 4 层平均 → Y ∈ R^(F×T)"]
-    end
-    subgraph Bm["Brain module（训练）"]
-        C["原始 MEG/EEG X ∈ R^(C×T)&lt;br/&gt;120 Hz，前移 150 ms&lt;br/&gt;baseline correction + clamp 20σ"] --&gt; D["空间注意力&lt;br/&gt;傅里叶参数化传感器位置函数&lt;br/&gt;→ 270 通道"]
-        D --&gt; E["被试层：1×1 Conv（每被试一个 270×270 矩阵）"]
-        E --&gt; F["5 块 × 3 层膨胀卷积&lt;br/&gt;残差 + BN + GELU，GLU 减半"]
-        F --&gt; G["两层 1×1 Conv → Z ∈ R^(F×T)"]
-    end
-    B --&gt; H["CLIP 损失&lt;br/&gt;batch 内负例，softmax 内积"]
-    G --&gt; H
-    subgraph E2["评测：zero-shot 检索"]
-        I["测试脑片段"] --&gt; G2["Brain module → Z"]
-        J["测试集全部 3 s 段（1000+）"] --&gt; K["候选 Y"]
-        G2 --&gt; L["内积排序 → top-10"]
-        K --&gt; L
-    end</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2355,7 +2314,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>检索范式是绕道而非终点</strong>。对比学习赢回归，赢在把「逐维拟合」换成「可分辨性」，但代价是解码器只会排序、不会生成——给定脑信号，它能在 1,000 个候选里挑出那句，却无法输出候选集之外的一个词。作者在 Discussion 里自己承认要补生成模块。这个限制和 SSM2Mel 形成精确的互补：回归路线输出自由但信噪比贴地，检索路线信噪比可用但被候选集圈死。真正的语音解码（想象语音、病人产出）两个都得过生成关；</li>
 <li><strong>被试层小得令人意外，这个结论可能被低估了</strong>。270×270 的一个矩阵就吸收了跨被试差异，且训练被试越多整体越好——这暗示 MEG/<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的被试特异性主要不是深层表征差异，而是「传感器几何 + 个体解剖」的低维重映射。对站内基础模型轴线的直接影响：EEGPT、CBraMod 这类多被试预训练模型里的被试建模，可能根本不需要复杂的 per-subject adapter，一个线性映射加一个位置先验就够了。当然边界要留：本文只测了被动听觉，主动任务或临床人群里被试差异的维度可能高得多；</li>

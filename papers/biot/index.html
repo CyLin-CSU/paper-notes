@@ -462,17 +462,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#14" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2072,17 +2061,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#14" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2211,16 +2189,6 @@
 <li><strong>线性注意力 Transformer</strong> 解决多通道长句子的二次复杂度问题（低秩 E/F 投影，注意力图 N×N → N×d）；</li>
 <li>频率信息以 FFT 能量特征形式进入 segment embedding——证明频域特征对 CHB-MIT、IIIC 与可穿戴 HAR 任务尤其有用；</li>
 </ol>
-<h4 id="14">1.4 流程<a class="headerlink" href="#14" title="Permanent link">#</a></h4>
-<pre class="mermaid"><code>flowchart LR
-    A["原始多通道信号"] --&gt; B["重采样 200Hz"]
-    B --&gt; C["95 分位数归一化"]
-    C --&gt; D["逐通道切段 1s / 重叠 0.5s"]
-    D --&gt; E["缺失 token 丢弃 + 展平成句"]
-    E --&gt; F["token embedding：FFT 能量 + 通道 + 位置"]
-    F --&gt; G["线性 Transformer ×4（低秩 E/F 投影）"]
-    G --&gt; H["mean pooling"]
-    H --&gt; I["ELU + 线性分类头"]</code></pre>
 <h4 id="15">1.5 实验与结果<a class="headerlink" href="#15" title="Permanent link">#</a></h4>
 <ul>
 <li>预训练语料：500 万静息 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（PREST）+ 500 万睡眠 <abbr title="脑电图 Electroencephalogram">EEG</abbr>（SHHS）+ ECG（Cardiology）；</li>

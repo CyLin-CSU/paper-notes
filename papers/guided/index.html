@@ -689,17 +689,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -708,7 +697,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2157,17 +2146,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2176,7 +2154,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2429,29 +2407,7 @@ p(I,\, z_E,\, z_I) = p(z_I \mid z_E)\; p(I \mid z_I)
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/guided-framework.png" data-desc-position="bottom"><img alt="Figure 2 · GUIDED 总体框架:左列对齐训练(CLIP 冻结 + ATM 可训练,对比学习)与零样本分类/检索;右侧两阶段生成(MSE 对齐 VAE latent 低层、Diffusion U-Net 先验出图像嵌入、IP-Adapter + SDXL-turbo 渲染、GIT 提供文本提示)" src="../../assets/guided-framework.png"></a></p>
 <p><em>Figure 2 · 左列:训练块——视觉刺激经 CLIP Image(雪花冻结)与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> Encoder(火焰可训练)分别嵌入,⊗ 对比学习对齐,零样本做 Classification / Retrieval(右侧 Image Dataset 给出 antelope / pear / kettle / sausage 候选);推理块 <abbr title="脑电图 Electroencephalogram">EEG</abbr> Encoder 亦冻结。右下 Generation 块:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 嵌入经 <abbr title="均方误差 Mean Squared Error">MSE</abbr> Loss 对齐 VAE image encoder → VAE Latent → VAE image decoder 出低层模糊图;<abbr title="脑电图 Electroencephalogram">EEG</abbr> 嵌入 + Noise 进 Diffusion U-Net(×T,可训练)出图像嵌入(高层);两者汇入 IP-Adapter + SDXL-turbo 渲染重建图像;GIT model img2text 从图像嵌入生成 caption(如 "A bunch of colorful, dense fudge.")作文本提示(语义层)。图内 "Generatilon" 系原文笔误</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    A["图像刺激 I"] --&gt; B["CLIP Image Encoder(冻结)"]
-    B --&gt; C["图像嵌入 z_I(N×1024)"]
-    D["EEG 序列 E(N×C×T, 0–1000ms)"] --&gt; E["ATM:嵌入 + 通道注意力 → 时空卷积 → MLP 投影"]
-    E --&gt; F["EEG 嵌入 z_E(N×1024)"]
-    C --&gt; G["对比学习 L_CLIP(温度 0.07)"]
-    F --&gt; G
-    F --&gt; H["MSE 回归(生成任务)"]
-    subgraph S1["Stage I · 先验扩散(EEG 嵌入 → CLIP 图像先验)"]
-        I["噪声 z_I^t + 时间步 t"] --&gt; J["轻量 U-Net 先验 ε(z_I^t, t, z_E)"]
-        J --&gt; K["CFG 采样 → CLIP 图像先验 z_I"]
-    end
-    F -.-&gt;|"条件:以 0.1 概率置空训练"| J
-    subgraph S2["Stage II · 图像合成(CLIP 先验 → 图像)"]
-        K --&gt; L["SDXL + IP-Adapter(冻结)双交叉注意力"]
-        K --&gt; M["GIT img2text → 文本提示(语义层,可选)"]
-        N["EEG → VAE latent(4×64×64)低层管线"] --&gt; O["VAE decoder 出模糊图 → img2img 强度 0.5"]
-        O --&gt; L
-        M --&gt; L
-        L --&gt; P["重建图像"]
-    end</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2494,7 +2450,7 @@ p(I,\, z_E,\, z_I) = p(z_I \mid z_E)\; p(I \mid z_I)
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>「接近 fMRI」要拆开读</strong>。高层 CLIP 指标 0.786 对 fMRI 的 0.917–0.942,差 0.13;低层 PixCorr 0.160 对 0.305,差近一倍;SSIM 0.345 vs 0.366 几乎持平——但 SSIM 对模糊图不敏感,而 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 低层管线输出的本来就是 img2img 之前的模糊图,这项持平的说服力有限。真正立得住的是两件事:同管线 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 全面超过 MEG(0.160 vs 0.104),以及 200-way 检索 28.64% 的量级。诚实的结论是「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 拿到了视觉重建的牌桌门票」,不是「<abbr title="脑电图 Electroencephalogram">EEG</abbr> 追平 fMRI」;Discussion 里 "performance close to fMRI" 的措辞比 Table 1 的数字响。fMRI 那几行还是别的数据集(NSD)、别的被试,跨数据集横比本就只能看量级;</li>
 <li><strong>生成质量的大头是 SDXL 的,不是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的</strong>。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 对最终图像的全部贡献是一个 1024 维语义向量加一张模糊图:先验扩散在 ImageNet 量级配对上训练、SDXL + IP-Adapter 冻结渲染、guidance scale 可调。Fig. 6d 恰好暴露了这点——调 w 可以在「贴合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语义」与「图像多样性」之间滑动,而「多样性」意味着模型在补全 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 根本没有提供的高层先验之外的细节。评估端只用 CLIP 检索式语义对齐、无任何分布级指标(无 FID),低层证据 PixCorr/SSIM 又只在单被试上报——「重建了图像」与「从 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 恢复了图像细节」之间的距离,这篇论文没有工具去度量;</li>

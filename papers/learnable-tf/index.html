@@ -1203,17 +1203,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -1222,7 +1211,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2135,17 +2124,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2154,7 +2132,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2292,22 +2270,7 @@
 <p><em>Figure 1 · 四种时频变换对照：前三行的核是手工预定义的，LTFT（末行）的核完全可学习，谱图每个像素都是学出来的表示</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/lft-cnn-bilstm.png" data-desc-position="bottom"><img alt="Figure 9 · LTFT + CNN + BiLSTM 的五类癫痫分类架构：逐 1 s 段变换，CNN 提特征，BiLSTM 建模段间时序，多数投票出结果" src="../../assets/lft-cnn-bilstm.png"></a></p>
 <p><em>Figure 9 · Bonn 五类任务架构：每段 1 s <abbr title="脑电图 Electroencephalogram">EEG</abbr> 独立过 LTFT 层（0–31 Hz，32×256 谱图，池化后 32×32），双卷积层 + 2×2 池化得 8×8×8 特征图，BiLSTM(256) 建模 23 个段的时序，多数投票定记录级标签</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    A["原始 EEG x[k]，长度 N"] --&gt; B["FFT 得 X"]
-    B --&gt; C["逐频率循环移位 X_m"]
-    D["可学习复值窗口 w_m（初始化为 ST 高斯窗）"] --&gt; E["FFT 得 W_m"]
-    C --&gt; F["L_m = IFFT(X_m ⊙ W_m)"]
-    E --&gt; F
-    F --&gt; G["谱图 P = |L|²"]
-    G --&gt; H{"下游网络"}
-    H --&gt;|"合成 / MI（SEED 不池化）"| I["时间轴平均池化 → Flatten&lt;br/&gt;SEED：展平 + BatchNorm → 线性分类器"]
-    H --&gt;|"Bonn"| J["CNN → BiLSTM(256) → 多数投票"]
-    I --&gt; K["交叉熵损失 E"]
-    J --&gt; K
-    K --&gt; L["Δ 来自自动微分&lt;br/&gt;∂E/∂w*_m = IFFT(X*_m ⊙ FFT(Δ_m ⊙ L_m))"]
-    L --&gt;|"SGDM 更新 w_m（不正则化）"| D</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2346,7 +2309,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ol>
 <li><strong>与「固定 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr>/<abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> + 下游学习」的差别到底在哪？</strong> 站内那条频域线（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/TFM/LUNA）的共同假设是：固定变换给出的频域表示已经够好，学习发生在表示层（embedding、重构目标、patch 注意力）。LTFT 把梯度一路送到变换核，学习发生在<strong>核函数层</strong>。但读了窗口可视化我会修正一个预期：学到的并不是全新的核——Bonn 上高频窗口基本留在高斯初始化，改动集中在少数判别频段。也就是说 LTFT 的实际收益模式是「在 ST 先验上做任务驱动的局部重加权」，而不是发现 ST/CWT 之外的表示。而且这个自由度不只是重加权：下游的损失加权或掩码只能改变「哪些频段的已有表示更重要」，改窗口改变的是每个频段<strong>时频分辨率权衡本身</strong>（窗宽窗形），这是自由度放进核函数才有的能力——Bonn 低频学出小波样核、高频保留高斯包络，就是分辨率被按频段重新分配的直接证据。这与 Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的频率加权在精神上接近，只是加权从损失函数搬进了核函数，且权重由梯度而非人工 <span class="arithmatex">\( k^\alpha \)</span> 决定；</li>
 <li><strong>自由度放在变换本身，合理但要付三笔账</strong>。参数账：每频率一个长度 N 的复窗口，256 点 32 频率就是 1.6 万参数，对单被试 280 trial 的 <abbr title="运动想象 Motor Imagery">MI</abbr> 明显偏多（峰值 88.53% 回落到 86.95% 就是账单）；正则账：窗口完全不正则，只靠数据量兜底，换到更大谱图（SEED 是 50×128×32）时这个设计的扩展性存疑；优化账：复值 Wirtinger 梯度虽给了闭式，但每频率一次 IFFT 的开销乘上频率数，训练成本高于一次性 FFT 的固定变换。另外全文只试了 ST 一种初始化，没有初始化敏感性消融——「换个起点（窄带 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 窗、Morlet 母小波）会学到什么」目前是空的。作者把「更高效的初始化方案」列为 future work，说明他们清楚这笔账；</li>

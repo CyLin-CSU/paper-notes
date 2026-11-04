@@ -735,17 +735,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -754,7 +743,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2179,17 +2168,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2198,7 +2176,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2467,33 +2445,7 @@
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/crosspt-framework.png" data-desc-position="bottom"><img alt="Figure 1 · CrossPT-EEG 数据集构建流程:实验范式 S1–S4、EEG 采集与多粒度标注、两阶段跨时间设计" src="../../assets/crosspt-framework.png"></a></p>
 <p><em>Figure 1 · 上排实验范式:<abbr title="脑电图 Electroencephalogram">EEG</abbr> 戴帽采集 → S1 类别标签呈现(空格键继续)→ S2 注视点 500 ms → S3 RSVP 每图 500 ms(Img1…ImgN)→ S4 随机测试(可选),Next category 回环;左下:连续采集的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 按图像对齐(Img1–Img50),与图像 index、粒度、标签共同入库;右下 Cross-time Stages:Stage 1 每类 N=50 block 呈现(橙/蓝分块)→ 7 天间隔 → Stage 2 每类 N=30/N=20 乱序(紫色为乱序插入的类别);底部 Multi-Granularity Labels:熊猫/高尔夫球为 Coarse,罗威纳/萨摩耶为 Fine。注:图中 S1–S4 步骤标签与图例是 PDF 矢量叠加层,不在内嵌位图里</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    subgraph P["实验范式(S1–S4 循环)"]
-        A["S1 类标签呈现(空格键继续)"] --&gt; B["S2 注视点 500 ms"]
-        B --&gt; C["S3 RSVP:每图 500 ms"]
-        C --&gt; D["S4 随机测试(可选)&lt;br/&gt;未通过类别剔除"]
-        D --&gt;|"Next category"| A
-    end
-    P --&gt; E["62 通道 × 1000 Hz 连续 EEG&lt;br/&gt;+ 图像 index / 粒度 / wnid 标签"]
-    E --&gt; F["预处理:M1+M2 重参考&lt;br/&gt;0.5–80 Hz 带通 + 50 Hz 陷波 + 伪迹去除"]
-    F --&gt; G["特征窗 40–440 ms"]
-    G --&gt; H["DE 频域特征&lt;br/&gt;δ/θ/α/β/γ 五频段 × 62 电极"]
-    G --&gt; I["时域原始段"]
-    H --&gt; J["Ridge / KNN / RF / SVM&lt;br/&gt;MLP / RGNN"]
-    I --&gt; K["EEGNet"]
-    J --&gt; L["two-way identification&lt;br/&gt;k=500,chance 0.5"]
-    K --&gt; L
-    subgraph S["两阶段采集"]
-        M["Stage 1 · 16 人 · block 设计&lt;br/&gt;每类 50 张连续呈现"] --&gt;|"间隔 ≥7 天"| N["Stage 2 · 6 人 · 非 block 乱序&lt;br/&gt;每类 30 训 + 20 测"]
-    end
-    S --&gt; J
-    S --&gt; K
-    L --&gt; O["WT:同一人 Stage 2 内 30 训 / 20 测"]
-    L --&gt; Q["CT:本人 Stage 1 → Stage 2"]
-    L --&gt; R["CP:10 人 Stage 1 → 6 人 Stage 2"]
-    L --&gt; T["PT:10 人 Stage 1 预训&lt;br/&gt;→ 本人 Stage 1 续训 → Stage 2"]</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2536,7 +2488,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>基准的价值在「下限」而不在「上限」</strong>。WT 0.95 → CT 0.55 → CP 0.52 这条崩塌曲线,是站内视觉解码线所有论文都没系统报过的维度:<a href="../guided/">GUIDED</a> 自己报过被试内 28.64% → 跨被试 11.84% 的腰斩,但那是单模型单数据集;本篇用 7 个模型 × 4 任务 × 2 粒度的受控矩阵说明:跨被试 ≈ 接近重来,跨时间 ≈ 丢掉六成。任何在 THINGS-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上刷 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr> 的工作,宣称「可用于 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr>」之前应该先过 CT/CP 这两关——本篇最大的贡献是把这两关做成了标准化协议;</li>
 <li><strong>「预训练有用」的证据在这里很弱,但方向诚实</strong>。PT 比 CT 只多 0.02–0.03:10 个被试 × 4,000 图的有监督预训练几乎买不到泛化。对照站内基础模型轴线的口径,本篇可以当「朴素预训练收益基线」——新方法的跨被试增益若不超过这个幅度,不足以支撑「预训练表征有跨被试不变性」的宣称。但边界要留:这里的预训练只是「换人训 + 半 lr 续训」,没有任何表征对齐、对抗解耦或通道无关设计,它给的是下界不是方法上限;CP 崩到 0.52 恰恰说明跨被试差异是主矛盾,谁若能在 CP 上把 0.52 拉到 CT 水平,就是下一个值得写的结果;</li>

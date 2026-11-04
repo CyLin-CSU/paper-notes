@@ -1284,17 +1284,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -1303,7 +1292,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2157,17 +2146,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2176,7 +2154,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2447,25 +2425,7 @@ z = \tanh\left(W_f \cdot \mathrm{Concat}(y_{\mathrm{sg}}, y_{\mathrm{swa}})\righ
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/codebrain-framework.png" data-desc-position="bottom"><img alt="Figure 2 · CodeBrain 两阶段框架:左 TFDual-Tokenizer,右 EEGSSM 掩码 token 预测" src="../../assets/codebrain-framework.png"></a></p>
 <p><em>Figure 2 · 左（Stage 1）:patched <abbr title="脑电图 Electroencephalogram">EEG</abbr> 过 TFConv（时域 conv 堆叠 ∥ <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr>→conv 堆叠）→ 共享时间位置嵌入 → TF-Encoder → NN 搜索进时/频两个码本;对比损失（段内正对）+ 双 decoder 重构（T-Decoder 原始波形、F-Decoder 幅值/相位）+ <abbr title="码本，离散 token 的可查询向量表">codebook</abbr>/commitment 损失。右（Stage 2）:掩码 patch → 动态位置嵌入 → EEGSSM Block ×N（RMS Norm → Conv+GELU → SGConv ∥ SWA → Tanh⊙Sigmoid 门控 → Conv×2 走 skip）→ Conv1D 出双码本 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测。图注细节:图中「Btach Norm」「Patchfied」为原文拼写笔误</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    subgraph S1["Stage 1 · TFDual-Tokenizer 预训练"]
-        A["1s patch x（200 点，逐通道）"] --&gt; B["TFConv：时域 conv 堆叠 ∥ DFT 频域 conv 堆叠，拼接为时频联合嵌入"]
-        B --&gt; C["加共享时间位置嵌入（无通道身份）"]
-        C --&gt; D["TF-Encoder（12 层 Transformer）"]
-        D --&gt; E["NN 搜索：时域码本与频域码本各 4096×32，得 v_t、v_f"]
-        E --&gt; F["T-Decoder 重构原始波形 + SimCLR 对比（段内两半为正对）"]
-        E --&gt; G["F-Decoder 重构幅值 A 与相位 φ（MSE）"]
-        F --&gt; H["codebook + commitment 损失（stop-gradient）"]
-        G --&gt; H
-    end
-    subgraph S2["Stage 2 · EEGSSM 预训练"]
-        I["30s 样本展平：19 通道 × 30 patch = 570 token"] --&gt; J["ACPE 动态位置嵌入（depthwise 2D conv）"]
-        J --&gt; K["EEGSSM Block × 8：RMS Norm → Conv+GELU → SGConv ∥ SWA → Tanh⊙Sigmoid 门控"]
-        K --&gt; L["Conv1D → 对被掩 patch（50%）交叉熵预测双码本 token 索引"]
-    end
-    H -.-&gt;|"冻结 tokenizer，生成预测目标"| L</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2504,7 +2464,7 @@ z = \tanh\left(W_f \cdot \mathrm{Concat}(y_{\mathrm{sg}}, y_{\mathrm{swa}})\righ
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>「桥接」的实际含义与 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的退守</strong>。标题喊 Bridging,但对照站内 tokenization 线的演进方向(<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 目标 → NeuroLM 词表 → TFM 输入),CodeBrain 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 用法其实<strong>退回</strong>了 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 范式:Stage 2 吃原始 patch、<abbr title="词元，模型处理的最小输入单元">token</abbr> 只是被预测的标签,推理时 tokenizer 整个丢弃,下游模型拿不到任何离散接口。真正被「桥」起来的是两阶段的设计耦合——下游预测的监督信号由 Stage 1 的双码本定义、骨干的多尺度假设与 tokenizer 的域分解呼应。所以它填的缺口是「tokenizer 与架构的联合设计」,不是「<abbr title="词元，模型处理的最小输入单元">token</abbr> 作为模型接口」;拿它和 TFM 比「谁的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 更可用」会问错问题;</li>
 <li><strong>双码本的收益要按数据集拆开看</strong>。Dual 对 Mixed 的差距:FACED +0.073、ISRUC S3 +0.027、SEED-V 仅 +0.003(0.2735 vs 0.2708);对单频码本 SEED-V 也只 +0.007。也就是说「二次扩展表征空间」的收益在情绪任务上几乎归零,理论命题(Proposition 2.1)的实证支撑并不均匀——「二次扩空间」的字面事实成立(每 patch 一个码字变成一对,组合空间 4096² ≈ 1678 万),但「判别力随之提升」只在部分任务上兑现。消融里真正普适的结论反而是骨干侧的:SGConv 和 Gate 拆谁都崩;</li>

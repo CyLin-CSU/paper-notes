@@ -958,17 +958,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -977,7 +966,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2135,17 +2124,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2154,7 +2132,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2341,20 +2319,7 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/delta-framework.png" data-desc-position="bottom"><img alt="Figure 1 · DELTA 框架:(a) EEG-RVQ tokenizer 把 105 通道 × 8 频段的词级向量经 conv encoder 与 n 层残差 VQ 离散化;(b) LLaDA 三阶段——EEG token 掩码复原预训练、EEG 前缀条件的文本去噪微调、全掩码出发的迭代采样" src="../../assets/delta-framework.png"></a></p>
 <p><em>Figure 1 · (a) <abbr title="脑电图 Electroencephalogram">EEG</abbr>-RVQ Tokenizer:Channels(105:FP1/AF7/AF3/F1/F3/…/O7)× Band Pass Filtering(8:Theta₁ 4–6 / Theta₂ 6.5–8 / Alpha₁ 8.5–10 / Alpha₂ 10.5–13 / Beta₁ 13.5–18 / Beta₂ 18.5–30 / Gamma₁ 30.5–40 / Gamma₂ 40.5–49.5 Hz)→ 840 <abbr title="脑电图 Electroencephalogram">EEG</abbr> Vector → Encoder → <abbr title="向量量化 Vector Quantization">VQ</abbr> 1…<abbr title="向量量化 Vector Quantization">VQ</abbr> n(残差逐层相减,⊕ 汇总 q1…qn)→ Decoder 重建 840 <abbr title="脑电图 Electroencephalogram">EEG</abbr> Vector,对外输出 <abbr title="脑电图 Electroencephalogram">EEG</abbr> Word Vector Token;(b) LLaDA-based <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 三栏:Pre-Training(<abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> → Masking t~U(0,1) → LLaDA-8B → Masking Predictor)、Fine-Tuning(<abbr title="脑电图 Electroencephalogram">EEG</abbr> <abbr title="词元，模型处理的最小输入单元">token</abbr> 与掩码文本 <abbr title="词元，模型处理的最小输入单元">token</abbr> 拼接,掩码只挂文本支路)、Sampling(全掩码 → 去噪 → Remask 循环)</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    A["逐词 EEG(105 通道,10-20 系统)"] --&gt; B["带通滤波 8 频段&lt;br/&gt;Theta1 4-6 Hz 至 Gamma2 40.5-49.5 Hz"]
-    B --&gt; C["840 EEG 向量(105 x 8,逐词)"]
-    C --&gt; D["1D 卷积 Encoder,潜特征 Z"]
-    D --&gt; E["RVQ:n 层残差 VQ&lt;br/&gt;zq = Σ c(m, qm)"]
-    E --&gt; F["EEG Word Vector Token 序列"]
-    E -.-&gt;|"Decoder 重建 840 维"| G["VQ-VAE 损失&lt;br/&gt;重构 + codebook + β·commitment"]
-    F --&gt; H["阶段一 · EEG token 掩码复原预训练&lt;br/&gt;mask ratio t ~ U(0,1),LLaDA-8B + QLoRA"]
-    H --&gt; I["阶段二 · EEG-to-Text SFT&lt;br/&gt;EEG token 前缀 + 掩码文本 token 拼接"]
-    T["文本 token Y"] --&gt; I
-    I --&gt; K["推理:全掩码序列出发&lt;br/&gt;固定步数迭代去噪 + Remask"]
-    K --&gt; L["非自回归并行生成文本"]</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -2397,7 +2362,7 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>5 pp 的领先建立在「8B 对亿级」的不对称上,「扩散优于 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr>」没有被干净地验证</strong>。基线 BART/T5 的具体规格论文未披露,但即使按 T5-large(7.7 亿)算,与 LLaDA-8B(80 亿)也差一个量级——QLoRA 冻住的只是底座权重,预训练语言能力差距原封不动地带进了对比。要支撑「非自回归复原更适合噪声 <abbr title="脑电图 Electroencephalogram">EEG</abbr>」这个核心主张,最起码需要同规模对照:LLaDA-8B 换 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 解码做同协议微调,或找一个 8B 级 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> <abbr title="大语言模型 Large Language Model">LLM</abbr> 对打。论文一个都没做。摘要的「up to 5.37 points」要与这条对读:提升真实存在,归因完全不明;</li>
 <li><strong>RVQ 是标题的第一个词,却是全文唯一没有对照的组件</strong>。三个基线吃的都是同一套 RVQ <abbr title="词元，模型处理的最小输入单元">token</abbr>——没有「连续 840 维特征直接进 LM」的基线,「RVQ 逐层编码核心特征、滤掉噪声」这一动机性宣称(从音频压缩搬来的直觉)在本文任何实验里都没被检验。对比站内 tokenization 线的惯例:<a href="../labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> 有 tokenizer 与随机初始化的消融,<a href="../tfm-tokenizer/">TFM-Tokenizer</a> 用 plug-and-play 换头验证 <abbr title="词元，模型处理的最小输入单元">token</abbr> 质量,DELTA 的 tokenizer 是免检组件;加上码本自训于 ZuCo(跨数据集语义存疑)、层数尺寸未披露、无代码——RVQ 这半篇目前既不可复现也不可评估;</li>

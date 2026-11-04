@@ -927,17 +927,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -946,7 +935,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2213,17 +2202,6 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         与其他论文的关系
       
     </span>
@@ -2232,7 +2210,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         个人思考
@@ -2322,20 +2300,7 @@
 <p><em>Figure 1 · NPI 全流程：(a) 观测的多脑区信号；(b) MLP 学单步动力学；(c) 逐区虚拟扰动；(d) 读出全脑 EC。(e,f) 递归生成验证 FC（r=0.97）；(g,h) 扰动响应差给兴奋（b→a 升）/抑制（b→c 降）；(i) 合成数据上 NPI-EC 对真值 r=0.95；(j) 真实 fMRI 上的 seed-based EC</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/surrogate-human-ebc.png" data-desc-position="bottom"><img alt="Figure 3 · HCP 800 人的群体级 EBC" src="../../assets/surrogate-human-ebc.png"></a></p>
 <p><em>Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制，色标 Exc/Inh）；(b) 皮层区归入七个功能网络；(c) 模型 FC 对经验 FC r=0.97；(d) 逐网络的 seed-based FC 空间模式；(e) 逐网络的 seed-based EC（红兴奋/蓝抑制）；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布</em></p>
-<h2 id="_2">流程<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart TD
-    subgraph S1["① 训代理脑（逐被试）"]
-        A["rs-fMRI：N 区 × T 时刻&lt;br/&gt;（HCP 4×15 min，360 区）"] --&gt; B["MLP：x_{t+1} = f(x_t, x_{t-1}, x_{t-2})&lt;br/&gt;单步 MSE，60 epoch"]
-        B --&gt; C{"代理合格？&lt;br/&gt;递归生成的 FC 对经验 FC r=0.97"}
-    end
-    C --&gt;|是| D
-    subgraph S2["② 虚拟扰动-记录"]
-        D["冻结网络，枚举 源区 i × 状态 t"] --&gt; E["x_t → x_t + Δ·e_i（Δ=0.5σ）"]
-        E --&gt; F["读 t+1 全区响应差&lt;br/&gt;EC_i· = E_t[f(x_t+Δe_i) − f(x_t)]&lt;br/&gt;（≡ 状态平均 Jacobian 中源区 i 对应的列）"]
-    end
-    F --&gt; G["逐区扫完 → all-to-all EBC&lt;br/&gt;方向 × 强度 × 兴奋/抑制符号"]
-    G --&gt; H["验证链：RNN 合成 r=0.95 → 公开 BOLD AUC≈1（胜 GC/DCM）→ WBM 胜 GC&lt;br/&gt;→ SC 支撑 r=0.42 → HCP-ABCD r=0.87 → CCEP 613 病人 r=0.33 &gt; FC 0.20"]</code></pre>
-<h2 id="_3">与其他论文的关系<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<h2 id="_2">与其他论文的关系<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <p>站内三篇候选对照都查过，没有与本篇的真实对话（本篇不引它们，主题坐标系也不同），下面如实标注；本篇真正的参照系是经典 EC 方法。</p>
 <table>
 <thead>
@@ -2375,7 +2340,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_4">个人思考<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>方法的全部重量压在一个迁移假设上</strong>：NPI 真正证明的是「扰动代理模型能恢复代理模型的 EC」（仿真部分，近乎循环），而「代理模型的 EC ≈ 真实脑的 EC」只有 CCEP r=0.33 这一间接证据撑着。论文对此的处理算体面——FC 基线 0.20 摆在旁边——但如果 CCEP 上只追平 FC，整个故事就塌了，所以这 0.13 的差距是全文最要命的数字，值得盯住。这层假设内部还有一个更细的错位：代理脑的合格标准是<strong>重现 FC</strong>（r=0.97），可 FC 是无方向的二阶统计量，FC 重现得好并不保证扰动响应（期望 Jacobian）也对——两个 FC 几乎相同的动力学系统完全可以有很不一样的局部增益结构。也就是说，被验收的指标和被使用的量不是同一个量，保真度对 EC 的传导在这道缝上没有免费保证；</li>
 <li><strong>小信号扰动 vs 强刺激的口径差是隐藏的裂缝</strong>：Δ=0.5σ 的冲激对应期望 Jacobian，是线性化的小信号增益；CCEP 是大电流强刺激。非线性系统里两者可以不一致。CCEP 验证成立反而暗示皮层响应在这段尺度上近似线性，或者对数正态分布的强度结构在两种口径下都占主导——论文没有讨论这一点，我认为这是比数据量更深的限制；</li>

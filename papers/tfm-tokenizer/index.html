@@ -940,17 +940,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#64" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#65" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2054,17 +2043,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#64" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#65" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2175,17 +2153,6 @@
 <li><strong>模型极小</strong>：tokenizer ~1.2M + 下游 ~0.7M ≈ 1.9M，比 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（3.2M）、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（5.8M+8.6M）小，性能反而更好；</li>
 <li><abbr title="词元，模型处理的最小输入单元">token</abbr> 质量分析体系：类-<abbr title="词元，模型处理的最小输入单元">token</abbr> 独有性（uniqueness）、类内一致性（检索 precision@K）、频率学习能力（<abbr title="词元，模型处理的最小输入单元">token</abbr> 序列谱熵）、<abbr title="词元，模型处理的最小输入单元">token</abbr> 利用率。</li>
 </ol>
-<h4 id="64">6.4 流程<a class="headerlink" href="#64" title="Permanent link">#</a></h4>
-<pre class="mermaid"><code>flowchart LR
-    subgraph T1["阶段一：Tokenizer 训练（单通道）"]
-        A["原始 patch → Temporal Encoder"] --&gt; F["拼接 → Temporal Transformer → VQ 8192"]
-        B["STFT 频谱窗 → 频率 patch 切分"] --&gt; C["Frequency Transformer"]
-        C --&gt; D["门控聚合"] --&gt; F
-    end
-    F --&gt; G["冻结 tokenizer → token 查表（码字初始化）"]
-    G --&gt; H["下游线性注意力 Transformer"]
-    H --&gt; I["掩码 token 预测（交叉熵）"]
-    I --&gt; J["下游任务微调"]</code></pre>
 <h4 id="65">6.5 实验与结果<a class="headerlink" href="#65" title="Permanent link">#</a></h4>
 <ul>
 <li>数据集：TUEV、TUAB、CHB-MIT、IIIC Seizure（+ 跨设备 EESM23 ear-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 睡眠分期）；</li>

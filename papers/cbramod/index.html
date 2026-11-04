@@ -2318,16 +2318,6 @@
 <h3 id="25">2.5 掩码重构预训练<a class="headerlink" href="#25" title="Permanent link">#</a></h3>
 <p>FC 重构头从表示还原被掩 patch，<abbr title="均方误差 Mean Squared Error">MSE</abbr> 损失<strong>只算被掩位置</strong>（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 惯例）。</p>
 <h2 id="3">3 预训练流水线<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart LR
-    A["TUEG 27,062h 原始临床 EEG&lt;br/&gt;69,652 记录 / 14,987 被试"] --&gt; B["清洗：&lt;5min 剔除&lt;br/&gt;掐头去尾 1min&lt;br/&gt;选 19 个 10-20 公共通道"]
-    B --&gt; C["0.3-75Hz 带通&lt;br/&gt;60Hz 陷波&lt;br/&gt;重采样 200Hz"]
-    C --&gt; D["切 30s 样本&lt;br/&gt;任意点 &gt;100µV 整段剔除&lt;br/&gt;单位 100µV 归一"]
-    D --&gt; E["1,109,545 样本&lt;br/&gt;合计 &gt;9000h"]
-    E --&gt; F["切段 1s/patch&lt;br/&gt;30s → 19×30=570 patch&lt;br/&gt;随机掩码 50%（全零 token）"]
-    F --&gt; G["时频双分支编码&lt;br/&gt;3 层 1D CNN ⊕ rFFT 能量+FC"]
-    G --&gt; H["ACPE&lt;br/&gt;2D depthwise conv 核 (19,7)"]
-    H --&gt; I["12 层 Criss-Cross Transformer&lt;br/&gt;4 头 S-Attn 并行 4 头 T-Attn"]
-    I --&gt; J["FC 重构头&lt;br/&gt;MSE 只算被掩 patch"]</code></pre>
 <p>关键数字：清洗环节剔掉了大量脏数据后仍剩 <strong>&gt;9000h</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 预训练语料 2,534.78h 的 3.5 倍）；训练配置 AdamW lr 5e-4 / wd 5e-2 / cosine 退火 / batch 128 / 40 epoch，4×RTX A5000 约 5 天。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/cbramod-overview.png" data-desc-position="bottom"><img alt="Figure 2 · CBraMod 预训练总览：切段掩码 → 时频双分支 patch 编码 → ACPE → 12 层 Criss-Cross Transformer → 重构被掩 patch" src="../../assets/cbramod-overview.png"></a></p>

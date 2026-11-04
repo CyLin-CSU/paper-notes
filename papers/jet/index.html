@@ -1038,17 +1038,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2110,17 +2099,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2248,19 +2226,6 @@
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{geo}} = \lambda_{\mathrm{tv}} \mathcal{L}_{\mathrm{tv}} + \lambda_{\mathrm{corr}} \mathcal{L}_{\mathrm{corr}} = \lambda_{\mathrm{tv}} \, \frac{1}{T} \sum_t \left\| \nabla_t \hat{x}_1 \right\|_1 + \lambda_{\mathrm{corr}} \big( 1 - \rho(x_1, \hat{x}_1) \big) \]</div>
 <p><strong>总目标</strong>：</p>
 <div class="arithmatex">\[ \mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{recon}} + \mathcal{L}_{\mathrm{cons}} + \mathcal{L}_{\mathrm{geo}} \]</div>
-<h2 id="3">3 流程<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>flowchart LR
-    subgraph T["训练"]
-        A["EEG 样本 x1"] --&gt; C["线性插值路径&lt;br/&gt;x(t) = t·x1 + (1-t)·x0"]
-        B["高斯噪声 x0"] --&gt; C
-        C --&gt; D["JET Transformer&lt;br/&gt;预测向量场 v(x, t, c)"]
-        D --&gt; E["总损失 = L1 重构 + 统计一致性 + 时空结构"]
-        F["类别均衡采样&lt;br/&gt;p ∝ 1/N^α"] -.-&gt; A
-    end
-    subgraph I["推理"]
-        G["x0 ~ N(0, I)"] --&gt; H["解 ODE&lt;br/&gt;dx/dt = v(x, t, c)"] --&gt; J["生成的 EEG"]
-    end
-    E -.-&gt; H</code></pre>
 <h2 id="4">4 实验与结果<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
 <p><strong>数据</strong>：TUH 语料的三个大规模子集，合计超 10,000 次临床 session，统一 16 通道：</p>
 <table>

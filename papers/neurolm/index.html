@@ -695,17 +695,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#54" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#55" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2054,17 +2043,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#54" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#55" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2169,19 +2147,6 @@
 <li><abbr title="脑电图 Electroencephalogram">EEG</abbr> 词表并入 <abbr title="大语言模型 Large Language Model">LLM</abbr> 词表的「外语」接入范式；配 VAE/ELBO 理论解释；</li>
 <li>最大变体 1.7B 参数（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 信号处理领域当时最大）。</li>
 </ol>
-<h4 id="54">5.4 流程<a class="headerlink" href="#54" title="Permanent link">#</a></h4>
-<pre class="mermaid"><code>flowchart TD
-    subgraph P1["阶段一：文本对齐 Tokenizer"]
-        A["EEG patch → VQ Encoder"] --&gt; B["查表 → 时域 / 频域双 Decoder"]
-        A -. "梯度反转 GRL" .-&gt; C["域分类器：EEG 还是文本"]
-    end
-    subgraph P2["阶段二：多通道自回归"]
-        D["码字并入 GPT-2 词表"] --&gt; E["阶梯掩码：同通道预测下一时刻"]
-    end
-    subgraph P3["阶段三：多任务指令微调"]
-        F["EEG tokens + SEP + 文本指令"] --&gt; G["仅对答案部分计算损失"]
-    end
-    P1 --&gt; P2 --&gt; P3</code></pre>
 <h4 id="55">5.5 实验与结果<a class="headerlink" href="#55" title="Permanent link">#</a></h4>
 <ul>
 <li>下游 6 数据集：TUAB、TUEV、SEED（情绪）、HMC（睡眠分期）、Workload（认知负荷）、TUSL（慢波分类）；</li>

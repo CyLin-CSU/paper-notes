@@ -520,17 +520,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#24" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#25" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2054,17 +2043,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#24" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#25" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2170,20 +2148,6 @@
 <li>对称掩码策略（效率 + 数据多样性）；</li>
 <li>大规模 scaling 实验（数据量 1~2500 小时 × 模型 Base/Large/Huge），证实 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 领域也遵循 scaling law（Huge 模型在万小时级数据上仍会持续提升）。</li>
 </ol>
-<h4 id="24">2.4 流程<a class="headerlink" href="#24" title="Permanent link">#</a></h4>
-<pre class="mermaid"><code>flowchart TD
-    subgraph S1["阶段一：神经 Tokenizer 训练"]
-        A["EEG channel patch"] --&gt; B["Temporal Encoder"]
-        B --&gt; C["VQ 查表（8192 码本）"]
-        C --&gt; D["Neural Decoder 重构 DFT 幅值 + 相位"]
-    end
-    subgraph S2["阶段二：掩码 EEG 建模"]
-        E["随机掩码 50%（+ 对称掩码）"] --&gt; F["预测被掩 patch 的码字索引"]
-    end
-    subgraph S3["阶段三：下游微调"]
-        G["换任务预测头 + 平均池化"]
-    end
-    S1 --&gt; S2 --&gt; S3</code></pre>
 <h4 id="25">2.5 实验与结果<a class="headerlink" href="#25" title="Permanent link">#</a></h4>
 <ul>
 <li>下游：TUAB（异常检测）、TUEV（事件分类）、SEED-V（情绪）、MoBI（步态回归）；</li>

@@ -555,17 +555,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#34" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#35" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2054,17 +2043,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#34" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 流程
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#35" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2179,17 +2157,6 @@
 <li><strong>Linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr></strong>：证明学到的特征本身足够通用，小样本下游免微调；</li>
 <li>参数规模 scaling law 实证：<span class="arithmatex">\( \mathrm{ACC} = (33.6 \cdot N)^{0.029} \)</span>、<span class="arithmatex">\( \mathcal{L}_R = (0.72 \cdot N)^{-0.014} \)</span>。</li>
 </ol>
-<h4 id="34">3.4 流程<a class="headerlink" href="#34" title="Permanent link">#</a></h4>
-<pre class="mermaid"><code>flowchart TD
-    A["EEG 58ch × 4s → 250ms patch"] --&gt; B["掩码 50% 时间 × 80% 通道"]
-    B --&gt; C["Encoder 处理 masked 部分 + Summary Tokens"]
-    B --&gt; D["Momentum Encoder 处理全量（EMA 0.01）"]
-    C --&gt; E["Predictor（RoPE + query）预测全部时段特征"]
-    E --&gt; F["对齐损失 L_A（与 Momentum 输出）"]
-    C --&gt; G["Reconstructor（含 skip）重构 masked 原始 patch"]
-    G --&gt; H["重构损失 L_R"]
-    F --&gt; I["总损失 L = L_A + L_R"]
-    D --&gt; F</code></pre>
 <h4 id="35">3.5 实验与结果<a class="headerlink" href="#35" title="Permanent link">#</a></h4>
 <ul>
 <li>预训练：PhysioMI、HGD、TSU、SEED、M3CV（5 个数据集、多范式混合）；</li>
