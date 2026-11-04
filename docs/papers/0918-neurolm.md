@@ -145,4 +145,4 @@ flowchart TD
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：BrainGPT](0918-braingpt.md) ｜ :material-arrow-right: [下一篇：TFM-Tokenizer](0918-tfm-tokenizer.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [战绩总表](../comparison.md#benchmarks)
+:material-arrow-left: [上一篇：BrainGPT](0918-braingpt.md) ｜ :material-arrow-right: [下一篇：TFM-Tokenizer](0918-tfm-tokenizer.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十三篇方法对比](../comparison.md)
