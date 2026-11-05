@@ -689,6 +689,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../papers/reve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REVE (NeurIPS 2025 · 61,415h + 4D位置编码)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../papers/ssm2mel/" class="md-nav__link">
         
   
@@ -1725,7 +1760,7 @@
   <span class="md-ellipsis">
     
   
-    十三篇方法对比
+    十四篇方法对比
   
 
     
@@ -2054,7 +2089,7 @@
 
 
 <h1 id="_1">参考文献索引<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>二十五篇精读论文（含 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测轴外的六篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。</p>
+<p>二十六篇精读论文（含 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测轴外的六篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。</p>
 <h2 id="_2">基础架构与预训练范式<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -2434,6 +2469,12 @@
 <td>arXiv 2608.00048（2026-07）</td>
 <td><a href="../papers/not-all-eeg/">本站精读</a></td>
 <td>位置自适应时间调度的流匹配 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成：EMA 误差图展开位置时间图（PATS）+ 因子化时空注意力 + 频率加权多分辨率频谱损失；对复现 JET 的 TS-FID 再降 40–62%</td>
+</tr>
+<tr>
+<td>REVE</td>
+<td>NeurIPS 2025（arXiv 2510.21585）</td>
+<td><a href="../papers/reve/">本站精读</a></td>
+<td>4D 傅里叶位置编码吃任意电极布局/长度；92 数据集 61,415h 最大非侵入预训练（不剔 &gt;100µV，剔除下游数据防泄漏）；<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> + 时空块掩码 + 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次损失；10 任务平均 +2.5%，linear probing 对 CBraMod +17%；decoder 因隐私不发布</td>
 </tr>
 <tr>
 <td>Défossez et al.（语音感知解码）</td>

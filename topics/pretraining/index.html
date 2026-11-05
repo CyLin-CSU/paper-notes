@@ -691,6 +691,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../papers/reve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REVE (NeurIPS 2025 · 61,415h + 4D位置编码)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../papers/ssm2mel/" class="md-nav__link">
         
   
@@ -1887,7 +1922,7 @@
   <span class="md-ellipsis">
     
   
-    十三篇方法对比
+    十四篇方法对比
   
 
     
@@ -2238,6 +2273,13 @@
 <td>—</td>
 </tr>
 <tr>
+<td>REVE</td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
 <td>EEGMoE</td>
 <td>无码表</td>
 <td>—</td>
@@ -2367,6 +2409,11 @@
 <td>CodeBrain</td>
 <td><strong>原始信号 patch</strong></td>
 <td><strong>离散 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong></td>
+</tr>
+<tr>
+<td>REVE</td>
+<td><strong>原始信号 patch</strong>（时空块掩码 55%，空间 3cm / 时间 3s 连续块 + 10% 整通道 dropout）</td>
+<td><strong>原始信号 patch</strong> + 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次重构（attention pooling 跨全部 MHA 层，信息瓶颈）</td>
 </tr>
 </tbody>
 </table>
