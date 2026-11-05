@@ -1,8 +1,8 @@
-# 十三篇方法对比
+# 十四篇方法对比
 
-> 全站横向对照的**枢纽页**：先[一页速览](#一页速览)给十三篇定位，再按[九个维度](#dimension-guide)拆核心分歧——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源五个维度下放主题专题深读，模型设计 / 频域 / 规模效率三个维度保留在本页详解；结尾的[互怼链](#critique-chain)梳理论文间的批评与改进关系。数字均引自各论文自报结果。
+> 全站横向对照的**枢纽页**：先[一页速览](#一页速览)给十四篇定位，再按[九个维度](#dimension-guide)拆核心分歧——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源五个维度下放主题专题深读，模型设计 / 频域 / 规模效率三个维度保留在本页详解；结尾的[互怼链](#critique-chain)梳理论文间的批评与改进关系。数字均引自各论文自报结果。
 
-十三篇 = 核心六篇（[BIOT](papers/biot.md) / [LaBraM](papers/labram.md) / [EEGPT](papers/eegpt.md) / [BrainGPT](papers/braingpt.md) / [NeuroLM](papers/neurolm.md) / [TFM-Tokenizer](papers/tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展七篇（[CBraMod](papers/cbramod.md) / [LUNA](papers/luna.md) / [EEGMoE](papers/eegmoe.md) / [JET](papers/jet.md) / [EEGDM](papers/eegdm.md) / [RF-GPT](papers/rf-gpt.md) / [Not-All-EEG](papers/not-all-eeg.md)，把问题推向异构管理、生成与跨模态）。站内其余轴外精读（语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测）不参与十三篇排名，见首页论文库。
+十四篇 = 核心六篇（[BIOT](papers/biot.md) / [LaBraM](papers/labram.md) / [EEGPT](papers/eegpt.md) / [BrainGPT](papers/braingpt.md) / [NeuroLM](papers/neurolm.md) / [TFM-Tokenizer](papers/tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展八篇（[CBraMod](papers/cbramod.md) / [LUNA](papers/luna.md) / [REVE](papers/reve.md) / [EEGMoE](papers/eegmoe.md) / [JET](papers/jet.md) / [EEGDM](papers/eegdm.md) / [RF-GPT](papers/rf-gpt.md) / [Not-All-EEG](papers/not-all-eeg.md)，把问题推向异构管理、通用空间编码与规模化、生成与跨模态）。站内其余轴外精读（语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测）不参与十四篇排名，见首页论文库。
 
 ## 一页速览 {: #一页速览 }
 
@@ -16,6 +16,7 @@
 | [TFM-Tokenizer](papers/tfm-tokenizer.md) | ICLR 2026 | 单通道时频 motif 词表，离散 token 真正作下游输入 | **~1.9M**（tokenizer 1.2M + 下游 0.7M） | 4 个 EEG 数据集 + ear-EEG 跨设备验证 | ✅ |
 | [CBraMod](papers/cbramod.md) | ICLR 2025 | 十字交叉注意力 + ACPE：4M 参数 10 任务全 SOTA | 4.0M | TUEG 清洗版 **>9000h**（110 万样本） | ✅ |
 | [LUNA](papers/luna.md) | NeurIPS 2025 | 学习 query 压进固定隐空间：拓扑无关 + 通道数线性复杂度 | 7M / 43M / 311.4M | TUEG + Siena **21,900h**（3 种拓扑） | ✅ |
+| [REVE](papers/reve.md) | NeurIPS 2025 | 4D 傅里叶位置编码吃任意电极布局：最大非侵入预训练语料 | 12M / 69M / 408M | **61,415h** · 92 数据集 · 24,274 被试 | ✅（decoder 未发布） |
 | [EEGMoE](papers/eegmoe.md) | TNNLS 2026 | Specific + Shared 双专家组解耦域差异：解耦保留异构 | 1.68M（激活 0.89M） | 9 数据集 ~142h（认知域） | 未放 |
 | [JET](papers/jet.md) | ICML 2026 | 条件流匹配 + 三条生理约束的原始 EEG 生成器 | 129.9M | TUH 三子集（生成器训练即全部） | 项目页 |
 | [EEGDM](papers/eegdm.md) | arXiv 2026 | 潜扩散生成目标做表征学习：encoder 表示作条件（不 detach） | 25M（下游 encoder） | TUEG 19ch（30s 样本） | ✅ |
@@ -33,7 +34,7 @@
 | ③ 预训练目标 | 对比 / 掩码 / 自回归 / **生成**（2026 新增）四条路线；掩码派内部「掩什么 × 预测什么」的设计空间；对掩码重构的三条批评线 | [预训练范式专题](topics/pretraining.md) |
 | ④ 空间与通道异构 | 通道 embedding / 单通道建模 / 动态位置编码 / 电极坐标编码 / 统一脑地图——区分通道表示与跨通道整合 | [通道适配](topics/multi-task.md#channel-adaptation) |
 | ⑤ 下游适配与多任务 | 逐任务微调 / 冻结 encoder 后逐任务训练 / 多任务联合训练 / 指令微调——区分预训练初始化共享与下游参数共享 | [任务适配](topics/multi-task.md#task-adaptation) |
-| ⑥ 基座来源 | 十三篇里十一篇从零训练，仅两例借底座——NeuroLM 接 GPT-2，RF-GPT 更彻底（连信号编码器都不训，直接复用 VLM） | [基座来源专题](topics/base-model.md) |
+| ⑥ 基座来源 | 十四篇里十二篇从零训练，仅两例借底座——NeuroLM 接 GPT-2，RF-GPT 更彻底（连信号编码器都不训，直接复用 VLM） | [基座来源专题](topics/base-model.md) |
 | ⑦ 模型设计 | 注意力计算图如何匹配 EEG 的（通道 × 时间）结构：展平全注意力 → 线性 → 十字交叉 → query 压缩 → MoE 条件计算；「架构 > 规模」的证据 | [本页下文](#mod-architecture) |
 | ⑧ 频域信息 | 频域角色的六级递进：特征工程 → 重构目标 → 输入表示 → 建模对象 → 输入即全部 → 无显式；相位处理的暗线 | [本页下文](#mod-frequency) |
 | ⑨ 规模、效率与开源 | 参数量 1.68M–1.09B 排序、效率数字（LUNA 1/180、JET 67× 实时）、算力三档、开源与权重坑 | [本页下文](#mod-scale) |
@@ -55,7 +56,7 @@
 
 **② 「架构 > 规模」的最强证据**：CBraMod 附录 G——把 BIOT / LaBraM 的架构搬到 CBraMod 的 9000h 清洗语料上重训，BIOT(ours) ≈ BIOT(original)、LaBraM(ours) 仅小涨，而 CBraMod 全面碾压两者：**4.0M 参数在 TUEV 打过 369M 的 LaBraM-Huge**（0.6671 vs 0.6616）。固定数据换架构，把贡献归因做成了可证伪的对照。
 
-**③ 位置编码谱系**：正弦相对（BIOT）→ 可学习时空绝对（LaBraM / NeuroLM）→ RoPE（EEGPT predictor、LUNA 时间轴）→ 电极词表 prefix（BrainGPT）→ **无**（TFM tokenizer 内，消融支持）→ **卷积动态生成**（CBraMod ACPE）→ **连续 3D 坐标 NeRF 编码**（LUNA 空间）。趋势：从「查表绑定」走向「动态生成 / 连续坐标」，动因都是跨 montage 泛化——TFM 的「无」是同一月光的另一面：拒绝一切位置绑定。
+**③ 位置编码谱系**：正弦相对（BIOT）→ 可学习时空绝对（LaBraM / NeuroLM）→ RoPE（EEGPT predictor、LUNA 时间轴）→ 电极词表 prefix（BrainGPT）→ **无**（TFM tokenizer 内，消融支持）→ **卷积动态生成**（CBraMod ACPE）→ **连续 3D 坐标 NeRF 编码**（LUNA 空间）→ **4D 傅里叶坐标生成**（REVE：(x,y,z,t) 直投多频笛卡尔积 + 可学习适配层，时间也进坐标、噪声增强抗摆放差异）。趋势：从「查表绑定」走向「动态生成 / 连续坐标」，动因都是跨 montage 泛化——TFM 的「无」是同一月光的另一面：拒绝一切位置绑定。
 
 **维度小结**：模型设计的演进不是「更大」，而是**注意力计算图的形状逐渐匹配 EEG 的 (通道 × 时间) 结构**——每一步都在回答「哪些 patch 天生该互相看」。
 
@@ -78,7 +79,7 @@
 
 **① 参数量排序**（下游可用模型口径）
 
-EEGMoE 1.68M（激活 0.89M）< TFM ~1.9M < BIOT 3.2M < CBraMod 4.0M < LaBraM-Base 5.8M < LUNA-Base 7M < EEGPT ~10M < EEGDM 25M < JET 129.9M < LUNA-Huge 311.4M < LaBraM-Huge 369M < NeuroLM-XL 1696M < BrainGPT-Giant **1.09B** < RF-GPT 3B/7B（借 Qwen2.5-VL）。
+EEGMoE 1.68M（激活 0.89M）< TFM ~1.9M < BIOT 3.2M < CBraMod 4.0M < LaBraM-Base 5.8M < LUNA-Base 7M < EEGPT ~10M < EEGDM 25M < REVE-Base 69M < JET 129.9M < LUNA-Huge 311.4M < LaBraM-Huge 369M < REVE-Large 408M < NeuroLM-XL 1696M < BrainGPT-Giant **1.09B** < RF-GPT 3B/7B（借 Qwen2.5-VL）。
 
 **② 效率**
 
@@ -92,16 +93,16 @@ EEGMoE 1.68M（激活 0.89M）< TFM ~1.9M < BIOT 3.2M < CBraMod 4.0M < LaBraM-Ba
 | 档位 | 论文 | 配置 |
 |---|---|---|
 | 消费级单卡 | TFM、EEGMoE | tokenizer / 模型极小 |
-| 单机多卡 | BIOT、EEGPT、CBraMod、LUNA、EEGDM、JET | 实验室可复现 |
+| 单机多卡 | BIOT、EEGPT、CBraMod、LUNA、EEGDM、JET、REVE（~260 A100·h） | 实验室可复现 |
 | 多机旗舰 | LaBraM、BrainGPT、NeuroLM、RF-GPT | 预训练成本高 |
 
 **④ 开源与可复现性**
 
-- **有官方代码**：BIOT、LaBraM、EEGPT、NeuroLM、TFM、CBraMod（已进 Braindecode）、LUNA、EEGDM；
+- **有官方代码**：BIOT、LaBraM、EEGPT、NeuroLM、TFM、CBraMod（已进 Braindecode）、LUNA、EEGDM、REVE（encoder 权重 + 任意 3D 坐标加载器 + tutorials）；
 - **声明将放出 / 未附**：BrainGPT、EEGMoE、RF-GPT、JET（以项目页为准）；
-- **权重细节坑**：LaBraM 的 Large/Huge 权重未开源——各家论文里「打过 LaBraM-Huge」的数字多引自 LaBraM 原文，非独立复现。
+- **权重细节坑**：REVE 的 MAE decoder 不发布（能从表示重构原始 EEG，隐私考量）——EEG FM 第一次基于隐私 withholding 组件；LaBraM 的 Large/Huge 权重未开源——各家论文里「打过 LaBraM-Huge」的数字多引自 LaBraM 原文，非独立复现。
 
-**维度小结**：规模轴上被验证过的规律只有两条——**结构先验可以替代规模**（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及**效率在特定场景是硬需求**（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 EEG 上至今没有被干净地兑现（见[数据全景专题](topics/data-landscape.md)）。
+**维度小结**：规模轴上被验证过的规律只有两条——**结构先验可以替代规模**（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及**效率在特定场景是硬需求**（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 EEG 上至今没有被干净地兑现——REVE 给了半张答卷（模型规模消融干净：Base→Large 线性探针 0.609→0.654 稳定上升），数据量 scaling 曲线仍缺（见[数据全景专题](topics/data-landscape.md)）。
 
 ## 🔗 论文互怼链 {: #critique-chain }
 
@@ -146,9 +147,13 @@ flowchart LR
     NOTALL -- "全局统一时间调度忽略<br/>通道×位置的难度异质" --> JET
     NOTALL -- "时域 TV 约束压制<br/>高频临床瞬态" --> JET
 
+    REVE["REVE<br/>NeurIPS 2025"]:::new
+    REVE -- "查表/卷积位置编码绑死布局，<br/>4D 坐标生成任意蒙太奇可用" --> CBRAMOD
+    REVE -- "预训练增益 11% vs 2%：<br/>你的成绩更多来自架构而非表示" --> CBRAMOD
+
     classDef old fill:#eceff1,stroke:#90a4ae,color:#263238
     classDef mid fill:#fff3e0,stroke:#ffb74d,color:#3e2723
     classDef new fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20
 ```
 
-**解读**：BIOT 是公共对照组；LaBraM 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 token 接入 LLM；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：**CBraMod / LUNA / EEGMoE 的边都指向 LaBraM**——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-EEG 在生成轴线内部迭代；RF-GPT 从跨域视角质疑自训词表的必要性。
+**解读**：BIOT 是公共对照组；LaBraM 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 token 接入 LLM；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：**CBraMod / LUNA / EEGMoE 的边都指向 LaBraM**——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-EEG 在生成轴线内部迭代；RF-GPT 从跨域视角质疑自训词表的必要性；REVE 的两条边都指向 CBraMod——位置编码泛化与「预训练派 vs 架构派」的归因之争。

@@ -19,6 +19,7 @@ tags: [预训练, 综述]
 | TFM | VQ 码表 | **时频图** | **时频图** | 时频图 MSE + VQ 损失 |
 | CBraMod | 无码表 | — | — | — |
 | LUNA | 无码表 | — | — | — |
+| REVE | 无码表 | — | — | — |
 | EEGMoE | 无码表 | — | — | — |
 | NeuroRVQ | 多尺度 RVQ 码表 | **不掩码** | **频谱幅值 + 相位**，并约束还原信号 | 对数幅值 MSE + 相位余弦损失 + 信号 MSE + commitment loss |
 | BrainRVQ | 时域 / 频域双 RVQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值 + 相位** | 信号 MSE + 幅值 MSE + 相位 MSE + commitment loss |
@@ -61,6 +62,7 @@ tags: [预训练, 综述]
 | NeuroRVQ | **信号 embedding** | **离散 token** |
 | BrainRVQ | **信号 embedding** | **离散 token** |
 | CodeBrain | **原始信号 patch** | **离散 token** |
+| REVE | **原始信号 patch**（时空块掩码 55%，空间 3cm / 时间 3s 连续块 + 10% 整通道 dropout） | **原始信号 patch** + 全局 token 二次重构（attention pooling 跨全部 MHA 层，信息瓶颈） |
 
 **方法创新**：
 

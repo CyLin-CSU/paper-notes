@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **25** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **26** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
 个人论文精读库：记录研究问题、方法拆解与创新设计。++ctrl+k++ 全文搜索。
 
@@ -15,6 +15,8 @@ title: 首页
 ## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-05** · 新增精读 REVE（NeurIPS 2025）：4D 傅里叶位置编码吃任意电极布局 + 92 数据集 61,415h 最大非侵入预训练语料——10 任务平均 +2.5%，linear probing 对 CBraMod +17%，对比集扩至十四篇
 
 - **2026-11-04** · tokenization 线五篇齐发：NeuroRVQ（多尺度 RVQ，EEG 重构 MSE 较 LaBraM 降 67 倍）· BrainRVQ（时/频双域 RVQ）· CodeBrain（时/频双码本解耦）· NeuroDETR（VQ 事件记忆 + DETR 式事件检测，8 数据集 F1 全第一）· DELTA（RVQ + 掩码语言扩散 EEG-to-Text）——tokenization 演进页遗留缺口全面占坑
 
@@ -289,19 +291,25 @@ title: 首页
     ---
     脑信号 → 语音：Défossez 检索范式与 SSM2Mel mel 回归的 tokenization / 预训练 / 下游任务横读。
 
+- :material-earth: **[REVE](papers/reve.md)**
+    ---
+    NeurIPS 2025 · 12M / 69M / 408M
+
+    **61,415h / 92 数据集**最大非侵入语料 + **4D 傅里叶位置编码**吃任意蒙太奇：10 任务平均 +2.5%，linear probing +17%。tags: `MAE` `4D位置编码` `线性探针`
+
 </div>
 
 ## :material-chart-box-outline: 阅读统计
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 25 篇（EEG 基础模型 9 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1） |
+| 精读论文 | 26 篇（EEG 基础模型 10 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1） |
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×5 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 · CodeBrain/BrainRVQ TUEG 9200h+ |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
 
-综合对比见 [十三篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——五个维度下放专题深读，模型设计 / 频域 / 规模效率保留在页内 + 论文互怼链）。
+综合对比见 [十四篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——五个维度下放专题深读，模型设计 / 频域 / 规模效率保留在页内 + 论文互怼链）。
 
 ## :material-comment-processing: 留言板
 

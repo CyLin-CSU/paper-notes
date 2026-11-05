@@ -90,6 +90,7 @@ nav:
       - NeuroLM (ICLR 2025): papers/neurolm.md
       - LUNA (NeurIPS 2025 · 拓扑无关): papers/luna.md
       - CBraMod (ICLR 2025 · 十字交叉): papers/cbramod.md
+      - REVE (NeurIPS 2025 · 61,415h + 4D位置编码): papers/reve.md
       - SSM2Mel (arXiv 2025 · 语音解码): papers/ssm2mel.md
       - NPI (Nature Methods 2025 · 连接组学): papers/surrogate-brain.md
       - NeuroRVQ (arXiv 2025 · 多尺度RVQ): papers/neurorvq.md
@@ -119,7 +120,7 @@ nav:
   - 语音模型专题:
       - 语音解码与 Mel 谱建模: topics/speech-models.md
   - 综述: blog-2023-2026.md
-  - 十三篇方法对比: comparison.md
+  - 十四篇方法对比: comparison.md
   - 索引:
       - 数据集索引: datasets.md
       - 参考文献索引: references.md

@@ -19,6 +19,7 @@ tags: [基座模型, 模型规模, 综述]
 | [TFM](../papers/tfm-tokenizer.md) | **从零训练** | 约 0.7M | 约 1.2M | 分类时保留 tokenizer，两者合计约 1.9M |
 | [CBraMod](../papers/cbramod.md) | **从零训练** | 4.0M | — | 十字交叉 Transformer 从零预训练 |
 | [LUNA](../papers/luna.md) | **从零训练** | 7M / 43M / 311.4M | — | Base / Large / Huge 三种规模 |
+| [REVE](../papers/reve.md) | **从零训练** | 12M / 69M / 408M | — | MAE 从零预训练；encoder 权重开源，decoder 因隐私不发布 |
 | [EEGMoE](../papers/eegmoe.md) | **从零训练** | 1.68M（激活 0.89M） | — | 总参数量与每次激活参数量分开列 |
 | [NeuroRVQ](https://arxiv.org/abs/2510.13068) | **从零训练** | 5.9M（EEG backbone） | 随模态与 RVQ 配置变化，采用值未单列 | 只列 EEG 主模型，不合计分类头与 tokenizer |
 | [BrainRVQ](https://arxiv.org/abs/2602.16951) | **从零训练** | 5.82M（12 层 encoder） | 未单列 | 双域 RVQ + 分层码字预测，下游使用 encoder |
@@ -46,6 +47,6 @@ tags: [基座模型, 模型规模, 综述]
 
 ## 关联页面
 
-[预训练数据全景](data-landscape.md) · [通道适配与多任务学习](multi-task.md) · [十三篇方法对比](../comparison.md)
+[预训练数据全景](data-landscape.md) · [通道适配与多任务学习](multi-task.md) · [十四篇方法对比](../comparison.md)
 
 新增论文原文：[NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。

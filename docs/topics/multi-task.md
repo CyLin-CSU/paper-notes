@@ -123,6 +123,6 @@ BIOT、LaBraM、EEGPT、BrainGPT、NeuroLM 的通道表覆盖范围与使用阶�
 
 [BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [BrainGPT](../papers/braingpt.md) · [NeuroLM](../papers/neurolm.md) · [TFM](../papers/tfm-tokenizer.md) · [CBraMod](../papers/cbramod.md) · [LUNA](../papers/luna.md) · [EEGMoE](../papers/eegmoe.md)
 
-[预训练范式对比](pretraining.md) · [EEG Tokenization 演进](tokenization.md) · [十三篇方法对比](../comparison.md)
+[预训练范式对比](pretraining.md) · [EEG Tokenization 演进](tokenization.md) · [十四篇方法对比](../comparison.md)
 
 新增论文原文：[NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。

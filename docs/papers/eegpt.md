@@ -88,4 +88,4 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：LaBraM](labram.md) ｜ :material-arrow-right: [下一篇：BrainGPT](braingpt.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十三篇方法对比](../comparison.md)
+:material-arrow-left: [上一篇：LaBraM](labram.md) ｜ :material-arrow-right: [下一篇：BrainGPT](braingpt.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../comparison.md)

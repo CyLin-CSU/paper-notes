@@ -79,4 +79,4 @@ GAT 注意力系数（‖ 表示向量拼接）：
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：EEGPT](eegpt.md) ｜ :material-arrow-right: [下一篇：NeuroLM](neurolm.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十三篇方法对比](../comparison.md)
+:material-arrow-left: [上一篇：EEGPT](eegpt.md) ｜ :material-arrow-right: [下一篇：NeuroLM](neurolm.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../comparison.md)

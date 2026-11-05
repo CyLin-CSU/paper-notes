@@ -16,6 +16,7 @@ tags: [预训练数据, 综述]
 | TFM | TUEV、TUAB、CHB-MIT、IIIC | **4 个数据集**，含单数据集与多数据集设定 | 临床事件、异常、癫痫 |
 | CBraMod | 清洗后的 TUEG | **超过 9000h，约 110 万个 30s 片段** | 临床 |
 | LUNA | TUEG + Siena | **超过 21900h** | 临床，覆盖多种电极布局 |
+| REVE | OpenNeuro、MOABB、TUH、PhysioNet 等 92 个数据集 | **超过 61415h，24274 名被试** | 临床为主（约 50581h），混合认知与 BCI，396 个电极名 |
 | EEGMoE | DREAMER、SEED、MAHNOB、EEGMMIDB、BCIC-IV-1、EEGMat | **6 个数据集，约 142h** | 情绪、运动想象、认知负荷 |
 | NeuroRVQ | 12 个公开 EEG 数据集 + 自采运动数据 | **13 个来源**；自采部分约 **235h**，总时长未统一报告 | 运动、ERP、静息、伪迹、临床 |
 | BrainRVQ | 清洗后的 TUEG | **约 9200h，1109545 个 30s 片段** | 临床 |
@@ -29,6 +30,8 @@ BIOT 这里列的是无监督预训练的 EEG 数据；ECG 与跨数据集监督
 - **NeuroDETR**：列的是监督事件检测数据，没有独立通用预训练语料。
 
 - **BrainRVQ**：报告约 9200h 清洗后的 TUEG。
+
+- **REVE**：清洗哲学与 CBraMod 相反——不剔除 >100µV 段，只删 <10s 短记录与下游任务数据（防泄漏）。
 
 - **CodeBrain**：报告约 9246h 清洗后的 TUEG。小时数按各自原文保留。
 
@@ -59,6 +62,6 @@ BIOT 这里列的是无监督预训练的 EEG 数据；ECG 与跨数据集监督
 
 [BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [BrainGPT](../papers/braingpt.md) · [NeuroLM](../papers/neurolm.md) · [TFM](../papers/tfm-tokenizer.md) · [CBraMod](../papers/cbramod.md) · [LUNA](../papers/luna.md) · [EEGMoE](../papers/eegmoe.md)
 
-[数据集索引](../datasets.md) · [预训练范式对比](pretraining.md) · [通道适配与多任务学习](multi-task.md) · [十三篇方法对比](../comparison.md)
+[数据集索引](../datasets.md) · [预训练范式对比](pretraining.md) · [通道适配与多任务学习](multi-task.md) · [十四篇方法对比](../comparison.md)
 
 新增论文原文：[NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。

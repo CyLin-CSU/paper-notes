@@ -16,6 +16,7 @@ tags: [tokenization, 综述]
 | [TFM-Tokenizer](../papers/tfm-tokenizer.md) | [Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer) | 含预训练权重与全部预处理脚本 |
 | [CBraMod](../papers/cbramod.md) | [wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod) | 已进 Braindecode |
 | [LUNA](../papers/luna.md) | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | Base / Large / Huge 全系 |
+| [REVE](../papers/reve.md) | [brain-bzh.github.io/reve](https://brain-bzh.github.io/reve/) · [elouayas/reve_eeg](https://github.com/elouayas/reve_eeg) | 多规格权重 + tutorials；decoder 不发布（隐私） |
 | [EEGDM](../papers/eegdm.md) | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) | 含预处理脚本与训练配置 |
 | [JET](../papers/jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
 | [EEGMoE](../papers/eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
