@@ -96,6 +96,7 @@ nav:
       - NeuroRVQ (arXiv 2025 · 多尺度RVQ): papers/neurorvq.md
       - DELTA (NeurIPS WS 2025 · 掩码扩散EEG-to-Text): papers/delta.md
       - TFM-Tokenizer (ICLR 2026): papers/tfm-tokenizer.md
+      - Uni-NTFM (ICLR 2026): papers/uni-ntfm.md
       - RF-GPT (arXiv 2026 · 跨领域): papers/rf-gpt.md
       - JET (ICML 2026 · EEG 生成): papers/jet.md
       - EEGMoE (TNNLS 2026 · MoE): papers/eegmoe.md

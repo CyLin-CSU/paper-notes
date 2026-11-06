@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **26** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **27** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
 
 个人论文精读库：记录研究问题、方法拆解与创新设计。++ctrl+k++ 全文搜索。
 
@@ -15,6 +15,8 @@ title: 首页
 ## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-06** · 新增 [Uni-NTFM](papers/uni-ntfm.md) 精读，拆解时域与频域双向交叉注意力、分层拓扑嵌入和双域掩码重建。
 
 - **2026-11-05** · 新增精读 REVE（NeurIPS 2025）：4D 傅里叶位置编码吃任意电极布局 + 92 数据集 61,415h 最大非侵入预训练语料——10 任务平均 +2.5%，linear probing 对 CBraMod +17%，对比集扩至十四篇
 
@@ -169,6 +171,12 @@ title: 首页
 
     单通道**时频 motif 词表**，离散 token 真正作为模型输入。tags: `tokenization` `时频motif`
 
+- :material-swap-horizontal:{ .lg .middle } **[Uni-NTFM](papers/uni-ntfm.md)**
+    ---
+    ICLR 2026
+
+    **双向交叉注意力**融合逐电极的波形和频带功率特征，再由 MoE Transformer 学习表示。tags: `时频融合` `MoE`
+
 - :material-radio-tower:{ .lg .middle } **[RF-GPT](papers/rf-gpt.md)**
     ---
     arXiv 2026 · Qwen2.5-VL 3B/7B
@@ -303,11 +311,11 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 26 篇（EEG 基础模型 10 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1） |
+| 精读论文 | 27 篇（EEG 基础模型 11 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1） |
 | 发表跨度 | 2023 – 2026 |
-| 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×5 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
+| 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 · CodeBrain/BrainRVQ TUEG 9200h+ |
-| 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.09B（按各篇主模型口径） |
+| 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.9B（Uni-NTFM 总参数） |
 
 综合对比见 [十四篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——五个维度下放专题深读，模型设计 / 频域 / 规模效率保留在页内 + 论文互怼链）。
 
