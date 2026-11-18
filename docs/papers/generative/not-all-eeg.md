@@ -62,7 +62,7 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 
 τ 在通道与 patch 间都不同 → 条件必须解析到 **token 级**：每个 token 的条件向量 \( g_{i,j} = \mathrm{TimeEmbed}(\tau_{i,j}) + \mathrm{LabelEmbed}(c) \) 预测每个块 adaLN 的 shift/scale/gate。
 
-注意力不做 C×N 联合，而是两阶段因子化：**时间条带**（每通道内 N 个 patch 做注意力，捕长程时序）→ **通道条带**（每时间位置的 C 个通道做注意力，显式建模容积传导的跨通道依赖），复杂度 \( O((CN)^2) \to O(CN^2 + NC^2) \)。（站内对照：这正是 [CBraMod](cbramod.md) criss-cross 的结论在生成侧的重演——「EEG 的通道×时间网格该这么数注意力」。）
+注意力不做 C×N 联合，而是两阶段因子化：**时间条带**（每通道内 N 个 patch 做注意力，捕长程时序）→ **通道条带**（每时间位置的 C 个通道做注意力，显式建模容积传导的跨通道依赖），复杂度 \( O((CN)^2) \to O(CN^2 + NC^2) \)。（站内对照：这正是 [CBraMod](../fm/cbramod.md) criss-cross 的结论在生成侧的重演——「EEG 的通道×时间网格该这么数注意力」。）
 
 ### 2.4 四项损失
 
@@ -75,11 +75,11 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 
 ## 架构图
 
-![Figure 1 · 同一段记录内的难度异质性：绿色准平稳背景 / 黄色中等 / 红色高难瞬态，难位置跨样本复现](../assets/not-all-eeg-heterogeneity.png)
+![Figure 1 · 同一段记录内的难度异质性：绿色准平稳背景 / 黄色中等 / 红色高难瞬态，难位置跨样本复现](../../assets/not-all-eeg-heterogeneity.png)
 
 *Figure 1 · 难度异质示意：准平稳背景与高难瞬态共存于不同通道-时间位置，且同一协议下跨样本复现——难度可做成数据集级位置统计*
 
-![Figure 2 · 框架总览：EMA 误差图 → PATS 位置时间图 → 条件化因子化时空 Transformer 预测干净样本；采样按同一调度解 ODE](../assets/not-all-eeg-framework.png)
+![Figure 2 · 框架总览：EMA 误差图 → PATS 位置时间图 → 条件化因子化时空 Transformer 预测干净样本；采样按同一调度解 ODE](../../assets/not-all-eeg-framework.png)
 
 *Figure 2 · 框架总览：(a) 训练——PATS 从 EMA 误差图导出位置时间图，条件化因子化时空 Transformer 预测干净样本；(b) 采样——从高斯噪声出发，按同一位置调度迭代解流 ODE*
 
@@ -87,4 +87,4 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 
 **相关阅读**
 
-:material-arrow-left: [EEGDM（生成轴线姊妹篇：扩散训表征）](eegdm.md) ｜ :material-creation: [JET（直接前作：条件流匹配 + 生理约束）](jet.md) ｜ :material-chart-timeline-variant: [生成模型脉络（VAE → DDPM → FM）](../basics/generative-lineage.md) ｜ :material-heart-pulse: [CBraMod（因子化注意力同族 + 下游裁判）](cbramod.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [EEGDM（生成轴线姊妹篇：扩散训表征）](eegdm.md) ｜ :material-creation: [JET（直接前作：条件流匹配 + 生理约束）](jet.md) ｜ :material-chart-timeline-variant: [生成模型脉络（VAE → DDPM → FM）](../../basics/generative-lineage.md) ｜ :material-heart-pulse: [CBraMod（因子化注意力同族 + 下游裁判）](../fm/cbramod.md) ｜ :material-home: [首页](../../index.md)

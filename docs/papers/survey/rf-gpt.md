@@ -71,7 +71,7 @@ RF token 作为前缀条件驱动自回归解码。实现上完整编码器是�
 
 ## 架构图
 
-![Figure 1 · RF-GPT 框架：基于视觉的 RF 编码器（谱图 → patch → 视觉编码器）+ RF adapter 线性投影 + decoder-only LLM](../assets/rf-gpt-framework.png)
+![Figure 1 · RF-GPT 框架：基于视觉的 RF 编码器（谱图 → patch → 视觉编码器）+ RF adapter 线性投影 + decoder-only LLM](../../assets/rf-gpt-framework.png)
 
 *Figure 1 · RF-GPT 框架总览：频谱图经视觉编码器变成 RF token 前缀，LLM 在其条件下生成回答*
 
@@ -79,4 +79,4 @@ RF token 作为前缀条件驱动自回归解码。实现上完整编码器是�
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：TFM-Tokenizer](tfm-tokenizer.md) ｜ :material-angle-acute: [LoRA · 低秩适配](../basics/lora.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [上一篇：TFM-Tokenizer](../fm/tfm-tokenizer.md) ｜ :material-angle-acute: [LoRA · 低秩适配](../../basics/lora.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-home: [首页](../../index.md)

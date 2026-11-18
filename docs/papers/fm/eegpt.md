@@ -79,7 +79,7 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 ## 架构图
 
-![Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构](../assets/eegpt-arch.png)
+![Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构](../../assets/eegpt-arch.png)
 
 *Figure 1 · 双自监督结构：encoder 看 masked 部分 + predictor 对齐 momentum 输出 + reconstructor 重构*
 
@@ -88,4 +88,4 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：LaBraM](labram.md) ｜ :material-arrow-right: [下一篇：BrainGPT](braingpt.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../comparison.md)
+:material-arrow-left: [上一篇：LaBraM](labram.md) ｜ :material-arrow-right: [下一篇：BrainGPT](braingpt.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../../comparison.md)

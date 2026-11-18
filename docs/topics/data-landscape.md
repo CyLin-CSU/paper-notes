@@ -41,12 +41,12 @@ BIOT 这里列的是无监督预训练的 EEG 数据；ECG 与跨数据集监督
 
 | 论文 | 数据来源 | 数据用途 |
 |---|---|---|
-| [Défossez](../papers/defossez-speech.md) | 4 个脑信号–语音配对数据集，含 EEG 与 MEG | 训练语音表示对齐，评测候选检索 |
-| [SSM2Mel](../papers/ssm2mel.md) | SparrKULee | 监督训练 EEG 到 mel 时频图的映射 |
-| [DELTA](../papers/delta.md) | ZuCo 1.0 + 2.0 | 训练词级 EEG tokenizer，适配文本生成模型 |
-| [GUIDED](../papers/guided.md) | THINGS-EEG；另验证 MEG 迁移 | 训练脑信号与图像表示的对齐 |
-| [CrossPT-EEG](../papers/crosspt-eeg.md) | 16 位被试的视觉 EEG，包含两阶段采集 | 跨被试、跨时间评测 |
-| [EEGArena](../papers/eegarena.md) | 23 个公开数据集，构成 57 个下游任务 | 统一比较模型与训练协议 |
+| [Défossez](../papers/survey/defossez-speech.md) | 4 个脑信号–语音配对数据集，含 EEG 与 MEG | 训练语音表示对齐，评测候选检索 |
+| [SSM2Mel](../papers/survey/ssm2mel.md) | SparrKULee | 监督训练 EEG 到 mel 时频图的映射 |
+| [DELTA](../papers/survey/delta.md) | ZuCo 1.0 + 2.0 | 训练词级 EEG tokenizer，适配文本生成模型 |
+| [GUIDED](../papers/survey/guided.md) | THINGS-EEG；另验证 MEG 迁移 | 训练脑信号与图像表示的对齐 |
+| [CrossPT-EEG](../papers/survey/crosspt-eeg.md) | 16 位被试的视觉 EEG，包含两阶段采集 | 跨被试、跨时间评测 |
+| [EEGArena](../papers/survey/eegarena.md) | 23 个公开数据集，构成 57 个下游任务 | 统一比较模型与训练协议 |
 
 - **DELTA**：tokenizer 与语言模型的 EEG 适配均使用 ZuCo 训练数据，不把它计为额外的大规模通用语料。
 
@@ -54,13 +54,13 @@ BIOT 这里列的是无监督预训练的 EEG 数据；ECG 与跨数据集监督
 
 - **EEGArena**：数据规模指评测覆盖面，不表示所有模型共同使用这些数据预训练。
 
-- **[LTFT](../papers/learnable-tf.md)**：在监督任务中学习时频前端，没有单列通用预训练语料。
+- **[LTFT](../papers/survey/learnable-tf.md)**：在监督任务中学习时频前端，没有单列通用预训练语料。
 
-- **[NPI](../papers/surrogate-brain.md)**：使用 fMRI 训练代理脑并做虚拟扰动，单独作为有效连接方法参考，不计入 EEG 数据规模。
+- **[NPI](../papers/survey/surrogate-brain.md)**：使用 fMRI 训练代理脑并做虚拟扰动，单独作为有效连接方法参考，不计入 EEG 数据规模。
 
 ### 关联论文
 
-[BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [BrainGPT](../papers/braingpt.md) · [NeuroLM](../papers/neurolm.md) · [TFM](../papers/tfm-tokenizer.md) · [CBraMod](../papers/cbramod.md) · [LUNA](../papers/luna.md) · [EEGMoE](../papers/eegmoe.md)
+[BIOT](../papers/fm/biot.md) · [LaBraM](../papers/fm/labram.md) · [EEGPT](../papers/fm/eegpt.md) · [BrainGPT](../papers/fm/braingpt.md) · [NeuroLM](../papers/fm/neurolm.md) · [TFM](../papers/fm/tfm-tokenizer.md) · [CBraMod](../papers/fm/cbramod.md) · [LUNA](../papers/fm/luna.md) · [EEGMoE](../papers/fm/eegmoe.md)
 
 [数据集索引](../datasets.md) · [预训练范式对比](pretraining.md) · [通道适配与多任务学习](multi-task.md) · [十四篇方法对比](../comparison.md)
 

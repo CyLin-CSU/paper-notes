@@ -43,7 +43,7 @@ one-liner: "30 个 EEG FM × 25 个监督基线 × 57 任务/23 数据集、五�
 
 ## 架构图
 
-![Figure 1 · EEG-Arena 总览:(A) 开源软件包三接口;(B) 55 模型与 23 数据集 / 57 任务;(C) 五协议对应 RQ1–RQ5](../assets/eegarena-framework.png)
+![Figure 1 · EEG-Arena 总览:(A) 开源软件包三接口;(B) 55 模型与 23 数据集 / 57 任务;(C) 五协议对应 RQ1–RQ5](../../assets/eegarena-framework.png)
 
 *Figure 1 · (A) 软件包:数据标准化(HDF5)→ 数据 / 模型 / 评估三接口,统一 trainer + evaluator,79,000+ 行代码;(B) 30 FM + 25 基线(2021–2026)与 7 范式 57 任务;(C) 协议 I 大横评、II 预训练收益 × 6 档标签预算、III 模型规模、IV 预训练数据 0.6k–30k h、V 通道子集鲁棒性*
 
@@ -51,4 +51,4 @@ one-liner: "30 个 EEG FM × 25 个监督基线 × 57 任务/23 数据集、五�
 
 **相关阅读**
 
-:material-sword-cross: [CBraMod(「架构>规模」证据链在本榜被外部复现)](cbramod.md) ｜ :material-shield-search: [BIOT(双极设定内被追认为最强 FM)](biot.md) ｜ :material-tag-multiple: [TFM-Tokenizer(泛化项被本榜扣分的警示)](tfm-tokenizer.md) ｜ :material-puzzle: [NeuroRVQ(同批笔记:高方差画像与本榜一致)](neurorvq.md) ｜ :material-home: [首页](../index.md)
+:material-sword-cross: [CBraMod(「架构>规模」证据链在本榜被外部复现)](../fm/cbramod.md) ｜ :material-shield-search: [BIOT(双极设定内被追认为最强 FM)](../fm/biot.md) ｜ :material-tag-multiple: [TFM-Tokenizer(泛化项被本榜扣分的警示)](../fm/tfm-tokenizer.md) ｜ :material-puzzle: [NeuroRVQ(同批笔记:高方差画像与本榜一致)](../fm/neurorvq.md) ｜ :material-home: [首页](../../index.md)

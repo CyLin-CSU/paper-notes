@@ -9,40 +9,40 @@ tags: [tokenization, 综述]
 
 | 论文 | 代码 | 备注 |
 |---|---|---|
-| [BIOT](../papers/biot.md) | [ycq091044/BIOT](https://github.com/ycq091044/BIOT) | 完整开源 |
-| [LaBraM](../papers/labram.md) | [935963004/LaBraM](https://github.com/935963004/LaBraM) | 仅 Base 权重；Large / Huge 未放 |
-| [EEGPT](../papers/eegpt.md) | [BINE022/EEGPT](https://github.com/BINE022/EEGPT) | 开源 |
-| [NeuroLM](../papers/neurolm.md) | [935963004/NeuroLM](https://github.com/935963004/NeuroLM) | 开源 |
-| [TFM-Tokenizer](../papers/tfm-tokenizer.md) | [Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer) | 含预训练权重与全部预处理脚本 |
-| [CBraMod](../papers/cbramod.md) | [wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod) | 已进 Braindecode |
-| [LUNA](../papers/luna.md) | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | Base / Large / Huge 全系 |
-| [REVE](../papers/reve.md) | [brain-bzh.github.io/reve](https://brain-bzh.github.io/reve/) · [elouayas/reve_eeg](https://github.com/elouayas/reve_eeg) | 多规格权重 + tutorials；decoder 不发布（隐私） |
-| [EEGDM](../papers/eegdm.md) | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) | 含预处理脚本与训练配置 |
-| [JET](../papers/jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
-| [EEGMoE](../papers/eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
-| [RF-GPT](../papers/rf-gpt.md) | — | 论文未附仓库（底座 Qwen2.5-VL 等组件公开可得） |
-| [NeuroRVQ](../papers/neurorvq.md) | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
-| [BrainRVQ](../papers/brainrvq.md) | [keqicmz/BrainRVQ](https://github.com/keqicmz/BrainRVQ) | 代码可访问，权重承诺论文接收后放出 |
-| [CodeBrain](../papers/codebrain.md) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
-| [NeuroDETR](../papers/neurodetr.md) | — | 暂未检索到官方仓库 |
-| [DELTA](../papers/delta.md) | — | 论文未附仓库（NeurIPS 2025 Workshop） |
+| [BIOT](../papers/fm/biot.md) | [ycq091044/BIOT](https://github.com/ycq091044/BIOT) | 完整开源 |
+| [LaBraM](../papers/fm/labram.md) | [935963004/LaBraM](https://github.com/935963004/LaBraM) | 仅 Base 权重；Large / Huge 未放 |
+| [EEGPT](../papers/fm/eegpt.md) | [BINE022/EEGPT](https://github.com/BINE022/EEGPT) | 开源 |
+| [NeuroLM](../papers/fm/neurolm.md) | [935963004/NeuroLM](https://github.com/935963004/NeuroLM) | 开源 |
+| [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) | [Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer) | 含预训练权重与全部预处理脚本 |
+| [CBraMod](../papers/fm/cbramod.md) | [wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod) | 已进 Braindecode |
+| [LUNA](../papers/fm/luna.md) | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | Base / Large / Huge 全系 |
+| [REVE](../papers/fm/reve.md) | [brain-bzh.github.io/reve](https://brain-bzh.github.io/reve/) · [elouayas/reve_eeg](https://github.com/elouayas/reve_eeg) | 多规格权重 + tutorials；decoder 不发布（隐私） |
+| [EEGDM](../papers/generative/eegdm.md) | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) | 含预处理脚本与训练配置 |
+| [JET](../papers/generative/jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
+| [EEGMoE](../papers/fm/eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
+| [RF-GPT](../papers/survey/rf-gpt.md) | — | 论文未附仓库（底座 Qwen2.5-VL 等组件公开可得） |
+| [NeuroRVQ](../papers/fm/neurorvq.md) | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
+| [BrainRVQ](../papers/fm/brainrvq.md) | [keqicmz/BrainRVQ](https://github.com/keqicmz/BrainRVQ) | 代码可访问，权重承诺论文接收后放出 |
+| [CodeBrain](../papers/fm/codebrain.md) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
+| [NeuroDETR](../papers/fm/neurodetr.md) | — | 暂未检索到官方仓库 |
+| [DELTA](../papers/survey/delta.md) | — | 论文未附仓库（NeurIPS 2025 Workshop） |
 
 | 时间 | 论文 | Token 形态 | 词表 | Token 的用途 |
 |---|---|---|---|---|
-| 2023 | [BIOT](../papers/biot.md) | 信号 embedding（STFT 频谱帧投影） | 无码表 | 模型输入 |
-| 2024 | [LaBraM](../papers/labram.md) | 离散 token（VQ） | 有 | **仅作预训练目标**，推理时丢弃 |
-| 2024 | [EEGPT](../papers/eegpt.md) | 信号 embedding | 无码表 | 模型输入 |
-| 2024 | [BrainGPT](../papers/braingpt.md) | 信号 embedding | 无码表 | 模型输入 |
-| 2025 | [NeuroLM](../papers/neurolm.md) | 离散 token（VQ） | 有（并入 GPT-2 词表） | LLM 的输入 |
-| 2026 | [TFM-Tokenizer](../papers/tfm-tokenizer.md) | 离散 token（时频 motif） | 有 | 模型输入 + 可插拔复用 |
-| 2025 | [CBraMod](../papers/cbramod.md) | 信号 embedding | 无码表 | 模型输入 |
-| 2025 | [LUNA](../papers/luna.md) | 信号 embedding | 无码表 | 模型输入 |
-| 2026 | [EEGMoE](../papers/eegmoe.md) | 信号 embedding | 无码表 | 模型输入 |
-| 2025 | [NeuroRVQ](../papers/neurorvq.md) | 离散 token（多尺度 RVQ） | 多尺度、多层码表 | 预训练目标 |
-| 2026 | [BrainRVQ](../papers/brainrvq.md) | 离散 token（双域 RVQ） | 双域、多层码表 | 分层预训练目标 |
-| 2026 | [CodeBrain](../papers/codebrain.md) | 离散 token（双域 VQ） | 双域码表 | 预训练目标 |
-| 2026 | [NeuroDETR](../papers/neurodetr.md) | 时间多尺度 / 空间金字塔离散 token | 时间 / 空间码表 | 事件检测模型的输入记忆 |
-| 2025 | [DELTA](../papers/delta.md) | 离散 token（词级 RVQ） | 自训多层码表 | 掩码语言扩散的输入 |
+| 2023 | [BIOT](../papers/fm/biot.md) | 信号 embedding（STFT 频谱帧投影） | 无码表 | 模型输入 |
+| 2024 | [LaBraM](../papers/fm/labram.md) | 离散 token（VQ） | 有 | **仅作预训练目标**，推理时丢弃 |
+| 2024 | [EEGPT](../papers/fm/eegpt.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2024 | [BrainGPT](../papers/fm/braingpt.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2025 | [NeuroLM](../papers/fm/neurolm.md) | 离散 token（VQ） | 有（并入 GPT-2 词表） | LLM 的输入 |
+| 2026 | [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) | 离散 token（时频 motif） | 有 | 模型输入 + 可插拔复用 |
+| 2025 | [CBraMod](../papers/fm/cbramod.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2025 | [LUNA](../papers/fm/luna.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2026 | [EEGMoE](../papers/fm/eegmoe.md) | 信号 embedding | 无码表 | 模型输入 |
+| 2025 | [NeuroRVQ](../papers/fm/neurorvq.md) | 离散 token（多尺度 RVQ） | 多尺度、多层码表 | 预训练目标 |
+| 2026 | [BrainRVQ](../papers/fm/brainrvq.md) | 离散 token（双域 RVQ） | 双域、多层码表 | 分层预训练目标 |
+| 2026 | [CodeBrain](../papers/fm/codebrain.md) | 离散 token（双域 VQ） | 双域码表 | 预训练目标 |
+| 2026 | [NeuroDETR](../papers/fm/neurodetr.md) | 时间多尺度 / 空间金字塔离散 token | 时间 / 空间码表 | 事件检测模型的输入记忆 |
+| 2025 | [DELTA](../papers/survey/delta.md) | 离散 token（词级 RVQ） | 自训多层码表 | 掩码语言扩散的输入 |
 
 ## 预处理与归一化异构信号
 
@@ -168,18 +168,18 @@ tags: [tokenization, 综述]
 
 ## 相关前端与解码方式
 
-- **[LTFT](../papers/learnable-tf.md)**：直接学习时频变换的窗口，输出时频图；前端与下游网络一起训练，不建立离散码表。
+- **[LTFT](../papers/survey/learnable-tf.md)**：直接学习时频变换的窗口，输出时频图；前端与下游网络一起训练，不建立离散码表。
 
-- **[GUIDED](../papers/guided.md)**：用通道注意力与时空卷积把 EEG 编码为信号 embedding，再投影到 CLIP 图像表示空间，不建立离散码表。
+- **[GUIDED](../papers/survey/guided.md)**：用通道注意力与时空卷积把 EEG 编码为信号 embedding，再投影到 CLIP 图像表示空间，不建立离散码表。
 
-- **[Défossez](../papers/defossez-speech.md)**：连续卷积提取脑信号表示，对齐语音模型的 embedding。
+- **[Défossez](../papers/survey/defossez-speech.md)**：连续卷积提取脑信号表示，对齐语音模型的 embedding。
 
-- **[SSM2Mel](../papers/ssm2mel.md)**：连续 EEG 特征经过状态空间模型与注意力，输出 mel 时频图。这里时频图是预测目标。
+- **[SSM2Mel](../papers/survey/ssm2mel.md)**：连续 EEG 特征经过状态空间模型与注意力，输出 mel 时频图。这里时频图是预测目标。
 
 LTFT 学时频变换，TFM 在时频图上学离散词表，前端变换与词表训练需要分开看。
 
 ## 关联论文
 
-[BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [NeuroLM](../papers/neurolm.md) · [TFM-Tokenizer](../papers/tfm-tokenizer.md) · [CBraMod](../papers/cbramod.md) · [LUNA](../papers/luna.md) · [EEGDM](../papers/eegdm.md) · [JET](../papers/jet.md) · [EEGMoE](../papers/eegmoe.md) · [RF-GPT](../papers/rf-gpt.md) · [NeuroRVQ](../papers/neurorvq.md) · [BrainRVQ](../papers/brainrvq.md) · [CodeBrain](../papers/codebrain.md) · [NeuroDETR](../papers/neurodetr.md) · [DELTA](../papers/delta.md)
+[BIOT](../papers/fm/biot.md) · [LaBraM](../papers/fm/labram.md) · [EEGPT](../papers/fm/eegpt.md) · [NeuroLM](../papers/fm/neurolm.md) · [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) · [CBraMod](../papers/fm/cbramod.md) · [LUNA](../papers/fm/luna.md) · [EEGDM](../papers/generative/eegdm.md) · [JET](../papers/generative/jet.md) · [EEGMoE](../papers/fm/eegmoe.md) · [RF-GPT](../papers/survey/rf-gpt.md) · [NeuroRVQ](../papers/fm/neurorvq.md) · [BrainRVQ](../papers/fm/brainrvq.md) · [CodeBrain](../papers/fm/codebrain.md) · [NeuroDETR](../papers/fm/neurodetr.md) · [DELTA](../papers/survey/delta.md)
 
 新增论文原文：[DELTA](https://arxiv.org/abs/2511.21746)（NeurIPS 2025 Workshop）。

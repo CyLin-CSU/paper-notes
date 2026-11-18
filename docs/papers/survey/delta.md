@@ -69,7 +69,7 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 
 ## 架构图
 
-![Figure 1 · DELTA 框架:(a) EEG-RVQ tokenizer 把 105 通道 × 8 频段的词级向量经 conv encoder 与 n 层残差 VQ 离散化;(b) LLaDA 三阶段——EEG token 掩码复原预训练、EEG 前缀条件的文本去噪微调、全掩码出发的迭代采样](../assets/delta-framework.png)
+![Figure 1 · DELTA 框架:(a) EEG-RVQ tokenizer 把 105 通道 × 8 频段的词级向量经 conv encoder 与 n 层残差 VQ 离散化;(b) LLaDA 三阶段——EEG token 掩码复原预训练、EEG 前缀条件的文本去噪微调、全掩码出发的迭代采样](../../assets/delta-framework.png)
 
 *Figure 1 · (a) EEG-RVQ Tokenizer:Channels(105:FP1/AF7/AF3/F1/F3/…/O7)× Band Pass Filtering(8:Theta₁ 4–6 / Theta₂ 6.5–8 / Alpha₁ 8.5–10 / Alpha₂ 10.5–13 / Beta₁ 13.5–18 / Beta₂ 18.5–30 / Gamma₁ 30.5–40 / Gamma₂ 40.5–49.5 Hz)→ 840 EEG Vector → Encoder → VQ 1…VQ n(残差逐层相减,⊕ 汇总 q1…qn)→ Decoder 重建 840 EEG Vector,对外输出 EEG Word Vector Token;(b) LLaDA-based EEG-to-Text 三栏:Pre-Training(EEG token → Masking t~U(0,1) → LLaDA-8B → Masking Predictor)、Fine-Tuning(EEG token 与掩码文本 token 拼接,掩码只挂文本支路)、Sampling(全掩码 → 去噪 → Remask 循环)*
 
@@ -77,4 +77,4 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 
 **相关阅读**
 
-:material-arrow-left: [BrainRVQ(同批笔记:双域 RVQ 码字服务表征预训练)](brainrvq.md) ｜ :material-vector-link: [Tokenization 演进(离散 token 的完整谱系)](../topics/tokenization.md) ｜ :material-creation: [NeuroLM(神经码进 LLM 词表的自回归版)](neurolm.md) ｜ :material-account-group: [BrainGPT(EEG 当语言序列的自回归预训练)](braingpt.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [BrainRVQ(同批笔记:双域 RVQ 码字服务表征预训练)](../fm/brainrvq.md) ｜ :material-vector-link: [Tokenization 演进(离散 token 的完整谱系)](../../topics/tokenization.md) ｜ :material-creation: [NeuroLM(神经码进 LLM 词表的自回归版)](../fm/neurolm.md) ｜ :material-account-group: [BrainGPT(EEG 当语言序列的自回归预训练)](../fm/braingpt.md) ｜ :material-home: [首页](../../index.md)

@@ -37,7 +37,7 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 切段承 [BIOT](biot.md)：每通道切 w=1s、重叠 o=0.1s 的 patch，线性嵌入。位置编码分三步：
 
 1. **坐标 + 噪声**：电极 3D 坐标 \( P \in \mathbb{R}^{C\times3} \) 加标准差 0.25cm 的高斯噪声——模拟头围大小与电极摆放的自然差异；
-2. **4D 傅里叶投影**：把每个 patch 的 (x, y, z, t) 各投影到 n\_freq 个频率（时间维取离散值 1..p 并缩放到与空间同尺度），四维频率按**笛卡尔积**组合成 \( n_{freq}^4 \) 维（层级周期：x 的周期是 \( n_{freq}^1 \)、y 是 \( n_{freq}^2 \)……），正弦余弦变换后得 \( 2 n_{freq}^4 \) 维向量。方法直接沿用 [Défossez 语音解码](defossez-speech.md)的 2D 傅里叶位置编码并扩到 4D——站内两条线在这里接上了；
+2. **4D 傅里叶投影**：把每个 patch 的 (x, y, z, t) 各投影到 n\_freq 个频率（时间维取离散值 1..p 并缩放到与空间同尺度），四维频率按**笛卡尔积**组合成 \( n_{freq}^4 \) 维（层级周期：x 的周期是 \( n_{freq}^1 \)、y 是 \( n_{freq}^2 \)……），正弦余弦变换后得 \( 2 n_{freq}^4 \) 维向量。方法直接沿用 [Défossez 语音解码](../survey/defossez-speech.md)的 2D 傅里叶位置编码并扩到 4D——站内两条线在这里接上了；
 3. **可学习适配**：同一坐标过 linear + GELU + LayerNorm 得 \( F_{lin} \)，补偿傅里叶基的截断。最终 \( P_{enc} = \mathrm{LayerNorm}(F_{pe} + F_{lin}) \)——结构化先验 + 数据驱动适配的相加。消融（Table 19）：该组合 0.707 优于纯可学习 PE 变体（0.701）与纯 MLP 4D（0.677）。
 
 关键在消融的脚注：可学习 PE 在**见过的配置上并不差**（~400 个电极名、10s 窗内），但它无法外推到更长序列和没见过的布局——4D 编码的全部意义在泛化侧。encoder 与 decoder **复用同一套位置编码**（原版 MAE 两套独立），这也是长度/布局灵活性的前提。计算开销只是正弦计算 + 小线性层，随 token 数线性。
@@ -48,7 +48,7 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 
 ### 2.3 全局 token 二次损失：治 MAE 的末层过拟合
 
-主任务是标准 MAE：encoder 只看可见 patch，轻量 decoder 重构被掩 patch 的原始信号，**L1 损失**（EEG 噪声重尾，L2 被离群点绑架——与 [LUNA](luna.md) 的 Smooth-L1、[JET](jet.md) 的 L1 同一动机）。
+主任务是标准 MAE：encoder 只看可见 patch，轻量 decoder 重构被掩 patch 的原始信号，**L1 损失**（EEG 噪声重尾，L2 被离群点绑架——与 [LUNA](luna.md) 的 Smooth-L1、[JET](../generative/jet.md) 的 L1 同一动机）。
 
 创新在二次任务：把 encoder **所有 MHA 层**的输出 token（过 FFN 后）concat，由一个可学习 query 做 attention pooling，压成**单一全局 token**；这个 token 重复铺开、加位置编码、过两层 FFN，同样去重构被掩 patch。总损失 = 主损失 + 0.1 × 二次损失。
 
@@ -78,7 +78,7 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 
 ## 架构图
 
-![Figure 1 · REVE 预训练框架：BIOT 式重叠切段 → 4D 时空位置编码（坐标 + 噪声）→ 时空块掩码 → encoder 只看可见部分 → decoder 重构被掩 patch（主任务）；全部 MHA 层输出经 attention pooling 蒸馏成单一全局 token 再重构（二次任务），两项均 L1](../assets/reve-framework.png)
+![Figure 1 · REVE 预训练框架：BIOT 式重叠切段 → 4D 时空位置编码（坐标 + 噪声）→ 时空块掩码 → encoder 只看可见部分 → decoder 重构被掩 patch（主任务）；全部 MHA 层输出经 attention pooling 蒸馏成单一全局 token 再重构（二次任务），两项均 L1](../../assets/reve-framework.png)
 
 *Figure 1 · 主任务沿 MAE 骨架，差异在 4D 位置编码（黄线）、块掩码与 L1；二次任务（右上）从各层输出池化全局 token，构成信息瓶颈*
 
@@ -88,11 +88,11 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 |---|---|
 | [CBraMod](cbramod.md) | 最主要对照：数据哲学相反（保留 vs 剔除 >100µV 段）、位置编码相反（4D 傅里叶 vs ACPE 邻域卷积）；同口径 10 任务 REVE 平均 +2.5%，但 BCIC-IV-2a 的 +12.6pp 含预处理加成（见个人思考）。Table 3 的预训练价值消融是对「架构派」的正面回应 |
 | [LUNA](luna.md) | 「不查表」空间编码的两极：LUNA 用学习 query 把通道**压缩**进固定隐空间（置换不变），REVE 用坐标**生成**位置编码（每个 patch 自带空间地址）——前者解决通道数扩展，后者解决布局任意性，可叠加而非互斥 |
-| [Défossez 语音解码](defossez-speech.md) | 两处直接继承：4D 傅里叶位置编码扩自其 2D 方案；15σ 截断预处理同款。语音线与基础模型线在空间编码上首次合流 |
+| [Défossez 语音解码](../survey/defossez-speech.md) | 两处直接继承：4D 傅里叶位置编码扩自其 2D 方案；15σ 截断预处理同款。语音线与基础模型线在空间编码上首次合流 |
 | [BIOT](biot.md) | 重叠切段（w=1s, o=0.1s）承自 BIOT；REVE 用全注意力替掉其线性注意力——61,415h 语料 + 69M 参数撑得起 O(N²) |
 | [EEGPT](eegpt.md) | 「冻结可用」的第二个解法：EEGPT 靠表示对齐目标，REVE 靠全局 token 信息瓶颈——机制完全不同，疗效相当（REVE-L 探针 0.654 vs EEGPT 探针 0.62 量级） |
-| [数据全景专题](../topics/data-landscape.md) | 61,415h 把「万小时」叙事推到新量级，且 92 数据集的**多样性**（396 电极名、3–129 通道）才是它相对 NeuroLM 25,000h 单一 TUEG 的实质差异 |
-| [LoRA 基础页](../basics/lora.md) | 下游微调直接用 LoRA（QKVO 投影）防灾难性遗忘——站内 LoRA 笔记的又一个 EEG FM 实战用例 |
+| [数据全景专题](../../topics/data-landscape.md) | 61,415h 把「万小时」叙事推到新量级，且 92 数据集的**多样性**（396 电极名、3–129 通道）才是它相对 NeuroLM 25,000h 单一 TUEG 的实质差异 |
+| [LoRA 基础页](../../basics/lora.md) | 下游微调直接用 LoRA（QKVO 投影）防灾难性遗忘——站内 LoRA 笔记的又一个 EEG FM 实战用例 |
 
 ## 个人思考
 
@@ -133,4 +133,4 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 
 **相关阅读**
 
-:material-compress: [CBraMod（最主要对照：数据哲学与位置编码的正面分歧）](cbramod.md) ｜ :material-compress: [LUNA（空间编码另一极：query 压缩 vs 坐标生成）](luna.md) ｜ :material-magnify: [EEGPT（冻结可用的另一解法：对齐目标 vs 信息瓶颈）](eegpt.md) ｜ :material-database: [EEG 预训练数据全景（61,415h 入账后的语料版图）](../topics/data-landscape.md) ｜ :material-chart-box: [十四篇方法对比](../comparison.md) ｜ :material-home: [首页](../index.md)
+:material-compress: [CBraMod（最主要对照：数据哲学与位置编码的正面分歧）](cbramod.md) ｜ :material-compress: [LUNA（空间编码另一极：query 压缩 vs 坐标生成）](luna.md) ｜ :material-magnify: [EEGPT（冻结可用的另一解法：对齐目标 vs 信息瓶颈）](eegpt.md) ｜ :material-database: [EEG 预训练数据全景（61,415h 入账后的语料版图）](../../topics/data-landscape.md) ｜ :material-chart-box: [十四篇方法对比](../../comparison.md) ｜ :material-home: [首页](../../index.md)

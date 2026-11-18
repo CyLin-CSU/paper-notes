@@ -70,11 +70,11 @@ FC 重构头从表示还原被掩 patch，MSE 损失**只算被掩位置**（MAE
 
 ## 架构图
 
-![Figure 2 · CBraMod 预训练总览：切段掩码 → 时频双分支 patch 编码 → ACPE → 12 层 Criss-Cross Transformer → 重构被掩 patch](../assets/cbramod-overview.png)
+![Figure 2 · CBraMod 预训练总览：切段掩码 → 时频双分支 patch 编码 → ACPE → 12 层 Criss-Cross Transformer → 重构被掩 patch](../../assets/cbramod-overview.png)
 
 *Figure 2 · 预训练总览：左上切段+掩码，右上 ACPE 从邻域动态生成位置编码，右下 12 层 criss-cross 块，左下只重构被掩 patch*
 
-![Figure 3 · Criss-Cross Transformer Block：(a) pre-norm 块结构；(b) 8 头劈成 S-Attention（竖条带）与 T-Attention（横条带）并行后 concat](../assets/cbramod-block.png)
+![Figure 3 · Criss-Cross Transformer Block：(a) pre-norm 块结构；(b) 8 头劈成 S-Attention（竖条带）与 T-Attention（横条带）并行后 concat](../../assets/cbramod-block.png)
 
 *Figure 3 · criss-cross 注意力机制：空间条带（同一时刻跨通道）与时间条带（同一通道跨时刻）两路并行，各占一半注意力头*
 
@@ -82,4 +82,4 @@ FC 重构头从表示还原被掩 patch，MSE 损失**只算被掩位置**（MAE
 
 **相关阅读**
 
-:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](tfm-tokenizer.md) ｜ :material-grid-large: [通道适配与多任务学习](../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../basics/attention-alternatives.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](tfm-tokenizer.md) ｜ :material-grid-large: [通道适配与多任务学习](../../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../../basics/attention-alternatives.md) ｜ :material-home: [首页](../../index.md)

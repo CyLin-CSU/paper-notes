@@ -61,11 +61,11 @@ NPI 的立场是：别从模型权重里读因果，把模型当**可干预的�
 
 ## 架构图
 
-![Figure 1 · NPI 框架：观测信号 → 训练代理脑 → 虚拟扰动 → 全脑 EC](../assets/surrogate-npi-framework.png)
+![Figure 1 · NPI 框架：观测信号 → 训练代理脑 → 虚拟扰动 → 全脑 EC](../../assets/surrogate-npi-framework.png)
 
 *Figure 1 · NPI 全流程：(a) 观测的多脑区信号；(b) MLP 学单步动力学；(c) 逐区虚拟扰动；(d) 读出全脑 EC。(e,f) 递归生成验证 FC（r=0.97）；(g,h) 扰动响应差给兴奋（b→a 升）/抑制（b→c 降）；(i) 合成数据上 NPI-EC 对真值 r=0.95；(j) 真实 fMRI 上的 seed-based EC*
 
-![Figure 3 · HCP 800 人的群体级 EBC](../assets/surrogate-human-ebc.png)
+![Figure 3 · HCP 800 人的群体级 EBC](../../assets/surrogate-human-ebc.png)
 
 *Figure 3 · Human EBC：(a) 800 人平均的全脑 EC 矩阵（按 7 个功能网络分块，红兴奋/蓝抑制，色标 Exc/Inh）；(b) 皮层区归入七个功能网络；(c) 模型 FC 对经验 FC r=0.97；(d) 逐网络的 seed-based FC 空间模式；(e) 逐网络的 seed-based EC（红兴奋/蓝抑制）；(f,g) 兴奋/抑制 EC 强度均为对数正态分布；(h) 二值化后的节点度分布*
 
@@ -73,4 +73,4 @@ NPI 的立场是：别从模型权重里读因果，把模型当**可干预的�
 
 **相关阅读**
 
-:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](eegmoe.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](../fm/braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](../generative/eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](../fm/eegmoe.md) ｜ :material-home: [首页](../../index.md)

@@ -5,7 +5,7 @@ tags: [语音解码, mel谱, wav2vec, EEG-to-Text, 综述]
 
 # 语音模型专题：脑信号 → 语音与文本
 
-按输入表示、训练目标和下游输出，对照 [Défossez](../papers/defossez-speech.md)、[SSM2Mel](../papers/ssm2mel.md) 与 [DELTA](../papers/delta.md)。
+按输入表示、训练目标和下游输出，对照 [Défossez](../papers/survey/defossez-speech.md)、[SSM2Mel](../papers/survey/ssm2mel.md) 与 [DELTA](../papers/survey/delta.md)。
 
 ## 总览
 
@@ -92,7 +92,7 @@ DELTA 用特征重构与 VQ 损失训练 tokenizer，不重建原始波形或时
 
 ## 关联页面
 
-[Défossez 笔记](../papers/defossez-speech.md) · [SSM2Mel 笔记](../papers/ssm2mel.md) · [DELTA 笔记](../papers/delta.md)
+[Défossez 笔记](../papers/survey/defossez-speech.md) · [SSM2Mel 笔记](../papers/survey/ssm2mel.md) · [DELTA 笔记](../papers/survey/delta.md)
 
 [Tokenization](tokenization.md) · [预训练](pretraining.md) · [通道适配与多任务](multi-task.md) · [预训练数据](data-landscape.md) · [基座与参数量](base-model.md)
 

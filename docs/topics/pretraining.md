@@ -111,11 +111,11 @@ BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输
 
 | 论文 | 训练输入 | 预测 / 对齐目标 |
 |---|---|---|
-| [DELTA](../papers/delta.md) | 被掩 EEG token；EEG token + 被掩文本 token | 第一阶段预测 EEG token；第二阶段预测文本 token |
-| [GUIDED](../papers/guided.md) | EEG 与配对图像 | CLIP 图像 embedding；生成阶段学习图像先验 |
-| [Défossez](../papers/defossez-speech.md) | 脑信号与配对语音 | 语音 embedding |
-| [SSM2Mel](../papers/ssm2mel.md) | EEG 与配对语音 | mel 时频图 |
-| [LTFT](../papers/learnable-tf.md) | EEG 与任务标签 | 分类标签 |
+| [DELTA](../papers/survey/delta.md) | 被掩 EEG token；EEG token + 被掩文本 token | 第一阶段预测 EEG token；第二阶段预测文本 token |
+| [GUIDED](../papers/survey/guided.md) | EEG 与配对图像 | CLIP 图像 embedding；生成阶段学习图像先验 |
+| [Défossez](../papers/survey/defossez-speech.md) | 脑信号与配对语音 | 语音 embedding |
+| [SSM2Mel](../papers/survey/ssm2mel.md) | EEG 与配对语音 | mel 时频图 |
+| [LTFT](../papers/survey/learnable-tf.md) | EEG 与任务标签 | 分类标签 |
 
 - **DELTA**：先训练 RVQ tokenizer，再用掩码 EEG token 适配 LLaDA；文本微调时保留 EEG 条件，只掩码文本。
 
@@ -131,6 +131,6 @@ BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输
 
 ### 关联论文
 
-[BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [BrainGPT](../papers/braingpt.md) · [NeuroLM](../papers/neurolm.md) · [TFM-Tokenizer](../papers/tfm-tokenizer.md) · [CBraMod](../papers/cbramod.md) · [LUNA](../papers/luna.md) · [EEGMoE](../papers/eegmoe.md) · [JET](../papers/jet.md) · [EEGDM](../papers/eegdm.md) · [Not-All-EEG](../papers/not-all-eeg.md) · [RF-GPT](../papers/rf-gpt.md)
+[BIOT](../papers/fm/biot.md) · [LaBraM](../papers/fm/labram.md) · [EEGPT](../papers/fm/eegpt.md) · [BrainGPT](../papers/fm/braingpt.md) · [NeuroLM](../papers/fm/neurolm.md) · [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) · [CBraMod](../papers/fm/cbramod.md) · [LUNA](../papers/fm/luna.md) · [EEGMoE](../papers/fm/eegmoe.md) · [JET](../papers/generative/jet.md) · [EEGDM](../papers/generative/eegdm.md) · [Not-All-EEG](../papers/generative/not-all-eeg.md) · [RF-GPT](../papers/survey/rf-gpt.md)
 
 新增论文原文：[NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。

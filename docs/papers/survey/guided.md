@@ -80,7 +80,7 @@ Fig. 10 的对照实验:单阶段(EEG 嵌入直接生成)明显差于两阶段(�
 
 ## 架构图
 
-![Figure 2 · GUIDED 总体框架:左列对齐训练(CLIP 冻结 + ATM 可训练,对比学习)与零样本分类/检索;右侧两阶段生成(MSE 对齐 VAE latent 低层、Diffusion U-Net 先验出图像嵌入、IP-Adapter + SDXL-turbo 渲染、GIT 提供文本提示)](../assets/guided-framework.png)
+![Figure 2 · GUIDED 总体框架:左列对齐训练(CLIP 冻结 + ATM 可训练,对比学习)与零样本分类/检索;右侧两阶段生成(MSE 对齐 VAE latent 低层、Diffusion U-Net 先验出图像嵌入、IP-Adapter + SDXL-turbo 渲染、GIT 提供文本提示)](../../assets/guided-framework.png)
 
 *Figure 2 · 左列:训练块——视觉刺激经 CLIP Image(雪花冻结)与 EEG Encoder(火焰可训练)分别嵌入,⊗ 对比学习对齐,零样本做 Classification / Retrieval(右侧 Image Dataset 给出 antelope / pear / kettle / sausage 候选);推理块 EEG Encoder 亦冻结。右下 Generation 块:EEG 嵌入经 MSE Loss 对齐 VAE image encoder → VAE Latent → VAE image decoder 出低层模糊图;EEG 嵌入 + Noise 进 Diffusion U-Net(×T,可训练)出图像嵌入(高层);两者汇入 IP-Adapter + SDXL-turbo 渲染重建图像;GIT model img2text 从图像嵌入生成 caption(如 "A bunch of colorful, dense fudge.")作文本提示(语义层)。图内 "Generatilon" 系原文笔误*
 
@@ -88,4 +88,4 @@ Fig. 10 的对照实验:单阶段(EEG 嵌入直接生成)明显差于两阶段(�
 
 **相关阅读**
 
-:material-eye: [EEGDM · 条件扩散的反向用法(以生成训表征)](eegdm.md) ｜ :material-image-multiple: [Not-All-EEG(生成轴线:位置自适应调度)](not-all-eeg.md) ｜ :material-creation: [JET(流匹配生成 EEG 的质量标杆)](jet.md) ｜ :material-waveform: [Défossez 语音解码(感知解码姊妹线)](defossez-speech.md) ｜ :material-home: [首页](../index.md)
+:material-eye: [EEGDM · 条件扩散的反向用法(以生成训表征)](../generative/eegdm.md) ｜ :material-image-multiple: [Not-All-EEG(生成轴线:位置自适应调度)](../generative/not-all-eeg.md) ｜ :material-creation: [JET(流匹配生成 EEG 的质量标杆)](../generative/jet.md) ｜ :material-waveform: [Défossez 语音解码(感知解码姊妹线)](defossez-speech.md) ｜ :material-home: [首页](../../index.md)

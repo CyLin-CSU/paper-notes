@@ -67,7 +67,7 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 
 ## 架构图
 
-![Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测](../assets/tfm-framework.png)
+![Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测](../../assets/tfm-framework.png)
 
 *Figure 2 · 框架总览：(a) 双路径 tokenizer 预训练 (b) 掩码策略 (c) 频谱窗口编码器 (d) 下游掩码 token 预测*
 
@@ -76,4 +76,4 @@ EEG tokenization 是被忽视的关键问题。对现有方法的批评：① �
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：NeuroLM](neurolm.md) ｜ :material-arrow-right: [下一篇：BIOT](biot.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../comparison.md)
+:material-arrow-left: [上一篇：NeuroLM](neurolm.md) ｜ :material-arrow-right: [下一篇：BIOT](biot.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../../comparison.md)

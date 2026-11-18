@@ -64,11 +64,11 @@ Adam，lr \( 3\times10^{-4} \)，batch 256，一个 epoch 定义为 1,200 次更
 
 ## 架构图
 
-![Figure 1 · 总体框架：脑模块与 wav2vec 2.0 分别编码脑信号与语音，CLIP 损失对齐；评测时在候选段上做零样本检索](../assets/defossez-fig1-overview.png)
+![Figure 1 · 总体框架：脑模块与 wav2vec 2.0 分别编码脑信号与语音，CLIP 损失对齐；评测时在候选段上做零样本检索](../../assets/defossez-fig1-overview.png)
 
 *Figure 1 · 左：speech module（wav2vec 2.0 的卷积 + Transformer）把 3 秒语音映为 \( Y \)；右：brain module（空间注意力 + 被试块 + 卷积栈）把 \( C\times T \) 的脑信号映为 \( Z \)；顶部为评测协议——对每个脑表征 \( Z_i \) 给 \( N \) 个候选段逐一打内积分，即零样本检索；两空间以 CLIP 对比损失对齐，\( N \) 名被试共享除被试层外的全部权重*
 
-![Extended Data Fig. 4 · 设计选择（A–D）与 brain module 逐层结构（E）](../assets/defossez-brainmodule.png)
+![Extended Data Fig. 4 · 设计选择（A–D）与 brain module 逐层结构（E）](../../assets/defossez-brainmodule.png)
 
 *Extended Data Fig. 4 · A–D 是同一被试「Thank you for coming, Ed」的 Mel 重建对照：回归基线（B）只剩模糊能量轮廓，对比损失（C）恢复频带结构，换 wav2vec 目标（D）最干净；E 是 brain module 逐层结构——SpatialAttention(270) → Conv(270, K=1) → 被试专属 SubjectLayer(270, S) → 5 块膨胀卷积（GLU 减半）→ 两层 1×1 收尾到 \( F \) 维*
 
@@ -76,4 +76,4 @@ Adam，lr \( 3\times10^{-4} \)，batch 256，一个 epoch 定义为 1,200 次更
 
 **相关阅读**
 
-:material-arrow-left: [SSM2Mel（语音解码轴线的回归端：EEG→mel 谱）](ssm2mel.md) ｜ :material-brain: [BrainGPT（自回归因果 Transformer 的语言解码）](braingpt.md) ｜ :material-layers: [EEGPT（多被试 patch+通道 embedding 的另一解法）](eegpt.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [SSM2Mel（语音解码轴线的回归端：EEG→mel 谱）](ssm2mel.md) ｜ :material-brain: [BrainGPT（自回归因果 Transformer 的语言解码）](../fm/braingpt.md) ｜ :material-layers: [EEGPT（多被试 patch+通道 embedding 的另一解法）](../fm/eegpt.md) ｜ :material-home: [首页](../../index.md)

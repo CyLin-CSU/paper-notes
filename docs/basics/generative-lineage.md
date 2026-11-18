@@ -49,7 +49,7 @@ KL 项 ≥ 0，故 ELBO 是对数似然的下界且可计算。将其展开即�
 
 *VAE 架构与损失分解：\( x \to q_\phi(z|x) \to p(z) \to p_\theta(x|z) \) 的完整链路；图中 KL 闭式解 \( \frac{1}{2}\sum_i(\sigma_i^2 + \mu_i^2 - \log\sigma_i^2 - 1) \) 即上文正则项的逐维展开*
 
-**模糊的机制（脉络中那句话的严格版）**：decoder 逐维独立高斯似然的最优解是所有可能样本的**条件均值**——多模态答案被平均成单一模糊输出。decoder 过强时还会发生**后验坍缩**（KL 项将 \( q \) 压向先验，隐变量不再携带信息）。**分支**：VQ-VAE（2017）将连续隐变量替换为离散 codebook（commitment loss + stop-gradient，弃用 KL）——即 [LaBraM](../papers/labram.md) / [NeuroLM](../papers/neurolm.md) / [TFM-Tokenizer](../papers/tfm-tokenizer.md) 的 tokenizer 血统。
+**模糊的机制（脉络中那句话的严格版）**：decoder 逐维独立高斯似然的最优解是所有可能样本的**条件均值**——多模态答案被平均成单一模糊输出。decoder 过强时还会发生**后验坍缩**（KL 项将 \( q \) 压向先验，隐变量不再携带信息）。**分支**：VQ-VAE（2017）将连续隐变量替换为离散 codebook（commitment loss + stop-gradient，弃用 KL）——即 [LaBraM](../papers/fm/labram.md) / [NeuroLM](../papers/fm/neurolm.md) / [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) 的 tokenizer 血统。
 
 ## 3 第二代 · DDPM：马尔可夫链与逐步去噪
 
@@ -118,8 +118,8 @@ Flow Matching（Lipman et al. 2022）解决了连续归一化流「训练需在 
 
 ## 7 在 EEG 语境中的位置
 
-- **VQ-VAE 分支** → 已精读的 [LaBraM](../papers/labram.md)（神经码本 + 频谱重构目标）/ [NeuroLM](../papers/neurolm.md)（码字并入 LLM 词表）/ [TFM](../papers/tfm-tokenizer.md)（时频 motif 词表）；
-- **DDPM 线** → [JET](../papers/jet.md) 的 Vanilla Diffusion 基线与 EEG-GAN 对照。LaBraM 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；[EEGDM](../papers/eegdm.md) 把条件潜扩散（PCA 隐空间 + DiT）整个用作表征学习目标——encoder 表示当扩散条件且不 detach，生成即表征；
+- **VQ-VAE 分支** → 已精读的 [LaBraM](../papers/fm/labram.md)（神经码本 + 频谱重构目标）/ [NeuroLM](../papers/fm/neurolm.md)（码字并入 LLM 词表）/ [TFM](../papers/fm/tfm-tokenizer.md)（时频 motif 词表）；
+- **DDPM 线** → [JET](../papers/generative/jet.md) 的 Vanilla Diffusion 基线与 EEG-GAN 对照。LaBraM 的「原始波形不可重构、改用频谱目标」与扩散「分步去噪才能锐利」，本质是同一现象（单步回归的均值坍缩）的两种表述；[EEGDM](../papers/generative/eegdm.md) 把条件潜扩散（PCA 隐空间 + DiT）整个用作表征学习目标——encoder 表示当扩散条件且不 detach，生成即表征；
 - **FM 线** → JET 本体：线性插值路径 + 三条生理约束（在 FM 损失之外施加结构正则）；
 - **先验的拓扑要求三代一致**：JET 的「零噪声初始化灾难性失败」（TS-FID 1600+）是「先验必须非退化、具有全空间支撑」的实证——VAE 的标准正态先验、DDPM 的 \( x_T \)、FM 的 \( x_0 \) 无一例外。
 
@@ -131,10 +131,10 @@ Flow Matching（Lipman et al. 2022）解决了连续归一化流「训练需在 
     - **Score SDE**：Song et al., *Score-Based Generative Modeling through SDEs*, ICLR 2021（arXiv:2011.13456）
     - **Flow Matching**：Lipman et al., arXiv:2210.02747（2022）
     - **Rectified Flow**：Liu et al., *Flow Straight and Fast*, arXiv:2209.03003（2022）
-    - **EEG 落点**：[JET（ICML 2026）](../papers/jet.md)——线性插值 + 生理约束的本站精读
+    - **EEG 落点**：[JET（ICML 2026）](../papers/generative/jet.md)——线性插值 + 生理约束的本站精读
 
 ---
 
 **相关阅读**
 
-:material-creation: [JET · 流匹配生成 EEG（本站精读）](../papers/jet.md) ｜ :material-angle-acute: [LoRA · 低秩适配](lora.md) ｜ :material-vector-polyline: [Attention 替代方案](attention-alternatives.md) ｜ :material-heart-pulse: [LaBraM（VQ-VAE 分支的 EEG 实现）](../papers/labram.md) ｜ :material-home: [首页](../index.md)
+:material-creation: [JET · 流匹配生成 EEG（本站精读）](../papers/generative/jet.md) ｜ :material-angle-acute: [LoRA · 低秩适配](lora.md) ｜ :material-vector-polyline: [Attention 替代方案](attention-alternatives.md) ｜ :material-heart-pulse: [LaBraM（VQ-VAE 分支的 EEG 实现）](../papers/fm/labram.md) ｜ :material-home: [首页](../index.md)

@@ -69,7 +69,7 @@ S4 把 \( A, B \) 离散化（\(\bar{A}, \bar{B}\)）并做结构化约束；Mam
 
 ## 架构图
 
-![Figure 1 · SSM2Mel 总体框架：EEG 加位置编码后经 ESM（Sub-ID 嵌入调制）与 S4-UNet + ExternalAttention 预提取，MHSA/Mamba 交替骨干输出 mel 谱](../assets/ssm2mel-framework.png)
+![Figure 1 · SSM2Mel 总体框架：EEG 加位置编码后经 ESM（Sub-ID 嵌入调制）与 S4-UNet + ExternalAttention 预提取，MHSA/Mamba 交替骨干输出 mel 谱](../../assets/ssm2mel-framework.png)
 
 *Figure 1 · (a) 总体框架——ESM block（右上，Sub-ID 经 LayerNorm 进 MultiHead Attention）→ S4-UNet + ExternalAttention（左下，\( M_K/M_V \) 共享 memory）→ MHSA/Mamba 交替骨干（ESM 原始特征经四处 ⊕ 并入每块前的残差）→ Linear 出 mel 谱；(b) S4-UNet 的 U 形下采样-上采样，上采样前每级经 n 个 S4 blocks；(c) S4 block = linear → S4 → 残差 → Dropout → LayerNorm；(d) MHSA/mamba block：右列 Pre-Conv → S4-UNet → ffm 前置段，左列 ffm → MHSA/mamba module → conv → ffm 三明治，段间 ½× 缩放残差*
 
@@ -77,4 +77,4 @@ S4 把 \( A, B \) 离散化（\(\bar{A}, \bar{B}\)）并做结构化约束；Mam
 
 **相关阅读**
 
-:material-arrow-left: [Not-All-EEG（生成轴线姊妹篇：频谱一致性损失可迁移）](not-all-eeg.md) ｜ :material-creation: [CBraMod（交替混合机制的判别侧版本）](cbramod.md) ｜ :material-account-group: [BrainGPT（长序列 EEG 建模的自回归路线）](braingpt.md) ｜ :material-heart-pulse: [BIOT（线性复杂度的另一条路）](biot.md) ｜ :material-home: [首页](../index.md)
+:material-arrow-left: [Not-All-EEG（生成轴线姊妹篇：频谱一致性损失可迁移）](../generative/not-all-eeg.md) ｜ :material-creation: [CBraMod（交替混合机制的判别侧版本）](../fm/cbramod.md) ｜ :material-account-group: [BrainGPT（长序列 EEG 建模的自回归路线）](../fm/braingpt.md) ｜ :material-heart-pulse: [BIOT（线性复杂度的另一条路）](../fm/biot.md) ｜ :material-home: [首页](../../index.md)

@@ -7,7 +7,7 @@ tags: [索引, 数据集]
 
 十四篇精读论文（核心六篇 + RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG / REVE）用到的全部数据集汇总。**↑ = 预训练语料，↓ = 下游评估**（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部[别名说明](#dataset-alias)。**数据集名均链接至官方获取页；🔒 = 需注册或申请，无公开官方页的在表内注明。**
 
-> 口径说明：矩阵覆盖的是 EEG 基础模型与生成轴线的十四篇对比集。2026-11 新入库的轴外四篇（[Défossez 语音解码](papers/defossez-speech.md) / [SSM2Mel](papers/ssm2mel.md) / [LTFT](papers/learnable-tf.md) / [NPI](papers/surrogate-brain.md)）用的数据集（Broderick/Brennan/Schoffelen/Gwilliams MEG-EEG、SparrKULee、BCIC-II、Bonn、HCP/ABCD/F-TRACT 等）未入矩阵，见各自笔记。
+> 口径说明：矩阵覆盖的是 EEG 基础模型与生成轴线的十四篇对比集。2026-11 新入库的轴外四篇（[Défossez 语音解码](papers/survey/defossez-speech.md) / [SSM2Mel](papers/survey/ssm2mel.md) / [LTFT](papers/survey/learnable-tf.md) / [NPI](papers/survey/surrogate-brain.md)）用的数据集（Broderick/Brennan/Schoffelen/Gwilliams MEG-EEG、SparrKULee、BCIC-II、Bonn、HCP/ABCD/F-TRACT 等）未入矩阵，见各自笔记。
 
 ## 📊 数据集 × 论文使用矩阵
 

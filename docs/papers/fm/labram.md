@@ -61,11 +61,11 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 ## 架构图
 
-![Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer](../assets/labram-arch.png)
+![Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer](../../assets/labram-arch.png)
 
 *Figure 1 · Neural Transformer 整体架构：patch → temporal encoder → 时空 embedding → Transformer*
 
-![Figure 2 · 上：神经 tokenizer 训练（VQ + 频谱重构）；下：掩码 EEG 建模预训练](../assets/labram-tokenizer.png)
+![Figure 2 · 上：神经 tokenizer 训练（VQ + 频谱重构）；下：掩码 EEG 建模预训练](../../assets/labram-tokenizer.png)
 
 *Figure 2 · 上：神经 tokenizer 训练（VQ + 频谱重构）；下：掩码 EEG 建模预训练*
 
@@ -74,4 +74,4 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：BIOT](biot.md) ｜ :material-arrow-right: [下一篇：EEGPT](eegpt.md) ｜ :material-vector-link: [Tokenization 演进](../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../comparison.md)
+:material-arrow-left: [上一篇：BIOT](biot.md) ｜ :material-arrow-right: [下一篇：EEGPT](eegpt.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-chart-box: [十四篇方法对比](../../comparison.md)

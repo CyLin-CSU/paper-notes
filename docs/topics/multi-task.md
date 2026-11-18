@@ -102,10 +102,10 @@ BIOT、LaBraM、EEGPT、BrainGPT、NeuroLM 的通道表覆盖范围与使用阶�
 
 | 论文 | 通道 / 被试处理 | 下游输出 |
 |---|---|---|
-| [Défossez](../papers/defossez-speech.md) | 空间注意力统一通道，每位被试设置独立线性层 | 语音候选的相似度 |
-| [SSM2Mel](../papers/ssm2mel.md) | 被试 embedding 调制信号特征 | mel 时频图 |
-| [DELTA](../papers/delta.md) | 词级 EEG 特征经 RVQ 编码，采用固定的通道与频段配置 | 文本 token |
-| [GUIDED](../papers/guided.md) | 通道注意力 + 时空卷积提取脑信号表示 | 图像候选的相似度，或图像重建条件 |
+| [Défossez](../papers/survey/defossez-speech.md) | 空间注意力统一通道，每位被试设置独立线性层 | 语音候选的相似度 |
+| [SSM2Mel](../papers/survey/ssm2mel.md) | 被试 embedding 调制信号特征 | mel 时频图 |
+| [DELTA](../papers/survey/delta.md) | 词级 EEG 特征经 RVQ 编码，采用固定的通道与频段配置 | 文本 token |
+| [GUIDED](../papers/survey/guided.md) | 通道注意力 + 时空卷积提取脑信号表示 | 图像候选的相似度，或图像重建条件 |
 
 - **DELTA**：用 QLoRA 适配 LLaDA，EEG token 作为文本生成条件；原文未验证跨任务共享同一套模型。
 
@@ -113,15 +113,15 @@ BIOT、LaBraM、EEGPT、BrainGPT、NeuroLM 的通道表覆盖范围与使用阶�
 
 ## 五、跨被试、跨时间与通道评测
 
-- **[CrossPT-EEG](../papers/crosspt-eeg.md)**：把被试内、跨被试、跨时间的视觉解码分开评测，检查模型是否依赖特定被试或记录时间。
+- **[CrossPT-EEG](../papers/survey/crosspt-eeg.md)**：把被试内、跨被试、跨时间的视觉解码分开评测，检查模型是否依赖特定被试或记录时间。
 
-- **[EEGArena](../papers/eegarena.md)**：统一数据划分、训练与评测接口，同时保留各模型的输入处理；分开比较预训练收益、数据规模和通道兼容性。
+- **[EEGArena](../papers/survey/eegarena.md)**：统一数据划分、训练与评测接口，同时保留各模型的输入处理；分开比较预训练收益、数据规模和通道兼容性。
 
 多任务共享、跨被试迁移、跨时间迁移是不同问题，需要分别注明训练与测试的数据关系。
 
 ### 关联论文
 
-[BIOT](../papers/biot.md) · [LaBraM](../papers/labram.md) · [EEGPT](../papers/eegpt.md) · [BrainGPT](../papers/braingpt.md) · [NeuroLM](../papers/neurolm.md) · [TFM](../papers/tfm-tokenizer.md) · [CBraMod](../papers/cbramod.md) · [LUNA](../papers/luna.md) · [EEGMoE](../papers/eegmoe.md)
+[BIOT](../papers/fm/biot.md) · [LaBraM](../papers/fm/labram.md) · [EEGPT](../papers/fm/eegpt.md) · [BrainGPT](../papers/fm/braingpt.md) · [NeuroLM](../papers/fm/neurolm.md) · [TFM](../papers/fm/tfm-tokenizer.md) · [CBraMod](../papers/fm/cbramod.md) · [LUNA](../papers/fm/luna.md) · [EEGMoE](../papers/fm/eegmoe.md)
 
 [预训练范式对比](pretraining.md) · [EEG Tokenization 演进](tokenization.md) · [十四篇方法对比](../comparison.md)
 
