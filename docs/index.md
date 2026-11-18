@@ -4,7 +4,7 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } EEG 论文阅读笔记
 
-> CyLin-CSU · 精读 **27** 篇（EEG 基础模型 15 / 生成式模型 3 / 相关研究 9）· NeurIPS / ICLR / NMI 2023–2026 · 更新：<!-- LAST_UPDATE -->（北京时间）· <!-- ACTIVITY_BADGE --> · 按 `/` 全文搜索
+> CyLin-CSU · 精读 **31** 篇（EEG 基础模型 15 / 生成式模型 3 / 相关研究 13）· NeurIPS / ICLR / NMI 2023–2026 · 更新：<!-- LAST_UPDATE -->（北京时间）· <!-- ACTIVITY_BADGE --> · 按 `/` 全文搜索
 
 **[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)**
 
@@ -38,7 +38,7 @@ title: 首页
 | [EEGDM](papers/generative/eegdm.md) | arXiv 2026 · 25M | EEG 表示引导潜空间扩散，去噪任务训练编码器 |
 | [Not-All-EEG](papers/generative/not-all-eeg.md) | arXiv 2026 | 按位置难度调整流匹配时间调度 |
 
-### 相关研究（9 篇）
+### 相关研究（13 篇）
 
 | 论文 | 发表 | 方法一句话 |
 |---|---|---|
@@ -51,6 +51,10 @@ title: 首页
 | [LTFT](papers/survey/learnable-tf.md) | TETCI 2026 | 时频变换窗口设为可学习参数的信号前端 |
 | [RF-GPT](papers/survey/rf-gpt.md) | arXiv 2026 | 射频时频图接入 VLM，合成数据训练信号理解 |
 | [EEGArena](papers/survey/eegarena.md) | arXiv 2026 | 30 FM × 25 基线 × 57 任务的统一评测 |
+| [EEG FM 综述 (Yao)](papers/survey/yao-eegfm-survey.md) | JNE 2025 | 掩码/自回归/对比三路线横评 + 自跑 10 模型 × 6 数据集 |
+| [表示学习与 FM 综述 (Chen)](papers/survey/chen-representation-learning-review.md) | IEEE SPM 2025 | 19 个 FM 按词元化/嵌入/位置编码/骨干/损失拆表 + 迁移学习地图 |
+| [EEG FM 批判综述 (Kuruppu)](papers/survey/kuruppu-critical-review.md) | JNE 2026 | 三支柱拆 10 个早期 FM：评测异质、scaling 证据弱、LP 落后 FT |
+| [神经信号 FM 观点 (Kwon)](papers/survey/kwon-neural-fm-perspective.md) | EJN 2026 | 生理目标/结构先验/可解释三原则，判现存 FM 为第一代 |
 
 ## 主题专题与架构基础 {: #topics }
 
@@ -74,6 +78,8 @@ title: 首页
 <div class="ac-slot"><!-- ACTIVITY_CALENDAR --></div>
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-18** · 综述四篇齐发：[Yao（JNE 2025）](papers/survey/yao-eegfm-survey.md) 自跑 10 模型 × 6 数据集，FM 赢临床域、输 MI，根子在被癫痫数据主导的预训练域 · [Chen（IEEE SPM 2025）](papers/survey/chen-representation-learning-review.md) 19 模型按词元化/嵌入/位置编码/骨干/损失逐项拆表 · [Kuruppu（JNE 2026）](papers/survey/kuruppu-critical-review.md) 三支柱批判：评测异质、scaling 证据弱、LP 落后 FT · [Kwon & Shin（EJN 2026）](papers/survey/kwon-neural-fm-perspective.md) 生理先验/结构感知/可解释三原则，判现存 FM 为第一代（其 CBraMod「对比目标」转述与原文不符，站内已标注）
 
 - **2026-11-06** · 新增 [Uni-NTFM](papers/fm/uni-ntfm.md) 精读，拆解时域与频域双向交叉注意力、分层拓扑嵌入和双域掩码重建。
 
@@ -140,9 +146,9 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 27 篇（EEG 基础模型 11 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1） |
+| 精读论文 | 31 篇（EEG 基础模型 11 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1 + 综述 4） |
 | 发表跨度 | 2023 – 2026 |
-| 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
+| 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · JNE ×2 · IEEE SPM ×1 · EJN ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
 | 主力预训练语料 | REVE 61,415h（92 数据集）· NeuroLM 25000h · LUNA 21900h · CBraMod 9000h · LaBraM 2500h · BrainGPT 3750 万样本 |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.9B（Uni-NTFM 总参数） |
 

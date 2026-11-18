@@ -113,6 +113,10 @@ nav:
           - LTFT (IEEE TETCI 2026 · 时频方法): papers/survey/learnable-tf.md
           - RF-GPT (arXiv 2026 · 跨领域): papers/survey/rf-gpt.md
           - NPI (Nature Methods 2025 · 连接组学): papers/survey/surrogate-brain.md
+          - EEG FM 综述 (JNE 2025 · 预训练横评): papers/survey/yao-eegfm-survey.md
+          - 表示学习与 FM 综述 (IEEE SPM 2025 · 拆解表): papers/survey/chen-representation-learning-review.md
+          - EEG FM 批判综述 (JNE 2026 · 三支柱): papers/survey/kuruppu-critical-review.md
+          - 神经信号 FM 观点 (EJN 2026 · 生理先验): papers/survey/kwon-neural-fm-perspective.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md

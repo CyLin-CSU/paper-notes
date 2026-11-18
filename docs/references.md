@@ -5,7 +5,7 @@ tags: [索引, 参考文献]
 
 # 参考文献索引
 
-二十七篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测轴外的六篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
+三十一篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测 / 综述轴外的十篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
 ## 基础架构与预训练范式
 
@@ -109,6 +109,15 @@ tags: [索引, 参考文献]
 | Back to Basics: Let Denoising Generative Models Denoise | CVPR 2026（Li & He） | Not-All-EEG | 干净样本预测参数化的出处（本文网络直接预测 x̂₁ 再反解向量场） |
 | DeWave | NeurIPS 2023 | EEGPT | 离散 EEG 编码词表（Codex book 概念出处） |
 | EEG2VEC | arXiv 2023 | EEGPT | 对比+重构损失学习 EEG 表示的相关工作 |
+
+## EEG 基础模型综述
+
+| 文献 | 出处 | 被引于 | 一句话作用 |
+|---|---|---|---|
+| Yao et al. Foundation models for EEG decoding | J. Neural Eng. 22:061002（2025） | [本站精读](papers/survey/yao-eegfm-survey.md) | PRISMA 综述 + 自跑 10 模型 × 6 数据集：掩码/自回归/对比三路线横评；FM 赢临床域输 MI，归因预训练域被癫痫数据主导 |
+| Chen, Lu & Wu. Representation Learning and Foundation Models for EEG Analyses | IEEE Signal Processing Magazine 2025-09 | [本站精读](papers/survey/chen-representation-learning-review.md) | 19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项拆表（词元化五分类）+ 迁移学习四类地图 + SELSER/Brant-X/NeuroLM 三案例；表内 FoME 年份等有硬伤 |
+| Kuruppu et al. EEG foundation models: a critical review | J. Neural Eng. 23:021001（2026） | [本站精读](papers/survey/kuruppu-critical-review.md) | 三支柱（输入表示/建模/评测）拆 10 个早期 FM：共享任务仅 TUAB/TUEV、OOD 评测仅 2 篇、scaling 证据弱、LP 显著落后 FT——SSL 表示质量存疑 |
+| Kwon & Shin. Foundation Models for Neural Signal Decoding | Eur. J. Neurosci. 63:e70376（2026） | [本站精读](papers/survey/kwon-neural-fm-perspective.md) | 观点综述：生理感知目标（PAC 预测/相干重建）、结构感知架构（MNI 投影/3D 坐标 PE）、可解释性三原则，判现存 FM 为第一代；对 CBraMod 有「对比目标」误读 |
 
 ## 信号处理基础
 
