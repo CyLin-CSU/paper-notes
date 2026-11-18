@@ -39,6 +39,7 @@ def main() -> int:
     models = load("models.json")
     datasets = load("datasets.json")
     evidence = load("evidence.json")
+    use_matrix = load("use_matrix.json")
 
     # 1. ID 唯一性
     for name, rows, key in (("papers", papers, "paper_id"), ("models", models, "model_id"),
@@ -53,6 +54,15 @@ def main() -> int:
     paper_ids = {r["paper_id"] for r in papers}
     model_ids = {r["model_id"] for r in models}
     dataset_ids = {r["dataset_id"] for r in datasets}
+
+    # 2b. 使用矩阵关系记录的引用完整性
+    for r in use_matrix:
+        if r["paper_id"] not in paper_ids:
+            bad.append(f"use_matrix.json: {r['dataset_name']} × {r['paper_id']} 引用不存在的 paper_id")
+        if r.get("dataset") in dataset_ids or not r.get("dataset"):
+            pass
+        elif r.get("dataset_name") and r["dataset"] != r["dataset_name"]:
+            bad.append(f"use_matrix.json: {r['dataset_name']} 的 dataset id {r['dataset']} 不在 datasets.json")
 
     # 2. 引用完整性
     for m in models:

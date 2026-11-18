@@ -311,5 +311,387 @@
     "split": "零样本语音段分类",
     "status": "verified",
     "note": "单被试 175h vs 10h 的数据规模对照（非侵入语音解码）"
+  },
+  {
+    "evidence_id": "cbramod-t2-tuab-balacc",
+    "paper_id": "cbramod",
+    "source": "表 2（站内 cbramod.md 转述）",
+    "model_id": "cbramod-base",
+    "dataset": "tuab",
+    "protocol": "微调",
+    "metric": "balanced accuracy",
+    "value": {
+      "value": 0.8289
+    },
+    "unit": "",
+    "split": "TUAB 官方划分",
+    "status": "verified",
+    "note": "原报告口径"
+  },
+  {
+    "evidence_id": "cbramod-ablation-attn",
+    "paper_id": "cbramod",
+    "source": "附录消融（站内 comparison.md 转述）",
+    "model_id": "cbramod-base",
+    "dataset": null,
+    "protocol": "消融",
+    "metric": "注意力头分配",
+    "value": {
+      "best": "4:4 时空头",
+      "note": "6:2 / 2:6 偏科均下降"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "十字交叉注意力消融：空间与时间依赖同等重要"
+  },
+  {
+    "evidence_id": "labram-t-tuab-balacc",
+    "paper_id": "labram",
+    "source": "表（站内 comparison.md 转述）",
+    "model_id": "labram-base",
+    "dataset": "tuab",
+    "protocol": "微调",
+    "metric": "balanced accuracy",
+    "value": {
+      "value": 0.814
+    },
+    "unit": "",
+    "split": "TUAB 官方划分",
+    "status": "verified",
+    "note": "Yao 自跑口径 0.8140 与原报告互证"
+  },
+  {
+    "evidence_id": "labram-data-scaling-tuev",
+    "paper_id": "labram",
+    "source": "其数据量消融（站内 blog 转述）",
+    "model_id": "labram-base",
+    "dataset": "tuev",
+    "protocol": "微调",
+    "metric": "相对 2500h 版本达成率",
+    "value": {
+      "tuev_at_500h_pct": 90
+    },
+    "unit": "%",
+    "split": "",
+    "status": "verified",
+    "note": "Base 500h 预训练在 TUEV 达到 2500h 版本的 90%+"
+  },
+  {
+    "evidence_id": "luna-tuar-sota",
+    "paper_id": "luna",
+    "source": "表（站内 datasets.md 引用）",
+    "model_id": "luna-base",
+    "dataset": null,
+    "protocol": "微调",
+    "metric": "TUAR 伪迹分类准确率",
+    "value": {
+      "value": 0.921
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "TUAR 5 类伪迹任务上为其对比中 SOTA"
+  },
+  {
+    "evidence_id": "luna-tuab-bottleneck",
+    "paper_id": "luna",
+    "source": "其消融（站内 blog 转述）",
+    "model_id": "luna-base",
+    "dataset": "tuab",
+    "protocol": "微调",
+    "metric": "相对全注意力差距",
+    "value": {
+      "gap_pp": 1
+    },
+    "unit": "pp",
+    "split": "",
+    "status": "verified",
+    "note": "隐空间瓶颈的代价：TUAB 上落后全注意力约 1pp"
+  },
+  {
+    "evidence_id": "neurorvq-recon-mse",
+    "paper_id": "neurorvq",
+    "source": "其重构表（站内 references 转述）",
+    "model_id": "neurorvq",
+    "dataset": null,
+    "protocol": "tokenizer 重构",
+    "metric": "EEG 重构 MSE",
+    "value": {
+      "neurorvq": 0.016,
+      "labram": 1.071
+    },
+    "unit": "",
+    "split": "同数据同口径",
+    "status": "verified",
+    "note": "低 67 倍"
+  },
+  {
+    "evidence_id": "neurorvq-ecg-43class",
+    "paper_id": "neurorvq",
+    "source": "其 ECG 表（站内 references 转述）",
+    "model_id": "neurorvq",
+    "dataset": null,
+    "protocol": "微调",
+    "metric": "ECG 43 类分类",
+    "value": {
+      "note": "较最强基线翻倍"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "幅相分离重构对 ECG 同样有效"
+  },
+  {
+    "evidence_id": "eegpt-lp-sota",
+    "paper_id": "eegpt",
+    "source": "其表（站内 eegpt.md 转述）",
+    "model_id": "eegpt-main",
+    "dataset": null,
+    "protocol": "线性探针",
+    "metric": "多任务平均",
+    "value": {
+      "note": "linear probing 即达其对比中 SOTA"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "对齐目标（JEPA 式）+ 掩码重构双自监督的冻结可用性证据"
+  },
+  {
+    "evidence_id": "braingpt-ar-vs-mae",
+    "paper_id": "braingpt",
+    "source": "表 V（站内 braingpt.md 转述）",
+    "model_id": "braingpt-giant",
+    "dataset": null,
+    "protocol": "同架构同损失对照",
+    "metric": "五任务平均准确率差",
+    "value": {
+      "ar_minus_mae_pp": 2.5
+    },
+    "unit": "pp",
+    "split": "",
+    "status": "verified",
+    "note": "L2 损失最优时自回归较掩码重构平均高 2.5pp；作者归因时序因果结构，限于该五任务"
+  },
+  {
+    "evidence_id": "braingpt-mt-smalltask",
+    "paper_id": "braingpt",
+    "source": "表 VI（站内 blog 转述）",
+    "model_id": "braingpt-giant",
+    "dataset": null,
+    "protocol": "12 基准联合训练",
+    "metric": "认知负荷任务增益",
+    "value": {
+      "gain_pp": 3.9
+    },
+    "unit": "pp",
+    "split": "",
+    "status": "verified",
+    "note": "多任务信息载体是电极节点被多任务梯度共同更新；小任务受益最大"
+  },
+  {
+    "evidence_id": "neurolm-perplexity-scaling",
+    "paper_id": "neurolm",
+    "source": "§3.6（站内 blog 转述）",
+    "model_id": "neurolm-xl",
+    "dataset": null,
+    "protocol": "预训练规模",
+    "metric": "验证困惑度",
+    "value": {
+      "note": "L 与 XL 两档接近，十亿级参数未训满（作者观点）"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "25000h 语料上的模型缩放观察"
+  },
+  {
+    "evidence_id": "neurodetr-f1-all-first",
+    "paper_id": "neurodetr",
+    "source": "其主表（站内 neurodetr.md 转述）",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "事件检测",
+    "metric": "事件级 F1",
+    "value": {
+      "note": "8 数据集全部第一"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "多尺度 VQ 事件记忆 + DETR 式集合预测"
+  },
+  {
+    "evidence_id": "codebrain-token-bridge",
+    "paper_id": "codebrain",
+    "source": "站内 codebrain.md",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "架构定性",
+    "metric": "token 角色",
+    "value": {
+      "note": "token 退守预训练目标，未作下游输入"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "与 TFM（token 作输入）构成 token 用途的两极"
+  },
+  {
+    "evidence_id": "not-all-eeg-tsfid",
+    "paper_id": "not-all-eeg",
+    "source": "其主表（站内 not-all-eeg.md 转述）",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "生成评估",
+    "metric": "TS-FID 相对复现 JET",
+    "value": {
+      "reduction_pct": [
+        40,
+        62
+      ]
+    },
+    "unit": "%",
+    "split": "",
+    "status": "verified",
+    "note": "位置自适应时间调度（PATS）+ 因子化时空注意力 + 频率加权多分辨率频谱损失"
+  },
+  {
+    "evidence_id": "eegdm-spsw-recall",
+    "paper_id": "eegdm",
+    "source": "其表（站内 eegdm.md 转述）",
+    "model_id": "eegdm-encoder",
+    "dataset": null,
+    "protocol": "微调",
+    "metric": "少数类召回（SPSW）",
+    "value": {
+      "minority_recall_pct": [
+        10,
+        18
+      ]
+    },
+    "unit": "%",
+    "split": "",
+    "status": "verified",
+    "note": "被 EEGDM 用作批评 CBraMod 容量分配的证据；类不均衡场景鲁棒"
+  },
+  {
+    "evidence_id": "reve-channel-pruning-mi",
+    "paper_id": "reve",
+    "source": "其稀疏性实验（站内 reve.md 转述）",
+    "model_id": "reve-base",
+    "dataset": "physionet-mi",
+    "protocol": "通道递减",
+    "metric": "MI 任务准确率",
+    "value": {
+      "ch64": 0.824,
+      "ch1": 0.66
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "空间信息密集任务优雅退化；想象语音则 0.565→0.209 接近随机"
+  },
+  {
+    "evidence_id": "reve-fewshot-20",
+    "paper_id": "reve",
+    "source": "其少样本表（站内 reve.md 转述）",
+    "model_id": "reve-base",
+    "dataset": null,
+    "protocol": "20-shot",
+    "metric": "纯预训练权重 vs 跨数据集微调",
+    "value": {
+      "pretrain_only": 0.723,
+      "cross_ft": 0.817
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "跨数据集微调再 +9.4pp"
+  },
+  {
+    "evidence_id": "reve-isruc-kappa",
+    "paper_id": "reve",
+    "source": "表 2（站内 reve.md 转述）",
+    "model_id": "reve-base",
+    "dataset": null,
+    "protocol": "微调",
+    "metric": "ISRUC 平衡精度 / Kappa",
+    "value": {
+      "bacc": 0.7819,
+      "kappa": 0.75
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "平衡精度略低 CBraMod 0.7865 但 Kappa 0.7500 更高；REVE 修正了基线下巴电极混入 bug"
+  },
+  {
+    "evidence_id": "jet-tsfid-baseline",
+    "paper_id": "jet",
+    "source": "项目页 quantitative-comparison（站内 jet.md 转述）",
+    "model_id": "jet-generator",
+    "dataset": null,
+    "protocol": "生成评估",
+    "metric": "TS-FID",
+    "value": {
+      "note": "较 EEG-GAN / Vanilla Diffusion 强基线低 40%+"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "对照限于该论文的三项基准"
+  },
+  {
+    "evidence_id": "eegarena-fm-lead",
+    "paper_id": "eegarena",
+    "source": "§3（站内 eegarena.md 转述）",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "统一管线横评",
+    "metric": "定性结论",
+    "value": {
+      "conclusion": "FM 大多领先监督基线，但参数量不预测性能"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "30 FM × 25 监督基线 × 57 任务"
+  },
+  {
+    "evidence_id": "kuruppu-tuev-f1-range",
+    "paper_id": "kuruppu-critical-review",
+    "source": "§4.3 与其图 3(b)",
+    "model_id": null,
+    "dataset": "tuev",
+    "protocol": "微调",
+    "metric": "F1 跨模型范围",
+    "value": {
+      "range": [
+        0.7,
+        0.83
+      ]
+    },
+    "unit": "",
+    "split": "TUEV 官方划分",
+    "status": "verified",
+    "note": "仅 4 个 FM 可比；TUAB 或已饱和（传统方法 85–87%，其引 [152]）"
+  },
+  {
+    "evidence_id": "defossez-meg-retrieval",
+    "paper_id": "defossez-speech",
+    "source": "其主结果（站内 defossez-speech.md 转述）",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "零样本检索",
+    "metric": "3 秒 MEG 千余候选检索",
+    "value": {
+      "note": "详见其笔记"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "脑信号-语音对比对齐轴线的源头工作"
   }
 ]

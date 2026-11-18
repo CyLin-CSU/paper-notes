@@ -1,0 +1,723 @@
+[
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "biot",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "labram",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "eegpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "neurolm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "tfm-tokenizer",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "luna",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "jet",
+    "use": "P+D",
+    "note": "生成训练 + TS-FID 评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "cbramod",
+    "use": "P+D",
+    "note": "预训练 + 下游"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "eegdm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuab",
+    "dataset_name": "TUAB",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "biot",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "labram",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "eegpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "neurolm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "tfm-tokenizer",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "jet",
+    "use": "P+D",
+    "note": "生成训练 + TS-FID 评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "cbramod",
+    "use": "P+D",
+    "note": "预训练 + 下游"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "eegdm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "not-all-eeg",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tuev",
+    "dataset_name": "TUEV",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "tueg",
+    "dataset_name": "TUEG（总体）",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tueg",
+    "dataset_name": "TUEG（总体）",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tueg",
+    "dataset_name": "TUEG（总体）",
+    "paper_id": "luna",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tueg",
+    "dataset_name": "TUEG（总体）",
+    "paper_id": "cbramod",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tueg",
+    "dataset_name": "TUEG（总体）",
+    "paper_id": "eegdm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tueg",
+    "dataset_name": "TUEG（总体）",
+    "paper_id": "reve",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tusz",
+    "dataset_name": "TUSZ",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tusz",
+    "dataset_name": "TUSZ",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "tusz",
+    "dataset_name": "TUSZ",
+    "paper_id": "jet",
+    "use": "P+D",
+    "note": "生成训练 + TS-FID 评估"
+  },
+  {
+    "dataset": "tusz",
+    "dataset_name": "TUSZ",
+    "paper_id": "cbramod",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "TUEP / TUAR / TUSL",
+    "dataset_name": "TUEP / TUAR / TUSL",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "TUEP / TUAR / TUSL",
+    "dataset_name": "TUEP / TUAR / TUSL",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "TUEP / TUAR / TUSL",
+    "dataset_name": "TUEP / TUAR / TUSL",
+    "paper_id": "luna",
+    "use": "D",
+    "note": "TUAR/TUSL 下游；TUEP 含于 TUEG 预训练"
+  },
+  {
+    "dataset": "TUEP / TUAR / TUSL",
+    "dataset_name": "TUEP / TUAR / TUSL",
+    "paper_id": "cbramod",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "SEED（原始）",
+    "dataset_name": "SEED（原始）",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "SEED（原始）",
+    "dataset_name": "SEED（原始）",
+    "paper_id": "eegpt",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "SEED（原始）",
+    "dataset_name": "SEED（原始）",
+    "paper_id": "neurolm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "SEED（原始）",
+    "dataset_name": "SEED（原始）",
+    "paper_id": "eegmoe",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "seed-v",
+    "dataset_name": "SEED-IV / SEED-V",
+    "paper_id": "labram",
+    "use": "P+D",
+    "note": "预训练 + 下游"
+  },
+  {
+    "dataset": "seed-v",
+    "dataset_name": "SEED-IV / SEED-V",
+    "paper_id": "braingpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "seed-v",
+    "dataset_name": "SEED-IV / SEED-V",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "seed-v",
+    "dataset_name": "SEED-IV / SEED-V",
+    "paper_id": "luna",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "seed-v",
+    "dataset_name": "SEED-IV / SEED-V",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "seed-v",
+    "dataset_name": "SEED-IV / SEED-V",
+    "paper_id": "not-all-eeg",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "DEAP / FACED",
+    "dataset_name": "DEAP / FACED",
+    "paper_id": "braingpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "DEAP / FACED",
+    "dataset_name": "DEAP / FACED",
+    "paper_id": "eegmoe",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "DEAP / FACED",
+    "dataset_name": "DEAP / FACED",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "DEAP / FACED",
+    "dataset_name": "DEAP / FACED",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "PhysioMI",
+    "dataset_name": "PhysioMI",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "PhysioMI",
+    "dataset_name": "PhysioMI",
+    "paper_id": "eegpt",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "PhysioMI",
+    "dataset_name": "PhysioMI",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "PhysioMI",
+    "dataset_name": "PhysioMI",
+    "paper_id": "eegmoe",
+    "use": "P",
+    "note": "EEGMMIDB 预训练"
+  },
+  {
+    "dataset": "PhysioMI",
+    "dataset_name": "PhysioMI",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "HGD",
+    "dataset_name": "HGD",
+    "paper_id": "eegpt",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "BCIC4-1 / MIBCI",
+    "dataset_name": "BCIC4-1 / MIBCI",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "BCIC4-1 / MIBCI",
+    "dataset_name": "BCIC4-1 / MIBCI",
+    "paper_id": "braingpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC4-1 / MIBCI",
+    "dataset_name": "BCIC4-1 / MIBCI",
+    "paper_id": "eegmoe",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "BCIC4-1 / MIBCI",
+    "dataset_name": "BCIC4-1 / MIBCI",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC-2A / 2B",
+    "dataset_name": "BCIC-2A / 2B",
+    "paper_id": "eegpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC-2A / 2B",
+    "dataset_name": "BCIC-2A / 2B",
+    "paper_id": "eegmoe",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC-2A / 2B",
+    "dataset_name": "BCIC-2A / 2B",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC-2A / 2B",
+    "dataset_name": "BCIC-2A / 2B",
+    "paper_id": "not-all-eeg",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC-2A / 2B",
+    "dataset_name": "BCIC-2A / 2B",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "Grasp and Lift",
+    "dataset_name": "Grasp and Lift",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "Grasp and Lift",
+    "dataset_name": "Grasp and Lift",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "SHHS",
+    "dataset_name": "SHHS",
+    "paper_id": "biot",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "EDF / HMC（睡眠）",
+    "dataset_name": "EDF / HMC（睡眠）",
+    "paper_id": "eegpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "EDF / HMC（睡眠）",
+    "dataset_name": "EDF / HMC（睡眠）",
+    "paper_id": "braingpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "EDF / HMC（睡眠）",
+    "dataset_name": "EDF / HMC（睡眠）",
+    "paper_id": "neurolm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "EDF / HMC（睡眠）",
+    "dataset_name": "EDF / HMC（睡眠）",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "EESM23（ear-EEG）",
+    "dataset_name": "EESM23（ear-EEG）",
+    "paper_id": "tfm-tokenizer",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "EEGMat / STEW（负荷）",
+    "dataset_name": "EEGMat / STEW（负荷）",
+    "paper_id": "braingpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "EEGMat / STEW（负荷）",
+    "dataset_name": "EEGMat / STEW（负荷）",
+    "paper_id": "neurolm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "EEGMat / STEW（负荷）",
+    "dataset_name": "EEGMat / STEW（负荷）",
+    "paper_id": "eegmoe",
+    "use": "P+D",
+    "note": "EEGMat 预训练 + STEW 下游"
+  },
+  {
+    "dataset": "EEGMat / STEW（负荷）",
+    "dataset_name": "EEGMat / STEW（负荷）",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "Inria BCI / TVNT（P300）",
+    "dataset_name": "Inria BCI / TVNT（P300）",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "Inria BCI / TVNT（P300）",
+    "dataset_name": "Inria BCI / TVNT（P300）",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "KaggleERN / PhysioP300",
+    "dataset_name": "KaggleERN / PhysioP300",
+    "paper_id": "eegpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "TSU（SSVEP）",
+    "dataset_name": "TSU（SSVEP）",
+    "paper_id": "eegpt",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "M3CV",
+    "dataset_name": "M3CV",
+    "paper_id": "eegpt",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "PTB-XL / Cardiology（ECG）",
+    "dataset_name": "PTB-XL / Cardiology（ECG）",
+    "paper_id": "biot",
+    "use": "P+D",
+    "note": "预训练 + 下游"
+  },
+  {
+    "dataset": "HAR（可穿戴）",
+    "dataset_name": "HAR（可穿戴）",
+    "paper_id": "biot",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "MoBI（步态）",
+    "dataset_name": "MoBI（步态）",
+    "paper_id": "labram",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "dataset_name": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "paper_id": "labram",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "dataset_name": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "paper_id": "neurolm",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "dataset_name": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "paper_id": "luna",
+    "use": "P",
+    "note": "Siena 预训练；TUEG 另计"
+  },
+  {
+    "dataset": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "dataset_name": "Raw EEG / Resting / Siena / SPIS / 自采集",
+    "paper_id": "reve",
+    "use": "P",
+    "note": "预训练语料"
+  },
+  {
+    "dataset": "SHU-MI",
+    "dataset_name": "SHU-MI",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "SHU-MI",
+    "dataset_name": "SHU-MI",
+    "paper_id": "eegdm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "CL-Drive",
+    "dataset_name": "CL-Drive",
+    "paper_id": "eegdm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "DMER",
+    "dataset_name": "DMER",
+    "paper_id": "eegdm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "SEED-VII",
+    "dataset_name": "SEED-VII",
+    "paper_id": "eegdm",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "ISRUC",
+    "dataset_name": "ISRUC",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "ISRUC",
+    "dataset_name": "ISRUC",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "CHB-MIT",
+    "dataset_name": "CHB-MIT",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC2020-3",
+    "dataset_name": "BCIC2020-3",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "BCIC2020-3",
+    "dataset_name": "BCIC2020-3",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "Mumtaz2016",
+    "dataset_name": "Mumtaz2016",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "Mumtaz2016",
+    "dataset_name": "Mumtaz2016",
+    "paper_id": "reve",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "SEED-VIG",
+    "dataset_name": "SEED-VIG",
+    "paper_id": "cbramod",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "DREAMER（未见验证）",
+    "dataset_name": "DREAMER（未见验证）",
+    "paper_id": "braingpt",
+    "use": "D",
+    "note": "下游评估"
+  },
+  {
+    "dataset": "DREAMER（未见验证）",
+    "dataset_name": "DREAMER（未见验证）",
+    "paper_id": "eegmoe",
+    "use": "P",
+    "note": "EEGMoE 预训练语料之一"
+  },
+  {
+    "dataset": "合成 RF 波形（MATLAB 六技术 + TorchSig）",
+    "dataset_name": "合成 RF 波形（MATLAB 六技术 + TorchSig）",
+    "paper_id": "rf-gpt",
+    "use": "P",
+    "note": "RF-GPT 生成/指令数据语料（12,000 场景 / 0.625M 指令对）"
+  }
+]

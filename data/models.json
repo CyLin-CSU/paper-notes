@@ -292,5 +292,19 @@
     "license": null,
     "source": "CodeBrain 论文；站内 codebrain.md",
     "code": "https://github.com/jingyingma01/CodeBrain"
+  },
+  {
+    "model_id": "eegdm-encoder",
+    "paper_id": "eegdm",
+    "name": "EEGDM 下游 encoder",
+    "params_m": 25,
+    "input": "连续 patch（EEG-ViT encoder）",
+    "layout": "潜空间 PCA（零训练）",
+    "training_stage": "潜扩散生成目标联合优化（不 detach）",
+    "weights": "open",
+    "weights_note": "开源（comparison.md 开源表）",
+    "license": null,
+    "source": "EEGDM 论文；站内 eegdm.md",
+    "code": "https://github.com/wangsc18/EEGDM"
   }
 ]

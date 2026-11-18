@@ -44,6 +44,9 @@ extra_javascript:
   - javascripts/library.js
   - javascripts/evidence.js
   - javascripts/models.js
+  - javascripts/cite.js
+  - javascripts/reading-list.js
+  - javascripts/eeg-demo.js
 
 plugins:
   - search
@@ -139,6 +142,8 @@ nav:
   - 论文库: library.md
   - 模型对比: models.md
   - 实验证据: evidence.md
+  - 阅读清单: reading-list.md
+  - EEG 交互示例: eeg-demo.md
   - 十四篇方法对比: comparison.md
   - 索引:
       - 数据集索引: datasets.md

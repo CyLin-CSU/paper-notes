@@ -67,7 +67,8 @@ REDIRECT_TEMPLATE = (
 
 
 def _git(args: list) -> str:
-    return subprocess.run(["git"] + args, capture_output=True, text=True, check=True,
+    return subprocess.run(["git"] + args, capture_output=True, check=True,
+                          encoding="utf-8", errors="replace",
                           cwd=str(ROOT)).stdout
 
 
@@ -141,7 +142,92 @@ def on_page_content(html, page, **kwargs):
         html = _render_evidence(html)
     elif page.file.src_uri == "models.md":
         html = _render_models(html)
+    elif page.file.src_uri.startswith("papers/"):
+        html = _render_paper_toolbar(html, page)
     return html
+
+
+def _bibtex(p: dict) -> str:
+    fields = [f"title = {{{p['title']}}}",
+              "author = {" + " and ".join(p.get("authors", [])) + "}",
+              f"year = {{{p.get('year') or ''}}}"]
+    if p.get("venue"):
+        fields.append(f"journal = {{{p['venue']}}}")
+    if p.get("doi"):
+        fields.append(f"doi = {{{p['doi']}}}")
+    if p.get("arxiv") and str(p["arxiv"]).startswith("http"):
+        fields.append(f"url = {{{p['arxiv']}}}")
+    return "@article{" + p["paper_id"] + ",\n  " + ",\n  ".join(fields) + ",\n}"
+
+
+def _render_paper_toolbar(html, page):
+    """单篇页标题区工具条（方案 G/B）：来源链接、复制引用、保存阅读、证据反查。"""
+    m = re.match(r"papers/(fm|generative|survey|reviews)/([a-z0-9-]+)\.md", page.file.src_uri)
+    if not m:
+        return html
+    paper_id = m.group(2)
+    papers = {r["paper_id"]: r for r in _load_json("papers.json")}
+    p = papers.get(paper_id)
+    if not p:
+        return html
+    links = []
+    if p.get("doi"):
+        links.append(f'<a href="https://doi.org/{_esc(p["doi"])}">DOI</a>')
+    if p.get("arxiv") and str(p["arxiv"]).startswith("http"):
+        links.append(f'<a href="{_esc(p["arxiv"])}">arXiv</a>')
+    if p.get("code"):
+        links.append(f'<a href="{_esc(p["code"])}">代码/项目</a>')
+    links.append(f'<a href="../evidence/?paper={_esc(paper_id)}">实验证据</a>')
+    bibtex = json.dumps(_bibtex(p), ensure_ascii=False)
+    title = json.dumps(p["title"], ensure_ascii=False)
+    toolbar = (
+        f'<div class="paper-toolbar" data-paper="{_esc(paper_id)}">'
+        f'<span class="pt-links">{" · ".join(links)}</span>'
+        f'<button type="button" class="pt-cite" data-cite={bibtex}>复制引用</button>'
+        f'<button type="button" class="pt-save" data-title={title}>保存阅读</button>'
+        f"</div>"
+    )
+    return re.sub(r"(</h1>)", r"\1" + toolbar, html, count=1)
+
+
+def _build_atom(site, config):
+    """site/atom.xml：从 git 提交历史生成已发布笔记的更新订阅（方案 G）。"""
+    try:
+        log = _git(["log", "--format=%cI\x1f%s\x1f%H", "--name-only", "-60"])
+    except Exception:
+        return
+    entries, seen = [], set()
+    for block in log.split("\n\n"):
+        lines = [l for l in block.splitlines() if l.strip()]
+        if len(lines) < 2:
+            continue
+        ts, subject, sha = (lines[0].split("\x1f") + ["", ""])[:3]
+        for path in lines[2:]:
+            mm = re.match(r"docs/papers/(fm|generative|survey|reviews)/([a-z0-9-]+)\.md$", path)
+            if not mm or mm.group(2) in seen:
+                continue
+            seen.add(mm.group(2))
+            slug = mm.group(2)
+            entries.append((ts, slug, sha))
+    if not entries:
+        return
+    base = (config.get("site_url") or "https://cylin-csu.github.io/paper-notes/").rstrip("/")
+    items = []
+    for ts, slug, sha in entries[:30]:
+        items.append(
+            f'<entry><id>urn:paper-notes:{sha}:{slug}</id>'
+            f"<updated>{ts}</updated>"
+            f"<link rel=\"alternate\" href=\"{base}/papers/reviews/{slug}/\"/>"
+            f"<title>{_esc(slug)} 已发布/更新</title></entry>"
+        )
+    feed = (
+        '<?xml version="1.0" encoding="utf-8"?>'
+        f'<feed xmlns="http://www.w3.org/2005/Atom"><title>Paper Notes 更新</title>'
+        f'<link href="{base}/"/><id>urn:paper-notes:feed</id>'
+        f"<updated>{entries[0][0]}</updated>{''.join(items)}</feed>"
+    )
+    (site / "atom.xml").write_text(feed, encoding="utf-8")
+    print(f"[hooks] Atom 订阅已生成：{min(len(entries), 30)} 条（site/atom.xml）")
 
 
 def _render_home_extras(html):
@@ -322,3 +408,4 @@ def on_post_build(config, **kwargs):
     if missing:
         raise RuntimeError(f"[hooks] 论文重定向目标缺失（检查 mkdocs nav 与文件）：{missing}")
     print(f"[hooks] 论文历史地址重定向已生成：{written} 条（含锚点转发与无 JS 回退）")
+    _build_atom(site, config)
