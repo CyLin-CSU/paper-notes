@@ -13,7 +13,7 @@ tags: [基座模型, 模型规模, 综述]
 |---|---|---|---|---|
 | [BIOT](../papers/fm/biot.md) | **从零训练** | 3.2M | — | EEG encoder 从零预训练 |
 | [LaBraM](../papers/fm/labram.md) | **从零训练** | 5.8M / 46M / 369M | 约 8.6M | tokenizer 与主模型分别训练；分类时不使用 tokenizer |
-| [EEGPT](../papers/fm/eegpt.md) | **从零训练** | 约 25M（公开 Large encoder） | — | 只计 encoder，不合计 predictor、reconstructor 与 momentum encoder |
+| [EEGPT](../papers/fm/eegpt.md) | **从零训练** | 约 25M（公开 Large encoder；论文摘要口径为 10M，TUEV 主结果表 3 列 25M） | — | 只计 encoder，不合计 predictor、reconstructor 与 momentum encoder |
 | [BrainGPT](../papers/fm/braingpt.md) | **从零训练** | 1.46M / 11.29M / 183.8M / 1.09B | — | GPT 式架构，不加载语言模型权重 |
 | [NeuroLM](../papers/fm/neurolm.md) | **GPT-2 基座** | 扩词后未单列；基座约 124M / 355M / 1.56B | VQ encoder 未单列 | GPT-2 继续预训练与指令微调，VQ encoder 从零训练 |
 | [TFM](../papers/fm/tfm-tokenizer.md) | **从零训练** | 约 0.7M | 约 1.2M | 分类时保留 tokenizer，两者合计约 1.9M |

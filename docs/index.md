@@ -16,7 +16,7 @@ title: 首页
 |---|---|---|
 | [BIOT](papers/fm/biot.md) | NeurIPS 2023 · 3.2M | 逐通道切段 + 线性注意力，跨格式生物信号统一编码的起点 |
 | [LaBraM](papers/fm/labram.md) | ICLR 2024 · 5.8M–369M | VQ 神经 codebook + 频谱重构 + 掩码码字预测 |
-| [EEGPT](papers/fm/eegpt.md) | NeurIPS 2024 · ~10M | 表示对齐 + 掩码重构双自监督，linear probing 达 SOTA |
+| [EEGPT](papers/fm/eegpt.md) | NeurIPS 2024 · ~10M（论文摘要口径；TUEV 主结果用 25M encoder） | 表示对齐 + 掩码重构双自监督，linear probing 达 SOTA |
 | [BrainGPT](papers/fm/braingpt.md) | arXiv 2024 · 至 1.09B | 电极级建模 + GPT 式自回归 + 任务共享电极图 |
 | [NeuroLM](papers/fm/neurolm.md) | ICLR 2025 · 至 1696M | EEG 接进 GPT-2：文本对齐 tokenizer + 指令微调多任务 |
 | [CBraMod](papers/fm/cbramod.md) | ICLR 2025 · 4.0M | 十字交叉注意力分别建模时间与通道 + 动态位置编码 |
@@ -56,7 +56,7 @@ title: 首页
 
 | 页面 | 说明 |
 |---|---|
-| [EEG Tokenization 演进](topics/tokenization.md) | token 形态与词表用法的三步跃迁 |
+| [EEG Tokenization 演进](topics/tokenization.md) | 比较连续片段、离散码字及其训练用途。 |
 | [预训练范式对比](topics/pretraining.md) | 对比 / 掩码 / 自回归 / 生成四路线与掩码目标进化 |
 | [通道适配与多任务学习](topics/multi-task.md) | 通道表示、空间整合与任务共享方式 |
 | [EEG 预训练数据全景](topics/data-landscape.md) | 语料构成、域偏斜与规模瓶颈 |

@@ -5,27 +5,7 @@ tags: [tokenization, 综述]
 
 # EEG Tokenization 演进
 
-## 论文代码开源情况
-
-| 论文 | 代码 | 备注 |
-|---|---|---|
-| [BIOT](../papers/fm/biot.md) | [ycq091044/BIOT](https://github.com/ycq091044/BIOT) | 完整开源 |
-| [LaBraM](../papers/fm/labram.md) | [935963004/LaBraM](https://github.com/935963004/LaBraM) | 仅 Base 权重；Large / Huge 未放 |
-| [EEGPT](../papers/fm/eegpt.md) | [BINE022/EEGPT](https://github.com/BINE022/EEGPT) | 开源 |
-| [NeuroLM](../papers/fm/neurolm.md) | [935963004/NeuroLM](https://github.com/935963004/NeuroLM) | 开源 |
-| [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) | [Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer) | 含预训练权重与全部预处理脚本 |
-| [CBraMod](../papers/fm/cbramod.md) | [wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod) | 已进 Braindecode |
-| [LUNA](../papers/fm/luna.md) | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | Base / Large / Huge 全系 |
-| [REVE](../papers/fm/reve.md) | [brain-bzh.github.io/reve](https://brain-bzh.github.io/reve/) · [elouayas/reve_eeg](https://github.com/elouayas/reve_eeg) | 多规格权重 + tutorials；decoder 不发布（隐私） |
-| [EEGDM](../papers/generative/eegdm.md) | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) | 含预处理脚本与训练配置 |
-| [JET](../papers/generative/jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
-| [EEGMoE](../papers/fm/eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
-| [RF-GPT](../papers/survey/rf-gpt.md) | — | 论文未附仓库（底座 Qwen2.5-VL 等组件公开可得） |
-| [NeuroRVQ](../papers/fm/neurorvq.md) | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
-| [BrainRVQ](../papers/fm/brainrvq.md) | [keqicmz/BrainRVQ](https://github.com/keqicmz/BrainRVQ) | 代码可访问，权重承诺论文接收后放出 |
-| [CodeBrain](../papers/fm/codebrain.md) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
-| [NeuroDETR](../papers/fm/neurodetr.md) | — | 暂未检索到官方仓库 |
-| [DELTA](../papers/survey/delta.md) | — | 论文未附仓库（NeurIPS 2025 Workshop） |
+本页比较各方法怎么切片、码字在哪一阶段使用：连续切段是预处理产物，VQ 词表可用于预训练目标，也可作为模型输入。
 
 | 时间 | 论文 | Token 形态 | 词表 | Token 的用途 |
 |---|---|---|---|---|
@@ -62,7 +42,29 @@ tags: [tokenization, 综述]
 
 - **JET**：信号幅值整体乘 0.01。
 
-## 片段细粒度
+## token embedding 组成对比
+
+| 论文 | 时域 | 频域 | 空间/通道 | 时间位置 |
+|---|---|---|---|---|
+| BIOT | — | STFT 幅值 → 线性投影 | 可学习通道表 | 正弦相对位置编码 |
+| LaBraM / NeuroLM | temporal conv | 重构目标，不进 token | 10-20 空间表 | 可学习时间表 |
+| EEGPT | patch embedding | 无显式 | 通道 codex book | predictor 内 RoPE |
+| TFM | 线性投影 + GeLU | **频率 patch →  Transformer → 门控聚合** | 单通道，下游加通道 embedding | **tokenizer 内无** |
+| CBraMod | 3 层 1D conv | FFT 能量 → FC | 并入 ACPE 卷积 | 并入 ACPE 卷积 |
+| LUNA | 1D conv | FFT 幅度 + 相位 → MLP | 3D 坐标 NeRF 编码 | RoPE（时间 Transformer） |
+| NeuroRVQ | 多尺度卷积 | 幅值 + 相位作重构目标 | 通道 embedding | 时间 embedding |
+| BrainRVQ | patch 卷积 + Transformer | 幅值 + 相位作重构目标 | 通道位置 embedding | 时间位置编码 |
+| CodeBrain | 时域卷积 | 频域卷积 | tokenizer 无通道标识，主模型 ACPE | tokenizer 时间 embedding |
+| NeuroDETR | 连续信号卷积骨干 | 无显式频域输入 | 电极坐标混合 + 脑区分组 | 正弦位置编码 |
+
+
+- **CBraMod / LUNA**：把时域与频域特征合成信号 embedding。
+
+- **LaBraM / NeuroRVQ / BrainRVQ**：用频谱信息训练词表，频谱也是重构目标。
+
+- **CodeBrain**：输入与词表重构均使用频域信息。
+
+## 片段细粒度 {: #_3 }
 
 **patch 长度与重叠**：
 
@@ -119,29 +121,7 @@ tags: [tokenization, 综述]
 - **EEGMoE**：token 单位不是波形段而是「时刻 × 频带 × 电极网格」的脑地图体素；
 
 
-## token embedding 组成对比
-
-| 论文 | 时域 | 频域 | 空间/通道 | 时间位置 |
-|---|---|---|---|---|
-| BIOT | — | STFT 幅值 → 线性投影 | 可学习通道表 | 正弦相对位置编码 |
-| LaBraM / NeuroLM | temporal conv | 重构目标，不进 token | 10-20 空间表 | 可学习时间表 |
-| EEGPT | patch embedding | 无显式 | 通道 codex book | predictor 内 RoPE |
-| TFM | 线性投影 + GeLU | **频率 patch →  Transformer → 门控聚合** | 单通道，下游加通道 embedding | **tokenizer 内无** |
-| CBraMod | 3 层 1D conv | FFT 能量 → FC | 并入 ACPE 卷积 | 并入 ACPE 卷积 |
-| LUNA | 1D conv | FFT 幅度 + 相位 → MLP | 3D 坐标 NeRF 编码 | RoPE（时间 Transformer） |
-| NeuroRVQ | 多尺度卷积 | 幅值 + 相位作重构目标 | 通道 embedding | 时间 embedding |
-| BrainRVQ | patch 卷积 + Transformer | 幅值 + 相位作重构目标 | 通道位置 embedding | 时间位置编码 |
-| CodeBrain | 时域卷积 | 频域卷积 | tokenizer 无通道标识，主模型 ACPE | tokenizer 时间 embedding |
-| NeuroDETR | 连续信号卷积骨干 | 无显式频域输入 | 电极坐标混合 + 脑区分组 | 正弦位置编码 |
-
-
-- **CBraMod / LUNA**：把时域与频域特征合成信号 embedding。
-
-- **LaBraM / NeuroRVQ / BrainRVQ**：用频谱信息训练词表，频谱也是重构目标。
-
-- **CodeBrain**：输入与词表重构均使用频域信息。
-
-## 关键技术分歧
+## 关键技术分歧 {: #_4 }
 
 ### 频域信息怎么进 token
 
@@ -158,7 +138,7 @@ tags: [tokenization, 综述]
 | CodeBrain | 频域卷积作为输入，独立频域码表重构幅值 + 相位 | 输入与重构目标都显式使用频域信息 |
 
 
-## 遗留问题和可改进
+## 遗留问题和可改进 {: #_5 }
 
 - **固定窗长的软肋**：大 pattern 可能跨窗被切断，同一事件分到不同 token；
 
@@ -166,7 +146,29 @@ tags: [tokenization, 综述]
 
 - **与自然语言对齐**：LaBraM/NeuroLM 都展望过把神经码与语言词汇对齐。
 
-## 相关前端与解码方式
+## 代码与权重 {: #_1 }
+
+| 论文 | 代码 | 备注 |
+|---|---|---|
+| [BIOT](../papers/fm/biot.md) | [ycq091044/BIOT](https://github.com/ycq091044/BIOT) | 完整开源 |
+| [LaBraM](../papers/fm/labram.md) | [935963004/LaBraM](https://github.com/935963004/LaBraM) | 仅 Base 权重；Large / Huge 未放 |
+| [EEGPT](../papers/fm/eegpt.md) | [BINE022/EEGPT](https://github.com/BINE022/EEGPT) | 开源 |
+| [NeuroLM](../papers/fm/neurolm.md) | [935963004/NeuroLM](https://github.com/935963004/NeuroLM) | 开源 |
+| [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) | [Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer) | 含预训练权重与全部预处理脚本 |
+| [CBraMod](../papers/fm/cbramod.md) | [wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod) | 已进 Braindecode |
+| [LUNA](../papers/fm/luna.md) | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | Base / Large / Huge 全系 |
+| [REVE](../papers/fm/reve.md) | [brain-bzh.github.io/reve](https://brain-bzh.github.io/reve/) · [elouayas/reve_eeg](https://github.com/elouayas/reve_eeg) | 多规格权重 + tutorials；decoder 不发布（隐私） |
+| [EEGDM](../papers/generative/eegdm.md) | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) | 含预处理脚本与训练配置 |
+| [JET](../papers/generative/jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
+| [EEGMoE](../papers/fm/eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
+| [RF-GPT](../papers/survey/rf-gpt.md) | — | 论文未附仓库（底座 Qwen2.5-VL 等组件公开可得） |
+| [NeuroRVQ](../papers/fm/neurorvq.md) | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
+| [BrainRVQ](../papers/fm/brainrvq.md) | [keqicmz/BrainRVQ](https://github.com/keqicmz/BrainRVQ) | 代码可访问，权重承诺论文接收后放出 |
+| [CodeBrain](../papers/fm/codebrain.md) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
+| [NeuroDETR](../papers/fm/neurodetr.md) | — | 暂未检索到官方仓库 |
+| [DELTA](../papers/survey/delta.md) | — | 论文未附仓库（NeurIPS 2025 Workshop） |
+
+## 相关前端与解码方式 {: #_6 }
 
 - **[LTFT](../papers/survey/learnable-tf.md)**：直接学习时频变换的窗口，输出时频图；前端与下游网络一起训练，不建立离散码表。
 
@@ -178,7 +180,7 @@ tags: [tokenization, 综述]
 
 LTFT 学时频变换，TFM 在时频图上学离散词表，前端变换与词表训练需要分开看。
 
-## 关联论文
+## 关联论文 {: #_7 }
 
 [BIOT](../papers/fm/biot.md) · [LaBraM](../papers/fm/labram.md) · [EEGPT](../papers/fm/eegpt.md) · [NeuroLM](../papers/fm/neurolm.md) · [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) · [CBraMod](../papers/fm/cbramod.md) · [LUNA](../papers/fm/luna.md) · [EEGDM](../papers/generative/eegdm.md) · [JET](../papers/generative/jet.md) · [EEGMoE](../papers/fm/eegmoe.md) · [RF-GPT](../papers/survey/rf-gpt.md) · [NeuroRVQ](../papers/fm/neurorvq.md) · [BrainRVQ](../papers/fm/brainrvq.md) · [CodeBrain](../papers/fm/codebrain.md) · [NeuroDETR](../papers/fm/neurodetr.md) · [DELTA](../papers/survey/delta.md)
 

@@ -19,13 +19,13 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 **作者**：Wei-Bang Jiang, Li-Ming Zhao, Bao-Liang Lu（上海交通大学）
 
-#### 2.1 问题定位
+## 1 问题定位 {: #21 }
 
 受 LLM 启发探索大型 EEG 模型（LEMs）。三大挑战：① 缺乏足够大规模 EEG 数据（收集了 ~2500 小时、约 20 个数据集）；② EEG 采集配置多样，电极数、时长不一；③ 缺乏有效的 EEG 表示学习范式（低信噪比）。核心答案：**把 EEG 切成 channel patch，用向量量化的「神经 tokenization」得到离散神经码，再用 BERT 式掩码预测码字来预训练**。
 
-#### 2.2 方法
+## 2 方法 {: #22 }
 
-**（a）骨干架构：Neural Transformer**
+### （a）骨干架构：Neural Transformer
 
 - EEG \( X \in \mathbb{R}^{C \times T} \) 按 w=200（1 秒）无重叠窗口切成 channel patch，共 \( N = C \cdot \lfloor t / w \rfloor \) 个；
 - **Temporal Encoder**：每个 patch 过若干 1D 卷积块（Conv + GroupNorm + GELU）提取 patch 内时序特征 → patch embedding；
@@ -33,7 +33,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 - **Transformer Encoder**：ViT 风格，但做两点修改（引 Dehghani et al. 2023）：Q、K 先做 LayerNorm 再点积注意力（防 attention logits 过大）；QKV 计算去掉 bias 项加速训练；
 - 下游用平均池化 + 任务预测头。
 
-**（b）神经 VQ-Tokenizer**
+### （b）神经 VQ-Tokenizer
 
 - 受 VQ-VAE 启发：codebook \( \mathcal{V} \in \mathbb{R}^{K \times D} \)（K=8192，D=64）；
 - patch 表示 p 做 **ℓ2 归一化**后在 codebook 里**余弦相似度最近邻查表**得到码字索引（ℓ2 归一化提升 codebook 利用率）；
@@ -41,7 +41,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 - Neural decoder（若干 Transformer 块 + 平均池化 + 幅值/相位两个回归头）从离散码字回归频谱，MSE 损失；
 - 总损失（式 9）= 幅值 MSE + 相位 MSE + **codebook loss**（\( \left\| \mathrm{sg}(\ell_2(p)) - \ell_2(v_{z_i}) \right\|_2^2 \)，拉码字）+ **commitment loss**（\( \left\| \ell_2(p) - \mathrm{sg}(\ell_2(v_{z_i})) \right\|_2^2 \)，稳编码器）；sg = stop-gradient；码字用 **EMA（指数滑动平均）**更新。
 
-**（c）掩码预训练**
+### （c）掩码预训练
 
 - patch embedding 中随机 mask 比例 r=0.5，被 mask 位置换成可学习 mask token；
 - Transformer 编码可见 patch，线性分类头预测被 mask patch 对应的**码字索引**，交叉熵损失；
@@ -50,7 +50,7 @@ LaBraM: Large Brain Model (ICLR 2024)
 
 **模型规格**：Base 5.8M（12层/200维/10头）、Large 46M、Huge 369M。
 
-#### 2.3 创新点
+## 3 创新点 {: #23 }
 
 1. **首个**在 2500 小时、约 20 个数据集上预训练的大规模 EEG 基础模型（数据本身即是贡献）；
 2. **channel patch** 切分 + 可学习空间 embedding，天然兼容任意电极数/时长配置；

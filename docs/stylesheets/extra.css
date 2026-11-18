@@ -205,3 +205,11 @@
 [data-md-color-scheme="slate"] .mx-b { color: #d2a8ff; }
 .mx-legend { font-size: 0.72rem; color: var(--md-default-fg-color--light); }
 .mx-legend .mx-cell { margin: 0 0.15rem; }
+
+/* 方法对比速览表：窄屏横滑固定论文名列 */
+h2[id="一页速览"] + table th:first-child,
+h2[id="一页速览"] + table td:first-child {
+  position: sticky;
+  left: 0;
+  background: var(--md-default-bg-color);
+}

@@ -19,15 +19,15 @@ BIOT: Cross-data Biosignal Learning in the Wild (NeurIPS 2023)
 
 **作者**：Chaoqi Yang, M. Brandon Westover, Jimeng Sun（UIUC / Harvard / BIDMC）
 
-#### 1.1 问题定位
+## 1 问题定位 {: #11 }
 
 现实中的生物信号格式高度异构：采样率不同、通道分布不匹配、时长不一、存在缺失。现有模型只针对单一固定格式，换数据集则失效。BIOT 是第一个能处理各种格式生物信号的统一编码模型。
 
-#### 1.2 方法
+## 2 方法 {: #12 }
 
 整体由两个模块级联：**生物信号 Tokenizer** + **线性 Transformer 编码器**。
 
-**1. 生物信号 Tokenizer**
+### 1. 生物信号 Tokenizer
 
 1. **重采样**：线性插值统一到同一采样率 r（EEG 用 200Hz），依据采样定理（EEG 感兴趣最高频率约 100Hz）；
 2. **归一化**：每个通道除以自身绝对幅值的 95 分位数 \( S[i] \,/\, |S[i]|_{95\%} \)，消除通道/数据集间的单位和幅度差异；
@@ -44,7 +44,7 @@ BIOT: Cross-data Biosignal Learning in the Wild (NeurIPS 2023)
 
 最终"句子"为 \( X \in \mathbb{R}^{N \times l} \)。
 
-**2. 线性 Transformer**
+### 2. 线性 Transformer
 
 其线性注意力的核心公式（Linformer 式低秩投影）：
 
@@ -72,7 +72,7 @@ $$
 - 默认配置：4 层、8 头；句子级表示用 **mean pooling**（试过 [CLS] token，略差）；
 - 分类头：ELU + 线性层。
 
-**无监督预训练（对比学习）**
+### 无监督预训练（对比学习） {: #biot-pretraining }
 
 - 随机 dropout 部分通道 + 从剩余通道 dropout 部分 token，得到扰动信号 S̃；
 - 同一 BIOT 编码器分别编码 S 和 S̃；S̃ 侧接两层 predictor：\( Z = \mathrm{BIOT}(S) \)，\( \tilde{Z} = \mathrm{predictor}(\mathrm{BIOT}(\tilde{S})) \)；
@@ -88,7 +88,7 @@ $$
 
 *Figure 2 · Tokenization 细节：逐通道切段后用 segment/channel/position 三类 embedding 参数化*
 
-#### 1.3 创新点
+## 3 创新点 {: #13 }
 
 1. **首个**能处理通道不匹配、长度可变、数据缺失的统一生物信号编码模型；
 2. **逐通道独立 tokenization**——异构数据通吃的核心设计（缺失通道/短通道直接丢 token 即可）；

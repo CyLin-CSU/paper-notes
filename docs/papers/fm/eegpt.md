@@ -19,21 +19,21 @@ EEGPT: Pretrained Transformer (NeurIPS 2024)
 
 **作者**：Guagnyu Wang 等（哈尔滨工业大学）
 
-#### 3.1 问题定位
+## 1 问题定位 {: #31 }
 
 EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码器（MAE）学到的特征质量差、BERT 式模型没有显式表示 z。EEGPT 提出仅 ~10M 参数的通用特征提取器，用**双自监督**（时空表示对齐 + 掩码重构）训练，下游只做 **linear probing**。
 
-#### 3.2 方法
+## 2 方法 {: #32 }
 
 **理论动机（式 1→2）**：标准 MAE 只有 \( \mathcal{H}(d_\phi(z),\ x \odot (1-M)) \) 重构项，没有显式的隐变量z；EEGPT 加一条表示对齐分支 \( \mathcal{H}(z,\ f_\theta(x)) \)，显式地让 encoder 输出 z ，携带全局语义，提升编码质量与泛化。
 
-**局部时空 embedding**
+### 局部时空 embedding
 
 - 58 电极、256Hz、输入 4 秒（T=1024）；每 patch 时间长度 d=64（250ms），共 N=16 个时间 patch；
 - patch embedding + **通道 embedding（Code book）**：可学习通道向量 `{ς_i}`，**灵活对应任意数据集的通道配置**（通道适配的关键）；
 - \( \mathrm{token}_{i,j} = \mathrm{Embed}(p_{i,j}) + \varsigma_i \)。
 
-**双自监督预训练**
+### 双自监督预训练 {: #eegpt-pretraining }
 三条路径，patch后输入：第一条不掩码，经过momentum encoder得到压缩后的表示；第二条做掩码之后备用；第三条不经过momentum encoder,掩码后经过encoder得到压缩表示，再经过predictor预测掩码部分得到完整预测表示，和第二条表示做对齐；然后把掩码部分挖掉，经过reconstructor映射回原始信号维度，和第二条做reconstruction loss.
 
 
@@ -63,13 +63,13 @@ EEG 低信噪比、被试间差异大、通道不匹配，导致掩码自编码�
 
 分工：\( \mathcal{L}_A \) 迫使 encoder 在只剩稀疏可见 token 的条件下输出对齐全量目标的全局语义表示（linear probing 不微调直接可用的来源）；\( \mathcal{L}_R \) 把表示锚回局部信号细节。
 
-**下游 Linear Probing**
+### 下游 Linear Probing
 
 - encoder 完全冻结，只加两个轻量模块：**adaptive spatial filter**（1×1 卷积，对齐数据通道与模型通道）+ 线性分类头；
 - 只用 encoder 输出的 **summary token** 对应特征送入分类头；
 - 目的：避免大数据模型在小样本微调下过拟合，同时让性能纯粹反映 encoder 本身的表示质量。
 
-#### 3.3 创新点
+## 3 创新点 {: #33 }
 
 1. **双自监督**：表示对齐（JEPA 式，在表示空间预测）+ 掩码重构（MAE 式，在信号空间重构）——显式表示 z，对抗低信噪比导致的特征质量差；
 2. **掩码方向反转**：encoder 看被 mask 的稀疏部分、momentum encoder 看全量，迫使 encoder 输出含全局信息；

@@ -19,13 +19,13 @@ NeuroLM (ICLR 2025)
 
 **作者**：Wei-Bang Jiang, Yansen Wang, Bao-Liang Lu, Dongsheng Li（上海交大 / MSRA）
 
-#### 5.1 问题定位
+## 1 问题定位 {: #51 }
 
 LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模型只能用于一个任务。NeuroLM 是**首个 EEG 多任务基础模型**：把 EEG 当作外语，通过三阶段训练接入 LLM（GPT-2），实现单模型多任务学习与推理。三大挑战：EEG-text 对齐难（无成对数据）、LLM 范式下如何学通用表示、多任务统一。
 
-#### 5.2 方法（三阶段）
+## 2 方法（三阶段） {: #52 }
 
-**阶段一：文本对齐神经 Tokenizer（text-aligned neural tokenizer）**
+### 阶段一：文本对齐神经 Tokenizer（text-aligned neural tokenizer）
 
 - 在 LaBraM 的 VQ tokenizer 基础上改进，codebook \( \mathcal{V} \in \mathbb{R}^{K \times D} \)（8192），\( \ell_2 \) 归一化最近邻查表；
 - **改进 1——时频双域重构（vector-quantized temporal-frequency prediction）**：LaBraM 重构幅值+相位，NeuroLM 发现相位贡献很小，改为**两个独立 decoder**：时域 decoder 重构原始信号 + 频域 decoder 重构 DFT 幅值（幅值做样本内 z-score）；损失 L1 = 时域重构 + 频域重构 + codebook loss + commitment loss；
@@ -34,7 +34,7 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
   - VQ encoder 后接**梯度反转层（GRL, Ganin et al. 2016）**对抗训练，把 EEG embedding 推入文本 embedding 空间；
   - 总目标：\( \min \mathcal{L}_1 + \lambda \sum_i d_i \log C(h_i) \)，λ 随训练从 0 渐增到 1（\( \lambda = \tfrac{2}{1+e^{-10t/T}} - 1 \)）。
 
-**阶段二：多通道自回归预训练（multi-channel autoregressive pre-training）**
+### 阶段二：多通道自回归预训练（multi-channel autoregressive pre-training）
 
 - 冻结 VQ encoder；加载预训练 GPT-2，**把 8192 个 codebook 索引并入 GPT-2 词表**（Text vocab + EEG vocab）；
 - EEG token 复用 LLM 的时间 embedding，另学空间 embedding；序列最长 1024，零 padding 处屏蔽注意力；
@@ -42,7 +42,7 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
 - **VAE 理论解释**：tokenizer = 后验 \( q_\phi(z \mid x) \)，decoder = \( p_\psi(y \mid z) \)，多通道自回归预训练 = 学习先验 \( p_\theta(z) \)，整个范式对应 ELBO 两项（重构 + KL）；
 - 预训练同时在每批混入少量纯文本数据，保持 LLM 语言能力。
 
-**阶段三：多任务指令微调（multi-task instruction tuning）**
+### 阶段三：多任务指令微调（multi-task instruction tuning）
 
 - 为 6 个下游数据集分别设计文本指令（如 TUAB：「[SEP] Question: Is this EEG segment abnormal? Answer: {Yes, No} [END]」）；
 - **[SEP] token** 拼接 EEG token 与文本指令，标记模态切换；**loss 只算答案部分**（预测更稳定）；继续混入文本数据；
@@ -50,7 +50,7 @@ LaBraM 等模型每个下游任务都要全量微调，浪费算力且一个模�
 
 **模型规格**：基座 GPT-2；NeuroLM-B/L/XL = 254M / 500M / 1696M（含 VQ encoder）；预训练约 **25000 小时** EEG。
 
-#### 5.3 创新点
+## 3 创新点 {: #53 }
 
 1. **首个 EEG 多任务基础模型**：单模型通过指令微调统一六种 BCI 任务（检测/分类/情绪/睡眠/负荷/慢波），首次把 instruction tuning 引入 EEG 领域；
 2. **文本对齐 tokenizer**：GRL 对抗式空间对齐，使 EEG token 能直接作为 LLM 的输入 token（消融证明：不对齐则注意力紊乱、模型输出随机词）；

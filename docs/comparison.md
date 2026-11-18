@@ -4,7 +4,7 @@
 
 快速入口：[一页速览](#一页速览) · [模型设计](#mod-architecture) · [频域](#mod-frequency) · [规模效率](#mod-scale) · [比较与改进](#critique-chain)
 
-十四篇 = 核心六篇（[BIOT](papers/fm/biot.md) / [LaBraM](papers/fm/labram.md) / [EEGPT](papers/fm/eegpt.md) / [BrainGPT](papers/fm/braingpt.md) / [NeuroLM](papers/fm/neurolm.md) / [TFM-Tokenizer](papers/fm/tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展八篇（[CBraMod](papers/fm/cbramod.md) / [LUNA](papers/fm/luna.md) / [REVE](papers/fm/reve.md) / [EEGMoE](papers/fm/eegmoe.md) / [JET](papers/generative/jet.md) / [EEGDM](papers/generative/eegdm.md) / [RF-GPT](papers/survey/rf-gpt.md) / [Not-All-EEG](papers/generative/not-all-eeg.md)，把问题推向异构管理、通用空间编码与规模化、生成与跨模态）。站内其余轴外精读（语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测）不参与十四篇排名，见首页论文库。
+十四篇 = 核心六篇 + 2025–2026 扩展八篇（CBraMod / LUNA / REVE / EEGMoE / JET / EEGDM / RF-GPT / Not-All-EEG，名单见下方速览表）。轴外精读不参与本页排名。
 
 ## 一页速览 {: #一页速览 }
 
@@ -12,7 +12,7 @@
 |---|---|---|---|---|---|
 | [BIOT](papers/fm/biot.md) | NeurIPS 2023 | 逐通道切段 + 线性注意力的跨格式生物信号编码器 | 3.2M | ~1000 万样本（PREST + SHHS + ECG） | ✅ |
 | [LaBraM](papers/fm/labram.md) | ICLR 2024 | VQ 神经词表 + 频谱重构 + 掩码码字预测的大规模 EEG 基座 | 5.8M / 46M / 369M（tokenizer 另 8.6M） | ~2500h · 约 20 数据集 | ✅ |
-| [EEGPT](papers/fm/eegpt.md) | NeurIPS 2024 | 对齐 + 重构双自监督的通用特征提取器，linear probing 即 SOTA | ~10M（变体 0.4M–101M） | 5 个多范式数据集 | ✅ |
+| [EEGPT](papers/fm/eegpt.md) | NeurIPS 2024 | 对齐 + 重构双自监督的通用特征提取器，linear probing 即 SOTA | ~10M（论文摘要口径；TUEV 主结果用 25M encoder；变体 0.4M–101M） | 5 个多范式数据集 | ✅ |
 | [BrainGPT](papers/fm/braingpt.md) | arXiv 2024 | 电极级自回归 + 任务共享电极图的首个 EEG generalist | 1.46M–**1.09B** | 3750 万单电极样本（~1B token） | 未放 |
 | [NeuroLM](papers/fm/neurolm.md) | ICLR 2025 | 把 EEG 当外语接进 GPT-2：指令微调单模型多任务 | 254M / 500M / 1696M | ~25000h（TUEG 为主） | ✅ |
 | [TFM-Tokenizer](papers/fm/tfm-tokenizer.md) | ICLR 2026 | 单通道时频 motif 词表，离散 token 真正作下游输入 | **~1.9M**（tokenizer 1.2M + 下游 0.7M） | 4 个 EEG 数据集 + ear-EEG 跨设备验证 | ✅ |
@@ -56,7 +56,7 @@
 - **借来底座**：NeuroLM（GPT-2）与 RF-GPT（Qwen2.5-VL）的骨干完全不在 EEG 上设计，见[基座来源专题](topics/base-model.md)；
 - **生成骨干**：JET 标准 Transformer + adaLN 条件注入；EEGDM = EEG-ViT encoder + DiT 去噪器（adaLN-Zero）。
 
-**② 架构先验与预训练收益：CBraMod 附录 G 的归因实验**：把 BIOT / LaBraM 的架构搬到 CBraMod 的 9000h 清洗语料上重训，BIOT(ours) ≈ BIOT(original)、LaBraM(ours) 仅小涨，而同语料重训后，CBraMod 在所测下游任务上整体高于两个迁移架构（附录 G，TUEV 0.6671 vs LaBraM-Huge 0.6616）——**4.0M 参数高于 369M 的 LaBraM-Huge**。固定数据换架构，把贡献归因做成了可证伪的对照。
+**② 架构先验与预训练收益：CBraMod 附录 G 的归因实验**：附录 G 图 8 将 BIOT 和 LaBraM 在 CBraMod 的预训练语料（9000h 清洗版）上重训，分别在 FACED、SEED-V、PhysioNet-MI、SHU-MI 评估，BIOT(ours) ≈ BIOT(original)、LaBraM(ours) 仅小涨。另在表 13 的 TUEV 对照里，CBraMod、剔除 TUEV 后重训的 CBraMod、LaBraM-Huge 的平衡准确率分别为 0.6671、0.6659、0.6616——**4.0M 参数高于 369M 的 LaBraM-Huge**。固定数据换架构，把贡献归因做成了可证伪的对照（[原文](https://proceedings.iclr.cc/paper_files/paper/2025/file/bbbd6d915cb90be21c1254a82d45cedd-Paper-Conference.pdf)）。
 
 **③ 位置编码谱系**：正弦相对（BIOT）→ 可学习时空绝对（LaBraM / NeuroLM）→ RoPE（EEGPT predictor、LUNA 时间轴）→ 电极词表 prefix（BrainGPT）→ **无**（TFM tokenizer 内，消融支持）→ **卷积动态生成**（CBraMod ACPE）→ **连续 3D 坐标 NeRF 编码**（LUNA 空间）→ **4D 傅里叶坐标生成**（REVE：(x,y,z,t) 直投多频笛卡尔积 + 可学习适配层，时间也进坐标、噪声增强抗摆放差异）。趋势：从「查表绑定」走向「动态生成 / 连续坐标」，动因都是跨 montage 泛化——TFM 在 tokenizer 内不用位置编码，是同一取向的另一端：不绑定任何位置信息。
 
@@ -75,13 +75,13 @@
 
 **相位的处理是一条暗线**：重构它（LaBraM）→ 砍它（NeuroLM / TFM / RF-GPT）→ 又要它（LUNA 幅相都投）。没有定论，但「相位对表示学习有用、对判别式任务可省」是目前的经验边界。
 
-**维度小结**：社区共识在 2025–2026 收敛为**显式的时频结构建模优于隐式期望模型自己学**——CBraMod / LUNA / TFM 三家的消融从不同方向互证，且三家都把频域放在 patch embedding 这一层（性价比最高的位置）。
+**维度小结**：频域证据分篇看——TFM 在 tokenizer 内做频率轴注意力与频带掩码（其消融中频带掩码贡献最大）；CBraMod 在 patch embedding 加 rFFT 能量支路（消融：时+频 > 纯时 > 纯频）；LUNA 在 patch embedding 加 FFT 幅相支路并报告去掉后 AUROC 最多降 0.011–0.012。三家的消融各自支持频域支路在自己的任务与指标上有贡献，任务与协议不同，不构成跨研究的统一结论。
 
 ### 规模、效率与开源 {: #mod-scale }
 
 **① 参数量排序**（按口径分组）
 
-- **主模型（从零训练，下游口径）**：EEGMoE 1.68M（激活 0.89M）· TFM 下游 ~0.7M · BIOT 3.2M · CBraMod 4.0M · LaBraM-Base 5.8M · LUNA-Base 7M · EEGPT ~10M · EEGDM 25M · REVE-Base 69M · JET 129.9M · LUNA-Huge 311.4M · LaBraM-Huge 369M · REVE-Large 408M
+- **主模型（从零训练，下游口径）**：EEGMoE 1.68M（激活 0.89M）· TFM 下游 ~0.7M · BIOT 3.2M · CBraMod 4.0M · LaBraM-Base 5.8M · LUNA-Base 7M · EEGPT ~10M（论文摘要口径；TUEV 主结果用 25M encoder） · EEGDM 25M · REVE-Base 69M · JET 129.9M · LUNA-Huge 311.4M · LaBraM-Huge 369M · REVE-Large 408M
 - **端到端合计（含 tokenizer）**：TFM ~1.9M；NeuroLM-XL 含 GPT-2 基座至 1696M
 - **端到端合计（含语言基座）**：NeuroLM-XL 1696M · BrainGPT-Giant **1.09B**（均从零/扩词训练）
 - **复用外部基座**：RF-GPT 3B/7B（Qwen2.5-VL，不解码 EEG 波形参数）
