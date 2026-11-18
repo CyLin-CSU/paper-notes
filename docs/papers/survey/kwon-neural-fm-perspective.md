@@ -7,7 +7,8 @@ year: 2026
 tags: [综述, 观点论文, 生理先验, 可解释性, 跨模态, 临床转化]
 status: "精读"
 rating: 3.5
-arxiv: "https://doi.org/10.1111/ejn.70376"
+doi: "10.1111/ejn.70376"
+arxiv: ""
 code: ""
 one-liner: "神经科学期刊上的观点综述：生理感知目标、结构感知架构、可解释性三原则，判现存 EEG FM 为「第一代」——但对其引用模型的转述有硬伤"
 ---
@@ -36,7 +37,7 @@ PBT / CBraMod / BrainGPT 逐个按三原则打分（✓/△/✗）：三者可�
 
 ## 4 勘误与待查（站内核对）
 
-- **CBraMod 「对比目标」系误读**：文中两处称 CBraMod 用对比学习做被试间对齐（"contrastive learning strategy promotes intersubject alignment"）。站内对照 [CBraMod 原文笔记](../fm/cbramod.md)：CBraMod 只有掩码重建，无任何对比目标。引用其观点时须绕开这一条。
+- **CBraMod 「对比目标」系误读**：文中两处称 CBraMod 用对比学习做被试间对齐（"contrastive learning strategy promotes intersubject alignment"，Table 1 与 §4.3）。对照 [CBraMod 原文](https://arxiv.org/abs/2412.07236)：其预训练损失只有掩码信号重构（MSE，见原文 §3.3 与其式 (4)），无任何对比项；站内 [CBraMod 笔记](../fm/cbramod.md) 与此一致。引用其「对比对齐可能抹掉个体特异信号」的批评时须绕开 CBraMod 这一例。
 - **PBT 「监督预训练」待查**：Table 1 标 PBT（Klein et al. 2025）为 supervised pretraining + 数据增广，与站外常见转述（掩码重构预训练）不一致，站内未核对原文，存疑。
 - **命名再增一个别名**：文中 BrainGPT（Yue et al. 2024）= 站内 [BrainGPT](../fm/braingpt.md) = Yao 综述的 EEGPT(2)。同一篇论文已有 EEGPT、BrainGPT 两个名字在流转，引用时一律落到 arXiv 号。
 

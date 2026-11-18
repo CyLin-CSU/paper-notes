@@ -130,7 +130,7 @@ nav:
       - 基座来源分析: topics/base-model.md
   - 语音模型专题:
       - 语音解码与 Mel 谱建模: topics/speech-models.md
-  - EEG 基础模型综述: blog-2023-2026.md
+  - EEG 基础模型选读: blog-2023-2026.md
   - 十四篇方法对比: comparison.md
   - 索引:
       - 数据集索引: datasets.md

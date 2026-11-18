@@ -206,10 +206,20 @@
 .mx-legend { font-size: 0.72rem; color: var(--md-default-fg-color--light); }
 .mx-legend .mx-cell { margin: 0 0.15rem; }
 
-/* 方法对比速览表：窄屏横滑固定论文名列 */
-h2[id="一页速览"] + table th:first-child,
-h2[id="一页速览"] + table td:first-child {
+/* 方法对比速览表：自带横向滚动容器（comparison.md 内 .quick-scan div），
+   首列钉在容器左缘——不再依赖 h2 + table 相邻选择器（Material 版本差异
+   会影响表格是否被包进 scrollwrap，容器由页面自己提供更稳） */
+.quick-scan { overflow-x: auto; }
+.quick-scan table { min-width: 560px; }
+.quick-scan table th:first-child,
+.quick-scan table td:first-child {
   position: sticky;
   left: 0;
   background: var(--md-default-bg-color);
+  z-index: 1;
+}
+.quick-scan table thead th:first-child { z-index: 2; }
+/* 窄屏压缩「一句话定位」列，详细解释在各论文笔记正文 */
+@media (max-width: 480px) {
+  .quick-scan table td:nth-child(3) { font-size: 0.72rem; }
 }

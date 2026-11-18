@@ -7,7 +7,8 @@ year: 2025
 tags: [综述, 表示学习, 迁移学习, 词元化, 基础模型, EEG-to-Content]
 status: "精读"
 rating: 4
-arxiv: "https://doi.org/10.1109/MSP.2025.3595320"
+doi: "10.1109/MSP.2025.3595320"
+arxiv: ""
 code: ""
 one-liner: "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化/嵌入/位置编码/骨干/损失逐项拆表，外加迁移学习四类地图与三个落地案例"
 ---

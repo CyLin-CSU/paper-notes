@@ -12,6 +12,9 @@ group 取值：fm（EEG 基础模型）/ generative（生成式模型）/ survey
 note 子命令会生成 docs/papers/<group>/<slug>.md（含架构图占位），文件名不带阅读日期；
 之后核对发表年份，在 mkdocs.yml 的 nav 对应分组里登记。
 log 子命令会在首页时间线插入今天的条目，并自动刷新"最近更新"日期。
+
+元数据约定：doi 字段存期刊 DOI（纯号码，如 10.1088/1741-2552/ae17e9），
+arxiv 字段只存 arXiv 链接；期刊发表的文章两者并存时 DOI 归 doi、arxiv 留空。
 """
 import datetime
 import pathlib
@@ -31,6 +34,7 @@ year: {year}
 tags: []
 status: "粗读"
 rating:
+doi: ""
 arxiv: ""
 code: ""
 one-liner: ""

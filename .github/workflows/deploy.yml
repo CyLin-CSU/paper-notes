@@ -31,8 +31,11 @@ jobs:
       - name: Verify paper redirects
         run: python tools/check_redirects.py site
 
-      - name: Deploy to gh-pages
+      # 只发布上面已通过严格构建与重定向校验的同一份 site/ 目录。
+      # 不再用 mkdocs gh-deploy --force（它会重新构建，发布产物可能与检查产物不一致）。
+      # ghp-import 是 mkdocs-material 的随附依赖；-n 写入 .nojekyll，-b 指定发布分支。
+      - name: Deploy checked site/ to gh-pages
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          python -m mkdocs gh-deploy --force
+          python -m ghp_import -n -p -f -b gh-pages -m "Deploy ${GITHUB_SHA::7} from checked site/" site

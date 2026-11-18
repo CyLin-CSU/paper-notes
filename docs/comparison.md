@@ -1,12 +1,14 @@
 # 十四篇方法对比
 
-> 全站横向对照的**枢纽页**：先[一页速览](#一页速览)给十四篇定位，再按[九个维度](#dimension-guide)拆核心分歧——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源五个维度下放主题专题深读，模型设计 / 频域 / 规模效率三个维度保留在本页详解；结尾的[互怼链](#critique-chain)梳理论文间的批评与改进关系。数字均引自各论文自报结果。
+> 本页对照十四篇论文的信号表示、预训练和评测设定。按维度查方法，具体结果以各论文的实验条件为准；数字均引自各论文自报结果。论文间的批评与改进关系见[比较与改进](#critique-chain)。
 
-快速入口：[一页速览](#一页速览) · [模型设计](#mod-architecture) · [频域](#mod-frequency) · [规模效率](#mod-scale) · [比较与改进](#critique-chain)
+快速入口：[一页速览](#一页速览) · [按维度比较](#dimension-guide) · [模型设计](#mod-architecture) · [频域](#mod-frequency) · [规模效率](#mod-scale) · [比较与改进](#critique-chain)
 
-十四篇 = 核心六篇 + 2025–2026 扩展八篇（CBraMod / LUNA / REVE / EEGMoE / JET / EEGDM / RF-GPT / Not-All-EEG，名单见下方速览表）。轴外精读不参与本页排名。
+十四篇 = 核心六篇 + 2025–2026 扩展八篇（CBraMod / LUNA / REVE / EEGMoE / JET / EEGDM / RF-GPT / Not-All-EEG）。先看速览表定位，再进对应专题或笔记核对实验条件。
 
 ## 一页速览 {: #一页速览 }
+
+<div class="quick-scan" tabindex="0" role="region" aria-label="十四篇方法速览表，可横向滚动" markdown="1">
 
 | 论文 | 发表 | 一句话定位 | 参数量 | 预训练数据 | 代码 |
 |---|---|---|---|---|---|
@@ -24,6 +26,8 @@
 | [EEGDM](papers/generative/eegdm.md) | arXiv 2026 | 潜扩散生成目标做表征学习：encoder 表示作条件（不 detach） | 25M（下游 encoder） | TUEG 19ch（30s 样本） | ✅ |
 | [Not-All-EEG](papers/generative/not-all-eeg.md) | arXiv 2026 | 位置难度自适应时间调度的流匹配 EEG 生成器（EMA 误差图 → 位置时间图） | 未披露 | 3 数据集（TUEV / BCIC-IV-2a / SEED-IV，生成器训练即全部） | 未附 |
 | [RF-GPT](papers/survey/rf-gpt.md) | arXiv 2026 | 射频谱图 + 现成 VLM：零预训练、纯合成 SFT（跨域参照） | 3B / 7B（借 Qwen2.5-VL） | 合成 0.625M 指令对（零人工） | 未附 |
+
+</div>
 
 ## 分维度导读 {: #dimension-guide }
 

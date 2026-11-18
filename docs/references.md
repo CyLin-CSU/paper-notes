@@ -7,6 +7,17 @@ tags: [索引, 参考文献]
 
 三十一篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测 / 综述轴外的十篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
+## 综述速览
+
+四篇领域综述精读（完整条目在下方「EEG 基础模型综述」节）：
+
+| 综述 | 原文 | 站内精读 |
+|---|---|---|
+| Yao et al. · JNE 2025 · 预训练路线横评 + 自跑 10 模型 | [DOI](https://doi.org/10.1088/1741-2552/ae17e9) | [笔记](papers/survey/yao-eegfm-survey.md) |
+| Chen, Lu & Wu · IEEE SPM 2025 · 19 模型组件拆解 + 迁移学习地图 | [DOI](https://doi.org/10.1109/MSP.2025.3595320) | [笔记](papers/survey/chen-representation-learning-review.md) |
+| Kuruppu et al. · JNE 2026 · 三支柱批判：评测、scaling、LP/FT | [DOI](https://doi.org/10.1088/1741-2552/ae4455) | [笔记](papers/survey/kuruppu-critical-review.md) |
+| Kwon & Shin · EJN 2026 · 生理目标/结构先验/可解释三原则 | [DOI](https://doi.org/10.1111/ejn.70376) | [笔记](papers/survey/kwon-neural-fm-perspective.md) |
+
 ## 基础架构与预训练范式
 
 | 文献 | 出处 | 被引于 | 一句话作用 |

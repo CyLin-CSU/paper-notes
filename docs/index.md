@@ -4,13 +4,17 @@ title: 首页
 
 # ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } EEG 论文阅读笔记
 
-> CyLin-CSU · 精读 **31** 篇（EEG 基础模型 15 / 生成式模型 3 / 相关研究 13）· NeurIPS / ICLR / NMI 2023–2026 · 更新：<!-- LAST_UPDATE -->（北京时间）· <!-- ACTIVITY_BADGE --> · 按 `/` 全文搜索
+> CyLin-CSU · 精读 **31** 篇（2023–2026）· 按模型、任务和数据集查阅 EEG 论文笔记
 
-**[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)**
+**[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)** ｜ **[从哪篇综述读起](blog-2023-2026.md#综述速览)**
+
+按任务直达：**看预训练目标** → [预训练范式对比](topics/pretraining.md) ｜ **查数据集与规模** → [数据全景专题](topics/data-landscape.md) · [数据集索引](datasets.md) ｜ **读领域综述** → [综述与观点（4 篇）](#papers-survey-reviews) ｜ **比通道适配方案** → [通道适配与多任务](topics/multi-task.md)
 
 ## 论文库 {: #papers }
 
-### EEG 基础模型（15 篇）
+分组直达：[EEG 基础模型](#papers-fm) · [生成式模型](#papers-generative) · [相关研究](#papers-survey) · [综述与观点](#papers-survey-reviews)
+
+### EEG 基础模型（15 篇） {: #papers-fm }
 
 | 论文 | 发表 · 规模 | 方法一句话 |
 |---|---|---|
@@ -30,7 +34,7 @@ title: 首页
 | [CodeBrain](papers/fm/codebrain.md) | ICLR 2026 · 15.17M | 时频双码本解耦 + 多尺度骨干 |
 | [NeuroDETR](papers/fm/neurodetr.md) | arXiv 2026 | 多尺度 VQ 事件记忆检测 EEG 事件类别与起止 |
 
-### 生成式模型（3 篇）
+### 生成式模型（3 篇） {: #papers-generative }
 
 | 论文 | 发表 · 规模 | 方法一句话 |
 |---|---|---|
@@ -38,7 +42,7 @@ title: 首页
 | [EEGDM](papers/generative/eegdm.md) | arXiv 2026 · 25M | EEG 表示引导潜空间扩散，去噪任务训练编码器 |
 | [Not-All-EEG](papers/generative/not-all-eeg.md) | arXiv 2026 | 按位置难度调整流匹配时间调度 |
 
-### 相关研究（13 篇）
+### 相关研究（9 篇） {: #papers-survey }
 
 | 论文 | 发表 | 方法一句话 |
 |---|---|---|
@@ -51,10 +55,15 @@ title: 首页
 | [LTFT](papers/survey/learnable-tf.md) | TETCI 2026 | 时频变换窗口设为可学习参数的信号前端 |
 | [RF-GPT](papers/survey/rf-gpt.md) | arXiv 2026 | 射频时频图接入 VLM，合成数据训练信号理解 |
 | [EEGArena](papers/survey/eegarena.md) | arXiv 2026 | 30 FM × 25 基线 × 57 任务的统一评测 |
-| [EEG FM 综述 (Yao)](papers/survey/yao-eegfm-survey.md) | JNE 2025 | 掩码/自回归/对比三路线横评 + 自跑 10 模型 × 6 数据集 |
-| [表示学习与 FM 综述 (Chen)](papers/survey/chen-representation-learning-review.md) | IEEE SPM 2025 | 19 个 FM 按词元化/嵌入/位置编码/骨干/损失拆表 + 迁移学习地图 |
-| [EEG FM 批判综述 (Kuruppu)](papers/survey/kuruppu-critical-review.md) | JNE 2026 | 三支柱拆 10 个早期 FM：评测异质、scaling 证据弱、LP 落后 FT |
-| [神经信号 FM 观点 (Kwon)](papers/survey/kwon-neural-fm-perspective.md) | EJN 2026 | 生理目标/结构先验/可解释三原则，判现存 FM 为第一代 |
+
+#### 综述与观点（4 篇） {: #papers-survey-reviews }
+
+| 综述 | 发表 | 读它回答什么 |
+|---|---|---|
+| [EEG FM 综述 (Yao)](papers/survey/yao-eegfm-survey.md) | JNE 2025 | 预训练三路线怎么选：掩码/自回归/对比横评 + 自跑 10 模型 × 6 数据集 |
+| [表示学习与 FM 综述 (Chen)](papers/survey/chen-representation-learning-review.md) | IEEE SPM 2025 | 组件怎么拆：19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项对照 |
+| [EEG FM 批判综述 (Kuruppu)](papers/survey/kuruppu-critical-review.md) | JNE 2026 | 现状可信吗：评测异质、scaling 证据弱、LP 落后 FT 的证据清单 |
+| [神经信号 FM 观点 (Kwon)](papers/survey/kwon-neural-fm-perspective.md) | EJN 2026 | 下一步做什么：生理目标/结构先验/可解释三原则的规范性主张 |
 
 ## 主题专题与架构基础 {: #topics }
 
@@ -71,9 +80,11 @@ title: 首页
 | [生成模型脉络](basics/generative-lineage.md) | ELBO / 去噪 / 速度场三代绕法 |
 | [图神经网络](basics/gnn.md) | 消息传递与 GAT，BrainGPT TEG 的机制基础 |
 
-另有：[十四篇方法对比](comparison.md)（九维度横向对照）· [数据集索引](datasets.md)（14 × 36 使用矩阵）· [EEG 基础模型综述](blog-2023-2026.md)（对外综述版）· [参考文献索引](references.md)。
+另有：[十四篇方法对比](comparison.md)（九维度横向对照）· [数据集索引](datasets.md)（14 × 36 使用矩阵）· [EEG 基础模型选读](blog-2023-2026.md)（对外选读版，含「从哪篇综述读起」速览）· [参考文献索引](references.md)。
 
 ## 最近更新 {: #updates }
+
+最近提交：<!-- LAST_UPDATE -->（北京时间）· <!-- ACTIVITY_BADGE -->
 
 <div class="ac-slot"><!-- ACTIVITY_CALENDAR --></div>
 
@@ -146,11 +157,9 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 31 篇（EEG 基础模型 11 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1 + 综述 4） |
+| 精读论文 | 31 篇（EEG 基础模型 15 + 生成式模型 3 + 相关研究 9 + 综述与观点 4） |
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · JNE ×2 · IEEE SPM ×1 · EJN ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
-| 主力预训练语料 | REVE 61,415h（92 数据集）· NeuroLM 25000h · LUNA 21900h · CBraMod 9000h · LaBraM 2500h · BrainGPT 3750 万样本 |
-| 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.9B（Uni-NTFM 总参数） |
 
 综合对比见 [十四篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——五个维度下放专题深读，模型设计 / 频域 / 规模效率保留在页内 + 论文间的比较与改进）。
 

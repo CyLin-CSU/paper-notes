@@ -13,16 +13,11 @@ one-liner: "电极坐标与时间构建 4D 傅里叶位置编码，支持不同�
 ---
 # REVE: A Foundation Model for EEG — Adapting to Any Setup with Large-Scale Pretraining on 25,000 Subjects
 
-> **NeurIPS 2025** · IMT Atlantique（法国）+ 蒙特利尔大学 + Mila —— 站内已读**语料最大**的 EEG 基础模型：92 个数据集、24,274 名被试、61,415 小时（此前最大 ~40,000h 且以颅内 EEG 为主）。它与 [LUNA](luna.md)、[CBraMod](cbramod.md) 同处「空间编码不查表」路线但走得更远——位置编码直接从 (x, y, z, t) 坐标生成；也正面回应了 [CBraMod](cbramod.md) 笔记留下的数据规模之问。笔记基于 arXiv 2510.21585 v1。
+> **NeurIPS 2025** · IMT Atlantique（法国）+ 蒙特利尔大学 + Mila · 笔记基于 arXiv 2510.21585 v1
 
 **作者**：Yassine El Ouahidi\*, Jonathan Lys, Philipp Thölke, Nicolas Farrugia, Bastien Pasdeloup, Vincent Gripon, Karim Jerbi, Giulia Lioi\*（IMT Atlantique Lab-STICC；Thölke/Jerbi 兼 Montréal/Mila/UNIQUE）
 
-!!! abstract "TL;DR"
-    - 痛点有名字：现有 EEG FM 普遍只在单一 montage 上预训练（TUH 系 19/21 通道），位置编码查表或卷积都绑死布局——换蒙太奇就退化，尤其 linear probing 场景。REVE 的答案是 **4D 傅里叶位置编码**：每个 patch 的 (x, y, z, t) 直接生成编码，任意电极数、任意信号长度都有定义
-    - 数据：92 数据集 / 24,274 被试 / **61,415h** / 19TB 原始（OpenNeuro 56 集 + TUH 26,847h + MOABB 27 集 + PhysioNet），396 个电极名、10-5 系统——论文称非侵入 EEG 最大预训练语料；清洗哲学与 [CBraMod](cbramod.md) 相反：**不剔** >100µV 段（保住 60,000h vs CBraMod 9,000h / LaBraM 2,534h），只剔 <10s 短记录和下游任务数据（防泄漏内建）
-    - 目标：MAE + **时空块掩码**（55%，空间 3cm 半径连续块 + 时间 3s 窗 + 10% 整通道 dropout）+ **全局 token 二次损失**（attention pooling 跨全部 MHA 层，λ=0.1）——后者是信息瓶颈，专治 MAE 末层过拟合，linear probing 平均 0.523→0.558
-    - 结果：10 个下游任务微调平均 **+2.5%** vs CBraMod（BCIC-IV-2a 一项 +12.6pp，但加了基线没有的 Euclidean Alignment 预处理）；线性探针均值（表 4，无池化列）REVE-Large 0.654、CBraMod 0.501，差 0.153；泛化到 30s 睡眠输入与训练没见过的双极 montage
-    - 预训练价值消融（Table 3，PhysioNet-MI）：无预训练时 REVE 0.5409 低于 CBraMod 0.6196（差约 8pp）；有预训练 REVE 0.6480、CBraMod 0.6417（REVE +10.71pp，CBraMod +2.21pp）——「架构派 vs 预训练派」之争被同框量化
+正文按 §1 问题定位（montage 绑定为何是第一瓶颈）、§2 方法（4D 位置编码 / 块掩码 / 全局 token 损失 / 数据哲学）、§3 实验与结果（微调与线性探针、预训练价值消融）展开；语料规模、组件数字与表 3/表 4 口径在对应段落与文末复现速查卡中。
 
 ## 1 问题定位：montage 绑定是线性探针下的第一瓶颈
 

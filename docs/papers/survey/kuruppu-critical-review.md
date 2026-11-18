@@ -7,7 +7,8 @@ year: 2026
 tags: [综述, 批判性综述, 评测, scaling, 线性探针, OOD]
 status: "精读"
 rating: 4.5
-arxiv: "https://doi.org/10.1088/1741-2552/ae4455"
+doi: "10.1088/1741-2552/ae4455"
+arxiv: ""
 code: "https://github.com/gayalkuruppu/eeg-foundation-models"
 one-liner: "三支柱拆 10 个早期 EEG FM 后给出批判性结论：评测异质且多在分布内、scaling 证据弱、线性探针明显落后微调——SSL 表示质量存疑"
 ---
@@ -44,7 +45,7 @@ one-liner: "三支柱拆 10 个早期 EEG FM 后给出批判性结论：评测�
 ## 5 站内视角
 
 - 本篇的批判清单与 [EEGArena](eegarena.md) 高度互补：文中呼吁的「共享核心任务 + OOD + 强监督基线」正是 EEGArena 已经做成的事，两篇可当「诊断书与药方」连读。
-- LP 落后 FT 的观察对本站 [REVE](../fm/reve.md) 微调策略（缓存 LP → 小学习率 FT）是个提醒：LP 短板在 EEG FM 里是普遍现象，不是单模型实现问题。
+- LP 落后 FT 的观察对本站 [REVE](../fm/reve.md) 微调策略（缓存 LP → 小学习率 FT）是提醒而非定论：该综述纳入的线性探针结果与全量微调存在差距，涉及五个模型的不同任务与指标，比较时须注明各自任务与设定，外推为「EEG FM 的普遍规律」证据尚不足。
 - 三支柱框架（输入表示 / 建模 / 评测）与本站 [预训练范式专题](../../topics/pretraining.md) 的「目标 / 掩码 / 范式」切分兼容，可交叉引用。
 
 ---

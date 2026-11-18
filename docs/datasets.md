@@ -5,13 +5,15 @@ tags: [索引, 数据集]
 
 # 数据集索引
 
-十四篇精读论文（核心六篇 + RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG / REVE）用到的全部数据集汇总。**↑ = 预训练语料，↓ = 下游评估**（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部[别名说明](#dataset-alias)。**数据集名均链接至官方获取页；🔒 = 需注册或申请，无公开官方页的在表内注明。**
+十四篇精读论文（核心六篇 + RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG / REVE）用到的全部数据集汇总。矩阵记号统一为 **P = 预训练语料，D = 下游评估，P+D = 两者都用**；例外：JET 的 P 指**生成训练**使用（其训练目标即生成质量，详见[其笔记](papers/generative/jet.md)）。同一数据集在不同论文中命名可能不同，见底部[别名说明](#dataset-alias)。**数据集名均链接至官方获取页；🔒 = 需注册或申请，无公开官方页的在表内注明。**
 
 > 口径说明：矩阵覆盖的是 EEG 基础模型与生成轴线的十四篇对比集。2026-11 新入库的轴外四篇（[Défossez 语音解码](papers/survey/defossez-speech.md) / [SSM2Mel](papers/survey/ssm2mel.md) / [LTFT](papers/survey/learnable-tf.md) / [NPI](papers/survey/surrogate-brain.md)）用的数据集（Broderick/Brennan/Schoffelen/Gwilliams MEG-EEG、SparrKULee、BCIC-II、Bonn、HCP/ABCD/F-TRACT 等）未入矩阵，见各自笔记。
 
 ## 📊 数据集 × 论文使用矩阵
 
-图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者都用　<span class="mx-cell mx-n">·</span> 未使用。**窄屏请横向滑动查看其余论文列，数据集行名固定在左侧**；悬停单元格可看口径说明（JET 的 P 指生成训练使用）。例外口径见本节上方的口径说明段落，数据集详情按分类见下方各节：[临床 TUEG](#eegtemple-tueg) · [情绪](#_3) · [运动想象](#_4) · [睡眠](#_5) · [认知负荷](#_6) · [ERP/P300/SSVEP](#erp-p300-ssvep) · [癫痫/精神](#_7) · [ECG/其他](#ecg)。
+**按任务查数据**（先于矩阵）：[临床 TUEG](#eegtemple-tueg) · [情绪](#_3) · [运动想象](#_4) · [睡眠](#_5) · [认知负荷](#_6) · [ERP/P300/SSVEP](#erp-p300-ssvep) · [癫痫/精神](#_7) · [ECG/其他](#ecg) · [别名说明](#dataset-alias)。
+
+图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者都用　<span class="mx-cell mx-n">·</span> 未使用。**窄屏请横向滑动查看其余论文列，数据集行名固定在左侧**；悬停单元格可看口径说明（JET 的 P 指生成训练使用）。例外口径见本页开头的口径说明段落；上方任务链接的目标位于矩阵下方各分类节。
 
 <div class="mx-wrap" tabindex="0" role="region" aria-label="数据集与论文使用矩阵，可横向滚动">
 <table class="mx-matrix">
