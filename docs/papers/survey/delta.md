@@ -9,7 +9,7 @@ status: "精读"
 rating: 3.5
 arxiv: "https://arxiv.org/abs/2511.21746"
 code: ""
-one-liner: "自训 RVQ tokenizer 把 ZuCo 词级 EEG 离散成多层码字,LLaDA-8B 掩码扩散非自回归生成文本:词级 BLEU-1 21.93 / ROUGE-1 F 17.24,较同 token 重训的 AR 基线 +5.3 pp——tokenization 演进线里「离散生成 EEG-to-Text」的占坑之作"
+one-liner: "自训 RVQ tokenizer 把 ZuCo 词级 EEG 离散成多层码字,LLaDA-8B 掩码扩散非自回归生成文本:词级 BLEU-1 21.93 / ROUGE-1 F 17.24,较同 token 重训的 AR 基线 +5.3 pp——tokenization 演进线里「离散生成 EEG-to-Text」方向的早期工作"
 ---
 # DELTA: Language Diffusion-based EEG-to-Text Architecture
 

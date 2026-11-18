@@ -21,7 +21,7 @@ title: 首页
 | [NeuroLM](papers/fm/neurolm.md) | ICLR 2025 · 至 1696M | EEG 接进 GPT-2：文本对齐 tokenizer + 指令微调多任务 |
 | [CBraMod](papers/fm/cbramod.md) | ICLR 2025 · 4.0M | 十字交叉注意力分别建模时间与通道 + 动态位置编码 |
 | [LUNA](papers/fm/luna.md) | NeurIPS 2025 · 7M–311M | 可学习 query 汇聚通道，任意电极布局映射到固定隐空间 |
-| [REVE](papers/fm/reve.md) | NeurIPS 2025 · 12M–408M | 4D 傅里叶位置编码 + 61,415h/92 数据集最大非侵入预训练 |
+| [REVE](papers/fm/reve.md) | NeurIPS 2025 · 12M–408M | 电极坐标与时间构建 4D 傅里叶位置编码，支持不同电极布局和序列长度；92 数据集 61,415h 预训练 |
 | [TFM-Tokenizer](papers/fm/tfm-tokenizer.md) | ICLR 2026 · ~1.9M | 单通道时频 motif 词表，离散 token 作模型输入 |
 | [Uni-NTFM](papers/fm/uni-ntfm.md) | ICLR 2026 | 时域/频带功率双向交叉注意力 + 拓扑嵌入 + MoE |
 | [EEGMoE](papers/fm/eegmoe.md) | TNNLS 2026 · 1.68M | 域专属与共享专家分别学习域差异与共性 |
@@ -77,15 +77,15 @@ title: 首页
 
 - **2026-11-06** · 新增 [Uni-NTFM](papers/fm/uni-ntfm.md) 精读，拆解时域与频域双向交叉注意力、分层拓扑嵌入和双域掩码重建。
 
-- **2026-11-05** · 新增精读 REVE（NeurIPS 2025）：4D 傅里叶位置编码吃任意电极布局 + 92 数据集 61,415h 最大非侵入预训练语料——10 任务平均 +2.5%，linear probing 对 CBraMod +17%，对比集扩至十四篇
+- **2026-11-05** · 新增精读 REVE（NeurIPS 2025）：电极坐标与时间构建 4D 傅里叶位置编码，支持不同电极布局与序列长度；92 数据集 61,415h 预训练语料（论文称非侵入最大）——10 任务微调平均较 CBraMod +2.5%（其表 2），linear probing 均值 REVE-L 0.654 / CBraMod 0.501（其表 4，无池化列），对比集扩至十四篇
 
-- **2026-11-04** · tokenization 线五篇齐发：NeuroRVQ（多尺度 RVQ，EEG 重构 MSE 较 LaBraM 降 67 倍）· BrainRVQ（时/频双域 RVQ）· CodeBrain（时/频双码本解耦）· NeuroDETR（VQ 事件记忆 + DETR 式事件检测，8 数据集 F1 全第一）· DELTA（RVQ + 掩码语言扩散 EEG-to-Text）——tokenization 演进页遗留缺口全面占坑
+- **2026-11-04** · tokenization 线五篇齐发：NeuroRVQ（多尺度 RVQ，EEG 重构 MSE 较 LaBraM 降 67 倍）· BrainRVQ（时/频双域 RVQ）· CodeBrain（时/频双码本解耦）· NeuroDETR（VQ 事件记忆 + DETR 式事件检测，8 数据集 F1 全第一）· DELTA（RVQ + 掩码语言扩散 EEG-to-Text）——tokenization 演进页此前列出的缺口均有对应工作
 
 - **2026-11-04** · 新增精读 GUIDED（ATM · arXiv 2024）：EEG 映进 CLIP 空间 + 冻结 SDXL 两阶段引导扩散重建所见图像——站内「视觉重建」轴线第一篇，EEG 与 MEG/fMRI 首次同桌比较
 
-- **2026-11-04** · 新增精读 CrossPT-EEG（arXiv 2024 · 清华）：16 人 × 22 session 视觉解码泛化基准——two-way ID 从被试内 0.95 崩到跨时间 0.51、跨被试 0.49，泛化代价的第一份系统账目
+- **2026-11-04** · 新增精读 CrossPT-EEG（arXiv 2024 · 清华）：16 人 × 22 session 视觉解码泛化基准，比较被试内、跨时间与跨被试三种设置——two-way ID 被试内均值 0.95、跨时间 0.51、跨被试 0.49（均为对应设定均值）
 
-- **2026-11-04** · 新增精读 EEGArena（arXiv 2026）：30 FM × 25 监督基线 × 57 任务 / 23 数据集、五协议 2 万次评测——FM 大多领先但 TUEV 全体塌方，参数量不预测性能，预训练数据 0.6k→30k 小时无平台
+- **2026-11-04** · 新增 EEGArena 精读，记录 57 项任务的统一评测，以及 REVE-base 的预训练数据规模实验（600h→30k 小时，全量微调被试内 +6.69pp）
 
 - **2026-11-03** · 新增语音模型专题（与主题专题并列）：语音解码轴线按 Tokenization / Pretraining / 下游任务三段横读——脑端不切段、语音端选空间、监督对齐范式与检索/回归/生成三协议
 

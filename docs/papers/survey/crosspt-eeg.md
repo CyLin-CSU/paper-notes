@@ -9,7 +9,7 @@ status: "精读"
 rating: 3.5
 arxiv: "https://arxiv.org/abs/2406.07151"
 code: "https://anonymous.4open.science/r/EEG-ImageNet-anonymous-74B0"
-one-liner: "清华 IR 组的 EEG 视觉解码泛化基准:16 人 × 22 session、4,000 张 ImageNet 图、7 天间隔两阶段范式,two-way ID 从被试内 ~0.95 崩到跨时间 0.51–0.62、跨被试 0.49–0.57——视觉解码轴第一条基准线,泛化代价的第一份系统账目"
+one-liner: "清华 IR 组的 EEG 视觉解码泛化基准:16 人 × 22 session、4,000 张 ImageNet 图、7 天间隔两阶段范式,比较视觉解码在被试内、跨时间与跨被试三种设置下的表现;two-way ID 被试内均值 0.95、跨时间均值 0.51(模型间 0.51–0.62)、跨被试均值 0.49(模型间 0.49–0.57),均为对应设定下的结果"
 ---
 # CrossPT-EEG: A Benchmark for Cross-Participant and Cross-Time Generalization of EEG-Based Visual Decoding
 
@@ -23,7 +23,7 @@ one-liner: "清华 IR 组的 EEG 视觉解码泛化基准:16 人 × 22 session�
 
 作者的三个设计对应三条批评:4,000 图 + 两级粒度标注对规模与粒度;两阶段跨时间设计对 block 混淆。值得注意的是出发点:这是清华 IR 组(THUIR)的作品——Yiqun Liu 组此前有 brain-machine search interface 的 SIGIR Forum 立项文章、EEG-SVRec、TOIS 的 relevance feedback with brain signals,视觉解码基准服务于「图像搜索 BCI」的长期议程,所以 cross-time(用户隔周回访)和随机乱序(搜索结果不会按类分块出现)是第一需求,而非神经科学的事后补充。
 
-作为基准类论文,本文的主产品不是方法而是**测量**:图 2 的任务划分协议和 Table 2/3 的崩塌数字。被评模型是配角(作者自己在 Limitation 里承认没纳入最新方法)。
+作为基准类论文,本文的主产品不是方法而是**测量**:图 2 的任务划分协议和 Table 2/3 的三种设定成绩数字。被评模型是配角(作者自己在 Limitation 里承认没纳入最新方法)。
 
 ## 2 基准设计:数据集、两阶段范式与四个任务
 

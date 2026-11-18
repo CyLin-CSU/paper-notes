@@ -62,4 +62,4 @@ one-liner: "用 Specific+Shared 双专家组把 EEG 的域共性与域特性分�
 
 **相关阅读**
 
-:material-arrow-right: [LUNA（拓扑统一路线，对照阅读）](luna.md) ｜ :material-arrow-left: [JET（流匹配生成）](../generative/jet.md) ｜ :material-grid-large: [通道适配与多任务学习](../../topics/multi-task.md#channel-adaptation) ｜ :material-chart-box: [十一篇方法对比](../../comparison.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-right: [LUNA（拓扑统一路线，对照阅读）](luna.md) ｜ :material-arrow-left: [JET（流匹配生成）](../generative/jet.md) ｜ :material-grid-large: [通道适配与多任务学习](../../topics/multi-task.md#channel-adaptation) ｜ :material-chart-box: [方法对比](../../comparison.md) ｜ :material-home: [首页](../../index.md)

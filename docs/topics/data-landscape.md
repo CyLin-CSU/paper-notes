@@ -17,7 +17,7 @@ tags: [预训练数据, 综述]
 | CBraMod | 清洗后的 TUEG | **超过 9000h，约 110 万个 30s 片段** | 临床 |
 | LUNA | TUEG + Siena | **超过 21900h** | 临床，覆盖多种电极布局 |
 | REVE | OpenNeuro、MOABB、TUH、PhysioNet 等 92 个数据集 | **超过 61415h，24274 名被试** | 临床为主（约 50581h），混合认知与 BCI，396 个电极名 |
-| EEGMoE | DREAMER、SEED、MAHNOB、EEGMMIDB、BCIC-IV-1、EEGMat | **6 个数据集，约 142h** | 情绪、运动想象、认知负荷 |
+| EEGMoE | DREAMER、SEED、MAHNOB、EEGMMIDB、BCIC-IV-1、EEGMat | **6 个数据集，约 142h**；另有 3 个下游评测数据集（LOSO） | 情绪、运动想象、认知负荷 |
 | NeuroRVQ | 12 个公开 EEG 数据集 + 自采运动数据 | **13 个来源**；自采部分约 **235h**，总时长未统一报告 | 运动、ERP、静息、伪迹、临床 |
 | BrainRVQ | 清洗后的 TUEG | **约 9200h，1109545 个 30s 片段** | 临床 |
 | CodeBrain | 清洗后的 TUEG | **约 9246h，1109545 个 30s 片段** | 临床 |

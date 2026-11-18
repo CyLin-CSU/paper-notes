@@ -70,7 +70,7 @@ LoRA 的出发点来自 Aghajanyan 等（2020）关于**本征维度（intrinsic
 
 #### 1.7 在 EEG 大模型语境下怎么用
 
-- **已读六篇的微调光谱**：LaBraM 依赖全量微调（linear probing 在 TUEV 崩到 0.346，表示与微调强绑定）；EEGPT 主打免微调 linear probing；TFM-Tokenizer 参数太小（1.9M）可以全训。LoRA 卡在光谱中间：**比线性探针容量大、比全量微调便宜两个数量级**——正好适合「拿开源 EEG FM 的权重、适配自己的任务」的场景；
+- **已读六篇的微调光谱**：LaBraM 依赖全量微调（linear probing 在 TUEV 降至 0.346，表示与微调强绑定）；EEGPT 主打免微调 linear probing；TFM-Tokenizer 参数太小（1.9M）可以全训。LoRA 卡在光谱中间：**比线性探针容量大、比全量微调便宜两个数量级**——正好适合「拿开源 EEG FM 的权重、适配自己的任务」的场景；
 - **NeuroLM 是现成试验田**：它的底座就是 GPT-2，PEFT 库的 LoRA 配置可以直接套用；
 - **EEG 数据普遍偏小**，全量微调容易过拟合且灾难性遗忘预训练知识——低秩约束本身即正则。建议从 **r=4~8、只挂注意力 q/v** 起步，任务简单时甚至可以只调分类头 + LoRA；
 - 这也是 eeg2text-lite 项目「预训练 → LoRA → 解码」路线的理论支点：EEG 到文本/解码器的适配任务数据量小、映射偏移有限，处于 LoRA 的甜点区。
@@ -79,4 +79,4 @@ LoRA 的出发点来自 Aghajanyan 等（2020）关于**本征维度（intrinsic
 
 **相关阅读**
 
-:material-home: [首页](../index.md) ｜ :material-chart-box: [六篇方法对比](../comparison.md) ｜ :material-cube-outline: [基座来源分析](../topics/base-model.md) ｜ :material-robot: [NeuroLM（GPT-2 底座，LoRA 可直接套用）](../papers/fm/neurolm.md)
+:material-home: [首页](../index.md) ｜ :material-chart-box: [方法对比](../comparison.md) ｜ :material-cube-outline: [基座来源分析](../topics/base-model.md) ｜ :material-robot: [NeuroLM（GPT-2 底座，LoRA 可直接套用）](../papers/fm/neurolm.md)

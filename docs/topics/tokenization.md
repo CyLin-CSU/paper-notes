@@ -145,14 +145,14 @@ tags: [tokenization, 综述]
 
 ### 频域信息怎么进 token
 
-| 方案 | 做法 | 问题 |
+| 方案 | 做法 | 已知代价 / 相关消融 |
 |---|---|---|
 | BIOT | STFT 频谱帧 → 线性投影 | 丢失相位；1s 窗过粗，时域任务（P300）吃亏 |
 | LaBraM | DFT 幅值+相位作重构目标 | 相位贡献小（NeuroLM 实验证实） |
 | NeuroLM | 时域信号 + DFT 幅值双 decoder | — |
 | TFM | 频率轴切 patch + 频率 Transformer + 门控聚合 | **显式建模窗内跨频段依赖**，最彻底 |
-| CBraMod | rFFT 能量与时域 conv 相加进 embedding | 消融：时+频 > 纯时 > 纯频 |
-| LUNA | FFT 幅相经 MLP 与时域 conv 相加 | 消融：**去掉后掉分最多的组件**（AUROC 至 -0.011） |
+| CBraMod | rFFT 能量与时域 conv 相加进 embedding | 消融：时+频 > 纯时 > 纯频（该表不构成优劣结论） |
+| LUNA | FFT 幅相经 MLP 与时域 conv 相加 | 消融：**去掉后掉分最多的组件**（AUROC 至 -0.011，该表不构成优劣结论） |
 | NeuroRVQ | 重构对数幅值与相位，反变换后约束原始信号 | 用圆周相位损失处理角度周期性 |
 | BrainRVQ | 独立频域 RVQ，重构幅值 + 相位 | 与时域 RVQ 分开保留两类信息 |
 | CodeBrain | 频域卷积作为输入，独立频域码表重构幅值 + 相位 | 输入与重构目标都显式使用频域信息 |

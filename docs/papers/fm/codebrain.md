@@ -9,7 +9,7 @@ status: "精读"
 rating: 4
 arxiv: "https://arxiv.org/abs/2506.09110"
 code: "https://github.com/jingyingma01/CodeBrain"
-one-liner: "时/频双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干:8 任务 10 数据集对 CBraMod 小幅全面领先,token 却退守预训练目标——tokenizer 与下游架构「桥接」缺口的占坑之作"
+one-liner: "时/频双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干:8 任务 10 数据集对 CBraMod 小幅全面领先,token 却退守预训练目标——tokenizer 与下游架构针对「桥接」缺口的早期工作"
 ---
 # CodeBrain: Bridging Decoupled Tokenizer and Multi-Scale Architecture for EEG Foundation Model
 

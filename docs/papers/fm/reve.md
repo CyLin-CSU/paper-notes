@@ -9,7 +9,7 @@ status: "精读"
 rating: 4
 arxiv: "https://arxiv.org/abs/2510.21585"
 code: "https://brain-bzh.github.io/reve/"
-one-liner: "4D 傅里叶位置编码吃任意电极布局与长度 + 61,415h/92 数据集最大非侵入预训练语料：10 任务平均 +2.5%，linear probing 对 CBraMod 最高 +17%——把「跨 montage 泛化」和「规模化」同时做实的基础模型"
+one-liner: "电极坐标与时间构建 4D 傅里叶位置编码，支持不同电极布局与序列长度；92 数据集 61,415h 预训练语料（论文称非侵入最大）：10 任务微调平均较 CBraMod +2.5%（表 2），linear probing 均值 REVE-L 0.654 / CBraMod 0.501（表 4，无池化列）"
 ---
 # REVE: A Foundation Model for EEG — Adapting to Any Setup with Large-Scale Pretraining on 25,000 Subjects
 
@@ -19,10 +19,10 @@ one-liner: "4D 傅里叶位置编码吃任意电极布局与长度 + 61,415h/92 
 
 !!! abstract "TL;DR"
     - 痛点有名字：现有 EEG FM 普遍只在单一 montage 上预训练（TUH 系 19/21 通道），位置编码查表或卷积都绑死布局——换蒙太奇就退化，尤其 linear probing 场景。REVE 的答案是 **4D 傅里叶位置编码**：每个 patch 的 (x, y, z, t) 直接生成编码，任意电极数、任意信号长度都有定义
-    - 数据：92 数据集 / 24,274 被试 / **61,415h** / 19TB 原始（OpenNeuro 56 集 + TUH 26,847h + MOABB 27 集 + PhysioNet），396 个电极名、10-5 系统——非侵入 EEG 最大预训练语料；清洗哲学与 [CBraMod](cbramod.md) 相反：**不剔** >100µV 段（保住 60,000h vs CBraMod 9,000h / LaBraM 2,534h），只剔 <10s 短记录和下游任务数据（防泄漏内建）
+    - 数据：92 数据集 / 24,274 被试 / **61,415h** / 19TB 原始（OpenNeuro 56 集 + TUH 26,847h + MOABB 27 集 + PhysioNet），396 个电极名、10-5 系统——论文称非侵入 EEG 最大预训练语料；清洗哲学与 [CBraMod](cbramod.md) 相反：**不剔** >100µV 段（保住 60,000h vs CBraMod 9,000h / LaBraM 2,534h），只剔 <10s 短记录和下游任务数据（防泄漏内建）
     - 目标：MAE + **时空块掩码**（55%，空间 3cm 半径连续块 + 时间 3s 窗 + 10% 整通道 dropout）+ **全局 token 二次损失**（attention pooling 跨全部 MHA 层，λ=0.1）——后者是信息瓶颈，专治 MAE 末层过拟合，linear probing 平均 0.523→0.558
-    - 结果：10 个下游任务微调平均 **+2.5%** vs CBraMod（BCIC-IV-2a 一项 +12.6pp，但加了基线没有的 Euclidean Alignment 预处理）；linear probing REVE-Large 0.654 vs CBraMod 0.501（**+17%**）；泛化到 30s 睡眠输入与训练没见过的双极 montage
-    - 预训练价值消融是全文最锋利的一张牌：无预训练时 REVE 比 CBraMod 差 8%+，有预训练 REVE **+11%** 而 CBraMod 只 **+2%**——「架构派 vs 预训练派」之争第一次被同框量化
+    - 结果：10 个下游任务微调平均 **+2.5%** vs CBraMod（BCIC-IV-2a 一项 +12.6pp，但加了基线没有的 Euclidean Alignment 预处理）；线性探针均值（表 4，无池化列）REVE-Large 0.654、CBraMod 0.501，差 0.153；泛化到 30s 睡眠输入与训练没见过的双极 montage
+    - 预训练价值消融（Table 3，PhysioNet-MI）：无预训练时 REVE 0.5409 低于 CBraMod 0.6196（差约 8pp）；有预训练 REVE 0.6480、CBraMod 0.6417（REVE +10.71pp，CBraMod +2.21pp）——「架构派 vs 预训练派」之争被同框量化
 
 ## 1 问题定位：montage 绑定是线性探针下的第一瓶颈
 
@@ -70,11 +70,13 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 
 **微调 SOTA（Table 2/16，balanced accuracy）**：10 任务上对最强基线 CBraMod 平均 **+2.5%**。TUAB 0.8315（vs 0.8289）、TUEV 0.6759（vs 0.6671）、MAT 0.7660（vs 0.7256）、BCIC2020-3 想象语音 0.5635（vs 0.5373）、Mumtaz 0.9644、PhysioNet-MI 0.6480；ISRUC 平衡精度 0.7819 略低于 CBraMod 0.7865，但 Kappa 0.7500 更高——且 REVE 修了基线代码里下巴电极混入的 bug（诚实细节 +1）。跨设定泛化是位置编码的兑现处：预训练只见 10s 段，ISRUC/HMC 的 30s 输入照常工作；TUEV 的双极蒙太奇训练里从未出现。
 
-**Linear probing（Table 4）**：REVE-L 平均 0.654，对 CBraMod 0.501 领先 **17%**；TUAB 0.821、ISRUC 0.743、HMC 0.703——EEGPT 之后第二个把「冻结可用」做实的模型，且这里微调协议还是「两步走」（先冻结探针对齐特征空间，再解冻全网络，单次连续训练）+ LoRA on QKVO + Mixup + model souping（≥5 个微调模型权重平均，+1.5%）。
+**Linear probing（Table 4）**：均值按列分两种口径——无池化列 REVE-L 0.654 / REVE-B 0.609 / CBraMod 0.501，REVE-L 较 CBraMod 高 0.153；池化列 REVE-L 0.623 / CBraMod 0.373。单项任务取无池化列 REVE-L：Mumtaz 0.980、ISRUC 0.758、HMC 0.710、TUAB 0.809。原文正文概述「接近 17%」的 linear probing 增益——这是作者的表述，其口径与两列均值之差（0.153）不是同一回事，站内以表中均值为准。站内判断：EEGPT 之后第二个把「冻结可用」做实的模型。
+
+**下游微调协议**：微调成绩出自一套复合协议——「两步走」（先冻结探针对齐特征空间，再解冻全网络，单次连续训练）+ LoRA on QKVO + Mixup + model souping（≥5 个微调模型权重平均，+1.5%）。
 
 **预训练价值消融（Table 3）**：PhysioNet-MI 上，无预训练时 REVE 0.5409 比 CBraMod 0.6196 差 8%+；加预训练 REVE 涨 **11%**、CBraMod 只涨 **2%**。作者的读法是「REVE 的成绩来自预训练表示，基线来自架构设计」——这句话的反面同样成立：CBraMod 的架构从零初始化就够强，REVE 的架构离了预训练不行。
 
-**稀疏与少样本**：通道递减下 MI 任务优雅退化（64ch 0.824 → 1ch 0.660），想象语音则崩向随机（0.565 → 1ch 0.209）——空间信息密集的任务扛不住剪通道。20-shot 少样本：纯预训练权重 0.723，跨数据集微调后 **0.817**。
+**稀疏与少样本**：通道递减下 MI 任务优雅退化（64ch 0.824 → 1ch 0.660），想象语音则退化到接近随机（0.565 → 1ch 0.209）——空间信息密集的任务扛不住剪通道。20-shot 少样本：纯预训练权重 0.723，跨数据集微调后 **0.817**。
 
 ## 架构图
 
