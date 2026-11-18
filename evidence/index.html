@@ -13,7 +13,7 @@
         <link rel="prev" href="../models/">
       
       
-        <link rel="next" href="../comparison/">
+        <link rel="next" href="../reading-list/">
       
       
         
@@ -2270,6 +2270,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../reading-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读清单
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eeg-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG 交互示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../comparison/" class="md-nav__link">
         
   
@@ -2305,10 +2359,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14">
         
           
-          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
             
   
   
@@ -2326,8 +2380,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_12">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2468,6 +2522,29 @@
 <div class="ev-item" id="ev-tfm-band-mask-ablation" data-paper="tfm-tokenizer" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/tfm-tokenizer/">TFM-Tokenizer: Tokenizing Single-Channel EEG with Time-Frequency Motif Learning</a><span class="ev-source">出处：其消融表（转引自选读页 §六）</span></div><div class="ev-body"><div><b>指标</b>：Kappa / balanced accuracy 增量</div><div><b>模型</b>：TFM-Tokenizer（端到端）</div><div><b>协议</b>：tokenizer 消融</div><div class="ev-values"><div><code>band_mask_kappa_gain_pp</code> = 8</div><div><code>add_time_mask_bacc_gain_pp</code> = 5</div></div><div class="ev-note">其消融中频带掩码贡献最大；站内未逐点核对原图，量级以笔记转述为准</div></div></div>
 <div class="ev-item" id="ev-brainrvq-chbmit-aucpr" data-paper="brainrvq" data-dataset="chb-mit" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/brainrvq/">BrainRVQ: A High-Fidelity EEG Foundation Model via Dual-Domain Residual Quantization and Hierarchical Autoregression</a><span class="ev-source">出处：其表（转引自站内 references 条目）</span></div><div class="ev-body"><div><b>指标</b>：AUC-PR 增量</div><div><b>模型</b>：BrainRVQ</div><div><b>数据集</b>：CHB-MIT Scalp EEG</div><div><b>协议</b>：微调</div><div class="ev-values"><div><code>gain_vs_cbramod_pct</code> = 26</div></div><div class="ev-note">5.82M 小模型对照 CBraMod</div></div></div>
 <div class="ev-item" id="ev-defossez-scaling-speech" data-paper="defossez-speech" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/survey/defossez-speech/">Decoding Speech Perception from Non-invasive Brain Recordings</a><span class="ev-source">出处：Chen 综述数据规模节转述</span></div><div class="ev-body"><div><b>指标</b>：top-1 准确率</div><div><b>协议</b>：自监督预训练</div><div><b>划分</b>：零样本语音段分类</div><div class="ev-values"><div><code>h175</code> = 0.48</div><div><code>h10</code> = 0.025</div></div><div class="ev-note">单被试 175h vs 10h 的数据规模对照（非侵入语音解码）</div></div></div>
+<div class="ev-item" id="ev-cbramod-t2-tuab-balacc" data-paper="cbramod" data-dataset="tuab" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/cbramod/">CBraMod: A Criss-Cross Brain Foundation Model for EEG Decoding</a><span class="ev-source">出处：表 2（站内 cbramod.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：balanced accuracy</div><div><b>模型</b>：CBraMod</div><div><b>数据集</b>：TUAB</div><div><b>协议</b>：微调</div><div><b>划分</b>：TUAB 官方划分</div><div class="ev-values"><div><code>value</code> = 0.8289</div></div><div class="ev-note">原报告口径</div></div></div>
+<div class="ev-item" id="ev-cbramod-ablation-attn" data-paper="cbramod" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/cbramod/">CBraMod: A Criss-Cross Brain Foundation Model for EEG Decoding</a><span class="ev-source">出处：附录消融（站内 comparison.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：注意力头分配</div><div><b>模型</b>：CBraMod</div><div><b>协议</b>：消融</div><div class="ev-values"><div><code>best</code> = 4:4 时空头</div><div><code>note</code> = 6:2 / 2:6 偏科均下降</div></div><div class="ev-note">十字交叉注意力消融：空间与时间依赖同等重要</div></div></div>
+<div class="ev-item" id="ev-labram-t-tuab-balacc" data-paper="labram" data-dataset="tuab" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/labram/">LaBraM: Large Brain Model for Learning Generic Representations with Tremendous EEG Data in BCI</a><span class="ev-source">出处：表（站内 comparison.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：balanced accuracy</div><div><b>模型</b>：LaBraM-Base</div><div><b>数据集</b>：TUAB</div><div><b>协议</b>：微调</div><div><b>划分</b>：TUAB 官方划分</div><div class="ev-values"><div><code>value</code> = 0.814</div></div><div class="ev-note">Yao 自跑口径 0.8140 与原报告互证</div></div></div>
+<div class="ev-item" id="ev-labram-data-scaling-tuev" data-paper="labram" data-dataset="tuev" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/labram/">LaBraM: Large Brain Model for Learning Generic Representations with Tremendous EEG Data in BCI</a><span class="ev-source">出处：其数据量消融（站内 blog 转述）</span></div><div class="ev-body"><div><b>指标</b>：相对 2500h 版本达成率</div><div><b>模型</b>：LaBraM-Base</div><div><b>数据集</b>：TUEV</div><div><b>协议</b>：微调</div><div class="ev-values"><div><code>tuev_at_500h_pct</code> = 90</div></div><div class="ev-note">Base 500h 预训练在 TUEV 达到 2500h 版本的 90%+</div></div></div>
+<div class="ev-item" id="ev-luna-tuar-sota" data-paper="luna" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/luna/">LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis</a><span class="ev-source">出处：表（站内 datasets.md 引用）</span></div><div class="ev-body"><div><b>指标</b>：TUAR 伪迹分类准确率</div><div><b>模型</b>：LUNA-Base</div><div><b>协议</b>：微调</div><div class="ev-values"><div><code>value</code> = 0.921</div></div><div class="ev-note">TUAR 5 类伪迹任务上为其对比中 SOTA</div></div></div>
+<div class="ev-item" id="ev-luna-tuab-bottleneck" data-paper="luna" data-dataset="tuab" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/luna/">LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis</a><span class="ev-source">出处：其消融（站内 blog 转述）</span></div><div class="ev-body"><div><b>指标</b>：相对全注意力差距</div><div><b>模型</b>：LUNA-Base</div><div><b>数据集</b>：TUAB</div><div><b>协议</b>：微调</div><div class="ev-values"><div><code>gap_pp</code> = 1</div></div><div class="ev-note">隐空间瓶颈的代价：TUAB 上落后全注意力约 1pp</div></div></div>
+<div class="ev-item" id="ev-neurorvq-recon-mse" data-paper="neurorvq" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/neurorvq/">NeuroRVQ: Multi-Scale Biosignal Tokenization for Generative Foundation Models</a><span class="ev-source">出处：其重构表（站内 references 转述）</span></div><div class="ev-body"><div><b>指标</b>：EEG 重构 MSE</div><div><b>模型</b>：NeuroRVQ</div><div><b>协议</b>：tokenizer 重构</div><div><b>划分</b>：同数据同口径</div><div class="ev-values"><div><code>neurorvq</code> = 0.016</div><div><code>labram</code> = 1.071</div></div><div class="ev-note">低 67 倍</div></div></div>
+<div class="ev-item" id="ev-neurorvq-ecg-43class" data-paper="neurorvq" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/neurorvq/">NeuroRVQ: Multi-Scale Biosignal Tokenization for Generative Foundation Models</a><span class="ev-source">出处：其 ECG 表（站内 references 转述）</span></div><div class="ev-body"><div><b>指标</b>：ECG 43 类分类</div><div><b>模型</b>：NeuroRVQ</div><div><b>协议</b>：微调</div><div class="ev-values"><div><code>note</code> = 较最强基线翻倍</div></div><div class="ev-note">幅相分离重构对 ECG 同样有效</div></div></div>
+<div class="ev-item" id="ev-eegpt-lp-sota" data-paper="eegpt" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/eegpt/">EEGPT: Pretrained Transformer for Universal and Reliable Representation of EEG Signals</a><span class="ev-source">出处：其表（站内 eegpt.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：多任务平均</div><div><b>模型</b>：EEGPT（Wang et al.）</div><div><b>协议</b>：线性探针</div><div class="ev-values"><div><code>note</code> = linear probing 即达其对比中 SOTA</div></div><div class="ev-note">对齐目标（JEPA 式）+ 掩码重构双自监督的冻结可用性证据</div></div></div>
+<div class="ev-item" id="ev-braingpt-ar-vs-mae" data-paper="braingpt" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/braingpt/">BrainGPT: Unleashing the Potential of EEG Generalist Foundation Model by Autoregressive Pre-training</a><span class="ev-source">出处：表 V（站内 braingpt.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：五任务平均准确率差</div><div><b>模型</b>：BrainGPT-Giant</div><div><b>协议</b>：同架构同损失对照</div><div class="ev-values"><div><code>ar_minus_mae_pp</code> = 2.5</div></div><div class="ev-note">L2 损失最优时自回归较掩码重构平均高 2.5pp；作者归因时序因果结构，限于该五任务</div></div></div>
+<div class="ev-item" id="ev-braingpt-mt-smalltask" data-paper="braingpt" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/braingpt/">BrainGPT: Unleashing the Potential of EEG Generalist Foundation Model by Autoregressive Pre-training</a><span class="ev-source">出处：表 VI（站内 blog 转述）</span></div><div class="ev-body"><div><b>指标</b>：认知负荷任务增益</div><div><b>模型</b>：BrainGPT-Giant</div><div><b>协议</b>：12 基准联合训练</div><div class="ev-values"><div><code>gain_pp</code> = 3.9</div></div><div class="ev-note">多任务信息载体是电极节点被多任务梯度共同更新；小任务受益最大</div></div></div>
+<div class="ev-item" id="ev-neurolm-perplexity-scaling" data-paper="neurolm" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/neurolm/">NeuroLM: A Universal Multi-task Foundation Model for Bridging the Gap between Language and EEG Signals</a><span class="ev-source">出处：§3.6（站内 blog 转述）</span></div><div class="ev-body"><div><b>指标</b>：验证困惑度</div><div><b>模型</b>：NeuroLM-XL</div><div><b>协议</b>：预训练规模</div><div class="ev-values"><div><code>note</code> = L 与 XL 两档接近，十亿级参数未训满（作者观点）</div></div><div class="ev-note">25000h 语料上的模型缩放观察</div></div></div>
+<div class="ev-item" id="ev-neurodetr-f1-all-first" data-paper="neurodetr" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/neurodetr/">NeuroDETR: Multiscale Discrete Spatiotemporal Tokenization for Asynchronous EEG Event Detection</a><span class="ev-source">出处：其主表（站内 neurodetr.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：事件级 F1</div><div><b>协议</b>：事件检测</div><div class="ev-values"><div><code>note</code> = 8 数据集全部第一</div></div><div class="ev-note">多尺度 VQ 事件记忆 + DETR 式集合预测</div></div></div>
+<div class="ev-item" id="ev-codebrain-token-bridge" data-paper="codebrain" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/codebrain/">CodeBrain: Bridging Decoupled Tokenizer and Multi-Scale Architecture for EEG Foundation Model</a><span class="ev-source">出处：站内 codebrain.md</span></div><div class="ev-body"><div><b>指标</b>：token 角色</div><div><b>协议</b>：架构定性</div><div class="ev-values"><div><code>note</code> = token 退守预训练目标，未作下游输入</div></div><div class="ev-note">与 TFM（token 作输入）构成 token 用途的两极</div></div></div>
+<div class="ev-item" id="ev-not-all-eeg-tsfid" data-paper="not-all-eeg" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/generative/not-all-eeg/">Not All EEG Moments Are Equal: Position-Adaptive Time Scheduling for EEG Generation</a><span class="ev-source">出处：其主表（站内 not-all-eeg.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：TS-FID 相对复现 JET</div><div><b>协议</b>：生成评估</div><div class="ev-values"><div><code>reduction_pct</code> = [40, 62]</div></div><div class="ev-note">位置自适应时间调度（PATS）+ 因子化时空注意力 + 频率加权多分辨率频谱损失</div></div></div>
+<div class="ev-item" id="ev-eegdm-spsw-recall" data-paper="eegdm" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/generative/eegdm/">EEGDM: Learning EEG Representation with Latent Diffusion Model</a><span class="ev-source">出处：其表（站内 eegdm.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：少数类召回（SPSW）</div><div><b>模型</b>：EEGDM 下游 encoder</div><div><b>协议</b>：微调</div><div class="ev-values"><div><code>minority_recall_pct</code> = [10, 18]</div></div><div class="ev-note">被 EEGDM 用作批评 CBraMod 容量分配的证据；类不均衡场景鲁棒</div></div></div>
+<div class="ev-item" id="ev-reve-channel-pruning-mi" data-paper="reve" data-dataset="physionet-mi" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/reve/">REVE: A Foundation Model for EEG — Adapting to Any Setup with Large-Scale Pretraining on 25,000 Subjects</a><span class="ev-source">出处：其稀疏性实验（站内 reve.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：MI 任务准确率</div><div><b>模型</b>：REVE-Base</div><div><b>数据集</b>：PhysioNet EEG Motor Movement/Imagery</div><div><b>协议</b>：通道递减</div><div class="ev-values"><div><code>ch64</code> = 0.824</div><div><code>ch1</code> = 0.66</div></div><div class="ev-note">空间信息密集任务优雅退化；想象语音则 0.565→0.209 接近随机</div></div></div>
+<div class="ev-item" id="ev-reve-fewshot-20" data-paper="reve" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/reve/">REVE: A Foundation Model for EEG — Adapting to Any Setup with Large-Scale Pretraining on 25,000 Subjects</a><span class="ev-source">出处：其少样本表（站内 reve.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：纯预训练权重 vs 跨数据集微调</div><div><b>模型</b>：REVE-Base</div><div><b>协议</b>：20-shot</div><div class="ev-values"><div><code>pretrain_only</code> = 0.723</div><div><code>cross_ft</code> = 0.817</div></div><div class="ev-note">跨数据集微调再 +9.4pp</div></div></div>
+<div class="ev-item" id="ev-reve-isruc-kappa" data-paper="reve" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/fm/reve/">REVE: A Foundation Model for EEG — Adapting to Any Setup with Large-Scale Pretraining on 25,000 Subjects</a><span class="ev-source">出处：表 2（站内 reve.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：ISRUC 平衡精度 / Kappa</div><div><b>模型</b>：REVE-Base</div><div><b>协议</b>：微调</div><div class="ev-values"><div><code>bacc</code> = 0.7819</div><div><code>kappa</code> = 0.75</div></div><div class="ev-note">平衡精度略低 CBraMod 0.7865 但 Kappa 0.7500 更高；REVE 修正了基线下巴电极混入 bug</div></div></div>
+<div class="ev-item" id="ev-jet-tsfid-baseline" data-paper="jet" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/generative/jet/">JET: Let EEG Models Learn EEG</a><span class="ev-source">出处：项目页 quantitative-comparison（站内 jet.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：TS-FID</div><div><b>模型</b>：JET 生成器</div><div><b>协议</b>：生成评估</div><div class="ev-values"><div><code>note</code> = 较 EEG-GAN / Vanilla Diffusion 强基线低 40%+</div></div><div class="ev-note">对照限于该论文的三项基准</div></div></div>
+<div class="ev-item" id="ev-eegarena-fm-lead" data-paper="eegarena" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/survey/eegarena/">Benchmarking EEG Foundation Models at Scale: Lessons from 20,000 Evaluations</a><span class="ev-source">出处：§3（站内 eegarena.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：定性结论</div><div><b>协议</b>：统一管线横评</div><div class="ev-values"><div><code>conclusion</code> = FM 大多领先监督基线，但参数量不预测性能</div></div><div class="ev-note">30 FM × 25 监督基线 × 57 任务</div></div></div>
+<div class="ev-item" id="ev-kuruppu-tuev-f1-range" data-paper="kuruppu-critical-review" data-dataset="tuev" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/reviews/kuruppu-critical-review/">EEG foundation models: a critical review of current progress and future directions</a><span class="ev-source">出处：§4.3 与其图 3(b)</span></div><div class="ev-body"><div><b>指标</b>：F1 跨模型范围</div><div><b>数据集</b>：TUEV</div><div><b>协议</b>：微调</div><div><b>划分</b>：TUEV 官方划分</div><div class="ev-values"><div><code>range</code> = [0.7, 0.83]</div></div><div class="ev-note">仅 4 个 FM 可比；TUAB 或已饱和（传统方法 85–87%，其引 [152]）</div></div></div>
+<div class="ev-item" id="ev-defossez-meg-retrieval" data-paper="defossez-speech" data-dataset="" data-status="verified"><div class="ev-head"><span class="ev-status ev-verified">已核原文</span><a class="ev-paper" href="../papers/survey/defossez-speech/">Decoding Speech Perception from Non-invasive Brain Recordings</a><span class="ev-source">出处：其主结果（站内 defossez-speech.md 转述）</span></div><div class="ev-body"><div><b>指标</b>：3 秒 MEG 千余候选检索</div><div><b>协议</b>：零样本检索</div><div class="ev-values"><div><code>note</code> = 详见其笔记</div></div><div class="ev-note">脑信号-语音对比对齐轴线的源头工作</div></div></div>
 
 </div>
 
@@ -2551,6 +2628,12 @@
         <script src="../javascripts/evidence.js"></script>
       
         <script src="../javascripts/models.js"></script>
+      
+        <script src="../javascripts/cite.js"></script>
+      
+        <script src="../javascripts/reading-list.js"></script>
+      
+        <script src="../javascripts/eeg-demo.js"></script>
       
     
   
