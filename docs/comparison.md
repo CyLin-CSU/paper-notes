@@ -2,7 +2,7 @@
 
 > 本页对照十四篇论文的信号表示、预训练和评测设定。按维度查方法，具体结果以各论文的实验条件为准；数字均引自各论文自报结果。论文间的批评与改进关系见[比较与改进](#critique-chain)。
 
-快速入口：[一页速览](#一页速览) · [按维度比较](#dimension-guide) · [模型设计](#mod-architecture) · [频域](#mod-frequency) · [规模效率](#mod-scale) · [比较与改进](#critique-chain)
+快速入口：[一页速览](#一页速览) · [按维度比较](#dimension-guide) · [模型设计](#mod-architecture) · [频域](#mod-frequency) · [规模效率](#mod-scale) · [比较与改进](#critique-chain)；工具：[交互式并排对比](models.md) · [实验数值追溯](evidence.md)
 
 十四篇 = 核心六篇 + 2025–2026 扩展八篇（CBraMod / LUNA / REVE / EEGMoE / JET / EEGDM / RF-GPT / Not-All-EEG）。先看速览表定位，再进对应专题或笔记核对实验条件。
 

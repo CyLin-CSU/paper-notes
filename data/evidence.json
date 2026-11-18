@@ -208,5 +208,108 @@
     "split": "LOSO",
     "status": "verified",
     "note": "统一协议自跑；EEGNet 0.003M 参数，FM 最高者仍低 8pp 以上（BCIC IV-2a）"
+  },
+  {
+    "evidence_id": "cbramod-t13-tuev-balacc",
+    "paper_id": "cbramod",
+    "source": "表 13（TUEV 对照）",
+    "model_id": "cbramod-base",
+    "dataset": "tuev",
+    "protocol": "微调（防泄漏重训）",
+    "metric": "balanced accuracy",
+    "value": {
+      "cbramod_retrained": 0.6671,
+      "cbramod_no_tuev_retrain": 0.6659,
+      "labram_huge": 0.6616
+    },
+    "unit": "",
+    "split": "TUEV 官方划分",
+    "status": "verified",
+    "note": "CBraMod 4.0M 参数高于 369M LaBraM-Huge 的同框对照"
+  },
+  {
+    "evidence_id": "yao-t3-tuab-cbramod-top",
+    "paper_id": "yao-eegfm-survey",
+    "source": "§6.4（其表 3 原报告值口径）",
+    "model_id": "cbramod-base",
+    "dataset": "tuab",
+    "protocol": "全参微调",
+    "metric": "准确率",
+    "value": {
+      "cbramod": 0.8289,
+      "labram_base": 0.814,
+      "biot": 0.7959
+    },
+    "unit": "",
+    "split": "TUAB 官方划分",
+    "status": "verified",
+    "note": "Yao 自跑口径中 TUAB 最高值；正文口径 Neuro-GPT 0.7889 为自跑值，两列口径不同"
+  },
+  {
+    "evidence_id": "luna-flops-8000ch",
+    "paper_id": "luna",
+    "source": "其表 4（效率对照）",
+    "model_id": "luna-base",
+    "dataset": null,
+    "protocol": "FLOPs 对照",
+    "metric": "8000 通道前向计算量",
+    "value": {
+      "luna_gflops": 23,
+      "biot_gflops": 4156
+    },
+    "unit": "GFLOPs",
+    "split": "",
+    "status": "verified",
+    "note": "约 1/180；Base 16-bit 约 14MB，面向可穿戴预算"
+  },
+  {
+    "evidence_id": "tfm-band-mask-ablation",
+    "paper_id": "tfm-tokenizer",
+    "source": "其消融表（转引自选读页 §六）",
+    "model_id": "tfm-tokenizer",
+    "dataset": null,
+    "protocol": "tokenizer 消融",
+    "metric": "Kappa / balanced accuracy 增量",
+    "value": {
+      "band_mask_kappa_gain_pp": 8,
+      "add_time_mask_bacc_gain_pp": 5
+    },
+    "unit": "pp",
+    "split": "",
+    "status": "verified",
+    "note": "其消融中频带掩码贡献最大；站内未逐点核对原图，量级以笔记转述为准"
+  },
+  {
+    "evidence_id": "brainrvq-chbmit-aucpr",
+    "paper_id": "brainrvq",
+    "source": "其表（转引自站内 references 条目）",
+    "model_id": "brainrvq",
+    "dataset": "chb-mit",
+    "protocol": "微调",
+    "metric": "AUC-PR 增量",
+    "value": {
+      "gain_vs_cbramod_pct": 26
+    },
+    "unit": "%",
+    "split": "",
+    "status": "verified",
+    "note": "5.82M 小模型对照 CBraMod"
+  },
+  {
+    "evidence_id": "defossez-scaling-speech",
+    "paper_id": "defossez-speech",
+    "source": "Chen 综述数据规模节转述",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "自监督预训练",
+    "metric": "top-1 准确率",
+    "value": {
+      "h175": 0.48,
+      "h10": 0.025
+    },
+    "unit": "",
+    "split": "零样本语音段分类",
+    "status": "verified",
+    "note": "单被试 175h vs 10h 的数据规模对照（非侵入语音解码）"
   }
 ]

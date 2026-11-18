@@ -6,7 +6,7 @@ title: 首页
 
 > CyLin-CSU · 精读 **31** 篇（2023–2026）· 按模型、任务和数据集查阅 EEG 论文笔记
 
-**[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)** ｜ **[从哪篇综述读起](blog-2023-2026.md#综述速览)**
+**[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)** ｜ **[从哪篇综述读起](blog-2023-2026.md#综述速览)** ｜ **[论文库筛选](library.md)** ｜ **[模型并排对比](models.md)** ｜ **[实验证据](evidence.md)**
 
 按任务直达：**看预训练目标** → [预训练范式对比](topics/pretraining.md) ｜ **查数据集与规模** → [数据全景专题](topics/data-landscape.md) · [数据集索引](datasets.md) ｜ **读领域综述** → [综述与观点（4 篇）](#papers-reviews) ｜ **比通道适配方案** → [通道适配与多任务](topics/multi-task.md)
 

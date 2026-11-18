@@ -42,6 +42,9 @@ extra_javascript:
   - javascripts/giscus.js
   - javascripts/progress.js
   - javascripts/back-to-top.js
+  - javascripts/library.js
+  - javascripts/evidence.js
+  - javascripts/models.js
 
 plugins:
   - search
@@ -134,6 +137,9 @@ nav:
       - 语音解码与 Mel 谱建模: topics/speech-models.md
   - EEG 基础模型选读: blog-2023-2026.md
   - EEG 基础模型全景 · 2026-11: landscape-2026.md
+  - 论文库: library.md
+  - 模型对比: models.md
+  - 实验证据: evidence.md
   - 十四篇方法对比: comparison.md
   - 索引:
       - 数据集索引: datasets.md

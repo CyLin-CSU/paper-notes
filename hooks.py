@@ -9,6 +9,8 @@
    带锚点的访问由页面内脚本转发到新页对应锚点；无 JS 时回退链接可点击。
 """
 import datetime
+import html
+import json
 import pathlib
 import posixpath
 import re
@@ -131,8 +133,18 @@ def _activity_calendar(days: int = 7) -> str:
 
 
 def on_page_content(html, page, **kwargs):
-    if page.file.src_uri != "index.md":
-        return html
+    if page.file.src_uri == "index.md":
+        html = _render_home_extras(html)
+    elif page.file.src_uri == "library.md":
+        html = _render_library(html)
+    elif page.file.src_uri == "evidence.md":
+        html = _render_evidence(html)
+    elif page.file.src_uri == "models.md":
+        html = _render_models(html)
+    return html
+
+
+def _render_home_extras(html):
     t = _last_commit_time()
     html = html.replace("<!-- LAST_UPDATE -->", t.strftime("%Y-%m-%d %H:%M"))
     now = datetime.datetime.now(TZ_BJ)
@@ -146,6 +158,114 @@ def on_page_content(html, page, **kwargs):
     html = html.replace("<!-- ACTIVITY_BADGE -->", badge)
     if "<!-- ACTIVITY_CALENDAR -->" in html:
         html = html.replace("<!-- ACTIVITY_CALENDAR -->", _activity_calendar())
+    return html
+
+
+# ---------------------------------------------------------------------------
+# 结构化数据页（library / evidence / models）：构建时从 data/ 渲染完整 HTML，
+# JS 仅做筛选与对比的渐进增强——禁用脚本时页面仍完整可读。
+# ---------------------------------------------------------------------------
+
+DATA_DIR = pathlib.Path(__file__).resolve().parent / "data"
+
+GROUP_LABEL = {"fm": "EEG 基础模型", "generative": "生成式模型",
+               "reviews": "综述与观点", "survey": "相关研究"}
+WEIGHT_LABEL = {"open": "权重开源", "partial": "部分放出", "none": "无权重"}
+
+
+def _load_json(name: str):
+    return json.loads((DATA_DIR / name).read_text(encoding="utf-8"))
+
+
+def _esc(s) -> str:
+    return html.escape(str(s if s is not None else ""))
+
+
+def _render_library(html):
+    papers = _load_json("papers.json")
+    items = []
+    for p in sorted(papers, key=lambda r: (-(r["year"] or 0), r["paper_id"])):
+        links = []
+        if p.get("doi"):
+            links.append(f'<a href="https://doi.org/{_esc(p["doi"])}">DOI</a>')
+        if p.get("arxiv") and str(p["arxiv"]).startswith("http"):
+            links.append(f'<a href="{_esc(p["arxiv"])}">arXiv</a>')
+        if p.get("code"):
+            links.append(f'<a href="{_esc(p["code"])}">代码/项目</a>')
+        note = f'<span class="lib-note">{_esc(p["one_liner"])}</span>' if p.get("one_liner") else ""
+        meta = f'{_esc(p["venue"])} · {GROUP_LABEL.get(p["group"], p["group"])}'
+        items.append(
+            f'<div class="lib-item" data-group="{_esc(p["group"])}" data-type="{_esc(p["type"])}" '
+            f'data-year="{p["year"] or 0}" data-code="{"1" if p.get("code") else "0"}" '
+            f'data-doi="{"1" if p.get("doi") else "0"}">'
+            f'<div class="lib-head"><a class="lib-title" href="../papers/{p["group"]}/{p["paper_id"]}/">{_esc(p["title"])}</a>'
+            f'<span class="lib-year">{p["year"] or "?"}</span></div>'
+            f'<div class="lib-meta">{meta} · {note}</div>'
+            f'<div class="lib-links">{" · ".join(links) if links else "—"}</div>'
+            f"</div>"
+        )
+    return html.replace("<!-- LIBRARY_LIST -->", "\n".join(items))
+
+
+def _render_evidence(html):
+    papers = {r["paper_id"]: r for r in _load_json("papers.json")}
+    models = {r["model_id"]: r for r in _load_json("models.json")}
+    datasets = {r["dataset_id"]: r for r in _load_json("datasets.json")}
+    evidence = _load_json("evidence.json")
+    status_label = {"verified": "已核原文", "pending": "待核对", "unreported": "论文未报告", "na": "不适用"}
+    cards = []
+    for e in evidence:
+        p = papers.get(e["paper_id"], {})
+        m = models.get(e.get("model_id") or "", {})
+        d = datasets.get(e.get("dataset") or "", {})
+        value_html = []
+        for k, v in (e.get("value") or {}).items():
+            value_html.append(f"<div><code>{_esc(k)}</code> = {_esc(v)}</div>")
+        card = (
+            f'<div class="ev-item" id="ev-{_esc(e["evidence_id"])}" data-paper="{_esc(e["paper_id"])}" '
+            f'data-dataset="{_esc(e.get("dataset") or "")}" data-status="{_esc(e.get("status"))}">'
+            f'<div class="ev-head"><span class="ev-status ev-{_esc(e.get("status"))}">{_esc(status_label.get(e.get("status"), e.get("status")))}</span>'
+            f'<a class="ev-paper" href="../papers/{p.get("group", "fm")}/{_esc(e["paper_id"])}/">{_esc(p.get("title", e["paper_id"]))}</a>'
+            f'<span class="ev-source">出处：{_esc(e.get("source", "—"))}</span></div>'
+            f'<div class="ev-body">'
+            f'<div><b>指标</b>：{_esc(e.get("metric", "—"))}</div>'
+            f'{"<div><b>模型</b>：" + _esc(m.get("name", e.get("model_id"))) + "</div>" if m or e.get("model_id") else ""}'
+            f'{"<div><b>数据集</b>：" + _esc(d.get("name", e.get("dataset"))) + "</div>" if d or e.get("dataset") else ""}'
+            f'<div><b>协议</b>：{_esc(e.get("protocol", "—"))}</div>'
+            f'{"<div><b>划分</b>：" + _esc(e["split"]) + "</div>" if e.get("split") else ""}'
+            f'<div class="ev-values">{"".join(value_html) or "—"}</div>'
+            f'<div class="ev-note">{_esc(e.get("note", ""))}</div>'
+            f"</div></div>"
+        )
+        cards.append(card)
+    return html.replace("<!-- EVIDENCE_LIST -->", "\n".join(cards))
+
+
+def _render_models(html):
+    models = _load_json("models.json")
+    papers = {r["paper_id"]: r for r in _load_json("papers.json")}
+    # 无 JS 回退：窄表列出全部模型的关键字段
+    rows = []
+    for m in sorted(models, key=lambda r: (r["paper_id"], r["model_id"])):
+        p = papers.get(m["paper_id"], {})
+        rows.append(
+            f"<tr><td><a href=\"../papers/{p.get('group', 'fm')}/{m['paper_id']}/\">{_esc(m['name'])}</a></td>"
+            f"<td>{_esc(p.get('venue', ''))}</td>"
+            f"<td>{_esc(m['params_m'])}M</td>"
+            f"<td>{_esc(m['input'])}</td>"
+            f"<td>{_esc(WEIGHT_LABEL.get(m.get('weights'), m.get('weights')))}</td></tr>"
+        )
+    fallback = (
+        '<div class="models-fallback"><table><thead><tr><th>模型</th><th>发表</th>'
+        f'<th>参数量</th><th>输入</th><th>权重</th></tr></thead><tbody>{"".join(rows)}</tbody></table>'
+        "<p>启用脚本后可用上方选择器做 2–4 个模型的逐字段并排对比。</p></div>"
+    )
+    payload = json.dumps(models, ensure_ascii=False).replace("</", "<\\/")
+    html = html.replace("<!-- MODELS_FALLBACK -->", fallback)
+    html = html.replace(
+        '<script type="application/json" id="models-data"></script>',
+        f'<script type="application/json" id="models-data">{payload}</script>',
+    )
     return html
 
 
