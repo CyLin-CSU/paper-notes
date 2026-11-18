@@ -80,7 +80,7 @@ title: 首页
 | [生成模型脉络](basics/generative-lineage.md) | ELBO / 去噪 / 速度场三代绕法 |
 | [图神经网络](basics/gnn.md) | 消息传递与 GAT，BrainGPT TEG 的机制基础 |
 
-另有：[十四篇方法对比](comparison.md)（九维度横向对照）· [数据集索引](datasets.md)（14 × 36 使用矩阵）· [EEG 基础模型选读](blog-2023-2026.md)（对外选读版，含「从哪篇综述读起」速览）· [参考文献索引](references.md)。
+另有：[十四篇方法对比](comparison.md)（九维度横向对照）· [数据集索引](datasets.md)（14 × 36 使用矩阵）· [EEG 基础模型选读](blog-2023-2026.md)（对外选读版，含「从哪篇综述读起」速览）· [EEG 基础模型全景](landscape-2026.md)（研究重点 / 痛点 / 空白轴，全论断带出处）· [参考文献索引](references.md)。
 
 ## 最近更新 {: #updates }
 
@@ -89,6 +89,8 @@ title: 首页
 <div class="ac-slot"><!-- ACTIVITY_CALENDAR --></div>
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-19** · 新增领域全景页（landscape-2026）：研究重点、四类痛点、创新拥挤度、六条空白轴与 scaling 证据对照——全部论断标注站内笔记或综述节号出处
 
 - **2026-11-18** · 综述四篇齐发：[Yao（JNE 2025）](papers/reviews/yao-eegfm-survey.md) 自跑 10 模型 × 6 数据集，FM 赢临床域、输 MI，根子在被癫痫数据主导的预训练域 · [Chen（IEEE SPM 2025）](papers/reviews/chen-representation-learning-review.md) 19 模型按词元化/嵌入/位置编码/骨干/损失逐项拆表 · [Kuruppu（JNE 2026）](papers/reviews/kuruppu-critical-review.md) 三支柱批判：评测异质、scaling 证据弱、LP 落后 FT · [Kwon & Shin（EJN 2026）](papers/reviews/kwon-neural-fm-perspective.md) 生理先验/结构感知/可解释三原则，判现存 FM 为第一代（其 CBraMod「对比目标」转述与原文不符，站内已标注）
 
