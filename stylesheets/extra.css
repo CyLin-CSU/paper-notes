@@ -223,3 +223,57 @@
 @media (max-width: 480px) {
   .quick-scan table td:nth-child(3) { font-size: 0.72rem; }
 }
+
+/* 论文库 / 实验证据 / 模型对比 三页（M2，数据来自 data/ 构建时渲染） */
+.library-list .lib-item {
+  padding: 0.55rem 0.7rem;
+  margin: 0.45rem 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+}
+.library-list .lib-head { display: flex; justify-content: space-between; gap: 0.6rem; align-items: baseline; }
+.library-list .lib-title { font-weight: 600; }
+.library-list .lib-year { color: var(--md-default-fg-color--light); font-size: 0.75rem; white-space: nowrap; }
+.library-list .lib-meta { font-size: 0.72rem; color: var(--md-default-fg-color--light); margin-top: 0.15rem; }
+.library-list .lib-note { font-style: normal; }
+.library-list .lib-links { font-size: 0.72rem; margin-top: 0.2rem; }
+.lib-filters { font-size: 0.8rem; line-height: 2; }
+.lib-filters input[type="search"] { width: 16rem; }
+.lib-panel summary { cursor: pointer; font-weight: 600; }
+
+.evidence-list .ev-item {
+  padding: 0.6rem 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--md-primary-fg-color);
+  border-radius: 6px;
+}
+.ev-head { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
+.ev-status { font-size: 0.68rem; padding: 0.1rem 0.45rem; border-radius: 999px; white-space: nowrap; }
+.ev-verified { background: #40c46333; color: #1a7f37; }
+.ev-pending { background: #ffb74d33; color: #8a5a00; }
+.ev-unreported, .ev-na { background: #eceff133; color: var(--md-default-fg-color--light); }
+[data-md-color-scheme="slate"] .ev-verified { color: #7ee787; }
+[data-md-color-scheme="slate"] .ev-pending { color: #ffb74d; }
+.ev-paper { font-weight: 600; }
+.ev-source { font-size: 0.72rem; color: var(--md-default-fg-color--light); }
+.ev-body { font-size: 0.8rem; margin-top: 0.3rem; display: grid; gap: 0.15rem; }
+.ev-values { display: flex; flex-wrap: wrap; gap: 0.6rem; padding: 0.3rem 0.5rem; background: var(--md-code-bg-color); border-radius: 4px; }
+.ev-note { color: var(--md-default-fg-color--light); font-size: 0.75rem; }
+.ev-filters { font-size: 0.8rem; margin-bottom: 0.8rem; }
+
+.mdl-chips { line-height: 2.1; }
+.mdl-chips b { margin-right: 0.3rem; }
+.mdl-chip {
+  padding: 0.15rem 0.6rem; margin: 0.1rem 0.15rem;
+  font-size: 0.75rem; font-family: inherit;
+  background: transparent; color: var(--md-primary-fg-color);
+  border: 1px solid var(--md-primary-fg-color);
+  border-radius: 999px; cursor: pointer;
+}
+.mdl-chip.on { background: var(--md-primary-fg-color); color: var(--md-primary-bg-color); }
+.mdl-compare { overflow-x: auto; }
+.mdl-compare table { font-size: 0.8rem; }
+.mdl-compare th:first-child { white-space: nowrap; text-align: left; }
+.mdl-share input { width: min(100%, 34rem); font-size: 0.72rem; }
+.models-fallback { overflow-x: auto; }
