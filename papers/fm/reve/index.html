@@ -2271,7 +2271,7 @@
   <span class="md-ellipsis">
     
   
-    EEG 基础模型综述
+    EEG 基础模型选读
   
 
     
@@ -2607,19 +2607,10 @@
 
 <h1 id="reve-a-foundation-model-for-eeg-adapting-to-any-setup-with-large-scale-pretraining-on-25000-subjects">REVE: A Foundation Model for <abbr title="脑电图 Electroencephalogram">EEG</abbr> — Adapting to Any Setup with Large-Scale Pretraining on 25,000 Subjects<a class="headerlink" href="#reve-a-foundation-model-for-eeg-adapting-to-any-setup-with-large-scale-pretraining-on-25000-subjects" title="Permanent link">#</a></h1>
 <blockquote>
-<p><strong>NeurIPS 2025</strong> · IMT Atlantique（法国）+ 蒙特利尔大学 + Mila —— 站内已读<strong>语料最大</strong>的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型：92 个数据集、24,274 名被试、61,415 小时（此前最大 ~40,000h 且以颅内 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 为主）。它与 <a href="../luna/">LUNA</a>、<a href="../cbramod/">CBraMod</a> 同处「空间编码不查表」路线但走得更远——位置编码直接从 (x, y, z, t) 坐标生成；也正面回应了 <a href="../cbramod/">CBraMod</a> 笔记留下的数据规模之问。笔记基于 arXiv 2510.21585 v1。</p>
+<p><strong>NeurIPS 2025</strong> · IMT Atlantique（法国）+ 蒙特利尔大学 + Mila · 笔记基于 arXiv 2510.21585 v1</p>
 </blockquote>
 <p><strong>作者</strong>：Yassine El Ouahidi*, Jonathan Lys, Philipp Thölke, Nicolas Farrugia, Bastien Pasdeloup, Vincent Gripon, Karim Jerbi, Giulia Lioi*（IMT Atlantique Lab-STICC；Thölke/Jerbi 兼 Montréal/Mila/UNIQUE）</p>
-<div class="admonition abstract">
-<p class="admonition-title">TL;DR</p>
-<ul>
-<li>痛点有名字：现有 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 普遍只在单一 montage 上预训练（TUH 系 19/21 通道），位置编码查表或卷积都绑死布局——换蒙太奇就退化，尤其 linear probing 场景。REVE 的答案是 <strong>4D 傅里叶位置编码</strong>：每个 patch 的 (x, y, z, t) 直接生成编码，任意电极数、任意信号长度都有定义</li>
-<li>数据：92 数据集 / 24,274 被试 / <strong>61,415h</strong> / 19TB 原始（OpenNeuro 56 集 + TUH 26,847h + MOABB 27 集 + PhysioNet），396 个电极名、10-5 系统——论文称非侵入 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 最大预训练语料；清洗哲学与 <a href="../cbramod/">CBraMod</a> 相反：<strong>不剔</strong> &gt;100µV 段（保住 60,000h vs CBraMod 9,000h / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 2,534h），只剔 &lt;10s 短记录和下游任务数据（防泄漏内建）</li>
-<li>目标：<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> + <strong>时空块掩码</strong>（55%，空间 3cm 半径连续块 + 时间 3s 窗 + 10% 整通道 dropout）+ <strong>全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次损失</strong>（attention pooling 跨全部 MHA 层，λ=0.1）——后者是信息瓶颈，专治 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 末层过拟合，linear probing 平均 0.523→0.558</li>
-<li>结果：10 个下游任务微调平均 <strong>+2.5%</strong> vs CBraMod（BCIC-IV-2a 一项 +12.6pp，但加了基线没有的 Euclidean Alignment 预处理）；线性探针均值（表 4，无池化列）REVE-Large 0.654、CBraMod 0.501，差 0.153；泛化到 30s 睡眠输入与训练没见过的双极 montage</li>
-<li>预训练价值消融（Table 3，PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr>）：无预训练时 REVE 0.5409 低于 CBraMod 0.6196（差约 8pp）；有预训练 REVE 0.6480、CBraMod 0.6417（REVE +10.71pp，CBraMod +2.21pp）——「架构派 vs 预训练派」之争被同框量化</li>
-</ul>
-</div>
+<p>正文按 §1 问题定位（montage 绑定为何是第一瓶颈）、§2 方法（4D 位置编码 / 块掩码 / 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 损失 / 数据哲学）、§3 实验与结果（微调与线性探针、预训练价值消融）展开；语料规模、组件数字与表 3/表 4 口径在对应段落与文末复现速查卡中。</p>
 <h2 id="1-montage">1 问题定位：montage 绑定是线性探针下的第一瓶颈<a class="headerlink" href="#1-montage" title="Permanent link">#</a></h2>
 <p>作者对现有 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 的归因分两层。<strong>数据层</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / CBraMod / NeuroGPT 的预训练语料几乎都来自 TUH（固定 19/21 通道蒙太奇），换电极布局的数据集天然吃不到预训练红利。<strong>架构层</strong>：位置编码要么查表（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的电极编号 → embedding、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的通道表），要么卷积生成（CBraMod 的 ACPE）——前者覆盖不了训练没见过的电极名，后者编码的是邻域模式而非绝对空间位置，迁移时往往要全量微调补课。两层的共同后果：linear probing（最能反映表示通用性的协议）成绩次优。</p>
 <p>REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局任意长度都有定义），61,415h 多源语料解决数据层（布局多样性内建于数据），修改版 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 解决表示层（冻结可用）。</p>

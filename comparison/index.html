@@ -2075,7 +2075,7 @@
   <span class="md-ellipsis">
     
   
-    EEG 基础模型综述
+    EEG 基础模型选读
   
 
     
@@ -2486,11 +2486,12 @@
 
 <h1 id="_1">十四篇方法对比<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>全站横向对照的<strong>枢纽页</strong>：先<a href="#一页速览">一页速览</a>给十四篇定位，再按<a href="#dimension-guide">九个维度</a>拆核心分歧——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源五个维度下放主题专题深读，模型设计 / 频域 / 规模效率三个维度保留在本页详解；结尾的<a href="#critique-chain">互怼链</a>梳理论文间的批评与改进关系。数字均引自各论文自报结果。</p>
+<p>本页对照十四篇论文的信号表示、预训练和评测设定。按维度查方法，具体结果以各论文的实验条件为准；数字均引自各论文自报结果。论文间的批评与改进关系见<a href="#critique-chain">比较与改进</a>。</p>
 </blockquote>
-<p>快速入口：<a href="#一页速览">一页速览</a> · <a href="#mod-architecture">模型设计</a> · <a href="#mod-frequency">频域</a> · <a href="#mod-scale">规模效率</a> · <a href="#critique-chain">比较与改进</a></p>
-<p>十四篇 = 核心六篇 + 2025–2026 扩展八篇（CBraMod / LUNA / REVE / EEGMoE / JET / EEGDM / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>，名单见下方速览表）。轴外精读不参与本页排名。</p>
+<p>快速入口：<a href="#一页速览">一页速览</a> · <a href="#dimension-guide">按维度比较</a> · <a href="#mod-architecture">模型设计</a> · <a href="#mod-frequency">频域</a> · <a href="#mod-scale">规模效率</a> · <a href="#critique-chain">比较与改进</a></p>
+<p>十四篇 = 核心六篇 + 2025–2026 扩展八篇（CBraMod / LUNA / REVE / EEGMoE / JET / EEGDM / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr>）。先看速览表定位，再进对应专题或笔记核对实验条件。</p>
 <h2 id="一页速览">一页速览<a class="headerlink" href="#一页速览" title="Permanent link">#</a></h2>
+<div aria-label="十四篇方法速览表，可横向滚动" class="quick-scan" role="region" tabindex="0">
 <table>
 <thead>
 <tr>
@@ -2617,6 +2618,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="dimension-guide">分维度导读<a class="headerlink" href="#dimension-guide" title="Permanent link">#</a></h2>
 <p>九个维度：前六个由五个专题承接（通道适配与多任务合并一页，各专题按页内范围选论文），后三个保留在本页。</p>
 <table>

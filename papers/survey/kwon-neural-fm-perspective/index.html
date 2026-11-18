@@ -2188,7 +2188,7 @@
   <span class="md-ellipsis">
     
   
-    EEG 基础模型综述
+    EEG 基础模型选读
   
 
     
@@ -2454,7 +2454,7 @@
 <p>PBT / CBraMod / BrainGPT 逐个按三原则打分（✓/△/✗）：三者可解释性全 ✗；PBT 缺生物目标、CBraMod 双 ✓ 但被指「对比对齐可能抹掉临床上有意义的个体特异信号」、BrainGPT 时序强但目标纯统计。结论：现存 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 是「第一代」——解码有效但与产生信号的生理过程脱钩。</p>
 <h2 id="4">4 勘误与待查（站内核对）<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>CBraMod 「对比目标」系误读</strong>：文中两处称 CBraMod 用对比学习做被试间对齐（"contrastive learning strategy promotes intersubject alignment"）。站内对照 <a href="../../fm/cbramod/">CBraMod 原文笔记</a>：CBraMod 只有掩码重建，无任何对比目标。引用其观点时须绕开这一条。</li>
+<li><strong>CBraMod 「对比目标」系误读</strong>：文中两处称 CBraMod 用对比学习做被试间对齐（"contrastive learning strategy promotes intersubject alignment"，Table 1 与 §4.3）。对照 <a href="https://arxiv.org/abs/2412.07236">CBraMod 原文</a>：其预训练损失只有掩码信号重构（<abbr title="均方误差 Mean Squared Error">MSE</abbr>，见原文 §3.3 与其式 (4)），无任何对比项；站内 <a href="../../fm/cbramod/">CBraMod 笔记</a> 与此一致。引用其「对比对齐可能抹掉个体特异信号」的批评时须绕开 CBraMod 这一例。</li>
 <li><strong>PBT 「监督预训练」待查</strong>：Table 1 标 PBT（Klein et al. 2025）为 supervised pretraining + 数据增广，与站外常见转述（掩码重构预训练）不一致，站内未核对原文，存疑。</li>
 <li><strong>命名再增一个别名</strong>：文中 BrainGPT（Yue et al. 2024）= 站内 <a href="../../fm/braingpt/">BrainGPT</a> = Yao 综述的 EEGPT(2)。同一篇论文已有 EEGPT、BrainGPT 两个名字在流转，引用时一律落到 arXiv 号。</li>
 </ul>

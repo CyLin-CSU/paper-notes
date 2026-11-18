@@ -2084,7 +2084,7 @@
   <span class="md-ellipsis">
     
   
-    EEG 基础模型综述
+    EEG 基础模型选读
   
 
     
@@ -2102,7 +2102,7 @@
   <span class="md-ellipsis">
     
   
-    EEG 基础模型综述
+    EEG 基础模型选读
   
 
     
@@ -2126,6 +2126,17 @@
       目录
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#综述速览" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        综述速览：从哪篇读起
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
@@ -2376,6 +2387,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#综述速览" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        综述速览：从哪篇读起
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2478,6 +2500,44 @@
 </blockquote>
 <p><strong>选读名单</strong>：<a href="../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a>（NeurIPS 2023）· <a href="../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>（ICLR 2024）· <a href="../papers/fm/eegpt/">EEGPT</a>（NeurIPS 2024）· <a href="../papers/fm/braingpt/">BrainGPT</a>（arXiv 2024）· <a href="../papers/fm/neurolm/">NeuroLM</a>（ICLR 2025）· <a href="../papers/fm/luna/">LUNA</a>（NeurIPS 2025）· <a href="../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a>（ICLR 2026）· <a href="../papers/fm/eegmoe/">EEGMoE</a>（TNNLS 2026）· <a href="../papers/generative/jet/">JET</a>（ICML 2026）· <a href="../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a>（arXiv 2026）。
 每篇的完整方法拆解见站内论文笔记，本文是对外的选读总结；全文判断限于这十篇，§四的数据规模一节另用名单外的 REVE 与 EEGArena 补充证据。</p>
+<h2 id="综述速览">综述速览：从哪篇读起<a class="headerlink" href="#综述速览" title="Permanent link">#</a></h2>
+<p>本选读之外，站内另有四篇领域综述精读，按阅读目的选入口：</p>
+<table>
+<thead>
+<tr>
+<th>综述</th>
+<th>适合的问题</th>
+<th>原文</th>
+<th>站内笔记</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yao et al., JNE 2025</td>
+<td>预训练路线（掩码/自回归/对比）怎么选；统一协议下 FM 的实际成绩</td>
+<td><a href="https://doi.org/10.1088/1741-2552/ae17e9">DOI</a></td>
+<td><a href="../papers/survey/yao-eegfm-survey/">精读</a></td>
+</tr>
+<tr>
+<td>Chen, Lu &amp; Wu, IEEE SPM 2025</td>
+<td>每个模型的组件拆解（词元化/嵌入/位置编码/骨干/损失）；迁移学习路线图</td>
+<td><a href="https://doi.org/10.1109/MSP.2025.3595320">DOI</a></td>
+<td><a href="../papers/survey/chen-representation-learning-review/">精读</a></td>
+</tr>
+<tr>
+<td>Kuruppu et al., JNE 2026</td>
+<td>早期 FM 的评测可信度：共享任务少、OOD 评测稀缺、scaling 证据与 LP/FT 差距</td>
+<td><a href="https://doi.org/10.1088/1741-2552/ae4455">DOI</a></td>
+<td><a href="../papers/survey/kuruppu-critical-review/">精读</a></td>
+</tr>
+<tr>
+<td>Kwon &amp; Shin, EJN 2026</td>
+<td>设计原则层面的主张：生理感知目标、结构感知架构、可解释性</td>
+<td><a href="https://doi.org/10.1111/ejn.70376">DOI</a></td>
+<td><a href="../papers/survey/kwon-neural-fm-perspective/">精读</a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="_1">一、信号如何表示：连续片段与离散码字<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><strong>连续片段。</strong> <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（NeurIPS 2023）确立了一种逐通道切段的统一格式：通道可缺、长度可变、缺失即丢 <abbr title="词元，模型处理的最小输入单元">token</abbr>，配合线性注意力处理长序列。它的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是连续的，没有词表。</p>
 <p><strong>离散码字，三种角色。</strong> 三篇选读把离散码字用在了三个不同位置：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（ICLR 2024）将离散码字用作掩码预测目标——<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 式码本（8192 个码字），码字只在预训练中充当监督信号，推理时被丢弃。TFM-Tokenizer（ICLR 2026）将离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为下游模型输入——它学的是时频 motif 词表（频域路径显式建模跨频段依赖），论文报告以 1.9M 参数在其对比的任务上取得多项领先结果。NeuroLM（ICLR 2025）将 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 码字并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表，让 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 片段与文本共享同一套离散接口。</p>

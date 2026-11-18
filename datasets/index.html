@@ -2075,7 +2075,7 @@
   <span class="md-ellipsis">
     
   
-    EEG 基础模型综述
+    EEG 基础模型选读
   
 
     
@@ -2541,12 +2541,13 @@
 
 
 <h1 id="_1">数据集索引<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<p>十四篇精读论文（核心六篇 + RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> / REVE）用到的全部数据集汇总。<strong>↑ = 预训练语料，↓ = 下游评估</strong>（JET 的 P 指生成训练使用）。同一数据集在不同论文中命名可能不同，见底部<a href="#dataset-alias">别名说明</a>。<strong>数据集名均链接至官方获取页；🔒 = 需注册或申请，无公开官方页的在表内注明。</strong></p>
+<p>十四篇精读论文（核心六篇 + RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> / REVE）用到的全部数据集汇总。矩阵记号统一为 <strong>P = 预训练语料，D = 下游评估，P+D = 两者都用</strong>；例外：JET 的 P 指<strong>生成训练</strong>使用（其训练目标即生成质量，详见<a href="../papers/generative/jet/">其笔记</a>）。同一数据集在不同论文中命名可能不同，见底部<a href="#dataset-alias">别名说明</a>。<strong>数据集名均链接至官方获取页；🔒 = 需注册或申请，无公开官方页的在表内注明。</strong></p>
 <blockquote>
 <p>口径说明：矩阵覆盖的是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型与生成轴线的十四篇对比集。2026-11 新入库的轴外四篇（<a href="../papers/survey/defossez-speech/">Défossez 语音解码</a> / <a href="../papers/survey/ssm2mel/">SSM2Mel</a> / <a href="../papers/survey/learnable-tf/">LTFT</a> / <a href="../papers/survey/surrogate-brain/">NPI</a>）用的数据集（Broderick/Brennan/Schoffelen/Gwilliams MEG-<abbr title="脑电图 Electroencephalogram">EEG</abbr>、SparrKULee、BCIC-II、Bonn、HCP/ABCD/F-TRACT 等）未入矩阵，见各自笔记。</p>
 </blockquote>
 <h2 id="_2">📊 数据集 × 论文使用矩阵<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<p>图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者都用　<span class="mx-cell mx-n">·</span> 未使用。<strong>窄屏请横向滑动查看其余论文列，数据集行名固定在左侧</strong>；悬停单元格可看口径说明（JET 的 P 指生成训练使用）。例外口径见本节上方的口径说明段落，数据集详情按分类见下方各节：<a href="#eegtemple-tueg">临床 TUEG</a> · <a href="#_3">情绪</a> · <a href="#_4">运动想象</a> · <a href="#_5">睡眠</a> · <a href="#_6">认知负荷</a> · <a href="#erp-p300-ssvep"><abbr title="事件相关电位 Event-Related Potential">ERP</abbr>/P300/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr></a> · <a href="#_7">癫痫/精神</a> · <a href="#ecg">ECG/其他</a>。</p>
+<p><strong>按任务查数据</strong>（先于矩阵）：<a href="#eegtemple-tueg">临床 TUEG</a> · <a href="#_3">情绪</a> · <a href="#_4">运动想象</a> · <a href="#_5">睡眠</a> · <a href="#_6">认知负荷</a> · <a href="#erp-p300-ssvep"><abbr title="事件相关电位 Event-Related Potential">ERP</abbr>/P300/<abbr title="稳态视觉诱发电位 Steady-State Visual Evoked Potential">SSVEP</abbr></a> · <a href="#_7">癫痫/精神</a> · <a href="#ecg">ECG/其他</a> · <a href="#dataset-alias">别名说明</a>。</p>
+<p>图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者都用　<span class="mx-cell mx-n">·</span> 未使用。<strong>窄屏请横向滑动查看其余论文列，数据集行名固定在左侧</strong>；悬停单元格可看口径说明（JET 的 P 指生成训练使用）。例外口径见本页开头的口径说明段落；上方任务链接的目标位于矩阵下方各分类节。</p>
 <div class="mx-wrap" tabindex="0" role="region" aria-label="数据集与论文使用矩阵，可横向滚动">
 <table class="mx-matrix">
 <thead><tr><th scope="col">数据集 \ 论文</th><th scope="col">BIOT</th><th scope="col">LaBraM</th><th scope="col">EEGPT</th><th scope="col">BrainGPT</th><th scope="col">NeuroLM</th><th scope="col">TFM</th><th scope="col">EEGMoE</th><th scope="col">LUNA</th><th scope="col">JET</th><th scope="col">RF-GPT</th><th scope="col">CBraMod</th><th scope="col">EEGDM</th>
