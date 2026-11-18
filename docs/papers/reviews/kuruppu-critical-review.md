@@ -38,7 +38,7 @@ one-liner: "三支柱拆 10 个早期 EEG FM 后给出批判性结论：评测�
 | FoME | — | 476M / 745M | 变通道时序 | 头皮 + 颅内 | 时序 + 空间 Transformer encoder + 线性 decoder | 掩码信号重构 |
 | BrainWave | 878k | — | 变通道谱图 | 头皮 + 颅内 | Transformer encoder + 通道注意力 + 轻量 decoder | 掩码重构（整谱图） |
 
-模型间有三个数量级跨度值得注意：数据量 4.5k → 878k channel-hours（约 200 倍）、参数 3.3M（BIOT）→ 1.7B（NeuroLM，约 500 倍）、模态组合（纯头皮 6 / 纯颅内 2 / 双模态 2）。Mentality 两栏未报是该综述自己标注的数据缺口。
+模型间数据量差约 200 倍（4.5k → 878k channel-hours），参数量差约 500 倍（3.3M → 1.7B），模态组合分纯头皮（6）/纯颅内（2）/双模态（2）三种。Mentality 两栏未报是该综述自己标注的数据缺口。
 
 ## 3 三支柱对比
 
@@ -84,15 +84,15 @@ one-liner: "三支柱拆 10 个早期 EEG FM 后给出批判性结论：评测�
 | FoME | 7 任务 × 4 数据集 | 同分布 | FT | ✗ |
 | BrainWave | 12（跨被试/跨医院/跨亚型/few-shot） | OOD | few-shot 原型 | ✓ |
 
-汇总读法：任务数 1（Mentality）到 12（BrainWave），多数 ≤5；4/10 在分布内评测；**只有 BrainWave 和 Brant 做过真正的 OOD 评测**。共享任务只有 TUAB 与 TUEV（4 个模型可比）：TUAB AUC 0.86–0.92、TUEV F1 0.70–0.83；文中引证据说 TUAB 用传统方法已到 85–87% 精度，属饱和任务。linear probing 结果只有 LaBraM 报了（图 3 三角标）。
+任务数从 1（Mentality）到 12（BrainWave），多数 ≤5；4/10 在分布内评测。跨分布的完整 OOD 评测仅 BrainWave 与 Brant（Neuro-GPT 为外部数据集、EEGFormer 为新生儿子集，均为部分设置，见上表）。共享任务只有 TUAB 与 TUEV（4 个模型可比）：TUAB AUC 0.86–0.92、TUEV F1 0.70–0.83；文中引证据说 TUAB 用传统方法已到 85–87% 精度，属饱和任务。linear probing 结果只有 LaBraM 报了（图 3 三角标）。
 
-## 4 批判性结论（§5 的干货）
+## 4 批判性结论（原文 §5）
 
-- **Scaling 证据弱**：预训练数据规模与 TUAB/TUEV 性能无正相关（LaBraM 数据最多却与 EEGFormer/NeuroLM 互有胜负）；LaBraM 自家曲线 ~1000 h 后趋平；模型缩放（3.3M–1.7B）只有边际改进。
-- **线性探针显著落后微调**：五个报告 LP 的模型全线弱于 FT 与部分监督基线；FT 又略胜从头监督——作者据此**质疑 SSL 学到的表示质量**：增益可能主要来自架构与初始化而非预训练知识。
-- **通用时序 FM 意外能打**：PatchTST / TimesNet 微调后在病理检测、睡眠分期可打平甚至超过 EEG FM；BrainWave 的实验里 MOMENT 在癫痫检测与病理检测超过 EEG FM。EEG 专属归纳偏置（空间建模、头皮+颅内联合）是 EEG FM 的反超点。
-- **预处理普遍极简**：无显式去伪迹、归一化策略多数语焉不详，对 OOD 的影响未知。
-- **数据多样性 vs 数据量**：LaBraM 在 TUAB/TUEV 的领先可能来自数据源多样性（source 数）而非 channel-hours 绝对量；BrainWave 的头皮+颅内联合消融显示联合预训练几乎全面优于单模态。
+- Scaling 证据弱：预训练数据规模与 TUAB/TUEV 性能无正相关（LaBraM 数据最多却与 EEGFormer/NeuroLM 互有胜负）；LaBraM 自家曲线 ~1000 h 后趋平；模型缩放（3.3M–1.7B）只有边际改进。
+- 线性探针显著落后微调：五个报告 LP 的模型均弱于 FT 与部分监督基线，FT 又略胜从头监督。作者据此质疑 SSL 学到的表示质量：增益可能主要来自架构与初始化，预训练知识的贡献存疑。
+- 通用时序 FM 在部分任务上可打平或超过 EEG FM：PatchTST / TimesNet 微调后在病理检测、睡眠分期可打平甚至超过 EEG FM；BrainWave 的实验里 MOMENT 在癫痫检测与病理检测超过 EEG FM。EEG FM 的相对优势点在 EEG 专属归纳偏置（空间建模、头皮+颅内联合预训练）。
+- 预处理普遍极简：无显式去伪迹、归一化策略多数语焉不详，对 OOD 的影响未知。
+- 数据多样性 vs 数据量：LaBraM 在 TUAB/TUEV 的领先可能来自数据源多样性（source 数）而非 channel-hours 绝对量；BrainWave 的头皮+颅内联合消融显示联合预训练几乎全面优于单模态。
 
 ## 5 消融与可解释性补充（§4.3 末）
 
@@ -104,8 +104,8 @@ one-liner: "三支柱拆 10 个早期 EEG FM 后给出批判性结论：评测�
 
 ## 7 站内视角
 
-- 本篇的批判清单与 [EEGArena](../survey/eegarena.md) 高度互补：文中呼吁的「共享核心任务 + OOD + 强监督基线」正是 EEGArena 已经做成的事，两篇可当「诊断书与药方」连读。
-- LP 落后 FT 的观察对本站 [REVE](../fm/reve.md) 微调策略（缓存 LP → 小学习率 FT）是提醒而非定论：该综述纳入的线性探针结果与全量微调存在差距，涉及五个模型的不同任务与指标，比较时须注明各自任务与设定，外推为「EEG FM 的普遍规律」证据尚不足。
+- 本篇的批判清单与 [EEGArena](../survey/eegarena.md) 相互对应：文中呼吁的「共享核心任务 + OOD + 强监督基线」正是 EEGArena 已经做成的事，两篇可连读对照。
+- LP 落后 FT 的观察与本站 [REVE](../fm/reve.md) 微调策略（缓存 LP → 小学习率 FT）相关：该综述纳入的线性探针结果与全量微调存在差距，涉及五个模型的不同任务与指标，比较时须注明各自任务与设定，外推为「EEG FM 的普遍规律」证据尚不足。
 - 三支柱框架（输入表示 / 建模 / 评测）与本站 [预训练范式专题](../../topics/pretraining.md) 的「目标 / 掩码 / 范式」切分兼容，可交叉引用；§2 概要表与 [Yao 综述的设计总表](yao-eegfm-survey.md)、[Chen 综述的拆解表](chen-representation-learning-review.md) 三表字段口径不同，合读覆盖最全。
 
 ---

@@ -117,7 +117,7 @@ tags: [索引, 参考文献]
 | 文献 | 出处 | 被引于 | 一句话作用 |
 |---|---|---|---|
 | [Yao et al. Foundation models for EEG decoding](https://doi.org/10.1088/1741-2552/ae17e9) | J. Neural Eng. 22:061002（2025） | [本站精读](papers/reviews/yao-eegfm-survey.md) | PRISMA 综述 + 自跑 10 模型 × 6 数据集：掩码/自回归/对比三路线横评；FM 赢临床域输 MI，归因预训练域被癫痫数据主导 |
-| [Chen, Lu & Wu. Representation Learning and Foundation Models for EEG Analyses](https://doi.org/10.1109/MSP.2025.3595320) | IEEE Signal Processing Magazine 2025-09 | [本站精读](papers/reviews/chen-representation-learning-review.md) | 19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项拆表（词元化五分类）+ 迁移学习四类地图 + SELSER/Brant-X/NeuroLM 三案例；表内 FoME 年份等有硬伤 |
+| [Chen, Lu & Wu. Representation Learning and Foundation Models for EEG Analyses](https://doi.org/10.1109/MSP.2025.3595320) | IEEE Signal Processing Magazine 2025-09 | [本站精读](papers/reviews/chen-representation-learning-review.md) | 18 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项拆表（词元化五分类）+ 迁移学习四类地图 + SELSER/Brant-X/NeuroLM 三案例；表内 FoME 年份等有硬伤 |
 | [Kuruppu et al. EEG foundation models: a critical review](https://doi.org/10.1088/1741-2552/ae4455) | J. Neural Eng. 23:021001（2026） | [本站精读](papers/reviews/kuruppu-critical-review.md) | 三支柱（输入表示/建模/评测）拆 10 个早期 FM：共享任务仅 TUAB/TUEV、OOD 评测仅 2 篇、scaling 证据弱、LP 显著落后 FT——SSL 表示质量存疑 |
 | [Kwon & Shin. Foundation Models for Neural Signal Decoding](https://doi.org/10.1111/ejn.70376) | Eur. J. Neurosci. 63:e70376（2026） | [本站精读](papers/reviews/kwon-neural-fm-perspective.md) | 观点综述：生理感知目标（PAC 预测/相干重建）、结构感知架构（MNI 投影/3D 坐标 PE）、可解释性三原则，判现存 FM 为第一代；对 CBraMod 有「对比目标」误读 |
 

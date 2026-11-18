@@ -9,9 +9,9 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 
 **引用规则**：站内事实均带笔记或综述链接，并标注原文节号 / 表号；数字口径以各论文原文为准（channel-hours 与小时数不混用，见 [Kuruppu 综述](papers/reviews/kuruppu-critical-review.md) §1 的口径说明）。少数来自站外检索、站内尚未核对原文的动态集中在 §7，单独标注，不作为结论使用。标注「站内统计」的计数按本站笔记口径统计，一篇论文可占多个设计格。
 
-## 1 领域现状一句话
+## 1 领域现状
 
-**架构移植期已经结束，评测清算期刚刚开始。** 2021–2024 是把 BERT / MAE / GPT 范式搬进 EEG 的收编期（[Kuruppu 综述](papers/reviews/kuruppu-critical-review.md) §1：其收录的 10 个 FM 全部为 transformer 或 Mamba 骨干、7/10 用掩码重构）；2025–2026 的主线变成两件事：在移植过的骨架上卷组件差异（§2 的拥挤度），以及用统一评测反向拆台——[EEGArena](papers/survey/eegarena.md) 以 30 FM × 25 监督基线 × 57 任务给出「参数量不预测性能」（其 §3），[Yao 综述](papers/reviews/yao-eegfm-survey.md) §6 自跑显示 FM 在运动想象上不敌 0.003M 的 EEGNet。
+2021–2024 是把 BERT / MAE / GPT 范式搬进 EEG 的收编期（[Kuruppu 综述](papers/reviews/kuruppu-critical-review.md) §1：其收录的 10 个 FM 全部为 transformer 或 Mamba 骨干、7/10 用掩码重构）；2025–2026 的主线变成两件事：在移植过的骨架上卷组件差异（§2 的拥挤度），以及用统一评测反向拆台——[EEGArena](papers/survey/eegarena.md) 以 30 FM × 25 监督基线 × 57 任务给出「参数量不预测性能」（其 §3），[Yao 综述](papers/reviews/yao-eegfm-survey.md) §6 自跑显示 FM 在运动想象上不敌 0.003M 的 EEGNet。
 
 ## 2 研究重点：四条主线与拥挤度
 
@@ -23,8 +23,6 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 | VQ 离散词表 | 单码本：[LaBraM](papers/fm/labram.md)、[NeuroLM](papers/fm/neurolm.md)、[TFM](papers/fm/tfm-tokenizer.md)；多码本 / RVQ / 双域：[CodeBrain](papers/fm/codebrain.md)、[NeuroRVQ](papers/fm/neurorvq.md)、[BrainRVQ](papers/fm/brainrvq.md)、[NeuroDETR](papers/fm/neurodetr.md) | 7 篇 |
 | 注意力计算图改造 | 十字交叉（CBraMod）、隐空间压缩（LUNA）、线性化（[BIOT](papers/fm/biot.md)、TFM）、SSM+滑窗（CodeBrain）、因子化时空（[Not-All-EEG](papers/generative/not-all-eeg.md)） | 5 篇 |
 | 生成目标做表征 | [EEGDM](papers/generative/eegdm.md)（encoder 不 detach 联合优化）、纯生成器 JET（[ICML 2026](papers/generative/jet.md)）、Not-All-EEG | 3 篇 |
-
-三个观察（依据见对应笔记与综述）：
 
 - **连续 patch + 掩码重构的差异化全靠附加件**：CBraMod 靠十字交叉注意力 + ACPE + 清洗语料（其附录 G 与表 13），LUNA 靠 query 压缩（8000 通道 FLOPs 为 BIOT 的 1/180，其表 4），REVE 靠 4D 坐标 PE + 块掩码 + 全局 token 瓶颈（其表 17–19 消融），EEGMoE 靠 SSMoE 域解耦（其消融）；附加件各自有效，但互比条件不同（[Kuruppu 综述](papers/reviews/kuruppu-critical-review.md) §5.1：评测任务异质，仅 4/10 可在公共任务排名）。
 - **VQ 词表结构是 2025–2026 卷得最快的轴**：双码本、双域 RVQ、多尺度 RVQ、时频 motif 在一年内全部出现；[互怼链](comparison.md#critique-chain)中被指向最多的节点是 LaBraM（token 只当训练目标、展平注意力、通道平方复杂度、相位无贡献、单码本撞码等约 8 条批评边，均转写自各批评论文正文）。
@@ -71,7 +69,7 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 
 ## 5 scaling：四组证据的口径对照
 
-领域最大的悬而未决问题是「堆数据有没有用」。站内可核查的四组证据，口径各不相同，不能合并成一条曲线：
+「堆数据有没有用」是领域内尚无定论的问题。站内可核查的四组证据口径各不相同，不能合并成一条曲线：
 
 | 证据 | 改动变量 | 条件 | 结果 | 出处 |
 |---|---|---|---|---|
@@ -80,12 +78,12 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 | EEGArena 固定架构 | REVE-base 架构不变，语料 600h→30k h | 全量微调 | 被试内 +6.69pp | [EEGArena](papers/survey/eegarena.md) §2.6、§3.4 |
 | Kuruppu 跨研究对照 | 4.5k–878k channel-hours | TUAB/TUEV | 无正相关 | [Kuruppu 综述](papers/reviews/kuruppu-critical-review.md) §5.2 |
 
-读法（站内推断，非原文结论）：数据缩放效应**是否存在取决于任务与协议**——EEGArena 的受控对照说明增益存在但需固定架构，Kuruppu 的跨研究对照说明「报得多」不等于「效果好」；两者不矛盾，因为前者控制了架构变量而后者没有。这正是 §3 评测痛点（协议不可比）的直接代价。
+读法（站内推断，非原文结论）：数据缩放效应**是否存在取决于任务与协议**——EEGArena 的受控对照说明增益存在但需固定架构，Kuruppu 的跨研究对照说明「报得多」不等于「效果好」；两者不矛盾，因为前者控制了架构变量而后者没有。——即 §3 评测痛点（协议不可比）的直接代价。
 
 ## 6 正在被修正的三个叙事（站内证据）
 
-1. **「FM 普遍优于简单基线」**：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 MI 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且固定架构的预训练数据缩放有增益（受控对照见[实验证据](evidence.md)）。合成的结论是：**FM 的优势有条件（任务域、协议、数据规模），不是普适的**。
-2. **「线性探针差 = 实现问题」**：Kuruppu 在其纳入范围内报告 LP 落后 FT 跨五个模型出现（其图 4(a)；纳入范围与任务设定见[其笔记](papers/reviews/kuruppu-critical-review.md)）——凡做「冻结可用」主张的工作（[EEGPT](papers/fm/eegpt.md) 的对齐目标、[REVE](papers/fm/reve.md) 的全局 token 瓶颈）都是在对着这个观察设计，其普遍性尚待更大范围验证。
+1. **「FM 普遍优于简单基线」**：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 MI 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且固定架构的预训练数据缩放有增益（受控对照见[实验证据](evidence.md)）。综合这两项评测：FM 的优势取决于任务域、协议与数据规模。
+2. **「线性探针差 = 实现问题」**：Kuruppu 在其纳入范围内报告 LP 落后 FT 跨五个模型出现（其图 4(a)；纳入范围与任务设定见[其笔记](papers/reviews/kuruppu-critical-review.md)）——做「冻结可用」主张的工作（[EEGPT](papers/fm/eegpt.md) 的对齐目标、[REVE](papers/fm/reve.md) 的全局 token 瓶颈）针对这个观察设计，其普遍性尚待更大范围验证。
 3. **「架构 vs 预训练」二选一**：REVE 的预训练价值消融（其表 3：PhysioNet-MI 上无预训练 REVE 0.5409 < CBraMod 0.6196；有预训练 REVE 0.6480 > CBraMod 0.6417）把两种来源的贡献同框量化——架构先验与预训练数据各有其适用面，站内判断详见 [REVE 笔记的个人思考](papers/fm/reve.md)。
 
 ## 7 站外动态（检索所得，站内未核对原文，引用前须核实）

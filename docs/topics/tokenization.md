@@ -148,7 +148,7 @@ tags: [tokenization, 综述]
 
 ## 代码与权重 {: #_1 }
 
-各模型的代码地址、权重状态与参数口径统一由[模型对比页](../models.md)（数据源 `data/models.json`）维护，此处只保留与 tokenizer 复现直接相关的注释：
+代码地址、权重状态与参数口径的完整清单在[模型对比页](../models.md)（数据源 `data/models.json`）；这里只补与 tokenizer 复现相关的注释：
 
 - **[TFM-Tokenizer](../papers/fm/tfm-tokenizer.md)**：官方仓库含预训练权重与全部预处理脚本——复现其词表需连同预处理一起取；
 - **[NeuroRVQ](../papers/fm/neurorvq.md)**：官方实现挂在 Hugging Face（[ntinosbarmpas/NeuroRVQ](https://huggingface.co/ntinosbarmpas/NeuroRVQ)），另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)；

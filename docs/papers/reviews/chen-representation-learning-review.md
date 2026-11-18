@@ -10,7 +10,7 @@ rating: 4
 doi: "10.1109/MSP.2025.3595320"
 arxiv: ""
 code: ""
-one-liner: "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化/嵌入/位置编码/骨干/损失逐项拆表，外加迁移学习四类地图与三个落地案例"
+one-liner: "信号处理杂志视角的 EEG FM 全景：18 个模型按词元化/嵌入/位置编码/骨干/损失逐项拆表，外加迁移学习四类地图与三个落地案例"
 ---
 
 # Representation Learning and Foundation Models for Electroencephalography Analyses
@@ -21,11 +21,11 @@ one-liner: "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化
 
 ## 1 问题定位
 
-与前两篇纯 ML 视角的综述不同，这篇从**信号处理传统**出发：先铺 EEG 信号处理基础（谱分析、时空分析、源定位、功能连接、非线性分析）与图/流形方法（图傅里叶变换、黎曼几何协方差），再进入表示学习原理（「任务相关特征 + 上下文无关特征」的分解式），最后落到 FM。覆盖 EEG 与 iEEG，系统检索窗口 2020-01–2025-06，选出 19 个模型列表。
+与前两篇纯 ML 视角的综述不同，这篇从**信号处理传统**出发：先铺 EEG 信号处理基础（谱分析、时空分析、源定位、功能连接、非线性分析）与图/流形方法（图傅里叶变换、黎曼几何协方差），再进入表示学习原理（「任务相关特征 + 上下文无关特征」的分解式），最后落到 FM。覆盖 EEG 与 iEEG，系统检索窗口 2020-01–2025-06，选出 18 个模型（原文文字称 19，按其 Table 1 行数为 18）。
 
 ## 2 FM 拆解总表（原 Table 1 复现）
 
-19 个模型按七个字段逐项拆开。「—」为原文 N/A 或未报；站内命名换算：表中 EEGPT（decoder 自回归条目）= 站内 [BrainGPT](../fm/braingpt.md)，Mentality = MENTALITY。
+18 个模型按七个字段逐项拆开。「—」为原文 N/A 或未报；站内命名换算：表中 EEGPT（decoder 自回归条目）= 站内 [BrainGPT](../fm/braingpt.md)，Mentality = MENTALITY。
 
 | 模型 | 词元化 | 输入嵌入 | 位置编码 | 骨干 | 预训练损失 | 参数量 | 开源 | 年份 |
 |---|---|---|---|---|---|---|---|---|
@@ -52,7 +52,7 @@ one-liner: "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化
 
 ## 3 分类树（原 Figure 2 复现）
 
-把上表 19 个模型按字段聚族：
+把上表 18 个模型按字段聚族：
 
 **词元化五类 + 一个附加项**：
 
@@ -71,9 +71,9 @@ one-liner: "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化
 
 **骨干三族**：encoder（Transformer：BENDR、BIOT、BrainBERT、BrainWave、Brant 系、CBraMod、FoME、LaBraM）；encoder–decoder（Transformer：EEGFormer、Gram、MMM；Mamba：MENTALITY；混合：FEMBA、Neuro-BERT、Neuro-GPT）；decoder（EEGPT=站内 BrainGPT、NeuroLM）。
 
-**目标与损失**：重构 14 篇（信号/特征直接重构 vs 离散 token 预测两型）、预测 3 篇（Brant-2、EEGPT=站内 BrainGPT、Neuro-GPT、NeuroLM）、混合 1 篇（Brant-2）；损失对应 MSE（12 篇）、MAE/Smooth-L1（BrainBERT、FEMBA——对离群点更稳）、CE（Gram、LaBraM、NeuroLM——预测离散码字）、对比（BENDR、BIOT）。
+**目标与损失**：重构 14 篇（信号/特征直接重构 vs 离散 token 预测两型）、预测 3 篇（EEGPT=站内 BrainGPT、Neuro-GPT、NeuroLM）、混合 1 篇（Brant-2 同时做重构与预测）；损失对应 MSE（12 篇）、MAE/Smooth-L1（BrainBERT、FEMBA——对离群点更稳）、CE（Gram、LaBraM、NeuroLM——预测离散码字）、对比（BENDR、BIOT）。
 
-值得记的两个 trade-off：patching 让长记录在算力上可行，但**切段边界会破坏细粒度时序模式**——BENDR 因此不走切段，用卷积编码器直接对原始信号降采样；BrainBERT 则在切段前先做 superlet 变换取时频分辨率。VQ 的动机是连续分布难处理多模态，量化到码本「捕捉反复出现的模式」。
+patching 让长记录在算力上可行，代价是切段边界破坏细粒度时序模式——BENDR 因此不走切段，用卷积编码器直接对原始信号降采样；BrainBERT 则在切段前先做 superlet 变换取时频分辨率。VQ 的动机是连续分布难处理多模态，量化到码本「捕捉反复出现的模式」。
 
 ## 4 预训练语料（原 Table 2 精简）
 
@@ -91,7 +91,7 @@ one-liner: "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化
 | EEGPT（=站内 BrainGPT） | FACED、SEED 系、THINGS-EEG、私有语料 | 未报 | EEG |
 | MENTALITY / Neuro-GPT / FEMBA / EEGFormer / MMM | TUEG 或其子集 | 未报 | EEG |
 
-数据侧结论：TUEG 与 SEED 系是绝对主力；时长口径混杂（小时 / channel-hours / 样本数），站内对照见 [Kuruppu 综述的口径表](kuruppu-critical-review.md)。作者点名 EEG 预训练语料相对 NLP/CV「小而少样」，并引 MMM 的一维位置编码 + 多级通道层次 + 多阶段预训练作为拓扑差异的应对。
+数据侧结论：TUEG 与 SEED 系被最多模型用作预训练语料；时长口径混杂（小时 / channel-hours / 样本数），站内对照见 [Kuruppu 综述的口径表](kuruppu-critical-review.md)。作者点名 EEG 预训练语料相对 NLP/CV「小而少样」，并引 MMM 的一维位置编码 + 多级通道层次 + 多阶段预训练作为拓扑差异的应对。
 
 ## 5 迁移学习与不变表示
 
@@ -110,19 +110,19 @@ one-liner: "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化
 
 ## 6 三个落地案例
 
-- **SELSER**（抑郁生物标志物）：空间滤波 + 频带功率 + 线性回归在稀疏潜空间里全局最优求解，预测舍曲林疗效 HAMD 变化 r=0.6（p=5.19×10⁻¹¹）；同一模型放到安慰剂臂 r=−0.03——阴性对照做得很干净。
+- **SELSER**（抑郁生物标志物）：空间滤波 + 频带功率 + 线性回归在稀疏潜空间里全局最优求解，预测舍曲林疗效 HAMD 变化 r=0.6（p=5.19×10⁻¹¹）；同一模型放到安慰剂臂 r=−0.03，阴性对照符合预期。
 - **Brant-X**（多模态对齐）：冻结 Brant-2（预训练 4 TB+ EEG）作 EEG 端，EXG 端新训编码器，patch 级 + 序列级两级对比对齐；任务跨睡眠分期（EEG+EOG）、情绪（EEG+ECG）、冻结步态（EEG+EMG）、眼动交流。
 - **NeuroLM**（多任务指令微调）：VQ 词元器 + LLM 因果建模 + 多任务指令微调，预训练 25 000 h，单模型跨六任务推理（异常检测 / 情绪 / 睡眠分期 / 认知负荷 / 事件分类 / 慢波分类）。
 
 ## 7 规模、可解释性与开放科学
 
-Scaling 证据：LaBraM 的模型/数据双缩放实验；非侵入语音解码单被试 175 h→48% vs 10 h→2.5% top-1，作者预期 FM 性能随 10 000 h 量级语料继续提升。可解释性一节 beyond attention：归因分析（积分梯度、SHAP）、概念激活向量、因果表示学习的可辨识性定理（LLM 隐空间中概念线性编码的实证）、白盒 energy transformer。数据一节给了公开语料库清单（Harvard 28 万+ 记录、UCSD NEMAR 2.7 万被试、OpenNeuro、PhysioNet 等）并点名地理/性别/年龄偏置。讨论直言「Are large-scale foundation models all we need? The simple answer is no.」——灾难性遗忘、模型脆弱性（对抗噪声、解释本身也脆弱）、数据质量与开放科学三节均值得引用。
+Scaling 证据：LaBraM 的模型/数据双缩放实验；非侵入语音解码单被试 175 h→48% vs 10 h→2.5% top-1，作者预期 FM 性能随 10 000 h 量级语料继续提升。可解释性一节超出注意力可视化范畴：归因分析（积分梯度、SHAP）、概念激活向量、因果表示学习的可辨识性定理（LLM 隐空间中概念线性编码的实证）、白盒 energy transformer。数据一节给了公开语料库清单（Harvard 28 万+ 记录、UCSD NEMAR 2.7 万被试、OpenNeuro、PhysioNet 等）并点名地理/性别/年龄偏置。讨论直言「Are large-scale foundation models all we need? The simple answer is no.」——灾难性遗忘、模型脆弱性（对抗噪声、解释本身也脆弱）、数据质量与开放科学三节均值得引用。
 
 ## 8 站内视角
 
-- 词元化五分类是本站 [Tokenization 演进专题](../../topics/tokenization.md) 之外**轴最接近的现成对照**：它按「切段几何」分类，站内按「词表怎么来、用在哪」，写词元化节时先引后立。
+- 词元化五分类与本站 [Tokenization 演进专题](../../topics/tokenization.md) 口径最接近：它按「切段几何」分类，站内按「词表来源与用途」分类；写词元化节时先引该文分类，再给站内对照。
 - TL 四分类与本站 REVE 微调策略（缓存线性探针 → 小学习率微调）同属 model-based 一支，可直接引用其框架。
-- 与同期 [Kuruppu 批判性综述](kuruppu-critical-review.md) 相比，这篇更全景、批判更轻（「独立验证仍缺」一句带过）；两表的字段口径互补（本表含损失与开源，Yao 表含注意力机制与数据集）。
+- 与同期 [Kuruppu 批判性综述](kuruppu-critical-review.md) 相比，这篇覆盖面更广、批判较少（「独立验证仍缺」一句带过）；两表的字段口径互补（本表含损失与开源，Yao 表含注意力机制与数据集）。
 
 ---
 

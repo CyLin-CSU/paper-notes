@@ -12,7 +12,7 @@ title: 首页
 
 ## 论文库 {: #papers }
 
-完整 **31 篇**可筛选目录见 **[论文库](library.md)**（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 **[模型对比](models.md)**。以下为各组入口与近期收录。
+完整 31 篇可筛选目录见 [论文库](library.md)（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 [模型对比](models.md)。以下为各组入口与近期收录。
 
 ### EEG 基础模型（15 篇） {: #papers-fm }
 
@@ -31,7 +31,7 @@ title: 首页
 ### 综述与观点（4 篇） {: #papers-reviews }
 
 - [EEG FM 综述 (Yao)](papers/reviews/yao-eegfm-survey.md) · JNE 2025 —— 预训练三路线横评 + 自跑 10 模型 × 6 数据集
-- [表示学习与 FM 综述 (Chen)](papers/reviews/chen-representation-learning-review.md) · IEEE SPM 2025 —— 19 模型组件拆解表 + 迁移学习地图
+- [表示学习与 FM 综述 (Chen)](papers/reviews/chen-representation-learning-review.md) · IEEE SPM 2025 —— 18 模型组件拆解表 + 迁移学习地图
 - [EEG FM 批判综述 (Kuruppu)](papers/reviews/kuruppu-critical-review.md) · JNE 2026 —— 评测异质、scaling 证据弱、LP 落后 FT 的证据清单
 - [神经信号 FM 观点 (Kwon)](papers/reviews/kwon-neural-fm-perspective.md) · EJN 2026 —— 生理目标/结构先验/可解释三原则
 
@@ -70,7 +70,7 @@ title: 首页
 
 - **2026-11-19** · 新增领域全景页（landscape-2026）：研究重点、四类痛点、创新拥挤度、六条空白轴与 scaling 证据对照——全部论断标注站内笔记或综述节号出处
 
-- **2026-11-18** · 综述四篇齐发：[Yao（JNE 2025）](papers/reviews/yao-eegfm-survey.md) 自跑 10 模型 × 6 数据集，FM 赢临床域、输 MI，根子在被癫痫数据主导的预训练域 · [Chen（IEEE SPM 2025）](papers/reviews/chen-representation-learning-review.md) 19 模型按词元化/嵌入/位置编码/骨干/损失逐项拆表 · [Kuruppu（JNE 2026）](papers/reviews/kuruppu-critical-review.md) 三支柱批判：评测异质、scaling 证据弱、LP 落后 FT · [Kwon & Shin（EJN 2026）](papers/reviews/kwon-neural-fm-perspective.md) 生理先验/结构感知/可解释三原则，判现存 FM 为第一代（其 CBraMod「对比目标」转述与原文不符，站内已标注）
+- **2026-11-18** · 综述四篇齐发：[Yao（JNE 2025）](papers/reviews/yao-eegfm-survey.md) 自跑 10 模型 × 6 数据集，FM 赢临床域、输 MI，根子在被癫痫数据主导的预训练域 · [Chen（IEEE SPM 2025）](papers/reviews/chen-representation-learning-review.md) 18 模型按词元化/嵌入/位置编码/骨干/损失逐项拆表 · [Kuruppu（JNE 2026）](papers/reviews/kuruppu-critical-review.md) 三支柱批判：评测异质、scaling 证据弱、LP 落后 FT · [Kwon & Shin（EJN 2026）](papers/reviews/kwon-neural-fm-perspective.md) 生理先验/结构感知/可解释三原则，判现存 FM 为第一代（其 CBraMod「对比目标」转述与原文不符，站内已标注）
 
 - **2026-11-06** · 新增 [Uni-NTFM](papers/fm/uni-ntfm.md) 精读，拆解时域与频域双向交叉注意力、分层拓扑嵌入和双域掩码重建。
 
