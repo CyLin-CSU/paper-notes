@@ -2430,7 +2430,7 @@
 <tr>
 <td><a href="../papers/fm/reve/">REVE</a></td>
 <td>NeurIPS 2025</td>
-<td>4D 傅里叶位置编码吃任意电极布局：最大非侵入预训练语料</td>
+<td>电极坐标与时间构建 4D 傅里叶位置编码，支持不同电极布局与序列长度；92 数据集 61,415h 预训练</td>
 <td>12M / 69M / 408M</td>
 <td><strong>61,415h</strong> · 92 数据集 · 24,274 被试</td>
 <td>✅（decoder 未发布）</td>
@@ -2440,7 +2440,7 @@
 <td>TNNLS 2026</td>
 <td>Specific + Shared 双专家组解耦域差异：解耦保留异构</td>
 <td>1.68M（激活 0.89M）</td>
-<td>9 数据集 ~142h（认知域）</td>
+<td>6 数据集 ~142h 预训练（另 3 个下游评测集，认知域）</td>
 <td>未放</td>
 </tr>
 <tr>
@@ -2490,7 +2490,7 @@
 <tbody>
 <tr>
 <td>① 预训练数据</td>
-<td>规模 / 域距离 / 清洗哲学：TUEG 系语料越报越大（2500h→25000h），但清洗质量 &gt; 堆量、域邻近 &gt; 规模、1000h 后边际递减</td>
+<td>规模 / 域距离 / 清洗哲学：TUEG 系语料越报越大（2500h→25000h）；CBraMod 的单项消融显示清洗版优于脏数据版；EEGArena 固定 REVE 架构把预训练语料从 600h 加到 3 万小时仍见增益（被试内 +6.69pp）——两项实验对象与条件不同，详见数据全景专题</td>
 <td><a href="../topics/data-landscape/">数据全景专题</a></td>
 </tr>
 <tr>
@@ -2539,7 +2539,7 @@
 <h3 id="mod-architecture">模型设计：注意力结构与位置编码<a class="headerlink" href="#mod-architecture" title="Permanent link">#</a></h3>
 <p><strong>① 注意力结构谱系</strong>（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 的 C×n patch 网格到底怎么数）</p>
 <ul>
-<li><strong>全注意力一锅炖</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT 把 C·n 个 patch 展平进标准 ViT——CBraMod 的消融里全注意力在四种变体中垫底（19 通道 × 30s = 570 patch 已超出舒适区）；</li>
+<li><strong>展平全注意力</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT 把 C·n 个 patch 展平进标准 ViT——CBraMod 的消融里全注意力在四种变体中垫底（19 通道 × 30s = 570 patch 已超出舒适区）；</li>
 <li><strong>线性注意力</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（Linformer 式 E/F 低秩投影）、TFM 下游模型（~0.7M）——牺牲细粒度 <abbr title="词元，模型处理的最小输入单元">token</abbr> 间路由换效率；</li>
 <li><strong>十字交叉</strong>：CBraMod 把 8 个注意力头劈成 4 头 S-Attention（同一时刻跨通道）+ 4 头 T-Attention（同一通道跨时间）并行，复杂度 O(Cn² + nC²)；消融 4:4 最优，偏科 6:2 / 2:6 都掉——空间与时间依赖同等重要；</li>
 <li><strong>隐空间压缩</strong>：LUNA 用 Q 个学习 query 的交叉注意力把任意 C 个通道压进固定 Q×E 隐空间（置换不变 → 拓扑无关），时间注意力只在隐空间做；</li>
@@ -2548,11 +2548,11 @@
 <li><strong>借来底座</strong>：NeuroLM（<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2）与 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>（Qwen2.5-VL）的骨干完全不在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上设计，见<a href="../topics/base-model/">基座来源专题</a>；</li>
 <li><strong>生成骨干</strong>：JET 标准 Transformer + adaLN 条件注入；EEGDM = <abbr title="脑电图 Electroencephalogram">EEG</abbr>-ViT encoder + DiT 去噪器（adaLN-Zero）。</li>
 </ul>
-<p><strong>② 「架构 &gt; 规模」的最强证据</strong>：CBraMod 附录 G——把 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的架构搬到 CBraMod 的 9000h 清洗语料上重训，<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(ours) ≈ <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(original)、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(ours) 仅小涨，而 CBraMod 全面碾压两者：<strong>4.0M 参数在 TUEV 打过 369M 的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge</strong>（0.6671 vs 0.6616）。固定数据换架构，把贡献归因做成了可证伪的对照。</p>
-<p><strong>③ 位置编码谱系</strong>：正弦相对（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>）→ 可学习时空绝对（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM）→ RoPE（EEGPT predictor、LUNA 时间轴）→ 电极词表 prefix（BrainGPT）→ <strong>无</strong>（TFM tokenizer 内，消融支持）→ <strong>卷积动态生成</strong>（CBraMod ACPE）→ <strong>连续 3D 坐标 NeRF 编码</strong>（LUNA 空间）→ <strong>4D 傅里叶坐标生成</strong>（REVE：(x,y,z,t) 直投多频笛卡尔积 + 可学习适配层，时间也进坐标、噪声增强抗摆放差异）。趋势：从「查表绑定」走向「动态生成 / 连续坐标」，动因都是跨 montage 泛化——TFM 的「无」是同一月光的另一面：拒绝一切位置绑定。</p>
+<p><strong>② 架构先验与预训练收益：CBraMod 附录 G 的归因实验</strong>：把 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的架构搬到 CBraMod 的 9000h 清洗语料上重训，<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(ours) ≈ <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>(original)、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>(ours) 仅小涨，而同语料重训后，CBraMod 在所测下游任务上整体高于两个迁移架构（附录 G，TUEV 0.6671 vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 0.6616）——<strong>4.0M 参数高于 369M 的 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge</strong>。固定数据换架构，把贡献归因做成了可证伪的对照。</p>
+<p><strong>③ 位置编码谱系</strong>：正弦相对（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>）→ 可学习时空绝对（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / NeuroLM）→ RoPE（EEGPT predictor、LUNA 时间轴）→ 电极词表 prefix（BrainGPT）→ <strong>无</strong>（TFM tokenizer 内，消融支持）→ <strong>卷积动态生成</strong>（CBraMod ACPE）→ <strong>连续 3D 坐标 NeRF 编码</strong>（LUNA 空间）→ <strong>4D 傅里叶坐标生成</strong>（REVE：(x,y,z,t) 直投多频笛卡尔积 + 可学习适配层，时间也进坐标、噪声增强抗摆放差异）。趋势：从「查表绑定」走向「动态生成 / 连续坐标」，动因都是跨 montage 泛化——TFM 在 tokenizer 内不用位置编码，是同一取向的另一端：不绑定任何位置信息。</p>
 <p><strong>维度小结</strong>：模型设计的演进不是「更大」，而是<strong>注意力计算图的形状逐渐匹配 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的 (通道 × 时间) 结构</strong>——每一步都在回答「哪些 patch 天生该互相看」。</p>
 <h3 id="mod-frequency">频域信息：从特征工程到建模对象<a class="headerlink" href="#mod-frequency" title="Permanent link">#</a></h3>
-<p>频域的角色在这批论文里经历六级递进：</p>
+<p>频域信息在这批论文中有六类用途（同一论文可占多项）：</p>
 <ul>
 <li><strong>特征工程</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 把 FFT 能量向量过 FCN 进 segment embedding——EEGPT 附录 F 批评其丢相位、1s 窗 FFT 过粗，时域任务（P300 等）因此弱；</li>
 <li><strong>重构目标</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 重构 <abbr title="离散傅里叶变换 Discrete Fourier Transform">DFT</abbr> 幅值 + 相位（直接重构原始波形 loss 不收敛的关键替代）；NeuroLM 发现<strong>相位贡献小</strong>，砍掉相位；TFM 掩码重构频谱图；</li>
@@ -2564,8 +2564,13 @@
 <p><strong>相位的处理是一条暗线</strong>：重构它（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）→ 砍它（NeuroLM / TFM / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>）→ 又要它（LUNA 幅相都投）。没有定论，但「相位对表示学习有用、对判别式任务可省」是目前的经验边界。</p>
 <p><strong>维度小结</strong>：社区共识在 2025–2026 收敛为<strong>显式的时频结构建模优于隐式期望模型自己学</strong>——CBraMod / LUNA / TFM 三家的消融从不同方向互证，且三家都把频域放在 patch embedding 这一层（性价比最高的位置）。</p>
 <h3 id="mod-scale">规模、效率与开源<a class="headerlink" href="#mod-scale" title="Permanent link">#</a></h3>
-<p><strong>① 参数量排序</strong>（下游可用模型口径）</p>
-<p>EEGMoE 1.68M（激活 0.89M）&lt; TFM ~1.9M &lt; <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 3.2M &lt; CBraMod 4.0M &lt; <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base 5.8M &lt; LUNA-Base 7M &lt; EEGPT ~10M &lt; EEGDM 25M &lt; REVE-Base 69M &lt; JET 129.9M &lt; LUNA-Huge 311.4M &lt; <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 369M &lt; REVE-Large 408M &lt; NeuroLM-XL 1696M &lt; BrainGPT-Giant <strong>1.09B</strong> &lt; RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 3B/7B（借 Qwen2.5-VL）。</p>
+<p><strong>① 参数量排序</strong>（按口径分组）</p>
+<ul>
+<li><strong>主模型（从零训练，下游口径）</strong>：EEGMoE 1.68M（激活 0.89M）· TFM 下游 ~0.7M · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 3.2M · CBraMod 4.0M · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base 5.8M · LUNA-Base 7M · EEGPT ~10M · EEGDM 25M · REVE-Base 69M · JET 129.9M · LUNA-Huge 311.4M · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 369M · REVE-Large 408M</li>
+<li><strong>端到端合计（含 tokenizer）</strong>：TFM ~1.9M；NeuroLM-XL 含 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 基座至 1696M</li>
+<li><strong>端到端合计（含语言基座）</strong>：NeuroLM-XL 1696M · BrainGPT-Giant <strong>1.09B</strong>（均从零/扩词训练）</li>
+<li><strong>复用外部基座</strong>：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 3B/7B（Qwen2.5-VL，不解码 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 波形参数）</li>
+</ul>
 <p><strong>② 效率</strong></p>
 <ul>
 <li><strong>LUNA</strong>：8000 通道时 23 GFLOPs / 2GB（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 4156 GFLOPs，约 1/180），Base 16-bit 约 14MB——面向可穿戴 SoC 实时预算；</li>
@@ -2606,9 +2611,9 @@
 <li><strong>声明将放出 / 未附</strong>：BrainGPT、EEGMoE、RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>、JET（以项目页为准）；</li>
 <li><strong>权重细节坑</strong>：REVE 的 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> decoder 不发布（能从表示重构原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，隐私考量）——<abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 第一次基于隐私 withholding 组件；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 Large/Huge 权重未开源——各家论文里「打过 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge」的数字多引自 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 原文，非独立复现。</li>
 </ul>
-<p><strong>维度小结</strong>：规模轴上被验证过的规律只有两条——<strong>结构先验可以替代规模</strong>（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及<strong>效率在特定场景是硬需求</strong>（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上至今没有被干净地兑现——REVE 给了半张答卷（模型规模消融干净：Base→Large 线性探针 0.609→0.654 稳定上升），数据量 scaling 曲线仍缺（见<a href="../topics/data-landscape/">数据全景专题</a>）。</p>
+<p><strong>维度小结</strong>：规模轴上被验证过的规律只有两条——<strong>结构先验可以替代规模</strong>（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及<strong>效率在特定场景是硬需求</strong>（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上至今没有被干净地兑现——REVE 的模型规模消融给出模型侧证据（Base→Large 线性探针 0.609→0.654），EEGArena 固定架构给出数据侧证据（600h→3 万小时、被试内 +6.69pp）；但两者的任务集与协议不同，统一叙事仍缺（详见<a href="../topics/data-landscape/">数据全景专题</a>）。</p>
 <h2 id="critique-chain">论文间的比较与改进<a class="headerlink" href="#critique-chain" title="Permanent link">#</a></h2>
-<p>箭头方向 = 批评/改进指向，每条边标注批评点。<strong>来源口径</strong>：实线批评边均转写自箭头起点论文自己的正文或消融（如 TFM 对 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的批评出自其方法与实验章节、REVE 的预训练增益对比出自其 Table 3），站内未添加论文之外的对立关系；虚线边是站内归纳的互补关系，不构成批评。窄屏可在图内横向滑动。</p>
+<p>箭头方向 = 批评/改进指向；实线边标注批评点，虚线边含义见标签。<strong>来源口径</strong>：实线批评边转写自起点论文正文或消融（REVE 的预训练增益差值由其表 3 数字相减得出，因果解释为作者观点）；虚线边为站内类比或互补归纳，不构成论文自身的批评。窄屏可在图内横向滑动。</p>
 <pre class="mermaid"><code>flowchart LR
     BIOT["BIOT&lt;br/&gt;2023"]:::old
     LABRAM["LaBraM&lt;br/&gt;2024"]:::mid
@@ -2626,8 +2631,7 @@
     TFM -- "token 只当训练目标、&lt;br/&gt;推理时丢弃" --&gt; LABRAM
     TFM -- "整窗 FFT 线性投影&lt;br/&gt;过粗、无跨频段建模" --&gt; BIOT
     EEGPT -- "FFT 只留能量丢相位，&lt;br/&gt;时域任务（P300/ERN）弱" --&gt; BIOT
-    BRAINGPT -- "MAE 双向补全破坏&lt;br/&gt;时序因果结构（-2%+）" --&gt; LABRAM
-    BRAINGPT -- "被其归入掩码/双向建模&lt;br/&gt;范式批评（BIOT 实为对比学习）" --&gt; BIOT
+    BRAINGPT -- "同架构同损失消融：AR 较 MAE&lt;br/&gt;平均高 2.5pp（其表 V，ℓ2 最优）" --&gt; LABRAM
     NEUROLM -- "重构相位贡献小，&lt;br/&gt;砍掉相位只留幅值+时域" --&gt; LABRAM
     NEUROLM -- "逐任务全量微调低效，&lt;br/&gt;无多任务推理" --&gt; LABRAM
     TFM -- "固定空间 embedding&lt;br/&gt;无法跨设备（ear-EEG 缺席）" --&gt; EEGPT
@@ -2637,7 +2641,7 @@
     LUNA -- "8000 通道 FLOPs 仅 1/180&lt;br/&gt;（展平+线性注意力仍受限）" --&gt; BIOT
     EEGMOE -- "统一格式不解耦域，&lt;br/&gt;域失配拖累迁移" --&gt; LABRAM
     JET -- "EEG 生成应连续演化，&lt;br/&gt;离散去噪错配神经动态" --&gt; EEGGAN
-    RFGPT -- "谱图可直接喂现成 VLM，&lt;br/&gt;无需自训时频词表" --&gt; TFM
+    RFGPT -.-&gt;|"站内跨领域类比：谱图输入可复用现成视觉编码器&lt;br/&gt;（RF-GPT 原文未提及 TFM）"| TFM
     EEGDM["EEGDM&lt;br/&gt;arXiv 2026"]:::new
     EEGDM -- "掩码重构可由局部插值求解，&lt;br/&gt;学不到全局生成约束" --&gt; LABRAM
     EEGDM -- "少数类召回 10–18%（SPSW）&lt;br/&gt;容量花在局部统计上" --&gt; CBRAMOD
@@ -2648,13 +2652,13 @@
     NOTALL -- "时域 TV 约束压制&lt;br/&gt;高频临床瞬态" --&gt; JET
 
     REVE["REVE&lt;br/&gt;NeurIPS 2025"]:::new
-    REVE -- "查表/卷积位置编码绑死布局，&lt;br/&gt;4D 坐标生成任意蒙太奇可用" --&gt; CBRAMOD
-    REVE -- "预训练增益 11% vs 2%：&lt;br/&gt;你的成绩更多来自架构而非表示" --&gt; CBRAMOD
+    REVE -- "其 §1：绝对或卷积位置编码&lt;br/&gt;难以适配空间多样性" --&gt; CBRAMOD
+    REVE -- "PhysioNet-MI 上加预训练&lt;br/&gt;REVE +10.71pp / CBraMod +2.21pp（其表 3）" --&gt; CBRAMOD
 
     classDef old fill:#eceff1,stroke:#90a4ae,color:#263238
     classDef mid fill:#fff3e0,stroke:#ffb74d,color:#3e2723
     classDef new fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20</code></pre>
-<p><strong>解读</strong>（文字版路径：先读各边标签，再按下方说明核对来源）：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 是公共对照组；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接入 <abbr title="大语言模型 Large Language Model">LLM</abbr>；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：<strong>CBraMod / LUNA / EEGMoE 的边都指向 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 在生成轴线内部迭代；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 从跨域视角质疑自训词表的必要性；REVE 的两条边都指向 CBraMod——位置编码泛化与「预训练派 vs 架构派」的归因之争。</p>
+<p><strong>解读</strong>（文字版路径：先读各边标签，再按上方来源口径核对）：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 是公共对照组；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 转向离散码；EEGPT 改进自监督目标；BrainGPT 用同架构消融比较自回归与掩码目标；NeuroLM 把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接入 <abbr title="大语言模型 Large Language Model">LLM</abbr>；TFM 把批评落在输入表示层。2025–2026 的核心事实：<strong>CBraMod / LUNA / EEGMoE 的边都指向 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>——「展平全注意力 + 不解耦域」是被批评边指向最多的设计；JET / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 在生成轴线内部迭代；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 的谱图输入路线是站内跨领域类比（其原文未提及 TFM）；REVE 的两条边都指向 CBraMod——位置编码的空间适配与预训练增益的归因对比。</p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

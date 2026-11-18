@@ -22,7 +22,7 @@
     
     
       
-        <title>EEG 基础模型综述 · 三年演进（2023–2026） - Paper Notes · 论文阅读笔记</title>
+        <title>EEG 基础模型选读 · 2023–2026 - Paper Notes · 论文阅读笔记</title>
       
     
     
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              EEG 基础模型综述 · 三年演进（2023–2026）
+              EEG 基础模型选读 · 2023–2026
             
           </span>
         </div>
@@ -1988,43 +1988,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#tldr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TL;DR
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        一、输入表示：token 的三次升维
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        二、预训练目标：掩码建模的内部革命与自回归的挑战
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#specialist-generalist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        三、使用范式：从 specialist 到 generalist 的两条路
+        一、信号如何表示：连续片段与离散码字
       
     </span>
   </a>
@@ -2035,18 +2002,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        四、绕不开的天花板：数据
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#20252026" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        五、2025–2026：问题重心转移的三条新轴线
+        二、预训练在预测什么：重构、对齐与下一片段
       
     </span>
   </a>
@@ -2057,7 +2013,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        六、给研究者的四点启示
+        三、怎么适配任务：多任务联合的三种组织方式
       
     </span>
   </a>
@@ -2066,6 +2022,39 @@
       
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、哪些实验测过数据规模
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、选读小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、几个阅读入口
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         延伸阅读
@@ -2247,43 +2236,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#tldr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TL;DR
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        一、输入表示：token 的三次升维
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        二、预训练目标：掩码建模的内部革命与自回归的挑战
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#specialist-generalist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        三、使用范式：从 specialist 到 generalist 的两条路
+        一、信号如何表示：连续片段与离散码字
       
     </span>
   </a>
@@ -2294,18 +2250,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        四、绕不开的天花板：数据
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#20252026" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        五、2025–2026：问题重心转移的三条新轴线
+        二、预训练在预测什么：重构、对齐与下一片段
       
     </span>
   </a>
@@ -2316,7 +2261,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        六、给研究者的四点启示
+        三、怎么适配任务：多任务联合的三种组织方式
       
     </span>
   </a>
@@ -2325,6 +2270,39 @@
       
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、哪些实验测过数据规模
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、选读小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、几个阅读入口
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         延伸阅读
@@ -2354,46 +2332,59 @@
   
 
 
-<h1 id="eeg-20232026">综述：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型三年演进（2023–2026）<a class="headerlink" href="#eeg-20232026" title="Permanent link">#</a></h1>
+<h1 id="eeg-20232026"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型选读 · 2023–2026<a class="headerlink" href="#eeg-20232026" title="Permanent link">#</a></h1>
 <blockquote>
-<p>基于 10 篇代表性论文（核心六篇：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / EEGPT / BrainGPT / NeuroLM / TFM-Tokenizer；2025–2026 扩展：LUNA / EEGMoE / JET / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>）的精读综述。
-完整方法拆解见站内<a href="../papers/fm/biot/">论文笔记</a>，本文是对外的观点性总结。</p>
+<p>本文选读 10 种 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型与相关方法，比较信号表示、预训练目标和下游适配。连续片段和离散码字在这些方法中承担不同角色：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 用离散码字监督掩码预测，TFM-Tokenizer 把码字作为下游输入，NeuroLM 将码字并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表。跨电极布局、跨数据集和多任务学习也需要分别评估，因为它们改变的是不同条件。</p>
 </blockquote>
-<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">#</a></h2>
-<p>三年间，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型在三个维度上各走完了一条演进线：<strong>输入表示</strong>从规则切段走到可学习的时频 motif 词表，<strong>预训练目标</strong>从对比学习/掩码建模扩展到自回归，<strong>使用范式</strong>从「一任务一模型」走向接 <abbr title="大语言模型 Large Language Model">LLM</abbr> 的多任务指令推理。但所有模型的通用性仍被同一个东西卡住：<strong>数据</strong>——2.5 万小时已是极限规模，且被临床癫痫域重度偏斜。2025–2026 的最新一批工作开始正面回应这个天花板：<strong>LUNA/EEGMoE</strong> 分别从「统一拓扑」与「解耦域」两端管理数据异构性，<strong>JET</strong> 把生成建模（流匹配）做成缓解数据稀缺的正式方案，<strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></strong> 则在射频域证明「时频图 + 大模型」范式跨模态通用。</p>
-<h2 id="token">一、输入表示：<abbr title="词元，模型处理的最小输入单元">token</abbr> 的三次升维<a class="headerlink" href="#token" title="Permanent link">#</a></h2>
-<p><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（NeurIPS'23）确立了「逐通道切段」的统一格式：通道可缺、长度可变、缺失即丢 <abbr title="词元，模型处理的最小输入单元">token</abbr>，配合线性注意力处理长句子。它的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是连续的、无词表的——「tokenize 了，但没有词汇表」。</p>
-<p><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（ICLR'24）补上了词表：<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 式码本（8192）+ 傅里叶频谱重构目标。关键实验发现是<strong>重构域的选择</strong>：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比导致原始波形不可重构，频谱可以。但它的码字只当预训练的监督信号，推理时被丢弃。</p>
-<p>NeuroLM（ICLR'25）让码字真正上岗：并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表，<abbr title="脑电图 Electroencephalogram">EEG</abbr> 变成「外语句子」。TFM-Tokenizer（ICLR'26）则给出终审意见——<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 化不彻底；它学的是<strong>时频 motif</strong> 词表（频域路径显式建模跨频段依赖），并把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为下游模型的真正输入，以 1.9M 参数拿下多项 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>。</p>
-<p><strong>演进的逻辑主线</strong>：预处理产物 → 训练靶子 → 真实输入。</p>
-<h2 id="_1">二、预训练目标：掩码建模的内部革命与自回归的挑战<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<p>掩码建模内部经历了三次目标更替：原始波形（不收敛，失败）→ 频谱（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）→ 表示（EEGPT 的 JEPA 式对齐 + <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式重构双自监督）。EEGPT 的贡献是指出「掩码后恢复什么」比「是否掩码」更重要——在表示空间对齐比在信号空间重构学到的东西更通用，这让它用 linear probing 就达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>。</p>
-<p>BrainGPT（2024）则质疑范式本身：同架构同损失的消融显示，<strong>自回归比掩码建模平均高 2%+</strong>——<abbr title="脑电图 Electroencephalogram">EEG</abbr> 是连续因果的信息流，双向补全破坏了它的自然结构。它把模型推到 1.09B 参数并验证了 scaling law，代价是需要下游图网络把单电极预训练丢掉的空间信息补回来。</p>
-<h2 id="specialist-generalist">三、使用范式：从 specialist 到 generalist 的两条路<a class="headerlink" href="#specialist-generalist" title="Permanent link">#</a></h2>
-<p>BrainGPT 用<strong>任务共享图网络</strong>联合训练 12 个基准——多任务信息的载体不是图结构，而是「电极节点被多任务梯度共同更新」；小任务受益最大（+3.9%），本质是隐式数据增强。</p>
-<p>NeuroLM 走了更激进的路：把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 当外语接进 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2，指令微调统一六种任务。它诚实报告了性能仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>，且论文称有望泛化到新 prompt（潜力表述，原文未见泛化实验验证）。<strong>多任务的价值目前在范式与效率，不在数字</strong>。</p>
-<h2 id="_2">四、绕不开的天花板：数据<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p><strong>选读名单</strong>：<a href="../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a>（NeurIPS 2023）· <a href="../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a>（ICLR 2024）· <a href="../papers/fm/eegpt/">EEGPT</a>（NeurIPS 2024）· <a href="../papers/fm/braingpt/">BrainGPT</a>（arXiv 2024）· <a href="../papers/fm/neurolm/">NeuroLM</a>（ICLR 2025）· <a href="../papers/fm/luna/">LUNA</a>（NeurIPS 2025）· <a href="../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a>（ICLR 2026）· <a href="../papers/fm/eegmoe/">EEGMoE</a>（TNNLS 2026）· <a href="../papers/generative/jet/">JET</a>（ICML 2026）· <a href="../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a>（arXiv 2026）。
+每篇的完整方法拆解见站内论文笔记，本文是对外的选读总结；全文判断限于这十篇。</p>
+<h2 id="_1">一、信号如何表示：连续片段与离散码字<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p><strong>连续片段。</strong> <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>（NeurIPS 2023）确立了一种逐通道切段的统一格式：通道可缺、长度可变、缺失即丢 <abbr title="词元，模型处理的最小输入单元">token</abbr>，配合线性注意力处理长序列。它的 <abbr title="词元，模型处理的最小输入单元">token</abbr> 是连续的，没有词表。</p>
+<p><strong>离散码字，三种角色。</strong> 三篇选读把离散码字用在了三个不同位置：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（ICLR 2024）将离散码字用作掩码预测目标——<abbr title="向量量化变分自编码器（离散码本学习框架）">VQ-VAE</abbr> 式码本（8192 个码字），码字只在预训练中充当监督信号，推理时被丢弃。TFM-Tokenizer（ICLR 2026）将离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为下游模型输入——它学的是时频 motif 词表（频域路径显式建模跨频段依赖），论文报告以 1.9M 参数在其对比的任务上取得多项领先结果。NeuroLM（ICLR 2025）将 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 码字并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表，让 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 片段与文本共享同一套离散接口。</p>
+<p><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的重构目标选在傅里叶频谱上。作者给出的解释是：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比导致原始波形不可重构，频谱可以。这一观察出自 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 自己的消融，是它的设计依据，不是跨研究的通用结论。</p>
+<p><strong>电极布局的进入方式。</strong> LUNA（NeurIPS 2025）用可学习查询把不同电极布局映射到固定大小隐空间，时间注意力只在隐空间上进行。论文报告通道维复杂度从平方降到线性——8000 通道时 FLOPs 约为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180——并在 TUAR/TUSL 上取得其对比中的领先结果；代价是隐空间瓶颈，TUAB 上落后全注意力约 1pp。</p>
+<p><strong>跨领域参照。</strong> RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>（arXiv 2026）在射频任务中用预训练视觉编码器处理时频图，为脑电时频图输入提供跨领域参照（<a href="https://arxiv.org/abs/2602.14833">原论文</a>）。论文报告没有 RF 先验的通用 VLM 直接读谱图基本失败——「长得像图」不等于「有对应先验」。它还讨论了通道失配（IQ 不平衡）对时频输入的影响；<abbr title="脑电图 Electroencephalogram">EEG</abbr> 侧可对照的采集问题是电极阻抗失配。这是可对照的两个采集问题，分属两个域，尚无实验说明二者的处理方案可互相迁移。</p>
+<h2 id="_2">二、预训练在预测什么：重构、对齐与下一片段<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>掩码建模这一族里，「掩码后让模型恢复什么」在不同研究之间是不同的选择：</p>
 <ul>
-<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>：Base 500h 在 TUAB 反超 2500h、TUEV 达其 90%+，Huge 在 2500h 仍未饱和；</li>
-<li>NeuroLM：L 与 XL 验证困惑度接近 → 25000h 喂不饱十亿参数；</li>
-<li>BrainGPT：数据 0→1B <abbr title="词元，模型处理的最小输入单元">token</abbr> 性能持续上升但增益趋缓。</li>
+<li><strong>恢复频谱</strong>（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）：掩码片段的傅里叶频谱重构，理由见上节；</li>
+<li><strong>恢复表示</strong>（EEGPT，NeurIPS 2024）：JEPA 式的表示空间对齐 + <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式的信号重构，两个目标并用。作者认为「掩码后恢复什么」比「是否掩码」更重要，在表示空间对齐学到的东西更通用——在其报告的对比中，EEGPT 用 linear probing 达到 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；</li>
+<li><strong>预测下一片段</strong>（BrainGPT，2024）：自回归，不做双向掩码。</li>
 </ul>
-<p>规模瓶颈之外是<strong>域偏斜</strong>：能拿到万小时级的只有临床 TUEG 体系，这解释了为什么 pretrain-then-finetune 在脑机接口类任务上的收益普遍不如临床任务——BrainGPT 甚至观察到预训练 specialist 弱于从头训练。</p>
-<h2 id="20252026">五、2025–2026：问题重心转移的三条新轴线<a class="headerlink" href="#20252026" title="Permanent link">#</a></h2>
-<p>上面的故事止于「怎么表示 <abbr title="脑电图 Electroencephalogram">EEG</abbr>」；2025–2026 的新工作把问题推到了三个新方向。</p>
-<p><strong>轴线一：异构管理——统一还是解耦？</strong> <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据的「不齐」有两个轴。电极拓扑轴上，<strong>LUNA</strong>（NeurIPS 2025）用学习 query + 交叉注意力把任意电极布局压进固定隐空间，时间注意力只在隐空间上进行——通道复杂度从平方降到线性，8000 通道时 FLOPs 仅为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180，TUAR/TUSL 双 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；代价是隐空间瓶颈税（TUAB 落后全注意力约 1pp）。任务/数据集域轴上，<strong>EEGMoE</strong>（TNNLS 2026）实证了多任务联合预训练的梯度冲突，用 Specific+Shared 双专家 MoE 把域差异解耦保留——1.68M 参数（激活 0.89M）就在四个基准上全面超过复现的 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>，专家-任务分工可视化证明解耦真的发生了。两条路线哲学相反（拓扑该抹平、域该解耦），正好各管一个轴。</p>
-<p><strong>轴线二：生成——数据瓶颈的正面进攻。</strong> <strong>JET</strong>（ICML 2026）把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成建模为连续动力过程：条件流匹配学一个把噪声输运到数据分布的向量场，配合三条从 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 统计结构推出的约束（L1 重构抗伪迹、矩一致防漂移、TV+Pearson 保结构）。TS-FID 比强基线降 40%+ 只是表象，更关键的是<strong>下游增强收益为正而 GAN/扩散基线≈0</strong>——生成数据第一次被证明「真的有用」。这直接回应了第四节的数据天花板：临床数据贵且受隐私限制，高保真合成是规模化的替代路径。</p>
-<p><strong>轴线三：跨域镜像。</strong> <strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></strong>（arXiv 2026）在射频域完成了「时频图 + 大模型」的完整落地：谱图直接复用现成 VLM 视觉编码器、纯合成数据零人工标注 SFT。它给 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 研究者两个同样值钱的提醒：通用 VLM（含 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-5）读不懂 RF 谱图（<strong>「长得像图」不等于「有先验」</strong>）；通道失配（IQ 不平衡）是时频输入方案最致命的损伤，而这一点与 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的电极阻抗失配完全同构。</p>
-<h2 id="_3">六、给研究者的四点启示<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<ol>
-<li><strong>做 tokenization 的人该看 TFM</strong>：词表要学、位置编码要去、单通道要独立——三个反直觉设计都有消融支撑；</li>
-<li><strong>做预训练的人该看 EEGPT 与 BrainGPT 的分歧</strong>：掩码 vs 自回归之争目前 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 略胜，但双向建模在「整段理解」任务上的潜力未被证伪；</li>
-<li><strong>做应用的人该看 NeuroLM 的 limitation 章节</strong>：多任务统一模型的现实成本（超参敏感、粗粒度对齐）写得非常坦诚；</li>
-<li><strong>做异构与生成的人该看 2025–2026 这批</strong>：LUNA 证明拓扑可以抹平（1pp 的代价）、EEGMoE 证明域应该解耦（1.68M 就够）、JET 证明生成数据真能提升下游（而 GAN/扩散不能）——三者合起来正好对应「数据异构」与「数据稀缺」两大瓶颈的工程解。</li>
-</ol>
-<h2 id="_4">延伸阅读<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>BrainGPT 做了本选读中唯一一组同架构、同重构损失下的目标对比：在其表 V 的五项下游任务中，自回归的平均准确率高于掩码重构，L2 损失时平均高 2.5 个百分点（<a href="https://arxiv.org/html/2410.19779">BrainGPT §IV-E.3</a>）。作者把原因归于 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序因果结构；这是作者归因，结论限于这组五任务实验，不推广为「掩码建模不适用于 <abbr title="脑电图 Electroencephalogram">EEG</abbr>」。BrainGPT 把参数推到 1.09B，并报告了模型规模与数据量两个维度的 scaling 实验；它的单电极预训练丢掉了空间信息，靠下游的图网络补回来。</p>
+<h2 id="_3">三、怎么适配任务：多任务联合的三种组织方式<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p><strong>任务共享图网络</strong>（BrainGPT）：12 个基准联合训练。按作者的解释，多任务信息的载体不是图结构本身，而是电极节点被多任务梯度共同更新；小任务受益最大（+3.9%），作者视之为隐式数据增强。</p>
+<p><strong>指令微调</strong>（NeuroLM）：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 码字并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表后，用指令统一六种任务。论文如实报告性能仍逊于单任务 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>；「有望泛化到新 prompt」是论文的潜力表述，原文未见泛化实验验证。</p>
+<p><strong>域专属专家</strong>（EEGMoE，TNNLS 2026）：用共享专家与域专属专家建模不同数据域。论文实证了多任务联合预训练中的梯度冲突，专家-任务分工可视化显示解耦在其训练中发生；1.68M 参数（激活 0.89M）在其四个基准上超过其复现的 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>。</p>
+<p>三者的多任务设定不同（联合基准 / 指令统一 / 域分解），结果不能直接互相排序。在本选读范围内，多任务统一模型的价值目前体现在范式与训练效率上，任务数字尚未超过各自对比中的单任务模型。</p>
+<h2 id="_4">四、哪些实验测过数据规模<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>选读范围内，动过「预训练数据量」这个变量的实验有以下几组：</p>
 <ul>
-<li>完整对比：<a href="../comparison/">十四篇方法对比</a>（枢纽页：速览 + 九维度导读，详解在五个主题专题）+ 主题深挖：<a href="../topics/tokenization/">Tokenization 演进</a> · <a href="../topics/pretraining/">预训练范式</a> · <a href="../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> · <a href="../topics/data-landscape/">数据全景</a> · <a href="../topics/base-model/">基座来源</a></li>
+<li><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>：数据量 1–2500h × Base/Large/Huge 的规模消融。论文报告 Base 用 500h 预训练即在 TUAB 反超其 2500h 版本、TUEV 达到后者的 90%+，Huge 在 2500h 仍未饱和；</li>
+<li><strong>NeuroLM</strong>：预训练语料约 2.5 万小时（以 TUEG 临床体系为主）。论文观察到 L 与 XL 两档的验证困惑度接近，作者据此认为当前数据量还撑不起十亿级参数的训练（作者解释，见其 §3.6）；</li>
+<li><strong>REVE</strong>（NeurIPS 2025）：92 个数据集、约 6 万小时，是本选读中公开披露的最大非侵入预训练语料（<a href="https://proceedings.neurips.cc/paper_files/paper/2025/file/20a917f77773ac0fa8bea2bdd6606b66-Paper-Conference.pdf">原文</a>）；</li>
+<li><strong>EEGArena</strong>（arXiv 2026）：固定 REVE-base 架构，把预训练语料从 600 小时扩到 3 万小时，全量微调下被试内 +6.69pp、跨被试 +4.22pp（<a href="https://arxiv.org/html/2609.32743">EEGArena §2.6、§3.4</a>）。</li>
+</ul>
+<p>把这四组并排放在一起可以看到：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的曲线止于 2500h，NeuroLM 的 2.5 万小时是单一临床体系的规模，REVE 的 6 万小时强调数据集多样性，EEGArena 是固定架构后的受控对照。各研究回答的问题不同，本选读范围内拼不出一条「多少小时才够」的通用曲线——2.5 万小时是 NeuroLM 的训练规模，不是领域上限。</p>
+<p>规模之外是<strong>域构成</strong>：万小时级语料目前集中在临床 TUEG 体系。BrainGPT 在其对照中报告，带预训练的 specialist 在部分下游任务上略弱于从头训练的模型，作者归因于癫痫域预训练语料与这些任务之间的域差（<a href="https://arxiv.org/html/2410.19779">§IV-D</a>）。</p>
+<p><strong>生成式补数据</strong>（JET，ICML 2026）：把 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 生成建模为连续动力过程，条件流匹配学习把噪声输运到数据分布的向量场，并施加三条来自 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 统计结构的约束（L1 重构抗伪迹、矩匹配防漂移、TV+Pearson 保结构）。在 TUAB、TUEV、TUSZ 的增强实验中，加入合成数据后下游分类准确率分别提高 2.9、3.2、1.7 个百分点；比较对象为论文自实现的 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-GAN 与 Vanilla Diffusion（<a href="https://y-research-sbu.github.io/JET/#quantitative-comparison">JET 实验表</a>）。论文另报告 TS-FID 比强基线低 40%+。这三种生成器的对照限于该论文的这三项基准，未覆盖其他任务与其他生成器组合。</p>
+<h2 id="_5">五、选读小结<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<p>限于本选读的十篇：</p>
+<ol>
+<li><strong>信号表示</strong>是并列的两类做法——连续片段（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的逐通道切段、LUNA 的固定隐空间）与离散码字（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、TFM-Tokenizer、NeuroLM）。码字的三种角色（监督信号 / 下游输入 / 语言词表并轨）分别对应三篇各自的实验设定，三篇之间没有直接互相对比的实验；</li>
+<li><strong>预训练目标</strong>上，重构域（波形/频谱）、恢复空间（信号/表示）与预测方向（双向/单向）是各研究分别操控的变量；同架构同损失的成对比较在本选读中只有 BrainGPT 表 V 一组；</li>
+<li><strong>数据规模</strong>上，已公开的训练规模从 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 2500h 到 REVE 的约 6 万小时；固定架构扫数据量的受控实验在本选读中只有 EEGArena 一组。</li>
+</ol>
+<p>超出这十篇的领域级结论，本文不做。</p>
+<h2 id="_6">六、几个阅读入口<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
+<ol>
+<li><strong>想把时频结构显式建模进输入</strong>：TFM-Tokenizer 的频带掩码（其消融中频带掩码贡献最大：Kappa +8%，加时间掩码 balanced acc 再 +5%）与 NeuroRVQ 的幅相分离重构（对数幅值 + 圆周相位损失，同数据重构 <abbr title="均方误差 Mean Squared Error">MSE</abbr> 0.016 vs <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 1.071）各自做了什么取舍？对照读<a href="../topics/tokenization/">Tokenization 专题</a>与 <a href="../papers/fm/neurorvq/">NeuroRVQ 笔记</a>；</li>
+<li><strong>想比较预训练目标</strong>：先读 BrainGPT 表 V 的五任务对照（<a href="https://arxiv.org/html/2410.19779">§IV-E.3</a>），再对照 EEGPT 的双目标设计，见<a href="../topics/pretraining/">预训练范式专题</a>；</li>
+<li><strong>想处理跨电极布局与跨数据集</strong>：LUNA 的固定隐空间与 REVE 的 4D 位置编码是两条并列路线；多任务侧对照 BrainGPT 图网络、NeuroLM 指令微调、EEGMoE 域专属专家，见<a href="../topics/multi-task/#channel-adaptation">通道适配与多任务专题</a>与<a href="../topics/data-landscape/">数据全景专题</a>。</li>
+</ol>
+<h2 id="_7">延伸阅读<a class="headerlink" href="#_7" title="Permanent link">#</a></h2>
+<ul>
+<li>完整对比：<a href="../comparison/">十四篇方法对比</a>（枢纽页：速览 + 九维度导读，详解在五个主题专题）+ 主题深挖：<a href="../topics/tokenization/">Tokenization</a> · <a href="../topics/pretraining/">预训练范式</a> · <a href="../topics/multi-task/#channel-adaptation">通道适配与多任务学习</a> · <a href="../topics/data-landscape/">数据全景</a> · <a href="../topics/base-model/">基座来源</a></li>
 <li>架构基础：<a href="../basics/lora/">LoRA</a> · <a href="../basics/attention-alternatives/">Attention 替代方案</a></li>
 <li>每篇精读：见左侧「论文笔记」</li>
 </ul>

@@ -2474,10 +2474,10 @@
 <p class="admonition-title">TL;DR</p>
 <ul>
 <li>痛点有名字：现有 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 普遍只在单一 montage 上预训练（TUH 系 19/21 通道），位置编码查表或卷积都绑死布局——换蒙太奇就退化，尤其 linear probing 场景。REVE 的答案是 <strong>4D 傅里叶位置编码</strong>：每个 patch 的 (x, y, z, t) 直接生成编码，任意电极数、任意信号长度都有定义</li>
-<li>数据：92 数据集 / 24,274 被试 / <strong>61,415h</strong> / 19TB 原始（OpenNeuro 56 集 + TUH 26,847h + MOABB 27 集 + PhysioNet），396 个电极名、10-5 系统——非侵入 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 最大预训练语料；清洗哲学与 <a href="../cbramod/">CBraMod</a> 相反：<strong>不剔</strong> &gt;100µV 段（保住 60,000h vs CBraMod 9,000h / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 2,534h），只剔 &lt;10s 短记录和下游任务数据（防泄漏内建）</li>
+<li>数据：92 数据集 / 24,274 被试 / <strong>61,415h</strong> / 19TB 原始（OpenNeuro 56 集 + TUH 26,847h + MOABB 27 集 + PhysioNet），396 个电极名、10-5 系统——论文称非侵入 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 最大预训练语料；清洗哲学与 <a href="../cbramod/">CBraMod</a> 相反：<strong>不剔</strong> &gt;100µV 段（保住 60,000h vs CBraMod 9,000h / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 2,534h），只剔 &lt;10s 短记录和下游任务数据（防泄漏内建）</li>
 <li>目标：<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> + <strong>时空块掩码</strong>（55%，空间 3cm 半径连续块 + 时间 3s 窗 + 10% 整通道 dropout）+ <strong>全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次损失</strong>（attention pooling 跨全部 MHA 层，λ=0.1）——后者是信息瓶颈，专治 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 末层过拟合，linear probing 平均 0.523→0.558</li>
-<li>结果：10 个下游任务微调平均 <strong>+2.5%</strong> vs CBraMod（BCIC-IV-2a 一项 +12.6pp，但加了基线没有的 Euclidean Alignment 预处理）；linear probing REVE-Large 0.654 vs CBraMod 0.501（<strong>+17%</strong>）；泛化到 30s 睡眠输入与训练没见过的双极 montage</li>
-<li>预训练价值消融是全文最锋利的一张牌：无预训练时 REVE 比 CBraMod 差 8%+，有预训练 REVE <strong>+11%</strong> 而 CBraMod 只 <strong>+2%</strong>——「架构派 vs 预训练派」之争第一次被同框量化</li>
+<li>结果：10 个下游任务微调平均 <strong>+2.5%</strong> vs CBraMod（BCIC-IV-2a 一项 +12.6pp，但加了基线没有的 Euclidean Alignment 预处理）；线性探针均值（表 4，无池化列）REVE-Large 0.654、CBraMod 0.501，差 0.153；泛化到 30s 睡眠输入与训练没见过的双极 montage</li>
+<li>预训练价值消融（Table 3，PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr>）：无预训练时 REVE 0.5409 低于 CBraMod 0.6196（差约 8pp）；有预训练 REVE 0.6480、CBraMod 0.6417（REVE +10.71pp，CBraMod +2.21pp）——「架构派 vs 预训练派」之争被同框量化</li>
 </ul>
 </div>
 <h2 id="1-montage">1 问题定位：montage 绑定是线性探针下的第一瓶颈<a class="headerlink" href="#1-montage" title="Permanent link">#</a></h2>
@@ -2506,9 +2506,10 @@
 <p>与 <a href="../cbramod/">CBraMod</a> 的分歧在剪枝标准：CBraMod 剔掉任意点 &gt;100µV 的整段（换来干净但只剩 9,000h），REVE 全保留（60,000h）。谁的哲学对，看实验。</p>
 <h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
 <p><strong>微调 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>（Table 2/16，balanced accuracy）</strong>：10 任务上对最强基线 CBraMod 平均 <strong>+2.5%</strong>。TUAB 0.8315（vs 0.8289）、TUEV 0.6759（vs 0.6671）、MAT 0.7660（vs 0.7256）、BCIC2020-3 想象语音 0.5635（vs 0.5373）、Mumtaz 0.9644、PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 0.6480；ISRUC 平衡精度 0.7819 略低于 CBraMod 0.7865，但 Kappa 0.7500 更高——且 REVE 修了基线代码里下巴电极混入的 bug（诚实细节 +1）。跨设定泛化是位置编码的兑现处：预训练只见 10s 段，ISRUC/HMC 的 30s 输入照常工作；TUEV 的双极蒙太奇训练里从未出现。</p>
-<p><strong>Linear probing（Table 4）</strong>：REVE-L 平均 0.654，对 CBraMod 0.501 领先 <strong>17%</strong>；TUAB 0.821、ISRUC 0.743、HMC 0.703——EEGPT 之后第二个把「冻结可用」做实的模型，且这里微调协议还是「两步走」（先冻结探针对齐特征空间，再解冻全网络，单次连续训练）+ LoRA on QKVO + Mixup + model souping（≥5 个微调模型权重平均，+1.5%）。</p>
+<p><strong>Linear probing（Table 4）</strong>：均值按列分两种口径——无池化列 REVE-L 0.654 / REVE-B 0.609 / CBraMod 0.501，REVE-L 较 CBraMod 高 0.153；池化列 REVE-L 0.623 / CBraMod 0.373。单项任务取无池化列 REVE-L：Mumtaz 0.980、ISRUC 0.758、HMC 0.710、TUAB 0.809。原文正文概述「接近 17%」的 linear probing 增益——这是作者的表述，其口径与两列均值之差（0.153）不是同一回事，站内以表中均值为准。站内判断：EEGPT 之后第二个把「冻结可用」做实的模型。</p>
+<p><strong>下游微调协议</strong>：微调成绩出自一套复合协议——「两步走」（先冻结探针对齐特征空间，再解冻全网络，单次连续训练）+ LoRA on QKVO + Mixup + model souping（≥5 个微调模型权重平均，+1.5%）。</p>
 <p><strong>预训练价值消融（Table 3）</strong>：PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 上，无预训练时 REVE 0.5409 比 CBraMod 0.6196 差 8%+；加预训练 REVE 涨 <strong>11%</strong>、CBraMod 只涨 <strong>2%</strong>。作者的读法是「REVE 的成绩来自预训练表示，基线来自架构设计」——这句话的反面同样成立：CBraMod 的架构从零初始化就够强，REVE 的架构离了预训练不行。</p>
-<p><strong>稀疏与少样本</strong>：通道递减下 <abbr title="运动想象 Motor Imagery">MI</abbr> 任务优雅退化（64ch 0.824 → 1ch 0.660），想象语音则崩向随机（0.565 → 1ch 0.209）——空间信息密集的任务扛不住剪通道。20-shot 少样本：纯预训练权重 0.723，跨数据集微调后 <strong>0.817</strong>。</p>
+<p><strong>稀疏与少样本</strong>：通道递减下 <abbr title="运动想象 Motor Imagery">MI</abbr> 任务优雅退化（64ch 0.824 → 1ch 0.660），想象语音则退化到接近随机（0.565 → 1ch 0.209）——空间信息密集的任务扛不住剪通道。20-shot 少样本：纯预训练权重 0.723，跨数据集微调后 <strong>0.817</strong>。</p>
 <h2 id="_1">架构图<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/reve-framework.png" data-desc-position="bottom"><img alt="Figure 1 · REVE 预训练框架：BIOT 式重叠切段 → 4D 时空位置编码（坐标 + 噪声）→ 时空块掩码 → encoder 只看可见部分 → decoder 重构被掩 patch（主任务）；全部 MHA 层输出经 attention pooling 蒸馏成单一全局 token 再重构（二次任务），两项均 L1" src="../../../assets/reve-framework.png"></a></p>
 <p><em>Figure 1 · 主任务沿 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 骨架，差异在 4D 位置编码（黄线）、块掩码与 L1；二次任务（右上）从各层输出池化全局 <abbr title="词元，模型处理的最小输入单元">token</abbr>，构成信息瓶颈</em></p>

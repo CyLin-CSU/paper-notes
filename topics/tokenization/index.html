@@ -2848,7 +2848,7 @@
 <tr>
 <th>方案</th>
 <th>做法</th>
-<th>问题</th>
+<th>已知代价 / 相关消融</th>
 </tr>
 </thead>
 <tbody>
@@ -2875,12 +2875,12 @@
 <tr>
 <td>CBraMod</td>
 <td>rFFT 能量与时域 conv 相加进 embedding</td>
-<td>消融：时+频 &gt; 纯时 &gt; 纯频</td>
+<td>消融：时+频 &gt; 纯时 &gt; 纯频（该表不构成优劣结论）</td>
 </tr>
 <tr>
 <td>LUNA</td>
 <td>FFT 幅相经 MLP 与时域 conv 相加</td>
-<td>消融：<strong>去掉后掉分最多的组件</strong>（AUROC 至 -0.011）</td>
+<td>消融：<strong>去掉后掉分最多的组件</strong>（AUROC 至 -0.011，该表不构成优劣结论）</td>
 </tr>
 <tr>
 <td>NeuroRVQ</td>

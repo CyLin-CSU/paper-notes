@@ -2363,7 +2363,7 @@
 <h2 id="1-eeg">1 问题定位:视觉解码的 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据集缺口<a class="headerlink" href="#1-eeg" title="Permanent link">#</a></h2>
 <p>论文开篇的处境描述与站内 <a href="../guided/">GUIDED</a> 笔记的框架一致:fMRI/MEG 靠大资源(NSD:8 人 × 10,000 图 × 一年)撑起了重建高潮,<abbr title="脑电图 Electroencephalogram">EEG</abbr> 便宜、便携、毫秒级,却受限于三条:(1) 缺大规模高质量数据集;(2) 标注粒度粗,做不了细粒度分析;(3) 普遍用 block 设计——同类图像连块呈现,<abbr title="脑电图 Electroencephalogram">EEG</abbr> 信号在刺激前后带上时间标记,Li et al. 2020a 已证明这会虚高 within-session 分类结果。对现有数据集的点名批评有两个:Spampinato 2017(6 人 2,000 图)规模小;Things-EEG1/2 用 50/100 ms 的极短 RSVP,「只有早期神经响应被捕获」,研究不了完整的视觉时程。</p>
 <p>作者的三个设计对应三条批评:4,000 图 + 两级粒度标注对规模与粒度;两阶段跨时间设计对 block 混淆。值得注意的是出发点:这是清华 IR 组(THUIR)的作品——Yiqun Liu 组此前有 brain-machine search interface 的 SIGIR Forum 立项文章、<abbr title="脑电图 Electroencephalogram">EEG</abbr>-SVRec、TOIS 的 relevance feedback with brain signals,视觉解码基准服务于「图像搜索 <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr>」的长期议程,所以 cross-time(用户隔周回访)和随机乱序(搜索结果不会按类分块出现)是第一需求,而非神经科学的事后补充。</p>
-<p>作为基准类论文,本文的主产品不是方法而是<strong>测量</strong>:图 2 的任务划分协议和 Table 2/3 的崩塌数字。被评模型是配角(作者自己在 Limitation 里承认没纳入最新方法)。</p>
+<p>作为基准类论文,本文的主产品不是方法而是<strong>测量</strong>:图 2 的任务划分协议和 Table 2/3 的三种设定成绩数字。被评模型是配角(作者自己在 Limitation 里承认没纳入最新方法)。</p>
 <h2 id="2">2 基准设计:数据集、两阶段范式与四个任务<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <h3 id="21">2.1 数据集与采集<a class="headerlink" href="#21" title="Permanent link">#</a></h3>
 <ul>
