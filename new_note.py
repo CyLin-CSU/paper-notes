@@ -8,7 +8,7 @@
   python new_note.py log "更新说明文字"
   # 例：python new_note.py log "新增 CBraMod 精读"
 
-group 取值：fm（EEG 基础模型）/ generative（生成式模型）/ survey（综述与轴外）。
+group 取值：fm（EEG 基础模型）/ generative（生成式模型）/ reviews（综述与观点）/ survey（相关研究）。
 note 子命令会生成 docs/papers/<group>/<slug>.md（含架构图占位），文件名不带阅读日期；
 之后核对发表年份，在 mkdocs.yml 的 nav 对应分组里登记。
 log 子命令会在首页时间线插入今天的条目，并自动刷新"最近更新"日期。
@@ -62,7 +62,7 @@ def today() -> str:
     return datetime.date.today().isoformat()
 
 
-GROUPS = {"fm": "EEG 基础模型", "generative": "生成式模型", "survey": "相关研究"}
+GROUPS = {"fm": "EEG 基础模型", "generative": "生成式模型", "reviews": "综述与观点", "survey": "相关研究"}
 
 
 def cmd_note(group: str, slug: str, title: str) -> None:

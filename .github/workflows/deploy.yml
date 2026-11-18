@@ -23,6 +23,10 @@ jobs:
       - name: Install dependencies
         run: pip install mkdocs-material mkdocs-glightbox jieba pymdown-extensions
 
+      # 数据关系与计数先于构建：ID 唯一性、引用完整性、front matter 一致性（方案 H）
+      - name: Validate structured data
+        run: python tools/check_data.py
+
       - name: Build site (strict)
         run: python -m mkdocs build --strict
 

@@ -1,0 +1,212 @@
+[
+  {
+    "evidence_id": "reve-t3-pretrain-gain-mi",
+    "paper_id": "reve",
+    "source": "Table 3",
+    "model_id": "reve-base",
+    "dataset": "physionet-mi",
+    "protocol": "微调",
+    "metric": "balanced accuracy",
+    "value": {
+      "reve_with_pretrain": 0.648,
+      "reve_scratch": 0.5409,
+      "cbra_mod_with_pretrain": 0.6417,
+      "cbra_mod_scratch": 0.6196
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "预训练价值消融（PhysioNet-MI 单任务）；REVE +10.71pp / CBraMod +2.21pp 的差值由两行相减得出，因果解释为作者观点"
+  },
+  {
+    "evidence_id": "reve-t2-finetune-avg",
+    "paper_id": "reve",
+    "source": "Table 2 / Table 16",
+    "model_id": "reve-base",
+    "dataset": null,
+    "protocol": "微调（两步 + LoRA + Mixup + souping 复合协议）",
+    "metric": "10 任务平均 balanced accuracy 相对 CBraMod",
+    "value": {
+      "delta_vs_cbramod_pp": 2.5
+    },
+    "unit": "pp",
+    "split": "各任务原生划分",
+    "status": "verified",
+    "note": "BCIC-IV-2a 一项 +12.6pp 含基线未用的 Euclidean Alignment 预处理，不能直读为模型增益（其表 2 口径注意项）"
+  },
+  {
+    "evidence_id": "reve-t4-lp-mean",
+    "paper_id": "reve",
+    "source": "Table 4",
+    "model_id": "reve-large",
+    "dataset": null,
+    "protocol": "线性探针",
+    "metric": "8 任务平均准确率（无池化列）",
+    "value": {
+      "reve_large": 0.654,
+      "reve_base": 0.609,
+      "cbramod": 0.501
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "池化列另为 REVE-L 0.623 / CBraMod 0.373；原文正文「接近 17%」为作者表述，与两列均值差（0.153）非同一口径"
+  },
+  {
+    "evidence_id": "reve-t18-block-mask",
+    "paper_id": "reve",
+    "source": "Table 18",
+    "model_id": "reve-small",
+    "dataset": null,
+    "protocol": "冻结 / 微调两种评测",
+    "metric": "平均任务表现",
+    "value": {
+      "block_55_frozen": 0.558,
+      "block_55_ft": 0.665,
+      "random_55_frozen": 0.55,
+      "random_25_frozen": 0.523
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "块掩码 55% 为最优点；随机掩码最优比例 25% 且冻结端仍更差"
+  },
+  {
+    "evidence_id": "reve-t17-global-token",
+    "paper_id": "reve",
+    "source": "Table 17",
+    "model_id": "reve-small",
+    "dataset": null,
+    "protocol": "线性探针与微调对照",
+    "metric": "平均任务表现",
+    "value": {
+      "lp_with_global": 0.558,
+      "lp_without_global": 0.523,
+      "ft_with_global": 0.665,
+      "ft_without_global": 0.612
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "全局 token 二次损失主要收益在冻结特征质量"
+  },
+  {
+    "evidence_id": "labram-data-scaling-tuab",
+    "paper_id": "labram",
+    "source": "其数据量消融图（转引自选读页 §四）",
+    "model_id": "labram-base",
+    "dataset": "tuab",
+    "protocol": "微调",
+    "metric": "准确率",
+    "value": {
+      "note": "Base 用 500h 预训练即在 TUAB 反超其 2500h 版本；~1000h 后曲线趋平（Kuruppu §5.2 转述）"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "站内未逐点核对其消融原图，量级结论以两处综述转述为准；引用具体点位前回原文"
+  },
+  {
+    "evidence_id": "eegarena-data-scaling-intrasubject",
+    "paper_id": "eegarena",
+    "source": "§2.6、§3.4",
+    "model_id": "reve-base",
+    "dataset": null,
+    "protocol": "全量微调（固定架构）",
+    "metric": "平衡准确率增量",
+    "value": {
+      "intrasubject_gain_pp": 6.69,
+      "crosssubject_gain_pp": 4.22
+    },
+    "unit": "pp",
+    "split": "被试内 / 跨被试",
+    "status": "verified",
+    "note": "预训练语料 600h → 30,000h 的受控对照（固定 REVE-base 架构）"
+  },
+  {
+    "evidence_id": "eegarena-params-not-predictive",
+    "paper_id": "eegarena",
+    "source": "§3（RQ3）",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "统一管线横评",
+    "metric": "参数量与综合名次相关性",
+    "value": {
+      "conclusion": "参数量不预测性能"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "30 FM × 57 任务的横评结论（其 §3）"
+  },
+  {
+    "evidence_id": "kuruppu-lp-ft-gap",
+    "paper_id": "kuruppu-critical-review",
+    "source": "§5.2 与其图 4(a)",
+    "model_id": null,
+    "dataset": null,
+    "protocol": "线性探针 vs 全量微调（综述转述）",
+    "metric": "定性结论",
+    "value": {
+      "conclusion": "五个报告 LP 的模型全线落后于 FT 与部分监督基线"
+    },
+    "unit": "",
+    "split": "",
+    "status": "verified",
+    "note": "外推为普遍规律证据不足（涉及五模型不同任务与指标），比较须注明各自设定"
+  },
+  {
+    "evidence_id": "kuruppu-tuab-auc-range",
+    "paper_id": "kuruppu-critical-review",
+    "source": "§4.3 与其图 3(a)",
+    "model_id": null,
+    "dataset": "tuab",
+    "protocol": "微调",
+    "metric": "AUC 跨模型范围",
+    "value": {
+      "range": [
+        0.86,
+        0.92
+      ]
+    },
+    "unit": "",
+    "split": "TUAB 官方划分",
+    "status": "verified",
+    "note": "仅 4 个 FM 可比；TUEV F1 范围 0.70–0.83（图 3(b)）"
+  },
+  {
+    "evidence_id": "jet-augmentation-tuab",
+    "paper_id": "jet",
+    "source": "JET 实验表（项目页 quantitative-comparison）",
+    "model_id": "jet-generator",
+    "dataset": "tuab",
+    "protocol": "生成数据增强后的下游分类",
+    "metric": "准确率增量",
+    "value": {
+      "gain_pp": 2.9
+    },
+    "unit": "pp",
+    "split": "",
+    "status": "verified",
+    "note": "对照为论文自实现 EEG-GAN 与 Vanilla Diffusion；TUEV +3.2pp、TUSZ +1.7pp 为同表另两列"
+  },
+  {
+    "evidence_id": "yao-mi-eegnet-beats-fm",
+    "paper_id": "yao-eegfm-survey",
+    "source": "§6.4（其表 3 正文口径）",
+    "model_id": null,
+    "dataset": "bcic-iv-2a",
+    "protocol": "全参微调 / 从头训练（LOSO）",
+    "metric": "准确率",
+    "value": {
+      "eegnet_2a": 0.6879,
+      "eegnet_2b": 0.7321,
+      "bendr_2a": 0.4899,
+      "eegpt_2a": 0.5846
+    },
+    "unit": "",
+    "split": "LOSO",
+    "status": "verified",
+    "note": "统一协议自跑；EEGNet 0.003M 参数，FM 最高者仍低 8pp 以上（BCIC IV-2a）"
+  }
+]

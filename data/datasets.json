@@ -1,0 +1,90 @@
+[
+  {
+    "dataset_id": "tuab",
+    "name": "TUAB",
+    "aliases": ["Temple University Abnormal EEG"],
+    "homepage": "https://isip.piconepress.com/projects/tuh_eeg/",
+    "access": "registration",
+    "parent": "tueg",
+    "task": "异常/正常二分类",
+    "config": "23ch / 256Hz / 10s 片段",
+    "usage_note": "多篇 FM 的下游评估（数据集索引矩阵 P/D 记录）"
+  },
+  {
+    "dataset_id": "tuev",
+    "name": "TUEV",
+    "aliases": ["Temple University EEG Events"],
+    "homepage": "https://isip.piconepress.com/projects/tuh_eeg/",
+    "access": "registration",
+    "parent": "tueg",
+    "task": "事件分类（6 类）",
+    "config": "23ch / 256Hz / 5s 片段",
+    "usage_note": "同上；CBraMod 有防泄漏重训版"
+  },
+  {
+    "dataset_id": "tueg",
+    "name": "TUEG",
+    "aliases": ["TUH EEG Corpus", "TUH EEG Corpus v2.0.0"],
+    "homepage": "https://isip.piconepress.com/projects/tuh_eeg/",
+    "access": "registration",
+    "parent": null,
+    "task": "临床 EEG 语料（多任务来源）",
+    "config": "17–23ch / 250–1024Hz",
+    "usage_note": "多数 FM 的预训练主料；清洗口径各异（REVE 不剔 >100µV，CBraMod 清洗版 >9000h）"
+  },
+  {
+    "dataset_id": "bcic-iv-2a",
+    "name": "BCI Competition IV-2a",
+    "aliases": ["BCIC4-2a", "BCIC IV 2a", "Graz data set a"],
+    "homepage": "http://www.bbci.de/competition/iv/",
+    "access": "open",
+    "parent": null,
+    "task": "运动想象（4 类）",
+    "config": "22ch / 250Hz",
+    "usage_note": "MI 基准；REVE 在此任务加了 Euclidean Alignment 预处理（其表 2 口径注意项）"
+  },
+  {
+    "dataset_id": "physionet-mi",
+    "name": "PhysioNet EEG Motor Movement/Imagery",
+    "aliases": ["PhysioMI", "EEGMMIDB", "EEG Motor Movement/Imagery Dataset"],
+    "homepage": "https://physionet.org/content/eegmmidb/1.0.0/",
+    "access": "open",
+    "parent": null,
+    "task": "运动想象与执行",
+    "config": "64ch / 160Hz / 109 被试",
+    "usage_note": "EEGPT/LaBraM/NeuroLM/EEGMoE 预训练语料之一；REVE 表 3 消融所在任务"
+  },
+  {
+    "dataset_id": "seed-v",
+    "name": "SEED-V",
+    "aliases": ["SEED Series"],
+    "homepage": "https://bcmi.sjtu.edu.cn/home/seed/seed-v.html",
+    "access": "registration",
+    "parent": null,
+    "task": "情绪识别（5 类）",
+    "config": "62ch / 1000Hz / 20 被试（开源版 16）",
+    "usage_note": "LaBraM/CBraMod 下游；开源版与全量版被试数有差异（数据集索引注）"
+  },
+  {
+    "dataset_id": "tusz",
+    "name": "TUSZ",
+    "aliases": ["Temple University Hospital Seizure Corpus"],
+    "homepage": "https://isip.piconepress.com/projects/tuh_eeg/",
+    "access": "registration",
+    "parent": "tueg",
+    "task": "癫痫事件检测",
+    "config": "19–23ch / 256Hz / 1138.5h",
+    "usage_note": "LaBraM/NeuroLM 预训练成分；MENTALITY（站外）同分布评测案例"
+  },
+  {
+    "dataset_id": "chb-mit",
+    "name": "CHB-MIT Scalp EEG",
+    "aliases": ["CHB-MIT"],
+    "homepage": "https://physionet.org/content/chbmit/1.0.0/",
+    "access": "open",
+    "parent": null,
+    "task": "癫痫检测（2 类）",
+    "config": "23 患者（儿科）/ 16 双极导联 / 256Hz",
+    "usage_note": "CBraMod/JET 下游；双极导联为多数头皮 FM 训练未见的 montage 形态"
+  }
+]

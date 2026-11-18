@@ -1,0 +1,93 @@
+[
+  {
+    "model_id": "reve-small",
+    "paper_id": "reve",
+    "name": "REVE-Small",
+    "params_m": 12,
+    "input": "连续 patch",
+    "layout": "任意（4D 傅里叶位置编码，坐标 + 时间）",
+    "training_stage": "MAE 主任务 + 全局 token 二次损失（λ=0.1）",
+    "weights": "open",
+    "weights_note": "encoder 权重开源；MAE decoder 因隐私不发布（其复现速查卡）",
+    "license": null,
+    "source": "REVE 论文 §2.4 与项目页"
+  },
+  {
+    "model_id": "reve-base",
+    "paper_id": "reve",
+    "name": "REVE-Base",
+    "params_m": 69,
+    "input": "连续 patch",
+    "layout": "任意（4D 傅里叶位置编码）",
+    "training_stage": "同 reve-small；约 260 A100 GPU 小时预训练",
+    "weights": "open",
+    "weights_note": "同上",
+    "license": null,
+    "source": "REVE 论文 §2.4"
+  },
+  {
+    "model_id": "reve-large",
+    "paper_id": "reve",
+    "name": "REVE-Large",
+    "params_m": 408,
+    "input": "连续 patch",
+    "layout": "任意（4D 傅里叶位置编码）",
+    "training_stage": "同 reve-base",
+    "weights": "open",
+    "weights_note": "同上",
+    "license": null,
+    "source": "REVE 论文 §2.4"
+  },
+  {
+    "model_id": "labram-base",
+    "paper_id": "labram",
+    "name": "LaBraM-Base",
+    "params_m": 5.8,
+    "input": "连续 patch（encoder）；预训练目标为离散码字",
+    "layout": "固定 10-20（空间 PE 绑定布局）",
+    "training_stage": "VQ 神经 tokenizer（频谱重构）+ 掩码码字预测主模型",
+    "weights": "open",
+    "weights_note": "Base 权重开源（comparison.md 开源表）",
+    "license": null,
+    "source": "LaBraM 论文；站内 comparison.md 规模节"
+  },
+  {
+    "model_id": "labram-large",
+    "paper_id": "labram",
+    "name": "LaBraM-Large",
+    "params_m": 46,
+    "input": "同 labram-base",
+    "layout": "固定 10-20",
+    "training_stage": "同 labram-base",
+    "weights": "none",
+    "weights_note": "Large/Huge 权重未开源；各家论文引用其数字多引自原文（站内 comparison.md 开源表注）",
+    "license": null,
+    "source": "站内 comparison.md 规模效率节"
+  },
+  {
+    "model_id": "labram-huge",
+    "paper_id": "labram",
+    "name": "LaBraM-Huge",
+    "params_m": 369,
+    "input": "同 labram-base",
+    "layout": "固定 10-20",
+    "training_stage": "同 labram-base",
+    "weights": "none",
+    "weights_note": "权重未开源",
+    "license": null,
+    "source": "站内 comparison.md 规模效率节"
+  },
+  {
+    "model_id": "jet-generator",
+    "paper_id": "jet",
+    "name": "JET 生成器",
+    "params_m": 129.9,
+    "input": "连续波形（生成输出）",
+    "layout": "条件注入（adaLN）",
+    "training_stage": "条件流匹配 + 三条生理结构约束",
+    "weights": "partial",
+    "weights_note": "以项目页为准（comparison.md：声明将放出）",
+    "license": null,
+    "source": "JET 论文；站内 jet.md"
+  }
+]
