@@ -14,7 +14,7 @@ import pathlib
 import re
 import sys
 
-GROUPS = ("fm", "generative", "survey")
+GROUPS = ("fm", "generative", "survey", "reviews")
 NAV_RE = re.compile(r"papers/(" + "|".join(GROUPS) + r")/([a-z0-9-]+)\.md")
 TITLE_RE = re.compile(r"^###\s+.*（(\d+)\s*篇）", re.M)
 
@@ -57,10 +57,8 @@ def main(root: pathlib.Path) -> int:
     for m in TITLE_RE.finditer(index_text):
         print(f"[check-home-count] 首页分组标题计数：{m.group(0).strip()}")
 
-    # 综述小节（#### 综述与观点（4 篇））与 survey 组文件数的关系提示
-    survey_n = len(files["survey"])
-    print(f"[check-home-count] 合计 {total} 篇（survey 组含综述 {survey_n} 篇，"
-          f"其中综述与观点小节单列展示）")
+    # 综述独立分组（reviews）提示
+    print(f"[check-home-count] 合计 {total} 篇（reviews 组综述 {len(files['reviews'])} 篇单列展示）")
 
     if problems:
         print()

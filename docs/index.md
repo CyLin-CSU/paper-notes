@@ -8,11 +8,11 @@ title: 首页
 
 **[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)** ｜ **[从哪篇综述读起](blog-2023-2026.md#综述速览)**
 
-按任务直达：**看预训练目标** → [预训练范式对比](topics/pretraining.md) ｜ **查数据集与规模** → [数据全景专题](topics/data-landscape.md) · [数据集索引](datasets.md) ｜ **读领域综述** → [综述与观点（4 篇）](#papers-survey-reviews) ｜ **比通道适配方案** → [通道适配与多任务](topics/multi-task.md)
+按任务直达：**看预训练目标** → [预训练范式对比](topics/pretraining.md) ｜ **查数据集与规模** → [数据全景专题](topics/data-landscape.md) · [数据集索引](datasets.md) ｜ **读领域综述** → [综述与观点（4 篇）](#papers-reviews) ｜ **比通道适配方案** → [通道适配与多任务](topics/multi-task.md)
 
 ## 论文库 {: #papers }
 
-分组直达：[EEG 基础模型](#papers-fm) · [生成式模型](#papers-generative) · [相关研究](#papers-survey) · [综述与观点](#papers-survey-reviews)
+分组直达：[EEG 基础模型](#papers-fm) · [生成式模型](#papers-generative) · [综述与观点](#papers-reviews) · [相关研究](#papers-survey)
 
 ### EEG 基础模型（15 篇） {: #papers-fm }
 
@@ -42,6 +42,15 @@ title: 首页
 | [EEGDM](papers/generative/eegdm.md) | arXiv 2026 · 25M | EEG 表示引导潜空间扩散，去噪任务训练编码器 |
 | [Not-All-EEG](papers/generative/not-all-eeg.md) | arXiv 2026 | 按位置难度调整流匹配时间调度 |
 
+### 综述与观点（4 篇） {: #papers-reviews }
+
+| 综述 | 发表 | 读它回答什么 |
+|---|---|---|
+| [EEG FM 综述 (Yao)](papers/reviews/yao-eegfm-survey.md) | JNE 2025 | 预训练三路线怎么选：掩码/自回归/对比横评 + 自跑 10 模型 × 6 数据集 |
+| [表示学习与 FM 综述 (Chen)](papers/reviews/chen-representation-learning-review.md) | IEEE SPM 2025 | 组件怎么拆：19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项对照 |
+| [EEG FM 批判综述 (Kuruppu)](papers/reviews/kuruppu-critical-review.md) | JNE 2026 | 现状可信吗：评测异质、scaling 证据弱、LP 落后 FT 的证据清单 |
+| [神经信号 FM 观点 (Kwon)](papers/reviews/kwon-neural-fm-perspective.md) | EJN 2026 | 下一步做什么：生理目标/结构先验/可解释三原则的规范性主张 |
+
 ### 相关研究（9 篇） {: #papers-survey }
 
 | 论文 | 发表 | 方法一句话 |
@@ -55,15 +64,6 @@ title: 首页
 | [LTFT](papers/survey/learnable-tf.md) | TETCI 2026 | 时频变换窗口设为可学习参数的信号前端 |
 | [RF-GPT](papers/survey/rf-gpt.md) | arXiv 2026 | 射频时频图接入 VLM，合成数据训练信号理解 |
 | [EEGArena](papers/survey/eegarena.md) | arXiv 2026 | 30 FM × 25 基线 × 57 任务的统一评测 |
-
-#### 综述与观点（4 篇） {: #papers-survey-reviews }
-
-| 综述 | 发表 | 读它回答什么 |
-|---|---|---|
-| [EEG FM 综述 (Yao)](papers/survey/yao-eegfm-survey.md) | JNE 2025 | 预训练三路线怎么选：掩码/自回归/对比横评 + 自跑 10 模型 × 6 数据集 |
-| [表示学习与 FM 综述 (Chen)](papers/survey/chen-representation-learning-review.md) | IEEE SPM 2025 | 组件怎么拆：19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项对照 |
-| [EEG FM 批判综述 (Kuruppu)](papers/survey/kuruppu-critical-review.md) | JNE 2026 | 现状可信吗：评测异质、scaling 证据弱、LP 落后 FT 的证据清单 |
-| [神经信号 FM 观点 (Kwon)](papers/survey/kwon-neural-fm-perspective.md) | EJN 2026 | 下一步做什么：生理目标/结构先验/可解释三原则的规范性主张 |
 
 ## 主题专题与架构基础 {: #topics }
 
@@ -90,7 +90,7 @@ title: 首页
 
 <ul class="timeline" id="home-timeline" markdown>
 
-- **2026-11-18** · 综述四篇齐发：[Yao（JNE 2025）](papers/survey/yao-eegfm-survey.md) 自跑 10 模型 × 6 数据集，FM 赢临床域、输 MI，根子在被癫痫数据主导的预训练域 · [Chen（IEEE SPM 2025）](papers/survey/chen-representation-learning-review.md) 19 模型按词元化/嵌入/位置编码/骨干/损失逐项拆表 · [Kuruppu（JNE 2026）](papers/survey/kuruppu-critical-review.md) 三支柱批判：评测异质、scaling 证据弱、LP 落后 FT · [Kwon & Shin（EJN 2026）](papers/survey/kwon-neural-fm-perspective.md) 生理先验/结构感知/可解释三原则，判现存 FM 为第一代（其 CBraMod「对比目标」转述与原文不符，站内已标注）
+- **2026-11-18** · 综述四篇齐发：[Yao（JNE 2025）](papers/reviews/yao-eegfm-survey.md) 自跑 10 模型 × 6 数据集，FM 赢临床域、输 MI，根子在被癫痫数据主导的预训练域 · [Chen（IEEE SPM 2025）](papers/reviews/chen-representation-learning-review.md) 19 模型按词元化/嵌入/位置编码/骨干/损失逐项拆表 · [Kuruppu（JNE 2026）](papers/reviews/kuruppu-critical-review.md) 三支柱批判：评测异质、scaling 证据弱、LP 落后 FT · [Kwon & Shin（EJN 2026）](papers/reviews/kwon-neural-fm-perspective.md) 生理先验/结构感知/可解释三原则，判现存 FM 为第一代（其 CBraMod「对比目标」转述与原文不符，站内已标注）
 
 - **2026-11-06** · 新增 [Uni-NTFM](papers/fm/uni-ntfm.md) 精读，拆解时域与频域双向交叉注意力、分层拓扑嵌入和双域掩码重建。
 

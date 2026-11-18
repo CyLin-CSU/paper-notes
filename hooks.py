@@ -46,6 +46,15 @@ DATE_PREFIX_SLUGS = {
     '1104-neurorvq': 'neurorvq',
 }
 
+# 组间迁移旧地址 → 当前 slug。key 可含分组目录（如 'survey/<slug>'），
+# 对应旧地址 papers/survey/<slug>/；'papers/<key>/' 整体作为重定向页写入。
+GROUP_MOVE_SLUGS = {
+    'survey/yao-eegfm-survey': 'yao-eegfm-survey',
+    'survey/chen-representation-learning-review': 'chen-representation-learning-review',
+    'survey/kuruppu-critical-review': 'kuruppu-critical-review',
+    'survey/kwon-neural-fm-perspective': 'kwon-neural-fm-perspective',
+}
+
 REDIRECT_TEMPLATE = (
     '<!doctype html><html lang="zh"><meta charset="utf-8">'
     '<meta http-equiv="refresh" content="0; url={rel}">'
@@ -148,15 +157,19 @@ def _paper_pages(config) -> dict:
     """从构建产物收集 papers/<group>/<slug>/ → 页面目录 URL（如 fm/biot/）。
 
     on_post_build 阶段 config 里已不含文件集合，且 mkdocs 每次构建会先清空
-    site 目录，因此产物目录就是当前分类的事实源。
+    site 目录，因此产物目录就是当前分类的事实源。含 meta refresh 的页面
+    是历史迁移留下的重定向页，不算当前论文页。
     """
     pages = {}
     seen = {}
-    group_dirs = {"fm", "generative", "survey"}
+    group_dirs = {"fm", "generative", "survey", "reviews"}
+    redirect_re = re.compile(r'http-equiv="refresh"')
     for idx in (pathlib.Path(config["site_dir"]) / "papers").glob("*/*/index.html"):
         group, slug = idx.parent.parent.name, idx.parent.name
         if group not in group_dirs:
             continue
+        if redirect_re.search(idx.read_text(encoding="utf-8")):
+            continue  # 旧地址重定向页（组间迁移），不是当前论文页
         if slug in seen and seen[slug] != group:
             raise RuntimeError(f"论文 slug 重复：{slug} 同时位于 papers/{seen[slug]}/ 与 papers/{group}/")
         seen[slug] = group
@@ -168,8 +181,10 @@ def on_post_build(config, **kwargs):
     site = pathlib.Path(config["site_dir"])
     pages = _paper_pages(config)
 
-    # 重定向来源：日期前缀地址 + 无前缀旧址（reve / uni-ntfm 等无前缀出生的也覆盖）
+    # 重定向来源：日期前缀地址 + 组间迁移旧地址 + 无前缀旧址
+    # （reve / uni-ntfm 等无前缀出生的也覆盖）
     sources = dict(DATE_PREFIX_SLUGS)
+    sources.update(GROUP_MOVE_SLUGS)
     for slug in pages:
         sources.setdefault(slug, slug)
 

@@ -3,7 +3,8 @@
 
 期望映射（单一事实源）：
   1. hooks.DATE_PREFIX_SLUGS 的日期前缀旧址；
-  2. site/papers/<group>/<slug>/ 收集到的全部当前 slug 的无前缀旧址。
+  2. hooks.GROUP_MOVE_SLUGS 的组间迁移旧地址（如 survey/<slug> → reviews/<slug>）；
+  3. site/papers/<group>/<slug>/ 收集到的全部当前 slug 的无前缀旧址。
 逐项检查：重定向页存在、meta refresh 落点与 hooks 的相对路径算法一致、
 无自环、meta 落点与回退链接一致、目标页本身不是重定向（无跳转链）；
 site 中出现期望清单之外的重定向页同样报错。
@@ -17,19 +18,24 @@ import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
-from hooks import DATE_PREFIX_SLUGS  # noqa: E402  与构建钩子共用同一份映射
+from hooks import DATE_PREFIX_SLUGS, GROUP_MOVE_SLUGS  # noqa: E402
 
 REDIRECT_RE = re.compile(r'http-equiv="refresh" content="0; url=([^"]+)"')
 LINK_RE = re.compile(r'<a href="([^"]+)">')
-GROUPS = {"fm", "generative", "survey"}
+GROUPS = {"fm", "generative", "survey", "reviews"}
 
 
 def collect_pages(papers: pathlib.Path) -> dict:
-    """当前论文页：site/papers/<group>/<slug>/index.html → 'group/slug/'。"""
+    """当前论文页：site/papers/<group>/<slug>/index.html → 'group/slug/'。
+
+    含 meta refresh 的页面是组间迁移留下的旧地址重定向页，跳过。
+    """
     pages, seen = {}, {}
     for idx in sorted(papers.glob("*/*/index.html")):
         group, slug = idx.parent.parent.name, idx.parent.name
         if group not in GROUPS:
+            continue
+        if REDIRECT_RE.search(idx.read_text(encoding="utf-8")):
             continue
         if slug in seen and seen[slug] != group:
             raise SystemExit(f"[check-redirects] 论文 slug 跨分组重复：{slug}")
@@ -39,16 +45,29 @@ def collect_pages(papers: pathlib.Path) -> dict:
 
 
 def collect_old_redirects(papers: pathlib.Path) -> dict:
-    """site 中实际存在的旧地址重定向页：papers/<old>/index.html → (meta_url, link_url)。"""
+    """site 中实际存在的旧地址重定向页 → (meta_url, link_url)。
+
+    旧地址形态两种：papers/<old>/index.html（一层，日期前缀与无前缀旧址）、
+    papers/<group>/<old-slug>/index.html（两层，组间迁移旧址）。
+    """
     found = {}
+    # 一层：papers/<old>/index.html
     for idx in sorted(papers.glob("*/index.html")):
         if idx.parent.name in GROUPS:
-            continue  # 分组目录自身（fm/generative/survey）不是旧地址页
+            continue
         html = idx.read_text(encoding="utf-8")
         m = REDIRECT_RE.search(html)
         if m:
             a = LINK_RE.search(html)
             found[idx.parent.name] = (m.group(1), a.group(1) if a else None)
+    # 两层：papers/<group>/<old-slug>/index.html 且内容是重定向页
+    for idx in sorted(papers.glob("*/*/index.html")):
+        html = idx.read_text(encoding="utf-8")
+        m = REDIRECT_RE.search(html)
+        if m:
+            old = f"{idx.parent.parent.name}/{idx.parent.name}"
+            a = LINK_RE.search(html)
+            found[old] = (m.group(1), a.group(1) if a else None)
     return found
 
 
@@ -67,8 +86,9 @@ def main(site_dir: str) -> int:
         print("[check-redirects] 未找到任何论文页")
         return 1
 
-    # 期望映射：日期前缀旧址 + 每个当前 slug 的无前缀旧址
+    # 期望映射：日期前缀 + 组间迁移 + 每个当前 slug 的无前缀旧址
     expected = dict(DATE_PREFIX_SLUGS)
+    expected.update(GROUP_MOVE_SLUGS)
     for slug in pages:
         expected.setdefault(slug, slug)
 
