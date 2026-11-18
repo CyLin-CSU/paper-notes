@@ -608,7 +608,7 @@
     "code": null,
     "status": "精读",
     "verified_date": "2026-11-18",
-    "one_liner": "信号处理杂志视角的 EEG FM 全景：19 个模型按词元化/嵌入/位置编码/骨干/损失逐项拆表，外加迁移学习四类地图与三个落地案例"
+    "one_liner": "信号处理杂志视角的 EEG FM 全景：18 个模型按词元化/嵌入/位置编码/骨干/损失逐项拆表，外加迁移学习四类地图与三个落地案例"
   },
   {
     "paper_id": "kuruppu-critical-review",
