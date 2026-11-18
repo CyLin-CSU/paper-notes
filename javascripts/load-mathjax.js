@@ -1,6 +1,8 @@
 // 按优先级依次尝试多个 CDN 加载 MathJax（国内网络友好，带超时与污染校验）
 // CDN 顺序按实测速度：npmmirror 0.5s / jsdelivr 间歇 / unpkg 1.6s / bootcdn 9.2s
 (function () {
+  // 页面没有公式（无 arithmatex 节点）时直接跳过，省掉无谓的 CDN 请求
+  if (!document.querySelector(".arithmatex")) return;
   var cdns = [
     "https://registry.npmmirror.com/mathjax/3.2.2/files/es5/tex-mml-chtml.js",
     "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js",

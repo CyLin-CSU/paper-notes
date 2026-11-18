@@ -1099,7 +1099,7 @@
   <span class="md-ellipsis">
     
   
-    综述
+    相关研究
   
 
     
@@ -1115,7 +1115,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    综述
+    相关研究
   
 
           </label>
@@ -1935,7 +1935,7 @@
   <span class="md-ellipsis">
     
   
-    综述
+    EEG 基础模型综述
   
 
     
@@ -2090,7 +2090,7 @@
   <a href="#critique-chain" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔗 论文互怼链
+        论文间的比较与改进
       
     </span>
   </a>
@@ -2317,7 +2317,7 @@
   <a href="#critique-chain" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔗 论文互怼链
+        论文间的比较与改进
       
     </span>
   </a>
@@ -2348,6 +2348,7 @@
 <blockquote>
 <p>全站横向对照的<strong>枢纽页</strong>：先<a href="#一页速览">一页速览</a>给十四篇定位，再按<a href="#dimension-guide">九个维度</a>拆核心分歧——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源五个维度下放主题专题深读，模型设计 / 频域 / 规模效率三个维度保留在本页详解；结尾的<a href="#critique-chain">互怼链</a>梳理论文间的批评与改进关系。数字均引自各论文自报结果。</p>
 </blockquote>
+<p>快速入口：<a href="#一页速览">一页速览</a> · <a href="#mod-architecture">模型设计</a> · <a href="#mod-frequency">频域</a> · <a href="#mod-scale">规模效率</a> · <a href="#critique-chain">比较与改进</a></p>
 <p>十四篇 = 核心六篇（<a href="../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> / <a href="../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> / <a href="../papers/fm/eegpt/">EEGPT</a> / <a href="../papers/fm/braingpt/">BrainGPT</a> / <a href="../papers/fm/neurolm/">NeuroLM</a> / <a href="../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a>，回答「<abbr title="词元，模型处理的最小输入单元">token</abbr> 该是什么、怎么预训练」）+ 2025–2026 扩展八篇（<a href="../papers/fm/cbramod/">CBraMod</a> / <a href="../papers/fm/luna/">LUNA</a> / <a href="../papers/fm/reve/">REVE</a> / <a href="../papers/fm/eegmoe/">EEGMoE</a> / <a href="../papers/generative/jet/">JET</a> / <a href="../papers/generative/eegdm/">EEGDM</a> / <a href="../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a> / <a href="../papers/generative/not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a>，把问题推向异构管理、通用空间编码与规模化、生成与跨模态）。站内其余轴外精读（语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测）不参与十四篇排名，见首页论文库。</p>
 <h2 id="一页速览">一页速览<a class="headerlink" href="#一页速览" title="Permanent link">#</a></h2>
 <table>
@@ -2606,8 +2607,8 @@
 <li><strong>权重细节坑</strong>：REVE 的 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> decoder 不发布（能从表示重构原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，隐私考量）——<abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 第一次基于隐私 withholding 组件；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 Large/Huge 权重未开源——各家论文里「打过 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge」的数字多引自 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 原文，非独立复现。</li>
 </ul>
 <p><strong>维度小结</strong>：规模轴上被验证过的规律只有两条——<strong>结构先验可以替代规模</strong>（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及<strong>效率在特定场景是硬需求</strong>（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上至今没有被干净地兑现——REVE 给了半张答卷（模型规模消融干净：Base→Large 线性探针 0.609→0.654 稳定上升），数据量 scaling 曲线仍缺（见<a href="../topics/data-landscape/">数据全景专题</a>）。</p>
-<h2 id="critique-chain">🔗 论文互怼链<a class="headerlink" href="#critique-chain" title="Permanent link">#</a></h2>
-<p>箭头方向 = 批评/改进指向，每条边标注批评点。</p>
+<h2 id="critique-chain">论文间的比较与改进<a class="headerlink" href="#critique-chain" title="Permanent link">#</a></h2>
+<p>箭头方向 = 批评/改进指向，每条边标注批评点。<strong>来源口径</strong>：实线批评边均转写自箭头起点论文自己的正文或消融（如 TFM 对 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的批评出自其方法与实验章节、REVE 的预训练增益对比出自其 Table 3），站内未添加论文之外的对立关系；虚线边是站内归纳的互补关系，不构成批评。窄屏可在图内横向滑动。</p>
 <pre class="mermaid"><code>flowchart LR
     BIOT["BIOT&lt;br/&gt;2023"]:::old
     LABRAM["LaBraM&lt;br/&gt;2024"]:::mid
@@ -2653,7 +2654,7 @@
     classDef old fill:#eceff1,stroke:#90a4ae,color:#263238
     classDef mid fill:#fff3e0,stroke:#ffb74d,color:#3e2723
     classDef new fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20</code></pre>
-<p><strong>解读</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 是公共对照组；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接入 <abbr title="大语言模型 Large Language Model">LLM</abbr>；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：<strong>CBraMod / LUNA / EEGMoE 的边都指向 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 在生成轴线内部迭代；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 从跨域视角质疑自训词表的必要性；REVE 的两条边都指向 CBraMod——位置编码泛化与「预训练派 vs 架构派」的归因之争。</p>
+<p><strong>解读</strong>（文字版路径：先读各边标签，再按下方说明核对来源）：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 是公共对照组；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 <abbr title="词元，模型处理的最小输入单元">token</abbr> 接入 <abbr title="大语言模型 Large Language Model">LLM</abbr>；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：<strong>CBraMod / LUNA / EEGMoE 的边都指向 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr> 在生成轴线内部迭代；RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 从跨域视角质疑自训词表的必要性；REVE 的两条边都指向 CBraMod——位置编码泛化与「预训练派 vs 架构派」的归因之争。</p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -2724,8 +2725,6 @@
         <script src="../javascripts/progress.js"></script>
       
         <script src="../javascripts/back-to-top.js"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
       
     
   
