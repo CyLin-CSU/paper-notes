@@ -1623,10 +1623,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
+  <a href="#32-ar" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 三条作者口径的观察
+        3.2 掩码率、AR 取舍与同架构对照
       
     </span>
   </a>
@@ -2701,10 +2701,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
+  <a href="#32-ar" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 三条作者口径的观察
+        3.2 掩码率、AR 取舍与同架构对照
       
     </span>
   </a>
@@ -2814,7 +2814,7 @@
 </blockquote>
 <p><strong>作者</strong>：Yuxuan Yao、Hongbo Wang、Li Chen、Yiheng Peng（复旦工研院 AIR）、Jingjing Luo（通讯，中南大学）</p>
 <h2 id="1">1 问题定位<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
-<p>监督式 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型任务特定、数据依赖重。本文用 PRISMA 流程筛 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-only、含预训练、有泛化评测的近五年工作，按「任务与数据集 / 预训练策略 / 架构」三条线梳理，并补一场统一协议的性能对比。特色是<strong>自己跑了对比实验</strong>：10 个模型 × 6 个数据集，原论文报告值（彩色）与自跑补齐值（黑色）分开标注。</p>
+<p>监督式 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 模型任务特定、数据依赖重。本文用 PRISMA 流程筛 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-only、含预训练、有泛化评测的近五年工作，按「任务与数据集 / 预训练策略 / 架构」三条线梳理，并补一场统一协议的性能对比。对比实验为作者自跑：10 个模型 × 6 个数据集，原论文报告值（彩色）与自跑补齐值（黑色）分开标注。</p>
 <h2 id="2">2 任务与数据集：范式失衡<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <p>五个下游任务域（癫痫 / <abbr title="运动想象 Motor Imagery">MI</abbr> / 情绪 / 睡眠 / 其他）的常用数据集汇总成表，按总时长一排就看出口径差距：</p>
 <table>
@@ -2853,7 +2853,7 @@
 </tr>
 </tbody>
 </table>
-<p>§3.5 是全文最有价值的论点：现有 FM 预训练基本被 TUEG 一类临床癫痫数据主导，与 <abbr title="运动想象 Motor Imagery">MI</abbr> / 情绪等下游范式差异大，形成域差；文中引的一项研究显示部分预训练模型从头训练还不如任务专用模型。多范式联合预训练是数据侧的待解问题。另有一个次要观察：睡眠数据时长可观但通道少（2–6 导），因此很少被用作 FM 预训练主料。</p>
+<p>§3.5 讨论预训练语料与下游任务的域差：现有 FM 预训练基本被 TUEG 一类临床癫痫数据主导，与 <abbr title="运动想象 Motor Imagery">MI</abbr> / 情绪等下游范式差异大；文中引的一项研究显示部分预训练模型从头训练还不如任务专用模型。多范式联合预训练是数据侧的待解问题。睡眠数据时长可观但通道少（2–6 导），因此很少被用作 FM 预训练语料。</p>
 <h2 id="3">3 预训练策略分类<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
 <h3 id="31">3.1 分类总表<a class="headerlink" href="#31" title="Permanent link">#</a></h3>
 <table>
@@ -2946,11 +2946,11 @@
 </tr>
 </tbody>
 </table>
-<h3 id="32">3.2 三条作者口径的观察<a class="headerlink" href="#32" title="Permanent link">#</a></h3>
+<h3 id="32-ar">3.2 掩码率、<abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 取舍与同架构对照<a class="headerlink" href="#32-ar" title="Permanent link">#</a></h3>
 <ul>
-<li><strong>掩码率 ~50%</strong>，低于图像的 75–90%——解释是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语义冗余低于图像，激进掩码会破坏基本时序模式；</li>
-<li><strong><abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 与时序结构天然契合</strong>但受非平稳、低 SNR 拖累，所以双向掩码（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）反而更常用；</li>
-<li><strong>同架构对照</strong>（BrainGPT，站内口径）：睡眠分期 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 77.9% &gt; <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 74.8%，由此推测 <strong><abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 适合时间连续任务、掩码适合信号突变任务（如棘波癫痫）</strong>——尚属初步结论，文中明言预训练策略研究仍处早期、无共识。</li>
+<li>掩码率 ~50%，低于图像的 75–90%——解释是 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 语义冗余低于图像，激进掩码会破坏基本时序模式；</li>
+<li><abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 与时序结构契合，但受非平稳、低 SNR 拖累，双向掩码（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式）因此更常用；</li>
+<li>同架构对照（BrainGPT，站内口径）：睡眠分期 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 77.9% &gt; <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 74.8%，由此推测 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 适合时间连续任务、掩码适合信号突变任务（如棘波癫痫）——尚属初步结论，文中明言预训练策略研究仍处早期、无共识。</li>
 </ul>
 <h2 id="4">4 架构组件<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
 <table>
@@ -3015,7 +3015,7 @@
 <tr>
 <td>骨干</td>
 <td>encoder-only Transformer</td>
-<td>压倒性多数，~12 层 + 线性/MLP 头</td>
+<td>多数模型采用，~12 层 + 线性/MLP 头</td>
 </tr>
 <tr>
 <td>骨干</td>
@@ -3358,14 +3358,13 @@
 </tr>
 </tbody>
 </table>
-<p>四个读数：</p>
 <ul>
-<li><strong>临床域 FM 大胜</strong>：TUAB/TUEV 领先者均为 FM（自跑口径 Neuro-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 领先、原报告口径 CBraMod 更高），作者归因于预训练域与癫痫数据同源；</li>
-<li><strong><abbr title="运动想象 Motor Imagery">MI</abbr> 全线失守</strong>：EEGNet 两个数据集最高，BENDR 2a 仅 0.4899——低 SNR + 范式域差双重归因；</li>
-<li><strong>中间地带</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base / CBraMod 在 SleepEDFx、SEED-V 尚有竞争力，说明跨范式泛化并非不可能；</li>
-<li><strong>成本注脚</strong>：EEGNet 0.003M vs Neuro-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 56.6M——增益换参数，资源受限场景要另算账。</li>
+<li>临床域 FM 领先：TUAB/TUEV 领先者均为 FM（自跑口径 Neuro-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 领先、原报告口径 CBraMod 更高），作者归因于预训练域与癫痫数据同源；</li>
+<li><abbr title="运动想象 Motor Imagery">MI</abbr> 域 FM 落后：EEGNet 在两个数据集上最高，BENDR 2a 仅 0.4899——低 SNR 与范式域差双重归因；</li>
+<li><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base / CBraMod 在 SleepEDFx、SEED-V 上尚有竞争力，跨范式泛化有正例；</li>
+<li>参数量差距大：EEGNet 0.003M vs Neuro-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 56.6M，资源受限场景需另行权衡。</li>
 </ul>
-<p>另有两处跨报告数值不一致被点名：EEGNet 在 2a（0.4482–0.5130）、EEGConformer 在 SEED-V（0.2650–0.3537）、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base 在 SEED-V（0.2640–0.4095）——来源是预处理、超参或训练协议差异。这本身就是「评测碎片化」的直接证据。</p>
+<p>另有多处跨报告数值不一致被点名：EEGNet 在 2a（0.4482–0.5130）、EEGConformer 在 SEED-V（0.2650–0.3537）、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base 在 SEED-V（0.2640–0.4095）——来源是预处理、超参或训练协议差异。这本身就是「评测碎片化」的直接证据。</p>
 <h2 id="7">7 可解释性与可信性盘点<a class="headerlink" href="#7" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>可解释性</strong>：Grad-CAM（CBraMod 的 <abbr title="运动想象 Motor Imagery">MI</abbr> 激活落在 C3/C4 运动皮层）、时序显著性图（EEGFormer 的癫痫段落落在 Fz/Pz/T3/T6）、注意力拓扑图（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>-<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Transformer）；</li>
@@ -3379,7 +3378,7 @@
 <li>本文与 <a href="../../survey/eegarena/">EEGArena</a> 互补：一个纵评预训练策略（固定协议自跑），一个横评 FM 对监督基线（各模型专属预处理）。<abbr title="运动想象 Motor Imagery">MI</abbr> 结论不一致（EEGArena 称 FM 大多领先，本文称 FM 输 EEGNet），协议与任务池不同，站内不做合并推断。</li>
 <li>命名陷阱：文中 EEGPT(1) = 站内 <a href="../../fm/eegpt/">EEGPT</a>（Wang et al., NeurIPS 2024），EEGPT(2) = 站内 <a href="../../fm/braingpt/">BrainGPT</a>（Yue et al.）。引用两篇时注意消歧。</li>
 <li>§3.5 的域差论证是数据侧动机的直接引文，<a href="../../../topics/data-landscape/">数据全景专题</a> 可对接。</li>
-<li>§5 技术设计总表与 <a href="../chen-representation-learning-review/">Chen 综述的拆解表</a> 互为印证——两表字段口径不同（本表含注意力机制与数据集，Chen 表含损失与开源信息），合读可互补。</li>
+<li>§5 技术设计总表与 <a href="../chen-representation-learning-review/">Chen 综述的拆解表</a> 字段口径不同：本表含注意力机制与数据集附注，Chen 表含损失与开源信息，两表合读覆盖更全。</li>
 </ul>
 <hr>
 <p><strong>相关阅读</strong></p>

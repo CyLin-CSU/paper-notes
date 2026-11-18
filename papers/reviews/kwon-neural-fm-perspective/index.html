@@ -2787,7 +2787,7 @@
 </tr>
 </tbody>
 </table>
-<p>作者的总结论：三者 illustrate FM 架构能提升解码性能，但都属「第一代」——解码有效，与产生信号的生理过程脱钩；且无一内置可解释性机制。</p>
+<p>作者的总结论：三者说明 FM 架构能提升解码性能，但都属「第一代」——解码有效，与产生信号的生理过程脱钩；且无一内置可解释性机制。</p>
 <h2 id="3-table-2">3 三条设计原则与设计维度（原 Table 2 复现）<a class="headerlink" href="#3-table-2" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -2815,7 +2815,7 @@
 </tr>
 </tbody>
 </table>
-<p>对三个模型的策略比较（§4.3）：PBT 的掩码段预测只编码局部连续性，难覆盖跨频耦合与长程相干；CBraMod 的对比对齐主张（作者口径，见 §6 勘误）可能过度归一化、抹掉临床有意义的个体特异信号；BrainGPT 的下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 目标纯统计，无振荡相位、带限同步、嵌套节律机制。三者共同点：编码的是<strong>表面时序/空间相关</strong>，不是深层神经生物学机制。</p>
+<p>对三个模型的策略比较（§4.3）：PBT 的掩码段预测只编码局部连续性，难覆盖跨频耦合与长程相干；CBraMod 的对比对齐主张（作者口径，见 §6 勘误）可能过度归一化、抹掉临床有意义的个体特异信号；BrainGPT 的下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 目标纯统计，无振荡相位、带限同步、嵌套节律机制。三者共同点：编码的是表面时序/空间相关，未触及深层神经生物学机制。</p>
 <h2 id="4-51">4 生理感知目标：五个具体提案（§5.1）<a class="headerlink" href="#4-51" title="Permanent link">#</a></h2>
 <p>作者给了一组可直接操作的自监督任务设计，全部未见实现：</p>
 <table>
@@ -2902,10 +2902,10 @@
 </tr>
 </tbody>
 </table>
-<p>要点：同一神经事件跨模态的时频特征差异巨大，需要<strong>尺度不变特征</strong>；架构上连续波形模型不适配稀疏尖峰，需 transformer–SNN 混合；目标需按模态调整（ECoG 掩码电压预测、皮层内 spike-timing 重构）；迁移机会在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> encoder 初始化 ECoG 模型（共享振荡结构）与多视图对比/共嵌入对齐。终局是共享 tokenization / 归一化 / 空间对齐下的统一神经 FM。</p>
+<p>要点：同一神经事件跨模态的时频特征差异巨大，需要尺度不变特征；架构上连续波形模型不适配稀疏尖峰，需 transformer–SNN 混合；目标需按模态调整（ECoG 掩码电压预测、皮层内 spike-timing 重构）；迁移机会在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> encoder 初始化 ECoG 模型（共享振荡结构）与多视图对比/共嵌入对齐。终局是共享 tokenization / 归一化 / 空间对齐下的统一神经 FM。</p>
 <h2 id="8">8 站内视角<a class="headerlink" href="#8" title="Permanent link">#</a></h2>
 <ul>
-<li>价值在<strong>议程</strong>不在证据：全文无自家实验，是立场文章。但「电极拓扑 / MNI 投影 / 3D 坐标 <abbr title="位置编码 Positional Encoding">PE</abbr>」清单与站内 <a href="../../fm/luna/">LUNA</a>、<a href="../../fm/reve/">REVE</a> 的拓扑无关路线互相印证——方向共识已在，差距在没人把三原则同时做进一个预训练管线。</li>
+<li>全文无自家实验，属立场文章，增量在设计清单：「电极拓扑 / MNI 投影 / 3D 坐标 <abbr title="位置编码 Positional Encoding">PE</abbr>」与站内 <a href="../../fm/luna/">LUNA</a>、<a href="../../fm/reve/">REVE</a> 的拓扑无关路线互相印证；三原则尚无人在同一预训练管线中同时实现。</li>
 <li>§4 的五个生理目标提案是掩码/自回归之外的任务设计素材，与 <a href="../../../topics/pretraining/">预训练范式专题</a> 的「目标」维度互补。</li>
 <li>与同组综述分工：<a href="../yao-eegfm-survey/">Yao</a> / <a href="../chen-representation-learning-review/">Chen</a> 记录现状，<a href="../kuruppu-critical-review/">Kuruppu</a> 批判现状，本篇给规范性主张。</li>
 </ul>

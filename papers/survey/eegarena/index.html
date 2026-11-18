@@ -1383,10 +1383,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#1-eeg-fm" class="md-nav__link">
+  <a href="#1-fm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1 问题定位:给 EEG FM 补一场有强对手的擂台赛
+        1 问题定位:既有基准缺强基线，FM 排名混着归因
       
     </span>
   </a>
@@ -2601,10 +2601,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#1-eeg-fm" class="md-nav__link">
+  <a href="#1-fm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1 问题定位:给 EEG FM 补一场有强对手的擂台赛
+        1 问题定位:既有基准缺强基线，FM 排名混着归因
       
     </span>
   </a>
@@ -2703,13 +2703,13 @@
 <p><strong>arXiv 2026</strong></p>
 </blockquote>
 <p><strong>作者</strong>:Zhige Chen、Shu Peng、Chengxuan Qin(三人共同一作)、Rui Liu、Rui Yang、Kay Chen Tan、Jibin Wu(通讯,港理工)</p>
-<h2 id="1-eeg-fm">1 问题定位:给 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 补一场有强对手的擂台赛<a class="headerlink" href="#1-eeg-fm" title="Permanent link">#</a></h2>
+<h2 id="1-fm">1 问题定位:既有基准缺强基线，FM 排名混着归因<a class="headerlink" href="#1-fm" title="Permanent link">#</a></h2>
 <p>论文的出发点是既有基准的结构性缺陷(Table 1 清点了 11 个同类基准):监督基线普遍缺席或偏弱(<abbr title="脑电图 Electroencephalogram">EEG</abbr>-FM-Bench、<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Bench 为 0,最多的 NeuralBench 也只有 8 个),且 FM 之间的排名把架构、参数量、预训练数据混在一起,赢了也说不清赢在哪。最终精度一个数字,还回答不了「预训练到底带来了什么」。<abbr title="脑电图 Electroencephalogram">EEG</abbr>-Arena 的答案是把问题拆成五个 RQ:FM 对强基线(RQ1)、预训练收益及其随标签量的变化(RQ2)、参数量 scaling(RQ3)、预训练数据 scaling(RQ4)、通道配置鲁棒性(RQ5)——前一个靠大覆盖面横评,后四个靠受控对照实验,这是它区别于纯排行榜的地方。</p>
 <h2 id="2">2 基准设计<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <h3 id="21">2.1 规模与模型口径<a class="headerlink" href="#21" title="Permanent link">#</a></h3>
 <p>55 个模型 = 30 个 FM 变体 + 25 个基线(24 个 DL + YASA 谱方法);入选标准是开源可得、引用量、社区认可度。注意「30」是<strong>变体口径</strong>:20 个家族里 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、LUNA、ST-EEGFormer、SleepFM 各 3 个变体、HEAR/REVE 各 2 个。57 个任务覆盖 7 范式(<abbr title="运动想象 Motor Imagery">MI</abbr> / Sleep / Clinical / Cognitive / AAD / <abbr title="事件相关电位 Event-Related Potential">ERP</abbr> / Emotion;Table 4 逐任务给全定义,窗口 0.85–30 s、通道 2–144);有可靠被试元数据的任务同时报 WS(被试内)与 CS(跨被试)。</p>
 <h3 id="22">2.2 统一管线:统一什么、保留什么<a class="headerlink" href="#22" title="Permanent link">#</a></h3>
-<p>软件包统一三件事:<strong>数据</strong>标准化为 HDF5(GDF/EDF 摄入,统一 split 与 10-20/10-10/10-5/动态通道选择);<strong>模型</strong>接口统一初始化与任务头配置,但<strong>保留 FM 专属预处理与输入构造</strong>(Table 7:21 套预处理并存——CBraMod 0.3–75 Hz + notch 60 + ÷100 µV,REVE session 级 z-score ±15σ 裁剪,而监督基线统一 0.1–75 Hz + notch 50 + 通道级 z-score);<strong>训练/评估</strong>统一(同一 split、按验证集选 checkpoint、统一优化设置)。两条排除规则很关键:预训练数据与下游数据直接重叠的结果被剔除出总排名(红 E 徽章),通道数/输入长度/格式不兼容的组合标记 unsupported 不进排名。</p>
+<p>软件包统一三件事:<strong>数据</strong>标准化为 HDF5(GDF/EDF 摄入,统一 split 与 10-20/10-10/10-5/动态通道选择);<strong>模型</strong>接口统一初始化与任务头配置,但<strong>保留 FM 专属预处理与输入构造</strong>(Table 7:21 套预处理并存——CBraMod 0.3–75 Hz + notch 60 + ÷100 µV,REVE session 级 z-score ±15σ 裁剪,而监督基线统一 0.1–75 Hz + notch 50 + 通道级 z-score);<strong>训练/评估</strong>统一(同一 split、按验证集选 checkpoint、统一优化设置)。两条排除规则:预训练数据与下游数据直接重叠的结果被剔除出总排名(红 E 徽章),通道数/输入长度/格式不兼容的组合标记 unsupported 不进排名。</p>
 <h3 id="23">2.3 统计方法<a class="headerlink" href="#23" title="Permanent link">#</a></h3>
 <p>三指标(二分类 balanced accuracy、多分类 macro-F1、Cohen's κ),对每个模型在每个任务上取三个指标名次的均值再对任务平均:</p>
 <div class="arithmatex">\[

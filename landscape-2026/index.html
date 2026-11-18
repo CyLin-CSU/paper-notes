@@ -2215,7 +2215,7 @@
   <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1 领域现状一句话
+        1 领域现状
       
     </span>
   </a>
@@ -2659,7 +2659,7 @@
   <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1 领域现状一句话
+        1 领域现状
       
     </span>
   </a>
@@ -2818,8 +2818,8 @@
 <p>本文综合站内 31 篇精读与四篇领域综述（<a href="../papers/reviews/yao-eegfm-survey/">Yao, JNE 2025</a> · <a href="../papers/reviews/chen-representation-learning-review/">Chen, Lu &amp; Wu, IEEE SPM 2025</a> · <a href="../papers/reviews/kuruppu-critical-review/">Kuruppu et al., JNE 2026</a> · <a href="../papers/reviews/kwon-neural-fm-perspective/">Kwon &amp; Shin, EJN 2026</a>），给出研究重点、痛点、创新集中度与空白轴的全景判断。</p>
 </blockquote>
 <p><strong>引用规则</strong>：站内事实均带笔记或综述链接，并标注原文节号 / 表号；数字口径以各论文原文为准（channel-hours 与小时数不混用，见 <a href="../papers/reviews/kuruppu-critical-review/">Kuruppu 综述</a> §1 的口径说明）。少数来自站外检索、站内尚未核对原文的动态集中在 §7，单独标注，不作为结论使用。标注「站内统计」的计数按本站笔记口径统计，一篇论文可占多个设计格。</p>
-<h2 id="1">1 领域现状一句话<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
-<p><strong>架构移植期已经结束，评测清算期刚刚开始。</strong> 2021–2024 是把 BERT / <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> / <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 范式搬进 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的收编期（<a href="../papers/reviews/kuruppu-critical-review/">Kuruppu 综述</a> §1：其收录的 10 个 FM 全部为 transformer 或 Mamba 骨干、7/10 用掩码重构）；2025–2026 的主线变成两件事：在移植过的骨架上卷组件差异（§2 的拥挤度），以及用统一评测反向拆台——<a href="../papers/survey/eegarena/">EEGArena</a> 以 30 FM × 25 监督基线 × 57 任务给出「参数量不预测性能」（其 §3），<a href="../papers/reviews/yao-eegfm-survey/">Yao 综述</a> §6 自跑显示 FM 在运动想象上不敌 0.003M 的 EEGNet。</p>
+<h2 id="1">1 领域现状<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
+<p>2021–2024 是把 BERT / <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> / <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 范式搬进 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的收编期（<a href="../papers/reviews/kuruppu-critical-review/">Kuruppu 综述</a> §1：其收录的 10 个 FM 全部为 transformer 或 Mamba 骨干、7/10 用掩码重构）；2025–2026 的主线变成两件事：在移植过的骨架上卷组件差异（§2 的拥挤度），以及用统一评测反向拆台——<a href="../papers/survey/eegarena/">EEGArena</a> 以 30 FM × 25 监督基线 × 57 任务给出「参数量不预测性能」（其 §3），<a href="../papers/reviews/yao-eegfm-survey/">Yao 综述</a> §6 自跑显示 FM 在运动想象上不敌 0.003M 的 EEGNet。</p>
 <h2 id="2">2 研究重点：四条主线与拥挤度<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <p>站内 31 篇按设计轴归类（站内统计，可多格重复计入）：</p>
 <table>
@@ -2853,7 +2853,6 @@
 </tr>
 </tbody>
 </table>
-<p>三个观察（依据见对应笔记与综述）：</p>
 <ul>
 <li><strong>连续 patch + 掩码重构的差异化全靠附加件</strong>：CBraMod 靠十字交叉注意力 + ACPE + 清洗语料（其附录 G 与表 13），LUNA 靠 query 压缩（8000 通道 FLOPs 为 <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的 1/180，其表 4），REVE 靠 4D 坐标 <abbr title="位置编码 Positional Encoding">PE</abbr> + 块掩码 + 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 瓶颈（其表 17–19 消融），EEGMoE 靠 SSMoE 域解耦（其消融）；附加件各自有效，但互比条件不同（<a href="../papers/reviews/kuruppu-critical-review/">Kuruppu 综述</a> §5.1：评测任务异质，仅 4/10 可在公共任务排名）。</li>
 <li><strong><abbr title="向量量化 Vector Quantization">VQ</abbr> 词表结构是 2025–2026 卷得最快的轴</strong>：双码本、双域 RVQ、多尺度 RVQ、时频 motif 在一年内全部出现；<a href="../comparison/#critique-chain">互怼链</a>中被指向最多的节点是 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>（<abbr title="词元，模型处理的最小输入单元">token</abbr> 只当训练目标、展平注意力、通道平方复杂度、相位无贡献、单码本撞码等约 8 条批评边，均转写自各批评论文正文）。</li>
@@ -2936,7 +2935,7 @@
 </tbody>
 </table>
 <h2 id="5-scaling">5 scaling：四组证据的口径对照<a class="headerlink" href="#5-scaling" title="Permanent link">#</a></h2>
-<p>领域最大的悬而未决问题是「堆数据有没有用」。站内可核查的四组证据，口径各不相同，不能合并成一条曲线：</p>
+<p>「堆数据有没有用」是领域内尚无定论的问题。站内可核查的四组证据口径各不相同，不能合并成一条曲线：</p>
 <table>
 <thead>
 <tr>
@@ -2978,11 +2977,11 @@
 </tr>
 </tbody>
 </table>
-<p>读法（站内推断，非原文结论）：数据缩放效应<strong>是否存在取决于任务与协议</strong>——EEGArena 的受控对照说明增益存在但需固定架构，Kuruppu 的跨研究对照说明「报得多」不等于「效果好」；两者不矛盾，因为前者控制了架构变量而后者没有。这正是 §3 评测痛点（协议不可比）的直接代价。</p>
+<p>读法（站内推断，非原文结论）：数据缩放效应<strong>是否存在取决于任务与协议</strong>——EEGArena 的受控对照说明增益存在但需固定架构，Kuruppu 的跨研究对照说明「报得多」不等于「效果好」；两者不矛盾，因为前者控制了架构变量而后者没有。——即 §3 评测痛点（协议不可比）的直接代价。</p>
 <h2 id="6">6 正在被修正的三个叙事（站内证据）<a class="headerlink" href="#6" title="Permanent link">#</a></h2>
 <ol>
-<li><strong>「FM 普遍优于简单基线」</strong>：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 <abbr title="运动想象 Motor Imagery">MI</abbr> 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且固定架构的预训练数据缩放有增益（受控对照见<a href="../evidence/">实验证据</a>）。合成的结论是：<strong>FM 的优势有条件（任务域、协议、数据规模），不是普适的</strong>。</li>
-<li><strong>「线性探针差 = 实现问题」</strong>：Kuruppu 在其纳入范围内报告 LP 落后 FT 跨五个模型出现（其图 4(a)；纳入范围与任务设定见<a href="../papers/reviews/kuruppu-critical-review/">其笔记</a>）——凡做「冻结可用」主张的工作（<a href="../papers/fm/eegpt/">EEGPT</a> 的对齐目标、<a href="../papers/fm/reve/">REVE</a> 的全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 瓶颈）都是在对着这个观察设计，其普遍性尚待更大范围验证。</li>
+<li><strong>「FM 普遍优于简单基线」</strong>：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 <abbr title="运动想象 Motor Imagery">MI</abbr> 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且固定架构的预训练数据缩放有增益（受控对照见<a href="../evidence/">实验证据</a>）。综合这两项评测：FM 的优势取决于任务域、协议与数据规模。</li>
+<li><strong>「线性探针差 = 实现问题」</strong>：Kuruppu 在其纳入范围内报告 LP 落后 FT 跨五个模型出现（其图 4(a)；纳入范围与任务设定见<a href="../papers/reviews/kuruppu-critical-review/">其笔记</a>）——做「冻结可用」主张的工作（<a href="../papers/fm/eegpt/">EEGPT</a> 的对齐目标、<a href="../papers/fm/reve/">REVE</a> 的全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 瓶颈）针对这个观察设计，其普遍性尚待更大范围验证。</li>
 <li><strong>「架构 vs 预训练」二选一</strong>：REVE 的预训练价值消融（其表 3：PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 上无预训练 REVE 0.5409 &lt; CBraMod 0.6196；有预训练 REVE 0.6480 &gt; CBraMod 0.6417）把两种来源的贡献同框量化——架构先验与预训练数据各有其适用面，站内判断详见 <a href="../papers/fm/reve/">REVE 笔记的个人思考</a>。</li>
 </ol>
 <h2 id="7">7 站外动态（检索所得，站内未核对原文，引用前须核实）<a class="headerlink" href="#7" title="Permanent link">#</a></h2>

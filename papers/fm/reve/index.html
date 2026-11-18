@@ -2835,7 +2835,7 @@
 <p><strong>NeurIPS 2025</strong> · IMT Atlantique（法国）+ 蒙特利尔大学 + Mila · 笔记基于 arXiv 2510.21585 v1</p>
 </blockquote>
 <p><strong>作者</strong>：Yassine El Ouahidi*, Jonathan Lys, Philipp Thölke, Nicolas Farrugia, Bastien Pasdeloup, Vincent Gripon, Karim Jerbi, Giulia Lioi*（IMT Atlantique Lab-STICC；Thölke/Jerbi 兼 Montréal/Mila/UNIQUE）</p>
-<p>正文按 §1 问题定位（montage 绑定为何是第一瓶颈）、§2 方法（4D 位置编码 / 块掩码 / 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 损失 / 数据哲学）、§3 实验与结果（微调与线性探针、预训练价值消融）展开；语料规模、组件数字与表 3/表 4 口径在对应段落与文末复现速查卡中。</p>
+<p>组件消融数字见 §2 各小节，语料构成见 §2.5，复现参数见文末速查卡。</p>
 <h2 id="1-montage">1 问题定位：montage 绑定是线性探针下的第一瓶颈<a class="headerlink" href="#1-montage" title="Permanent link">#</a></h2>
 <p>作者对现有 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 的归因分两层。<strong>数据层</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / CBraMod / NeuroGPT 的预训练语料几乎都来自 TUH（固定 19/21 通道蒙太奇），换电极布局的数据集天然吃不到预训练红利。<strong>架构层</strong>：位置编码要么查表（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的电极编号 → embedding、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的通道表），要么卷积生成（CBraMod 的 ACPE）——前者覆盖不了训练没见过的电极名，后者编码的是邻域模式而非绝对空间位置，迁移时往往要全量微调补课。两层的共同后果：linear probing（最能反映表示通用性的协议）成绩次优。</p>
 <p>REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局任意长度都有定义），多源大规模语料解决数据层（布局多样性内建于数据，规模与构成见 §2.5），修改版 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 解决表示层（冻结可用）。</p>
@@ -2861,7 +2861,7 @@
 <p>语料构成（Table 7）：临床 50,581h（8 集，TUH 一家 26,847h）+ 认知 10,376h（56 集，多为 OpenNeuro 实验室数据）+ <abbr title="脑机接口 Brain-Computer Interface">BCI</abbr> 457h（28 集，MOABB 系）——通道数从 3 到 129 全谱系覆盖。预处理刻意极简：只剔 &lt;10s 记录与下游任务数据（防泄漏），200Hz 重采样、0.5–99.5Hz 带通、跨会话统计的 z-score、15σ 截断（承 Défossez）。</p>
 <p>与 <a href="../cbramod/">CBraMod</a> 的分歧在剪枝标准：CBraMod 剔掉任意点 &gt;100µV 的整段（换来干净但只剩 9,000h），REVE 全保留（60,000h）。谁的哲学对，看实验。</p>
 <h2 id="3">3 实验与结果<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<p><strong>微调 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>（Table 2/16，balanced accuracy）</strong>：10 任务上对最强基线 CBraMod 平均 <strong>+2.5%</strong>。TUAB 0.8315（vs 0.8289）、TUEV 0.6759（vs 0.6671）、MAT 0.7660（vs 0.7256）、BCIC2020-3 想象语音 0.5635（vs 0.5373）、Mumtaz 0.9644、PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 0.6480；ISRUC 平衡精度 0.7819 略低于 CBraMod 0.7865，但 Kappa 0.7500 更高——且 REVE 修了基线代码里下巴电极混入的 bug（诚实细节 +1）。跨设定泛化是位置编码的兑现处：预训练只见 10s 段，ISRUC/HMC 的 30s 输入照常工作；TUEV 的双极蒙太奇训练里从未出现。</p>
+<p><strong>微调 <abbr title="State Of The Art，当前最先进水平">SOTA</abbr>（Table 2/16，balanced accuracy）</strong>：10 任务上对最强基线 CBraMod 平均 <strong>+2.5%</strong>。TUAB 0.8315（vs 0.8289）、TUEV 0.6759（vs 0.6671）、MAT 0.7660（vs 0.7256）、BCIC2020-3 想象语音 0.5635（vs 0.5373）、Mumtaz 0.9644、PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 0.6480；ISRUC 平衡精度 0.7819 略低于 CBraMod 0.7865，但 Kappa 0.7500 更高——且 REVE 修了基线代码里下巴电极混入的 bug。位置编码的设计直接受跨设定泛化检验：预训练只见 10s 段，ISRUC/HMC 的 30s 输入照常工作；TUEV 的双极蒙太奇训练里从未出现。</p>
 <p><strong>Linear probing（Table 4）</strong>：均值按列分两种口径——无池化列 REVE-L 0.654 / REVE-B 0.609 / CBraMod 0.501，REVE-L 较 CBraMod 高 0.153；池化列 REVE-L 0.623 / CBraMod 0.373。单项任务取无池化列 REVE-L：Mumtaz 0.980、ISRUC 0.758、HMC 0.710、TUAB 0.809。原文正文概述「接近 17%」的 linear probing 增益——这是作者的表述，其口径与两列均值之差（0.153）不是同一回事，站内以表中均值为准。站内判断：EEGPT 之后第二个把「冻结可用」做实的模型。</p>
 <p><strong>下游微调协议</strong>：微调成绩出自一套复合协议——「两步走」（先冻结探针对齐特征空间，再解冻全网络，单次连续训练）+ LoRA on QKVO + Mixup + model souping（≥5 个微调模型权重平均，+1.5%）。</p>
 <p><strong>预训练价值消融（Table 3）</strong>：PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 上，无预训练时 REVE 0.5409 比 CBraMod 0.6196 差 8%+；加预训练 REVE 涨 <strong>11%</strong>、CBraMod 只涨 <strong>2%</strong>。作者的读法是「REVE 的成绩来自预训练表示，基线来自架构设计」——这句话的反面同样成立：CBraMod 的架构从零初始化就够强，REVE 的架构离了预训练不行。</p>
@@ -2911,15 +2911,15 @@
 <h2 id="_3">个人思考<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>清洗标准没有跨设定的结论</strong>。CBraMod 在其 9,000h 语料上的消融显示清洗版优于脏数据版；REVE 保留 &gt;100µV 段、以 60,000h 语料在多数任务上取得更高成绩。两者的语料规模、模型容量与任务集都不同，清洗标准没有跨设定结论。CBraMod 笔记留下的「多数据集多样性能否突破 1000h 饱和」，REVE 没有正面回答（没做数据量 scaling 消融，只有模型规模消融），但原论文表 2 的 +2.5% 平均优势至少与「多样性有用」相容；</li>
-<li><strong>预训练价值消融是双刃剑</strong>。REVE 涨 11 个点、CBraMod 只涨 2 个点，作者读作「我们的成绩来自预训练」。反过来读：CBraMod 从零初始化就有 0.62，说明它的十字交叉架构自带强先验；REVE 从零只有 0.54，说明 69M 参数的普通 Transformer 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上并不自带什么——它的成绩是数据堆出来的。哪种更可取取决于你信「架构先验」还是「数据先验」，这篇论文没有也不能替你回答，但它提供了两种来源贡献的同框对照（PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 单任务）；</li>
-<li><strong>BCIC-IV-2a 的 +12.6pp 不能直接读作模型增益</strong>。REVE 在这个任务上用了 Euclidean Alignment 预处理（He &amp; Wu 2019，基线都没用）——该预处理在 <abbr title="运动想象 Motor Imagery">MI</abbr> 任务上是公认的大杀器。跨论文比数字时以原论文表 2 的报告口径为准：10 任务平均较 CBraMod +2.5%（含 BCIC-IV-2a 这一项）。排除该任务重算均值需要注明排除的任务、模型版本与平均方式，站内选择不重算。这是「预处理不对齐」教训的又一个案例；</li>
-<li><strong>全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次损失是全文最可偷的组件</strong>。实现只有 attention pooling + 两层 FFN，消融收益明确且机制清晰（信息瓶颈对抗末层过拟合）。任何做 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式预训练、又在乎冻结特征的pipeline都值得加上——它和 EEGPT 的对齐损失、LUNA 的可见 patch 小系数一起，构成了「让预训练表示免微调可用」的三个独立方案；</li>
-<li><strong>decoder 不发布是行业先例</strong>。<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的 decoder 能重构原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>——等于自带一个「从表示反推脑信号」的工具，作者以隐私为由扣下 decoder 只放 encoder。<abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 论文第一次认真对待「重建能力的隐私面」，这个决定比成绩数字更值得被后来者记住。</li>
+<li><strong>预训练价值消融可以反过来读</strong>。REVE 涨 11 个点、CBraMod 只涨 2 个点，作者读作「我们的成绩来自预训练」。反过来读：CBraMod 从零初始化就有 0.62，说明它的十字交叉架构自带强先验；REVE 从零只有 0.54，说明 69M 参数的普通 Transformer 在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上并不自带什么——它的成绩是数据堆出来的。架构先验和数据先验哪个更可取，这个消融回答不了；它给出的是两种来源贡献的同框对照（PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 单任务）；</li>
+<li><strong>BCIC-IV-2a 的 +12.6pp 不能直接读作模型增益</strong>。REVE 在这个任务上用了 Euclidean Alignment 预处理（He &amp; Wu 2019，基线都没用）——该预处理在 <abbr title="运动想象 Motor Imagery">MI</abbr> 任务上提升明显。跨论文比数字时以原论文表 2 的报告口径为准：10 任务平均较 CBraMod +2.5%（含 BCIC-IV-2a 这一项）。排除该任务重算均值需要注明排除的任务、模型版本与平均方式，站内选择不重算。这是「预处理不对齐」教训的又一个案例；</li>
+<li><strong>全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次损失：实现小、消融收益明确</strong>。只有 attention pooling + 两层 FFN，机制是信息瓶颈对抗末层过拟合。做 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式预训练、在乎冻结特征的 pipeline 可以直接加上——它和 EEGPT 的对齐损失、LUNA 的可见 patch 小系数，构成三个独立的「冻结可用」方案；</li>
+<li><strong>decoder 不发布，理由是隐私</strong>。<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 的 decoder 能重构原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，等于提供从表示反推脑信号的工具；作者只放 encoder。这是站内 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 笔记里第一个以隐私为由限制发布的组件。</li>
 </ul>
 <h2 id="_4">自问自答<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <details class="question">
 <summary>Q1 · 4D 傅里叶位置编码凭什么比查表泛化？</summary>
-<p>查表的覆盖集是训练见过的 (电极名, 时间索引) 组合——REVE 统计约 400 个电极名、10s 窗内的索引，出了这个集合（62 通道蒙太奇、30s 睡眠窗、双极导联）就没有对应向量。坐标驱动的编码对任意 (x, y, z, t) 都有定义，因为它是一组连续函数而非离散查找。消融的脚注说得很诚实：可学习 <abbr title="位置编码 Positional Encoding">PE</abbr> 变体在见过的配置上不差（0.701 vs 0.707），4D 编码的全部价值都在泛化侧；坐标加 0.25cm 噪声则是对电极摆放差异的显式建模。</p>
+<p>查表的覆盖集是训练见过的 (电极名, 时间索引) 组合——REVE 统计约 400 个电极名、10s 窗内的索引，出了这个集合（62 通道蒙太奇、30s 睡眠窗、双极导联）就没有对应向量。坐标驱动的编码对任意 (x, y, z, t) 都有定义，因为它是一组连续函数而非离散查找。消融脚注给了对照数字：可学习 <abbr title="位置编码 Positional Encoding">PE</abbr> 变体在见过的配置上不差（0.701 vs 0.707），差距出在没见过的布局与更长序列；坐标加 0.25cm 噪声则是对电极摆放差异的显式建模。</p>
 </details>
 <details class="question">
 <summary>Q2 · 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次损失为什么能提升冻结特征？</summary>
@@ -2927,11 +2927,11 @@
 </details>
 <details class="question">
 <summary>Q3 · 块掩码为什么优于随机掩码，比例怎么选？</summary>
-<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时间邻域和空间邻域都高度自相关：随机点掩码下，被掩 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的信息大概率还在旁边的可见 <abbr title="词元，模型处理的最小输入单元">token</abbr> 里，重构退化为插值，梯度信号弱。块掩码按空间半径 3cm × 时间 3s 连续挖，把这些冗余一并挖掉。Table 18 的比例扫描：55% 是块掩码最优点（frozen 0.558 / FT 0.665），随机掩码最优在 25%（0.523 / 0.612）——随机掩码被迫用低比例「减少难度」，但冻结端仍输给块掩码。这与 TFM 的频带掩码消融（结构化 &gt; 随机 +8%）互为印证：掩码的结构要匹配信号的结构。</p>
+<p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时间邻域和空间邻域都高度自相关：随机点掩码下，被掩 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的信息大概率还在旁边的可见 <abbr title="词元，模型处理的最小输入单元">token</abbr> 里，重构退化为插值，梯度信号弱。块掩码按空间半径 3cm × 时间 3s 连续挖，把这些冗余一并挖掉。Table 18 的比例扫描：55% 是块掩码最优点（frozen 0.558 / FT 0.665），随机掩码最优在 25%（0.523 / 0.612）——随机掩码被迫用低比例「减少难度」，但冻结端仍输给块掩码。TFM 的频带掩码消融（结构化 &gt; 随机 +8%）方向相同：两类块掩码挖的都是信号的自相关冗余。</p>
 </details>
 <details class="question">
 <summary>Q4 · REVE 算不算回答了 CBraMod 留下的数据饱和问题？</summary>
-<p>部分回答。CBraMod 消融显示自家清洗语料 1000h 后边际递减，并质疑堆数据路线；REVE 用 92 数据集 61,415h 拿到平均 +2.5%——与「多样性突破单一分布饱和」相容。但要打两个折扣：① 论文没有数据量 scaling 消融，与 9,000h 清洗语料的增益对比里混着架构（4D <abbr title="位置编码 Positional Encoding">PE</abbr>）、模型规模（69M vs 4M）与目标差异，归因不纯；② REVE 自己承认语料以北美欧洲临床数据为主、人口多样性有限，下一步才是选择性策展。数据 scaling 曲线在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上仍然是稀缺品——这个问题保持开放。</p>
+<p>部分回答。CBraMod 消融显示自家清洗语料 1000h 后边际递减，并质疑堆数据路线；REVE 用 92 数据集 61,415h 拿到平均 +2.5%——与「多样性突破单一分布饱和」相容。但要打两个折扣：① 论文没有数据量 scaling 消融，与 9,000h 清洗语料的增益对比里混着架构（4D <abbr title="位置编码 Positional Encoding">PE</abbr>）、模型规模（69M vs 4M）与目标差异，归因不纯；② REVE 自己承认语料以北美欧洲临床数据为主、人口多样性有限，下一步才是选择性策展。<abbr title="脑电图 Electroencephalogram">EEG</abbr> 上还没有数据量 scaling 曲线，这个问题保持开放。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
