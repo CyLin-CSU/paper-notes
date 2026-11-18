@@ -2771,7 +2771,7 @@
 <ol>
 <li><strong>信号表示</strong>是并列的两类做法——连续片段（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的逐通道切段、LUNA 的固定隐空间）与离散码字（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、TFM-Tokenizer、NeuroLM）。码字的三种角色（监督信号 / 下游输入 / 语言词表并轨）分别对应三篇各自的实验设定，三篇之间没有直接互相对比的实验；</li>
 <li><strong>预训练目标</strong>上，重构域（波形/频谱）、恢复空间（信号/表示）与预测方向（双向/单向）是各研究分别操控的变量；同架构同损失的成对比较在本选读中只有 BrainGPT 表 V 一组；</li>
-<li><strong>数据规模</strong>上，十篇之内有三组证据：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 1–2500h 消融、EEGPT 附录 A.5 的 12.5%–100% 受控对照（BCIC-2A/2B）、NeuroLM 约 2.5 万小时的单一训练规模；另用名单外的 REVE 与 EEGArena 补充数据规模证据——REVE 提供最大披露语料（约 6 万小时），EEGArena 固定 REVE-base 扫数据量（600h→3 万小时）。</li>
+<li><strong>数据规模</strong>上，十篇之内有三组证据：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 1–2500h 消融、EEGPT 附录 A.5 的 12.5%–100% 受控对照（BCIC-2A/2B）、NeuroLM 约 2.5 万小时的单一训练规模；另用名单外的 REVE 与 EEGArena 补充数据规模证据——REVE 提供最大披露语料（约 6 万小时），EEGArena 固定 REVE-base 扫数据量（600h→3 万小时，数值与协议见<a href="../evidence/">实验证据</a>与<a href="../topics/data-landscape/">数据全景专题</a>）。</li>
 </ol>
 <p>超出这十篇的领域级结论，本文不做。</p>
 <h2 id="_6">六、几个阅读入口<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
@@ -2859,8 +2859,6 @@
         <script src="../javascripts/giscus.js"></script>
       
         <script src="../javascripts/progress.js"></script>
-      
-        <script src="../javascripts/back-to-top.js"></script>
       
         <script src="../javascripts/library.js"></script>
       

@@ -3119,102 +3119,13 @@
 </li>
 </ul>
 <h2 id="_1">代码与权重<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文</th>
-<th>代码</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td><a href="https://github.com/ycq091044/BIOT">ycq091044/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td>完整开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td><a href="https://github.com/935963004/LaBraM">935963004/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td>仅 Base 权重；Large / Huge 未放</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/eegpt/">EEGPT</a></td>
-<td><a href="https://github.com/BINE022/EEGPT">BINE022/EEGPT</a></td>
-<td>开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/neurolm/">NeuroLM</a></td>
-<td><a href="https://github.com/935963004/NeuroLM">935963004/NeuroLM</a></td>
-<td>开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a></td>
-<td><a href="https://github.com/Jathurshan0330/TFM-Tokenizer">Jathurshan0330/TFM-Tokenizer</a></td>
-<td>含预训练权重与全部预处理脚本</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/cbramod/">CBraMod</a></td>
-<td><a href="https://github.com/wjq-learning/CBraMod">wjq-learning/CBraMod</a></td>
-<td>已进 Braindecode</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/luna/">LUNA</a></td>
-<td><a href="https://github.com/pulp-bio/biofoundation">pulp-bio/biofoundation</a></td>
-<td>Base / Large / Huge 全系</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/reve/">REVE</a></td>
-<td><a href="https://brain-bzh.github.io/reve/">brain-bzh.github.io/reve</a> · <a href="https://github.com/elouayas/reve_eeg">elouayas/reve_eeg</a></td>
-<td>多规格权重 + tutorials；decoder 不发布（隐私）</td>
-</tr>
-<tr>
-<td><a href="../../papers/generative/eegdm/">EEGDM</a></td>
-<td><a href="https://github.com/wangsc18/EEGDM">wangsc18/EEGDM</a></td>
-<td>含预处理脚本与训练配置</td>
-</tr>
-<tr>
-<td><a href="../../papers/generative/jet/">JET</a></td>
-<td><a href="https://y-research-sbu.github.io/JET/">项目页</a></td>
-<td>代码 / 权重以项目页为准</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/eegmoe/">EEGMoE</a></td>
-<td>—</td>
-<td>论文声明将放出，精读时未见仓库</td>
-</tr>
-<tr>
-<td><a href="../../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></td>
-<td>—</td>
-<td>论文未附仓库（底座 Qwen2.5-VL 等组件公开可得）</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/neurorvq/">NeuroRVQ</a></td>
-<td><a href="https://neurorvq.github.io">项目页</a> · <a href="https://huggingface.co/ntinosbarmpas/NeuroRVQ">Hugging Face</a></td>
-<td>官方实现挂 HF（另有第三方 <a href="https://github.com/eugenehp/neurorvq-rs">Rust 推理</a>）</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/brainrvq/">BrainRVQ</a></td>
-<td><a href="https://github.com/keqicmz/BrainRVQ">keqicmz/BrainRVQ</a></td>
-<td>代码可访问，权重承诺论文接收后放出</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/codebrain/">CodeBrain</a></td>
-<td><a href="https://github.com/jingyingma01/CodeBrain">jingyingma01/CodeBrain</a></td>
-<td>ICLR 2026 官方开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/neurodetr/">NeuroDETR</a></td>
-<td>—</td>
-<td>暂未检索到官方仓库</td>
-</tr>
-<tr>
-<td><a href="../../papers/survey/delta/">DELTA</a></td>
-<td>—</td>
-<td>论文未附仓库（NeurIPS 2025 Workshop）</td>
-</tr>
-</tbody>
-</table>
+<p>各模型的代码地址、权重状态与参数口径统一由<a href="../../models/">模型对比页</a>（数据源 <code>data/models.json</code>）维护，此处只保留与 tokenizer 复现直接相关的注释：</p>
+<ul>
+<li><strong><a href="../../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a></strong>：官方仓库含预训练权重与全部预处理脚本——复现其词表需连同预处理一起取；</li>
+<li><strong><a href="../../papers/fm/neurorvq/">NeuroRVQ</a></strong>：官方实现挂在 Hugging Face（<a href="https://huggingface.co/ntinosbarmpas/NeuroRVQ">ntinosbarmpas/NeuroRVQ</a>），另有第三方 <a href="https://github.com/eugenehp/neurorvq-rs">Rust 推理</a>；</li>
+<li><strong><a href="../../papers/fm/reve/">REVE</a></strong>：<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> decoder 不发布（可从表示重构原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，隐私考量）——复现其 tokenizer 输出只需 encoder；</li>
+<li>未附仓库：EEGMoE（声明将放出）、RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>（底座组件公开可得）、NeuroDETR、DELTA（Workshop 论文）。</li>
+</ul>
 <h2 id="_6">相关前端与解码方式<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
 <ul>
 <li>
@@ -3305,8 +3216,6 @@
         <script src="../../javascripts/giscus.js"></script>
       
         <script src="../../javascripts/progress.js"></script>
-      
-        <script src="../../javascripts/back-to-top.js"></script>
       
         <script src="../../javascripts/library.js"></script>
       

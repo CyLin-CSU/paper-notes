@@ -2927,8 +2927,8 @@
 <p>读法（站内推断，非原文结论）：数据缩放效应<strong>是否存在取决于任务与协议</strong>——EEGArena 的受控对照说明增益存在但需固定架构，Kuruppu 的跨研究对照说明「报得多」不等于「效果好」；两者不矛盾，因为前者控制了架构变量而后者没有。这正是 §3 评测痛点（协议不可比）的直接代价。</p>
 <h2 id="6">6 正在被修正的三个叙事（站内证据）<a class="headerlink" href="#6" title="Permanent link">#</a></h2>
 <ol>
-<li><strong>「FM 普遍优于简单基线」</strong>：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 <abbr title="运动想象 Motor Imagery">MI</abbr> 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且预训练数据缩放有增益（+6.69pp）。合成的结论是：<strong>FM 的优势有条件（任务域、协议、数据规模），不是普适的</strong>。</li>
-<li><strong>「线性探针差 = 实现问题」</strong>：Kuruppu 显示 LP 落后 FT 跨五个模型出现（其图 4(a)），说明这是<strong>范式级现象</strong>——凡做「冻结可用」主张的工作（<a href="../papers/fm/eegpt/">EEGPT</a> 的对齐目标、<a href="../papers/fm/reve/">REVE</a> 的全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 瓶颈）都是在对着这个现象设计。</li>
+<li><strong>「FM 普遍优于简单基线」</strong>：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 <abbr title="运动想象 Motor Imagery">MI</abbr> 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且固定架构的预训练数据缩放有增益（受控对照见<a href="../evidence/">实验证据</a>）。合成的结论是：<strong>FM 的优势有条件（任务域、协议、数据规模），不是普适的</strong>。</li>
+<li><strong>「线性探针差 = 实现问题」</strong>：Kuruppu 在其纳入范围内报告 LP 落后 FT 跨五个模型出现（其图 4(a)；纳入范围与任务设定见<a href="../papers/reviews/kuruppu-critical-review/">其笔记</a>）——凡做「冻结可用」主张的工作（<a href="../papers/fm/eegpt/">EEGPT</a> 的对齐目标、<a href="../papers/fm/reve/">REVE</a> 的全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 瓶颈）都是在对着这个观察设计，其普遍性尚待更大范围验证。</li>
 <li><strong>「架构 vs 预训练」二选一</strong>：REVE 的预训练价值消融（其表 3：PhysioNet-<abbr title="运动想象 Motor Imagery">MI</abbr> 上无预训练 REVE 0.5409 &lt; CBraMod 0.6196；有预训练 REVE 0.6480 &gt; CBraMod 0.6417）把两种来源的贡献同框量化——架构先验与预训练数据各有其适用面，站内判断详见 <a href="../papers/fm/reve/">REVE 笔记的个人思考</a>。</li>
 </ol>
 <h2 id="7">7 站外动态（检索所得，站内未核对原文，引用前须核实）<a class="headerlink" href="#7" title="Permanent link">#</a></h2>
@@ -2947,7 +2947,7 @@
 <li><strong>写作引用纪律</strong>：四篇综述互有转述失真（如 Kwon 对 CBraMod 的「对比目标」误读，见<a href="../papers/reviews/kwon-neural-fm-perspective/">其勘误节</a>），模型设计事实应回原文核对，综述仅作地图使用。</li>
 </ol>
 <hr>
-<p><strong>相关阅读</strong>：<a href="../papers/reviews/yao-eegfm-survey/">四篇综述精读</a> ｜ <a href="../papers/survey/eegarena/">EEGArena</a> ｜ <a href="../comparison/">十四篇方法对比</a> ｜ <a href="../topics/data-landscape/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练数据全景</a> ｜ <a href="../blog-2023-2026/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型选读</a> ｜ <a href="../">首页</a></p>
+<p><strong>相关阅读</strong>：四篇综述精读——<a href="../papers/reviews/yao-eegfm-survey/">Yao（技术分类与复跑比较）</a> · <a href="../papers/reviews/chen-representation-learning-review/">Chen（组件拆解与迁移学习）</a> · <a href="../papers/reviews/kuruppu-critical-review/">Kuruppu（评测批判与代表性）</a> · <a href="../papers/reviews/kwon-neural-fm-perspective/">Kwon（设计原则主张）</a> ｜ <a href="../evidence/">实验证据</a> ｜ <a href="../papers/survey/eegarena/">EEGArena</a> ｜ <a href="../comparison/">十四篇方法对比</a> ｜ <a href="../topics/data-landscape/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练数据全景</a> ｜ <a href="../">首页</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -3019,8 +3019,6 @@
         <script src="../javascripts/giscus.js"></script>
       
         <script src="../javascripts/progress.js"></script>
-      
-        <script src="../javascripts/back-to-top.js"></script>
       
         <script src="../javascripts/library.js"></script>
       

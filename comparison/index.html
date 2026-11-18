@@ -2797,7 +2797,7 @@
 <tbody>
 <tr>
 <td>① 预训练数据</td>
-<td>规模 / 域距离 / 清洗哲学：TUEG 系语料越报越大（2500h→25000h）；CBraMod 的单项消融显示清洗版优于脏数据版；EEGArena 固定 REVE 架构把预训练语料从 600h 加到 3 万小时仍见增益（被试内 +6.69pp）——两项实验对象与条件不同，详见数据全景专题</td>
+<td>规模 / 域距离 / 清洗哲学：TUEG 系语料越报越大（2500h→25000h）；CBraMod 的单项消融显示清洗版优于脏数据版；EEGArena 固定 REVE 架构把预训练语料从 600h 加到 3 万小时仍见增益——两项实验对象与条件不同，数值与协议见<a href="../evidence/">实验证据</a>，解读详见数据全景专题</td>
 <td><a href="../topics/data-landscape/">数据全景专题</a></td>
 </tr>
 <tr>
@@ -2871,13 +2871,7 @@
 <p><strong>相位的处理是一条暗线</strong>：重构它（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>）→ 砍它（NeuroLM / TFM / RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>）→ 又要它（LUNA 幅相都投）。没有定论，但「相位对表示学习有用、对判别式任务可省」是目前的经验边界。</p>
 <p><strong>维度小结</strong>：频域证据分篇看——TFM 在 tokenizer 内做频率轴注意力与频带掩码（其消融中频带掩码贡献最大）；CBraMod 在 patch embedding 加 rFFT 能量支路（消融：时+频 &gt; 纯时 &gt; 纯频）；LUNA 在 patch embedding 加 FFT 幅相支路并报告去掉后 AUROC 最多降 0.011–0.012。三家的消融各自支持频域支路在自己的任务与指标上有贡献，任务与协议不同，不构成跨研究的统一结论。</p>
 <h3 id="mod-scale">规模、效率与开源<a class="headerlink" href="#mod-scale" title="Permanent link">#</a></h3>
-<p><strong>① 参数量排序</strong>（按口径分组）</p>
-<ul>
-<li><strong>主模型（从零训练，下游口径）</strong>：EEGMoE 1.68M（激活 0.89M）· TFM 下游 ~0.7M · <abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 3.2M · CBraMod 4.0M · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Base 5.8M · LUNA-Base 7M · EEGPT ~10M（论文摘要口径；TUEV 主结果用 25M encoder） · EEGDM 25M · REVE-Base 69M · JET 129.9M · LUNA-Huge 311.4M · <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge 369M · REVE-Large 408M</li>
-<li><strong>端到端合计（含 tokenizer）</strong>：TFM ~1.9M；NeuroLM-XL 含 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 基座至 1696M</li>
-<li><strong>端到端合计（含语言基座）</strong>：NeuroLM-XL 1696M · BrainGPT-Giant <strong>1.09B</strong>（均从零/扩词训练）</li>
-<li><strong>复用外部基座</strong>：RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 3B/7B（Qwen2.5-VL，不解码 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 波形参数）</li>
-</ul>
+<p><strong>① 参数与代码/权重状态</strong>：逐模型的总参数、激活参数、encoder/tokenizer 口径与代码、权重状态统一在<a href="../models/">模型对比页</a>维护（数据源 <code>data/models.json</code>，21 个模型条目）。口径分组的地域：<strong>主模型（从零训练，下游口径）</strong> 从 EEGMoE 1.68M 到 REVE-Large 408M；<strong>端到端合计（含 tokenizer / 语言基座）</strong> 有 TFM ~1.9M 与 NeuroLM-XL 1696M、BrainGPT-Giant 1.09B；<strong>复用外部基座</strong> 有 RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>（Qwen2.5-VL，不解码 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 波形参数）。</p>
 <p><strong>② 效率</strong></p>
 <ul>
 <li><strong>LUNA</strong>：8000 通道时 23 GFLOPs / 2GB（<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 4156 GFLOPs，约 1/180），Base 16-bit 约 14MB——面向可穿戴 SoC 实时预算；</li>
@@ -2912,13 +2906,8 @@
 </tr>
 </tbody>
 </table>
-<p><strong>④ 开源与可复现性</strong></p>
-<ul>
-<li><strong>有官方代码</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr>、<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>、EEGPT、NeuroLM、TFM、CBraMod（已进 Braindecode）、LUNA、EEGDM、REVE（encoder 权重 + 任意 3D 坐标加载器 + tutorials）；</li>
-<li><strong>声明将放出 / 未附</strong>：BrainGPT、EEGMoE、RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>、JET（以项目页为准）；</li>
-<li><strong>权重细节坑</strong>：REVE 的 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> decoder 不发布（能从表示重构原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，隐私考量）——<abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 第一次基于隐私 withholding 组件；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 Large/Huge 权重未开源——各家论文里「打过 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge」的数字多引自 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 原文，非独立复现。</li>
-</ul>
-<p><strong>维度小结</strong>：规模轴上被验证过的规律只有两条——<strong>结构先验可以替代规模</strong>（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及<strong>效率在特定场景是硬需求</strong>（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上至今没有被干净地兑现——REVE 的模型规模消融给出模型侧证据（Base→Large 线性探针 0.609→0.654），EEGArena 固定架构给出数据侧证据（600h→3 万小时、被试内 +6.69pp）；但两者的任务集与协议不同，统一叙事仍缺（详见<a href="../topics/data-landscape/">数据全景专题</a>）。</p>
+<p><strong>④ 权重细节坑</strong>（逐条状态见<a href="../models/">模型对比页</a>）：REVE 的 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> decoder 不发布（能从表示重构原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr>，隐私考量）——<abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 第一次基于隐私 withholding 组件；<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的 Large/Huge 权重未开源——各家论文里「打过 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>-Huge」的数字多引自 <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 原文，非独立复现。</p>
+<p><strong>维度小结</strong>：规模轴上被验证过的规律只有两条——<strong>结构先验可以替代规模</strong>（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及<strong>效率在特定场景是硬需求</strong>（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上至今没有被干净地兑现——REVE 的模型规模消融给出模型侧证据（Base→Large 线性探针 0.609→0.654），EEGArena 固定架构给出数据侧证据（受控对照）；但两者的任务集与协议不同，统一叙事仍缺，数值见<a href="../evidence/">实验证据</a>（详见<a href="../topics/data-landscape/">数据全景专题</a>）。</p>
 <h2 id="critique-chain">论文间的比较与改进<a class="headerlink" href="#critique-chain" title="Permanent link">#</a></h2>
 <p>箭头方向 = 批评/改进指向；实线边标注批评点，虚线边含义见标签。<strong>来源口径</strong>：实线批评边转写自起点论文正文或消融（REVE 的预训练增益差值由其表 3 数字相减得出，因果解释为作者观点）；虚线边为站内类比或互补归纳，不构成论文自身的批评。窄屏可在图内横向滑动。</p>
 <pre class="mermaid"><code>flowchart LR
@@ -3034,8 +3023,6 @@
         <script src="../javascripts/giscus.js"></script>
       
         <script src="../javascripts/progress.js"></script>
-      
-        <script src="../javascripts/back-to-top.js"></script>
       
         <script src="../javascripts/library.js"></script>
       

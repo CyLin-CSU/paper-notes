@@ -2778,7 +2778,7 @@
 <p>正文按 §1 问题定位（montage 绑定为何是第一瓶颈）、§2 方法（4D 位置编码 / 块掩码 / 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 损失 / 数据哲学）、§3 实验与结果（微调与线性探针、预训练价值消融）展开；语料规模、组件数字与表 3/表 4 口径在对应段落与文末复现速查卡中。</p>
 <h2 id="1-montage">1 问题定位：montage 绑定是线性探针下的第一瓶颈<a class="headerlink" href="#1-montage" title="Permanent link">#</a></h2>
 <p>作者对现有 <abbr title="脑电图 Electroencephalogram">EEG</abbr> FM 的归因分两层。<strong>数据层</strong>：<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> / <abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / CBraMod / NeuroGPT 的预训练语料几乎都来自 TUH（固定 19/21 通道蒙太奇），换电极布局的数据集天然吃不到预训练红利。<strong>架构层</strong>：位置编码要么查表（<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> 的电极编号 → embedding、<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr> 的通道表），要么卷积生成（CBraMod 的 ACPE）——前者覆盖不了训练没见过的电极名，后者编码的是邻域模式而非绝对空间位置，迁移时往往要全量微调补课。两层的共同后果：linear probing（最能反映表示通用性的协议）成绩次优。</p>
-<p>REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局任意长度都有定义），61,415h 多源语料解决数据层（布局多样性内建于数据），修改版 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 解决表示层（冻结可用）。</p>
+<p>REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局任意长度都有定义），多源大规模语料解决数据层（布局多样性内建于数据，规模与构成见 §2.5），修改版 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 解决表示层（冻结可用）。</p>
 <h2 id="2">2 方法<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
 <h3 id="21-4d">2.1 4D 位置编码：从坐标生成，不查表<a class="headerlink" href="#21-4d" title="Permanent link">#</a></h3>
 <p>切段承 <a href="../biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a>：每通道切 w=1s、重叠 o=0.1s 的 patch，线性嵌入。位置编码分三步：</p>
@@ -2840,7 +2840,7 @@
 </tr>
 <tr>
 <td><a href="../../../topics/data-landscape/">数据全景专题</a></td>
-<td>61,415h 把「万小时」叙事推到新量级，且 92 数据集的<strong>多样性</strong>（396 电极名、3–129 通道）才是它相对 NeuroLM 25,000h 单一 TUEG 的实质差异</td>
+<td>最大非侵入披露语料把「万小时」叙事推到新量级，且 92 数据集的<strong>多样性</strong>（396 电极名、3–129 通道）才是它相对 NeuroLM 25,000h 单一 TUEG 的实质差异</td>
 </tr>
 <tr>
 <td><a href="../../../basics/lora/">LoRA 基础页</a></td>
@@ -2871,7 +2871,7 @@
 </details>
 <details class="question">
 <summary>Q4 · REVE 算不算回答了 CBraMod 留下的数据饱和问题？</summary>
-<p>部分回答。CBraMod 消融显示自家清洗语料 1000h 后边际递减，并质疑堆数据路线；REVE 用 92 数据集 61,415h 拿到平均 +2.5%——与「多样性突破单一分布饱和」相容。但要打两个折扣：① 论文没有数据量 scaling 消融，61,415h vs 9,000h 的增益里混着架构（4D <abbr title="位置编码 Positional Encoding">PE</abbr>）、模型规模（69M vs 4M）与目标差异，归因不纯；② REVE 自己承认语料以北美欧洲临床数据为主、人口多样性有限，下一步才是选择性策展。数据 scaling 曲线在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上仍然是稀缺品——这个问题保持开放。</p>
+<p>部分回答。CBraMod 消融显示自家清洗语料 1000h 后边际递减，并质疑堆数据路线；REVE 用 92 数据集 61,415h 拿到平均 +2.5%——与「多样性突破单一分布饱和」相容。但要打两个折扣：① 论文没有数据量 scaling 消融，与 9,000h 清洗语料的增益对比里混着架构（4D <abbr title="位置编码 Positional Encoding">PE</abbr>）、模型规模（69M vs 4M）与目标差异，归因不纯；② REVE 自己承认语料以北美欧洲临床数据为主、人口多样性有限，下一步才是选择性策展。数据 scaling 曲线在 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 上仍然是稀缺品——这个问题保持开放。</p>
 </details>
 <div class="admonition abstract">
 <p class="admonition-title">复现速查卡</p>
@@ -2887,7 +2887,7 @@
 </div>
 <hr>
 <p><strong>相关阅读</strong></p>
-<p>:material-compress: <a href="../cbramod/">CBraMod（最主要对照：数据哲学与位置编码的正面分歧）</a> ｜ :material-compress: <a href="../luna/">LUNA（空间编码另一极：query 压缩 vs 坐标生成）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> <a href="../eegpt/">EEGPT（冻结可用的另一解法：对齐目标 vs 信息瓶颈）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></span> <a href="../../../topics/data-landscape/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练数据全景（61,415h 入账后的语料版图）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/">十四篇方法对比</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></span> <a href="../../../">首页</a></p>
+<p>:material-compress: <a href="../cbramod/">CBraMod（最主要对照：数据哲学与位置编码的正面分歧）</a> ｜ :material-compress: <a href="../luna/">LUNA（空间编码另一极：query 压缩 vs 坐标生成）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg></span> <a href="../eegpt/">EEGPT（冻结可用的另一解法：对齐目标 vs 信息瓶颈）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></span> <a href="../../../topics/data-landscape/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 预训练数据全景（最大披露语料入账后的版图）</a> ｜ <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"></path></svg></span> <a href="../../../comparison/">十四篇方法对比</a></p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 
@@ -2959,8 +2959,6 @@
         <script src="../../../javascripts/giscus.js"></script>
       
         <script src="../../../javascripts/progress.js"></script>
-      
-        <script src="../../../javascripts/back-to-top.js"></script>
       
         <script src="../../../javascripts/library.js"></script>
       

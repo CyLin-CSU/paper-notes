@@ -15,8 +15,8 @@
   var wrap = document.getElementById("mdl-table-wrap");
   var countEl = document.getElementById("mdl-count");
   var selLabel = document.getElementById("mdl-selected");
-  var FIELDS = ["params_m", "input", "layout", "training_stage", "weights_note"];
-  var FIELD_LABELS = { params_m: "参数量 (M)", input: "输入", layout: "电极布局适配", training_stage: "训练阶段", weights_note: "权重与许可" };
+  var FIELDS = ["params_m", "input", "layout", "training_stage", "weights_note", "code"];
+  var FIELD_LABELS = { params_m: "参数量 (M)", input: "输入", layout: "电极布局适配", training_stage: "训练阶段", weights_note: "权重与许可", code: "代码/项目" };
 
   function renderChips() {
     chips.innerHTML = "";
@@ -72,6 +72,7 @@
     var body = FIELDS.map(function (f) {
       return "<tr><th>" + FIELD_LABELS[f] + "</th>" + selected.map(function (id) {
         var v = byId[id][f];
+        if (f === "code" && v) { return "<td><a href='" + v + "'>" + v.replace("https://", "").slice(0, 34) + "</a></td>"; }
         return "<td>" + (v === null || v === undefined ? "—" : String(v)) + "</td>";
       }).join("") + "</tr>";
     }).join("");
