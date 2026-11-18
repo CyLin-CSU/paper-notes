@@ -7,6 +7,10 @@ hooks:
   - hooks.py
   - search_zh.py
 
+validation:
+  links:
+    anchors: warn   # 严格构建下锚点缺失会报错，防止标题被吞后快捷入口失效
+
 theme:
   name: material
   language: zh

@@ -11,11 +11,9 @@ tags: [索引, 数据集]
 
 ## 📊 数据集 × 论文使用矩阵
 
-图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者都用　<span class="mx-cell mx-n">·</span> 未使用。**窄屏请横向滑动查看其余论文列，数据集行名固定在左侧**；悬停单元格可看口径说明（JET 的 P 指生成训练使用）。例外口径见[开头说明](#dataset-alias)上方的口径段落，数据集详情按分类见下方各节：[临床 TUEG](#临床-eegtemple-大学-tueg-体系) · [情绪](#情绪识别) · [运动想象](#运动想象--执行) · [睡眠](#睡眠分期) · [认知负荷](#认知负荷) · [ERP/P300/SSVEP](#erp--p300--ssvep) · [癫痫/精神](#癫痫--精神诊断--想象语音) · [ECG/其他](#ecg--可穿戴--跨模态--其他)。
+图例：<span class="mx-cell mx-p">P</span> 预训练语料　<span class="mx-cell mx-d">D</span> 下游评估　<span class="mx-cell mx-b">P+D</span> 两者都用　<span class="mx-cell mx-n">·</span> 未使用。**窄屏请横向滑动查看其余论文列，数据集行名固定在左侧**；悬停单元格可看口径说明（JET 的 P 指生成训练使用）。例外口径见本节上方的口径说明段落，数据集详情按分类见下方各节：[临床 TUEG](#eegtemple-tueg) · [情绪](#_3) · [运动想象](#_4) · [睡眠](#_5) · [认知负荷](#_6) · [ERP/P300/SSVEP](#erp-p300-ssvep) · [癫痫/精神](#_7) · [ECG/其他](#ecg)。
 
 <div class="mx-wrap" tabindex="0" role="region" aria-label="数据集与论文使用矩阵，可横向滚动">
-
-<div class="mx-wrap">
 <table class="mx-matrix">
 <thead><tr><th scope="col">数据集 \ 论文</th><th scope="col">BIOT</th><th scope="col">LaBraM</th><th scope="col">EEGPT</th><th scope="col">BrainGPT</th><th scope="col">NeuroLM</th><th scope="col">TFM</th><th scope="col">EEGMoE</th><th scope="col">LUNA</th><th scope="col">JET</th><th scope="col">RF-GPT</th><th scope="col">CBraMod</th><th scope="col">EEGDM</th>
 <th scope="col">Not-All-EEG</th>
