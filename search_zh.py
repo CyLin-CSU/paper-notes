@@ -6,11 +6,15 @@
 """
 import json
 import pathlib
+import re
 
 import jieba
 
 ROOT = pathlib.Path(__file__).resolve().parent
-SEARCH_INDEX = ROOT / "site" / "search" / "search_index.json"
+
+# 连字符词与站点专名加入词典，避免被切碎
+jieba.add_word("Uni-NTFM")
+jieba.add_word("REVE")
 
 # 领域词加入词典，避免被切碎
 for w in ["掩码建模", "码本", "码字", "自回归", "梯度反转", "向量量化", "掩码预测",
@@ -20,15 +24,25 @@ for w in ["掩码建模", "码本", "码字", "自回归", "梯度反转", "向�
     jieba.add_word(w)
 
 
+TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _clean(text: str) -> str:
+    """去掉索引正文里的 HTML 标签，避免搜索摘要出现裸露的 <span>/<li> 片段。"""
+    return TAG_RE.sub(" ", text)
+
+
 def on_post_build(config, **kwargs):
-    if not SEARCH_INDEX.exists():
+    # 索引路径跟随实际输出目录（自定义 --site-dir 时同样生效）
+    index = pathlib.Path(config.get("site_dir", "site")) / "search" / "search_index.json"
+    if not index.exists():
         return
-    data = json.loads(SEARCH_INDEX.read_text(encoding="utf-8"))
+    data = json.loads(index.read_text(encoding="utf-8"))
     docs = data.get("docs", [])
     for doc in docs:
-        title = doc.get("title", "")
-        text = doc.get("text", "")
+        title = _clean(doc.get("title", ""))
+        text = _clean(doc.get("text", ""))
         seg = " ".join(w for w in jieba.cut(title + " " + text) if w.strip())
         doc["text"] = seg
-    SEARCH_INDEX.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    index.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
     print(f"[hooks] 搜索索引已完成 jieba 中文分词（{len(docs)} 条）")

@@ -10,7 +10,7 @@
 |---|---|
 | 工作区 `C:\Users\ChengyeLin.LINOUP-XIAOXIN1\Desktop\paper-notes` | 说明文档、BrainLLM 资料与站点工程 |
 | 工作区下的 `paper-notes/` | **Git 仓库与 MkDocs 工程，构建和发布都在这里执行** |
-| `docs/papers/` | 单篇论文笔记，直接放在此目录，文件名不带阅读日期，目前 25 篇 |
+| `docs/papers/` | 单篇论文笔记，按三个子目录分类：`fm/`（EEG 基础模型）、`generative/`（生成式模型）、`survey/`（综述与轴外），目前 27 篇 |
 | `docs/topics/` | 五个主题专题，跨论文做宏观对照 |
 | `docs/assets/` | 论文图与站点图片 |
 | `docs/comparison.md` | 综合比较入口，覆盖范围以页面说明为准 |

@@ -2,17 +2,76 @@
 title: 首页
 ---
 
-# ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } CyLin-CSU
+# ![CyLin-CSU](https://github.com/CyLin-CSU.png){ .h1-avatar } EEG 论文阅读笔记
 
-> **最近更新**：<!-- LAST_UPDATE --> · <!-- ACTIVITY_BADGE --> · 精读 **27** 篇（含 1 篇 RF 跨领域、1 篇连接组学）· NeurIPS / ICLR / NMI 2023–2026 · 主题：EEG 基础模型与 Tokenization
+> CyLin-CSU · 精读 **27** 篇（EEG 基础模型 15 / 生成式模型 3 / 相关研究 9）· NeurIPS / ICLR / NMI 2023–2026 · 更新：<!-- LAST_UPDATE -->（北京时间）· <!-- ACTIVITY_BADGE --> · 按 `/` 全文搜索
 
-个人论文精读库：记录研究问题、方法拆解与创新设计。++ctrl+k++ 全文搜索。
+**[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)**
 
-## :material-calendar-check: 活跃日程（最近一周）
+## 论文库 {: #papers }
+
+### EEG 基础模型（15 篇）
+
+| 论文 | 发表 · 规模 | 方法一句话 |
+|---|---|---|
+| [BIOT](papers/fm/biot.md) | NeurIPS 2023 · 3.2M | 逐通道切段 + 线性注意力，跨格式生物信号统一编码的起点 |
+| [LaBraM](papers/fm/labram.md) | ICLR 2024 · 5.8M–369M | VQ 神经 codebook + 频谱重构 + 掩码码字预测 |
+| [EEGPT](papers/fm/eegpt.md) | NeurIPS 2024 · ~10M | 表示对齐 + 掩码重构双自监督，linear probing 达 SOTA |
+| [BrainGPT](papers/fm/braingpt.md) | arXiv 2024 · 至 1.09B | 电极级建模 + GPT 式自回归 + 任务共享电极图 |
+| [NeuroLM](papers/fm/neurolm.md) | ICLR 2025 · 至 1696M | EEG 接进 GPT-2：文本对齐 tokenizer + 指令微调多任务 |
+| [CBraMod](papers/fm/cbramod.md) | ICLR 2025 · 4.0M | 十字交叉注意力分别建模时间与通道 + 动态位置编码 |
+| [LUNA](papers/fm/luna.md) | NeurIPS 2025 · 7M–311M | 可学习 query 汇聚通道，任意电极布局映射到固定隐空间 |
+| [REVE](papers/fm/reve.md) | NeurIPS 2025 · 12M–408M | 4D 傅里叶位置编码 + 61,415h/92 数据集最大非侵入预训练 |
+| [TFM-Tokenizer](papers/fm/tfm-tokenizer.md) | ICLR 2026 · ~1.9M | 单通道时频 motif 词表，离散 token 作模型输入 |
+| [Uni-NTFM](papers/fm/uni-ntfm.md) | ICLR 2026 | 时域/频带功率双向交叉注意力 + 拓扑嵌入 + MoE |
+| [EEGMoE](papers/fm/eegmoe.md) | TNNLS 2026 · 1.68M | 域专属与共享专家分别学习域差异与共性 |
+| [NeuroRVQ](papers/fm/neurorvq.md) | arXiv 2025 · 5.9M | 多尺度残差量化 + 幅值相位约束的 EEG 离散词表 |
+| [BrainRVQ](papers/fm/brainrvq.md) | arXiv 2026 · 5.82M | 时域/频域双路 RVQ，按码字层级从粗到细预测 |
+| [CodeBrain](papers/fm/codebrain.md) | ICLR 2026 · 15.17M | 时频双码本解耦 + 多尺度骨干 |
+| [NeuroDETR](papers/fm/neurodetr.md) | arXiv 2026 | 多尺度 VQ 事件记忆检测 EEG 事件类别与起止 |
+
+### 生成式模型（3 篇）
+
+| 论文 | 发表 · 规模 | 方法一句话 |
+|---|---|---|
+| [JET](papers/generative/jet.md) | ICML 2026 · 129.9M | 条件流匹配 + 生理结构约束，直接生成原始 EEG |
+| [EEGDM](papers/generative/eegdm.md) | arXiv 2026 · 25M | EEG 表示引导潜空间扩散，去噪任务训练编码器 |
+| [Not-All-EEG](papers/generative/not-all-eeg.md) | arXiv 2026 | 按位置难度调整流匹配时间调度 |
+
+### 相关研究（9 篇）
+
+| 论文 | 发表 | 方法一句话 |
+|---|---|---|
+| [Défossez 语音解码](papers/survey/defossez-speech.md) | NMI 2023 | 脑信号与语音表示对比对齐，候选检索听到的语音 |
+| [CrossPT-EEG](papers/survey/crosspt-eeg.md) | arXiv 2024 | 被试内/跨被试/跨时间设定下视觉解码泛化评测 |
+| [GUIDED](papers/survey/guided.md) | arXiv 2024 | EEG 对齐 CLIP 空间，引导扩散重建所见图像 |
+| [SSM2Mel](papers/survey/ssm2mel.md) | arXiv 2025 | Mamba + 注意力交替，EEG 重建连续语音 mel 谱 |
+| [DELTA](papers/survey/delta.md) | NeurIPS WS 2025 | RVQ token + 掩码扩散语言模型的 EEG-to-Text |
+| [NPI](papers/survey/surrogate-brain.md) | Nature Methods 2025 | 代理脑虚拟扰动估计脑区间有效连接 |
+| [LTFT](papers/survey/learnable-tf.md) | TETCI 2026 | 时频变换窗口设为可学习参数的信号前端 |
+| [RF-GPT](papers/survey/rf-gpt.md) | arXiv 2026 | 射频时频图接入 VLM，合成数据训练信号理解 |
+| [EEGArena](papers/survey/eegarena.md) | arXiv 2026 | 30 FM × 25 基线 × 57 任务的统一评测 |
+
+## 主题专题与架构基础 {: #topics }
+
+| 页面 | 说明 |
+|---|---|
+| [EEG Tokenization 演进](topics/tokenization.md) | token 形态与词表用法的三步跃迁 |
+| [预训练范式对比](topics/pretraining.md) | 对比 / 掩码 / 自回归 / 生成四路线与掩码目标进化 |
+| [通道适配与多任务学习](topics/multi-task.md) | 通道表示、空间整合与任务共享方式 |
+| [EEG 预训练数据全景](topics/data-landscape.md) | 语料构成、域偏斜与规模瓶颈 |
+| [基座来源分析](topics/base-model.md) | 从零训练 vs 加载现成基座 |
+| [语音模型专题](topics/speech-models.md) | 语音解码轴线按 tokenization / pretraining / 下游任务横读 |
+| [LoRA · 低秩适配](basics/lora.md) | 参数高效微调事实标准 |
+| [Attention 替代方案](basics/attention-alternatives.md) | 线性注意力 → Mamba-2 → 混合 → DSA |
+| [生成模型脉络](basics/generative-lineage.md) | ELBO / 去噪 / 速度场三代绕法 |
+| [图神经网络](basics/gnn.md) | 消息传递与 GAT，BrainGPT TEG 的机制基础 |
+
+另有：[十四篇方法对比](comparison.md)（九维度横向对照）· [数据集索引](datasets.md)（14 × 36 使用矩阵）· [EEG 基础模型综述](blog-2023-2026.md)（对外综述版）· [参考文献索引](references.md)。
+
+## 最近更新 {: #updates }
 
 <div class="ac-slot"><!-- ACTIVITY_CALENDAR --></div>
-
-## :material-history: 更新时间线
 
 <ul class="timeline" id="home-timeline" markdown>
 
@@ -77,249 +136,19 @@ title: 首页
 
 </ul>
 
-## :material-bookshelf: 论文库
-
-<div class="grid cards" markdown>
-
-- :material-heart-pulse:{ .lg .middle } **[BIOT](papers/fm/biot.md)**
-    ---
-    NeurIPS 2023 · 3.2M 参数
-
-    逐通道切段 + 线性注意力，跨格式生物信号统一编码的**起点**。tags: `tokenization` `线性注意力`
-
-- :material-ear-hearing:{ .lg .middle } **[Défossez 语音解码](papers/survey/defossez-speech.md)**
-    ---
-    NMI 2023
-
-    脑信号与语音表示做**对比对齐**，从候选中检索听到的语音。tags: `对比学习` `语音解码`
-
-- :material-brain:{ .lg .middle } **[LaBraM](papers/fm/labram.md)**
-    ---
-    ICLR 2024 · 5.8M–369M 参数
-
-    VQ 神经 codebook + 频谱重构 + 掩码码字预测的 EEG **大模型**。tags: `VQ-VAE` `掩码预训练`
-
-- :material-magnify:{ .lg .middle } **[EEGPT](papers/fm/eegpt.md)**
-    ---
-    NeurIPS 2024 · ~10M 参数
-
-    表示对齐 + 掩码重构**双自监督**，linear probing 达 SOTA。tags: `双自监督` `线性探针`
-
-- :material-chart-line:{ .lg .middle } **[BrainGPT](papers/fm/braingpt.md)**
-    ---
-    arXiv 2024 · 至 1.09B 参数
-
-    电极级建模 + GPT 式**自回归** + 任务共享电极图的首个 generalist。tags: `自回归` `多任务` `scaling law`
-
-- :material-image:{ .lg .middle } **[GUIDED](papers/survey/guided.md)**
-    ---
-    arXiv 2024 · 3.18M 编码器
-
-    把 EEG 对齐到 **CLIP 空间**，引导预训练扩散模型重建所见图像。tags: `视觉重建` `扩散`
-
-- :material-image-search:{ .lg .middle } **[CrossPT-EEG](papers/survey/crosspt-eeg.md)**
-    ---
-    arXiv 2024
-
-    比较被试内、跨被试与跨时间设定，评估**视觉解码的泛化能力**。tags: `视觉解码` `泛化评测`
-
-- :material-robot:{ .lg .middle } **[NeuroLM](papers/fm/neurolm.md)**
-    ---
-    ICLR 2025 · 至 1696M 参数
-
-    把 EEG 当**外语接进 GPT-2**：文本对齐 tokenizer + 指令微调多任务。tags: `LLM` `指令微调`
-
-- :material-compress:{ .lg .middle } **[LUNA](papers/fm/luna.md)**
-    ---
-    NeurIPS 2025 · 7M–311M 参数
-
-    用**可学习 query 汇聚通道**，把不同电极布局映射到固定隐空间。tags: `通道适配` `隐空间`
-
-- :material-crosshairs-gps:{ .lg .middle } **[CBraMod](papers/fm/cbramod.md)**
-    ---
-    ICLR 2025 · 4.0M 参数
-
-    **十字交叉注意力**分别建模时间与通道关系，结合动态位置编码。tags: `掩码预训练` `时空建模`
-
-- :material-music-note:{ .lg .middle } **[SSM2Mel](papers/survey/ssm2mel.md)**
-    ---
-    arXiv 2025
-
-    **Mamba 与注意力交替建模**，从 EEG 重建连续语音 mel 谱。tags: `状态空间模型` `语音解码`
-
-- :material-hub-outline:{ .lg .middle } **[NPI](papers/survey/surrogate-brain.md)**
-    ---
-    Nature Methods 2025
-
-    对神经网络代理脑做**虚拟扰动**，估计脑区间的有效连接。tags: `虚拟扰动` `有效连接`
-
-- :material-layers:{ .lg .middle } **[NeuroRVQ](papers/fm/neurorvq.md)**
-    ---
-    arXiv 2025 · 5.9M 骨干
-
-    **多尺度残差量化**结合幅值与相位约束，学习 EEG 离散词表。tags: `RVQ` `多尺度`
-
-- :material-text-fields:{ .lg .middle } **[DELTA](papers/survey/delta.md)**
-    ---
-    NeurIPS 2025 Workshop
-
-    把 EEG 量化为离散 token，接入**掩码扩散语言模型**生成文本。tags: `EEG-to-Text` `掩码扩散`
-
-- :material-sine-wave:{ .lg .middle } **[TFM-Tokenizer](papers/fm/tfm-tokenizer.md)**
-    ---
-    ICLR 2026 · ~1.9M 参数
-
-    单通道**时频 motif 词表**，离散 token 真正作为模型输入。tags: `tokenization` `时频motif`
-
-- :material-swap-horizontal:{ .lg .middle } **[Uni-NTFM](papers/fm/uni-ntfm.md)**
-    ---
-    ICLR 2026
-
-    **双向交叉注意力**融合逐电极的波形和频带功率特征，再由 MoE Transformer 学习表示。tags: `时频融合` `MoE`
-
-- :material-radio-tower:{ .lg .middle } **[RF-GPT](papers/survey/rf-gpt.md)**
-    ---
-    arXiv 2026 · Qwen2.5-VL 3B/7B
-
-    把射频**时频图接入视觉语言模型**，用合成数据训练信号理解能力。tags: `时频图` `多模态LLM`
-
-- :material-creation:{ .lg .middle } **[JET](papers/generative/jet.md)**
-    ---
-    ICML 2026 · 129.9M 参数
-
-    **条件流匹配**结合生理结构约束，直接生成原始 EEG。tags: `流匹配` `EEG生成`
-
-- :material-account-group:{ .lg .middle } **[EEGMoE](papers/fm/eegmoe.md)**
-    ---
-    IEEE TNNLS 2026 · 1.68M 参数
-
-    **域专属与共享专家**分别学习域差异和共性，用于 EEG 表示学习。tags: `MoE` `域解耦`
-
-- :material-waveform:{ .lg .middle } **[EEGDM](papers/generative/eegdm.md)**
-    ---
-    arXiv 2026 · 25M 参数
-
-    用 EEG 表示引导**潜空间扩散**，通过去噪任务训练信号编码器。tags: `扩散` `表示学习`
-
-- :material-timer-cog:{ .lg .middle } **[Not-All-EEG](papers/generative/not-all-eeg.md)**
-    ---
-    arXiv 2026
-
-    按位置难度调整**流匹配时间调度**，学习生成 EEG。tags: `流匹配` `时间调度`
-
-- :material-chart-bell-curve-cumulative:{ .lg .middle } **[LTFT](papers/survey/learnable-tf.md)**
-    ---
-    IEEE TETCI 2026
-
-    把时频变换的**窗口函数设为可学习参数**，联合优化 EEG 分析前端。tags: `可学习前端` `时频变换`
-
-- :material-compare:{ .lg .middle } **[BrainRVQ](papers/fm/brainrvq.md)**
-    ---
-    arXiv 2026 · 5.82M 参数
-
-    **时域与频域双路 RVQ**量化信号，按码字层级从粗到细预测。tags: `双域RVQ` `层级预测`
-
-- :material-code:{ .lg .middle } **[CodeBrain](papers/fm/codebrain.md)**
-    ---
-    ICLR 2026 · 15.17M 参数
-
-    **时域与频域双码表**提供预测目标，多尺度骨干学习 EEG 表示。tags: `双码表` `状态空间模型`
-
-- :material-radar:{ .lg .middle } **[NeuroDETR](papers/fm/neurodetr.md)**
-    ---
-    arXiv 2026
-
-    用**多尺度 VQ 事件记忆**，从连续 EEG 检测事件类别与起止时间。tags: `事件检测` `向量量化`
-
-- :material-emoji-events:{ .lg .middle } **[EEGArena](papers/survey/eegarena.md)**
-    ---
-    arXiv 2026
-
-    在多任务与多种训练协议下，**统一评测 EEG 基础模型和监督模型**。tags: `基准评测` `EEG基础模型`
-
-</div>
-
-## :material-cube-unfolded: 模型架构基础
-
-大模型通用组件的精读与速查——与 EEG 无关也值得掌握的基本功。
-
-<div class="grid cards" markdown>
-
-- :material-angle-acute:{ .lg .middle } **[LoRA · 低秩适配](basics/lora.md)**
-    ---
-    ICLR 2022 · 微调 0.02% 参数
-
-    冻结底座 + 低秩旁路 BA：参数高效微调的**事实标准**，含变体族谱与 EEG 用法。tags: `LoRA` `参数高效微调`
-
-- :material-vector-polyline:{ .lg .middle } **[Attention 替代方案](basics/attention-alternatives.md)**
-    ---
-    Stanford CS336 Lec 4 · MoE 之前部分
-
-    长上下文路线图：线性注意力 → Mamba-2 → Gated DeltaNet → 混合堆叠 → DSA 稀疏注意力。tags: `线性注意力` `SSM` `稀疏注意力`
-
-- :material-chart-timeline-variant:{ .lg .middle } **[生成模型脉络](basics/generative-lineage.md)**
-    ---
-    VAE → DDPM → Flow Matching
-
-    一条主线：似然积分算不动——变分下界、逐步去噪、直连速度场的**三代绕法**。tags: `ELBO` `扩散` `流匹配`
-
-- :material-graph:{ .lg .middle } **[图神经网络](basics/gnn.md)**
-    ---
-    消息传递 · GAT · 表达力
-
-    网格与序列之外的第三种形态：置换不变聚合、谱卷积出身、过平滑边界——BrainGPT TEG 的机制基础。tags: `消息传递` `GAT` `图卷积`
-
-</div>
-
-## :material-sitemap: 主题专题
-
-<div class="grid cards" markdown>
-
-- :material-vector-link: **[EEG Tokenization 演进](topics/tokenization.md)**
-    ---
-    从规则切段到可学习词表：token 形态与词表用法的三步跃迁。
-
-- :material-refresh: **[预训练范式对比](topics/pretraining.md)**
-    ---
-    对比学习 / 掩码建模 / 自回归三条路线与掩码目标的进化。
-
-- :material-grid-large: **[通道适配与多任务学习](topics/multi-task.md)**
-    ---
-    脑电大模型的通道表示、空间整合与下游任务共享方式。
-
-- :material-database: **[EEG 预训练数据全景](topics/data-landscape.md)**
-    ---
-    2500h vs 25000h：语料构成、域偏斜与规模瓶颈。
-
-- :material-cube-outline: **[基座来源分析](topics/base-model.md)**
-    ---
-    主模型与 tokenizer 参数量，区分从零训练和加载现成基座。
-
-- :material-ear-hearing: **[语音模型专题](topics/speech-models.md)**
-    ---
-    脑信号 → 语音：Défossez 检索范式与 SSM2Mel mel 回归的 tokenization / 预训练 / 下游任务横读。
-
-- :material-earth: **[REVE](papers/fm/reve.md)**
-    ---
-    NeurIPS 2025 · 12M / 69M / 408M
-
-    **61,415h / 92 数据集**最大非侵入语料 + **4D 傅里叶位置编码**吃任意蒙太奇：10 任务平均 +2.5%，linear probing +17%。tags: `MAE` `4D位置编码` `线性探针`
-
-</div>
-
-## :material-chart-box-outline: 阅读统计
+## 阅读统计 {: #stats }
 
 | 统计项 | 数值 |
 |---|---|
 | 精读论文 | 27 篇（EEG 基础模型 11 + tokenization 5 + EEG 生成 3 + 视觉解码 2 + 语音解码 2 + 基准评测 1 + 跨领域 RF 1 + 时频方法 1 + 连接组学 1） |
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
-| 主力预训练语料 | LaBraM 2500h · NeuroLM 25000h · BrainGPT 3750 万样本 · BIOT 1000 万样本 · CodeBrain/BrainRVQ TUEG 9200h+ |
+| 主力预训练语料 | REVE 61,415h（92 数据集）· NeuroLM 25000h · LUNA 21900h · CBraMod 9000h · LaBraM 2500h · BrainGPT 3750 万样本 |
 | 模型规模跨度 | 0.89M（EEGMoE 激活）— 1.9B（Uni-NTFM 总参数） |
 
-综合对比见 [十四篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——五个维度下放专题深读，模型设计 / 频域 / 规模效率保留在页内 + 论文互怼链）。
+综合对比见 [十四篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——五个维度下放专题深读，模型设计 / 频域 / 规模效率保留在页内 + 论文间的比较与改进）。
 
-## :material-comment-processing: 留言板
+## 留言板 {: #comments }
 
 欢迎留言交流——提问、纠错、推荐新论文都可以。
 

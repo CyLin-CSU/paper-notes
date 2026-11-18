@@ -1,12 +1,11 @@
 /* 标题旁的 GitHub 头像 */
 .md-typeset h1 .h1-avatar {
-  height: 100px !important;
-  width: 100px !important;
+  height: 1.35em !important;
+  width: auto !important;
   border-radius: 50%;
-  vertical-align: middle;
-  margin-right: 0.3rem;
-  border: 2px solid var(--md-primary-fg-color);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  vertical-align: -0.3em;
+  margin-right: 0.45rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
 }
 
 /* 活跃热力图（最近一周，GitHub 风格） */
@@ -143,14 +142,32 @@
 .timeline.expanded li.timeline-extra { display: list-item; }
 #timeline-more {
   margin-top: 0.3rem;
+  padding: 0.25rem 0.7rem;
   font-size: 0.72rem;
+  font-family: inherit;
   color: var(--md-primary-fg-color);
+  background: transparent;
+  border: 1px solid var(--md-primary-fg-color);
+  border-radius: 6px;
   cursor: pointer;
   user-select: none;
 }
+#timeline-more:hover { background: var(--md-primary-fg-color--a100-40, rgba(63, 81, 181, 0.08)); }
 
 /* 数据集×论文使用矩阵 */
 .mx-wrap { overflow-x: auto; }
+/* 窄屏横滑时行名固定在左侧 */
+.mx-matrix thead th:first-child,
+.mx-matrix tbody th {
+  position: sticky;
+  left: 0;
+  background: var(--md-default-bg-color);
+  z-index: 1;
+}
+.mx-matrix thead th:first-child { z-index: 2; }
+.mx-matrix tbody th { min-width: 6.5rem; white-space: normal; }
+.md-typeset .mermaid { overflow-x: auto; }
+.md-typeset .mermaid svg { min-width: 640px; }
 .mx-matrix { border-collapse: separate; border-spacing: 3px; width: auto; }
 .mx-matrix th {
   font-size: 0.7rem;

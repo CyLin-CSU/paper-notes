@@ -2,6 +2,8 @@
 
 > 全站横向对照的**枢纽页**：先[一页速览](#一页速览)给十四篇定位，再按[九个维度](#dimension-guide)拆核心分歧——数据 / tokenization / 预训练目标 / 通道适配与多任务 / 基座来源五个维度下放主题专题深读，模型设计 / 频域 / 规模效率三个维度保留在本页详解；结尾的[互怼链](#critique-chain)梳理论文间的批评与改进关系。数字均引自各论文自报结果。
 
+快速入口：[一页速览](#一页速览) · [模型设计](#mod-architecture) · [频域](#mod-frequency) · [规模效率](#mod-scale) · [比较与改进](#critique-chain)
+
 十四篇 = 核心六篇（[BIOT](papers/fm/biot.md) / [LaBraM](papers/fm/labram.md) / [EEGPT](papers/fm/eegpt.md) / [BrainGPT](papers/fm/braingpt.md) / [NeuroLM](papers/fm/neurolm.md) / [TFM-Tokenizer](papers/fm/tfm-tokenizer.md)，回答「token 该是什么、怎么预训练」）+ 2025–2026 扩展八篇（[CBraMod](papers/fm/cbramod.md) / [LUNA](papers/fm/luna.md) / [REVE](papers/fm/reve.md) / [EEGMoE](papers/fm/eegmoe.md) / [JET](papers/generative/jet.md) / [EEGDM](papers/generative/eegdm.md) / [RF-GPT](papers/survey/rf-gpt.md) / [Not-All-EEG](papers/generative/not-all-eeg.md)，把问题推向异构管理、通用空间编码与规模化、生成与跨模态）。站内其余轴外精读（语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测）不参与十四篇排名，见首页论文库。
 
 ## 一页速览 {: #一页速览 }
@@ -104,9 +106,9 @@ EEGMoE 1.68M（激活 0.89M）< TFM ~1.9M < BIOT 3.2M < CBraMod 4.0M < LaBraM-Ba
 
 **维度小结**：规模轴上被验证过的规律只有两条——**结构先验可以替代规模**（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及**效率在特定场景是硬需求**（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 EEG 上至今没有被干净地兑现——REVE 给了半张答卷（模型规模消融干净：Base→Large 线性探针 0.609→0.654 稳定上升），数据量 scaling 曲线仍缺（见[数据全景专题](topics/data-landscape.md)）。
 
-## 🔗 论文互怼链 {: #critique-chain }
+## 论文间的比较与改进 {: #critique-chain }
 
-箭头方向 = 批评/改进指向，每条边标注批评点。
+箭头方向 = 批评/改进指向，每条边标注批评点。**来源口径**：实线批评边均转写自箭头起点论文自己的正文或消融（如 TFM 对 LaBraM 的批评出自其方法与实验章节、REVE 的预训练增益对比出自其 Table 3），站内未添加论文之外的对立关系；虚线边是站内归纳的互补关系，不构成批评。窄屏可在图内横向滑动。
 
 ```mermaid
 flowchart LR
@@ -156,4 +158,4 @@ flowchart LR
     classDef new fill:#e8f5e9,stroke:#66bb6a,color:#1b5e20
 ```
 
-**解读**：BIOT 是公共对照组；LaBraM 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 token 接入 LLM；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：**CBraMod / LUNA / EEGMoE 的边都指向 LaBraM**——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-EEG 在生成轴线内部迭代；RF-GPT 从跨域视角质疑自训词表的必要性；REVE 的两条边都指向 CBraMod——位置编码泛化与「预训练派 vs 架构派」的归因之争。
+**解读**（文字版路径：先读各边标签，再按下方说明核对来源）：BIOT 是公共对照组；LaBraM 转向离散码；EEGPT 改进自监督目标；BrainGPT 掀翻掩码范式；NeuroLM 把 token 接入 LLM；TFM 对前作做「输入表示」的终审。2025–2026 的核心事实：**CBraMod / LUNA / EEGMoE 的边都指向 LaBraM**——「展平全注意力 + 不解耦域」是被攻击最密集的设计；JET / EEGDM / Not-All-EEG 在生成轴线内部迭代；RF-GPT 从跨域视角质疑自训词表的必要性；REVE 的两条边都指向 CBraMod——位置编码泛化与「预训练派 vs 架构派」的归因之争。

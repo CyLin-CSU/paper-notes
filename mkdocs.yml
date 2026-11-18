@@ -37,7 +37,6 @@ extra_javascript:
   - javascripts/giscus.js
   - javascripts/progress.js
   - javascripts/back-to-top.js
-  - https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js
 
 plugins:
   - search
@@ -100,7 +99,7 @@ nav:
           - JET (ICML 2026 · EEG 生成): papers/generative/jet.md
           - EEGDM (arXiv 2026 · 扩散表征): papers/generative/eegdm.md
           - Not-All-EEG (arXiv 2026 · 流匹配生成): papers/generative/not-all-eeg.md
-      - 综述:
+      - 相关研究:
           - Défossez 语音解码 (NMI 2023 · 轴线源头): papers/survey/defossez-speech.md
           - SSM2Mel (arXiv 2025 · 语音解码): papers/survey/ssm2mel.md
           - CrossPT-EEG (arXiv 2024 · 视觉解码基准): papers/survey/crosspt-eeg.md
@@ -123,7 +122,7 @@ nav:
       - 基座来源分析: topics/base-model.md
   - 语音模型专题:
       - 语音解码与 Mel 谱建模: topics/speech-models.md
-  - 综述: blog-2023-2026.md
+  - EEG 基础模型综述: blog-2023-2026.md
   - 十四篇方法对比: comparison.md
   - 索引:
       - 数据集索引: datasets.md

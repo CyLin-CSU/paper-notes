@@ -3,11 +3,14 @@
 论文笔记助手：新增笔记（按论文名命名）+ 自动更新首页时间线。
 
 用法（在 paper-notes 目录下，pythonProject1 环境）：
-  python new_note.py note <slug> "论文标题"      # 例：python new_note.py note cbramod "CBraMod"
-  python new_note.py log "更新说明文字"          # 例：python new_note.py log "新增 CBraMod 精读"
+  python new_note.py note <group> <slug> "论文标题"
+  # 例：python new_note.py note fm cbramod "CBraMod"
+  python new_note.py log "更新说明文字"
+  # 例：python new_note.py log "新增 CBraMod 精读"
 
-note 子命令会生成 docs/papers/<slug>.md（含架构图占位），文件名不带阅读日期；
-之后核对发表年份，在 mkdocs.yml 的 nav 里按发表年份登记。
+group 取值：fm（EEG 基础模型）/ generative（生成式模型）/ survey（综述与轴外）。
+note 子命令会生成 docs/papers/<group>/<slug>.md（含架构图占位），文件名不带阅读日期；
+之后核对发表年份，在 mkdocs.yml 的 nav 对应分组里登记。
 log 子命令会在首页时间线插入今天的条目，并自动刷新"最近更新"日期。
 """
 import datetime
@@ -43,7 +46,7 @@ one-liner: ""
 
 ## 架构图
 
-![架构图占位](../assets/占位.png)
+![架构图占位](../../assets/占位.png)
 *把论文架构图放到 docs/assets/ 后替换上面的路径与说明*
 
 ## 创新点
@@ -55,9 +58,15 @@ def today() -> str:
     return datetime.date.today().isoformat()
 
 
-def cmd_note(slug: str, title: str) -> None:
+GROUPS = {"fm": "EEG 基础模型", "generative": "生成式模型", "survey": "相关研究"}
+
+
+def cmd_note(group: str, slug: str, title: str) -> None:
+    if group not in GROUPS:
+        print(f"[!] 未知的分组 {group!r}，可选：{' / '.join(GROUPS)}")
+        sys.exit(1)
     d = datetime.date.today()
-    papers_dir = DOCS / "papers"
+    papers_dir = DOCS / "papers" / group
     papers_dir.mkdir(parents=True, exist_ok=True)
     out = papers_dir / f"{slug}.md"
     if out.exists():
@@ -65,8 +74,8 @@ def cmd_note(slug: str, title: str) -> None:
         sys.exit(1)
     out.write_text(TEMPLATE.format(title=title, today=d.isoformat(), year=d.year), encoding="utf-8")
     print(f"[+] 已创建 {out}")
-    print(f"[i] 记得在 mkdocs.yml 的 nav 里登记：\n"
-          f'      - {title} (会议/期刊 发表年份): papers/{out.name}')
+    print(f"[i] 记得在 mkdocs.yml 的 nav「{GROUPS[group]}」分组里登记：\n"
+          f'          - {title} (会议/期刊 发表年份): papers/{group}/{out.name}')
 
 
 def cmd_log(message: str) -> None:
@@ -90,8 +99,8 @@ if __name__ == "__main__":
         print(__doc__)
         sys.exit(1)
     cmd = sys.argv[1]
-    if cmd == "note" and len(sys.argv) >= 4:
-        cmd_note(sys.argv[2], sys.argv[3])
+    if cmd == "note" and len(sys.argv) >= 5:
+        cmd_note(sys.argv[2], sys.argv[3], " ".join(sys.argv[4:]))
     elif cmd == "log" and len(sys.argv) >= 3:
         cmd_log(" ".join(sys.argv[2:]))
     else:

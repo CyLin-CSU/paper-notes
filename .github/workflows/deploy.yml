@@ -23,8 +23,13 @@ jobs:
       - name: Install dependencies
         run: pip install mkdocs-material mkdocs-glightbox jieba pymdown-extensions
 
-      - name: Build site
-        run: python -m mkdocs build
+      - name: Build site (strict)
+        run: python -m mkdocs build --strict
+
+      # 严格构建检查 Markdown，但不会校验自定义钩子生成的重定向页；
+      # 此步验证全部历史地址重定向的落点存在、无自环、数量达标，失败即中断发布。
+      - name: Verify paper redirects
+        run: python tools/check_redirects.py site
 
       - name: Deploy to gh-pages
         run: |
