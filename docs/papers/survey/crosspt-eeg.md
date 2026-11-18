@@ -66,4 +66,4 @@ one-liner: "清华 IR 组的 EEG 视觉解码泛化基准:16 人 × 22 session�
 
 **相关阅读**
 
-:material-eye: [GUIDED · 视觉重建线(被试内上限,与本篇互补)](guided.md) ｜ :material-format-list-numbered: [EEGArena(基础模型横评基准,宽度对本篇深度)](eegarena.md) ｜ :material-layers: [EEGPT(预训练特征提取器,CP 协议的天然候选被测方)](../fm/eegpt.md) ｜ :material-creation: [CBraMod(多数据集预训练,跨被试主张待此基准对账)](../fm/cbramod.md) ｜ :material-heart-pulse: [BIOT(跨被试/跨记录建模的对账对象)](../fm/biot.md) ｜ :material-home: [首页](../../index.md)
+:material-eye: [GUIDED · 视觉重建线(被试内上限,与本篇互补)](guided.md) ｜ :material-format-list-numbered: [EEGArena(基础模型横评基准,宽度对本篇深度)](eegarena.md) ｜ :material-layers: [EEGPT(预训练特征提取器,CP 协议的天然候选被测方)](../fm/eegpt.md) ｜ :material-creation: [CBraMod(多数据集预训练,跨被试主张待此基准对账)](../fm/cbramod.md) ｜ :material-heart-pulse: [BIOT(跨被试/跨记录建模的对账对象)](../fm/biot.md)

@@ -77,4 +77,4 @@ S4 把 \( A, B \) 离散化（\(\bar{A}, \bar{B}\)）并做结构化约束；Mam
 
 **相关阅读**
 
-:material-arrow-left: [Not-All-EEG（生成轴线姊妹篇：频谱一致性损失可迁移）](../generative/not-all-eeg.md) ｜ :material-creation: [CBraMod（交替混合机制的判别侧版本）](../fm/cbramod.md) ｜ :material-account-group: [BrainGPT（长序列 EEG 建模的自回归路线）](../fm/braingpt.md) ｜ :material-heart-pulse: [BIOT（线性复杂度的另一条路）](../fm/biot.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [Not-All-EEG（生成轴线姊妹篇：频谱一致性损失可迁移）](../generative/not-all-eeg.md) ｜ :material-creation: [CBraMod（交替混合机制的判别侧版本）](../fm/cbramod.md) ｜ :material-account-group: [BrainGPT（长序列 EEG 建模的自回归路线）](../fm/braingpt.md) ｜ :material-heart-pulse: [BIOT（线性复杂度的另一条路）](../fm/biot.md)

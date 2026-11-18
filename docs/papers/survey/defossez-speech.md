@@ -76,4 +76,4 @@ Adam，lr \( 3\times10^{-4} \)，batch 256，一个 epoch 定义为 1,200 次更
 
 **相关阅读**
 
-:material-arrow-left: [SSM2Mel（语音解码轴线的回归端：EEG→mel 谱）](ssm2mel.md) ｜ :material-brain: [BrainGPT（自回归因果 Transformer 的语言解码）](../fm/braingpt.md) ｜ :material-layers: [EEGPT（多被试 patch+通道 embedding 的另一解法）](../fm/eegpt.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [SSM2Mel（语音解码轴线的回归端：EEG→mel 谱）](ssm2mel.md) ｜ :material-brain: [BrainGPT（自回归因果 Transformer 的语言解码）](../fm/braingpt.md) ｜ :material-layers: [EEGPT（多被试 patch+通道 embedding 的另一解法）](../fm/eegpt.md)

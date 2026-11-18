@@ -51,4 +51,4 @@ one-liner: "30 个 EEG FM × 25 个监督基线 × 57 任务/23 数据集、五�
 
 **相关阅读**
 
-:material-sword-cross: [CBraMod(「架构>规模」证据链在本榜被外部复现)](../fm/cbramod.md) ｜ :material-shield-search: [BIOT(双极设定内被追认为最强 FM)](../fm/biot.md) ｜ :material-tag-multiple: [TFM-Tokenizer(泛化项被本榜扣分的警示)](../fm/tfm-tokenizer.md) ｜ :material-puzzle: [NeuroRVQ(同批笔记:高方差画像与本榜一致)](../fm/neurorvq.md) ｜ :material-home: [首页](../../index.md)
+:material-sword-cross: [CBraMod(「架构>规模」证据链在本榜被外部复现)](../fm/cbramod.md) ｜ :material-shield-search: [BIOT(双极设定内被追认为最强 FM)](../fm/biot.md) ｜ :material-tag-multiple: [TFM-Tokenizer(泛化项被本榜扣分的警示)](../fm/tfm-tokenizer.md) ｜ :material-puzzle: [NeuroRVQ(同批笔记:高方差画像与本榜一致)](../fm/neurorvq.md)

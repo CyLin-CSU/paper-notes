@@ -87,4 +87,4 @@ v_{i,j}(z,t,c) = \frac{\dot{\tau}_{i,j}(t)}{1-\tau_{i,j}(t)}\big(\hat{x}_{1,i,j}
 
 **相关阅读**
 
-:material-arrow-left: [EEGDM（生成轴线姊妹篇：扩散训表征）](eegdm.md) ｜ :material-creation: [JET（直接前作：条件流匹配 + 生理约束）](jet.md) ｜ :material-chart-timeline-variant: [生成模型脉络（VAE → DDPM → FM）](../../basics/generative-lineage.md) ｜ :material-heart-pulse: [CBraMod（因子化注意力同族 + 下游裁判）](../fm/cbramod.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [EEGDM（生成轴线姊妹篇：扩散训表征）](eegdm.md) ｜ :material-creation: [JET（直接前作：条件流匹配 + 生理约束）](jet.md) ｜ :material-chart-timeline-variant: [生成模型脉络（VAE → DDPM → FM）](../../basics/generative-lineage.md) ｜ :material-heart-pulse: [CBraMod（因子化注意力同族 + 下游裁判）](../fm/cbramod.md)

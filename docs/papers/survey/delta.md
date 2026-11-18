@@ -77,4 +77,4 @@ z_q = \sum_{m=1}^{M} c^{(m,\, q_m)}
 
 **相关阅读**
 
-:material-arrow-left: [BrainRVQ(同批笔记:双域 RVQ 码字服务表征预训练)](../fm/brainrvq.md) ｜ :material-vector-link: [Tokenization 演进(离散 token 的完整谱系)](../../topics/tokenization.md) ｜ :material-creation: [NeuroLM(神经码进 LLM 词表的自回归版)](../fm/neurolm.md) ｜ :material-account-group: [BrainGPT(EEG 当语言序列的自回归预训练)](../fm/braingpt.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [BrainRVQ(同批笔记:双域 RVQ 码字服务表征预训练)](../fm/brainrvq.md) ｜ :material-vector-link: [Tokenization 演进(离散 token 的完整谱系)](../../topics/tokenization.md) ｜ :material-creation: [NeuroLM(神经码进 LLM 词表的自回归版)](../fm/neurolm.md) ｜ :material-account-group: [BrainGPT(EEG 当语言序列的自回归预训练)](../fm/braingpt.md)

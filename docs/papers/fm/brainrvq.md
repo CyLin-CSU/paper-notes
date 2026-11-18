@@ -99,4 +99,4 @@ S_{c,a} = \alpha_1 \tilde{S}_{neural} + \alpha_2 \tilde{S}_{clean} + \alpha_3 \t
 
 **相关阅读**
 
-:material-vector-link: [NeuroRVQ(RVQ 分支先行者:多尺度卷积单时域)](neurorvq.md) ｜ :material-vector-circle: [CodeBrain(双域 VQ + Mamba 的最近竞品)](codebrain.md) ｜ :material-tag: [LaBraM(单层 VQ + token 作目标的范式起点)](labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的可插拔路线)](tfm-tokenizer.md) ｜ :material-compare: [CBraMod(同语料最强基线)](cbramod.md) ｜ :material-routes: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-home: [首页](../../index.md)
+:material-vector-link: [NeuroRVQ(RVQ 分支先行者:多尺度卷积单时域)](neurorvq.md) ｜ :material-vector-circle: [CodeBrain(双域 VQ + Mamba 的最近竞品)](codebrain.md) ｜ :material-tag: [LaBraM(单层 VQ + token 作目标的范式起点)](labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的可插拔路线)](tfm-tokenizer.md) ｜ :material-compare: [CBraMod(同语料最强基线)](cbramod.md) ｜ :material-routes: [Tokenization 演进](../../topics/tokenization.md)

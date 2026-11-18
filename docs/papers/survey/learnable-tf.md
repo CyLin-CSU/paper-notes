@@ -73,4 +73,4 @@ one-liner: "把时频变换的复值窗口本身做成可训练参数：每个�
 
 **相关阅读**
 
-:material-arrow-left: [Not-All-EEG（损失端频率加权 vs 变换端可学习窗口）](../generative/not-all-eeg.md) ｜ :material-creation: [TFM-Tokenizer（STFT 谱图 tokenizer，LTFT 的潜在替换对象）](../fm/tfm-tokenizer.md) ｜ :material-waveform: [BIOT（FFT 能量特征进 embedding）](../fm/biot.md) ｜ :material-chart-timeline-variant: [LaBraM（DFT 幅相作重构目标）](../fm/labram.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [Not-All-EEG（损失端频率加权 vs 变换端可学习窗口）](../generative/not-all-eeg.md) ｜ :material-creation: [TFM-Tokenizer（STFT 谱图 tokenizer，LTFT 的潜在替换对象）](../fm/tfm-tokenizer.md) ｜ :material-waveform: [BIOT（FFT 能量特征进 embedding）](../fm/biot.md) ｜ :material-chart-timeline-variant: [LaBraM（DFT 幅相作重构目标）](../fm/labram.md)

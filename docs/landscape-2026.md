@@ -84,8 +84,8 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 
 ## 6 正在被修正的三个叙事（站内证据）
 
-1. **「FM 普遍优于简单基线」**：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 MI 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且预训练数据缩放有增益（+6.69pp）。合成的结论是：**FM 的优势有条件（任务域、协议、数据规模），不是普适的**。
-2. **「线性探针差 = 实现问题」**：Kuruppu 显示 LP 落后 FT 跨五个模型出现（其图 4(a)），说明这是**范式级现象**——凡做「冻结可用」主张的工作（[EEGPT](papers/fm/eegpt.md) 的对齐目标、[REVE](papers/fm/reve.md) 的全局 token 瓶颈）都是在对着这个现象设计。
+1. **「FM 普遍优于简单基线」**：EEGArena 显示参数量不预测性能（其 §3），Yao §6 自跑显示 MI 域 FM 全线输 EEGNet——但 EEGArena 同时显示「FM 大多领先」且固定架构的预训练数据缩放有增益（受控对照见[实验证据](evidence.md)）。合成的结论是：**FM 的优势有条件（任务域、协议、数据规模），不是普适的**。
+2. **「线性探针差 = 实现问题」**：Kuruppu 在其纳入范围内报告 LP 落后 FT 跨五个模型出现（其图 4(a)；纳入范围与任务设定见[其笔记](papers/reviews/kuruppu-critical-review.md)）——凡做「冻结可用」主张的工作（[EEGPT](papers/fm/eegpt.md) 的对齐目标、[REVE](papers/fm/reve.md) 的全局 token 瓶颈）都是在对着这个观察设计，其普遍性尚待更大范围验证。
 3. **「架构 vs 预训练」二选一**：REVE 的预训练价值消融（其表 3：PhysioNet-MI 上无预训练 REVE 0.5409 < CBraMod 0.6196；有预训练 REVE 0.6480 > CBraMod 0.6417）把两种来源的贡献同框量化——架构先验与预训练数据各有其适用面，站内判断详见 [REVE 笔记的个人思考](papers/fm/reve.md)。
 
 ## 7 站外动态（检索所得，站内未核对原文，引用前须核实）
@@ -106,4 +106,4 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 
 ---
 
-**相关阅读**：[四篇综述精读](papers/reviews/yao-eegfm-survey.md) ｜ [EEGArena](papers/survey/eegarena.md) ｜ [十四篇方法对比](comparison.md) ｜ [EEG 预训练数据全景](topics/data-landscape.md) ｜ [EEG 基础模型选读](blog-2023-2026.md) ｜ [首页](index.md)
+**相关阅读**：四篇综述精读——[Yao（技术分类与复跑比较）](papers/reviews/yao-eegfm-survey.md) · [Chen（组件拆解与迁移学习）](papers/reviews/chen-representation-learning-review.md) · [Kuruppu（评测批判与代表性）](papers/reviews/kuruppu-critical-review.md) · [Kwon（设计原则主张）](papers/reviews/kwon-neural-fm-perspective.md) ｜ [实验证据](evidence.md) ｜ [EEGArena](papers/survey/eegarena.md) ｜ [十四篇方法对比](comparison.md) ｜ [EEG 预训练数据全景](topics/data-landscape.md) ｜ [首页](index.md)

@@ -41,7 +41,6 @@ extra_javascript:
   - javascripts/load-mathjax.js
   - javascripts/giscus.js
   - javascripts/progress.js
-  - javascripts/back-to-top.js
   - javascripts/library.js
   - javascripts/evidence.js
   - javascripts/models.js

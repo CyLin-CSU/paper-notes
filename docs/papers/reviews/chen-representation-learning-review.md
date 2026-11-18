@@ -128,4 +128,4 @@ Scaling 证据：LaBraM 的模型/数据双缩放实验；非侵入语音解码�
 
 **相关阅读**
 
-:material-call_split: [Tokenization 演进专题（与词元化五分类对照）](../../topics/tokenization.md) ｜ :material-link-variant: [LaBraM（Table 1 中 VQ 谱预测一支）](../fm/labram.md) ｜ :material-tag-multiple: [NeuroLM（EEG-文本对齐 + 指令微调案例）](../fm/neurolm.md) ｜ :material-magnify-remove-outline: [EEGPT（注意与表中条目同名不同人）](../fm/eegpt.md) ｜ :material-format-list-bulleted: [Yao 综述（技术设计表口径互补）](yao-eegfm-survey.md) ｜ :material-clipboard-check: [Kuruppu 批判性综述（同期更严的对照）](kuruppu-critical-review.md) ｜ :material-home: [首页](../../index.md)
+:material-call_split: [Tokenization 演进专题（与词元化五分类对照）](../../topics/tokenization.md) ｜ :material-link-variant: [LaBraM（Table 1 中 VQ 谱预测一支）](../fm/labram.md) ｜ :material-tag-multiple: [NeuroLM（EEG-文本对齐 + 指令微调案例）](../fm/neurolm.md) ｜ :material-magnify-remove-outline: [EEGPT（注意与表中条目同名不同人）](../fm/eegpt.md) ｜ :material-format-list-bulleted: [Yao 综述（技术设计表口径互补）](yao-eegfm-survey.md) ｜ :material-clipboard-check: [Kuruppu 批判性综述（同期更严的对照）](kuruppu-critical-review.md)

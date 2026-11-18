@@ -77,4 +77,4 @@ FM 复用同一多尺度编码器 + Transformer + token 预测头,以对称掩�
 
 **相关阅读**
 
-:material-vector-link: [Tokenization 演进(RVQ/多尺度缺口由本篇填补)](../../topics/tokenization.md) ｜ :material-vector-circle: [BrainRVQ(RVQ 分支后续:双域 + 层间自回归)](brainrvq.md) ｜ :material-tag: [LaBraM(被对照 67× 的单码本 VQ 前作)](labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的分岔路线)](tfm-tokenizer.md) ｜ :material-compare: [CBraMod(深骨干 tokenizer 的批评对象)](cbramod.md) ｜ :material-heart-pulse: [BIOT(连续 patch 路线的崩盘基线)](biot.md) ｜ :material-home: [首页](../../index.md)
+:material-vector-link: [Tokenization 演进(RVQ/多尺度缺口由本篇填补)](../../topics/tokenization.md) ｜ :material-vector-circle: [BrainRVQ(RVQ 分支后续:双域 + 层间自回归)](brainrvq.md) ｜ :material-tag: [LaBraM(被对照 67× 的单码本 VQ 前作)](labram.md) ｜ :material-vector-polyline: [TFM-Tokenizer(token 作输入的分岔路线)](tfm-tokenizer.md) ｜ :material-compare: [CBraMod(深骨干 tokenizer 的批评对象)](cbramod.md) ｜ :material-heart-pulse: [BIOT(连续 patch 路线的崩盘基线)](biot.md)

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""从 docs/papers/** front matter 生成 data/papers.json（31 篇元数据迁移首版）。
+"""从 docs/papers/** front matter 生成 data/papers.json（可再生文件）。
 
+papers.json 是 front matter 的派生物：别名、短摘要等补充信息一律进
+front matter，不要手改 papers.json——下次重建会被覆盖。
 用法：python tools/build_data.py            # 写 data/papers.json
-     python tools/build_data.py --stdout   # 只打印不写
-生成内容为纯机器抽取，不含手工字段；手工补充（别名等）直接编辑 papers.json
-时请同时修改本脚本的 HAND_EXTRAS 合并逻辑，避免下次重建丢失。
+     python tools/build_data.py --stdout    # 只打印不写
+CI 漂移检查：重新生成并与已提交版本逐字节比对，不一致即失败（deploy 工作流）。
 """
 import json
 import pathlib
@@ -46,6 +47,8 @@ def load_note(path: pathlib.Path) -> dict:
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")  # Windows 控制台默认 GBK，--stdout 需 UTF-8
     papers = []
     for group in GROUPS:
         for path in sorted((ROOT / "docs" / "papers" / group).glob("*.md")):

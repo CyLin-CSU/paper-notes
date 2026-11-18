@@ -10,7 +10,8 @@
     "weights": "open",
     "weights_note": "encoder 权重开源；MAE decoder 因隐私不发布（其复现速查卡）",
     "license": null,
-    "source": "REVE 论文 §2.4 与项目页"
+    "source": "REVE 论文 §2.4 与项目页",
+    "code": "https://github.com/elouayas/reve_eeg"
   },
   {
     "model_id": "reve-base",
@@ -23,7 +24,8 @@
     "weights": "open",
     "weights_note": "同上",
     "license": null,
-    "source": "REVE 论文 §2.4"
+    "source": "REVE 论文 §2.4",
+    "code": "https://github.com/elouayas/reve_eeg"
   },
   {
     "model_id": "reve-large",
@@ -36,7 +38,8 @@
     "weights": "open",
     "weights_note": "同上",
     "license": null,
-    "source": "REVE 论文 §2.4"
+    "source": "REVE 论文 §2.4",
+    "code": "https://github.com/elouayas/reve_eeg"
   },
   {
     "model_id": "labram-base",
@@ -49,7 +52,8 @@
     "weights": "open",
     "weights_note": "Base 权重开源（comparison.md 开源表）",
     "license": null,
-    "source": "LaBraM 论文；站内 comparison.md 规模节"
+    "source": "LaBraM 论文；站内 comparison.md 规模节",
+    "code": "https://github.com/935963004/LaBraM"
   },
   {
     "model_id": "labram-large",
@@ -62,7 +66,8 @@
     "weights": "none",
     "weights_note": "Large/Huge 权重未开源；各家论文引用其数字多引自原文（站内 comparison.md 开源表注）",
     "license": null,
-    "source": "站内 comparison.md 规模效率节"
+    "source": "站内 comparison.md 规模效率节",
+    "code": "https://github.com/935963004/LaBraM"
   },
   {
     "model_id": "labram-huge",
@@ -75,7 +80,8 @@
     "weights": "none",
     "weights_note": "权重未开源",
     "license": null,
-    "source": "站内 comparison.md 规模效率节"
+    "source": "站内 comparison.md 规模效率节",
+    "code": "https://github.com/935963004/LaBraM"
   },
   {
     "model_id": "jet-generator",
@@ -88,7 +94,8 @@
     "weights": "partial",
     "weights_note": "以项目页为准（comparison.md：声明将放出）",
     "license": null,
-    "source": "JET 论文；站内 jet.md"
+    "source": "JET 论文；站内 jet.md",
+    "code": "https://y-research-sbu.github.io/JET/"
   },
   {
     "model_id": "cbramod-base",
@@ -101,7 +108,8 @@
     "weights": "open",
     "weights_note": "开源并已进 Braindecode（comparison.md 开源表）",
     "license": null,
-    "source": "CBraMod 论文；站内 comparison.md"
+    "source": "CBraMod 论文；站内 comparison.md",
+    "code": "https://github.com/wjq-learning/CBraMod"
   },
   {
     "model_id": "luna-base",
@@ -114,7 +122,8 @@
     "weights": "open",
     "weights_note": "开源（comparison.md 开源表）",
     "license": null,
-    "source": "LUNA 论文；站内 luna.md"
+    "source": "LUNA 论文；站内 luna.md",
+    "code": "https://github.com/pulp-bio/biofoundation"
   },
   {
     "model_id": "luna-huge",
@@ -127,7 +136,8 @@
     "weights": "open",
     "weights_note": "开源",
     "license": null,
-    "source": "站内 comparison.md 规模节"
+    "source": "站内 comparison.md 规模节",
+    "code": "https://github.com/pulp-bio/biofoundation"
   },
   {
     "model_id": "biot-base",
@@ -140,7 +150,8 @@
     "weights": "open",
     "weights_note": "开源（comparison.md 开源表）",
     "license": null,
-    "source": "BIOT 论文；站内 biot.md"
+    "source": "BIOT 论文；站内 biot.md",
+    "code": "https://github.com/ycq091044/BIOT"
   },
   {
     "model_id": "eegpt-main",
@@ -153,7 +164,8 @@
     "weights": "open",
     "weights_note": "开源；论文摘要口径 ~10M，TUEV 主结果用 25M encoder（comparison.md 参数口径分组）",
     "license": null,
-    "source": "EEGPT 论文；站内 comparison.md"
+    "source": "EEGPT 论文；站内 comparison.md",
+    "code": "https://github.com/BINE022/EEGPT"
   },
   {
     "model_id": "tfm-tokenizer",
@@ -166,7 +178,8 @@
     "weights": "open",
     "weights_note": "开源（comparison.md 开源表）",
     "license": null,
-    "source": "TFM 论文；站内 tfm-tokenizer.md"
+    "source": "TFM 论文；站内 tfm-tokenizer.md",
+    "code": "https://github.com/Jathurshan0330/TFM-Tokenizer"
   },
   {
     "model_id": "braingpt-giant",
@@ -179,7 +192,8 @@
     "weights": "none",
     "weights_note": "未放（comparison.md）；变体另有 1.46M / 11.29M / 183.8M",
     "license": null,
-    "source": "BrainGPT 论文；站内 braingpt.md"
+    "source": "BrainGPT 论文；站内 braingpt.md",
+    "code": null
   },
   {
     "model_id": "neurolm-large",
@@ -192,7 +206,8 @@
     "weights": "open",
     "weights_note": "开源（comparison.md 开源表）",
     "license": null,
-    "source": "NeuroLM 论文；站内 neurolm.md"
+    "source": "NeuroLM 论文；站内 neurolm.md",
+    "code": "https://github.com/935963004/NeuroLM"
   },
   {
     "model_id": "neurolm-xl",
@@ -205,7 +220,8 @@
     "weights": "open",
     "weights_note": "开源",
     "license": null,
-    "source": "站内 comparison.md 规模节"
+    "source": "站内 comparison.md 规模节",
+    "code": "https://github.com/935963004/NeuroLM"
   },
   {
     "model_id": "eegmoe",
@@ -218,7 +234,8 @@
     "weights": "none",
     "weights_note": "未放（comparison.md）",
     "license": null,
-    "source": "EEGMoE 论文；站内 eegmoe.md"
+    "source": "EEGMoE 论文；站内 eegmoe.md",
+    "code": null
   },
   {
     "model_id": "uni-ntfm",
@@ -231,7 +248,8 @@
     "weights": "open",
     "weights_note": "开源（站内 uni-ntfm.md）",
     "license": null,
-    "source": "Uni-NTFM 论文；站内 uni-ntfm.md"
+    "source": "Uni-NTFM 论文；站内 uni-ntfm.md",
+    "code": null
   },
   {
     "model_id": "neurorvq",
@@ -244,7 +262,8 @@
     "weights": "open",
     "weights_note": "开源（站内 neurorvq.md）",
     "license": null,
-    "source": "NeuroRVQ 论文；站内 neurorvq.md"
+    "source": "NeuroRVQ 论文；站内 neurorvq.md",
+    "code": "https://huggingface.co/ntinosbarmpas/NeuroRVQ"
   },
   {
     "model_id": "brainrvq",
@@ -257,7 +276,8 @@
     "weights": "open",
     "weights_note": "开源（站内 brainrvq.md）",
     "license": null,
-    "source": "BrainRVQ 论文；站内 brainrvq.md"
+    "source": "BrainRVQ 论文；站内 brainrvq.md",
+    "code": "https://github.com/keqicmz/BrainRVQ"
   },
   {
     "model_id": "codebrain",
@@ -270,6 +290,7 @@
     "weights": "open",
     "weights_note": "开源（站内 codebrain.md）",
     "license": null,
-    "source": "CodeBrain 论文；站内 codebrain.md"
+    "source": "CodeBrain 论文；站内 codebrain.md",
+    "code": "https://github.com/jingyingma01/CodeBrain"
   }
 ]

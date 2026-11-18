@@ -96,4 +96,4 @@ one-liner: "神经科学期刊上的观点综述：生理感知目标、结构�
 
 **相关阅读**
 
-:material-alert-outline: [CBraMod（勘误对象：原文无对比目标）](../fm/cbramod.md) ｜ :material-electric-bolt: [BrainGPT（同名第三处出现）](../fm/braingpt.md) ｜ :material-grid-4x4: [LUNA（拓扑无关路线的现实版）](../fm/luna.md) ｜ :material-earth: [REVE（4D 电极坐标位置编码）](../fm/reve.md) ｜ :material-call_split: [通道适配与多任务专题（结构先验的站内对照）](../../topics/multi-task.md) ｜ :material-clipboard-check: [Kuruppu 批判性综述（同一「第一代」判断的证据面）](kuruppu-critical-review.md) ｜ :material-home: [首页](../../index.md)
+:material-alert-outline: [CBraMod（勘误对象：原文无对比目标）](../fm/cbramod.md) ｜ :material-electric-bolt: [BrainGPT（同名第三处出现）](../fm/braingpt.md) ｜ :material-grid-4x4: [LUNA（拓扑无关路线的现实版）](../fm/luna.md) ｜ :material-earth: [REVE（4D 电极坐标位置编码）](../fm/reve.md) ｜ :material-call_split: [通道适配与多任务专题（结构先验的站内对照）](../../topics/multi-task.md) ｜ :material-clipboard-check: [Kuruppu 批判性综述（同一「第一代」判断的证据面）](kuruppu-critical-review.md)

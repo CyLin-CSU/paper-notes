@@ -73,4 +73,4 @@ NPI 的立场是：别从模型权重里读因果，把模型当**可干预的�
 
 **相关阅读**
 
-:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](../fm/braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](../generative/eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](../fm/eegmoe.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [BrainGPT（同样训代理模型，但作表征工具而非实验对象）](../fm/braingpt.md) ｜ :material-creation: [EEGDM（模型作生成工具 vs 本篇作科学工具）](../generative/eegdm.md) ｜ :material-chart-timeline-variant: [EEGMoE（被试间差异的另一种处理）](../fm/eegmoe.md)

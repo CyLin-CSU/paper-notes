@@ -79,4 +79,4 @@ RF token 作为前缀条件驱动自回归解码。实现上完整编码器是�
 
 **相关阅读**
 
-:material-arrow-left: [上一篇：TFM-Tokenizer](../fm/tfm-tokenizer.md) ｜ :material-angle-acute: [LoRA · 低秩适配](../../basics/lora.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [上一篇：TFM-Tokenizer](../fm/tfm-tokenizer.md) ｜ :material-angle-acute: [LoRA · 低秩适配](../../basics/lora.md) ｜ :material-vector-link: [Tokenization 演进](../../topics/tokenization.md)

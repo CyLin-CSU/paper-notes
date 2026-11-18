@@ -66,4 +66,4 @@ ViT 式架构：每通道按 \( \omega \) 长度无重叠切 patch，1 层 1D �
 
 **相关阅读**
 
-:material-creation: [JET · 流匹配生成 EEG（生成轴线姊妹篇）](jet.md) ｜ :material-magnify: [EEGPT（显式表示约束的轻量版对照）](../fm/eegpt.md) ｜ :material-chart-timeline-variant: [生成模型脉络（DDPM 线的 EEG 落地）](../../basics/generative-lineage.md) ｜ :material-compress: [CBraMod（掩码重构主线对照）](../fm/cbramod.md) ｜ :material-home: [首页](../../index.md)
+:material-creation: [JET · 流匹配生成 EEG（生成轴线姊妹篇）](jet.md) ｜ :material-magnify: [EEGPT（显式表示约束的轻量版对照）](../fm/eegpt.md) ｜ :material-chart-timeline-variant: [生成模型脉络（DDPM 线的 EEG 落地）](../../basics/generative-lineage.md) ｜ :material-compress: [CBraMod（掩码重构主线对照）](../fm/cbramod.md)

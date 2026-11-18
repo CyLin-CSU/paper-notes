@@ -7,16 +7,7 @@ tags: [索引, 参考文献]
 
 三十一篇精读论文（含 RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测 / 综述轴外的十篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
-## 综述速览
-
-四篇领域综述精读（完整条目在下方「EEG 基础模型综述」节）：
-
-| 综述 | 原文 | 站内精读 |
-|---|---|---|
-| Yao et al. · JNE 2025 · 预训练路线横评 + 自跑 10 模型 | [DOI](https://doi.org/10.1088/1741-2552/ae17e9) | [笔记](papers/reviews/yao-eegfm-survey.md) |
-| Chen, Lu & Wu · IEEE SPM 2025 · 19 模型组件拆解 + 迁移学习地图 | [DOI](https://doi.org/10.1109/MSP.2025.3595320) | [笔记](papers/reviews/chen-representation-learning-review.md) |
-| Kuruppu et al. · JNE 2026 · 三支柱批判：评测、scaling、LP/FT | [DOI](https://doi.org/10.1088/1741-2552/ae4455) | [笔记](papers/reviews/kuruppu-critical-review.md) |
-| Kwon & Shin · EJN 2026 · 生理目标/结构先验/可解释三原则 | [DOI](https://doi.org/10.1111/ejn.70376) | [笔记](papers/reviews/kwon-neural-fm-perspective.md) |
+四篇领域综述的完整引文与 DOI 见下方 [EEG 基础模型综述](#eeg-基础模型综述) 节；按阅读目的选入口请看[选读页的综述速览](blog-2023-2026.md#综述速览)。
 
 ## 基础架构与预训练范式
 
@@ -105,7 +96,7 @@ tags: [索引, 参考文献]
 | DELTA | NeurIPS 2025 WS（arXiv 2511.21746） | [本站精读](papers/survey/delta.md) | 自训 RVQ + LLaDA-8B 掩码语言扩散做非自回归 EEG-to-Text：词级 BLEU-1 21.93，离散生成线的工作 |
 | GUIDED（ATM） | arXiv 2403.07721（2024） | [本站精读](papers/survey/guided.md) | ATM 编码器把 EEG 映进 CLIP 空间，先验扩散 + 冻结 SDXL 两阶段重建所见图像：200 类零样本检索 top-1 28.6%，EEG 与 MEG/fMRI 同桌比较 |
 | CrossPT-EEG | arXiv 2406.07151（2024） | [本站精读](papers/survey/crosspt-eeg.md) | 清华视觉解码泛化基准：16 人 × 22 session × 4000 张 ImageNet 图，比较被试内、跨时间与跨被试三种设置；two-way ID 被试内均值 0.95、跨时间均值 0.51、跨被试均值 0.49（均为对应设定均值） |
-| EEG-Arena | arXiv 2609.32743（2026） | [本站精读](papers/survey/eegarena.md) | 30 FM × 25 监督基线 × 57 任务 / 23 数据集、五协议 2 万次评测：FM 大多领先，参数量不预测性能；含 REVE-base 预训练数据规模实验（600h→30k 小时，全量微调被试内 +6.69pp） |
+| EEG-Arena | arXiv 2609.32743（2026） | [本站精读](papers/survey/eegarena.md) | 30 FM × 25 监督基线 × 57 任务 / 23 数据集、五协议 2 万次评测：FM 大多领先，参数量不预测性能；含 REVE-base 预训练数据规模实验（数值见[实验证据](evidence.md)） |
 | CPVT（条件位置编码 CPE） | arXiv 2021 | CBraMod | ACPE 的直接来源：卷积动态生成位置编码，CBraMod 推广为非对称双轴 |
 | CCNet（criss-cross attention） | ICCV 2019 | CBraMod | 十字交叉注意力的视觉出处（单注意力图仿射近似） |
 | CSWin Transformer | CVPR 2022 | CBraMod | 十字形状窗口注意力的视觉出处（CBraMod 双路并行设计参照） |
@@ -121,14 +112,14 @@ tags: [索引, 参考文献]
 | DeWave | NeurIPS 2023 | EEGPT | 离散 EEG 编码词表（Codex book 概念出处） |
 | EEG2VEC | arXiv 2023 | EEGPT | 对比+重构损失学习 EEG 表示的相关工作 |
 
-## EEG 基础模型综述
+## EEG 基础模型综述 {: #eeg-基础模型综述 }
 
 | 文献 | 出处 | 被引于 | 一句话作用 |
 |---|---|---|---|
-| Yao et al. Foundation models for EEG decoding | J. Neural Eng. 22:061002（2025） | [本站精读](papers/reviews/yao-eegfm-survey.md) | PRISMA 综述 + 自跑 10 模型 × 6 数据集：掩码/自回归/对比三路线横评；FM 赢临床域输 MI，归因预训练域被癫痫数据主导 |
-| Chen, Lu & Wu. Representation Learning and Foundation Models for EEG Analyses | IEEE Signal Processing Magazine 2025-09 | [本站精读](papers/reviews/chen-representation-learning-review.md) | 19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项拆表（词元化五分类）+ 迁移学习四类地图 + SELSER/Brant-X/NeuroLM 三案例；表内 FoME 年份等有硬伤 |
-| Kuruppu et al. EEG foundation models: a critical review | J. Neural Eng. 23:021001（2026） | [本站精读](papers/reviews/kuruppu-critical-review.md) | 三支柱（输入表示/建模/评测）拆 10 个早期 FM：共享任务仅 TUAB/TUEV、OOD 评测仅 2 篇、scaling 证据弱、LP 显著落后 FT——SSL 表示质量存疑 |
-| Kwon & Shin. Foundation Models for Neural Signal Decoding | Eur. J. Neurosci. 63:e70376（2026） | [本站精读](papers/reviews/kwon-neural-fm-perspective.md) | 观点综述：生理感知目标（PAC 预测/相干重建）、结构感知架构（MNI 投影/3D 坐标 PE）、可解释性三原则，判现存 FM 为第一代；对 CBraMod 有「对比目标」误读 |
+| [Yao et al. Foundation models for EEG decoding](https://doi.org/10.1088/1741-2552/ae17e9) | J. Neural Eng. 22:061002（2025） | [本站精读](papers/reviews/yao-eegfm-survey.md) | PRISMA 综述 + 自跑 10 模型 × 6 数据集：掩码/自回归/对比三路线横评；FM 赢临床域输 MI，归因预训练域被癫痫数据主导 |
+| [Chen, Lu & Wu. Representation Learning and Foundation Models for EEG Analyses](https://doi.org/10.1109/MSP.2025.3595320) | IEEE Signal Processing Magazine 2025-09 | [本站精读](papers/reviews/chen-representation-learning-review.md) | 19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项拆表（词元化五分类）+ 迁移学习四类地图 + SELSER/Brant-X/NeuroLM 三案例；表内 FoME 年份等有硬伤 |
+| [Kuruppu et al. EEG foundation models: a critical review](https://doi.org/10.1088/1741-2552/ae4455) | J. Neural Eng. 23:021001（2026） | [本站精读](papers/reviews/kuruppu-critical-review.md) | 三支柱（输入表示/建模/评测）拆 10 个早期 FM：共享任务仅 TUAB/TUEV、OOD 评测仅 2 篇、scaling 证据弱、LP 显著落后 FT——SSL 表示质量存疑 |
+| [Kwon & Shin. Foundation Models for Neural Signal Decoding](https://doi.org/10.1111/ejn.70376) | Eur. J. Neurosci. 63:e70376（2026） | [本站精读](papers/reviews/kwon-neural-fm-perspective.md) | 观点综述：生理感知目标（PAC 预测/相干重建）、结构感知架构（MNI 投影/3D 坐标 PE）、可解释性三原则，判现存 FM 为第一代；对 CBraMod 有「对比目标」误读 |
 
 ## 信号处理基础
 

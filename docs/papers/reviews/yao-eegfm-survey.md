@@ -162,4 +162,4 @@ one-liner: "PRISMA 综述 + 自跑 10 模型 × 6 数据集：掩码重建是主
 
 **相关阅读**
 
-:material-format-list-bulleted: [EEGArena（互为镜像的评测视角）](../survey/eegarena.md) ｜ :material-shield-search: [CBraMod（本榜临床域自跑第一梯队）](../fm/cbramod.md) ｜ :material-electric-bolt: [BrainGPT（文中 EEGPT(2)，AR vs MAE 同架构对照）](../fm/braingpt.md) ｜ :material-cog: [预训练范式专题（目标/掩码/范式同一口径）](../../topics/pretraining.md) ｜ :material-script-text: [站内 EEG 基础模型选读（可对照其取舍）](../../blog-2023-2026.md) ｜ :material-clipboard-check: [Chen 综述（拆解表口径互补）](chen-representation-learning-review.md) ｜ :material-home: [首页](../../index.md)
+:material-format-list-bulleted: [EEGArena（互为镜像的评测视角）](../survey/eegarena.md) ｜ :material-shield-search: [CBraMod（本榜临床域自跑第一梯队）](../fm/cbramod.md) ｜ :material-electric-bolt: [BrainGPT（文中 EEGPT(2)，AR vs MAE 同架构对照）](../fm/braingpt.md) ｜ :material-cog: [预训练范式专题（目标/掩码/范式同一口径）](../../topics/pretraining.md) ｜ :material-script-text: [站内 EEG 基础模型选读（可对照其取舍）](../../blog-2023-2026.md) ｜ :material-clipboard-check: [Chen 综述（拆解表口径互补）](chen-representation-learning-review.md)

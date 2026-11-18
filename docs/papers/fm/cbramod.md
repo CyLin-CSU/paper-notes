@@ -82,4 +82,4 @@ FC 重构头从表示还原被掩 patch，MSE 损失**只算被掩位置**（MAE
 
 **相关阅读**
 
-:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](tfm-tokenizer.md) ｜ :material-grid-large: [通道适配与多任务学习](../../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../../basics/attention-alternatives.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [LaBraM（最主要对照：神经码字 vs 像素重构）](labram.md) ｜ :material-compress: [LUNA（通道线性复杂度的另一极）](luna.md) ｜ :material-sine-wave: [TFM-Tokenizer（ICLR 2026 掩码路线的另一端）](tfm-tokenizer.md) ｜ :material-grid-large: [通道适配与多任务学习](../../topics/multi-task.md#channel-adaptation) ｜ :material-vector-polyline: [Attention 替代方案（因子化注意力谱系）](../../basics/attention-alternatives.md)

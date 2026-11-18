@@ -127,4 +127,4 @@ Z = Z_t + g\, \mathrm{LN}[F_s(Z_t, M_s)], \qquad g = \sigma(\gamma),\ g \text{ �
 
 **相关阅读**
 
-:material-vector-link: [Tokenization 演进（站内主线，本文补上「事件驱动」一格）](../../topics/tokenization.md) ｜ :material-timeline: [LaBraM（token 只当预训练目标的起点）](labram.md) ｜ :material-chart-box: [TFM-Tokenizer（时频 motif 词表的可插拔用法）](tfm-tokenizer.md) ｜ :material-layers: [NeuroRVQ（多尺度 RVQ 的预训练路线）](neurorvq.md) ｜ :material-code-json: [CodeBrain（双域解耦码表）](codebrain.md) ｜ :material-home: [首页](../../index.md)
+:material-vector-link: [Tokenization 演进（站内主线，本文补上「事件驱动」一格）](../../topics/tokenization.md) ｜ :material-timeline: [LaBraM（token 只当预训练目标的起点）](labram.md) ｜ :material-chart-box: [TFM-Tokenizer（时频 motif 词表的可插拔用法）](tfm-tokenizer.md) ｜ :material-layers: [NeuroRVQ（多尺度 RVQ 的预训练路线）](neurorvq.md) ｜ :material-code-json: [CodeBrain（双域解耦码表）](codebrain.md)

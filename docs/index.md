@@ -8,62 +8,40 @@ title: 首页
 
 **[浏览论文](#papers)** ｜ **[方法对比](comparison.md)** ｜ **[主题专题](#topics)** ｜ **[从哪篇综述读起](blog-2023-2026.md#综述速览)** ｜ **[论文库筛选](library.md)** ｜ **[模型并排对比](models.md)** ｜ **[实验证据](evidence.md)**
 
-按任务直达：**看预训练目标** → [预训练范式对比](topics/pretraining.md) ｜ **查数据集与规模** → [数据全景专题](topics/data-landscape.md) · [数据集索引](datasets.md) ｜ **读领域综述** → [综述与观点（4 篇）](#papers-reviews) ｜ **比通道适配方案** → [通道适配与多任务](topics/multi-task.md)
+按任务直达：**看预训练目标** → [预训练范式对比](topics/pretraining.md) ｜ **找数据集下载与用途** → [数据集索引](datasets.md) ｜ **读预训练语料与报告规模** → [数据全景专题](topics/data-landscape.md) ｜ **读领域全景与争议** → [EEG 基础模型全景](landscape-2026.md) ｜ **读领域综述** → [综述与观点（4 篇）](#papers-reviews) ｜ **比通道适配方案** → [通道适配与多任务](topics/multi-task.md)
 
 ## 论文库 {: #papers }
 
-分组直达：[EEG 基础模型](#papers-fm) · [生成式模型](#papers-generative) · [综述与观点](#papers-reviews) · [相关研究](#papers-survey)
+完整 **31 篇**可筛选目录见 **[论文库](library.md)**（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 **[模型对比](models.md)**。以下为各组入口与近期收录。
 
 ### EEG 基础模型（15 篇） {: #papers-fm }
 
-| 论文 | 发表 · 规模 | 方法一句话 |
-|---|---|---|
-| [BIOT](papers/fm/biot.md) | NeurIPS 2023 · 3.2M | 逐通道切段 + 线性注意力，跨格式生物信号统一编码的起点 |
-| [LaBraM](papers/fm/labram.md) | ICLR 2024 · 5.8M–369M | VQ 神经 codebook + 频谱重构 + 掩码码字预测 |
-| [EEGPT](papers/fm/eegpt.md) | NeurIPS 2024 · ~10M（论文摘要口径；TUEV 主结果用 25M encoder） | 表示对齐 + 掩码重构双自监督，linear probing 达 SOTA |
-| [BrainGPT](papers/fm/braingpt.md) | arXiv 2024 · 至 1.09B | 电极级建模 + GPT 式自回归 + 任务共享电极图 |
-| [NeuroLM](papers/fm/neurolm.md) | ICLR 2025 · 至 1696M | EEG 接进 GPT-2：文本对齐 tokenizer + 指令微调多任务 |
-| [CBraMod](papers/fm/cbramod.md) | ICLR 2025 · 4.0M | 十字交叉注意力分别建模时间与通道 + 动态位置编码 |
-| [LUNA](papers/fm/luna.md) | NeurIPS 2025 · 7M–311M | 可学习 query 汇聚通道，任意电极布局映射到固定隐空间 |
-| [REVE](papers/fm/reve.md) | NeurIPS 2025 · 12M–408M | 电极坐标与时间构建 4D 傅里叶位置编码，支持不同电极布局和序列长度；92 数据集 61,415h 预训练 |
-| [TFM-Tokenizer](papers/fm/tfm-tokenizer.md) | ICLR 2026 · ~1.9M | 单通道时频 motif 词表，离散 token 作模型输入 |
-| [Uni-NTFM](papers/fm/uni-ntfm.md) | ICLR 2026 | 时域/频带功率双向交叉注意力 + 拓扑嵌入 + MoE |
-| [EEGMoE](papers/fm/eegmoe.md) | TNNLS 2026 · 1.68M | 域专属与共享专家分别学习域差异与共性 |
-| [NeuroRVQ](papers/fm/neurorvq.md) | arXiv 2025 · 5.9M | 多尺度残差量化 + 幅值相位约束的 EEG 离散词表 |
-| [BrainRVQ](papers/fm/brainrvq.md) | arXiv 2026 · 5.82M | 时域/频域双路 RVQ，按码字层级从粗到细预测 |
-| [CodeBrain](papers/fm/codebrain.md) | ICLR 2026 · 15.17M | 时频双码本解耦 + 多尺度骨干 |
-| [NeuroDETR](papers/fm/neurodetr.md) | arXiv 2026 | 多尺度 VQ 事件记忆检测 EEG 事件类别与起止 |
+- [REVE](papers/fm/reve.md) · NeurIPS 2025 —— 4D 傅里叶位置编码适配任意电极布局，61,415h 预训练（[模型卡](models.md)）
+- [Uni-NTFM](papers/fm/uni-ntfm.md) · ICLR 2026 —— 时域/频带功率双向交叉注意力 + 拓扑嵌入 + MoE
+- [CodeBrain](papers/fm/codebrain.md) · ICLR 2026 —— 时/频双码本解耦 + 多尺度 SSM 骨干
+
+全部 15 篇：[论文库 · EEG 基础模型](library.md?group=fm)；按维度横读见下方[主题专题](#topics)。
 
 ### 生成式模型（3 篇） {: #papers-generative }
 
-| 论文 | 发表 · 规模 | 方法一句话 |
-|---|---|---|
-| [JET](papers/generative/jet.md) | ICML 2026 · 129.9M | 条件流匹配 + 生理结构约束，直接生成原始 EEG |
-| [EEGDM](papers/generative/eegdm.md) | arXiv 2026 · 25M | EEG 表示引导潜空间扩散，去噪任务训练编码器 |
-| [Not-All-EEG](papers/generative/not-all-eeg.md) | arXiv 2026 | 按位置难度调整流匹配时间调度 |
+- [JET](papers/generative/jet.md) · ICML 2026 —— 条件流匹配 + 生理结构约束，直接生成原始 EEG
+- [EEGDM](papers/generative/eegdm.md) · arXiv 2026 —— 潜扩散生成目标做表征学习
+- [Not-All-EEG](papers/generative/not-all-eeg.md) · arXiv 2026 —— 按位置难度调整流匹配时间调度
 
 ### 综述与观点（4 篇） {: #papers-reviews }
 
-| 综述 | 发表 | 读它回答什么 |
-|---|---|---|
-| [EEG FM 综述 (Yao)](papers/reviews/yao-eegfm-survey.md) | JNE 2025 | 预训练三路线怎么选：掩码/自回归/对比横评 + 自跑 10 模型 × 6 数据集 |
-| [表示学习与 FM 综述 (Chen)](papers/reviews/chen-representation-learning-review.md) | IEEE SPM 2025 | 组件怎么拆：19 个 FM 按词元化/嵌入/位置编码/骨干/损失逐项对照 |
-| [EEG FM 批判综述 (Kuruppu)](papers/reviews/kuruppu-critical-review.md) | JNE 2026 | 现状可信吗：评测异质、scaling 证据弱、LP 落后 FT 的证据清单 |
-| [神经信号 FM 观点 (Kwon)](papers/reviews/kwon-neural-fm-perspective.md) | EJN 2026 | 下一步做什么：生理目标/结构先验/可解释三原则的规范性主张 |
+- [EEG FM 综述 (Yao)](papers/reviews/yao-eegfm-survey.md) · JNE 2025 —— 预训练三路线横评 + 自跑 10 模型 × 6 数据集
+- [表示学习与 FM 综述 (Chen)](papers/reviews/chen-representation-learning-review.md) · IEEE SPM 2025 —— 19 模型组件拆解表 + 迁移学习地图
+- [EEG FM 批判综述 (Kuruppu)](papers/reviews/kuruppu-critical-review.md) · JNE 2026 —— 评测异质、scaling 证据弱、LP 落后 FT 的证据清单
+- [神经信号 FM 观点 (Kwon)](papers/reviews/kwon-neural-fm-perspective.md) · EJN 2026 —— 生理目标/结构先验/可解释三原则
 
 ### 相关研究（9 篇） {: #papers-survey }
 
-| 论文 | 发表 | 方法一句话 |
-|---|---|---|
-| [Défossez 语音解码](papers/survey/defossez-speech.md) | NMI 2023 | 脑信号与语音表示对比对齐，候选检索听到的语音 |
-| [CrossPT-EEG](papers/survey/crosspt-eeg.md) | arXiv 2024 | 被试内/跨被试/跨时间设定下视觉解码泛化评测 |
-| [GUIDED](papers/survey/guided.md) | arXiv 2024 | EEG 对齐 CLIP 空间，引导扩散重建所见图像 |
-| [SSM2Mel](papers/survey/ssm2mel.md) | arXiv 2025 | Mamba + 注意力交替，EEG 重建连续语音 mel 谱 |
-| [DELTA](papers/survey/delta.md) | NeurIPS WS 2025 | RVQ token + 掩码扩散语言模型的 EEG-to-Text |
-| [NPI](papers/survey/surrogate-brain.md) | Nature Methods 2025 | 代理脑虚拟扰动估计脑区间有效连接 |
-| [LTFT](papers/survey/learnable-tf.md) | TETCI 2026 | 时频变换窗口设为可学习参数的信号前端 |
-| [RF-GPT](papers/survey/rf-gpt.md) | arXiv 2026 | 射频时频图接入 VLM，合成数据训练信号理解 |
-| [EEGArena](papers/survey/eegarena.md) | arXiv 2026 | 30 FM × 25 基线 × 57 任务的统一评测 |
+- [EEGArena](papers/survey/eegarena.md) · arXiv 2026 —— 30 FM × 25 基线 × 57 任务的统一评测
+- [LTFT](papers/survey/learnable-tf.md) · TETCI 2026 —— 时频变换窗口设为可学习参数的信号前端
+- [NPI](papers/survey/surrogate-brain.md) · Nature Methods 2025 —— 代理脑虚拟扰动估计脑区间有效连接
+
+全部 9 篇：[论文库 · 相关研究](library.md?group=survey)
 
 ## 主题专题与架构基础 {: #topics }
 
@@ -104,7 +82,7 @@ title: 首页
 
 - **2026-11-04** · 新增精读 CrossPT-EEG（arXiv 2024 · 清华）：16 人 × 22 session 视觉解码泛化基准，比较被试内、跨时间与跨被试三种设置——two-way ID 被试内均值 0.95、跨时间 0.51、跨被试 0.49（均为对应设定均值）
 
-- **2026-11-04** · 新增 EEGArena 精读，记录 57 项任务的统一评测，以及 REVE-base 的预训练数据规模实验（600h→30k 小时，全量微调被试内 +6.69pp）
+- **2026-11-04** · 新增 EEGArena 精读，记录 57 项任务的统一评测与预训练数据规模实验（数值见[实验证据](evidence.md)）
 
 - **2026-11-03** · 新增语音模型专题（与主题专题并列）：语音解码轴线按 Tokenization / Pretraining / 下游任务三段横读——脑端不切段、语音端选空间、监督对齐范式与检索/回归/生成三协议
 
@@ -163,7 +141,6 @@ title: 首页
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · JNE ×2 · IEEE SPM ×1 · EJN ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
 
-综合对比见 [十四篇方法对比](comparison.md)（枢纽页：一页速览 + 九维度导读——五个维度下放专题深读，模型设计 / 频域 / 规模效率保留在页内 + 论文间的比较与改进）。
 
 ## 留言板 {: #comments }
 

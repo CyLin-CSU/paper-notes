@@ -27,6 +27,12 @@ jobs:
       - name: Validate structured data
         run: python tools/check_data.py
 
+      # 漂移检查：papers.json 必须与 front matter 再生成结果一致（方案 §6 P0·A/H）
+      - name: Check papers.json drift
+        run: |
+          python tools/build_data.py --stdout > /tmp/papers.regenerated.json
+          diff -q /tmp/papers.regenerated.json data/papers.json
+
       - name: Build site (strict)
         run: python -m mkdocs build --strict
 

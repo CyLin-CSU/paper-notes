@@ -33,21 +33,24 @@ def main(root: pathlib.Path) -> int:
     for g, slug in NAV_RE.findall(nav_text):
         nav[g].add(slug)
 
-    # 3. 首页论文库表格
+    # 3. 首页（改版后职责 = 分类入口 + 近期收录；完整目录由 /library/ 承担）
+    #    规则：首页链接到的条目必须真实存在（防死链），不要求全覆盖。
     index_text = (docs / "index.md").read_text(encoding="utf-8")
     home: dict[str, set] = {g: set() for g in GROUPS}
     for g, slug in NAV_RE.findall(index_text):
         home[g].add(slug)
+    for g in GROUPS:
+        for miss in sorted(home[g] - files[g]):
+            problems.append(f"首页链接的 papers/{g}/{miss}.md 没有对应文件")
 
     total = 0
     for g in GROUPS:
         f, n, h = files[g], nav[g], home[g]
         total += len(f)
-        for where, a, b in (("nav", f, n), ("首页", f, h)):
-            for miss in sorted(a - b):
-                problems.append(f"papers/{g}/{miss}.md 未登记在{where}")
-            for extra in sorted(b - a):
-                problems.append(f"{where} 中的 papers/{g}/{extra}.md 没有对应文件")
+        for miss in sorted(f - n):
+            problems.append(f"papers/{g}/{miss}.md 未登记在 nav")
+        for extra in sorted(n - f):
+            problems.append(f"nav 中的 papers/{g}/{extra}.md 没有对应文件")
         dup = len(f) - len(f)
         if dup:
             problems.append(f"{g} 分组文件重复")

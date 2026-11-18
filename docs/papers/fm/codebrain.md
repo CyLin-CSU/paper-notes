@@ -93,4 +93,4 @@ MAE 式:Bernoulli 掩码（r=0.5）,EEGSSM 输出过 1D 卷积预测被掩 patch
 
 **相关阅读**
 
-:material-vector-link: [Tokenization 演进(CodeBrain 已入表)](../../topics/tokenization.md) ｜ :material-creation: [TFM-Tokenizer(同届另一条时频 tokenization 路线)](tfm-tokenizer.md) ｜ :material-account-group: [LaBraM(单码本 VQ 的源头)](labram.md) ｜ :material-chart-box: [NeuroRVQ(多尺度 RVQ 同框对比)](neurorvq.md) ｜ :material-heart-pulse: [CBraMod(最强基线与 ACPE 出处)](cbramod.md) ｜ :material-home: [首页](../../index.md)
+:material-vector-link: [Tokenization 演进(CodeBrain 已入表)](../../topics/tokenization.md) ｜ :material-creation: [TFM-Tokenizer(同届另一条时频 tokenization 路线)](tfm-tokenizer.md) ｜ :material-account-group: [LaBraM(单码本 VQ 的源头)](labram.md) ｜ :material-chart-box: [NeuroRVQ(多尺度 RVQ 同框对比)](neurorvq.md) ｜ :material-heart-pulse: [CBraMod(最强基线与 ACPE 出处)](cbramod.md)

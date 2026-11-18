@@ -99,4 +99,4 @@ EEG 建模的根本瓶颈是数据——高质量临床记录昂贵、需专家�
 
 **相关阅读**
 
-:material-arrow-left: [RF-GPT（跨领域：时频图 + LLM）](../survey/rf-gpt.md) ｜ :material-hammer-wrench: [LoRA · 低秩适配](../../basics/lora.md) ｜ :material-vector-polyline: [Attention 替代方案](../../basics/attention-alternatives.md) ｜ :material-heart-pulse: [下游评估所用分类器 CBraMod](../fm/cbramod.md) ｜ :material-home: [首页](../../index.md)
+:material-arrow-left: [RF-GPT（跨领域：时频图 + LLM）](../survey/rf-gpt.md) ｜ :material-hammer-wrench: [LoRA · 低秩适配](../../basics/lora.md) ｜ :material-vector-polyline: [Attention 替代方案](../../basics/attention-alternatives.md) ｜ :material-heart-pulse: [下游评估所用分类器 CBraMod](../fm/cbramod.md)

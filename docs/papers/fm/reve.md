@@ -23,7 +23,7 @@ one-liner: "电极坐标与时间构建 4D 傅里叶位置编码，支持不同�
 
 作者对现有 EEG FM 的归因分两层。**数据层**：BIOT / LaBraM / CBraMod / NeuroGPT 的预训练语料几乎都来自 TUH（固定 19/21 通道蒙太奇），换电极布局的数据集天然吃不到预训练红利。**架构层**：位置编码要么查表（LaBraM 的电极编号 → embedding、BIOT 的通道表），要么卷积生成（CBraMod 的 ACPE）——前者覆盖不了训练没见过的电极名，后者编码的是邻域模式而非绝对空间位置，迁移时往往要全量微调补课。两层的共同后果：linear probing（最能反映表示通用性的协议）成绩次优。
 
-REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局任意长度都有定义），61,415h 多源语料解决数据层（布局多样性内建于数据），修改版 MAE 解决表示层（冻结可用）。
+REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局任意长度都有定义），多源大规模语料解决数据层（布局多样性内建于数据，规模与构成见 §2.5），修改版 MAE 解决表示层（冻结可用）。
 
 ## 2 方法
 
@@ -88,7 +88,7 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 | [Défossez 语音解码](../survey/defossez-speech.md) | 两处直接继承：4D 傅里叶位置编码扩自其 2D 方案；15σ 截断预处理同款。语音线与基础模型线在空间编码上首次合流 |
 | [BIOT](biot.md) | 重叠切段（w=1s, o=0.1s）承自 BIOT；REVE 用全注意力替掉其线性注意力——61,415h 语料 + 69M 参数撑得起 O(N²) |
 | [EEGPT](eegpt.md) | 「冻结可用」的第二个解法：EEGPT 靠表示对齐目标，REVE 靠全局 token 信息瓶颈——机制完全不同，疗效相当（REVE-L 探针 0.654 vs EEGPT 探针 0.62 量级） |
-| [数据全景专题](../../topics/data-landscape.md) | 61,415h 把「万小时」叙事推到新量级，且 92 数据集的**多样性**（396 电极名、3–129 通道）才是它相对 NeuroLM 25,000h 单一 TUEG 的实质差异 |
+| [数据全景专题](../../topics/data-landscape.md) | 最大非侵入披露语料把「万小时」叙事推到新量级，且 92 数据集的**多样性**（396 电极名、3–129 通道）才是它相对 NeuroLM 25,000h 单一 TUEG 的实质差异 |
 | [LoRA 基础页](../../basics/lora.md) | 下游微调直接用 LoRA（QKVO 投影）防灾难性遗忘——站内 LoRA 笔记的又一个 EEG FM 实战用例 |
 
 ## 个人思考
@@ -115,7 +115,7 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 
 ??? question "Q4 · REVE 算不算回答了 CBraMod 留下的数据饱和问题？"
 
-    部分回答。CBraMod 消融显示自家清洗语料 1000h 后边际递减，并质疑堆数据路线；REVE 用 92 数据集 61,415h 拿到平均 +2.5%——与「多样性突破单一分布饱和」相容。但要打两个折扣：① 论文没有数据量 scaling 消融，61,415h vs 9,000h 的增益里混着架构（4D PE）、模型规模（69M vs 4M）与目标差异，归因不纯；② REVE 自己承认语料以北美欧洲临床数据为主、人口多样性有限，下一步才是选择性策展。数据 scaling 曲线在 EEG 上仍然是稀缺品——这个问题保持开放。
+    部分回答。CBraMod 消融显示自家清洗语料 1000h 后边际递减，并质疑堆数据路线；REVE 用 92 数据集 61,415h 拿到平均 +2.5%——与「多样性突破单一分布饱和」相容。但要打两个折扣：① 论文没有数据量 scaling 消融，与 9,000h 清洗语料的增益对比里混着架构（4D PE）、模型规模（69M vs 4M）与目标差异，归因不纯；② REVE 自己承认语料以北美欧洲临床数据为主、人口多样性有限，下一步才是选择性策展。数据 scaling 曲线在 EEG 上仍然是稀缺品——这个问题保持开放。
 
 !!! abstract "复现速查卡"
     - **代码**：[项目页](https://brain-bzh.github.io/reve/) + [GitHub](https://github.com/elouayas/reve_eeg)（多规格权重 + tutorials）；⚠️ **MAE decoder 不发布**（可重构原始 EEG，隐私考量）
@@ -130,4 +130,4 @@ REVE 的三个贡献各打一层：4D 位置编码解决架构层（任意布局
 
 **相关阅读**
 
-:material-compress: [CBraMod（最主要对照：数据哲学与位置编码的正面分歧）](cbramod.md) ｜ :material-compress: [LUNA（空间编码另一极：query 压缩 vs 坐标生成）](luna.md) ｜ :material-magnify: [EEGPT（冻结可用的另一解法：对齐目标 vs 信息瓶颈）](eegpt.md) ｜ :material-database: [EEG 预训练数据全景（61,415h 入账后的语料版图）](../../topics/data-landscape.md) ｜ :material-chart-box: [十四篇方法对比](../../comparison.md) ｜ :material-home: [首页](../../index.md)
+:material-compress: [CBraMod（最主要对照：数据哲学与位置编码的正面分歧）](cbramod.md) ｜ :material-compress: [LUNA（空间编码另一极：query 压缩 vs 坐标生成）](luna.md) ｜ :material-magnify: [EEGPT（冻结可用的另一解法：对齐目标 vs 信息瓶颈）](eegpt.md) ｜ :material-database: [EEG 预训练数据全景（最大披露语料入账后的版图）](../../topics/data-landscape.md) ｜ :material-chart-box: [十四篇方法对比](../../comparison.md)

@@ -35,7 +35,7 @@
 
 | 维度 | 核心分歧一句话 | 深读 |
 |---|---|---|
-| ① 预训练数据 | 规模 / 域距离 / 清洗哲学：TUEG 系语料越报越大（2500h→25000h）；CBraMod 的单项消融显示清洗版优于脏数据版；EEGArena 固定 REVE 架构把预训练语料从 600h 加到 3 万小时仍见增益（被试内 +6.69pp）——两项实验对象与条件不同，详见数据全景专题 | [数据全景专题](topics/data-landscape.md) |
+| ① 预训练数据 | 规模 / 域距离 / 清洗哲学：TUEG 系语料越报越大（2500h→25000h）；CBraMod 的单项消融显示清洗版优于脏数据版；EEGArena 固定 REVE 架构把预训练语料从 600h 加到 3 万小时仍见增益——两项实验对象与条件不同，数值与协议见[实验证据](evidence.md)，解读详见数据全景专题 | [数据全景专题](topics/data-landscape.md) |
 | ② 信号 Tokenization | 切多细（40 点 → 1s）、离不离散（连续 vs VQ 词表）、词表用在哪（预处理 → 训练目标 → 模型输入）——三步跃迁 + 2025–2026 连续派的加固 | [Tokenization 专题](topics/tokenization.md) |
 | ③ 预训练目标 | 对比 / 掩码 / 自回归 / **生成**（2026 新增）四条路线；掩码派内部「掩什么 × 预测什么」的设计空间；对掩码重构的三条批评线 | [预训练范式专题](topics/pretraining.md) |
 | ④ 空间与通道异构 | 通道 embedding / 单通道建模 / 动态位置编码 / 电极坐标编码 / 统一脑地图——区分通道表示与跨通道整合 | [通道适配](topics/multi-task.md#channel-adaptation) |
@@ -83,12 +83,7 @@
 
 ### 规模、效率与开源 {: #mod-scale }
 
-**① 参数量排序**（按口径分组）
-
-- **主模型（从零训练，下游口径）**：EEGMoE 1.68M（激活 0.89M）· TFM 下游 ~0.7M · BIOT 3.2M · CBraMod 4.0M · LaBraM-Base 5.8M · LUNA-Base 7M · EEGPT ~10M（论文摘要口径；TUEV 主结果用 25M encoder） · EEGDM 25M · REVE-Base 69M · JET 129.9M · LUNA-Huge 311.4M · LaBraM-Huge 369M · REVE-Large 408M
-- **端到端合计（含 tokenizer）**：TFM ~1.9M；NeuroLM-XL 含 GPT-2 基座至 1696M
-- **端到端合计（含语言基座）**：NeuroLM-XL 1696M · BrainGPT-Giant **1.09B**（均从零/扩词训练）
-- **复用外部基座**：RF-GPT 3B/7B（Qwen2.5-VL，不解码 EEG 波形参数）
+**① 参数与代码/权重状态**：逐模型的总参数、激活参数、encoder/tokenizer 口径与代码、权重状态统一在[模型对比页](models.md)维护（数据源 `data/models.json`，21 个模型条目）。口径分组的地域：**主模型（从零训练，下游口径）** 从 EEGMoE 1.68M 到 REVE-Large 408M；**端到端合计（含 tokenizer / 语言基座）** 有 TFM ~1.9M 与 NeuroLM-XL 1696M、BrainGPT-Giant 1.09B；**复用外部基座** 有 RF-GPT（Qwen2.5-VL，不解码 EEG 波形参数）。
 
 **② 效率**
 
@@ -105,13 +100,9 @@
 | 单机多卡 | BIOT、EEGPT、CBraMod、LUNA、EEGDM、JET、REVE（~260 A100·h） | 实验室可复现 |
 | 多机旗舰 | LaBraM、BrainGPT、NeuroLM、RF-GPT | 预训练成本高 |
 
-**④ 开源与可复现性**
+**④ 权重细节坑**（逐条状态见[模型对比页](models.md)）：REVE 的 MAE decoder 不发布（能从表示重构原始 EEG，隐私考量）——EEG FM 第一次基于隐私 withholding 组件；LaBraM 的 Large/Huge 权重未开源——各家论文里「打过 LaBraM-Huge」的数字多引自 LaBraM 原文，非独立复现。
 
-- **有官方代码**：BIOT、LaBraM、EEGPT、NeuroLM、TFM、CBraMod（已进 Braindecode）、LUNA、EEGDM、REVE（encoder 权重 + 任意 3D 坐标加载器 + tutorials）；
-- **声明将放出 / 未附**：BrainGPT、EEGMoE、RF-GPT、JET（以项目页为准）；
-- **权重细节坑**：REVE 的 MAE decoder 不发布（能从表示重构原始 EEG，隐私考量）——EEG FM 第一次基于隐私 withholding 组件；LaBraM 的 Large/Huge 权重未开源——各家论文里「打过 LaBraM-Huge」的数字多引自 LaBraM 原文，非独立复现。
-
-**维度小结**：规模轴上被验证过的规律只有两条——**结构先验可以替代规模**（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及**效率在特定场景是硬需求**（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 EEG 上至今没有被干净地兑现——REVE 的模型规模消融给出模型侧证据（Base→Large 线性探针 0.609→0.654），EEGArena 固定架构给出数据侧证据（600h→3 万小时、被试内 +6.69pp）；但两者的任务集与协议不同，统一叙事仍缺（详见[数据全景专题](topics/data-landscape.md)）。
+**维度小结**：规模轴上被验证过的规律只有两条——**结构先验可以替代规模**（CBraMod 4M、TFM 1.9M、EEGMoE 1.68M），以及**效率在特定场景是硬需求**（LUNA 面向可穿戴、JET 面向实时生成）；「大模型 + 大数据」的 scaling 叙事在 EEG 上至今没有被干净地兑现——REVE 的模型规模消融给出模型侧证据（Base→Large 线性探针 0.609→0.654），EEGArena 固定架构给出数据侧证据（受控对照）；但两者的任务集与协议不同，统一叙事仍缺，数值见[实验证据](evidence.md)（详见[数据全景专题](topics/data-landscape.md)）。
 
 ## 论文间的比较与改进 {: #critique-chain }
 

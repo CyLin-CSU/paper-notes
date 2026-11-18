@@ -88,4 +88,4 @@ Fig. 10 的对照实验:单阶段(EEG 嵌入直接生成)明显差于两阶段(�
 
 **相关阅读**
 
-:material-eye: [EEGDM · 条件扩散的反向用法(以生成训表征)](../generative/eegdm.md) ｜ :material-image-multiple: [Not-All-EEG(生成轴线:位置自适应调度)](../generative/not-all-eeg.md) ｜ :material-creation: [JET(流匹配生成 EEG 的质量标杆)](../generative/jet.md) ｜ :material-waveform: [Défossez 语音解码(感知解码姊妹线)](defossez-speech.md) ｜ :material-home: [首页](../../index.md)
+:material-eye: [EEGDM · 条件扩散的反向用法(以生成训表征)](../generative/eegdm.md) ｜ :material-image-multiple: [Not-All-EEG(生成轴线:位置自适应调度)](../generative/not-all-eeg.md) ｜ :material-creation: [JET(流匹配生成 EEG 的质量标杆)](../generative/jet.md) ｜ :material-waveform: [Défossez 语音解码(感知解码姊妹线)](defossez-speech.md)

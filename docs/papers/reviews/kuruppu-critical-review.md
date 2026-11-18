@@ -112,4 +112,4 @@ one-liner: "三支柱拆 10 个早期 EEG FM 后给出批判性结论：评测�
 
 **相关阅读**
 
-:material-sword-cross: [EEGArena（批判清单的落地实现）](../survey/eegarena.md) ｜ :material-format-list-bulleted: [Yao 综述（同刊前一年的技术面版本）](yao-eegfm-survey.md) ｜ :material-electric-bolt: [BrainGPT（文中 NeuroLM 的直接前身与对照）](../fm/braingpt.md) ｜ :material-tune: [REVE（LP/FT 差异与本站微调策略相关）](../fm/reve.md) ｜ :material-home: [首页](../../index.md)
+:material-sword-cross: [EEGArena（批判清单的落地实现）](../survey/eegarena.md) ｜ :material-format-list-bulleted: [Yao 综述（同刊前一年的技术面版本）](yao-eegfm-survey.md) ｜ :material-electric-bolt: [BrainGPT（文中 NeuroLM 的直接前身与对照）](../fm/braingpt.md) ｜ :material-tune: [REVE（LP/FT 差异与本站微调策略相关）](../fm/reve.md)

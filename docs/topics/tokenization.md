@@ -148,25 +148,12 @@ tags: [tokenization, 综述]
 
 ## 代码与权重 {: #_1 }
 
-| 论文 | 代码 | 备注 |
-|---|---|---|
-| [BIOT](../papers/fm/biot.md) | [ycq091044/BIOT](https://github.com/ycq091044/BIOT) | 完整开源 |
-| [LaBraM](../papers/fm/labram.md) | [935963004/LaBraM](https://github.com/935963004/LaBraM) | 仅 Base 权重；Large / Huge 未放 |
-| [EEGPT](../papers/fm/eegpt.md) | [BINE022/EEGPT](https://github.com/BINE022/EEGPT) | 开源 |
-| [NeuroLM](../papers/fm/neurolm.md) | [935963004/NeuroLM](https://github.com/935963004/NeuroLM) | 开源 |
-| [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) | [Jathurshan0330/TFM-Tokenizer](https://github.com/Jathurshan0330/TFM-Tokenizer) | 含预训练权重与全部预处理脚本 |
-| [CBraMod](../papers/fm/cbramod.md) | [wjq-learning/CBraMod](https://github.com/wjq-learning/CBraMod) | 已进 Braindecode |
-| [LUNA](../papers/fm/luna.md) | [pulp-bio/biofoundation](https://github.com/pulp-bio/biofoundation) | Base / Large / Huge 全系 |
-| [REVE](../papers/fm/reve.md) | [brain-bzh.github.io/reve](https://brain-bzh.github.io/reve/) · [elouayas/reve_eeg](https://github.com/elouayas/reve_eeg) | 多规格权重 + tutorials；decoder 不发布（隐私） |
-| [EEGDM](../papers/generative/eegdm.md) | [wangsc18/EEGDM](https://github.com/wangsc18/EEGDM) | 含预处理脚本与训练配置 |
-| [JET](../papers/generative/jet.md) | [项目页](https://y-research-sbu.github.io/JET/) | 代码 / 权重以项目页为准 |
-| [EEGMoE](../papers/fm/eegmoe.md) | — | 论文声明将放出，精读时未见仓库 |
-| [RF-GPT](../papers/survey/rf-gpt.md) | — | 论文未附仓库（底座 Qwen2.5-VL 等组件公开可得） |
-| [NeuroRVQ](../papers/fm/neurorvq.md) | [项目页](https://neurorvq.github.io) · [Hugging Face](https://huggingface.co/ntinosbarmpas/NeuroRVQ) | 官方实现挂 HF（另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)） |
-| [BrainRVQ](../papers/fm/brainrvq.md) | [keqicmz/BrainRVQ](https://github.com/keqicmz/BrainRVQ) | 代码可访问，权重承诺论文接收后放出 |
-| [CodeBrain](../papers/fm/codebrain.md) | [jingyingma01/CodeBrain](https://github.com/jingyingma01/CodeBrain) | ICLR 2026 官方开源 |
-| [NeuroDETR](../papers/fm/neurodetr.md) | — | 暂未检索到官方仓库 |
-| [DELTA](../papers/survey/delta.md) | — | 论文未附仓库（NeurIPS 2025 Workshop） |
+各模型的代码地址、权重状态与参数口径统一由[模型对比页](../models.md)（数据源 `data/models.json`）维护，此处只保留与 tokenizer 复现直接相关的注释：
+
+- **[TFM-Tokenizer](../papers/fm/tfm-tokenizer.md)**：官方仓库含预训练权重与全部预处理脚本——复现其词表需连同预处理一起取；
+- **[NeuroRVQ](../papers/fm/neurorvq.md)**：官方实现挂在 Hugging Face（[ntinosbarmpas/NeuroRVQ](https://huggingface.co/ntinosbarmpas/NeuroRVQ)），另有第三方 [Rust 推理](https://github.com/eugenehp/neurorvq-rs)；
+- **[REVE](../papers/fm/reve.md)**：MAE decoder 不发布（可从表示重构原始 EEG，隐私考量）——复现其 tokenizer 输出只需 encoder；
+- 未附仓库：EEGMoE（声明将放出）、RF-GPT（底座组件公开可得）、NeuroDETR、DELTA（Workshop 论文）。
 
 ## 相关前端与解码方式 {: #_6 }
 
