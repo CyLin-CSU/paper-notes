@@ -1761,10 +1761,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        论文代码开源情况
+        预处理与归一化异构信号
       
     </span>
   </a>
@@ -1772,10 +1772,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#token-embedding" class="md-nav__link">
     <span class="md-ellipsis">
       
-        预处理与归一化异构信号
+        token embedding 组成对比
       
     </span>
   </a>
@@ -1816,17 +1816,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#token-embedding" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        token embedding 组成对比
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1859,6 +1848,17 @@
     <span class="md-ellipsis">
       
         遗留问题和可改进
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码与权重
       
     </span>
   </a>
@@ -2288,10 +2288,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        论文代码开源情况
+        预处理与归一化异构信号
       
     </span>
   </a>
@@ -2299,10 +2299,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#token-embedding" class="md-nav__link">
     <span class="md-ellipsis">
       
-        预处理与归一化异构信号
+        token embedding 组成对比
       
     </span>
   </a>
@@ -2343,17 +2343,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#token-embedding" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        token embedding 组成对比
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2386,6 +2375,17 @@
     <span class="md-ellipsis">
       
         遗留问题和可改进
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码与权重
       
     </span>
   </a>
@@ -2435,103 +2435,7 @@
 
 
 <h1 id="eeg-tokenization"><abbr title="脑电图 Electroencephalogram">EEG</abbr> Tokenization 演进<a class="headerlink" href="#eeg-tokenization" title="Permanent link">#</a></h1>
-<h2 id="_1">论文代码开源情况<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>论文</th>
-<th>代码</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td><a href="https://github.com/ycq091044/BIOT">ycq091044/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
-<td>完整开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td><a href="https://github.com/935963004/LaBraM">935963004/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
-<td>仅 Base 权重；Large / Huge 未放</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/eegpt/">EEGPT</a></td>
-<td><a href="https://github.com/BINE022/EEGPT">BINE022/EEGPT</a></td>
-<td>开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/neurolm/">NeuroLM</a></td>
-<td><a href="https://github.com/935963004/NeuroLM">935963004/NeuroLM</a></td>
-<td>开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a></td>
-<td><a href="https://github.com/Jathurshan0330/TFM-Tokenizer">Jathurshan0330/TFM-Tokenizer</a></td>
-<td>含预训练权重与全部预处理脚本</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/cbramod/">CBraMod</a></td>
-<td><a href="https://github.com/wjq-learning/CBraMod">wjq-learning/CBraMod</a></td>
-<td>已进 Braindecode</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/luna/">LUNA</a></td>
-<td><a href="https://github.com/pulp-bio/biofoundation">pulp-bio/biofoundation</a></td>
-<td>Base / Large / Huge 全系</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/reve/">REVE</a></td>
-<td><a href="https://brain-bzh.github.io/reve/">brain-bzh.github.io/reve</a> · <a href="https://github.com/elouayas/reve_eeg">elouayas/reve_eeg</a></td>
-<td>多规格权重 + tutorials；decoder 不发布（隐私）</td>
-</tr>
-<tr>
-<td><a href="../../papers/generative/eegdm/">EEGDM</a></td>
-<td><a href="https://github.com/wangsc18/EEGDM">wangsc18/EEGDM</a></td>
-<td>含预处理脚本与训练配置</td>
-</tr>
-<tr>
-<td><a href="../../papers/generative/jet/">JET</a></td>
-<td><a href="https://y-research-sbu.github.io/JET/">项目页</a></td>
-<td>代码 / 权重以项目页为准</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/eegmoe/">EEGMoE</a></td>
-<td>—</td>
-<td>论文声明将放出，精读时未见仓库</td>
-</tr>
-<tr>
-<td><a href="../../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></td>
-<td>—</td>
-<td>论文未附仓库（底座 Qwen2.5-VL 等组件公开可得）</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/neurorvq/">NeuroRVQ</a></td>
-<td><a href="https://neurorvq.github.io">项目页</a> · <a href="https://huggingface.co/ntinosbarmpas/NeuroRVQ">Hugging Face</a></td>
-<td>官方实现挂 HF（另有第三方 <a href="https://github.com/eugenehp/neurorvq-rs">Rust 推理</a>）</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/brainrvq/">BrainRVQ</a></td>
-<td><a href="https://github.com/keqicmz/BrainRVQ">keqicmz/BrainRVQ</a></td>
-<td>代码可访问，权重承诺论文接收后放出</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/codebrain/">CodeBrain</a></td>
-<td><a href="https://github.com/jingyingma01/CodeBrain">jingyingma01/CodeBrain</a></td>
-<td>ICLR 2026 官方开源</td>
-</tr>
-<tr>
-<td><a href="../../papers/fm/neurodetr/">NeuroDETR</a></td>
-<td>—</td>
-<td>暂未检索到官方仓库</td>
-</tr>
-<tr>
-<td><a href="../../papers/survey/delta/">DELTA</a></td>
-<td>—</td>
-<td>论文未附仓库（NeurIPS 2025 Workshop）</td>
-</tr>
-</tbody>
-</table>
+<p>本页比较各方法怎么切片、码字在哪一阶段使用：连续切段是预处理产物，<abbr title="向量量化 Vector Quantization">VQ</abbr> 词表可用于预训练目标，也可作为模型输入。</p>
 <table>
 <thead>
 <tr>
@@ -2668,84 +2572,6 @@
 <p><strong>JET</strong>：信号幅值整体乘 0.01。</p>
 </li>
 </ul>
-<h2 id="_3">片段细粒度<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
-<p><strong>patch 长度与重叠</strong>：</p>
-<ul>
-<li>
-<p><strong>LUNA</strong>：40 点，256Hz 下约 0.16s。</p>
-</li>
-<li>
-<p><strong>EEGPT</strong>：64 点，256Hz 下为 250ms。</p>
-</li>
-<li>
-<p><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></strong>：1s <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 窗，步长 0.5s；每个时间帧的频谱投影为 <abbr title="词元，模型处理的最小输入单元">token</abbr>。</p>
-</li>
-<li>
-<p><strong>TFM</strong>：1s 窗、0.5s 步长，每个窗内继续建模时频结构。</p>
-</li>
-<li>
-<p><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / CBraMod / EEGDM / JET</strong>：主要使用 1s patch。</p>
-</li>
-<li>
-<p><strong>BrainRVQ / CodeBrain</strong>：使用 1s 非重叠 patch。</p>
-</li>
-</ul>
-<p><strong>其他输入组织方式</strong>：</p>
-<ul>
-<li>
-<p><strong>EEGMoE</strong>：先分频带，再按电极位置摆成脑地图，用空间与频率编码器提取表示。</p>
-</li>
-<li>
-<p><strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></strong>：把 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 时频图作为图片输入视觉语言模型。</p>
-</li>
-<li>
-<p><strong>DELTA</strong>：按词语组织 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征，切分单位由配对阅读任务确定。</p>
-</li>
-</ul>
-<h2 id="token">对token切分的总结<a class="headerlink" href="#token" title="Permanent link">#</a></h2>
-<ul>
-<li>
-<p><strong>NeuroRVQ</strong>：在 patch 内用多尺度卷积提取表示，每个尺度分别做 RVQ。</p>
-</li>
-<li>
-<p><strong>BrainRVQ</strong>：同一 patch 分别量化为时域与频域两组残差码字。</p>
-</li>
-<li>
-<p><strong>CodeBrain</strong>：时域与频域分别使用独立码表，给主模型提供预测目标。</p>
-</li>
-<li>
-<p><strong>NeuroDETR</strong>：从连续信号构造多尺度时间 <abbr title="词元，模型处理的最小输入单元">token</abbr> 与脑区 <abbr title="词元，模型处理的最小输入单元">token</abbr>，作为事件检测的输入记忆。</p>
-</li>
-<li>
-<p><strong>DELTA</strong>：按阅读词语组织 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征，用 RVQ 得到离散 <abbr title="词元，模型处理的最小输入单元">token</abbr>，再接入语言模型。</p>
-</li>
-</ul>
-<p><strong>把异构信号规则切段，统一成连续 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>：好处是 tokenizer 免训练、时域信息保留，坏处是 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只是切分的产物，没有数据驱动的词表，谈不上语义单元；</p>
-<p><strong>词表用在哪里</strong>：</p>
-<ul>
-<li>
-<p><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>：离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为预训练目标，分类时保留主模型。</p>
-</li>
-<li>
-<p><strong>NeuroLM</strong>：把离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表，用指令组织下游任务。</p>
-</li>
-<li>
-<p><strong>TFM</strong>：离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为主模型输入，tokenizer 可以接入不同骨干。</p>
-</li>
-<li>
-<p><strong>DELTA</strong>：离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 的条件输入，由语言模型生成文本。</p>
-</li>
-</ul>
-<h2 id="token_1">切分token方法的加固与新形态<a class="headerlink" href="#token_1" title="Permanent link">#</a></h2>
-<ul>
-<li>
-<p><strong>CBraMod、LUNA · 时频双分支 + 位置编码</strong>：</p>
-<p>每个 patch 的 embedding 由时域、频域两路相加而成，然后再单独编码通道结构；</p>
-</li>
-<li>
-<p><strong>EEGMoE</strong>：<abbr title="词元，模型处理的最小输入单元">token</abbr> 单位不是波形段而是「时刻 × 频带 × 电极网格」的脑地图体素；</p>
-</li>
-</ul>
 <h2 id="token-embedding"><abbr title="词元，模型处理的最小输入单元">token</abbr> embedding 组成对比<a class="headerlink" href="#token-embedding" title="Permanent link">#</a></h2>
 <table>
 <thead>
@@ -2841,6 +2667,84 @@
 <p><strong>CodeBrain</strong>：输入与词表重构均使用频域信息。</p>
 </li>
 </ul>
+<h2 id="_3">片段细粒度<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p><strong>patch 长度与重叠</strong>：</p>
+<ul>
+<li>
+<p><strong>LUNA</strong>：40 点，256Hz 下约 0.16s。</p>
+</li>
+<li>
+<p><strong>EEGPT</strong>：64 点，256Hz 下为 250ms。</p>
+</li>
+<li>
+<p><strong><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></strong>：1s <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 窗，步长 0.5s；每个时间帧的频谱投影为 <abbr title="词元，模型处理的最小输入单元">token</abbr>。</p>
+</li>
+<li>
+<p><strong>TFM</strong>：1s 窗、0.5s 步长，每个窗内继续建模时频结构。</p>
+</li>
+<li>
+<p><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr> / CBraMod / EEGDM / JET</strong>：主要使用 1s patch。</p>
+</li>
+<li>
+<p><strong>BrainRVQ / CodeBrain</strong>：使用 1s 非重叠 patch。</p>
+</li>
+</ul>
+<p><strong>其他输入组织方式</strong>：</p>
+<ul>
+<li>
+<p><strong>EEGMoE</strong>：先分频带，再按电极位置摆成脑地图，用空间与频率编码器提取表示。</p>
+</li>
+<li>
+<p><strong>RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></strong>：把 <abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr> 时频图作为图片输入视觉语言模型。</p>
+</li>
+<li>
+<p><strong>DELTA</strong>：按词语组织 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征，切分单位由配对阅读任务确定。</p>
+</li>
+</ul>
+<h2 id="token">对token切分的总结<a class="headerlink" href="#token" title="Permanent link">#</a></h2>
+<ul>
+<li>
+<p><strong>NeuroRVQ</strong>：在 patch 内用多尺度卷积提取表示，每个尺度分别做 RVQ。</p>
+</li>
+<li>
+<p><strong>BrainRVQ</strong>：同一 patch 分别量化为时域与频域两组残差码字。</p>
+</li>
+<li>
+<p><strong>CodeBrain</strong>：时域与频域分别使用独立码表，给主模型提供预测目标。</p>
+</li>
+<li>
+<p><strong>NeuroDETR</strong>：从连续信号构造多尺度时间 <abbr title="词元，模型处理的最小输入单元">token</abbr> 与脑区 <abbr title="词元，模型处理的最小输入单元">token</abbr>，作为事件检测的输入记忆。</p>
+</li>
+<li>
+<p><strong>DELTA</strong>：按阅读词语组织 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 特征，用 RVQ 得到离散 <abbr title="词元，模型处理的最小输入单元">token</abbr>，再接入语言模型。</p>
+</li>
+</ul>
+<p><strong>把异构信号规则切段，统一成连续 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong>：好处是 tokenizer 免训练、时域信息保留，坏处是 <abbr title="词元，模型处理的最小输入单元">token</abbr> 只是切分的产物，没有数据驱动的词表，谈不上语义单元；</p>
+<p><strong>词表用在哪里</strong>：</p>
+<ul>
+<li>
+<p><strong><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></strong>：离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为预训练目标，分类时保留主模型。</p>
+</li>
+<li>
+<p><strong>NeuroLM</strong>：把离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 并入 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr>-2 词表，用指令组织下游任务。</p>
+</li>
+<li>
+<p><strong>TFM</strong>：离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为主模型输入，tokenizer 可以接入不同骨干。</p>
+</li>
+<li>
+<p><strong>DELTA</strong>：离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 作为 <abbr title="脑电图 Electroencephalogram">EEG</abbr>-to-Text 的条件输入，由语言模型生成文本。</p>
+</li>
+</ul>
+<h2 id="token_1">切分token方法的加固与新形态<a class="headerlink" href="#token_1" title="Permanent link">#</a></h2>
+<ul>
+<li>
+<p><strong>CBraMod、LUNA · 时频双分支 + 位置编码</strong>：</p>
+<p>每个 patch 的 embedding 由时域、频域两路相加而成，然后再单独编码通道结构；</p>
+</li>
+<li>
+<p><strong>EEGMoE</strong>：<abbr title="词元，模型处理的最小输入单元">token</abbr> 单位不是波形段而是「时刻 × 频带 × 电极网格」的脑地图体素；</p>
+</li>
+</ul>
 <h2 id="_4">关键技术分歧<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <h3 id="token_2">频域信息怎么进 <abbr title="词元，模型处理的最小输入单元">token</abbr><a class="headerlink" href="#token_2" title="Permanent link">#</a></h3>
 <table>
@@ -2909,6 +2813,103 @@
 <p><strong>与自然语言对齐</strong>：<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr>/NeuroLM 都展望过把神经码与语言词汇对齐。</p>
 </li>
 </ul>
+<h2 id="_1">代码与权重<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>代码</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
+<td><a href="https://github.com/ycq091044/BIOT">ycq091044/<abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a></td>
+<td>完整开源</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
+<td><a href="https://github.com/935963004/LaBraM">935963004/<abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a></td>
+<td>仅 Base 权重；Large / Huge 未放</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/eegpt/">EEGPT</a></td>
+<td><a href="https://github.com/BINE022/EEGPT">BINE022/EEGPT</a></td>
+<td>开源</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/neurolm/">NeuroLM</a></td>
+<td><a href="https://github.com/935963004/NeuroLM">935963004/NeuroLM</a></td>
+<td>开源</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a></td>
+<td><a href="https://github.com/Jathurshan0330/TFM-Tokenizer">Jathurshan0330/TFM-Tokenizer</a></td>
+<td>含预训练权重与全部预处理脚本</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/cbramod/">CBraMod</a></td>
+<td><a href="https://github.com/wjq-learning/CBraMod">wjq-learning/CBraMod</a></td>
+<td>已进 Braindecode</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/luna/">LUNA</a></td>
+<td><a href="https://github.com/pulp-bio/biofoundation">pulp-bio/biofoundation</a></td>
+<td>Base / Large / Huge 全系</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/reve/">REVE</a></td>
+<td><a href="https://brain-bzh.github.io/reve/">brain-bzh.github.io/reve</a> · <a href="https://github.com/elouayas/reve_eeg">elouayas/reve_eeg</a></td>
+<td>多规格权重 + tutorials；decoder 不发布（隐私）</td>
+</tr>
+<tr>
+<td><a href="../../papers/generative/eegdm/">EEGDM</a></td>
+<td><a href="https://github.com/wangsc18/EEGDM">wangsc18/EEGDM</a></td>
+<td>含预处理脚本与训练配置</td>
+</tr>
+<tr>
+<td><a href="../../papers/generative/jet/">JET</a></td>
+<td><a href="https://y-research-sbu.github.io/JET/">项目页</a></td>
+<td>代码 / 权重以项目页为准</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/eegmoe/">EEGMoE</a></td>
+<td>—</td>
+<td>论文声明将放出，精读时未见仓库</td>
+</tr>
+<tr>
+<td><a href="../../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></td>
+<td>—</td>
+<td>论文未附仓库（底座 Qwen2.5-VL 等组件公开可得）</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/neurorvq/">NeuroRVQ</a></td>
+<td><a href="https://neurorvq.github.io">项目页</a> · <a href="https://huggingface.co/ntinosbarmpas/NeuroRVQ">Hugging Face</a></td>
+<td>官方实现挂 HF（另有第三方 <a href="https://github.com/eugenehp/neurorvq-rs">Rust 推理</a>）</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/brainrvq/">BrainRVQ</a></td>
+<td><a href="https://github.com/keqicmz/BrainRVQ">keqicmz/BrainRVQ</a></td>
+<td>代码可访问，权重承诺论文接收后放出</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/codebrain/">CodeBrain</a></td>
+<td><a href="https://github.com/jingyingma01/CodeBrain">jingyingma01/CodeBrain</a></td>
+<td>ICLR 2026 官方开源</td>
+</tr>
+<tr>
+<td><a href="../../papers/fm/neurodetr/">NeuroDETR</a></td>
+<td>—</td>
+<td>暂未检索到官方仓库</td>
+</tr>
+<tr>
+<td><a href="../../papers/survey/delta/">DELTA</a></td>
+<td>—</td>
+<td>论文未附仓库（NeurIPS 2025 Workshop）</td>
+</tr>
+</tbody>
+</table>
 <h2 id="_6">相关前端与解码方式<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
 <ul>
 <li>

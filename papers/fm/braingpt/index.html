@@ -574,7 +574,7 @@
   <a href="#41" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.1 问题定位
+        1 问题定位
       
     </span>
   </a>
@@ -585,10 +585,49 @@
   <a href="#42" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.2 方法
+        2 方法
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aelectrode-wise-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （a）电极级建模策略（Electrode-wise Modeling）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bete-electrode-temporal-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （b）自回归预训练（ETE: Electrode Temporal Encoder）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cteg-task-shared-electrode-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （c）多任务迁移学习（TEG: Task-shared Electrode Graph）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -596,7 +635,7 @@
   <a href="#43" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.3 创新点
+        3 创新点
       
     </span>
   </a>
@@ -2217,7 +2256,7 @@
   <a href="#41" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.1 问题定位
+        1 问题定位
       
     </span>
   </a>
@@ -2228,10 +2267,49 @@
   <a href="#42" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.2 方法
+        2 方法
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aelectrode-wise-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （a）电极级建模策略（Electrode-wise Modeling）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bete-electrode-temporal-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （b）自回归预训练（ETE: Electrode Temporal Encoder）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cteg-task-shared-electrode-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （c）多任务迁移学习（TEG: Task-shared Electrode Graph）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2239,7 +2317,7 @@
   <a href="#43" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.3 创新点
+        3 创新点
       
     </span>
   </a>
@@ -2283,16 +2361,16 @@
 </blockquote>
 <p>BrainGPT：自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 通用模型 (arXiv 2024)</p>
 <p><strong>作者</strong>：Tongtian Yue 等（中科院自动化所）</p>
-<h4 id="41">4.1 问题定位<a class="headerlink" href="#41" title="Permanent link">#</a></h4>
+<h2 id="41">1 问题定位<a class="headerlink" href="#41" title="Permanent link">#</a></h2>
 <p>现有 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型三大局限：① 数据格式异构难以统一；② 普遍采用 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式双向掩码重构，忽视 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序依赖/因果结构；③ 任务特定微调导致 specialist 模型，无多任务协同。BrainGPT 定位为<strong>第一个 generalist <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型</strong>，核心是用<strong>自回归（下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测）替代掩码重构</strong>。</p>
-<h4 id="42">4.2 方法<a class="headerlink" href="#42" title="Permanent link">#</a></h4>
-<p><strong>（a）电极级建模策略（Electrode-wise Modeling）</strong></p>
+<h2 id="42">2 方法<a class="headerlink" href="#42" title="Permanent link">#</a></h2>
+<h3 id="aelectrode-wise-modeling">（a）电极级建模策略（Electrode-wise Modeling）<a class="headerlink" href="#aelectrode-wise-modeling" title="Permanent link">#</a></h3>
 <ul>
 <li>多电极 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 先切成 T 个 1 秒区间，每区间 D 个均匀采样点；再<strong>把每个电极的时间序列拆成独立训练样本</strong> <span class="arithmatex">\( x_i^e \in \mathbb{R}^{T \times D} \)</span>——天然适配任意电极数/组合；</li>
 <li><strong>电极词表</strong> <span class="arithmatex">\( \mathcal{V} \in \mathbb{R}^{E \times D} \)</span>：覆盖预训练中出现的全部 E 个电极，每个电极一个可学习 embedding，作为 <strong>条件 <abbr title="词元，模型处理的最小输入单元">token</abbr></strong> 拼在序列最前面，告诉模型信号来自哪个电极；</li>
 <li>预训练集：3750 万个单电极样本，约 10 亿 tokens。</li>
 </ul>
-<p><strong>（b）自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>: Electrode Temporal Encoder）</strong></p>
+<h3 id="bete-electrode-temporal-encoder">（b）自回归预训练（<abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr>: Electrode Temporal Encoder）<a class="headerlink" href="#bete-electrode-temporal-encoder" title="Permanent link">#</a></h3>
 <ul>
 <li>所有电极<strong>共享</strong>一个 <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 式因果 Transformer：多头<strong>因果</strong>注意力（causal mask，只看过去）+ Swish 门控前馈网络（公式见下）；</li>
 <li>轻量 MLP 预测下一个 <abbr title="词元，模型处理的最小输入单元">token</abbr>（<strong>连续原始信号值</strong>，不做 <abbr title="向量量化 Vector Quantization">VQ</abbr> 离散化）；</li>
@@ -2303,7 +2381,7 @@
 <div class="arithmatex">\[ \mathrm{FFN}(x) = W_{\text{down}} \left( \mathrm{Swish}(W_{\text{gate}}\, x) \odot (W_{\text{up}}\, x) \right) \]</div>
 <p>自回归下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测损失：</p>
 <div class="arithmatex">\[ \mathcal{L}(\theta) = \frac{1}{T} \sum_{t=1}^{T} \rho \left( x_i^e[t] - \mathrm{ETE}(x_i^e[\leq t]) \right) \]</div>
-<p><strong>（c）多任务迁移学习（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>: Task-shared Electrode Graph）</strong></p>
+<h3 id="cteg-task-shared-electrode-graph">（c）多任务迁移学习（<abbr title="任务共享电极图网络 Task-shared Electrode Graph（BrainGPT）">TEG</abbr>: Task-shared Electrode Graph）<a class="headerlink" href="#cteg-task-shared-electrode-graph" title="Permanent link">#</a></h3>
 <ul>
 <li><abbr title="电极时序编码器 Electrode Temporal Encoder（BrainGPT）">ETE</abbr> <strong>冻结</strong>，只作特征提取骨干；</li>
 <li>每个样本的每条电极序列末尾追加一个可学习 special <abbr title="词元，模型处理的最小输入单元">token</abbr> c（利用因果注意力把整条序列信息汇聚到该位置），取出该位置输出作为电极表示 <span class="arithmatex">\( z_j \in \mathbb{R}^{E_j \times D} \)</span>；</li>
@@ -2315,7 +2393,7 @@
 <p><abbr title="图注意力网络 Graph Attention Network">GAT</abbr> 注意力系数（‖ 表示向量拼接）：</p>
 <div class="arithmatex">\[ \alpha_{mn} = \mathrm{ReLU} \left( \mathbf{a}^{\top} \big[ W h_m \,\Vert\, W h_n \big] \right) \]</div>
 <p><strong>模型规格</strong>：Base 1.46M / Large 11.29M / Huge 183.8M / <strong>Giant 1.09B</strong>（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 领域当时最大）。</p>
-<h4 id="43">4.3 创新点<a class="headerlink" href="#43" title="Permanent link">#</a></h4>
+<h2 id="43">3 创新点<a class="headerlink" href="#43" title="Permanent link">#</a></h2>
 <ol>
 <li><strong>电极级建模</strong>：单电极信号为基本样本 + 电极条件 prefix <abbr title="词元，模型处理的最小输入单元">token</abbr>，支持最多 138 个电极及任意组合（覆盖面最大）；</li>
 <li><strong>首个自回归 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型</strong>：从「双向掩码补全」转向「因果下一 <abbr title="词元，模型处理的最小输入单元">token</abbr> 预测」，更贴合 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的时序本质（消融：同架构同损失下 <abbr title="自回归 Autoregressive（因果地预测下一单元）">AR</abbr> 比 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 平均高 2%+）；</li>

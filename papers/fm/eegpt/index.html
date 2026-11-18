@@ -539,7 +539,7 @@
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 问题定位
+        1 问题定位
       
     </span>
   </a>
@@ -550,10 +550,49 @@
   <a href="#32" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 方法
+        2 方法
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        局部时空 embedding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eegpt-pretraining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双自监督预训练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下游 Linear Probing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -561,7 +600,7 @@
   <a href="#33" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.3 创新点
+        3 创新点
       
     </span>
   </a>
@@ -2217,7 +2256,7 @@
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 问题定位
+        1 问题定位
       
     </span>
   </a>
@@ -2228,10 +2267,49 @@
   <a href="#32" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 方法
+        2 方法
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        局部时空 embedding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eegpt-pretraining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双自监督预训练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下游 Linear Probing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2239,7 +2317,7 @@
   <a href="#33" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.3 创新点
+        3 创新点
       
     </span>
   </a>
@@ -2283,18 +2361,18 @@
 </blockquote>
 <p>EEGPT: Pretrained Transformer (NeurIPS 2024)</p>
 <p><strong>作者</strong>：Guagnyu Wang 等（哈尔滨工业大学）</p>
-<h4 id="31">3.1 问题定位<a class="headerlink" href="#31" title="Permanent link">#</a></h4>
+<h2 id="31">1 问题定位<a class="headerlink" href="#31" title="Permanent link">#</a></h2>
 <p><abbr title="脑电图 Electroencephalogram">EEG</abbr> 低信噪比、被试间差异大、通道不匹配，导致掩码自编码器（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr>）学到的特征质量差、BERT 式模型没有显式表示 z。EEGPT 提出仅 ~10M 参数的通用特征提取器，用<strong>双自监督</strong>（时空表示对齐 + 掩码重构）训练，下游只做 <strong>linear probing</strong>。</p>
-<h4 id="32">3.2 方法<a class="headerlink" href="#32" title="Permanent link">#</a></h4>
+<h2 id="32">2 方法<a class="headerlink" href="#32" title="Permanent link">#</a></h2>
 <p><strong>理论动机（式 1→2）</strong>：标准 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 只有 <span class="arithmatex">\( \mathcal{H}(d_\phi(z),\ x \odot (1-M)) \)</span> 重构项，没有显式的隐变量z；EEGPT 加一条表示对齐分支 <span class="arithmatex">\( \mathcal{H}(z,\ f_\theta(x)) \)</span>，显式地让 encoder 输出 z ，携带全局语义，提升编码质量与泛化。</p>
-<p><strong>局部时空 embedding</strong></p>
+<h3 id="embedding">局部时空 embedding<a class="headerlink" href="#embedding" title="Permanent link">#</a></h3>
 <ul>
 <li>58 电极、256Hz、输入 4 秒（T=1024）；每 patch 时间长度 d=64（250ms），共 N=16 个时间 patch；</li>
 <li>patch embedding + <strong>通道 embedding（Code book）</strong>：可学习通道向量 <code>{ς_i}</code>，<strong>灵活对应任意数据集的通道配置</strong>（通道适配的关键）；</li>
 <li><span class="arithmatex">\( \mathrm{token}_{i,j} = \mathrm{Embed}(p_{i,j}) + \varsigma_i \)</span>。</li>
 </ul>
-<p><strong>双自监督预训练</strong>
-三条路径，patch后输入：第一条不掩码，经过momentum encoder得到压缩后的表示；第二条做掩码之后备用；第三条不经过momentum encoder,掩码后经过encoder得到压缩表示，再经过predictor预测掩码部分得到完整预测表示，和第二条表示做对齐；然后把掩码部分挖掉，经过reconstructor映射回原始信号维度，和第二条做reconstruction loss.</p>
+<h3 id="eegpt-pretraining">双自监督预训练<a class="headerlink" href="#eegpt-pretraining" title="Permanent link">#</a></h3>
+<p>三条路径，patch后输入：第一条不掩码，经过momentum encoder得到压缩后的表示；第二条做掩码之后备用；第三条不经过momentum encoder,掩码后经过encoder得到压缩表示，再经过predictor预测掩码部分得到完整预测表示，和第二条表示做对齐；然后把掩码部分挖掉，经过reconstructor映射回原始信号维度，和第二条做reconstruction loss.</p>
 <p><strong>路径① · 完整信号 → Momentum encoder（对齐目标）</strong>。不做掩码，经动量编码器 <span class="arithmatex">\( f_{\bar\theta} \)</span>（权重由在线 encoder 的 EMA 更新，目标侧不回传梯度）输出<strong>全部位置</strong>的目标表示：</p>
 <div class="arithmatex">\[ \mathrm{menc}_j = f_{\bar\theta}(x)_j, \qquad j = 1, \dots, N \]</div>
 <p><strong>路径② · 掩码信号（真值备用）</strong>。按 <span class="arithmatex">\(50\%\)</span> 时间 × <span class="arithmatex">\(80\%\)</span> 通道挖掉 patch，被挖掉的原始 patch 记为 <span class="arithmatex">\( \{p_{i,j}\}_{(i,j)\in\mathcal{M}} \)</span>，留作重构目标。与 <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 相反的关键设计：encoder 不看这些位置，只处理掩码后剩下的稀疏可见 <abbr title="词元，模型处理的最小输入单元">token</abbr>，且每个时间步追加 <span class="arithmatex">\(S\)</span> 个可学习 summary <abbr title="词元，模型处理的最小输入单元">token</abbr>（类似 [CLS]）聚合全局信息。</p>
@@ -2314,13 +2392,13 @@
 <p><strong>总损失</strong>：</p>
 <div class="arithmatex">\[ \mathcal{L} = \mathcal{L}_A + \mathcal{L}_R \]</div>
 <p>分工：<span class="arithmatex">\( \mathcal{L}_A \)</span> 迫使 encoder 在只剩稀疏可见 <abbr title="词元，模型处理的最小输入单元">token</abbr> 的条件下输出对齐全量目标的全局语义表示（linear probing 不微调直接可用的来源）；<span class="arithmatex">\( \mathcal{L}_R \)</span> 把表示锚回局部信号细节。</p>
-<p><strong>下游 Linear Probing</strong></p>
+<h3 id="linear-probing">下游 Linear Probing<a class="headerlink" href="#linear-probing" title="Permanent link">#</a></h3>
 <ul>
 <li>encoder 完全冻结，只加两个轻量模块：<strong>adaptive spatial filter</strong>（1×1 卷积，对齐数据通道与模型通道）+ 线性分类头；</li>
 <li>只用 encoder 输出的 <strong>summary <abbr title="词元，模型处理的最小输入单元">token</abbr></strong> 对应特征送入分类头；</li>
 <li>目的：避免大数据模型在小样本微调下过拟合，同时让性能纯粹反映 encoder 本身的表示质量。</li>
 </ul>
-<h4 id="33">3.3 创新点<a class="headerlink" href="#33" title="Permanent link">#</a></h4>
+<h2 id="33">3 创新点<a class="headerlink" href="#33" title="Permanent link">#</a></h2>
 <ol>
 <li><strong>双自监督</strong>：表示对齐（JEPA 式，在表示空间预测）+ 掩码重构（<abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> 式，在信号空间重构）——显式表示 z，对抗低信噪比导致的特征质量差；</li>
 <li><strong>掩码方向反转</strong>：encoder 看被 mask 的稀疏部分、momentum encoder 看全量，迫使 encoder 输出含全局信息；</li>
