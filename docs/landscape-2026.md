@@ -5,7 +5,7 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 
 # EEG 基础模型全景 · 2026-11
 
-> 本文综合站内 32 篇精读与四篇领域综述（[Yao, JNE 2025](papers/reviews/yao-eegfm-survey.md) · [Chen, Lu & Wu, IEEE SPM 2025](papers/reviews/chen-representation-learning-review.md) · [Kuruppu et al., JNE 2026](papers/reviews/kuruppu-critical-review.md) · [Kwon & Shin, EJN 2026](papers/reviews/kwon-neural-fm-perspective.md)），给出研究重点、痛点、创新集中度与空白轴的全景判断。
+> 本文综合站内 33 篇精读与四篇领域综述（[Yao, JNE 2025](papers/reviews/yao-eegfm-survey.md) · [Chen, Lu & Wu, IEEE SPM 2025](papers/reviews/chen-representation-learning-review.md) · [Kuruppu et al., JNE 2026](papers/reviews/kuruppu-critical-review.md) · [Kwon & Shin, EJN 2026](papers/reviews/kwon-neural-fm-perspective.md)），给出研究重点、痛点、创新集中度与空白轴的全景判断。
 
 **引用规则**：站内事实均带笔记或综述链接，并标注原文节号 / 表号；数字口径以各论文原文为准（channel-hours 与小时数不混用，见 [Kuruppu 综述](papers/reviews/kuruppu-critical-review.md) §1 的口径说明）。少数来自站外检索、站内尚未核对原文的动态集中在 §7，单独标注，不作为结论使用。标注「站内统计」的计数按本站笔记口径统计，一篇论文可占多个设计格。
 
@@ -15,7 +15,7 @@ tags: [全景, 研究重点, 痛点, 空白轴, 综述]
 
 ## 2 研究重点：四条主线与拥挤度
 
-站内 32 篇按设计轴归类（站内统计，可多格重复计入）：
+站内 33 篇按设计轴归类（站内统计，可多格重复计入）：
 
 | 主线 | 成员 | 拥挤度 |
 |---|---|---|

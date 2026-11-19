@@ -125,6 +125,7 @@ nav:
           - 表示学习与 FM 综述 (IEEE SPM 2025 · 拆解表): papers/reviews/chen-representation-learning-review.md
           - EEG FM 批判综述 (JNE 2026 · 三支柱): papers/reviews/kuruppu-critical-review.md
           - 神经信号 FM 观点 (EJN 2026 · 生理先验): papers/reviews/kwon-neural-fm-perspective.md
+          - Chaddad EEG 信号处理综述 (Sensors 2023 · 四阶段流水线): papers/reviews/chaddad-eeg-signal-processing-review.md
   - 模型架构基础:
       - LoRA · 低秩适配 (ICLR 2022): basics/lora.md
       - Attention 替代方案 (CS336 Lec 4): basics/attention-alternatives.md

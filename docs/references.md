@@ -5,7 +5,7 @@ tags: [索引, 参考文献]
 
 # 参考文献索引
 
-三十二篇精读论文（含 NeurIPT / RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测 / 综述轴外的十篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
+三十三篇精读论文（含 NeurIPT / RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测 / 综述轴外的十篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
 四篇领域综述的完整引文与 DOI 见下方 [EEG 基础模型综述](#eeg-基础模型综述) 节；按阅读目的选入口请看[选读页的综述速览](blog-2023-2026.md#综述速览)。
 
@@ -130,3 +130,4 @@ tags: [索引, 参考文献]
 | EMD / Hilbert 谱 | Royal Soc. 1998 | TFM | 时域信号频率成分纠缠（频率坍缩）讨论的起点 |
 | Frequency Principle | Comm. Comp. Phys. 2020 | TFM | 神经网络偏重低频、忽略高频的理论依据 |
 | Parameterizing Neural Power Spectra（FOOOF/FOOPLA） | Nature Neuroscience 2020 | JET · RF-GPT | EEG 幂律频谱（1/f^χ）与 aperiodic 背景的实证依据 |
+| [Chaddad et al. EEG Signal Processing: A Comprehensive Review](https://doi.org/10.3390/s23146434) | Sensors 23(14):6434（2023） | [本站精读](papers/reviews/chaddad-eeg-signal-processing-review.md) | 采集→去噪→特征→分类四阶段方法对照（去噪含公式+伪代码）；传统流水线视角，全文零处基础模型 |

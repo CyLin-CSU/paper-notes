@@ -12,7 +12,7 @@ title: 首页
 
 ## 论文库 {: #papers }
 
-完整 32 篇可筛选目录见 [论文库](library.md)（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 [模型对比](models.md)。以下为各组入口与近期收录。
+完整 33 篇可筛选目录见 [论文库](library.md)（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 [模型对比](models.md)。以下为各组入口与近期收录。
 
 ### EEG 基础模型（16 篇） {: #papers-fm }
 
@@ -29,12 +29,13 @@ title: 首页
 - [EEGDM](papers/generative/eegdm.md) · arXiv 2026 —— 潜扩散生成目标做表征学习
 - [Not-All-EEG](papers/generative/not-all-eeg.md) · arXiv 2026 —— 按位置难度调整流匹配时间调度
 
-### 综述与观点（4 篇） {: #papers-reviews }
+### 综述与观点（5 篇） {: #papers-reviews }
 
 - [EEG FM 综述 (Yao)](papers/reviews/yao-eegfm-survey.md) · JNE 2025 —— 预训练三路线横评 + 自跑 10 模型 × 6 数据集
 - [表示学习与 FM 综述 (Chen)](papers/reviews/chen-representation-learning-review.md) · IEEE SPM 2025 —— 18 模型组件拆解表 + 迁移学习地图
 - [EEG FM 批判综述 (Kuruppu)](papers/reviews/kuruppu-critical-review.md) · JNE 2026 —— 评测异质、scaling 证据弱、LP 落后 FT 的证据清单
 - [神经信号 FM 观点 (Kwon)](papers/reviews/kwon-neural-fm-perspective.md) · EJN 2026 —— 生理目标/结构先验/可解释三原则
+- [EEG 信号处理综述 (Chaddad)](papers/reviews/chaddad-eeg-signal-processing-review.md) · Sensors 2023 —— 采集→去噪→特征→分类四阶段传统流水线方法对照（零基础模型）
 
 ### 相关研究（9 篇） {: #papers-survey }
 
@@ -68,6 +69,8 @@ title: 首页
 <div class="ac-slot"><!-- ACTIVITY_CALENDAR --></div>
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-19** · 新增 Chaddad EEG 信号处理综述精读（Sensors 2023，四阶段流水线）
 
 - **2026-11-19** · 新增 NeurIPT 精读（arXiv 2025，幅度感知掩码 + 递增 PMoE）
 
@@ -140,7 +143,7 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 32 篇（EEG 基础模型 16 + 生成式模型 3 + 相关研究 9 + 综述与观点 4） |
+| 精读论文 | 33 篇（EEG 基础模型 16 + 生成式模型 3 + 相关研究 9 + 综述与观点 5） |
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · JNE ×2 · IEEE SPM ×1 · EJN ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
 

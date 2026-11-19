@@ -618,6 +618,26 @@
     "one_liner": "训一个 MLP 代理脑，逐区虚拟扰动、读 t+1 响应差得全脑有效连接：方向×强度×兴奋/抑制一次给出，RNN 仿真 r=0.95、对 GC/DCM 全面占优，CCEP 613 病人作真实锚点（r=0.33 > FC 的 0.20）"
   },
   {
+    "paper_id": "chaddad-eeg-signal-processing-review",
+    "group": "reviews",
+    "type": "review",
+    "title": "Electroencephalography Signal Processing: A Comprehensive Review and Analysis of Methods and Techniques",
+    "authors": [
+      "Ahmad Chaddad",
+      "Yihang Wu",
+      "Reem Kateb",
+      "Ahmed Bouridane"
+    ],
+    "year": 2023,
+    "venue": "Sensors 2023",
+    "doi": "10.3390/s23146434",
+    "arxiv": null,
+    "code": null,
+    "status": "精读",
+    "verified_date": "2026-11-19",
+    "one_liner": "传统流水线视角的 EEG 信号处理综述：采集→去噪（回归/BSS/CCA/小波/EMD，公式+伪代码）→特征工程（时频/高阶谱/非线性）→分类（ML+DL）四阶段方法对照；全文零处基础模型"
+  },
+  {
     "paper_id": "chen-representation-learning-review",
     "group": "reviews",
     "type": "review",
