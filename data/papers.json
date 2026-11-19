@@ -192,6 +192,32 @@
     "one_liner": "学习 query + 交叉注意力把任意电极拓扑压进固定隐空间：通道数线性复杂度，对全注意力基线 FLOPs 降 300×"
   },
   {
+    "paper_id": "neuript",
+    "group": "fm",
+    "type": "research",
+    "title": "NeurIPT: Foundation Model for Neural Interfaces",
+    "authors": [
+      "Zitao Fang",
+      "Chenxuan Li",
+      "Hongting Zhou",
+      "Shuyang Yu",
+      "Guodong Du",
+      "Ashwaq Qasem",
+      "Yang Lu",
+      "Jing Li",
+      "Junsong Zhang",
+      "Sim Kuan Goh"
+    ],
+    "year": 2025,
+    "venue": "arXiv 2025",
+    "doi": null,
+    "arxiv": "https://arxiv.org/abs/2510.16548",
+    "code": null,
+    "status": "精读",
+    "verified_date": "2026-11-19",
+    "one_liner": "幅度感知掩码（按幅值带挖洞防插值）+ 专家数随深度递增的 PMoE + 3D 电极坐标嵌入与脑区分组池化；8 个 BCI 下游多数 B-ACC 第一，增益集中在低资源与类不平衡端"
+  },
+  {
     "paper_id": "neurodetr",
     "group": "fm",
     "type": "research",

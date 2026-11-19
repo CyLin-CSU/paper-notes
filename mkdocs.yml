@@ -98,6 +98,7 @@ nav:
           - TFM-Tokenizer (ICLR 2026): papers/fm/tfm-tokenizer.md
           - CBraMod (ICLR 2025 · 十字交叉): papers/fm/cbramod.md
           - LUNA (NeurIPS 2025 · 拓扑无关): papers/fm/luna.md
+          - NeurIPT (arXiv 2025 · 幅度感知掩码): papers/fm/neuript.md
           - REVE (NeurIPS 2025 · 61,415h + 4D位置编码): papers/fm/reve.md
           - EEGMoE (TNNLS 2026 · MoE): papers/fm/eegmoe.md
           - NeuroRVQ (arXiv 2025 · 多尺度RVQ): papers/fm/neurorvq.md

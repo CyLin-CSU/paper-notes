@@ -25,6 +25,7 @@ tags: [基座模型, 模型规模, 综述]
 | [BrainRVQ](https://arxiv.org/abs/2602.16951) | **从零训练** | 5.82M（12 层 encoder） | 未单列 | 双域 RVQ + 分层码字预测，下游使用 encoder |
 | [CodeBrain](https://arxiv.org/abs/2506.09110) | **从零训练** | 15.17M（EEGSSM） | 未单列 | tokenizer 提供预训练目标，分类时微调主模型 |
 | [NeuroDETR](https://arxiv.org/abs/2610.20349) | **监督训练，未报告外部基座** | 未单列 | 未单列，与检测模型联合训练 | 事件检测模型，不填作通用预训练 backbone |
+| [NeurIPT](../papers/fm/neuript.md) | **从零训练** | 73.5M（激活参数；总参数未单列） | — | Crossformer TSA + PMoE 从零预训练，8×RTX 4090 约 30 小时 |
 
 **参数口径**：M = 百万，B = 十亿；主模型与 tokenizer 分开统计。“—”表示无独立离散 tokenizer。
 

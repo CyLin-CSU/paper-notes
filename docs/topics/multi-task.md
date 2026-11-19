@@ -24,6 +24,7 @@ tags: [通道适配, 多任务, 迁移学习, 综述]
 | BrainRVQ | **通道 embedding** | 跨通道注意力 |
 | CodeBrain | **动态位置编码（ACPE）** | 通道邻域编码 + EEGSSM 整合 |
 | NeuroDETR | **电极坐标 + 脑区分组** | 虚拟通道混合 + 空间金字塔 VQ |
+| NeurIPT | **3D 电极坐标编码**（逐轴正弦，各占 \( d_{model}/3 \)） | 跨时间 + 跨维度两级注意力（Crossformer TSA）；下游脑叶分组池化 |
 
 BIOT、LaBraM、EEGPT、BrainGPT、NeuroLM 的通道表覆盖范围与使用阶段不同，这里统一写成 **通道 embedding**。
 
