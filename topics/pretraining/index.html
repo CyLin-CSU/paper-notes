@@ -670,6 +670,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../../papers/fm/neuript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeurIPT (arXiv 2025 · 幅度感知掩码)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../papers/fm/reve/" class="md-nav__link">
         
   
@@ -2846,6 +2881,13 @@
 <td>—</td>
 </tr>
 <tr>
+<td>NeurIPT</td>
+<td>无码表</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
 <td>NeuroRVQ</td>
 <td>多尺度 RVQ 码表</td>
 <td><strong>不掩码</strong></td>
@@ -2974,6 +3016,11 @@
 <td><strong>原始信号 patch</strong>（时空块掩码 55%，空间 3cm / 时间 3s 连续块 + 10% 整通道 dropout）</td>
 <td><strong>原始信号 patch</strong> + 全局 <abbr title="词元，模型处理的最小输入单元">token</abbr> 二次重构（attention pooling 跨全部 MHA 层，信息瓶颈）</td>
 </tr>
+<tr>
+<td>NeurIPT</td>
+<td><strong>原始信号单点</strong>（幅度感知掩码：逐通道按幅值排序取 20–50% 连续区间，BERT 式 80/10/10 替换）</td>
+<td><strong>原始信号单点</strong>（<span class="arithmatex">\( \ell_p \)</span> 重构）</td>
+</tr>
 </tbody>
 </table>
 <p><strong>方法创新</strong>：</p>
@@ -2989,8 +3036,9 @@
 </li>
 <li><strong>CBraMod</strong>：① <strong>十字交叉注意力</strong>，分别建模同一时刻的跨通道关系、同一通道的跨时间关系；② <strong>非对称卷积位置编码（ACPE）</strong>，从时空邻域动态生成位置信息。</li>
 <li><strong>LUNA</strong>：① <strong>可学习 query查询向量统一通道</strong>，把不同电极布局映射到固定大小的隐空间；② <strong>时间注意力只在隐空间计算</strong>，减少对原始通道数的计算依赖。</li>
+<li><strong>EEGMoE</strong>：① <strong>特殊+共享的双专家组</strong>，分别学习域特性与域共性；② <strong>按 <abbr title="词元，模型处理的最小输入单元">token</abbr> 路由</strong>，Top-K 选择特定专家，共享专家始终参与。</li>
 <li>
-<p><strong>EEGMoE</strong>：① <strong>特殊+共享的双专家组</strong>，分别学习域特性与域共性；② <strong>按 <abbr title="词元，模型处理的最小输入单元">token</abbr> 路由</strong>，Top-K 选择特定专家，共享专家始终参与。</p>
+<p><strong>NeurIPT</strong>：① <strong>幅度感知掩码（AAMP）</strong>，逐通道按幅值排序取连续区间掩码，挖掉特定幅值带、插值取巧失效；② <strong>渐进式 MoE</strong>，专家数随深度递增（[0,2,2,4,4,6]）加共享专家。</p>
 </li>
 <li>
 <p><strong>NeuroRVQ</strong>：① <strong>多尺度 + 多层残差量化</strong>，一个 patch 用多组离散 <abbr title="词元，模型处理的最小输入单元">token</abbr> 表示；② <strong>相位圆周约束</strong>，用相位的正弦 / 余弦表示计算损失，避免直接回归角度的跳变。</p>
@@ -3116,8 +3164,8 @@
 </ul>
 <p>这几种方法的输出目标不同，配对解码与通用 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 表示预训练分开列。</p>
 <h3 id="_4">关联论文<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
-<p><a href="../../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/fm/eegpt/">EEGPT</a> · <a href="../../papers/fm/braingpt/">BrainGPT</a> · <a href="../../papers/fm/neurolm/">NeuroLM</a> · <a href="../../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/fm/cbramod/">CBraMod</a> · <a href="../../papers/fm/luna/">LUNA</a> · <a href="../../papers/fm/eegmoe/">EEGMoE</a> · <a href="../../papers/generative/jet/">JET</a> · <a href="../../papers/generative/eegdm/">EEGDM</a> · <a href="../../papers/generative/not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a> · <a href="../../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></p>
-<p>新增论文原文：<a href="https://arxiv.org/abs/2510.13068">NeuroRVQ</a> · <a href="https://arxiv.org/abs/2602.16951">BrainRVQ</a> · <a href="https://arxiv.org/abs/2506.09110">CodeBrain</a> · <a href="https://arxiv.org/abs/2610.20349">NeuroDETR</a>。</p>
+<p><a href="../../papers/fm/biot/"><abbr title="生物信号 Transformer Biosignal Transformer">BIOT</abbr></a> · <a href="../../papers/fm/labram/"><abbr title="Large Brain Model，EEG 大基础模型">LaBraM</abbr></a> · <a href="../../papers/fm/eegpt/">EEGPT</a> · <a href="../../papers/fm/braingpt/">BrainGPT</a> · <a href="../../papers/fm/neurolm/">NeuroLM</a> · <a href="../../papers/fm/tfm-tokenizer/">TFM-Tokenizer</a> · <a href="../../papers/fm/cbramod/">CBraMod</a> · <a href="../../papers/fm/luna/">LUNA</a> · <a href="../../papers/fm/eegmoe/">EEGMoE</a> · <a href="../../papers/fm/neuript/">NeurIPT</a> · <a href="../../papers/generative/jet/">JET</a> · <a href="../../papers/generative/eegdm/">EEGDM</a> · <a href="../../papers/generative/not-all-eeg/">Not-All-<abbr title="脑电图 Electroencephalogram">EEG</abbr></a> · <a href="../../papers/survey/rf-gpt/">RF-<abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr></a></p>
+<p>新增论文原文：<a href="../../papers/fm/neuript/">NeurIPT</a> · <a href="https://arxiv.org/abs/2510.13068">NeuroRVQ</a> · <a href="https://arxiv.org/abs/2602.16951">BrainRVQ</a> · <a href="https://arxiv.org/abs/2506.09110">CodeBrain</a> · <a href="https://arxiv.org/abs/2610.20349">NeuroDETR</a>。</p>
 <!-- 全站缩略语：任何页面中以下缩写都会在鼠标悬停时显示全称 -->
 
 

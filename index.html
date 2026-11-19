@@ -342,7 +342,7 @@
   <a href="#papers-fm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        EEG 基础模型（15 篇）
+        EEG 基础模型（16 篇）
       
     </span>
   </a>
@@ -793,6 +793,41 @@
     
   
     LUNA (NeurIPS 2025 · 拓扑无关)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="papers/fm/neuript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeurIPT (arXiv 2025 · 幅度感知掩码)
   
 
     
@@ -2636,7 +2671,7 @@
   <a href="#papers-fm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        EEG 基础模型（15 篇）
+        EEG 基础模型（16 篇）
       
     </span>
   </a>
@@ -2752,14 +2787,15 @@
 <p><strong><a href="#papers">浏览论文</a></strong> ｜ <strong><a href="comparison/">方法对比</a></strong> ｜ <strong><a href="#topics">主题专题</a></strong> ｜ <strong><a href="blog-2023-2026/#综述速览">从哪篇综述读起</a></strong> ｜ <strong><a href="library/">论文库筛选</a></strong> ｜ <strong><a href="models/">模型并排对比</a></strong> ｜ <strong><a href="evidence/">实验证据</a></strong></p>
 <p>按任务直达：<strong>看预训练目标</strong> → <a href="topics/pretraining/">预训练范式对比</a> ｜ <strong>找数据集下载与用途</strong> → <a href="datasets/">数据集索引</a> ｜ <strong>读预训练语料与报告规模</strong> → <a href="topics/data-landscape/">数据全景专题</a> ｜ <strong>读领域全景与争议</strong> → <a href="landscape-2026/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型全景</a> ｜ <strong>读领域综述</strong> → <a href="#papers-reviews">综述与观点（4 篇）</a> ｜ <strong>比通道适配方案</strong> → <a href="topics/multi-task/">通道适配与多任务</a></p>
 <h2 id="papers">论文库<a class="headerlink" href="#papers" title="Permanent link">#</a></h2>
-<p>完整 31 篇可筛选目录见 <a href="library/">论文库</a>（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 <a href="models/">模型对比</a>。以下为各组入口与近期收录。</p>
-<h3 id="papers-fm"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型（15 篇）<a class="headerlink" href="#papers-fm" title="Permanent link">#</a></h3>
+<p>完整 32 篇可筛选目录见 <a href="library/">论文库</a>（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 <a href="models/">模型对比</a>。以下为各组入口与近期收录。</p>
+<h3 id="papers-fm"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型（16 篇）<a class="headerlink" href="#papers-fm" title="Permanent link">#</a></h3>
 <ul>
+<li><a href="papers/fm/neuript/">NeurIPT</a> · arXiv 2025 —— 幅度感知掩码 + 深度递增 PMoE + 3D 电极嵌入，73.5M 激活参数</li>
 <li><a href="papers/fm/reve/">REVE</a> · NeurIPS 2025 —— 4D 傅里叶位置编码适配任意电极布局，61,415h 预训练（<a href="models/">模型卡</a>）</li>
 <li><a href="papers/fm/uni-ntfm/">Uni-NTFM</a> · ICLR 2026 —— 时域/频带功率双向交叉注意力 + 拓扑嵌入 + MoE</li>
 <li><a href="papers/fm/codebrain/">CodeBrain</a> · ICLR 2026 —— 时/频双码本解耦 + 多尺度 SSM 骨干</li>
 </ul>
-<p>全部 15 篇：<a href="library/?group=fm">论文库 · <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型</a>；按维度横读见下方<a href="#topics">主题专题</a>。</p>
+<p>全部 16 篇：<a href="library/?group=fm">论文库 · <abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型</a>；按维度横读见下方<a href="#topics">主题专题</a>。</p>
 <h3 id="papers-generative">生成式模型（3 篇）<a class="headerlink" href="#papers-generative" title="Permanent link">#</a></h3>
 <ul>
 <li><a href="papers/generative/jet/">JET</a> · ICML 2026 —— 条件流匹配 + 生理结构约束，直接生成原始 <abbr title="脑电图 Electroencephalogram">EEG</abbr></li>
@@ -2833,10 +2869,11 @@
 </table>
 <p>另有：<a href="comparison/">十四篇方法对比</a>（九维度横向对照）· <a href="datasets/">数据集索引</a>（14 × 36 使用矩阵）· <a href="blog-2023-2026/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型选读</a>（对外选读版，含「从哪篇综述读起」速览）· <a href="landscape-2026/"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型全景</a>（研究重点 / 痛点 / 空白轴，全论断带出处）· <a href="references/">参考文献索引</a>。</p>
 <h2 id="updates">最近更新<a class="headerlink" href="#updates" title="Permanent link">#</a></h2>
-<p>最近提交：2026-11-19 02:32（北京时间）· 🟢 活跃中</p>
-<div class="ac-slot"><div class="activity-calendar"><span class="ac-total">11-13–11-19（北京时间）提交 <b>16</b> 次</span><div class="ac-grid"><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-13（周五，北京时间）· 0 次提交"></div><span class="ac-wd">11-13</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-14（周六，北京时间）· 0 次提交"></div><span class="ac-wd">11-14</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-15（周日，北京时间）· 0 次提交"></div><span class="ac-wd">11-15</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-16（周一，北京时间）· 0 次提交"></div><span class="ac-wd">11-16</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-17（周二，北京时间）· 0 次提交"></div><span class="ac-wd">11-17</span></div><div class="ac-day"><div class="ac-cell" data-l="4" title="2026-11-18（周三，北京时间）· 8 次提交"></div><span class="ac-wd">11-18</span></div><div class="ac-day"><div class="ac-cell" data-l="4" title="2026-11-19（周四，北京时间）· 8 次提交"></div><span class="ac-wd">11-19</span></div></div><span class="ac-legend">少<i data-l="0"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i>多</span></div></div>
+<p>最近提交：2026-11-19 19:59（北京时间）· 🟢 活跃中</p>
+<div class="ac-slot"><div class="activity-calendar"><span class="ac-total">11-13–11-19（北京时间）提交 <b>17</b> 次</span><div class="ac-grid"><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-13（周五，北京时间）· 0 次提交"></div><span class="ac-wd">11-13</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-14（周六，北京时间）· 0 次提交"></div><span class="ac-wd">11-14</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-15（周日，北京时间）· 0 次提交"></div><span class="ac-wd">11-15</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-16（周一，北京时间）· 0 次提交"></div><span class="ac-wd">11-16</span></div><div class="ac-day"><div class="ac-cell" data-l="0" title="2026-11-17（周二，北京时间）· 0 次提交"></div><span class="ac-wd">11-17</span></div><div class="ac-day"><div class="ac-cell" data-l="4" title="2026-11-18（周三，北京时间）· 8 次提交"></div><span class="ac-wd">11-18</span></div><div class="ac-day"><div class="ac-cell" data-l="4" title="2026-11-19（周四，北京时间）· 9 次提交"></div><span class="ac-wd">11-19</span></div></div><span class="ac-legend">少<i data-l="0"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i>多</span></div></div>
 
 <ul class="timeline" id="home-timeline">
+<li><strong>2026-11-19</strong> · 新增 NeurIPT 精读（arXiv 2025，幅度感知掩码 + 递增 PMoE）</li>
 <li><strong>2026-11-19</strong> · 新增领域全景页（landscape-2026）：研究重点、四类痛点、创新拥挤度、六条空白轴与 scaling 证据对照——全部论断标注站内笔记或综述节号出处</li>
 <li><strong>2026-11-18</strong> · 综述四篇齐发：<a href="papers/reviews/yao-eegfm-survey/">Yao（JNE 2025）</a> 自跑 10 模型 × 6 数据集，FM 赢临床域、输 <abbr title="运动想象 Motor Imagery">MI</abbr>，根子在被癫痫数据主导的预训练域 · <a href="papers/reviews/chen-representation-learning-review/">Chen（IEEE SPM 2025）</a> 18 模型按词元化/嵌入/位置编码/骨干/损失逐项拆表 · <a href="papers/reviews/kuruppu-critical-review/">Kuruppu（JNE 2026）</a> 三支柱批判：评测异质、scaling 证据弱、LP 落后 FT · <a href="papers/reviews/kwon-neural-fm-perspective/">Kwon &amp; Shin（EJN 2026）</a> 生理先验/结构感知/可解释三原则，判现存 FM 为第一代（其 CBraMod「对比目标」转述与原文不符，站内已标注）</li>
 <li><strong>2026-11-06</strong> · 新增 <a href="papers/fm/uni-ntfm/">Uni-NTFM</a> 精读，拆解时域与频域双向交叉注意力、分层拓扑嵌入和双域掩码重建。</li>
@@ -2882,7 +2919,7 @@
 <tbody>
 <tr>
 <td>精读论文</td>
-<td>31 篇（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型 15 + 生成式模型 3 + 相关研究 9 + 综述与观点 4）</td>
+<td>32 篇（<abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型 16 + 生成式模型 3 + 相关研究 9 + 综述与观点 4）</td>
 </tr>
 <tr>
 <td>发表跨度</td>

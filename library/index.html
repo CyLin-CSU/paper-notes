@@ -670,6 +670,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../papers/fm/neuript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeurIPT (arXiv 2025 · 幅度感知掩码)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../papers/fm/reve/" class="md-nav__link">
         
   
@@ -2494,7 +2529,7 @@
 
 <h1 id="_1">论文库<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>31 篇精读的结构化目录，数据来自 <code>data/papers.json</code>。筛选为浏览器增强——禁用脚本时可完整浏览下方目录。想按方法维度横读请去<a href="../models/">模型对比</a>与<a href="../comparison/">十四篇方法对比</a>；查实验数值去<a href="../evidence/">实验证据</a>。</p>
+<p>32 篇精读的结构化目录，数据来自 <code>data/papers.json</code>。筛选为浏览器增强——禁用脚本时可完整浏览下方目录。想按方法维度横读请去<a href="../models/">模型对比</a>与<a href="../comparison/">十四篇方法对比</a>；查实验数值去<a href="../evidence/">实验证据</a>。</p>
 </blockquote>
 <details class="lib-panel">
 <summary>筛选与排序（点击展开）</summary>
@@ -2510,7 +2545,7 @@
 
 **文本过滤**：<input type="search" id="lib-q" placeholder="标题 / 一句话摘要关键词">（筛选当前列表，全站全文搜索用页眉）
 
-<button id="lib-clear" type="button">清除筛选</button>　当前显示 <b id="lib-count">31</b> / 31 篇
+<button id="lib-clear" type="button">清除筛选</button>　当前显示 <b id="lib-count">32</b> / 32 篇
 
 </div>
 </details>
@@ -2534,6 +2569,7 @@
 <div class="lib-item" data-group="reviews" data-type="review" data-year="2025" data-code="0" data-doi="1"><div class="lib-head"><a class="lib-title" href="../papers/reviews/chen-representation-learning-review/">Representation Learning and Foundation Models for Electroencephalography Analyses</a><span class="lib-year">2025</span></div><div class="lib-meta">IEEE Signal Processing Magazine 2025 · 综述与观点 · <span class="lib-note">信号处理杂志视角的 EEG FM 全景：18 个模型按词元化/嵌入/位置编码/骨干/损失逐项拆表，外加迁移学习四类地图与三个落地案例</span></div><div class="lib-links"><a href="https://doi.org/10.1109/MSP.2025.3595320">DOI</a></div></div>
 <div class="lib-item" data-group="survey" data-type="research" data-year="2025" data-code="0" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/survey/delta/">DELTA: Language Diffusion-based EEG-to-Text Architecture</a><span class="lib-year">2025</span></div><div class="lib-meta">NeurIPS 2025 Workshop · 相关研究 · <span class="lib-note">自训 RVQ tokenizer 把 ZuCo 词级 EEG 离散成多层码字,LLaDA-8B 掩码扩散非自回归生成文本:词级 BLEU-1 21.93 / ROUGE-1 F 17.24,较同 token 重训的 AR 基线 +5.3 pp——tokenization 演进线里「离散生成 EEG-to-Text」方向的早期工作</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2511.21746">arXiv</a></div></div>
 <div class="lib-item" data-group="fm" data-type="research" data-year="2025" data-code="1" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/luna/">LUNA: Efficient and Topology-Agnostic Foundation Model for EEG Signal Analysis</a><span class="lib-year">2025</span></div><div class="lib-meta">NeurIPS 2025 · EEG 基础模型 · <span class="lib-note">学习 query + 交叉注意力把任意电极拓扑压进固定隐空间：通道数线性复杂度，对全注意力基线 FLOPs 降 300×</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2510.22257">arXiv</a> · <a href="https://github.com/pulp-bio/biofoundation">代码/项目</a></div></div>
+<div class="lib-item" data-group="fm" data-type="research" data-year="2025" data-code="0" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/neuript/">NeurIPT: Foundation Model for Neural Interfaces</a><span class="lib-year">2025</span></div><div class="lib-meta">arXiv 2025 · EEG 基础模型 · <span class="lib-note">幅度感知掩码（按幅值带挖洞防插值）+ 专家数随深度递增的 PMoE + 3D 电极坐标嵌入与脑区分组池化；8 个 BCI 下游多数 B-ACC 第一，增益集中在低资源与类不平衡端</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2510.16548">arXiv</a></div></div>
 <div class="lib-item" data-group="fm" data-type="research" data-year="2025" data-code="1" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/neurolm/">NeuroLM: A Universal Multi-task Foundation Model for Bridging the Gap between Language and EEG Signals</a><span class="lib-year">2025</span></div><div class="lib-meta">ICLR 2025 · EEG 基础模型 · <span class="lib-note">把 EEG 当外语接进 GPT-2：文本对齐 tokenizer + 多通道自回归 + 指令微调</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2409.00101">arXiv</a> · <a href="https://github.com/935963004/NeuroLM">代码/项目</a></div></div>
 <div class="lib-item" data-group="fm" data-type="research" data-year="2025" data-code="0" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/neurorvq/">NeuroRVQ: Multi-Scale Biosignal Tokenization for Generative Foundation Models</a><span class="lib-year">2025</span></div><div class="lib-meta">arXiv 2025 · EEG 基础模型 · <span class="lib-note">4 个多尺度卷积分支 × 逐分支 RVQ(8192 码本 × 8/16 层)+ 圆周相位损失:同数据 EEG 重构 MSE 0.016 vs LaBraM 1.071(67 倍),5.9M 骨干在 EEG 五任务 mean BAcc 74.9(+4.2)、ECG 43 类 BAcc 58.33 较最强基线翻倍</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2510.13068">arXiv</a></div></div>
 <div class="lib-item" data-group="fm" data-type="research" data-year="2025" data-code="1" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/reve/">REVE: A Foundation Model for EEG — Adapting to Any Setup with Large-Scale Pretraining on 25,000 Subjects</a><span class="lib-year">2025</span></div><div class="lib-meta">NeurIPS 2025 · EEG 基础模型 · <span class="lib-note">电极坐标与时间构建 4D 傅里叶位置编码，支持不同电极布局与序列长度；92 数据集 61,415h 预训练语料（论文称非侵入最大）：10 任务微调平均较 CBraMod +2.5%（表 2），linear probing 均值 REVE-L 0.654 / CBraMod 0.501（表 4，无池化列）</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2510.21585">arXiv</a> · <a href="https://brain-bzh.github.io/reve/">代码/项目</a></div></div>
