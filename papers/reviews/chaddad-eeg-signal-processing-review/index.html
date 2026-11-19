@@ -3069,6 +3069,54 @@
 <p>侵入式 vs 非侵入式两条路线；便携设备单列一节——Emotiv EPOC（14 通道）、Muse 头带（10–20 系统 4 记录电极 AF7/AF8/TP9/TP10 + 参考 Fpz，用于卒中识别）等，代价是通道少、精度低。参考电极的选择问题在采集阶段就提出：<abbr title="脑电图 Electroencephalogram">EEG</abbr> 记录的是活动电极与参考电极的电位差，参考点选在哪，数据就长什么样。</p>
 <h2 id="3-18">3 去噪：五族方法（原文式 1–8）<a class="headerlink" href="#3-18" title="Permanent link">#</a></h2>
 <p>伪迹来源两类：生理性（眼动/眨眼、心电、肌电）与外部干扰。五族方法的取舍逻辑：有明确参考通道用回归；无参考、按统计独立性分离用 ICA；按方差排序去噪用 PCA；肌电伪迹自相关低、利用 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 与辅助通道的相关结构用 CCA；非平稳信号按尺度分解用小波；非线性非平稳、按局部振荡筛分用 EMD。</p>
+<table>
+<thead>
+<tr>
+<th>方法族</th>
+<th>核心机制</th>
+<th>优势 / 适用</th>
+<th>论文给出的局限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>回归法</td>
+<td>同步记录 EOG，回归系数估计伪迹占比后扣除（式 1）</td>
+<td>有明确参考通道的 EOG/ECG 伪迹</td>
+<td>双向污染；EMG 等无参考通道的伪迹无从下手</td>
+</tr>
+<tr>
+<td>ICA</td>
+<td><span class="arithmatex">\( X=AS \)</span>，按统计独立性分源，置零伪迹分量重构</td>
+<td>源独立性成立时分离彻底</td>
+<td><abbr title="脑电图 Electroencephalogram">EEG</abbr>–EMG 时空重叠分不净；分量识别靠人工</td>
+</tr>
+<tr>
+<td>PCA</td>
+<td><span class="arithmatex">\( XX^{\top}\omega_i=\lambda_i\omega_i \)</span> 方差排序降维</td>
+<td>快速、无参考依赖</td>
+<td>方差大 ≠ 脑信号；投影子空间阈值主观</td>
+</tr>
+<tr>
+<td>CCA</td>
+<td>最大化 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 与辅助通道的相关线性组合（式 4）</td>
+<td>肌电伪迹（自相关低）场景优于 ICA</td>
+<td>依赖辅助通道与相关性假设</td>
+</tr>
+<tr>
+<td>小波 DWT</td>
+<td>多分辨率分解（式 5–6）+ 细节系数阈值化</td>
+<td>非平稳信号、无冗余</td>
+<td>缺平移不变性（SWT 补但冗余慢）；阈值敏感</td>
+</tr>
+<tr>
+<td>EMD</td>
+<td>极值包络筛分 IMF（式 7）</td>
+<td>自适应、无需基函数</td>
+<td>模态混叠、端点效应、对尖峰敏感</td>
+</tr>
+</tbody>
+</table>
 <h3 id="31-1">3.1 回归法（原文式 1）<a class="headerlink" href="#31-1" title="Permanent link">#</a></h3>
 <p>同步记录眼电图（EOG），用回归系数估计伪迹在各地电通道中的占比，再从记录信号里减掉：</p>
 <div class="arithmatex">\[
@@ -3113,7 +3161,63 @@ x(t) = \sum_{i=1}^{n} C_i(t) + r_N(t)
 MSE = \tfrac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2,\quad RMSE = \sqrt{MSE},\quad SNR = 10\log_{10}\frac{\sum y_i^2}{\sum (y_i-\hat{y}_i)^2},\quad PRD = \sqrt{\tfrac{\sum|y_i-\hat{y}_i|^2}{\sum y_i^2}}\times 100\%
 \]</div>
 <p><span class="arithmatex">\( y \)</span> 为原始信号、<span class="arithmatex">\( \hat{y} \)</span> 为去噪后信号；PRD 越低越接近原信号。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+<th>方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><abbr title="均方误差 Mean Squared Error">MSE</abbr> / RMSE</td>
+<td>均方 / 均方根误差</td>
+<td>越低越好</td>
+</tr>
+<tr>
+<td>SNR</td>
+<td>信号与残余噪声功率比（dB）</td>
+<td>越高越好</td>
+</tr>
+<tr>
+<td>PRD</td>
+<td>相对均方根差百分比</td>
+<td>越低越相似</td>
+</tr>
+</tbody>
+</table>
 <h2 id="4">4 特征工程：三族原理（通式为站内补）<a class="headerlink" href="#4" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>族</th>
+<th>代表方法 / 指标</th>
+<th>数学对象</th>
+<th>典型落地（论文引）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>时频分析</td>
+<td><abbr title="短时傅里叶变换 Short-Time Fourier Transform">STFT</abbr>、小波相干、Wigner–Ville</td>
+<td>联合时频表示 <span class="arithmatex">\( X(\tau,\omega) \)</span></td>
+<td>癫痫段定位、频带功率、峰检测</td>
+</tr>
+<tr>
+<td>高阶谱</td>
+<td>双谱 / 三阶累积量谱</td>
+<td><span class="arithmatex">\( B(\omega_1,\omega_2) \)</span></td>
+<td>高斯噪声抑制、非线性耦合（癫痫；情绪 95.7%）</td>
+</tr>
+<tr>
+<td>非线性动力学</td>
+<td>Lyapunov、关联维/分形维、熵族、LZC</td>
+<td>轨道发散率、复杂度、条件概率</td>
+<td>非平稳动态刻画（情绪三分类、认知任务分组）</td>
+</tr>
+</tbody>
+</table>
 <h3 id="41">4.1 时频分析<a class="headerlink" href="#41" title="Permanent link">#</a></h3>
 <p>建立时间-频率的联合表示，核心是滑窗加窗谱：</p>
 <div class="arithmatex">\[
@@ -3135,6 +3239,60 @@ B(\omega_1,\omega_2) = E\big[X(\omega_1)\,X(\omega_2)\,X^*(\omega_1+\omega_2)\bi
 <li><strong>复杂度</strong>：Lempel–Ziv（语法压缩行程数），论文引自适应/多尺度 LZC 区分三种情绪状态、等符号熵（ESE）。</li>
 </ul>
 <h2 id="5-ml-dl">5 分类：传统 ML 与 DL<a class="headerlink" href="#5-ml-dl" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>族</th>
+<th>方法</th>
+<th>原理一句话</th>
+<th>论文应用结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传统 ML</td>
+<td>SVM</td>
+<td>间隔最大化 + 核技巧</td>
+<td>出镜率最高：癫痫 / 抑郁 / 精神分裂 / 情绪</td>
+</tr>
+<tr>
+<td>传统 ML</td>
+<td>KNN</td>
+<td>近邻多数表决</td>
+<td><abbr title="运动想象 Motor Imagery">MI</abbr> 二分类加高斯噪声增强后 88.57%</td>
+</tr>
+<tr>
+<td>传统 ML</td>
+<td>RF</td>
+<td>bootstrap + 随机特征子集 + Gini</td>
+<td>负情绪性别识别最优；眩晕分级 82.5%</td>
+</tr>
+<tr>
+<td>传统 ML</td>
+<td>LDA / DT / NB</td>
+<td>Fisher 准则 / 信息增益 / 概率连乘</td>
+<td>LDA+KNN 下肢 <abbr title="运动想象 Motor Imagery">MI</abbr> 84.62%</td>
+</tr>
+<tr>
+<td>DL</td>
+<td>CNN（VGG-16 / ResNet-50 / AlexNet）</td>
+<td>卷积 + 池化逐层提特征</td>
+<td>卒中 90%；睡眠障碍 93.33%</td>
+</tr>
+<tr>
+<td>DL</td>
+<td>RNN / LSTM（常与 CNN 组合）</td>
+<td>门控保长程依赖</td>
+<td>双通道睡眠分期 79.7%</td>
+</tr>
+<tr>
+<td>DL</td>
+<td>GAN</td>
+<td>极小极大博弈生成</td>
+<td><abbr title="脑电图 Electroencephalogram">EEG</abbr> 数据增强与伪迹生成</td>
+</tr>
+</tbody>
+</table>
 <h3 id="51">5.1 传统机器学习<a class="headerlink" href="#51" title="Permanent link">#</a></h3>
 <p>论文收录族谱：NB、决策树、KNN、SVM、随机森林、LDA。方法原理（通式）：</p>
 <ul>
