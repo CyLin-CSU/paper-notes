@@ -5,7 +5,7 @@ tags: [索引, 论文库]
 
 # 论文库
 
-> 33 篇精读的结构化目录，数据来自 `data/papers.json`。筛选为浏览器增强——禁用脚本时可完整浏览下方目录。想按方法维度横读请去[模型对比](models.md)与[十四篇方法对比](comparison.md)；查实验数值去[实验证据](evidence.md)。
+> 34 篇精读的结构化目录，数据来自 `data/papers.json`。筛选为浏览器增强——禁用脚本时可完整浏览下方目录。想按方法维度横读请去[模型对比](models.md)与[十四篇方法对比](comparison.md)；查实验数值去[实验证据](evidence.md)。
 
 <details class="lib-panel" markdown>
 <summary>筛选与排序（点击展开）</summary>
@@ -22,7 +22,7 @@ tags: [索引, 论文库]
 
 **文本过滤**：<input type="search" id="lib-q" placeholder="标题 / 一句话摘要关键词">（筛选当前列表，全站全文搜索用页眉）
 
-<button id="lib-clear" type="button">清除筛选</button>　当前显示 <b id="lib-count">33</b> / 33 篇
+<button id="lib-clear" type="button">清除筛选</button>　当前显示 <b id="lib-count">34</b> / 34 篇
 
 </div>
 

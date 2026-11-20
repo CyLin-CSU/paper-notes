@@ -26,6 +26,7 @@ tags: [基座模型, 模型规模, 综述]
 | [CodeBrain](https://arxiv.org/abs/2506.09110) | **从零训练** | 15.17M（EEGSSM） | 未单列 | tokenizer 提供预训练目标，分类时微调主模型 |
 | [NeuroDETR](https://arxiv.org/abs/2610.20349) | **监督训练，未报告外部基座** | 未单列 | 未单列，与检测模型联合训练 | 事件检测模型，不填作通用预训练 backbone |
 | [NeurIPT](../papers/fm/neuript.md) | **从零训练** | 73.5M（激活参数；总参数未单列） | — | Crossformer TSA + PMoE 从零预训练，8×RTX 4090 约 30 小时 |
+| [EEG2Rep](../papers/fm/eeg2rep.md) | **从零训练（每数据集各自 SSL 预训练）** | 未单列（\( d_e=16 \) 极小配置） | — | 非跨库基础模型；LP 六数据集全第一是目标函数设计的证据 |
 
 **参数口径**：M = 百万，B = 十亿；主模型与 tokenizer 分开统计。“—”表示无独立离散 tokenizer。
 

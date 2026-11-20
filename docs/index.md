@@ -12,16 +12,17 @@ title: 首页
 
 ## 论文库 {: #papers }
 
-完整 33 篇可筛选目录见 [论文库](library.md)（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 [模型对比](models.md)。以下为各组入口与近期收录。
+完整 34 篇可筛选目录见 [论文库](library.md)（类型 / 分组 / 年份 / 代码与 DOI 可用性筛选，链接可复现筛选状态）；按字段并排比较见 [模型对比](models.md)。以下为各组入口与近期收录。
 
-### EEG 基础模型（16 篇） {: #papers-fm }
+### EEG 基础模型（17 篇） {: #papers-fm }
 
+- [EEG2Rep](papers/fm/eeg2rep.md) · KDD 2024 —— 隐空间预测 + SSP 语义保持掩码 + VICReg，LP 六数据集全第一
 - [NeurIPT](papers/fm/neuript.md) · arXiv 2025 —— 幅度感知掩码 + 深度递增 PMoE + 3D 电极嵌入，73.5M 激活参数
 - [REVE](papers/fm/reve.md) · NeurIPS 2025 —— 4D 傅里叶位置编码适配任意电极布局，61,415h 预训练（[模型卡](models.md)）
 - [Uni-NTFM](papers/fm/uni-ntfm.md) · ICLR 2026 —— 时域/频带功率双向交叉注意力 + 拓扑嵌入 + MoE
 - [CodeBrain](papers/fm/codebrain.md) · ICLR 2026 —— 时/频双码本解耦 + 多尺度 SSM 骨干
 
-全部 16 篇：[论文库 · EEG 基础模型](library.md?group=fm)；按维度横读见下方[主题专题](#topics)。
+全部 17 篇：[论文库 · EEG 基础模型](library.md?group=fm)；按维度横读见下方[主题专题](#topics)。
 
 ### 生成式模型（3 篇） {: #papers-generative }
 
@@ -69,6 +70,8 @@ title: 首页
 <div class="ac-slot"><!-- ACTIVITY_CALENDAR --></div>
 
 <ul class="timeline" id="home-timeline" markdown>
+
+- **2026-11-20** · 新增 EEG2Rep 精读（KDD 2024，隐空间预测 + SSP 掩码）
 
 - **2026-11-19** · 新增 Chaddad EEG 信号处理综述精读（Sensors 2023，四阶段流水线）
 
@@ -143,7 +146,7 @@ title: 首页
 
 | 统计项 | 数值 |
 |---|---|
-| 精读论文 | 33 篇（EEG 基础模型 16 + 生成式模型 3 + 相关研究 9 + 综述与观点 5） |
+| 精读论文 | 34 篇（EEG 基础模型 17 + 生成式模型 3 + 相关研究 9 + 综述与观点 5） |
 | 发表跨度 | 2023 – 2026 |
 | 涉及会议/期刊 | NeurIPS ×3 + 1 WS · ICLR ×6 · ICML ×1 · TNNLS ×1 · NMI ×1 · Nature Methods ×1 · TETCI ×1 · JNE ×2 · IEEE SPM ×1 · EJN ×1 · arXiv ×11（另基础页 ICLR 2022 / CS336） |
 

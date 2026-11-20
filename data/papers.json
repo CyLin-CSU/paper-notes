@@ -112,6 +112,28 @@
     "one_liner": "时/频双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干:8 任务 10 数据集对 CBraMod 小幅全面领先,token 却退守预训练目标——tokenizer 与下游架构针对「桥接」缺口的早期工作"
   },
   {
+    "paper_id": "eeg2rep",
+    "group": "fm",
+    "type": "research",
+    "title": "EEG2Rep: Enhancing Self-supervised EEG Representation Through Informative Masked Inputs",
+    "authors": [
+      "Navid Mohammadi Foumani",
+      "Geoffrey Mackellar",
+      "Soheila Ghane",
+      "Saad Irtza",
+      "Nam Nguyen",
+      "Mahsa Salehi"
+    ],
+    "year": 2024,
+    "venue": "KDD 2024",
+    "doi": "10.1145/3637528.3671600",
+    "arxiv": "https://arxiv.org/abs/2402.17772",
+    "code": "https://github.com/navidfoumani/eeg2rep",
+    "status": "精读",
+    "verified_date": "2026-11-20",
+    "one_liner": "Data2vec 式隐空间预测（预测完整输入的隐表示而非重构原始信号）+ SSP 语义保持掩码（决定保留谁而非掩码谁）+ VICReg 防坍缩；6 数据集 linear probing 全部第一，自预测系首次把 LP 拉起来"
+  },
+  {
     "paper_id": "eegmoe",
     "group": "fm",
     "type": "research",

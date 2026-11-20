@@ -94,6 +94,7 @@ nav:
           - LaBraM (ICLR 2024): papers/fm/labram.md
           - EEGPT (NeurIPS 2024): papers/fm/eegpt.md
           - BrainGPT (arXiv 2024): papers/fm/braingpt.md
+          - EEG2Rep (KDD 2024 · 隐空间预测): papers/fm/eeg2rep.md
           - NeuroLM (ICLR 2025): papers/fm/neurolm.md
           - TFM-Tokenizer (ICLR 2026): papers/fm/tfm-tokenizer.md
           - CBraMod (ICLR 2025 · 十字交叉): papers/fm/cbramod.md

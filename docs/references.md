@@ -5,7 +5,7 @@ tags: [索引, 参考文献]
 
 # 参考文献索引
 
-三十三篇精读论文（含 NeurIPT / RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测 / 综述轴外的十篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
+三十四篇精读论文（含 EEG2Rep / NeurIPT / RF-GPT / JET / EEGMoE / LUNA / CBraMod / EEGDM / Not-All-EEG，及语音解码 / 时频方法 / 连接组学 / 视觉解码 / 基准评测 / 综述轴外的十篇）与「模型架构基础」分类引用的关键文献，按主题分类。"被引于"标注了哪些精读论文/页面用到它。
 
 四篇领域综述的完整引文与 DOI 见下方 [EEG 基础模型综述](#eeg-基础模型综述) 节；按阅读目的选入口请看[选读页的综述速览](blog-2023-2026.md#综述速览)。
 
@@ -94,6 +94,7 @@ tags: [索引, 参考文献]
 | CodeBrain | ICLR 2026（arXiv 2506.09110） | [本站精读](papers/fm/codebrain.md) | 时间/频率双码本解耦 token 化 + SGConv/SWA 多尺度 SSM 骨干：token 退守预训练目标的「tokenizer-模型桥接」工作 |
 | NeuroDETR | arXiv 2610.20349（2026） | [本站精读](papers/fm/neurodetr.md) | 多尺度 VQ「事件记忆」+ FOCAL 事件引导 + DETR 式集合预测：8 数据集异步事件检测事件级 F1 全部第一 |
 | NeurIPT | arXiv 2510.16548（2025） | [本站精读](papers/fm/neuript.md) | 幅度感知掩码 + 深度递增 PMoE + 3D 电极嵌入与脑叶池化；8 个 BCI 下游多数 B-ACC 第一，增益集中在低资源端 |
+| EEG2Rep | KDD 2024（DOI 10.1145/3637528.3671600） | [本站精读](papers/fm/eeg2rep.md) | Data2vec 式隐空间预测 + SSP 保留式掩码 + VICReg；6 数据集 LP 全第一，自预测系 LP 反转的证据 |
 | DELTA | NeurIPS 2025 WS（arXiv 2511.21746） | [本站精读](papers/survey/delta.md) | 自训 RVQ + LLaDA-8B 掩码语言扩散做非自回归 EEG-to-Text：词级 BLEU-1 21.93，离散生成线的工作 |
 | GUIDED（ATM） | arXiv 2403.07721（2024） | [本站精读](papers/survey/guided.md) | ATM 编码器把 EEG 映进 CLIP 空间，先验扩散 + 冻结 SDXL 两阶段重建所见图像：200 类零样本检索 top-1 28.6%，EEG 与 MEG/fMRI 同桌比较 |
 | CrossPT-EEG | arXiv 2406.07151（2024） | [本站精读](papers/survey/crosspt-eeg.md) | 清华视觉解码泛化基准：16 人 × 22 session × 4000 张 ImageNet 图，比较被试内、跨时间与跨被试三种设置；two-way ID 被试内均值 0.95、跨时间均值 0.51、跨被试均值 0.49（均为对应设定均值） |

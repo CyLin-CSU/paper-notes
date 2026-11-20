@@ -22,6 +22,7 @@ tags: [预训练, 综述]
 | REVE | 无码表 | — | — | — |
 | EEGMoE | 无码表 | — | — | — |
 | NeurIPT | 无码表 | — | — | — |
+| EEG2Rep | 无码表 | — | — | — |
 | NeuroRVQ | 多尺度 RVQ 码表 | **不掩码** | **频谱幅值 + 相位**，并约束还原信号 | 对数幅值 MSE + 相位余弦损失 + 信号 MSE + commitment loss |
 | BrainRVQ | 时域 / 频域双 RVQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值 + 相位** | 信号 MSE + 幅值 MSE + 相位 MSE + commitment loss |
 | CodeBrain | 时域 / 频域双 VQ 码表 | **不掩码** | **原始信号 patch + 频谱幅值 + 相位** | 重构 MSE + 时域对比损失 + VQ 损失 |
@@ -65,6 +66,7 @@ tags: [预训练, 综述]
 | CodeBrain | **原始信号 patch** | **离散 token** |
 | REVE | **原始信号 patch**（时空块掩码 55%，空间 3cm / 时间 3s 连续块 + 10% 整通道 dropout） | **原始信号 patch** + 全局 token 二次重构（attention pooling 跨全部 MHA 层，信息瓶颈） |
 | NeurIPT | **原始信号单点**（幅度感知掩码：逐通道按幅值排序取 20–50% 连续区间，BERT 式 80/10/10 替换） | **原始信号单点**（\( \ell_p \) 重构） |
+| EEG2Rep | **信号 embedding**（SSP 语义保持掩码：决定保留大块连续子序列，可见块可重叠） | **信号 embedding**（隐空间 L2 预测完整输入的 teacher 表示，Data2vec 式） |
 
 **方法创新**：
 
@@ -77,6 +79,7 @@ tags: [预训练, 综述]
 - **LUNA**：① **可学习 query查询向量统一通道**，把不同电极布局映射到固定大小的隐空间；② **时间注意力只在隐空间计算**，减少对原始通道数的计算依赖。
 - **EEGMoE**：① **特殊+共享的双专家组**，分别学习域特性与域共性；② **按 token 路由**，Top-K 选择特定专家，共享专家始终参与。
 - **NeurIPT**：① **幅度感知掩码（AAMP）**，逐通道按幅值排序取连续区间掩码，挖掉特定幅值带、插值取巧失效；② **渐进式 MoE**，专家数随深度递增（[0,2,2,4,4,6]）加共享专家。
+- **EEG2Rep**：① **SSP 语义保持掩码**，决定「保留谁」而非「掩码谁」，上下文恒为大块连续子序列；② **隐空间预测目标**（Data2vec 式三网络 + EMA）加 **VICReg** 方差/协方差正则防坍缩——自预测系把 LP 拉平 invariance 系的代表作。
 
 
 - **NeuroRVQ**：① **多尺度 + 多层残差量化**，一个 patch 用多组离散 token 表示；② **相位圆周约束**，用相位的正弦 / 余弦表示计算损失，避免直接回归角度的跳变。
@@ -134,6 +137,6 @@ BrainGPT / NeuroLM 的掩码限制**注意力可见范围**，不随机挖掉输
 
 ### 关联论文
 
-[BIOT](../papers/fm/biot.md) · [LaBraM](../papers/fm/labram.md) · [EEGPT](../papers/fm/eegpt.md) · [BrainGPT](../papers/fm/braingpt.md) · [NeuroLM](../papers/fm/neurolm.md) · [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) · [CBraMod](../papers/fm/cbramod.md) · [LUNA](../papers/fm/luna.md) · [EEGMoE](../papers/fm/eegmoe.md) · [NeurIPT](../papers/fm/neuript.md) · [JET](../papers/generative/jet.md) · [EEGDM](../papers/generative/eegdm.md) · [Not-All-EEG](../papers/generative/not-all-eeg.md) · [RF-GPT](../papers/survey/rf-gpt.md)
+[BIOT](../papers/fm/biot.md) · [LaBraM](../papers/fm/labram.md) · [EEGPT](../papers/fm/eegpt.md) · [BrainGPT](../papers/fm/braingpt.md) · [NeuroLM](../papers/fm/neurolm.md) · [TFM-Tokenizer](../papers/fm/tfm-tokenizer.md) · [CBraMod](../papers/fm/cbramod.md) · [LUNA](../papers/fm/luna.md) · [EEGMoE](../papers/fm/eegmoe.md) · [NeurIPT](../papers/fm/neuript.md) · [EEG2Rep](../papers/fm/eeg2rep.md) · [JET](../papers/generative/jet.md) · [EEGDM](../papers/generative/eegdm.md) · [Not-All-EEG](../papers/generative/not-all-eeg.md) · [RF-GPT](../papers/survey/rf-gpt.md)
 
-新增论文原文：[NeurIPT](../papers/fm/neuript.md) · [NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。
+新增论文原文：[EEG2Rep](../papers/fm/eeg2rep.md) · [NeurIPT](../papers/fm/neuript.md) · [NeuroRVQ](https://arxiv.org/abs/2510.13068) · [BrainRVQ](https://arxiv.org/abs/2602.16951) · [CodeBrain](https://arxiv.org/abs/2506.09110) · [NeuroDETR](https://arxiv.org/abs/2610.20349)。
