@@ -2,218 +2,222 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/blog-2023-2026/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/comparison/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/datasets/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/eeg-demo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/evidence/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/landscape-2026/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/library/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/models/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/reading-list/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/references/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/basics/attention-alternatives/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/basics/generative-lineage/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/basics/gnn/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/basics/lora/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/biot/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/braingpt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/brainrvq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/cbramod/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/codebrain/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
+    </url>
+    <url>
+         <loc>https://cylin-csu.github.io/paper-notes/papers/fm/eeg2rep/</loc>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/eegmoe/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/eegpt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/labram/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/luna/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/neuript/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/neurodetr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/neurolm/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/neurorvq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/reve/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/tfm-tokenizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/fm/uni-ntfm/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/generative/eegdm/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/generative/jet/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/generative/not-all-eeg/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/reviews/chaddad-eeg-signal-processing-review/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/reviews/chen-representation-learning-review/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/reviews/kuruppu-critical-review/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/reviews/kwon-neural-fm-perspective/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/reviews/yao-eegfm-survey/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/crosspt-eeg/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/defossez-speech/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/delta/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/eegarena/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/guided/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/learnable-tf/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/rf-gpt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/ssm2mel/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/papers/survey/surrogate-brain/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/topics/base-model/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/topics/data-landscape/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/topics/multi-task/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/topics/pretraining/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/topics/speech-models/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://cylin-csu.github.io/paper-notes/topics/tokenization/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
 </urlset>

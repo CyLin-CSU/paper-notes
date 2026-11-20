@@ -530,6 +530,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../papers/fm/eeg2rep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG2Rep (KDD 2024 · 隐空间预测)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../papers/fm/neurolm/" class="md-nav__link">
         
   
@@ -2885,13 +2920,13 @@
 
 <h1 id="eeg-2026-11"><abbr title="脑电图 Electroencephalogram">EEG</abbr> 基础模型全景 · 2026-11<a class="headerlink" href="#eeg-2026-11" title="Permanent link">#</a></h1>
 <blockquote>
-<p>本文综合站内 33 篇精读与四篇领域综述（<a href="../papers/reviews/yao-eegfm-survey/">Yao, JNE 2025</a> · <a href="../papers/reviews/chen-representation-learning-review/">Chen, Lu &amp; Wu, IEEE SPM 2025</a> · <a href="../papers/reviews/kuruppu-critical-review/">Kuruppu et al., JNE 2026</a> · <a href="../papers/reviews/kwon-neural-fm-perspective/">Kwon &amp; Shin, EJN 2026</a>），给出研究重点、痛点、创新集中度与空白轴的全景判断。</p>
+<p>本文综合站内 34 篇精读与四篇领域综述（<a href="../papers/reviews/yao-eegfm-survey/">Yao, JNE 2025</a> · <a href="../papers/reviews/chen-representation-learning-review/">Chen, Lu &amp; Wu, IEEE SPM 2025</a> · <a href="../papers/reviews/kuruppu-critical-review/">Kuruppu et al., JNE 2026</a> · <a href="../papers/reviews/kwon-neural-fm-perspective/">Kwon &amp; Shin, EJN 2026</a>），给出研究重点、痛点、创新集中度与空白轴的全景判断。</p>
 </blockquote>
 <p><strong>引用规则</strong>：站内事实均带笔记或综述链接，并标注原文节号 / 表号；数字口径以各论文原文为准（channel-hours 与小时数不混用，见 <a href="../papers/reviews/kuruppu-critical-review/">Kuruppu 综述</a> §1 的口径说明）。少数来自站外检索、站内尚未核对原文的动态集中在 §7，单独标注，不作为结论使用。标注「站内统计」的计数按本站笔记口径统计，一篇论文可占多个设计格。</p>
 <h2 id="1">1 领域现状<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
 <p>2021–2024 是把 BERT / <abbr title="掩码自编码器 Masked Autoencoder">MAE</abbr> / <abbr title="生成式预训练 Transformer Generative Pre-trained Transformer">GPT</abbr> 范式搬进 <abbr title="脑电图 Electroencephalogram">EEG</abbr> 的收编期（<a href="../papers/reviews/kuruppu-critical-review/">Kuruppu 综述</a> §1：其收录的 10 个 FM 全部为 transformer 或 Mamba 骨干、7/10 用掩码重构）；2025–2026 的主线变成两件事：在移植过的骨架上卷组件差异（§2 的拥挤度），以及用统一评测反向拆台——<a href="../papers/survey/eegarena/">EEGArena</a> 以 30 FM × 25 监督基线 × 57 任务给出「参数量不预测性能」（其 §3），<a href="../papers/reviews/yao-eegfm-survey/">Yao 综述</a> §6 自跑显示 FM 在运动想象上不敌 0.003M 的 EEGNet。</p>
 <h2 id="2">2 研究重点：四条主线与拥挤度<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
-<p>站内 33 篇按设计轴归类（站内统计，可多格重复计入）：</p>
+<p>站内 34 篇按设计轴归类（站内统计，可多格重复计入）：</p>
 <table>
 <thead>
 <tr>

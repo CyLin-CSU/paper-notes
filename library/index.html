@@ -530,6 +530,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../papers/fm/eeg2rep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EEG2Rep (KDD 2024 · 隐空间预测)
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--精读"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../papers/fm/neurolm/" class="md-nav__link">
         
   
@@ -2564,7 +2599,7 @@
 
 <h1 id="_1">论文库<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
 <blockquote>
-<p>33 篇精读的结构化目录，数据来自 <code>data/papers.json</code>。筛选为浏览器增强——禁用脚本时可完整浏览下方目录。想按方法维度横读请去<a href="../models/">模型对比</a>与<a href="../comparison/">十四篇方法对比</a>；查实验数值去<a href="../evidence/">实验证据</a>。</p>
+<p>34 篇精读的结构化目录，数据来自 <code>data/papers.json</code>。筛选为浏览器增强——禁用脚本时可完整浏览下方目录。想按方法维度横读请去<a href="../models/">模型对比</a>与<a href="../comparison/">十四篇方法对比</a>；查实验数值去<a href="../evidence/">实验证据</a>。</p>
 </blockquote>
 <details class="lib-panel">
 <summary>筛选与排序（点击展开）</summary>
@@ -2580,7 +2615,7 @@
 
 **文本过滤**：<input type="search" id="lib-q" placeholder="标题 / 一句话摘要关键词">（筛选当前列表，全站全文搜索用页眉）
 
-<button id="lib-clear" type="button">清除筛选</button>　当前显示 <b id="lib-count">33</b> / 33 篇
+<button id="lib-clear" type="button">清除筛选</button>　当前显示 <b id="lib-count">34</b> / 34 篇
 
 </div>
 </details>
@@ -2613,6 +2648,7 @@
 <div class="lib-item" data-group="reviews" data-type="review" data-year="2025" data-code="0" data-doi="1"><div class="lib-head"><a class="lib-title" href="../papers/reviews/yao-eegfm-survey/">Foundation models for EEG decoding: current progress and prospective research</a><span class="lib-year">2025</span></div><div class="lib-meta">J. Neural Eng. 2025 · 综述与观点 · <span class="lib-note">PRISMA 综述 + 自跑 10 模型 × 6 数据集：掩码重建是主流预训练路线，FM 赢临床域、输 MI 域，根子在预训练数据被癫痫范式主导</span></div><div class="lib-links"><a href="https://doi.org/10.1088/1741-2552/ae17e9">DOI</a></div></div>
 <div class="lib-item" data-group="fm" data-type="research" data-year="2024" data-code="0" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/braingpt/">BrainGPT: Unleashing the Potential of EEG Generalist Foundation Model by Autoregressive Pre-training</a><span class="lib-year">2024</span></div><div class="lib-meta">arXiv 2024 · EEG 基础模型 · <span class="lib-note">电极级建模 + GPT 式自回归 + 任务共享电极图的首个 EEG generalist（至 1.09B）</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2410.19779">arXiv</a></div></div>
 <div class="lib-item" data-group="survey" data-type="research" data-year="2024" data-code="1" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/survey/crosspt-eeg/">CrossPT-EEG: A Benchmark for Cross-Participant and Cross-Time Generalization of EEG-Based Visual Decoding</a><span class="lib-year">2024</span></div><div class="lib-meta">arXiv 2024 · 相关研究 · <span class="lib-note">清华 IR 组的 EEG 视觉解码泛化基准:16 人 × 22 session、4,000 张 ImageNet 图、7 天间隔两阶段范式,比较视觉解码在被试内、跨时间与跨被试三种设置下的表现;two-way ID 被试内均值 0.95、跨时间均值 0.51(模型间 0.51–0.62)、跨被试均值 0.49(模型间 0.49–0.57),均为对应设定下的结果</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2406.07151">arXiv</a> · <a href="https://anonymous.4open.science/r/EEG-ImageNet-anonymous-74B0">代码/项目</a></div></div>
+<div class="lib-item" data-group="fm" data-type="research" data-year="2024" data-code="1" data-doi="1"><div class="lib-head"><a class="lib-title" href="../papers/fm/eeg2rep/">EEG2Rep: Enhancing Self-supervised EEG Representation Through Informative Masked Inputs</a><span class="lib-year">2024</span></div><div class="lib-meta">KDD 2024 · EEG 基础模型 · <span class="lib-note">Data2vec 式隐空间预测（预测完整输入的隐表示而非重构原始信号）+ SSP 语义保持掩码（决定保留谁而非掩码谁）+ VICReg 防坍缩；6 数据集 linear probing 全部第一，自预测系首次把 LP 拉起来</span></div><div class="lib-links"><a href="https://doi.org/10.1145/3637528.3671600">DOI</a> · <a href="https://arxiv.org/abs/2402.17772">arXiv</a> · <a href="https://github.com/navidfoumani/eeg2rep">代码/项目</a></div></div>
 <div class="lib-item" data-group="fm" data-type="research" data-year="2024" data-code="1" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/eegpt/">EEGPT: Pretrained Transformer for Universal and Reliable Representation of EEG Signals</a><span class="lib-year">2024</span></div><div class="lib-meta">NeurIPS 2024 · EEG 基础模型 · <span class="lib-note">表示对齐 + 掩码重构双自监督的 10M 通用 EEG 特征提取器，linear probing 达 SOTA</span></div><div class="lib-links"><a href="https://github.com/BINE022/EEGPT">代码/项目</a></div></div>
 <div class="lib-item" data-group="survey" data-type="research" data-year="2024" data-code="1" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/survey/guided/">Visual Decoding and Reconstruction via EEG Embeddings with Guided Diffusion</a><span class="lib-year">2024</span></div><div class="lib-meta">arXiv 2024 · 相关研究 · <span class="lib-note">ATM 把整段 EEG 映进 CLIP 空间,轻量先验扩散 + 冻结 SDXL 两阶段重建所见图像——200 类零样本检索 top-1 28.6%,EEG 重建首次与 MEG/fMRI 同桌比较</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2403.07721">arXiv</a> · <a href="https://github.com/ncclab-sustech/EEG_Image_decode">代码/项目</a></div></div>
 <div class="lib-item" data-group="fm" data-type="research" data-year="2024" data-code="1" data-doi="0"><div class="lib-head"><a class="lib-title" href="../papers/fm/labram/">LaBraM: Large Brain Model for Learning Generic Representations with Tremendous EEG Data in BCI</a><span class="lib-year">2024</span></div><div class="lib-meta">ICLR 2024 · EEG 基础模型 · <span class="lib-note">VQ 神经 tokenization + 频谱重构 + 掩码码字预测的 EEG 大模型</span></div><div class="lib-links"><a href="https://arxiv.org/abs/2405.18765">arXiv</a> · <a href="https://github.com/935963004/LaBraM">代码/项目</a></div></div>
